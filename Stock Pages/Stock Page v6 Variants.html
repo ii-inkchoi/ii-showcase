@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1640">
+  <title>Stock Page v6 — Variant Comparison</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-black:  #000000;
+      --c-1000:   #1C1C1C;
+      --c-900:    #232627;
+      --c-800:    #565B5E;
+      --c-700:    #929292;
+      --c-400:    #C7C7C7;
+      --c-white:  #FFFFFF;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--c-1000);
+      color: var(--c-white);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      padding: 48px 0 80px;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: auto;
+    }
+
+    .container {
+      width: max-content;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .meta {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .meta h1 {
+      font-size: 18px;
+      color: var(--c-white);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+    .meta p {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+    }
+
+    .columns {
+      display: flex;
+      gap: 24px;
+      justify-content: flex-start;
+      align-items: flex-start;
+      flex-wrap: nowrap;
+    }
+    .column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .col-label {
+      font-size: 12px;
+      color: var(--c-white);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .col-tagline {
+      font-size: 11px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      max-width: 393px;
+      text-align: center;
+      line-height: 1.5;
+      min-height: 48px;
+    }
+    .col-spec {
+      font-size: 10px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      max-width: 393px;
+      text-align: left;
+      line-height: 1.7;
+      padding: 12px 16px;
+      border-top: 0.5px solid var(--c-900);
+      border-bottom: 0.5px solid var(--c-900);
+      width: 100%;
+    }
+    .col-spec strong { color: var(--c-400); font-weight: 500; }
+    .frame {
+      width: 393px;
+      height: 880px;
+      border: 0.5px solid var(--c-900);
+      background: var(--c-black);
+      overflow: hidden;
+      position: relative;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: var(--c-black);
+    }
+
+    .footer {
+      max-width: 1100px;
+      margin: 56px auto 0;
+      color: var(--c-700);
+      font-size: 13px;
+      line-height: 1.7;
+      letter-spacing: -0.02em;
+    }
+    .footer strong { color: var(--c-400); font-weight: 400; }
+
+    /* Stays horizontal — body scrolls if needed */
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="meta">
+      <h1>Stock Page v6 — Variant Comparison</h1>
+      <p>Same content, three visual treatments. Pick a direction.</p>
+    </div>
+
+    <div class="columns">
+
+      <!-- v6a -->
+      <div class="column">
+        <span class="col-label">v6a</span>
+        <p class="col-tagline">Hairline-only. Dashboard alert mirror. Left vertical accent for Fiscal AI. Most II-severe.</p>
+        <div class="col-spec">
+          <strong>Alert:</strong> Full dashboard pattern, hairline only<br>
+          <strong>Fiscal AI:</strong> 1px left vertical accent<br>
+          <strong>Color:</strong> Severity dot only (warning)<br>
+          <strong>Doctrine:</strong> Strict II
+        </div>
+        <div class="frame">
+          <iframe src="Stock Page v6.html" title="v6a"></iframe>
+        </div>
+      </div>
+
+      <!-- v6b -->
+      <div class="column">
+        <span class="col-label">v6b</span>
+        <p class="col-tagline">Condensed single-line alert with muted warning hairline. Vertical hairline-separated data list inside memo.</p>
+        <div class="col-spec">
+          <strong>Alert:</strong> Compressed line + muted warning left hairline<br>
+          <strong>Memo data:</strong> Vertical row list (label/value, hairline rows)<br>
+          <strong>Fiscal AI:</strong> Full-bleed dark fill<br>
+          <strong>Doctrine:</strong> Color introduced (subtle)
+        </div>
+        <div class="frame">
+          <iframe src="Stock Page v6b.html" title="v6b"></iframe>
+        </div>
+      </div>
+
+      <!-- v6c -->
+      <div class="column">
+        <span class="col-label">v6c</span>
+        <p class="col-tagline">CEO mockup translated to II. Memo as cohesive box (hero unit) with nested boxed alert callout. Fiscal AI paired directly under memo.</p>
+        <div class="col-spec">
+          <strong>Memo:</strong> Hairline box · status + nested alert callout + footer<br>
+          <strong>Alert:</strong> Inset yellow hairline box + border pulse<br>
+          <strong>Fiscal AI:</strong> Positioned under memo (verification pair)<br>
+          <strong>Doctrine:</strong> CEO structure + II translation
+        </div>
+        <div class="frame">
+          <iframe src="Stock Page v6c.html" title="v6c"></iframe>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer">
+      <p><strong>Same data, three containment strategies.</strong> v6a is the strictest reading of II doctrine (hairlines only, no boxes, dashboard alert mirror). v6b introduces subtle warning color via a condensed hairline-tinted alert and uses a vertical hairline-row data list inside the memo. v6c adopts the CEO mockup's "memo as cohesive container" structure, with a nested boxed alert callout (pulse animation) and Fiscal AI paired directly under the memo as verification source.</p>
+    </div>
+
+  </div>
+</body>
+</html>
