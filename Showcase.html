@@ -794,27 +794,27 @@
         sub: 'The single home view. Combines positions, performance, and outstanding questions into one monochrome surface. Entry point for every recurring session.',
       },
       'unified-open': {
-        src: 'Unified Main Dashboard/Post MVP/Open Positions.html',
+        src: 'performance dashboard/Open Positions.html',
         title: 'Open Positions · Post MVP',
         sub: 'All currently held names with thesis-health status. Drill into any row to reach the matching Stock Page.',
       },
       'unified-closed': {
-        src: 'Unified Main Dashboard/Post MVP/Closed Positions.html',
+        src: 'performance dashboard/Closed Positions.html',
         title: 'Closed Positions · Post MVP',
         sub: 'Historical record of sold positions. Memos retained for post-mortem and pattern review.',
       },
       'unified-performance': {
-        src: 'Unified Main Dashboard/Post MVP/Performance Dashboard.html',
+        src: 'performance dashboard/Performance Dashboard.html',
         title: 'Performance Dashboard · Post MVP',
         sub: 'Portfolio-level performance — annualized return, equity curve, yearly breakdown. The portfolio-scope counterpart to the per-ticker Performance Detail.',
       },
       'unified-benchmark': {
-        src: 'Unified Main Dashboard/Post MVP/Benchmark.html',
+        src: 'performance dashboard/Benchmark.html',
         title: 'Benchmark · Post MVP',
         sub: 'Portfolio vs. benchmark comparison. Honest accounting in the monochrome doctrine — no green wash, no false reassurance.',
       },
       'unified-questions': {
-        src: 'Unified Main Dashboard/Post MVP/Open Questions.html',
+        src: 'performance dashboard/Open Questions.html',
         title: 'Open Questions · Post MVP',
         sub: 'Outstanding research questions across positions. Surfaces what is unresolved so it can become a Kill Line, a memo update, or a decision.',
       },
@@ -955,22 +955,8 @@
         btn.classList.toggle('active', btn.getAttribute('data-persona') === persona);
       });
 
-      // Stock-Page-scoped sidebar sections (Persona, Thesis Health) only
-      // make sense when the current screen belongs to the Stock Page family.
-      // Hide them for Unified Dashboard (portfolio-level) and Unmocked screens.
-      const stockScopedKeys = new Set([
-        'first', 'v5', 'approaching', 'invalidated',
-        'memo', 'notes', 'performance',
-      ]);
-      const isStockScoped = stockScopedKeys.has(key);
-      const personaSection = document.getElementById('persona-section');
-      const thesisSection = document.getElementById('thesis-section');
-      if (personaSection) personaSection.style.display = isStockScoped ? '' : 'none';
-      if (thesisSection) {
-        // Thesis Health is meaningful for returning-user Stock Pages only
-        const showThesis = isStockScoped && key !== 'first';
-        thesisSection.style.display = showThesis ? '' : 'none';
-      }
+      // Persona + Thesis Health are always visible — they serve as navigation
+      // entry points into the Stock Page family from any other screen.
     }
 
     function setPersona(persona) {
