@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <title>Performance Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-black: #000000;
+      --c-1000:  #1C1C1C;
+      --c-900:   #232627;
+      --c-800:   #565B5E;
+      --c-700:   #929292;
+      --c-600:   #A7A7A7;
+      --c-400:   #C7C7C7;
+      --c-200:   #E3E2E2;
+      --c-white: #FFFFFF;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      width: 100%;
+      max-width: 393px;
+      margin: 0 auto;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+    }
+    a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+
+    /* HEADER */
+    .header {
+      height: 71px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 13.5px;
+      border-bottom: 1px solid var(--c-900);
+    }
+    .back {
+      width: 13px; height: 13px;
+      display: inline-flex; align-items: center; justify-content: center;
+      color: var(--c-400);
+    }
+    .back::before {
+      content: '';
+      width: 8px; height: 8px;
+      border-left: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+      transform: rotate(45deg);
+      margin-left: 2px;
+    }
+    .back:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .exit {
+      font-size: 14px;
+      letter-spacing: -0.02em;
+      color: var(--c-400);
+      text-transform: capitalize;
+    }
+    .exit:active { opacity: 0.5; transition: opacity 80ms ease; }
+
+    /* TITLE */
+    .title-block {
+      padding: 81px 13.5px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+    .t-primary {
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: var(--c-700);
+      text-transform: capitalize;
+      line-height: 1.15;
+    }
+    .t-secondary {
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: var(--c-white);
+      line-height: 1.15;
+    }
+
+    /* HERO — Opportunity Cost */
+    .hero {
+      padding: 60px 13.5px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+    .hero-label {
+      font-size: 14px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      text-transform: capitalize;
+    }
+    .hero-value {
+      font-size: 28px;
+      color: var(--c-white);
+      letter-spacing: -0.56px;
+      line-height: normal;
+      font-weight: 400;
+    }
+    .hero-meta {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      text-align: right;
+      margin-top: 8px;
+      line-height: 1.4;
+      max-width: 280px;
+    }
+    .hero-period {
+      font-size: 11px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      text-align: right;
+      margin-top: 2px;
+    }
+    .ccy { color: var(--c-800); }
+
+    /* TIME PERIOD TOGGLE — sticky on scroll */
+    .period-bar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      gap: 20px;
+      align-items: baseline;
+      padding: 16px 13.5px;
+      margin-top: 32px;
+      justify-content: flex-start;
+      background: var(--c-black);
+      border-bottom: 0.5px solid var(--c-1000);
+    }
+    .period-bar .period-opt {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: color 200ms ease;
+    }
+    .period-bar .period-opt.active {
+      color: var(--c-white);
+    }
+    .period-bar .period-opt:active { opacity: 0.5; transition: opacity 80ms ease; }
+
+    /* SECTIONS — separated by space only */
+    .col {
+      padding: 40px 13.5px 120px;
+      display: flex;
+      flex-direction: column;
+      gap: 64px;
+    }
+    .section {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .section-label {
+      font-size: 14px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      text-align: left;
+      margin-bottom: 15px;
+    }
+
+    /* ROWS */
+    .row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      width: 100%;
+      padding-bottom: 10px;
+      border-bottom: 0.5px solid var(--c-900);
+    }
+    .row:has(+ .row.sub) {
+      border-bottom: none;
+      padding-bottom: 4px;
+    }
+    .row .lbl {
+      font-size: 14px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      text-align: left;
+    }
+    a.lbl {
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      text-decoration: none;
+    }
+    a.lbl:active {
+      opacity: 0.5;
+      transition: opacity 80ms ease;
+    }
+    .row .val {
+      font-size: 15px;
+      color: var(--c-white);
+      letter-spacing: -0.02em;
+      text-align: right;
+    }
+    .row .val .muted { color: var(--c-700); margin-left: 6px; font-size: 14px; }
+
+    .row.sub {
+      padding-left: 14px;
+      padding-top: 2px;
+      padding-bottom: 10px;
+      border-bottom: 0.5px solid var(--c-900);
+    }
+    .row.sub:has(+ .row.sub) {
+      border-bottom: none;
+      padding-bottom: 4px;
+    }
+    a.row.sub { color: inherit; text-decoration: none; }
+    a.row.sub:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .sub-chev { color: var(--c-700); font-size: 13px; font-weight: 300; line-height: 1; margin-left: 4px; }
+    .row.sub .lbl {
+      font-size: 13px;
+      color: var(--c-700);
+    }
+    .row.sub .val {
+      font-size: 14px;
+      color: var(--c-400);
+    }
+
+    .row.diff {
+      padding-top: 0;
+      padding-bottom: 10px;
+      border-top: none;
+      border-bottom: 0.5px solid var(--c-900);
+    }
+    .row.diff .lbl { color: var(--c-700); }
+    .row.diff .val {
+      color: var(--c-white);
+    }
+
+    /* Soft fade transition for swapping data values */
+    [data-bind] {
+      transition: opacity 180ms ease;
+    }
+    [data-bind].swapping {
+      opacity: 0.35;
+    }
+
+    /* EQUITY CURVE — solid actual vs dashed VFV */
+    .curve-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .curve-svg {
+      width: 100%;
+      height: 180px;
+      display: block;
+      overflow: visible;
+    }
+    .curve-svg path {
+      transition: opacity 180ms ease;
+    }
+    .curve-svg path.swapping {
+      opacity: 0.3;
+    }
+    .curve-svg text {
+      font-family: 'Inter', sans-serif;
+    }
+    .curve-axis {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      padding: 0 0 0 10.1%;
+    }
+
+    /* CASH DRAG CALLOUT */
+    .cash-drag { padding: 0; }
+    .cash-drag .cd-lbl {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .cash-drag .cd-body {
+      font-size: 14px;
+      color: var(--c-white);
+      letter-spacing: -0.02em;
+      line-height: 1.5;
+    }
+    .cash-drag .cd-meta {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      line-height: 1.4;
+      margin-top: 6px;
+    }
+
+    /* Open / Closed block within Decisions */
+    .d-block {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-bottom: 10px;
+      border-bottom: 0.5px solid var(--c-900);
+    }
+    .d-block .row.sub {
+      border-bottom: none;
+      padding-bottom: 4px;
+    }
+    .d-block .row:has(+ .row.sub) {
+      border-bottom: none;
+    }
+    .d-view-all {
+      display: block;
+      margin-top: 2px;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      line-height: 1.32;
+      text-align: right;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .d-view-all:active { opacity: 0.5; transition: opacity 80ms ease; }
+
+    /* YEARLY BREAKDOWN — 4-column tabular (fund tear sheet style) */
+    .yt-table {
+      display: grid;
+      grid-template-columns: 1fr 64px 64px 64px;
+      column-gap: 14px;
+    }
+    .yt-head, .yt-row { display: contents; }
+    .yt-head > span {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      text-align: right;
+      padding-bottom: 8px;
+      border-bottom: 0.5px solid var(--c-900);
+    }
+    .yt-head > span:first-child { text-align: left; }
+    .yt-row > span {
+      padding: 10px 0;
+      border-bottom: 0.5px solid var(--c-900);
+      font-size: 14px;
+      letter-spacing: -0.02em;
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+    }
+    .yt-row .yt-year { color: var(--c-700); text-align: left; }
+    .yt-row .yt-real { color: var(--c-400); text-align: right; }
+    .yt-row .yt-sp { color: var(--c-700); text-align: right; }
+    .yt-row .yt-alpha { color: var(--c-white); text-align: right; }
+    .yt-row.ytd .yt-year::after {
+      content: ' YTD';
+      font-size: 11px;
+      color: var(--c-700);
+      margin-left: 4px;
+    }
+
+    /* TAPPABLE LABEL — text is the affordance (II doctrine) */
+    .lbl-tap {
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      border-bottom: 0.5px dotted var(--c-800);
+      padding-bottom: 1px;
+      transition: color 120ms ease, border-color 120ms ease;
+    }
+    .lbl-tap:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .lbl-tap.open { color: var(--c-white); border-bottom-color: var(--c-700); }
+
+    .info-panel {
+      padding: 10px 14px 14px;
+      margin-top: -10px;
+      border-bottom: 0.5px solid var(--c-900);
+      font-size: 13px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      line-height: 1.55;
+    }
+    .info-panel[hidden] { display: none; }
+    .info-panel .ip-formula {
+      font-size: 12px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      margin-top: 6px;
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+    }
+
+    /* DISCLOSURE */
+    .disclosure {
+      padding: 0 13.5px;
+      margin-top: 30px;
+      font-size: 13px;
+      color: var(--c-800);
+      letter-spacing: -0.02em;
+      text-align: left;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <a href="javascript:history.back()" class="back" aria-label="Back"></a>
+    <a href="Unified%20Dashboard.html" class="exit" aria-label="Exit">Exit</a>
+  </header>
+
+  <div class="title-block">
+    <span class="t-primary">Performance</span>
+    <span class="t-secondary">Active · Self-Directed</span>
+  </div>
+
+  <!-- HERO: Opportunity Cost -->
+  <section class="hero" aria-label="Opportunity cost">
+    <span class="hero-label">Opportunity Cost</span>
+    <span class="hero-value"><span data-bind="hero-amount">−3,123.45</span> <span class="ccy">CAD</span></span>
+    <span class="hero-meta" data-bind="hero-meta">Your portfolio since inception vs. the same capital in S&amp;P 500 over the same period.</span>
+    <span class="hero-period" data-bind="hero-period">Jan 2020 — May 8, 2026</span>
+  </section>
+
+  <!-- TIME PERIOD TOGGLE -->
+  <div class="period-bar" role="tablist" aria-label="Time period">
+    <span class="period-opt" data-period="ytd" role="tab" aria-selected="false">YTD</span>
+    <span class="period-opt" data-period="1y" role="tab" aria-selected="false">1Y</span>
+    <span class="period-opt" data-period="3y" role="tab" aria-selected="false">3Y</span>
+    <span class="period-opt" data-period="5y" role="tab" aria-selected="false">5Y</span>
+    <span class="period-opt active" data-period="all" role="tab" aria-selected="true">All</span>
+  </div>
+
+  <div class="col">
+
+    <!-- 1. PERFORMANCE vs S&P 500 -->
+    <section class="section" aria-label="Performance vs S&P 500">
+      <span class="section-label">Performance vs S&amp;P 500</span>
+      <div class="row">
+        <span class="lbl">Portfolio</span>
+        <span class="val"><span data-bind="perf-portfolio-cad">+2,353.46</span><span class="muted" data-bind="perf-portfolio-pct">+5.3%</span></span>
+      </div>
+      <div class="row">
+        <a class="lbl" href="Benchmark.html">S&amp;P Would Have</a>
+        <span class="val"><span data-bind="perf-sp-cad">+5,476.91</span><span class="muted" data-bind="perf-sp-pct">+12.4%</span></span>
+      </div>
+      <div class="row diff">
+        <span class="lbl">Alpha</span>
+        <span class="val"><span data-bind="perf-alpha-cad">−3,123.45</span><span class="muted" data-bind="perf-alpha-pct">−7.1pp</span></span>
+      </div>
+    </section>
+
+    <!-- 2. EQUITY CURVE -->
+    <section class="section" aria-label="Equity curve">
+      <span class="section-label">Equity Curve</span>
+      <div class="curve-wrap">
+        <svg class="curve-svg" viewBox="-36 0 356 180" preserveAspectRatio="none" aria-hidden="true">
+          <text x="-36" y="11" fill="#929292" font-size="9" text-anchor="start" data-bind="y-top">50k</text>
+          <text x="-36" y="92" fill="#929292" font-size="9" text-anchor="start" data-bind="y-mid">46k</text>
+          <text x="-36" y="174" fill="#929292" font-size="9" text-anchor="start" data-bind="y-bot">42k</text>
+          <rect x="12" y="6" width="148" height="22" fill="#262626" />
+          <g font-size="9">
+            <line x1="24" y1="17" x2="38" y2="17" stroke="#C7C7C7" stroke-width="1" vector-effect="non-scaling-stroke" />
+            <text x="42" y="20" fill="#929292">Portfolio</text>
+            <line x1="96" y1="17" x2="110" y2="17" stroke="#929292" stroke-width="1" stroke-dasharray="3 3" vector-effect="non-scaling-stroke" />
+            <a href="Benchmark.html"><text x="114" y="20" fill="#929292" style="cursor:pointer">S&amp;P 500</text></a>
+          </g>
+          <g stroke="#1C1C1C" stroke-width="0.5">
+            <line x1="0" y1="0" x2="320" y2="0" vector-effect="non-scaling-stroke" />
+            <line x1="0" y1="88" x2="320" y2="88" vector-effect="non-scaling-stroke" />
+          </g>
+          <line x1="0" y1="0" x2="0" y2="176" stroke="#565B5E" stroke-width="0.5" vector-effect="non-scaling-stroke" />
+          <line x1="0" y1="176" x2="320" y2="176" stroke="#565B5E" stroke-width="0.5" vector-effect="non-scaling-stroke" />
+          <path data-bind-d="curve-sp" d="M0,123 L40,115 L80,103 L120,88 L160,73 L200,55 L240,38 L280,20 L320,3" fill="none" stroke="#929292" stroke-width="1" stroke-dasharray="3 3" vector-effect="non-scaling-stroke" />
+          <path data-bind-d="curve-portfolio" d="M0,123 L40,120 L80,115 L120,108 L160,100 L200,93 L240,88 L280,79 L320,71" fill="none" stroke="#C7C7C7" stroke-width="1" vector-effect="non-scaling-stroke" />
+        </svg>
+        <div class="curve-axis">
+          <span data-bind="axis-1">Jan 20</span>
+          <span data-bind="axis-2">Aug 22</span>
+          <span data-bind="axis-3">Apr 24</span>
+          <span data-bind="axis-4">May 26</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. CASH DRAG -->
+    <section class="section" aria-label="Cash drag">
+      <div class="cash-drag">
+        <span class="cd-lbl">Cash Drag</span>
+        <p class="cd-body">Cash cost you <span data-bind="cd-amount">−1,840.00</span> in opportunity over this period.</p>
+        <p class="cd-meta" data-bind="cd-meta">Avg 18% cash. S&amp;P returned +12.4% over same window. Idle capital is a position too.</p>
+      </div>
+    </section>
+
+    <!-- 4. PERFORMANCE METRICS -->
+    <section class="section" aria-label="Performance metrics">
+      <span class="section-label">Performance Metrics</span>
+
+      <div class="row">
+        <span class="lbl"><span class="lbl-tap" data-info="twr">TWR (annualized)</span></span>
+        <span class="val" data-bind="pm-twr">+5.3%</span>
+      </div>
+      <div class="info-panel" data-info-for="twr" hidden>
+        <p>Time-Weighted Return measures stock-picking skill, isolated from when you deposited or withdrew money. It's the industry standard for comparing managers — it removes the noise of cash flows.</p>
+        <p class="ip-formula">Geometric link of period returns. Deposits and withdrawals do not affect TWR.</p>
+      </div>
+
+      <div class="row">
+        <span class="lbl"><span class="lbl-tap" data-info="mwr">MWR (annualized)</span></span>
+        <span class="val" data-bind="pm-mwr">+3.9%</span>
+      </div>
+      <div class="info-panel" data-info-for="mwr" hidden>
+        <p>Money-Weighted Return reflects the timing of your capital deployment. If you added cash at peaks and held back at bottoms, MWR will lag TWR — that's a timing-skill gap.</p>
+        <p class="ip-formula">XIRR over all cash flows. MWR includes deposit and withdrawal timing.</p>
+      </div>
+
+      <div class="row sub">
+        <span class="lbl"><span class="lbl-tap" data-info="gap">Timing gap (MWR − TWR)</span></span>
+        <span class="val" data-bind="pm-gap">−1.4pp</span>
+      </div>
+      <div class="info-panel" data-info-for="gap" hidden>
+        <p>The gap between MWR and TWR is your timing skill. Negative means your deposits were poorly timed relative to your stock-picking. Positive means you added cash at the right moments.</p>
+      </div>
+
+      <div class="row">
+        <span class="lbl"><span class="lbl-tap" data-info="dd">Max Drawdown</span></span>
+        <span class="val" data-bind="pm-drawdown">−22.0%</span>
+      </div>
+      <div class="info-panel" data-info-for="dd" hidden>
+        <p>The worst peak-to-trough decline over the selected period. A 22% drawdown means the portfolio dropped 22% from its highest point to its lowest before recovering.</p>
+        <p class="ip-formula">min(equity_t / peak_t − 1) over period. Daily marks.</p>
+      </div>
+
+      <div class="row sub">
+        <a class="lbl" href="Benchmark.html">S&amp;P 500 same window</a>
+        <span class="val" data-bind="pm-sp-drawdown">−14.5%</span>
+      </div>
+
+      <div class="row">
+        <span class="lbl"><span class="lbl-tap" data-info="vol">Volatility (12M)</span></span>
+        <span class="val" data-bind="pm-vol">17.2%</span>
+      </div>
+      <div class="info-panel" data-info-for="vol" hidden>
+        <p>Annualized standard deviation of daily returns. Higher volatility means larger swings — not necessarily worse, but a measure of how bumpy the ride is.</p>
+        <p class="ip-formula">stdev(daily returns) × √252. Trailing 12 months.</p>
+      </div>
+
+      <div class="row sub">
+        <a class="lbl" href="Benchmark.html">S&amp;P 500</a>
+        <span class="val" data-bind="pm-sp-vol">15.4%</span>
+      </div>
+
+      <div class="row">
+        <span class="lbl"><span class="lbl-tap" data-info="cash">Avg Cash %</span></span>
+        <span class="val" data-bind="pm-cash">18%</span>
+      </div>
+      <div class="info-panel" data-info-for="cash" hidden>
+        <p>Average percentage of portfolio held in cash over the period. Cash earned no return — its opportunity cost shows up in the Cash Drag callout above.</p>
+        <p class="ip-formula">mean(cash_cad / market_value_cad) on a daily basis.</p>
+      </div>
+    </section>
+
+    <!-- 5. YEARLY BREAKDOWN — 4-column fund tear sheet -->
+    <section class="section" aria-label="Yearly breakdown">
+      <span class="section-label">Yearly Breakdown</span>
+      <div class="yt-table">
+        <div class="yt-head">
+          <span>Year</span>
+          <span>Portfolio</span>
+          <span>S&amp;P</span>
+          <span>Alpha</span>
+        </div>
+        <div class="yt-row ytd">
+          <span class="yt-year">2026</span>
+          <span class="yt-real">+1.7%</span>
+          <span class="yt-sp">+8.4%</span>
+          <span class="yt-alpha">−6.7pp</span>
+        </div>
+        <div class="yt-row">
+          <span class="yt-year">2025</span>
+          <span class="yt-real">+12.4%</span>
+          <span class="yt-sp">+18.2%</span>
+          <span class="yt-alpha">−5.8pp</span>
+        </div>
+        <div class="yt-row">
+          <span class="yt-year">2024</span>
+          <span class="yt-real">+8.6%</span>
+          <span class="yt-sp">+24.1%</span>
+          <span class="yt-alpha">−15.5pp</span>
+        </div>
+        <div class="yt-row">
+          <span class="yt-year">2023</span>
+          <span class="yt-real">+18.2%</span>
+          <span class="yt-sp">+24.2%</span>
+          <span class="yt-alpha">−6.0pp</span>
+        </div>
+        <div class="yt-row">
+          <span class="yt-year">2022</span>
+          <span class="yt-real">−32.4%</span>
+          <span class="yt-sp">−18.1%</span>
+          <span class="yt-alpha">−14.3pp</span>
+        </div>
+        <div class="yt-row">
+          <span class="yt-year">2021</span>
+          <span class="yt-real">+22.8%</span>
+          <span class="yt-sp">+26.9%</span>
+          <span class="yt-alpha">−4.1pp</span>
+        </div>
+        <div class="yt-row">
+          <span class="yt-year">2020</span>
+          <span class="yt-real">+38.6%</span>
+          <span class="yt-sp">+16.3%</span>
+          <span class="yt-alpha">+22.3pp</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. DECISIONS -->
+    <section class="section" aria-label="Decisions">
+      <span class="section-label">Decisions</span>
+
+      <div class="row">
+        <span class="lbl">Total Positions</span>
+        <span class="val" data-bind="d-total">50</span>
+      </div>
+      <div class="row sub">
+        <span class="lbl">Beating / Trailing</span>
+        <span class="val" data-bind="d-bs">18 / 32</span>
+      </div>
+      <div class="row">
+        <span class="lbl"><span class="lbl-tap" data-info="winrate">Win Rate vs S&amp;P</span></span>
+        <span class="val" data-bind="d-winrate">36.0%</span>
+      </div>
+      <div class="info-panel" data-info-for="winrate" hidden>
+        <p>Percentage of positions where alpha is positive — meaning you outperformed buying the index at the same moment. Anything below 50% means more than half your picks lost to the index.</p>
+        <p class="ip-formula">count(positions where alpha &gt; 0) ÷ total positions.</p>
+      </div>
+
+      <div class="row sub">
+        <span class="lbl"><span class="lbl-tap" data-info="aw">Avg Alpha-Win</span></span>
+        <span class="val" data-bind="d-aw">+4,860.00</span>
+      </div>
+      <div class="info-panel" data-info-for="aw" hidden>
+        <p>Average dollar alpha across positions where you beat the index. Pair with Avg Alpha-Loss — you need wins to be larger than losses to compound positive alpha.</p>
+        <p class="ip-formula">mean(alpha) for positions where alpha &gt; 0.</p>
+      </div>
+
+      <div class="row sub">
+        <span class="lbl"><span class="lbl-tap" data-info="al">Avg Alpha-Loss</span></span>
+        <span class="val" data-bind="d-al">−3,640.00</span>
+      </div>
+      <div class="info-panel" data-info-for="al" hidden>
+        <p>Average dollar alpha across positions where you trailed the index. If your average loss is larger than your average win, win rate alone won't save you.</p>
+        <p class="ip-formula">mean(alpha) for positions where alpha ≤ 0.</p>
+      </div>
+
+      <div class="d-block">
+        <div class="row">
+          <span class="lbl">Open</span>
+          <span class="val" data-bind="d-open">12</span>
+        </div>
+        <div class="row sub">
+          <span class="lbl">Beating S&amp;P / Trailing</span>
+          <span class="val" data-bind="d-open-bs">5 / 7</span>
+        </div>
+        <a href="Open%20Positions.html" class="d-view-all"><span data-bind="d-view-open">→ View All</span></a>
+      </div>
+
+      <div class="d-block">
+        <div class="row">
+          <span class="lbl">Closed</span>
+          <span class="val" data-bind="d-closed">38</span>
+        </div>
+        <div class="row sub">
+          <span class="lbl">Beat S&amp;P / Trailed</span>
+          <span class="val" data-bind="d-closed-bs">14 / 24</span>
+        </div>
+        <a href="Closed%20Positions.html" class="d-view-all"><span data-bind="d-view-all">→ View All</span></a>
+      </div>
+    </section>
+
+    <!-- 7. DISCIPLINE -->
+    <section class="section" aria-label="Discipline">
+      <span class="section-label">Discipline</span>
+
+      <div class="row">
+        <span class="lbl">Days Since Last Trade</span>
+        <span class="val" data-bind="dis-days">47</span>
+      </div>
+      <div class="row">
+        <span class="lbl">Turnover</span>
+        <span class="val" data-bind="dis-turnover">50%</span>
+      </div>
+      <div class="row sub">
+        <a class="lbl" href="Benchmark.html">S&amp;P 500</a>
+        <span class="val">~4%</span>
+      </div>
+      <div class="row">
+        <span class="lbl">Avg Holding Period</span>
+        <span class="val" data-bind="dis-holding">2y</span>
+      </div>
+    </section>
+
+  </div>
+
+  <p class="disclosure">
+    Time-weighted return (TWR) measures stock-picking. Money-weighted return (MWR) reflects timing of capital deployment; the gap between them is timing skill. Dividends reinvested. Cash held shows up as opportunity cost. Period selected applies to all metrics on this page. Closed positions use past tense (Beat / Trailed); open positions use present (Beating / Trailing). Tap the i icon next to any metric for definition and methodology.
+  </p>
+
+  <div style="height:60px"></div>
+
+  <script>
+    const periodData = {
+      'ytd': {
+        'hero-amount': '−1,847.30',
+        'hero-meta': 'Your portfolio year-to-date vs. the same capital in S&P 500 over the same period.',
+        'hero-period': 'Jan 1 — May 8, 2026',
+        'perf-portfolio-cad': '+1,247.80', 'perf-portfolio-pct': '+1.7%',
+        'perf-sp-cad': '+3,095.10', 'perf-sp-pct': '+8.4%',
+        'perf-alpha-cad': '−1,847.30', 'perf-alpha-pct': '−6.7pp',
+        'curve-portfolio': 'M0,140 L80,138 L160,142 L240,135 L320,128',
+        'curve-sp':        'M0,140 L80,128 L160,98 L240,72 L320,48',
+        'y-top': '48k', 'y-mid': '46k', 'y-bot': '44k',
+        'axis-1': 'Jan 26', 'axis-2': 'Feb 26', 'axis-3': 'Apr 26', 'axis-4': 'May 26',
+        'cd-amount': '−612.40',
+        'cd-meta': 'Avg 18% cash. S&P returned +8.4% over same window. Idle capital is a position too.',
+        'pm-twr': '+1.7%', 'pm-mwr': '+1.4%', 'pm-gap': '−0.3pp',
+        'pm-drawdown': '−4.2%', 'pm-sp-drawdown': '−2.8%',
+        'pm-vol': '14.8%', 'pm-sp-vol': '11.2%', 'pm-cash': '18%',
+        'd-total': '12', 'd-winrate': '41.7%', 'd-bs': '5 / 7',
+        'd-aw': '+1,420.00', 'd-al': '−980.00',
+        'd-open': '12', 'd-open-bs': '5 / 7',
+        'd-closed': '0', 'd-closed-bs': '0 / 0',
+        'dis-days': '47', 'dis-turnover': '8%', 'dis-holding': '14m'
+      },
+      '1y': {
+        'hero-amount': '−1,200.00',
+        'hero-meta': 'Your portfolio over the last 12 months vs. the same capital in S&P 500 over the same period.',
+        'hero-period': 'May 2025 — May 8, 2026',
+        'perf-portfolio-cad': '+1,180.00', 'perf-portfolio-pct': '+2.8%',
+        'perf-sp-cad': '+2,380.00', 'perf-sp-pct': '+5.7%',
+        'perf-alpha-cad': '−1,200.00', 'perf-alpha-pct': '−2.9pp',
+        'curve-portfolio': 'M0,106 L80,103 L160,90 L240,73 L320,55',
+        'curve-sp':        'M0,106 L80,95 L160,70 L240,38 L320,3',
+        'y-top': '48k', 'y-mid': '46k', 'y-bot': '44k',
+        'axis-1': 'May 25', 'axis-2': 'Sep 25', 'axis-3': 'Jan 26', 'axis-4': 'May 26',
+        'cd-amount': '−420.00',
+        'cd-meta': 'Avg 12% cash. S&P returned +5.7% over same window. Idle capital is a position too.',
+        'pm-twr': '+2.8%', 'pm-mwr': '+2.1%', 'pm-gap': '−0.7pp',
+        'pm-drawdown': '−8.0%', 'pm-sp-drawdown': '−5.5%',
+        'pm-vol': '14.5%', 'pm-sp-vol': '13.2%', 'pm-cash': '12%',
+        'd-total': '14', 'd-winrate': '42.9%', 'd-bs': '6 / 8',
+        'd-aw': '+1,860.00', 'd-al': '−1,420.00',
+        'd-open': '12', 'd-open-bs': '5 / 7',
+        'd-closed': '2', 'd-closed-bs': '1 / 1',
+        'dis-days': '47', 'dis-turnover': '14%', 'dis-holding': '11m'
+      },
+      '3y': {
+        'hero-amount': '−2,400.00',
+        'hero-meta': 'Your portfolio over the last 3 years vs. the same capital in S&P 500 over the same period.',
+        'hero-period': 'May 2023 — May 8, 2026',
+        'perf-portfolio-cad': '+2,150.00', 'perf-portfolio-pct': '+4.5%',
+        'perf-sp-cad': '+4,550.00', 'perf-sp-pct': '+9.7%',
+        'perf-alpha-cad': '−2,400.00', 'perf-alpha-pct': '−5.2pp',
+        'curve-portfolio': 'M0,158 L70,153 L140,140 L210,123 L280,105 L320,95',
+        'curve-sp':        'M0,158 L70,145 L140,123 L210,90 L280,50 L320,25',
+        'y-top': '50k', 'y-mid': '47k', 'y-bot': '44k',
+        'axis-1': 'May 23', 'axis-2': 'Nov 24', 'axis-3': 'Aug 25', 'axis-4': 'May 26',
+        'cd-amount': '−980.00',
+        'cd-meta': 'Avg 16% cash. S&P returned +9.7% over same window. Idle capital is a position too.',
+        'pm-twr': '+4.5%', 'pm-mwr': '+3.5%', 'pm-gap': '−1.0pp',
+        'pm-drawdown': '−15.0%', 'pm-sp-drawdown': '−10.2%',
+        'pm-vol': '16.1%', 'pm-sp-vol': '14.3%', 'pm-cash': '16%',
+        'd-total': '30', 'd-winrate': '36.7%', 'd-bs': '11 / 19',
+        'd-aw': '+3,420.00', 'd-al': '−2,890.00',
+        'd-open': '12', 'd-open-bs': '5 / 7',
+        'd-closed': '18', 'd-closed-bs': '6 / 12',
+        'dis-days': '47', 'dis-turnover': '32%', 'dis-holding': '1y 6m'
+      },
+      '5y': {
+        'hero-amount': '−2,890.00',
+        'hero-meta': 'Your portfolio over the last 5 years vs. the same capital in S&P 500 over the same period.',
+        'hero-period': 'May 2021 — May 8, 2026',
+        'perf-portfolio-cad': '+2,250.00', 'perf-portfolio-pct': '+5.0%',
+        'perf-sp-cad': '+5,140.00', 'perf-sp-pct': '+11.4%',
+        'perf-alpha-cad': '−2,890.00', 'perf-alpha-pct': '−6.4pp',
+        'curve-portfolio': 'M0,160 L60,155 L120,145 L180,130 L240,115 L320,95',
+        'curve-sp':        'M0,160 L60,148 L120,123 L180,90 L240,50 L320,10',
+        'y-top': '50k', 'y-mid': '47k', 'y-bot': '44k',
+        'axis-1': 'May 21', 'axis-2': 'Feb 23', 'axis-3': 'Nov 24', 'axis-4': 'May 26',
+        'cd-amount': '−1,450.00',
+        'cd-meta': 'Avg 17% cash. S&P returned +11.4% over same window. Idle capital is a position too.',
+        'pm-twr': '+5.0%', 'pm-mwr': '+3.8%', 'pm-gap': '−1.2pp',
+        'pm-drawdown': '−19.2%', 'pm-sp-drawdown': '−12.8%',
+        'pm-vol': '16.8%', 'pm-sp-vol': '14.9%', 'pm-cash': '17%',
+        'd-total': '42', 'd-winrate': '35.7%', 'd-bs': '15 / 27',
+        'd-aw': '+4,210.00', 'd-al': '−3,360.00',
+        'd-open': '12', 'd-open-bs': '5 / 7',
+        'd-closed': '30', 'd-closed-bs': '10 / 20',
+        'dis-days': '47', 'dis-turnover': '42%', 'dis-holding': '1y 10m'
+      },
+      'all': {
+        'hero-amount': '−3,123.45',
+        'hero-meta': 'Your portfolio since inception vs. the same capital in S&P 500 over the same period.',
+        'hero-period': 'Jan 2020 — May 8, 2026',
+        'perf-portfolio-cad': '+2,353.46', 'perf-portfolio-pct': '+5.3%',
+        'perf-sp-cad': '+5,476.91', 'perf-sp-pct': '+12.4%',
+        'perf-alpha-cad': '−3,123.45', 'perf-alpha-pct': '−7.1pp',
+        'curve-portfolio': 'M0,123 L40,120 L80,115 L120,108 L160,100 L200,93 L240,88 L280,79 L320,71',
+        'curve-sp':        'M0,123 L40,115 L80,103 L120,88 L160,73 L200,55 L240,38 L280,20 L320,3',
+        'y-top': '50k', 'y-mid': '46k', 'y-bot': '42k',
+        'axis-1': 'Jan 20', 'axis-2': 'Aug 22', 'axis-3': 'Apr 24', 'axis-4': 'May 26',
+        'cd-amount': '−1,840.00',
+        'cd-meta': 'Avg 18% cash. S&P returned +12.4% over same window. Idle capital is a position too.',
+        'pm-twr': '+5.3%', 'pm-mwr': '+3.9%', 'pm-gap': '−1.4pp',
+        'pm-drawdown': '−22.0%', 'pm-sp-drawdown': '−14.5%',
+        'pm-vol': '17.2%', 'pm-sp-vol': '15.4%', 'pm-cash': '18%',
+        'd-total': '50', 'd-winrate': '36.0%', 'd-bs': '18 / 32',
+        'd-aw': '+4,860.00', 'd-al': '−3,640.00',
+        'd-open': '12', 'd-open-bs': '5 / 7',
+        'd-closed': '38', 'd-closed-bs': '14 / 24',
+        'dis-days': '47', 'dis-turnover': '50%', 'dis-holding': '2y'
+      }
+    };
+
+    function applyPeriod(period) {
+      const data = periodData[period];
+      if (!data) return;
+      const textNodes = document.querySelectorAll('[data-bind]');
+      const pathNodes = document.querySelectorAll('[data-bind-d]');
+      textNodes.forEach(el => el.classList.add('swapping'));
+      pathNodes.forEach(p => p.classList.add('swapping'));
+      setTimeout(() => {
+        textNodes.forEach(el => {
+          const key = el.getAttribute('data-bind');
+          if (data[key] !== undefined) el.textContent = data[key];
+        });
+        pathNodes.forEach(p => {
+          const key = p.getAttribute('data-bind-d');
+          if (data[key] !== undefined) p.setAttribute('d', data[key]);
+        });
+        textNodes.forEach(el => el.classList.remove('swapping'));
+        pathNodes.forEach(p => p.classList.remove('swapping'));
+      }, 180);
+    }
+
+    const periodOpts = document.querySelectorAll('.period-opt');
+    periodOpts.forEach(opt => {
+      opt.addEventListener('click', e => {
+        e.stopPropagation();
+        if (opt.classList.contains('active')) return;
+        periodOpts.forEach(o => { o.classList.remove('active'); o.setAttribute('aria-selected','false'); });
+        opt.classList.add('active');
+        opt.setAttribute('aria-selected','true');
+        applyPeriod(opt.getAttribute('data-period'));
+      });
+    });
+
+    document.querySelectorAll('.lbl-tap').forEach(label => {
+      label.addEventListener('click', e => {
+        e.stopPropagation();
+        e.preventDefault();
+        const key = label.getAttribute('data-info');
+        const panel = document.querySelector('.info-panel[data-info-for="' + key + '"]');
+        if (!panel) return;
+        const isOpen = !panel.hidden;
+        panel.hidden = isOpen;
+        if (isOpen) label.classList.remove('open');
+        else label.classList.add('open');
+      });
+    });
+  </script>
+
+</body>
+</html>

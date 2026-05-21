@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>Watchlist — Under Review</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@4.5.15/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@4.5.15/300.css">
+<style>
+  :root {
+    --bg:       #000000;
+    --white:    #FFFFFF;
+    --n-400:    #C7C7C7;
+    --n-700:    #929292;
+    --n-800:    #565B5E;
+    --hairline: #232627;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); }
+  body {
+    font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-feature-settings: 'lnum' 1, 'tnum' 1;
+    font-variant-numeric: tabular-nums lining-nums;
+    color: var(--white);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+  }
+
+  .page {
+    position: relative;
+    width: 100%;
+    max-width: 393px;
+    margin: 0 auto;
+    min-height: 852px;
+    background: var(--bg);
+  }
+
+  .header {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 65px;
+  }
+  .header .hairline {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 1px;
+    background: var(--hairline);
+  }
+  .header .back {
+    position: absolute;
+    left: 30px; bottom: 26px;
+    width: 13px; height: 13px;
+    color: var(--n-400);
+  }
+  .header .back::before {
+    content: '';
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-left: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+    transform: rotate(45deg);
+    margin-left: 2px;
+  }
+  .header .search {
+    position: absolute;
+    right: 30px; bottom: 24px;
+    width: 16px; height: 16px;
+    border: 1px solid var(--n-400);
+    border-radius: 50%;
+    color: var(--n-400);
+  }
+  .header .search::after {
+    content: '';
+    position: absolute;
+    right: -4px; bottom: -4px;
+    width: 7px; height: 1px;
+    background: var(--n-400);
+    transform: rotate(45deg);
+  }
+
+  .title-block {
+    position: absolute;
+    top: 100px; right: 30px; left: auto;
+    max-width: calc(100% - 60px);
+    display: flex; align-items: baseline; gap: 12px;
+    text-align: right; justify-content: flex-end;
+  }
+  .title-block .name {
+    font-size: 18px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    font-weight: 400;
+  }
+  .title-block .count {
+    font-size: 18px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--n-700);
+    font-weight: 400;
+  }
+
+  .rows {
+    position: absolute;
+    top: 190px; left: 30px; right: 30px;
+    display: flex; flex-direction: column;
+    gap: 40px;
+  }
+  .row {
+    display: flex; flex-direction: column;
+    gap: 8px;
+  }
+  .row .ticker-line {
+    display: flex; align-items: baseline; gap: 10px;
+  }
+  .row .ticker {
+    font-size: 15px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+  .row--delisted .ticker {
+    color: var(--n-700);
+    text-decoration: line-through;
+    text-decoration-color: var(--n-800);
+  }
+  .row .badge {
+    font-size: 11px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--n-700);
+    font-weight: 400;
+    white-space: nowrap;
+  }
+  .row .badge::before { content: '['; margin-right: 3px; color: var(--n-800); }
+  .row .badge::after  { content: ']'; margin-left: 3px; color: var(--n-800); }
+  .row .price-line {
+    font-size: 14px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--n-400);
+    font-weight: 400;
+    white-space: pre-wrap;
+  }
+  .row .price-line .ccy { color: var(--n-700); }
+  .row .price-line .delta { color: var(--n-700); margin-left: 20px; }
+  .row .price-line .delta.na { color: var(--n-800); }
+
+  /* Reveal animation (matches Stock Page timing) ------------------ */
+  .title-block,
+  .rows .row {
+    opacity: 0;
+    animation: reveal 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  .title-block            { animation-delay: 1.95s; }
+  .rows .row:nth-child(1) { animation-delay: 2.03s; }
+  .rows .row:nth-child(2) { animation-delay: 2.11s; }
+  .rows .row:nth-child(3) { animation-delay: 2.19s; }
+  .rows .row:nth-child(4) { animation-delay: 2.27s; }
+  @keyframes reveal { from { opacity: 0; } to { opacity: 1; } }
+
+  /* Meter rails (skeleton loading) --------------------------------- */
+  .meter-rails {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    animation: meter-off 0.55s cubic-bezier(0.76, 0, 0.24, 1) 1.60s forwards;
+  }
+  @keyframes meter-off { to { opacity: 0; visibility: hidden; } }
+  .meter-rails .rail {
+    position: absolute;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    animation: meter-rail-in 0.45s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+    animation-delay: var(--d, 0s);
+  }
+  .meter-rails .rail::after {
+    content: '';
+    position: absolute;
+    inset: 0 100% 0 0;
+    background: var(--n-400);
+    animation: meter-fill 0.85s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+    animation-delay: var(--d, 0s);
+  }
+  @keyframes meter-fill { from { right: 100%; } to { right: 0%; } }
+  @keyframes meter-rail-in { from { opacity: 0; } to { opacity: 1; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .header .back:active, .header .search:active { transition: none; }
+    .title-block, .rows .row { opacity: 1; animation: none; }
+    .meter-rails { display: none; }
+  }
+</style>
+</head>
+<body>
+  <main class="page">
+    <div class="header">
+      <a href="./index.html" class="back" aria-label="Back"></a>
+      <a href="#" class="search" aria-label="Search"></a>
+      <div class="hairline" aria-hidden="true"></div>
+    </div>
+
+    <!-- Meter rails (skeleton) — positioned by JS -->
+    <div class="meter-rails" aria-hidden="true">
+      <span class="rail" data-target=".title-block" style="--d:0.15s"></span>
+      <span class="rail" data-target=".rows .row:nth-child(1) .ticker" style="--d:0.30s"></span>
+      <span class="rail" data-target=".rows .row:nth-child(2) .ticker" style="--d:0.45s"></span>
+      <span class="rail" data-target=".rows .row:nth-child(3) .ticker" style="--d:0.60s"></span>
+      <span class="rail" data-target=".rows .row:nth-child(4) .ticker" style="--d:0.75s"></span>
+    </div>
+
+    <div class="title-block">
+      <span class="name">Under Review</span>
+      <span class="count">4</span>
+    </div>
+
+    <div class="rows">
+      <div class="row">
+        <div class="ticker-line">
+          <span class="ticker">ASML</span>
+        </div>
+        <p class="price-line">137.60 <span class="ccy">CAD</span><span class="delta">+0.9%</span></p>
+      </div>
+
+      <div class="row">
+        <div class="ticker-line">
+          <span class="ticker">SOXL</span>
+          <span class="badge">Halted</span>
+        </div>
+        <p class="price-line">114.60 <span class="ccy">CAD</span><span class="delta na">—</span></p>
+      </div>
+
+      <div class="row row--delisted">
+        <div class="ticker-line">
+          <span class="ticker">SNOW</span>
+          <span class="badge">Delisted</span>
+        </div>
+        <p class="price-line">N/A</p>
+      </div>
+
+      <div class="row">
+        <div class="ticker-line">
+          <span class="ticker">META</span>
+          <span class="badge">Dual</span>
+        </div>
+        <p class="price-line">87.60 <span class="ccy">CAD</span><span class="delta">+2.8%</span></p>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // Position skeleton rails over each target's rendered text box
+    function positionRails() {
+      const page = document.querySelector('.page');
+      const rails = document.querySelectorAll('.meter-rails .rail');
+      if (!page || !rails.length) return;
+      const pageRect = page.getBoundingClientRect();
+      const textRect = (el) => {
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        const r = range.getBoundingClientRect();
+        range.detach && range.detach();
+        return r;
+      };
+      rails.forEach((rail) => {
+        const sel = rail.getAttribute('data-target');
+        const el = document.querySelector(sel);
+        if (!el) { rail.style.display = 'none'; return; }
+        const r = textRect(el);
+        rail.style.top   = (r.bottom - pageRect.top) + 'px';
+        rail.style.left  = (r.left - pageRect.left) + 'px';
+        rail.style.width = r.width + 'px';
+      });
+    }
+    positionRails();
+    window.addEventListener('resize', positionRails);
+  </script>
+</body>
+</html>

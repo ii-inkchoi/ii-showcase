@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <title>ATZ — Memo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-black:  #000000;
+      --c-1000:   #1C1C1C;
+      --c-900:    #232627;
+      --c-800:    #565B5E;
+      --c-700:    #929292;
+      --c-400:    #C7C7C7;
+      --c-white:  #FFFFFF;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--c-black);
+      color: var(--c-white);
+      font-family: 'Inter', sans-serif;
+      width: 100%;
+      max-width: 393px;
+      margin: 0 auto;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    body::-webkit-scrollbar { display: none; }
+    html {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    html::-webkit-scrollbar { display: none; }
+    a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+
+    /* HEADER */
+    .header {
+      height: 71px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 13.5px;
+      border-bottom: 1px solid var(--c-900);
+    }
+    .back {
+      width: 13px; height: 13px;
+      display: inline-flex; align-items: center; justify-content: center;
+      color: var(--c-400);
+    }
+    .back::before {
+      content: '';
+      width: 8px; height: 8px;
+      border-left: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+      transform: rotate(45deg);
+      margin-left: 2px;
+    }
+    .back:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .exit {
+      font-size: 14px;
+      letter-spacing: -0.02em;
+      color: var(--c-400);
+    }
+    .exit:active { opacity: 0.5; transition: opacity 80ms ease; }
+
+    /* TITLE — Performance Dashboard pattern (Memo / Aritzia · ATZ) */
+    .title-block {
+      padding: 40px 20px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+    .t-primary {
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: var(--c-700);
+      line-height: 1.15;
+    }
+    .t-secondary {
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: var(--c-white);
+      line-height: 1.15;
+    }
+
+    /* MEMO METADATA bar */
+    .memo-status {
+      margin: 60px 20px 0;
+      padding-bottom: 14px;
+      border-bottom: 0.5px solid var(--c-900);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .memo-status .version {
+      font-size: 13px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+    }
+    .memo-status .reviewed {
+      font-size: 11px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+    }
+    .memo-status .doctrine-note {
+      font-size: 11px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      line-height: 1.5;
+      margin-top: 12px;
+      max-width: 92%;
+    }
+
+    /* COLUMN */
+    .col {
+      padding: 56px 20px 120px;
+      display: flex;
+      flex-direction: column;
+      gap: 56px;
+    }
+
+    /* SECTION (memo content) */
+    .section {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .section-header {
+      padding: 0 0 14px;
+      margin-bottom: 4px;
+      border-bottom: 0.5px solid var(--c-900);
+    }
+    .section-title {
+      font-size: 15px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+    }
+    .section-meta {
+      font-size: 11px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      margin-left: 6px;
+    }
+
+    /* PROSE */
+    .prose {
+      font-size: 15px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      line-height: 1.65;
+    }
+    .prose + .prose {
+      margin-top: 12px;
+    }
+
+    /* DATA rows (margin of safety) */
+    .data-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .data-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .data-key {
+      font-size: 14px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+    }
+    .data-val {
+      font-size: 15px;
+      color: var(--c-white);
+      letter-spacing: -0.02em;
+    }
+    .data-val .ccy {
+      color: var(--c-700);
+      margin-left: 4px;
+      font-size: 14px;
+    }
+    .data-note {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      line-height: 1.5;
+      margin-top: 8px;
+    }
+
+    /* CONFIDENCE meta */
+    .conf-meta {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      margin-top: 4px;
+    }
+
+    /* NOTES LIST (mixed: // AI insights + sources + user notes) */
+    .notes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .note-item {
+      padding: 14px 0;
+      border-bottom: 0.5px solid var(--c-900);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .note-item:first-child {
+      padding-top: 0;
+    }
+    .note-item:last-child {
+      border-bottom: none;
+    }
+    .note-header-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .note-source {
+      font-size: 13px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+    }
+    .note-source .ai-mark {
+      color: var(--c-700);
+      margin-right: 4px;
+    }
+    .note-date {
+      font-size: 11px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+    .note-body {
+      font-size: 14px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      line-height: 1.55;
+    }
+    .note-item.user .note-body {
+      color: var(--c-white);
+    }
+
+    /* VIEW LINK — Title Case written in HTML directly */
+    .view-link {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-top: 4px;
+      align-self: flex-start;
+    }
+    .view-link .chev {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--c-700);
+    }
+    .view-link:active { opacity: 0.5; transition: opacity 80ms ease; }
+
+    /* CAPITAL DECISION CTA — fixed bottom */
+    .capital-decision {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 393px;
+      padding: 40px 13.5px 24px;
+      display: flex;
+      justify-content: flex-end;
+      background: linear-gradient(to top, var(--c-black) 0%, var(--c-black) 60%, rgba(0,0,0,0) 100%);
+      pointer-events: none;
+      z-index: 10;
+    }
+    .capital-decision a {
+      pointer-events: auto;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 15px;
+      color: var(--c-white);
+      letter-spacing: -0.02em;
+      padding: 8px 4px;
+    }
+    .capital-decision a:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .capital-decision a .arrow {
+      font-weight: 300;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <a href="Stock%20Page%20v5.html" class="back" aria-label="Back"></a>
+    <a href="Stock%20Page%20v5.html" class="exit" aria-label="Exit">Exit</a>
+  </header>
+
+  <div class="title-block">
+    <span class="t-primary">Memo</span>
+    <span class="t-secondary">Aritzia Inc · ATZ</span>
+  </div>
+
+  <section class="memo-status" aria-label="Memo status">
+    <span class="version">V3</span>
+    <span class="reviewed">Reviewed Apr 12, 2026 · 26d ago · 2 prior versions</span>
+    <p class="doctrine-note">Memos are immutable once sealed. Each edit creates a new version. Prior versions stay on the record.</p>
+  </section>
+
+  <div class="col">
+
+    <!-- THESIS -->
+    <section class="section" aria-label="Thesis">
+      <div class="section-header">
+        <span class="section-title">Thesis</span>
+      </div>
+      <p class="prose">Aritzia is undervalued by ~40% on a SOTP basis. Brand momentum, US store rollout, and operating leverage drive multi-year compounding.</p>
+      <p class="prose">Two conditions: First, US revenue continues compounding above 30% as the store rollout scales. Second, operating margins expand toward 18% as the ecommerce mix grows and the supply chain stabilizes.</p>
+      <p class="prose">If both hold, Aritzia compounds at 25%+ over three years from a margin of safety near 30%.</p>
+    </section>
+
+    <!-- KILL LINE -->
+    <section class="section" aria-label="Kill line">
+      <div class="section-header">
+        <span class="section-title">Kill Line</span>
+      </div>
+      <p class="prose">Three conditions close the position. Same-store sales negative for two consecutive quarters. US expansion stalls below 8 new stores per year. Operating margin contracts below 12% TTM.</p>
+      <p class="prose">Any one invalidates the multi-year compounding thesis. Position closes within ten trading days.</p>
+    </section>
+
+    <!-- MARGIN OF SAFETY -->
+    <section class="section" aria-label="Margin of safety">
+      <div class="section-header">
+        <span class="section-title">Margin of Safety</span>
+      </div>
+      <div class="data-rows">
+        <div class="data-row">
+          <span class="data-key">At entry</span>
+          <span class="data-val">28%</span>
+        </div>
+        <div class="data-row">
+          <span class="data-key">Today</span>
+          <span class="data-val">25%</span>
+        </div>
+        <div class="data-row">
+          <span class="data-key">Fair value</span>
+          <span class="data-val">120.00 <span class="ccy">CAD</span></span>
+        </div>
+      </div>
+      <p class="data-note">Anchored to 22× FY26 earnings on the retail segment plus a 15× multiple on online sales, blended and discounted 12% for execution risk.</p>
+    </section>
+
+    <!-- CONFIDENCE -->
+    <section class="section" aria-label="Confidence">
+      <div class="section-header">
+        <span class="section-title">Confidence</span>
+      </div>
+      <p class="prose">70% probability of 25%+ CAGR over 3 years.</p>
+      <p class="conf-meta">Setup · Consumer retail compounder</p>
+    </section>
+
+    <!-- RESEARCH (// Mogo insights + source documents) -->
+    <section class="section" aria-label="Research">
+      <div class="section-header">
+        <span class="section-title">Research <span class="section-meta">· 3</span></span>
+      </div>
+      <div class="notes-list">
+
+        <article class="note-item">
+          <div class="note-header-row">
+            <span class="note-source"><span class="ai-mark">//</span>Brand momentum signal decomposition</span>
+            <span class="note-date">May 8, 2026</span>
+          </div>
+          <p class="note-body">Wholesale partnerships with Nordstrom and Holt Renfrew added 14% to brand awareness — driven by Super Puff seasonal carryover, not core womenswear pricing.</p>
+        </article>
+
+        <article class="note-item">
+          <div class="note-header-row">
+            <span class="note-source">10-K · FY2025</span>
+            <span class="note-date">Mar 22, 2026</span>
+          </div>
+          <p class="note-body">US store footprint 76 locations, +18 YoY. Capex on Vancouver flagship and US distribution centers 142M CAD, depreciation schedule extended to 7 yrs.</p>
+        </article>
+
+        <article class="note-item">
+          <div class="note-header-row">
+            <span class="note-source"><span class="ai-mark">//</span>Scenario valuation — base / bull / bear</span>
+            <span class="note-date">Feb 14, 2026</span>
+          </div>
+          <p class="note-body">Bull/base/bear FV 145 / 120 / 78 CAD. Asymmetry holds at current price under base case.</p>
+        </article>
+
+      </div>
+      <a href="#" class="view-link">View All Research <span class="chev" aria-hidden="true">›</span></a>
+    </section>
+
+    <!-- NOTES (user observations) -->
+    <section class="section" aria-label="Notes">
+      <div class="section-header">
+        <span class="section-title">Notes <span class="section-meta">· 2</span></span>
+      </div>
+      <div class="notes-list">
+
+        <article class="note-item user">
+          <div class="note-header-row">
+            <span class="note-date">Apr 27, 2026</span>
+          </div>
+          <p class="note-body">Considering whether to size up. Want to see US store rollout exceed 12 per year before adding.</p>
+        </article>
+
+        <article class="note-item user">
+          <div class="note-header-row">
+            <span class="note-date">May 4, 2026</span>
+          </div>
+          <p class="note-body">Q4 earnings beat. US revenue grew 32% YoY — reinforces the long thesis.</p>
+        </article>
+
+      </div>
+      <a href="ATZ%20Notes.html" class="view-link">View All · Add Note <span class="chev" aria-hidden="true">›</span></a>
+    </section>
+
+  </div>
+
+  <!-- Capital Decision CTA (fixed bottom) -->
+  <div class="capital-decision">
+    <a href="#" aria-label="Capital Decision">
+      <span class="arrow">→</span> Capital Decision
+    </a>
+  </div>
+
+</body>
+</html>

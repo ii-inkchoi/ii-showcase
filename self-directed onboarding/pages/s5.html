@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>5 · Standard of Entry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="phone">
+  <div class="screen" id="s5">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn" onclick="goBack()">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="fig-main fig-main--scroll">
+      <p class="t18-w" style="max-width:255px;">No position should exist without a reason.</p>
+      <p class="t14-700">Before capital is allocated, there should be:</p>
+      <div class="fig-line-group" style="margin-bottom:24px;">
+        <p class="t14-400">a thesis</p>
+        <p class="t14-400">a time horizon</p>
+        <p class="t14-400">a condition for being wrong</p>
+      </div>
+      <p class="t14-800" style="margin-bottom:20px;">Which of these do you define least clearly today?</p>
+      <div class="choice-list" id="s5choices">
+        <button type="button" class="choice-btn" onclick="selectRadio(this,'s5','s5btn')"><span class="choice-label">Thesis</span><span class="choice-indicator"></span></button>
+        <button type="button" class="choice-btn" onclick="selectRadio(this,'s5','s5btn')"><span class="choice-label">Time horizon</span><span class="choice-indicator"></span></button>
+        <button type="button" class="choice-btn" onclick="selectRadio(this,'s5','s5btn')"><span class="choice-label">Condition for being wrong</span><span class="choice-indicator"></span></button>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <button type="button" class="arrow-btn" id="s5btn" onclick="saveState({s5:getSelectedChoiceLabel('s5')}); goTo('s6.html')" disabled>
+        <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+<script src="app.js"></script>
+<script>
+  (function(){
+    const saved = loadState().s5;
+    if (saved) {
+      document.querySelectorAll('#s5 .choice-btn').forEach(b => {
+        if (b.querySelector('.choice-label').textContent.trim() === saved) {
+          b.classList.add('sel');
+          document.getElementById('s5btn').disabled = false;
+        }
+      });
+    }
+  })();
+  initScreen('s5');
+</script>
+</body>
+</html>

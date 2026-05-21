@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>3 · Inversion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="phone">
+  <div class="screen" id="s3">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn" onclick="goBack()">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="fig-main fig-main--scroll">
+      <p class="t18-w" style="max-width:260px;">Start with failure.</p>
+      <p class="t14-700" style="max-width:280px; margin-bottom:24px;">Before trying to outperform, identify how you are most likely to fail.</p>
+      <p class="t14-800" style="margin-bottom:20px;">Which errors have you made before?</p>
+      <div class="check-list" id="s3checks">
+        <div class="check-row" onclick="toggleCheck(this,'s3checks','s3btn')"><span class="check-label">Sold too early</span><div class="check-box"></div></div>
+        <div class="check-row" onclick="toggleCheck(this,'s3checks','s3btn')"><span class="check-label">Held too long</span><div class="check-box"></div></div>
+        <div class="check-row" onclick="toggleCheck(this,'s3checks','s3btn')"><span class="check-label">Reacted to price</span><div class="check-box"></div></div>
+        <div class="check-row" onclick="toggleCheck(this,'s3checks','s3btn')"><span class="check-label">Followed narrative without conviction</span><div class="check-box"></div></div>
+        <div class="check-row" onclick="toggleCheck(this,'s3checks','s3btn')"><span class="check-label">Entered without a clear thesis</span><div class="check-box"></div></div>
+        <div class="check-row" onclick="toggleCheck(this,'s3checks','s3btn')"><span class="check-label">Increased activity after losses</span><div class="check-box"></div></div>
+        <div class="check-row" onclick="toggleCheck(this,'s3checks','s3btn')"><span class="check-label">Confused movement with progress</span><div class="check-box"></div></div>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <button type="button" class="arrow-btn" id="s3btn" onclick="saveState({s3:getCheckedLabels('s3checks')}); goTo('s4.html')" disabled>
+        <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+<script src="app.js"></script>
+<script>
+  (function(){
+    const saved = (loadState().s3) || [];
+    document.querySelectorAll('#s3checks .check-row').forEach(row => {
+      const label = row.querySelector('.check-label').textContent.trim();
+      if (saved.includes(label)) row.classList.add('sel');
+    });
+    if (saved.length) document.getElementById('s3btn').disabled = false;
+  })();
+  initScreen('s3');
+</script>
+</body>
+</html>

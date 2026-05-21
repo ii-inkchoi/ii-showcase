@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>2 · Reality</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="phone">
+  <div class="screen" id="s2">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn" onclick="goBack()">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="fig-main fig-main--input">
+      <p class="t18-w" style="max-width:255px;">You will likely not beat the market.</p>
+      <div class="fig-line-group" style="margin-bottom:10px;">
+        <p class="t14-400">Most investors do not.</p>
+        <p class="t14-400">Most professionals do not.</p>
+      </div>
+      <p class="t14-700">The failure is usually not lack of information.</p>
+      <p class="t14-700" style="margin-bottom:0;">It is poor judgment under uncertainty.</p>
+      <label class="input-label" for="s2input">What causes most investor underperformance?</label>
+      <textarea class="text-input" id="s2input" rows="2" maxlength="180" oninput="checkTextInput('s2input','s2btn')"></textarea>
+      <p class="input-note">Keep it short and specific.</p>
+      <p class="input-count" data-for="s2input">0/180</p>
+    </div>
+    <div class="cta-bar">
+      <button type="button" class="arrow-btn" id="s2btn" onclick="saveState({s2:document.getElementById('s2input').value.trim()}); goTo('s3.html')" disabled>
+        <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+<script src="app.js"></script>
+<script>
+  const s = loadState();
+  if (s.s2) { document.getElementById('s2input').value = s.s2; checkTextInput('s2input','s2btn'); }
+  initScreen('s2');
+</script>
+</body>
+</html>

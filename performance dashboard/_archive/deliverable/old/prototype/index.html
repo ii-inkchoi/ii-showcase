@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <title>Performance Dashboard — Prototype</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-black:  #000000;
+      --c-1000:   #1C1C1C;
+      --c-900:    #232627;
+      --c-800:    #565B5E;
+      --c-700:    #929292;
+      --c-400:    #C7C7C7;
+      --c-white:  #FFFFFF;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--c-black);
+      color: var(--c-white);
+      font-family: 'Inter', sans-serif;
+      width: 100%;
+      max-width: 393px;
+      margin: 0 auto;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+    }
+    a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+
+    .title-block {
+      padding: 81px 20px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+    .t-primary {
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: var(--c-700);
+      line-height: 1.15;
+    }
+    .t-secondary {
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: var(--c-white);
+      line-height: 1.15;
+    }
+
+    .desc {
+      padding: 60px 20px 0;
+      font-size: 14px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      line-height: 1.5;
+    }
+
+    .pages {
+      padding: 48px 20px 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .page-link {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 14px 0;
+      border-top: 0.5px solid var(--c-1000);
+    }
+    .page-link:first-child { border-top: none; }
+    .page-link:active { opacity: 0.5; transition: opacity 80ms ease; }
+
+    .pl-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .pl-title {
+      font-size: 16px;
+      color: var(--c-white);
+      letter-spacing: -0.02em;
+    }
+    .pl-chev {
+      color: var(--c-700);
+      font-size: 14px;
+      font-weight: 300;
+    }
+    .pl-meta {
+      font-size: 12px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      line-height: 1.4;
+    }
+
+    .footer {
+      padding: 0 20px 60px;
+      font-size: 11px;
+      color: var(--c-800);
+      letter-spacing: -0.02em;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="title-block">
+    <span class="t-primary">Prototype</span>
+    <span class="t-secondary">Performance Dashboard</span>
+  </div>
+
+  <p class="desc">II accountability system — performance vs S&amp;P 500. Mobile prototype, 393×852.</p>
+
+  <div class="pages">
+
+    <a href="Unified%20Dashboard.html" class="page-link">
+      <div class="pl-row">
+        <span class="pl-title">Unified Dashboard</span>
+        <span class="pl-chev">›</span>
+      </div>
+      <span class="pl-meta">Entry point · Active card with S&amp;P comparison</span>
+    </a>
+
+    <a href="Performance%20Dashboard.html" class="page-link">
+      <div class="pl-row">
+        <span class="pl-title">Performance Dashboard</span>
+        <span class="pl-chev">›</span>
+      </div>
+      <span class="pl-meta">Hero opportunity cost · Period toggle · Equity curve · Cash drag · Performance metrics · Decisions · Discipline</span>
+    </a>
+
+    <a href="Closed%20Positions.html" class="page-link">
+      <div class="pl-row">
+        <span class="pl-title">Closed Positions</span>
+        <span class="pl-chev">›</span>
+      </div>
+      <span class="pl-meta">38 closed · Capital / Return / Alpha · Sort by alpha worst first</span>
+    </a>
+
+    <a href="Open%20Positions.html" class="page-link">
+      <div class="pl-row">
+        <span class="pl-title">Open Positions</span>
+        <span class="pl-chev">›</span>
+      </div>
+      <span class="pl-meta">12 open · Discipline severity · Status badges · Sort</span>
+    </a>
+
+    <a href="Benchmark.html" class="page-link">
+      <div class="pl-row">
+        <span class="pl-title">Benchmark</span>
+        <span class="pl-chev">›</span>
+      </div>
+      <span class="pl-meta">S&amp;P 500 explainer · Methodology · When performance matters</span>
+    </a>
+
+  </div>
+
+  <p class="footer">Mobile prototype · Built for II Self-Directed loop · Per-tranche shadow benchmarking · Anti-hiding by design.</p>
+
+</body>
+</html>

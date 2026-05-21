@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Self-Directed System — Two Flows · Figma Export</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+
+  /* Design System — Intelligent Investing 3.0 */
+  :root {
+    --n-black: #000000;
+    --n-1000:  #1c1c1c;
+    --n-900:   #232627;
+    --n-800:   #565b5e;
+    --n-700:   #929292;
+    --n-600:   #a7a7a7;
+    --n-400:   #c7c7c7;
+    --n-200:   #e3e2e2;
+    --n-white: #ffffff;
+  }
+
+  body {
+    background: #ffffff;
+    color: #111;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+    padding: 60px 60px 120px;
+    min-height: 100vh;
+    width: max-content;
+  }
+
+  /* PAGE LAYOUT */
+  .page-title {
+    font-size: 28px; letter-spacing: -0.6px; font-weight: 500;
+    margin-bottom: 6px;
+    color: #111;
+  }
+  .page-sub {
+    font-size: 14px; color: #666; letter-spacing: -0.2px;
+    margin-bottom: 64px; max-width: 760px;
+  }
+
+  .flow-section {
+    margin-bottom: 96px;
+  }
+  .flow-eyebrow {
+    font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: #888; margin-bottom: 6px;
+  }
+  .flow-title {
+    font-size: 22px; letter-spacing: -0.4px; font-weight: 500;
+    margin-bottom: 8px;
+    color: #111;
+  }
+  .flow-sub {
+    font-size: 14px; color: #666; letter-spacing: -0.2px;
+    margin-bottom: 48px; max-width: 760px;
+  }
+
+  /* STEPS — horizontal row of cards */
+  .steps-row {
+    display: flex;
+    flex-direction: row;
+    gap: 48px;
+    align-items: flex-start;
+  }
+
+  /* STEP CARD — description (top) + phone frame (bottom), vertical card */
+  .step {
+    width: 393px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .step-info {
+    min-height: 220px;
+  }
+  .step-num {
+    display: inline-block;
+    font-size: 11px; letter-spacing: 1.5px; color: #888;
+    margin-bottom: 8px;
+  }
+  .step-name {
+    font-size: 18px; letter-spacing: -0.36px; font-weight: 500;
+    margin-bottom: 12px;
+    line-height: 1.3;
+    color: #111;
+  }
+  .step-body {
+    font-size: 14px; line-height: 1.55; color: #444;
+    letter-spacing: -0.2px;
+    margin-bottom: 8px;
+  }
+  .step-meta {
+    margin-top: 14px;
+    display: flex; flex-direction: column; gap: 4px;
+    font-size: 12px; letter-spacing: -0.2px; color: #888;
+  }
+  .step-meta b { color: #333; font-weight: 500; }
+
+  /* PHONE FRAME (static, 393×852) */
+  .phone {
+    width: 393px; height: 852px;
+    background: var(--n-black);
+    overflow: hidden; position: relative;
+    border-radius: 50px;
+    flex-shrink: 0;
+  }
+
+  /* === SHARED INTERNAL SCREEN STYLES === */
+  .screen-inner {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    background: var(--n-black);
+  }
+  .screen-header {
+    flex-shrink: 0;
+    display: flex; flex-direction: column;
+    justify-content: flex-end;
+    gap: 18px; height: 77px; box-sizing: border-box;
+  }
+  .top-bar {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    padding: 0 27px 0 30px;
+  }
+  .back-btn { width: 44px; height: 28px; background: none; border: none; color: var(--n-white); display: flex; align-items: center; }
+  .back-btn.hidden { opacity: 0; }
+  .exit-btn { background: none; border: none; font: inherit; font-size: 15px; letter-spacing: -0.28px; color: var(--n-400); }
+  .exit-btn.hidden { opacity: 0; }
+  .top-divider { flex-shrink: 0; width: 100%; height: 1px; background: var(--n-900); }
+
+  .fig-main {
+    flex: 1; min-height: 0; overflow: hidden;
+    display: flex; flex-direction: column;
+    padding: 33px 30px 0;
+  }
+  .fig-col {
+    width: 255px; max-width: 100%;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+
+  /* TYPOGRAPHY */
+  .t18-w {
+    font-size: 18px; line-height: 1.4;
+    letter-spacing: -1.08px; color: var(--n-white); font-weight: 400;
+  }
+  .t14-400 {
+    font-size: 15px; line-height: 1.5;
+    letter-spacing: -0.28px; color: var(--n-700); font-weight: 400;
+  }
+  .t14-700 {
+    font-size: 15px; line-height: 1.5;
+    letter-spacing: -0.28px; color: var(--n-700); font-weight: 400;
+  }
+  .t14-800 {
+    font-size: 15px; line-height: 1.5;
+    letter-spacing: -0.28px; color: var(--n-400); font-weight: 400;
+    margin-top: 24px; margin-bottom: 32px;
+  }
+  .fig-line-group { display: flex; flex-direction: column; }
+  .fig-line-group p { margin: 0; }
+
+  /* INPUT */
+  .input-label {
+    font-size: 15px; line-height: 1.5; letter-spacing: -0.28px;
+    color: var(--n-400); font-weight: 400; display: block;
+    margin-top: 24px; margin-bottom: 16px;
+  }
+  .text-input {
+    width: 100%; background: transparent;
+    border: 1px solid var(--n-900); border-radius: 4px;
+    color: var(--n-white); font: inherit;
+    font-size: 15px; line-height: 1.5; letter-spacing: -0.28px;
+    min-height: 136px; padding: 16px;
+  }
+  .input-note {
+    margin-top: 10px;
+    font-size: 13px; line-height: 1.5; letter-spacing: -0.22px;
+    color: var(--n-800);
+  }
+  .input-count {
+    margin-top: 6px;
+    font-size: 13px; line-height: 1.5; letter-spacing: -0.22px;
+    color: var(--n-800); text-align: right;
+  }
+
+  /* CHECK LIST (multi-select, square) */
+  .check-list, .choice-list { display: flex; flex-direction: column; width: 100%; }
+  .check-row, .choice-btn {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 18px; padding: 14px 0; width: 100%;
+    border-bottom: 1px solid var(--n-900);
+    background: none; border-left: none; border-right: none; border-top: none;
+  }
+  .check-row:first-child, .choice-btn:first-child { padding-top: 0; }
+  .check-row:last-child, .choice-btn:last-child { border-bottom: none; padding-bottom: 0; }
+  .check-label, .choice-label {
+    flex: 1; min-width: 0;
+    font-size: 15px; line-height: 1.5;
+    letter-spacing: -0.28px; color: var(--n-700);
+    text-align: left;
+  }
+  .check-row.sel .check-label, .choice-btn.sel .choice-label { color: var(--n-white); }
+  .choice-indicator {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    border: 1px solid var(--n-800);
+    position: relative; flex-shrink: 0;
+  }
+  .choice-indicator::after {
+    content: ''; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--n-white);
+  }
+  .choice-btn.sel .choice-indicator { border-color: var(--n-white); }
+  .choice-btn.sel .choice-indicator::after { transform: translate(-50%, -50%) scale(1); }
+  .check-box {
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    border: 1px solid var(--n-800);
+    position: relative; flex-shrink: 0;
+  }
+  .check-box::after {
+    content: ''; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 4px; height: 4px; border-radius: 1px;
+    background: var(--n-white);
+  }
+  .check-row.sel .check-box { border-color: var(--n-white); }
+  .check-row.sel .check-box::after { transform: translate(-50%, -50%) scale(1); }
+
+  /* CTA BAR */
+  .cta-bar { flex-shrink: 0; display: flex; justify-content: flex-end; align-items: center; height: 99px; padding: 10px 30px; }
+  .cta-bar--split { flex-shrink: 0; height: 99px; padding: 10px 30px; display: flex; align-items: center; justify-content: space-between; }
+  .arrow-btn { background: none; border: none; color: var(--n-400); padding: 10px; margin: -10px; }
+  .arrow-btn.disabled { color: var(--n-900); }
+
+  /* HOLD BAR (S11) */
+  .hold-bar {
+    position: relative; width: 100%; min-height: 75px;
+    background: #242424; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    border: none; flex-shrink: 0;
+  }
+  .hold-fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0%; background: #1a1a1a; }
+  .hold-label {
+    position: relative; z-index: 1;
+    font-size: 15px; color: var(--n-white); letter-spacing: -0.02em;
+  }
+
+  /* REFLECT BLOCK (S10) */
+  .reflect-block {
+    margin-top: 30px; padding-left: 16px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .reflect-header {
+    font-size: 13px; line-height: 1.5; letter-spacing: -0.22px;
+    color: var(--n-800); font-weight: 400;
+  }
+  .reflect-item { display: flex; flex-direction: column; gap: 2px; }
+  .reflect-item-label {
+    font-size: 13px; line-height: 1.5; letter-spacing: -0.22px;
+    color: var(--n-800);
+  }
+  .reflect-item-val {
+    font-size: 15px; line-height: 1.5; letter-spacing: -0.28px;
+    color: var(--n-700);
+  }
+
+  /* NUMBERED LIST (Add Account / Open Account) */
+  .num-list { display: flex; flex-direction: column; width: 100%; }
+  .num-row {
+    background: none; border: none;
+    width: 100%; display: flex;
+    align-items: flex-start; gap: 32px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--n-900);
+  }
+  .num-row:last-child { border-bottom: none; }
+  .num-tag { font-size: 13px; line-height: 1.5; letter-spacing: 0.5px; color: var(--n-700); flex-shrink: 0; }
+  .num-content { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+  .num-label { font-size: 15px; line-height: 1.5; letter-spacing: -0.28px; color: var(--n-white); text-align: left; }
+  .num-desc { font-size: 13px; line-height: 1.5; letter-spacing: -0.22px; color: var(--n-700); text-align: left; max-width: 240px; }
+  .addacc-subtitle { font-size: 15px; color: var(--n-400); margin-bottom: 32px; }
+
+  /* MAIN DASHBOARD */
+  .dash-frame { flex: 1; display: flex; flex-direction: column; text-align: right; padding-bottom: 32px; }
+  .dash-header { height: 52px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 13.5px; border-bottom: 0.5px solid #1C1C1C; }
+  .dash-header svg { width: 17px; height: 17px; opacity: 0.85; }
+  .dash-header svg.menu { opacity: 0.4; }
+  .dash-header .logo-mark { font-size: 14px; letter-spacing: 0.5px; color: var(--n-400); font-weight: 500; }
+  .dash-header-icons { display: flex; align-items: center; gap: 20px; }
+  .total-capital { padding: 0 13.5px; margin-top: 60px; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+  .tc-label { font-size: 13px; color: var(--n-700); letter-spacing: -0.22px; text-transform: capitalize; }
+  .tc-value { font-size: 28px; color: #fff; letter-spacing: -0.56px; }
+  .tc-ccy { color: var(--n-800); }
+  .dash-divider { border: none; border-top: 1px solid #1C1C1C; margin: 0 13.5px; }
+  .dash-section { padding: 30px 13.5px 0; }
+  .s-inner { display: flex; flex-direction: column; gap: 50px; }
+  .s-title-wrap { display: flex; align-items: flex-start; justify-content: space-between; }
+  .s-title-col { display: flex; flex-direction: column; gap: 10px; text-align: left; }
+  .t-primary { font-size: 18px; color: var(--n-400); letter-spacing: -0.36px; text-transform: capitalize; }
+  .t-secondary { font-size: 15px; color: #565b5e; letter-spacing: -0.3px; text-transform: capitalize; }
+  .data-col { display: flex; flex-direction: column; align-items: flex-end; gap: 50px; width: 100%; }
+  .db { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; width: 100%; }
+  .db-label { font-size: 13px; color: var(--n-700); letter-spacing: -0.22px; text-transform: capitalize; width: 100%; }
+  .n22 { font-size: 22px; color: #fff; letter-spacing: -0.44px; width: 100%; }
+  .n15 { font-size: 15px; color: var(--n-400); letter-spacing: -0.3px; width: 100%; }
+  .pos-group { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; width: 100%; }
+  .pos-head { font-size: 15px; color: var(--n-400); letter-spacing: -0.3px; text-transform: capitalize; width: 100%; }
+  .mt-managed { margin-top: 70px; }
+  .mt-active { margin-top: 70px; }
+
+  /* STOCK PAGE */
+  .sp-fig { flex: 1; display: flex; flex-direction: column; padding: 33px 30px 0; }
+  .sp-head { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; margin-bottom: 36px; }
+  .sp-name { font-size: 18px; color: var(--n-white); letter-spacing: -0.36px; }
+  .sp-price { font-size: 13px; color: var(--n-700); letter-spacing: -0.22px; }
+  .sp-price b { font-weight: 400; color: var(--n-400); margin-left: 8px; }
+  .sp-stats { display: flex; flex-direction: column; gap: 18px; margin-bottom: 28px; }
+  .sp-stat-val { font-size: 15px; color: var(--n-white); letter-spacing: -0.28px; }
+  .sp-stat-val .ccy { color: var(--n-700); margin-left: 6px; }
+  .sp-stat-val .delta { color: var(--n-700); margin-left: 6px; }
+  .sp-stat-label { font-size: 13px; color: var(--n-700); letter-spacing: -0.22px; margin-top: 2px; }
+  .sp-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--n-400); background: none; border: none; padding: 0; margin-bottom: 28px; }
+  .sp-desc { font-size: 13px; color: var(--n-700); letter-spacing: -0.22px; max-width: 290px; margin-bottom: 36px; }
+  .sp-nav { display: flex; flex-direction: column; gap: 40px; }
+  .sp-nav a { font-size: 15px; color: var(--n-400); letter-spacing: -0.02em; text-transform: capitalize; }
+  .sp-cta { flex-shrink: 0; display: flex; justify-content: flex-end; padding: 18px 30px; }
+  .sp-cta .cta { background: none; border: none; font: inherit; font-size: 15px; color: var(--n-white); letter-spacing: -0.28px; padding: 12px 0; }
+
+  /* CAPITAL DECISION MODAL */
+  .cd-header { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; margin-bottom: 48px; }
+  .cd-eyebrow { font-size: 13px; color: var(--n-700); letter-spacing: 0.5px; }
+  .cd-title { font-size: 18px; color: var(--n-white); letter-spacing: -0.36px; }
+  .cd-list { display: flex; flex-direction: column; width: 100%; }
+  .cd-row {
+    background: none; border: none;
+    display: flex; align-items: center; justify-content: space-between;
+    width: 100%; padding: 22px 0;
+  }
+  .cd-row .cd-label { font-size: 15px; color: var(--n-white); letter-spacing: -0.28px; text-align: left; }
+  .cd-footer { flex-shrink: 0; display: flex; justify-content: space-between; align-items: center; padding: 10px 30px; height: 99px; }
+  .cd-cancel { background: none; border: none; font: inherit; font-size: 15px; color: var(--n-400); letter-spacing: -0.28px; display: flex; align-items: center; gap: 8px; padding: 10px; margin: -10px; }
+
+  /* GATE (Buy / Sell) */
+  .gate-replay { display: flex; flex-direction: column; gap: 14px; }
+  .gate-item { display: flex; flex-direction: column; gap: 2px; }
+  .gate-item-label { font-size: 13px; color: var(--n-800); letter-spacing: -0.22px; }
+  .gate-item-val { font-size: 15px; color: var(--n-700); letter-spacing: -0.28px; overflow-wrap: anywhere; }
+  .gate-decision {
+    margin-top: 48px; padding-top: 24px;
+    border-top: 1px solid var(--n-900);
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .gate-quote { font-size: 13px; color: var(--n-800); letter-spacing: -0.22px; margin: 0; }
+  .gate-question { font-size: 15px; color: var(--n-white); letter-spacing: -0.28px; margin: 0; }
+  .gate-actions { display: flex; flex-direction: column; gap: 14px; margin-top: 8px; }
+  .gate-action {
+    background: none; border: none; padding: 0;
+    font: inherit; font-size: 15px; letter-spacing: -0.28px;
+    text-align: left; align-self: flex-start;
+  }
+  .gate-action--yes { color: var(--n-white); }
+  .gate-action--no { color: var(--n-700); }
+
+  /* SELECT ACCOUNT */
+  .sa-list { display: flex; flex-direction: column; width: 100%; gap: 28px; }
+  .sa-row { background: none; border: none; width: 100%; display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; }
+  .sa-content { display: flex; flex-direction: column; gap: 2px; flex: 1; text-align: left; }
+  .sa-name { font-size: 15px; color: var(--n-white); letter-spacing: -0.28px; }
+  .sa-detail { font-size: 13px; color: var(--n-700); letter-spacing: -0.22px; }
+  .sa-footer { flex-shrink: 0; display: flex; justify-content: space-between; align-items: center; padding: 10px 30px; height: 99px; }
+  .sa-cancel { background: none; border: none; font: inherit; font-size: 15px; color: var(--n-400); letter-spacing: -0.28px; display: flex; align-items: center; gap: 8px; padding: 10px; margin: -10px; }
+  .sa-arrow { background: none; border: none; color: var(--n-900); padding: 10px; margin: -10px; }
+
+  /* DASHBOARD CTA HOOK */
+  .pos-group.cta { cursor: pointer; }
+</style>
+</head>
+<body>
+
+<h1 class="page-title">Self-Directed System — Two Flows</h1>
+<p class="page-sub">
+Calibration is a one-time ritual fired when a user first chooses Self-Directed.
+Decision Gates fire on every trade thereafter, replaying the user's stored standards.
+Below: every screen of both flows, in order, with a one-line rationale per step.
+</p>
+
+<!-- =====================================================
+     FLOW A · CALIBRATION (one-time)
+     ===================================================== -->
+<section class="flow-section">
+  <p class="flow-eyebrow">Flow A</p>
+  <h2 class="flow-title">Calibration ritual — one time</h2>
+  <p class="flow-sub">
+    Fires the moment a user actively switches to Self-Directed mode. Ends when
+    the first Self-Directed account opens. Captures the standards that the
+    Decision Gate will replay on every subsequent trade.
+  </p>
+
+  <div class="steps-row">
+
+  <!-- A1 · MAIN DASHBOARD -->
+  <div class="step">
+    <div class="step-info">
+      <p class="step-num">A1 · ENTRY</p>
+      <h3 class="step-name">Main Dashboard — No Self-Directed Accounts</h3>
+      <p class="step-body">
+        User lands on the unified dashboard. Active section shows "No Accounts"
+        with an Open Account CTA. Calibration is triggered from this CTA — never
+        from signup.
+      </p>
+      <div class="step-meta">
+        <span><b>State</b> No Self-Directed account exists</span>
+        <span><b>Next</b> Tap "Open Account"</span>
+      </div>
+    </div>
+    <div class="phone">
+      <div class="screen-inner" style="background:#000;">
+        <header class="dash-header">
+          <span class="logo-mark">II</span>
+          <div class="dash-header-icons">
+            <svg viewBox="0 0 17 17" fill="none"><circle cx="7.5" cy="7.5" r="5.5" stroke="#D9D9D9" stroke-width="1"/><path d="M11.5 11.5L15.5 15.5" stroke="#D9D9D9" stroke-width="1" stroke-linecap="round"/></svg>
+            <svg class="menu" viewBox="0 0 17 17" fill="none"><path d="M2 4H15M2 9H15M2 14H15" stroke="#666666" stroke-width="1" stroke-linecap="round"/></svg>
+          </div>
+        </header>
+        <div class="dash-frame">
+          <div class="total-capital">
+            <span class="tc-label">Total Value</span>
+            <span class="tc-value">75,000.00 <span class="tc-ccy">CAD</span></span>
+          </div>
+          <div class="mt-managed">
+            <hr class="dash-divider"/>
+            <div class="dash-section"><div class="s-inner">
+              <div class="s-title-wrap"><div class="s-title-col">
+                <span class="t-primary">Core</span>
+                <span class="t-secondary">Managed</span>
+              </div></div>
+              <div class="data-col">
+                <div class="db"><span class="db-label">Value</span><span class="n22">75,000.00</span></div>
+                <div class="db"><span class="db-label">Projection</span><span class="n15">1.23M</span></div>
+              </div>
+            </div></div>
+          </div>
+          <div class="mt-active">
+            <hr class="dash-divider"/>
+            <div class="dash-section"><div class="s-inner">
+              <div class="s-title-wrap"><div class="s-title-col">
+                <span class="t-primary">Active</span>
+                <span class="t-secondary">Self-directed</span>
+              </div></div>
+              <div class="data-col">
+                <div class="pos-group cta">
+                  <span class="pos-head" style="color:#929292;">No Accounts</span>
+                  <span class="pos-head">Open Account</span>
+                </div>
+              </div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- A2 · ADD ACCOUNT -->
+  <div class="step">
+    <div class="step-info">
+      <p class="step-num">A2 · MODE CHOICE</p>
+      <h3 class="step-name">Add Account — Managed or Self-Directed</h3>
+      <p class="step-body">
+        The decision moment. Selecting Self-Directed triggers the 11-screen
+        ritual. Selecting Managed routes to the standard managed flow (out of
+        scope here).
+      </p>
+      <div class="step-meta">
+        <span><b>Path</b> [02] Self-Directed → S1 begins</span>
+      </div>
+    </div>
+    <div class="phone">
+      <div class="screen-inner">
+        <div class="screen-header">
+          <div class="top-bar">
+            <button class="back-btn"><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button class="exit-btn">Exit</button>
+          </div>
+          <div class="top-divider"></div>
+        </div>
+        <div class="fig-main">
+          <p class="t18-w" style="text-align:right; width:100%; max-width:100%; margin-bottom:48px;">Add Account</p>
+          <p class="addacc-subtitle">Available Account Types</p>
+          <div class="num-list">
+            <button class="num-row">
+              <span class="num-tag">[ 01 ]</span>
+              <div class="num-content">
+                <span class="num-label">Managed</span>
+                <span class="num-desc">Discretionary portfolios managed on your behalf</span>
+              </div>
+            </button>
+            <button class="num-row">
+              <span class="num-tag">[ 02 ]</span>
+              <div class="num-content">
+                <span class="num-label">Self-Directed</span>
+                <span class="num-desc">Investor-directed trading and execution</span>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- A3 · S1 ENTRY -->
+  <div class="step">
+    <div class="step-info">
+      <p class="step-num">A3 · S1</p>
+      <h3 class="step-name">Responsibility transfer</h3>
+      <p class="step-body">
+        First screen sets the stakes. No friendly framing — the system states
+        what is about to be transferred and what will be recorded.
+      </p>
+    </div>
+    <div class="phone">
+      <div class="screen-inner">
+        <div class="screen-header"><div class="top-bar"><button class="back-btn hidden"></button><button class="exit-btn hidden"></button></div><div class="top-divider"></div></div>
+        <div class="fig-main">
+          <div class="fig-col">
+            <p class="t18-w">Self-directed investing transfers responsibility to you.</p>
+            <div class="fig-line-group">
+              <p class="t14-400">You will make the decisions.</p>
+              <p class="t14-400">You will own the errors.</p>
+              <p class="t14-400">The system will record both.</p>
+            </div>
+          </div>
+        </div>
+        <div class="cta-bar"><button class="arrow-btn"><svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- A4 · S2 -->
+  <div class="step">
+    <div class="step-info">
+      <p class="step-num">A4 · S2</p>
+      <h3 class="step-name">Reality check (1st text input)</h3>
+      <p class="step-body">
+        Establishes the baseline statistical reality (most investors lose to
+        the market) and asks the user to commit a 1st-person statement on when
+        they personally misjudge.
+      </p>
+    </div>
+    <div class="phone">
+      <div class="screen-inner">
+        <div class="screen-header"><div class="top-bar"><button class="back-btn"><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="exit-btn hidden"></button></div><div class="top-divider"></div></div>
+        <div class="fig-main">
+          <p class="t18-w" style="max-width:255px;">You will likely not beat the market.</p>
+          <div class="fig-line-group" style="margin-bottom:10px;">
+            <p class="t14-400">Most investors do not.</p>
+            <p class="t14-400">Most professionals do not.</p>
+          </div>
+          <p class="t14-700">Failure is rarely caused by missing information.</p>
+          <p class="t14-700">It is caused by poor judgment under uncertainty.</p>
+          <label class="input-label">When are you most likely to misjudge?</label>
+          <textarea class="text-input" rows="5">When prices drop sharply with no new information and panic sets in.</textarea>
+          <p class="input-note">Keep it short and specific.</p>
+          <p class="input-count">62/180</p>
+        </div>
+        <div class="cta-bar"><button class="arrow-btn"><svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- A5 · S3 -->
+  <div class="step">
+    <div class="step-info">
+      <p class="step-num">A5 · S3</p>
+      <h3 class="step-name">Past errors (multi-select)</h3>
+      <p class="step-body">
+        Inversion: before chasing edge, name your failure modes. Multi-select
+        captures the full pattern; the next screen forces a single most-likely
+        repeat.
+      </p>
+    </div>
+    <div class="phone">
+      <div class="screen-inner">
+        <div class="screen-header"><div class="top-bar"><button class="back-btn"><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="exit-btn hidden"></button></div><div class="top-divider"></div></div>
+        <div class="fig-main">
+          <p class="t18-w" style="max-width:260px;">Start with failure.</p>
+          <p class="t14-700" style="max-width:280px;">Before trying to outperform, identify how you are most likely to fail.</p>
+          <p class="t14-800">Which errors have you made before?</p>
+          <div class="check-list">
+            <div class="check-row sel"><span class="check-label">Sold too early</span><div class="check-box"></div></div>
+            <div class="check-row"><span class="check-label">Held too long</span><div class="check-box"></div></div>
+            <div class="check-row sel"><span class="check-label">Reacted to price</span><div class="check-box"></div></div>
+            <div class="check-row"><span class="check-label">Followed narrative without conviction</span><div class="check-box"></div></div>
+            <div class="check-row"><span class="check-label">Entered without a clear thesis</span><div class="check-box"></div></div>
+            <div class="check-row sel"><span class="check-label">Increased activity after losses</span><div class="check-box"></div></div>
+            <div class="check-row"><span class="check-label">Confused movement with progress</span><div class="check-box"></div></div>
+          </div>
+        </div>
+        <div class="cta-bar"><button class="arrow-btn"><svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- A6 · S4 -->
+  <div class="step">
+    <div class="step-info">
+      <p class="step-num">A6 · S4</p>
+      <h3 class="step-name">Repeated error + trigger</h3>
+      <p class="step-body">
+        Dynamic step: only the errors selected in S3 appear here. User picks
+        the single most dangerous, then names what triggers it.
+      </p>
+      <div class="step-meta">
+        <span><b>Replay target</b> Buy gate / Volatility intervention</span>
+      </div>
+    </div>
+    <div class="phone">
+      <div class="screen-inner">
+        <div class="screen-header"><div class="top-bar"><button class="back-btn"><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="exit-btn hidden"></button></div><div class="top-divider"></div></div>
+        <div class="fig-main">
+          <p class="t18-w" style="max-width:255px;">One repeated error matters more than ten isolated ones.</p>
+          <p class="t14-700" style="margin-bottom:24px;">A system improves only when failure patterns are made explicit.</p>
+          <p class="t14-800">Which error is most likely to hurt you again?</p>
+          <div class="choice-list">
+            <button class="choice-btn"><span class="choice-label">Sold too early</span><span class="choice-indicator"></span></button>
+            <button class="choice-btn sel"><span class="choice-label">Reacted to price</span><span class="choice-indicator"></span></button>
+            <button class="choice-btn"><span class="choice-label">Increased activity after losses</span><span class="choice-indicator"></span></button>
+          </div>
+          <label class="input-label" style="margin-top:48px;">What usually triggers it?</label>
+          <textarea class="text-input" rows="3">Sharp intraday drops with no new information.</textarea>
+          <p class="input-note">A brief, concrete trigger is enough.</p>
+          <p class="input-count">43/180</p>
+        </div>
+        <div class="cta-bar"><button class="arrow-btn"><svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- A7 · S5 -->
+  <div class="step">
+    <div class="step-info">
+      <p class="step-num">A7 · S5</p>
+      <h3 class="step-name">Standard of entry — weakest definition</h3>
+      <p class="step-body">
+        Names the three required components of a position (thesis / horizon /
+        falsification condition), then asks which the user defines least
+        clearly.
+      </p>
+    </div>
+    <div class="phone">
+      <div class="screen-inner">
+        <div class="screen-header"><div class="top-bar"><button class="back-btn"><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="exit-btn hidden"></button></div><div class="top-divider"></div></div>
+        <div class="fig-main">
+          <p class="t18-w" style="max-width:255px;">No position should exist without a reason.</p>
+          <p class="t14-700" style="max-width:280px;">Before capital is allocated, three things should be defined: a thesis, a time horizon, and a condition for being wrong.</p>
+          <p class="t14-800">Which of these do you define least clearly today?</p>
+          <div class="choice-list">
+            <button class="choice-btn"><span class="choice-label">Thesis</span><span class="choice-indicator"></span></button>
+            <button class="choice-btn"><span class="choice-label">Time horizon</span><span class="choice-indicator"></span></button>
+            <button class="choice-btn sel"><span class="choice-label">Condition for being wrong</span><span class="choice-indicator"></span></button>
+          </div>
+        </div>
+        <div class="cta-bar"><button class="arrow-btn"><svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- A8 · S6 -->
+  <div class="step">
+    <div class="step-info">
+      <p class="step-num">A8 · S6</p>
+      <h3 class="step-name">Claimed edge</h3>
+      <p class="step-body">
+        Forces the user to articulate a single sentence claim. The act of
+        writing it is the friction; the fact that it will be replayed is the
+        consequence.
+      </p>
+      <div class="step-meta">
+        <span><b>Replay target</b> Buy gate</span>
+      </div>
+    </div>
+    <div class="phone">
+      <div class="screen-inner">
+        <div class="screen-header"><div class="top-bar"><button class="back-btn"><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="exit-btn hidden"></button></div><div class="top-divider"></div></div>
+        <div class="fig-main">
+          <p class="t18-w" style="max-width:255px;">Active investing is not assumed.</p>
+          <div class="fig-line-group">
+            <p class="t14-400">It is not a default setting.</p>
+            <p class="t14-400">It is a claim.</p>
+            <p class="t14-400">Claims require evidence.</p>
+          </div>
+          <label class="input-label">What edge do you believe you have?</label>
+          <textarea class="text-input" rows="3">Patience to hold positions through volatility others cannot.</textarea>
+          <p class="input-note">One clear sentence works best.</p>
+          <p class="input-count">58/180</p>
+        </div>
+        <div class="cta-bar"><button class="arrow-btn"><svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- A9 · S7 -->
+  <div class="step">
+    <div class="step-info">
+      <p class="step-num">A9 · S7</p>
+      <h3 class="step-name">Condition for action</h3>
+      <p class="step-body">
+        Forces a verifiable condition before opening a position. This is the
+        primary text the Buy gate replays.
+      </p>
+      <div class="step-meta">
+        <span><b>Replay target</b> Buy gate (primary)</span>
+      </div>
+    </div>
+    <div class="phone">
+      <div class="screen-inner">
+        <div class="screen-header"><div class="top-bar"><button class="back-btn"><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="exit-btn hidden"></button></div><div class="top-divider"></div></div>
+        <div class="fig-main">
+          <p class="t18-w" style="max-width:255px;">Activity is not the objective.</p>
+          <div class="fig-line-group">
+            <p class="t14-400">A trade is not progress.</p>
+            <p class="t14-400">Access is not edge.</p>
+            <p class="t14-400">Action without a clear condition is usually noise.</p>
+          </div>
+          <label class="input-label">Before opening a position, what must be true?</label>
+          <textarea class="text-input" rows="3">A clear thesis, valuation checked, and exit condition defined.</textarea>
+          <p class="input-note">Write a condition you can verify.</p>
+          <p class="input-count">61/180</p>
+        </div>
+        <div class="cta-bar"><button class="arrow-btn"><svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- A10 · S8 -->
+  <div class="step">
+    <div class="step-info">
+      <p class="step-num">A10 · S8</p>
+      <h3 class="step-name">Reconsideration triggers (multi-select)</h3>
+      <p class="step-body">
+        Names the legitimate reasons to revisit a position vs. the noise
+        (price volatility alone). The Sell gate replays the user's selections.
+      </p>
+      <div class="step-meta">
+        <span><b>Replay target</b> Sell gate</span>
+      </div>
+    </div>
+    <div class="phone">
+      <div class="screen-inner">
+        <div class="screen-header"><div class="top-bar"><button class="back-btn"><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="exit-btn hidden"></button></div><div class="top-divider"></div></div>
+        <div class="fig-main">
+          <p class="t18-w" style="max-width:280px;">A position should not be reviewed because price moved.</p>
+          <p class="t14-700">Price movement is common.<br/>A broken thesis is different.</p>
+          <p class="t14-800">What should cause you to reconsider a position?</p>
+          <div class="check-list">
+            <div class="check-row sel"><span class="check-label">New information</span><div class="check-box"></div></div>
+            <div class="check-row sel"><span class="check-label">Thesis broken</span><div class="check-box"></div></div>
+            <div class="check-row"><span class="check-label">Valuation materially changed</span><div class="check-box"></div></div>
+            <div class="check-row"><span class="check-label">Position became too large</span><div class="check-box"></div></div>
+            <div class="check-row"><span class="check-label">Need for liquidity</span><div class="check-box"></div></div>
+            <div class="check-row"><span class="check-label">Price volatility alone</span><div class="check-box"></div></div>
+          </div>
+        </div>
+        <div class="cta-bar"><button class="arrow-btn"><svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- A11 · S9 -->
+  <div class="step">
+    <div class="step-info">
+      <p class="step-num">A11 · S9</p>
+      <h3 class="step-name">Weakness environment</h3>
+      <p class="step-body">
+        Names the moment the user is most prone to bad decisions. The Sell
+        gate and Volatility intervention replay this.
+      </p>
+      <div class="step-meta">
+        <span><b>Replay target</b> Sell gate / Volatility intervention</span>
+      </div>
+    </div>
+    <div class="phone">
+      <div class="screen-inner">
+        <div class="screen-header"><div class="top-bar"><button class="back-btn"><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="exit-btn hidden"></button></div><div class="top-divider"></div></div>
+        <div class="fig-main">
+          <p class="t18-w" style="max-width:255px;">The system uses friction deliberately.</p>
+          <div class="fig-line-group">
+            <p class="t14-400">In consequential domains, speed is overrated.</p>
+            <p class="t14-400">The purpose of friction is not delay.</p>
+            <p class="t14-400">It is accuracy.</p>
+          </div>
+          <p class="t14-800">When are you most likely to act badly?</p>
+          <div class="choice-list">
+            <button class="choice-btn sel"><span class="choice-label">After a sharp drop</span><span class="choice-indicator"></span></button>
+            <button class="choice-btn"><span class="choice-label">After a sharp rise</span><span class="choice-indicator"></span></button>
+            <button class="choice-btn"><span class="choice-label">After reading news</span><span class="choice-indicator"></span></button>
+            <button class="choice-btn"><span class="choice-label">After seeing others act</span><span class="choice-indicator"></span></button>
+            <button class="choice-btn"><span class="choice-label">After a period of underperformance</span><span class="choice-indicator"></span></button>
+            <button class="choice-btn"><span class="choice-label">When I feel I may miss out</span><span class="choice-indicator"></span></button>
+          </div>
+        </div>
+        <div class="cta-bar"><button class="arrow-btn"><svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- A12 · S10 -->
+  <div class="step">
+    <div class="step-info">
+      <p class="step-num">A12 · S10</p>
+      <h3 class="step-name">Reflect-back</h3>
+      <p class="step-body">
+        First demonstration of the replay mechanic. The system shows the user
+        their answers exactly as written — a preview of what will return at
+        every trade decision.
+      </p>
+    </div>
+    <div class="phone">
+      <div class="screen-inner">
+        <div class="screen-header"><div class="top-bar"><button class="back-btn"><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="exit-btn hidden"></button></div><div class="top-divider"></div></div>
+        <div class="fig-main">
+          <div class="fig-col" style="width:290px;">
+            <p class="t18-w">The record begins now.</p>
+            <div class="fig-line-group">
+              <p class="t14-400">This system does not promise results.</p>
+              <p class="t14-400">It improves decisions.</p>
+              <p class="t14-400">Over time, the record becomes useful.</p>
+            </div>
+            <div class="reflect-block">
+              <p class="reflect-header">You said</p>
+              <div class="reflect-item"><span class="reflect-item-label">your repeated error is</span><span class="reflect-item-val">Reacted to price</span></div>
+              <div class="reflect-item"><span class="reflect-item-label">it is usually triggered by</span><span class="reflect-item-val">Sharp intraday drops with no new information.</span></div>
+              <div class="reflect-item"><span class="reflect-item-label">your claimed edge is</span><span class="reflect-item-val">Patience to hold positions through volatility others cannot.</span></div>
+              <div class="reflect-item"><span class="reflect-item-label">before investing, this must be true</span><span class="reflect-item-val">A clear thesis, valuation checked, and exit condition defined.</span></div>
+              <div class="reflect-item"><span class="reflect-item-label">you reconsider when</span><span class="reflect-item-val">New information, Thesis broken</span></div>
+              <div class="reflect-item"><span class="reflect-item-label">you are weakest</span><span class="reflect-item-val">After a sharp drop</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="cta-bar"><button class="arrow-btn"><svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- A13 · S11 -->
+  <div class="step">
+    <div class="step-info">
+      <p class="step-num">A13 · S11</p>
+      <h3 class="step-name">Hold to enter — 1s ritual</h3>
+      <p class="step-body">
+        Mode-entry ritual. A 1-second hold is required — full-width bar, darker
+        fill sweeps left to right. After completion, transitions to the actual
+        account-creation step.
+      </p>
+    </div>
+    <div class="phone">
+      <div class="screen-inner">
+        <div class="screen-header"><div class="top-bar"><button class="back-btn"><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="exit-btn hidden"></button></div><div class="top-divider"></div></div>
+        <div class="fig-main" style="justify-content:center; align-items:flex-start;">
+          <div class="fig-col" style="width:280px;">
+            <p class="t18-w">You Are Entering Self-Directed Investing.</p>
+            <div class="fig-line-group" style="margin-top:24px;">
+              <p class="t14-400">From here, decisions are yours.</p>
+              <p class="t14-400">The system will hold you to what you wrote.</p>
+            </div>
+          </div>
+        </div>
+        <div class="hold-bar">
+          <span class="hold-fill"></span>
+          <span class="hold-label">Hold to enter</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- A14 · S12 -->
+  <div class="step">
+    <div class="step-info">
+      <p class="step-num">A14 · S12</p>
+      <h3 class="step-name">Open Account — pick TFSA / RRSP / Non-Registered</h3>
+      <p class="step-body">
+        Last step of the calibration prototype. Real flow continues to
+        agreement → ID review → account active (out of scope here).
+      </p>
+    </div>
+    <div class="phone">
+      <div class="screen-inner">
+        <div class="screen-header"><div class="top-bar"><button class="back-btn"><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="exit-btn">Exit</button></div><div class="top-divider"></div></div>
+        <div class="fig-main">
+          <p class="t18-w" style="text-align:right; width:100%; max-width:100%; margin-bottom:48px;">Open Account</p>
+          <div class="num-list">
+            <button class="num-row"><span class="num-tag">[ 01 ]</span><div class="num-content"><span class="num-label">TFSA</span></div></button>
+            <button class="num-row"><span class="num-tag">[ 02 ]</span><div class="num-content"><span class="num-label">RRSP</span></div></button>
+            <button class="num-row"><span class="num-tag">[ 03 ]</span><div class="num-content"><span class="num-label">Non-Registered</span></div></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /.steps-row -->
+</section>
+
+<!-- =====================================================
+     FLOW B · DECISION GATES (every trade)
+     ===================================================== -->
+<section class="flow-section">
+  <p class="flow-eyebrow">Flow B</p>
+  <h2 class="flow-title">Decision Gates — every trade</h2>
+  <p class="flow-sub">
+    Fires every time the user attempts a Capital Decision on a stock. Replays
+    the calibration answers and forces explicit Yes / No.
+  </p>
+
+  <div class="steps-row">
+
+  <!-- B1 · STOCK PAGE -->
+  <div class="step">
+    <div class="step-info">
+      <p class="step-num">B1 · ENTRY</p>
+      <h3 class="step-name">Stock Page — Aritzia · ATZ</h3>
+      <p class="step-body">
+        Full stock context: market value, portfolio weight, unrealized P/L,
+        description, navigation. Capital Decision CTA in lower right.
+      </p>
+    </div>
+    <div class="phone">
+      <div class="screen-inner">
+        <div class="screen-header"><div class="top-bar"><button class="back-btn"><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="exit-btn">Exit</button></div><div class="top-divider"></div></div>
+        <div class="sp-fig">
+          <div class="sp-head">
+            <span class="sp-name">Aritzia Inc · ATZ</span>
+            <span class="sp-price">Last Price <b>87.60 CAD</b></span>
+          </div>
+          <div class="sp-stats">
+            <div>
+              <div class="sp-stat-val">18,950.00<span class="ccy">CAD</span></div>
+              <div class="sp-stat-label">Market Value</div>
+            </div>
+            <div>
+              <div class="sp-stat-val">42.2%</div>
+              <div class="sp-stat-label">Portfolio Weight</div>
+            </div>
+            <div>
+              <div class="sp-stat-val">+4,365.00<span class="ccy">CAD</span><span class="delta">(+26.8%)</span></div>
+              <div class="sp-stat-label">Unrealized P/L</div>
+            </div>
+          </div>
+          <button class="sp-link">View Holdings <svg width="6" height="9" viewBox="0 0 6 9" fill="none"><path d="M1 1L5 4.5L1 8" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <p class="sp-desc">Aritzia Inc., together with its subsidiaries, designs and sells apparels and accessories…</p>
+          <div class="sp-nav"><a>History</a><a>Market</a><a>News</a><a>Research</a></div>
+        </div>
+        <div class="sp-cta"><button class="cta">Capital Decision</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B2 · CAPITAL DECISION (A) -->
+  <div class="step">
+    <div class="step-info">
+      <p class="step-num">B2 · MODAL</p>
+      <h3 class="step-name">Capital Decision — Scenario A (0 shares)</h3>
+      <p class="step-body">
+        First-position case. Only "Initiate position" is offered. Routes to
+        Buy gate.
+      </p>
+      <div class="step-meta">
+        <span><b>URL hash</b> #A</span>
+        <span><b>Shares held</b> 0</span>
+      </div>
+    </div>
+    <div class="phone">
+      <div class="screen-inner">
+        <div class="screen-header"><div class="top-bar"><button class="back-btn"><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="exit-btn">Exit</button></div><div class="top-divider"></div></div>
+        <div class="fig-main">
+          <div class="cd-header">
+            <span class="cd-eyebrow">ATZ.TO</span>
+            <span class="cd-title">Capital Decision</span>
+          </div>
+          <div class="cd-list">
+            <button class="cd-row"><span class="cd-label">Initiate position</span><span class="choice-indicator"></span></button>
+          </div>
+        </div>
+        <div class="cd-footer"><button class="cd-cancel"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M4 6L1 3.5L4 1M1 3.5H8" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>Cancel</button><span></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B3 · CAPITAL DECISION (B/C) -->
+  <div class="step">
+    <div class="step-info">
+      <p class="step-num">B3 · MODAL</p>
+      <h3 class="step-name">Capital Decision — Scenario B / C (≥ 1 share)</h3>
+      <p class="step-body">
+        User holds the position. Increase routes to Buy gate; Reduce routes to
+        Sell gate.
+      </p>
+      <div class="step-meta">
+        <span><b>URL hash</b> #B (1 share) or #C (2+ shares)</span>
+      </div>
+    </div>
+    <div class="phone">
+      <div class="screen-inner">
+        <div class="screen-header"><div class="top-bar"><button class="back-btn"><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="exit-btn">Exit</button></div><div class="top-divider"></div></div>
+        <div class="fig-main">
+          <div class="cd-header">
+            <span class="cd-eyebrow">ATZ.TO</span>
+            <span class="cd-title">Capital Decision</span>
+          </div>
+          <div class="cd-list">
+            <button class="cd-row"><span class="cd-label">Increase exposure</span><span class="choice-indicator"></span></button>
+            <button class="cd-row"><span class="cd-label">Reduce exposure</span><span class="choice-indicator"></span></button>
+          </div>
+        </div>
+        <div class="cd-footer"><button class="cd-cancel"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M4 6L1 3.5L4 1M1 3.5H8" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>Cancel</button><span></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B4 · BUY GATE -->
+  <div class="step">
+    <div class="step-info">
+      <p class="step-num">B4 · GATE</p>
+      <h3 class="step-name">Buy gate — Your standard (forced choice)</h3>
+      <p class="step-body">
+        Replays S7 (entry condition), S6 (claimed edge), S4 (misjudgement
+        trigger). Single hairline groups question + Yes / No as one decision
+        unit. No back, no passive dismiss.
+      </p>
+      <div class="step-meta">
+        <span><b>Replays</b> S7, S6, S4</span>
+        <span><b>Yes</b> → Select Account</span>
+        <span><b>No</b> → Capital Decision modal</span>
+      </div>
+    </div>
+    <div class="phone">
+      <div class="screen-inner">
+        <div class="screen-header"><div class="top-bar"><button class="back-btn hidden"></button><button class="exit-btn hidden"></button></div><div class="top-divider"></div></div>
+        <div class="fig-main">
+          <div class="cd-header">
+            <span class="cd-eyebrow">Buy gate · ATZ.TO</span>
+            <span class="cd-title">Your standard</span>
+          </div>
+          <div class="gate-replay">
+            <div class="gate-item"><span class="gate-item-label">before investing, this must be true</span><span class="gate-item-val">A clear thesis, valuation checked, and exit condition defined.</span></div>
+            <div class="gate-item"><span class="gate-item-label">your claimed edge is</span><span class="gate-item-val">Patience to hold positions through volatility others cannot.</span></div>
+            <div class="gate-item"><span class="gate-item-label">you misjudge when</span><span class="gate-item-val">Sharp intraday drops with no new information.</span></div>
+          </div>
+          <div class="gate-decision">
+            <p class="gate-question">Does this trade meet your standard?</p>
+            <div class="gate-actions">
+              <button class="gate-action gate-action--yes">Yes, proceed</button>
+              <button class="gate-action gate-action--no">No, cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B5 · SELL GATE -->
+  <div class="step">
+    <div class="step-info">
+      <p class="step-num">B5 · GATE</p>
+      <h3 class="step-name">Sell gate — Your sell rule (heavier ritual)</h3>
+      <p class="step-body">
+        Replays S8 (reconsideration triggers) and S9 (weakness environment).
+        Adds a reflective quote: "Most investors fail like this: cut winners,
+        hold losers."
+      </p>
+      <div class="step-meta">
+        <span><b>Replays</b> S8, S9</span>
+      </div>
+    </div>
+    <div class="phone">
+      <div class="screen-inner">
+        <div class="screen-header"><div class="top-bar"><button class="back-btn hidden"></button><button class="exit-btn hidden"></button></div><div class="top-divider"></div></div>
+        <div class="fig-main">
+          <div class="cd-header">
+            <span class="cd-eyebrow">Sell gate · ATZ.TO</span>
+            <span class="cd-title">Your sell rule</span>
+          </div>
+          <div class="gate-replay">
+            <div class="gate-item"><span class="gate-item-label">you reconsider when</span><span class="gate-item-val">New information, Thesis broken</span></div>
+            <div class="gate-item"><span class="gate-item-label">you are weakest</span><span class="gate-item-val">After a sharp drop</span></div>
+          </div>
+          <div class="gate-decision">
+            <p class="gate-quote">Most investors fail like this: cut winners, hold losers.</p>
+            <p class="gate-question">Does this sell match your rule?</p>
+            <div class="gate-actions">
+              <button class="gate-action gate-action--yes">Yes, proceed</button>
+              <button class="gate-action gate-action--no">No, cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B6 · SELECT ACCOUNT (Buy) -->
+  <div class="step">
+    <div class="step-info">
+      <p class="step-num">B6 · DOWNSTREAM</p>
+      <h3 class="step-name">Select account — first downstream step</h3>
+      <p class="step-body">
+        After "Yes, proceed" the gate hands off to standard order entry. Header
+        switches between "Buy" and "Sell" based on the gate that fired.
+        Downstream (shares, review, submit) is out of scope here.
+      </p>
+      <div class="step-meta">
+        <span><b>Header</b> ATZ.TO Buy or ATZ.TO Sell</span>
+      </div>
+    </div>
+    <div class="phone">
+      <div class="screen-inner">
+        <div class="screen-header"><div class="top-bar"><button class="back-btn"><svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="exit-btn hidden"></button></div><div class="top-divider"></div></div>
+        <div class="fig-main">
+          <div class="cd-header">
+            <span class="cd-eyebrow">ATZ.TO · Buy</span>
+            <span class="cd-title">Select account</span>
+          </div>
+          <div class="sa-list">
+            <button class="sa-row">
+              <div class="sa-content"><span class="sa-name">Non-Registered</span><span class="sa-detail">500.00 CAD Available</span></div>
+              <span class="choice-indicator"></span>
+            </button>
+            <button class="sa-row">
+              <div class="sa-content"><span class="sa-name">TFSA</span><span class="sa-detail">531.23 CAD Available</span><span class="sa-detail">300 Shares</span></div>
+              <span class="choice-indicator"></span>
+            </button>
+            <button class="sa-row">
+              <div class="sa-content"><span class="sa-name">RRSP</span><span class="sa-detail">1,545.19 CAD Available</span><span class="sa-detail">100 Shares</span></div>
+              <span class="choice-indicator"></span>
+            </button>
+          </div>
+        </div>
+        <div class="sa-footer">
+          <button class="sa-cancel"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M4 6L1 3.5L4 1M1 3.5H8" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>Cancel</button>
+          <button class="sa-arrow"><svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /.steps-row -->
+</section>
+
+</body>
+</html>

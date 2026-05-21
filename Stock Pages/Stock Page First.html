@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <title>ATZ — Stock Page (First-Time)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-black:  #000000;
+      --c-1000:   #1C1C1C;
+      --c-900:    #232627;
+      --c-800:    #565B5E;
+      --c-700:    #929292;
+      --c-400:    #C7C7C7;
+      --c-white:  #FFFFFF;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--c-black);
+      color: var(--c-white);
+      font-family: 'Inter', sans-serif;
+      width: 100%;
+      max-width: 393px;
+      margin: 0 auto;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    body::-webkit-scrollbar { display: none; }
+    html {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    html::-webkit-scrollbar { display: none; }
+    a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+
+    /* HEADER */
+    .header {
+      height: 71px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 13.5px;
+      border-bottom: 1px solid var(--c-900);
+    }
+    .back {
+      width: 13px; height: 13px;
+      display: inline-flex; align-items: center; justify-content: center;
+      color: var(--c-400);
+    }
+    .back::before {
+      content: '';
+      width: 8px; height: 8px;
+      border-left: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+      transform: rotate(45deg);
+      margin-left: 2px;
+    }
+    .back:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .star {
+      width: 16px; height: 16px;
+      display: inline-flex; align-items: center; justify-content: center;
+      color: var(--c-400);
+    }
+    .exit {
+      font-size: 14px;
+      letter-spacing: -0.02em;
+      color: var(--c-400);
+    }
+    .exit:active { opacity: 0.5; transition: opacity 80ms ease; }
+
+    /* TITLE */
+    .title-block {
+      padding: 40px 20px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+    .t-primary {
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: var(--c-white);
+      line-height: 1.15;
+    }
+    .t-secondary {
+      font-size: 13px;
+      letter-spacing: -0.02em;
+      color: var(--c-700);
+      line-height: 1.15;
+    }
+    .t-secondary .price {
+      color: var(--c-white);
+      margin-left: 4px;
+    }
+
+    /* COLUMN */
+    .col {
+      padding: 60px 20px 120px;
+      display: flex;
+      flex-direction: column;
+      gap: 56px;
+    }
+
+    /* SECTION (header + content pattern, matches Stock Page v5) */
+    .section {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 0 0 14px;
+      margin-bottom: 4px;
+      border-bottom: 0.5px solid var(--c-900);
+      width: 100%;
+    }
+    .section-header.empty-state {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+    .section-title {
+      font-size: 15px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+    }
+    .section-meta {
+      font-size: 11px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      margin-left: auto;
+      margin-right: 4px;
+    }
+    .section-chev {
+      color: var(--c-700);
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1;
+    }
+
+    /* SECTION HEADER as link (whole-row clickable) */
+    a.section-header:active {
+      opacity: 0.5;
+      transition: opacity 80ms ease;
+    }
+
+    /* PROSE */
+    .prose {
+      font-size: 15px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      line-height: 1.65;
+    }
+    .prose + .prose {
+      margin-top: 12px;
+    }
+    .prose-note {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      line-height: 1.5;
+    }
+
+    /* VIEW LINK (small drill-in text) — Title Case written in HTML directly */
+    .view-link {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-top: 4px;
+      align-self: flex-start;
+    }
+    .view-link .chev {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--c-700);
+    }
+    .view-link:active { opacity: 0.5; transition: opacity 80ms ease; }
+
+    /* NAV — Market / News / Research */
+    .nav {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      width: 100%;
+    }
+    .nav a {
+      display: block;
+      font-size: 15px;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      color: var(--c-400);
+      font-weight: 400;
+    }
+    .nav a:active { opacity: 0.5; transition: opacity 80ms ease; }
+
+    /* CAPITAL DECISION CTA — fixed bottom with fade scrim */
+    .capital-decision {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 393px;
+      padding: 40px 13.5px 24px;
+      display: flex;
+      justify-content: flex-end;
+      background: linear-gradient(to top, var(--c-black) 0%, var(--c-black) 60%, rgba(0,0,0,0) 100%);
+      pointer-events: none;
+      z-index: 10;
+    }
+    .capital-decision a {
+      pointer-events: auto;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 15px;
+      color: var(--c-white);
+      letter-spacing: -0.02em;
+      padding: 8px 4px;
+    }
+    .capital-decision a:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .capital-decision a .arrow {
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <a href="javascript:history.back()" class="back" aria-label="Back"></a>
+    <span style="display:flex;align-items:center;gap:14px;">
+      <a href="#" class="star" aria-label="Star">☆</a>
+      <a href="#" class="exit" aria-label="Exit">Exit</a>
+    </span>
+  </header>
+
+  <div class="title-block">
+    <span class="t-primary">Aritzia Inc · ATZ</span>
+    <span class="t-secondary">Last Price <span class="price">87.60 CAD</span></span>
+  </div>
+
+  <div class="col">
+
+    <!-- 1. DRAFT MEMO — explainer; action lives in Capital Decision CTA -->
+    <section class="section draft-memo" aria-label="Draft memo">
+      <div class="section-header">
+        <span class="section-title">Draft Memo · ATZ</span>
+      </div>
+      <p class="prose">Walk the protocol before execution. Ten fields, staged. SEAL writes the record.</p>
+      <a href="#" class="view-link">Field Reference · 10 Questions <span class="chev" aria-hidden="true">›</span></a>
+    </section>
+
+    <!-- 2. ABOUT THE COMPANY -->
+    <section class="section about" aria-label="About Aritzia Inc.">
+      <div class="section-header">
+        <span class="section-title">About Aritzia Inc.</span>
+      </div>
+      <p class="prose">Aritzia Inc. designs and sells in-house women's fashion brands — including Wilfred, TNA, Babaton, and Super Puff — through 110+ boutiques in Canada and the US, plus a growing ecommerce business. Founded in Vancouver in 1984.</p>
+      <a href="#" class="view-link">Read More on the Company <span class="chev" aria-hidden="true">›</span></a>
+    </section>
+
+    <!-- 3. NAV — Market / News / Research -->
+    <nav class="section nav" aria-label="Sections">
+      <a href="#">Market</a>
+      <a href="#">News</a>
+      <a href="#">Research</a>
+    </nav>
+
+  </div>
+
+  <!-- Capital Decision CTA (fixed bottom) -->
+  <div class="capital-decision">
+    <a href="#" aria-label="Capital Decision">
+      <span class="arrow">→</span> Capital Decision
+    </a>
+  </div>
+
+</body>
+</html>

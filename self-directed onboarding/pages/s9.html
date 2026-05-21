@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>9 · Decision Environment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="phone">
+  <div class="screen" id="s9">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn" onclick="goBack()">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="fig-main fig-main--scroll">
+      <p class="t18-w" style="max-width:255px;">The system uses friction deliberately.</p>
+      <div class="fig-line-group" style="margin-bottom:24px;">
+        <p class="t14-400">In consequential domains, speed is overrated.</p>
+        <p class="t14-400">The purpose of friction is not delay.</p>
+        <p class="t14-400">It is accuracy.</p>
+      </div>
+      <p class="t14-800" style="margin-bottom:20px;">When are you most likely to act badly?</p>
+      <div class="choice-list" id="s9choices">
+        <button type="button" class="choice-btn" onclick="selectRadio(this,'s9','s9btn')"><span class="choice-label">After a sharp drop</span><span class="choice-indicator"></span></button>
+        <button type="button" class="choice-btn" onclick="selectRadio(this,'s9','s9btn')"><span class="choice-label">After a sharp rise</span><span class="choice-indicator"></span></button>
+        <button type="button" class="choice-btn" onclick="selectRadio(this,'s9','s9btn')"><span class="choice-label">After reading news</span><span class="choice-indicator"></span></button>
+        <button type="button" class="choice-btn" onclick="selectRadio(this,'s9','s9btn')"><span class="choice-label">After seeing others act</span><span class="choice-indicator"></span></button>
+        <button type="button" class="choice-btn" onclick="selectRadio(this,'s9','s9btn')"><span class="choice-label">After a period of underperformance</span><span class="choice-indicator"></span></button>
+        <button type="button" class="choice-btn" onclick="selectRadio(this,'s9','s9btn')"><span class="choice-label">When I feel I may miss out</span><span class="choice-indicator"></span></button>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <button type="button" class="arrow-btn" id="s9btn" onclick="saveState({s9:getSelectedChoiceLabel('s9')}); goTo('s10.html')" disabled>
+        <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+<script src="app.js"></script>
+<script>
+  (function(){
+    const saved = loadState().s9;
+    if (saved) {
+      document.querySelectorAll('#s9 .choice-btn').forEach(b => {
+        if (b.querySelector('.choice-label').textContent.trim() === saved) {
+          b.classList.add('sel');
+          document.getElementById('s9btn').disabled = false;
+        }
+      });
+    }
+  })();
+  initScreen('s9');
+</script>
+</body>
+</html>

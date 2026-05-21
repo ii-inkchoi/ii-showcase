@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <title>ATZ — Performance Detail</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-black: #000000;
+      --c-1000:  #1C1C1C;
+      --c-900:   #232627;
+      --c-800:   #565B5E;
+      --c-700:   #929292;
+      --c-600:   #A7A7A7;
+      --c-400:   #C7C7C7;
+      --c-200:   #E3E2E2;
+      --c-white: #FFFFFF;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      width: 100%;
+      max-width: 393px;
+      margin: 0 auto;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    body::-webkit-scrollbar { display: none; }
+    html {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    html::-webkit-scrollbar { display: none; }
+    a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+
+    /* HEADER */
+    .header {
+      height: 71px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 13.5px;
+      border-bottom: 1px solid var(--c-900);
+    }
+    .back {
+      width: 13px; height: 13px;
+      display: inline-flex; align-items: center; justify-content: center;
+      color: var(--c-400);
+    }
+    .back::before {
+      content: '';
+      width: 8px; height: 8px;
+      border-left: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+      transform: rotate(45deg);
+      margin-left: 2px;
+    }
+    .back:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .exit {
+      font-size: 14px;
+      letter-spacing: -0.02em;
+      color: var(--c-400);
+    }
+    .exit:active { opacity: 0.5; transition: opacity 80ms ease; }
+
+    /* TITLE */
+    .title-block {
+      padding: 40px 13.5px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+    .t-primary {
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: var(--c-700);
+      line-height: 1.15;
+    }
+    .t-secondary {
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: var(--c-white);
+      line-height: 1.15;
+    }
+
+    /* HERO — Held since + duration (left-aligned, II doctrine) */
+    .hero {
+      padding: 60px 13.5px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+    .hero-meta {
+      font-size: 11px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+    }
+    .hero-value {
+      font-size: 18px;
+      color: var(--c-white);
+      letter-spacing: -0.02em;
+      font-weight: 400;
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+      line-height: 1.15;
+    }
+
+    /* CUMULATIVE block — 3-col with alpha in middle */
+    .cumulative-block {
+      margin: 28px 13.5px 0;
+      padding-top: 24px;
+      border-top: 0.5px solid var(--c-900);
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .cumulative-label {
+      font-size: 11px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      text-align: left;
+    }
+    .cumulative-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      column-gap: 8px;
+      row-gap: 6px;
+    }
+    .ann-label { font-size: 11px; color: var(--c-700); letter-spacing: -0.02em; }
+    .ann-label.left { text-align: left; }
+    .ann-label.center { text-align: center; }
+    .ann-label.right { text-align: right; }
+    .ann-value { font-size: 18px; color: var(--c-white); letter-spacing: -0.02em; font-weight: 400; font-feature-settings: 'lnum' 1, 'tnum' 1; align-self: baseline; }
+    .ann-value.left { text-align: left; }
+    .ann-value.right { text-align: right; }
+    .ann-value.alpha { font-size: 14px; text-align: center; letter-spacing: -0.02em; align-self: end; padding-bottom: 4px; }
+
+    /* NOT YET SIGNAL callout (5-year track-record gate) */
+    .signal-callout {
+      margin: 24px 13.5px 0;
+      padding: 18px;
+      background: var(--c-1000);
+      border: 0.5px solid var(--c-900);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .signal-title {
+      font-size: 14px;
+      color: var(--c-white);
+      letter-spacing: -0.02em;
+      font-weight: 400;
+    }
+    .signal-body {
+      font-size: 13px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      line-height: 1.55;
+    }
+    .signal-progress {
+      margin-top: 6px;
+      width: 100%;
+      height: 3px;
+      background: var(--c-900);
+      position: relative;
+    }
+    .signal-progress-fill {
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      background: var(--c-700);
+    }
+    .signal-meta-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      margin-top: 4px;
+    }
+
+    /* TIME PERIOD TOGGLE — sticky on scroll */
+    .period-bar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      gap: 20px;
+      align-items: baseline;
+      padding: 16px 13.5px;
+      margin-top: 64px;
+      justify-content: flex-start;
+      background: var(--c-black);
+      border-bottom: 0.5px solid var(--c-1000);
+    }
+    .period-bar .period-opt {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: color 200ms ease;
+    }
+    .period-bar .period-opt.active { color: var(--c-white); }
+    .period-bar .period-opt:active { opacity: 0.5; transition: opacity 80ms ease; }
+
+    /* SECTIONS */
+    .col {
+      padding: 32px 13.5px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 64px;
+    }
+    .section { display: flex; flex-direction: column; gap: 10px; }
+    .section-label {
+      font-size: 14px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      text-align: left;
+      margin-bottom: 15px;
+    }
+
+    /* ROWS */
+    .row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      width: 100%;
+      padding-bottom: 10px;
+      border-bottom: 0.5px solid var(--c-900);
+    }
+    .row:has(+ .row.sub) { border-bottom: none; padding-bottom: 4px; }
+    .row .lbl { font-size: 14px; color: var(--c-700); letter-spacing: -0.02em; text-align: left; }
+    a.lbl { cursor: pointer; -webkit-tap-highlight-color: transparent; text-decoration: none; }
+    a.lbl:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .row .val { font-size: 15px; color: var(--c-white); letter-spacing: -0.02em; text-align: right; }
+    .row .val .muted { color: var(--c-700); margin-left: 6px; font-size: 14px; }
+
+    .row.sub {
+      padding-left: 14px;
+      padding-top: 2px;
+      padding-bottom: 10px;
+      border-bottom: 0.5px solid var(--c-900);
+    }
+    .row.sub:has(+ .row.sub) { border-bottom: none; padding-bottom: 4px; }
+    .row.sub .lbl { font-size: 13px; color: var(--c-700); }
+    .row.sub .val { font-size: 14px; color: var(--c-400); }
+
+    .row.diff {
+      padding-top: 0;
+      padding-bottom: 10px;
+      border-bottom: 0.5px solid var(--c-900);
+    }
+    .row.diff .lbl { color: var(--c-700); }
+    .row.diff .val { color: var(--c-white); }
+
+    [data-bind] { transition: opacity 180ms ease; }
+    [data-bind].swapping { opacity: 0.35; }
+
+    /* TAPPABLE LABEL — text is the affordance (II doctrine) */
+    .lbl-tap {
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      border-bottom: 0.5px dotted var(--c-800);
+      padding-bottom: 1px;
+      transition: color 120ms ease, border-color 120ms ease;
+    }
+    .lbl-tap:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .lbl-tap.open { color: var(--c-white); border-bottom-color: var(--c-700); }
+
+    .info-panel {
+      padding: 10px 14px 14px;
+      margin-top: -10px;
+      border-bottom: 0.5px solid var(--c-900);
+      font-size: 13px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      line-height: 1.55;
+    }
+    .info-panel[hidden] { display: none; }
+    .info-panel .ip-formula {
+      font-size: 12px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      margin-top: 6px;
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+    }
+
+    /* EQUITY CURVE */
+    .curve-wrap { display: flex; flex-direction: column; gap: 12px; }
+    .curve-svg { width: 100%; height: 180px; display: block; overflow: visible; }
+    .curve-svg path { transition: opacity 180ms ease; }
+    .curve-svg path.swapping { opacity: 0.3; }
+    .curve-svg text { font-family: 'Inter', sans-serif; }
+    .curve-axis {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      padding: 0 0 0 10.1%;
+    }
+
+    /* YEARLY BREAKDOWN — 4-column tabular */
+    .yt-table {
+      display: grid;
+      grid-template-columns: 1fr 64px 64px 64px;
+      column-gap: 14px;
+    }
+    .yt-head, .yt-row { display: contents; }
+    .yt-head > span {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      text-align: right;
+      padding-bottom: 8px;
+      border-bottom: 0.5px solid var(--c-900);
+    }
+    .yt-head > span:first-child { text-align: left; }
+    .yt-row > span {
+      padding: 10px 0;
+      border-bottom: 0.5px solid var(--c-900);
+      font-size: 14px;
+      letter-spacing: -0.02em;
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+    }
+    .yt-row .yt-year { color: var(--c-700); text-align: left; }
+    .yt-row .yt-real { color: var(--c-400); text-align: right; }
+    .yt-row .yt-sp { color: var(--c-700); text-align: right; }
+    .yt-row .yt-alpha { color: var(--c-white); text-align: right; }
+    .yt-row.ytd .yt-year::after {
+      content: ' YTD';
+      font-size: 11px;
+      color: var(--c-700);
+      margin-left: 4px;
+    }
+    .yt-row.avg .yt-year { color: var(--c-white); }
+    .yt-row.avg .yt-real,
+    .yt-row.avg .yt-sp { color: var(--c-white); }
+    .yt-row.avg .yt-alpha { color: var(--c-white); }
+    .yt-row.avg > span {
+      padding-top: 14px;
+      border-top: 0.5px solid var(--c-900);
+    }
+    .yt-row.future > span {
+      color: var(--c-800);
+    }
+    .yt-divider {
+      grid-column: 1 / -1;
+      height: 0;
+      border-top: 0.5px solid var(--c-800);
+      margin: 8px 0;
+    }
+    .yt-row.signal-year .yt-year::after {
+      content: ' Signal';
+      font-size: 10px;
+      color: var(--c-700);
+      letter-spacing: 0.02em;
+      margin-left: 6px;
+    }
+
+    /* DISCLOSURE */
+    .disclosure {
+      padding: 0 13.5px;
+      margin-top: 64px;
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      text-align: left;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <a href="Stock%20Page%20v5.html" class="back" aria-label="Back"></a>
+    <a href="Stock%20Page%20v5.html" class="exit" aria-label="Exit">Exit</a>
+  </header>
+
+  <div class="title-block">
+    <span class="t-primary">Performance</span>
+    <span class="t-secondary">Aritzia · ATZ</span>
+  </div>
+
+  <!-- HERO: HELD SINCE + DURATION -->
+  <section class="hero" aria-label="Held duration">
+    <span class="hero-meta">Held since Feb 14, 2023</span>
+    <span class="hero-value">3y 2m</span>
+  </section>
+
+  <!-- CUMULATIVE — 3-col with alpha in middle -->
+  <section class="cumulative-block" aria-label="Cumulative">
+    <span class="cumulative-label">Annualized · Preliminary</span>
+    <div class="cumulative-row">
+      <span class="ann-label left">Your Position</span>
+      <span class="ann-label center">Alpha</span>
+      <span class="ann-label right">S&amp;P 500</span>
+      <span class="ann-value left" data-bind="ann-position">+42.6%</span>
+      <span class="ann-value alpha" data-bind="ann-alpha">+28.4pp</span>
+      <span class="ann-value right" data-bind="ann-sp">+14.2%</span>
+    </div>
+  </section>
+
+  <!-- TIME PERIOD TOGGLE -->
+  <div class="period-bar" role="tablist" aria-label="Time period">
+    <span class="period-opt" data-period="ytd" role="tab" aria-selected="false">YTD</span>
+    <span class="period-opt" data-period="1y" role="tab" aria-selected="false">1Y</span>
+    <span class="period-opt" data-period="3y" role="tab" aria-selected="false">3Y</span>
+    <span class="period-opt active" data-period="all" role="tab" aria-selected="true">All</span>
+  </div>
+
+  <div class="col">
+
+    <!-- 1. PERFORMANCE vs S&P 500 -->
+    <section class="section" aria-label="Performance vs S&P 500">
+      <span class="section-label">Performance vs S&amp;P 500</span>
+      <div class="row">
+        <span class="lbl">Your Position</span>
+        <span class="val"><span data-bind="perf-position-cad">+5,652.72</span><span class="muted" data-bind="perf-position-pct">+42.6%</span></span>
+      </div>
+      <div class="row">
+        <a class="lbl" href="#">S&amp;P Would Have</a>
+        <span class="val"><span data-bind="perf-sp-cad">+1,884.72</span><span class="muted" data-bind="perf-sp-pct">+14.2%</span></span>
+      </div>
+      <div class="row diff">
+        <span class="lbl">Alpha</span>
+        <span class="val"><span data-bind="perf-alpha-cad">+3,768.00</span><span class="muted" data-bind="perf-alpha-pct">+28.4pp</span></span>
+      </div>
+    </section>
+
+    <!-- 2. EQUITY CURVE -->
+    <section class="section" aria-label="Equity curve">
+      <span class="section-label">Equity Curve</span>
+      <div class="curve-wrap">
+        <svg class="curve-svg" viewBox="-36 0 356 180" preserveAspectRatio="none" aria-hidden="true">
+          <text x="-36" y="11" fill="#929292" font-size="9" text-anchor="start" data-bind="y-top">20k</text>
+          <text x="-36" y="92" fill="#929292" font-size="9" text-anchor="start" data-bind="y-mid">15k</text>
+          <text x="-36" y="174" fill="#929292" font-size="9" text-anchor="start" data-bind="y-bot">12k</text>
+          <rect x="12" y="3" width="160" height="26" rx="10" ry="10" fill="#000000" stroke="#565B5E" stroke-width="0.5" vector-effect="non-scaling-stroke" />
+          <g font-size="9">
+            <line x1="24" y1="17" x2="38" y2="17" stroke="#C7C7C7" stroke-width="1" vector-effect="non-scaling-stroke" />
+            <text x="42" y="20" fill="#929292">ATZ</text>
+            <line x1="74" y1="17" x2="88" y2="17" stroke="#929292" stroke-width="1" stroke-dasharray="3 3" vector-effect="non-scaling-stroke" />
+            <text x="92" y="20" fill="#929292" style="cursor:pointer">S&amp;P 500</text>
+          </g>
+          <g stroke="#1C1C1C" stroke-width="0.5">
+            <line x1="0" y1="0" x2="320" y2="0" vector-effect="non-scaling-stroke" />
+            <line x1="0" y1="88" x2="320" y2="88" vector-effect="non-scaling-stroke" />
+          </g>
+          <line x1="0" y1="0" x2="0" y2="176" stroke="#565B5E" stroke-width="0.5" vector-effect="non-scaling-stroke" />
+          <line x1="0" y1="176" x2="320" y2="176" stroke="#565B5E" stroke-width="0.5" vector-effect="non-scaling-stroke" />
+          <path data-bind-d="curve-sp" d="M0,158 L70,150 L140,135 L210,118 L280,98 L320,88" fill="none" stroke="#929292" stroke-width="1" stroke-dasharray="3 3" vector-effect="non-scaling-stroke" />
+          <path data-bind-d="curve-position" d="M0,158 L70,140 L140,108 L210,72 L280,38 L320,18" fill="none" stroke="#C7C7C7" stroke-width="1" vector-effect="non-scaling-stroke" />
+        </svg>
+        <div class="curve-axis">
+          <span data-bind="axis-1">Feb 23</span>
+          <span data-bind="axis-2">Jan 24</span>
+          <span data-bind="axis-3">Sep 25</span>
+          <span data-bind="axis-4">May 26</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. PERFORMANCE METRICS -->
+    <section class="section" aria-label="Performance metrics">
+      <span class="section-label">Performance Metrics</span>
+
+      <div class="row">
+        <span class="lbl"><span class="lbl-tap" data-info="twr">TWR (annualized)</span></span>
+        <span class="val" data-bind="pm-twr">+11.7%</span>
+      </div>
+      <div class="info-panel" data-info-for="twr" hidden>
+        <p>Time-Weighted Return measures the position's compounding rate, isolated from your tranche timing.</p>
+        <p class="ip-formula">Geometric link of period returns. Buy/sell timing does not affect TWR.</p>
+      </div>
+
+      <div class="row">
+        <span class="lbl"><span class="lbl-tap" data-info="mwr">MWR (annualized)</span></span>
+        <span class="val" data-bind="pm-mwr">+13.4%</span>
+      </div>
+      <div class="info-panel" data-info-for="mwr" hidden>
+        <p>Money-Weighted Return reflects when you deployed capital into this position. Positive gap to TWR means tranche timing helped.</p>
+        <p class="ip-formula">XIRR over all tranche cash flows.</p>
+      </div>
+
+      <div class="row sub">
+        <span class="lbl"><span class="lbl-tap" data-info="gap">Timing gap (MWR − TWR)</span></span>
+        <span class="val" data-bind="pm-gap">+1.7pp</span>
+      </div>
+      <div class="info-panel" data-info-for="gap" hidden>
+        <p>The gap between MWR and TWR is your tranche timing skill on this position. Positive = bought more at better moments.</p>
+      </div>
+
+      <div class="row">
+        <span class="lbl"><span class="lbl-tap" data-info="dd">Max Drawdown</span></span>
+        <span class="val" data-bind="pm-drawdown">−24.2%</span>
+      </div>
+      <div class="info-panel" data-info-for="dd" hidden>
+        <p>Worst peak-to-trough decline for this position over the holding period.</p>
+        <p class="ip-formula">min(price_t / peak_t − 1) over period.</p>
+      </div>
+
+      <div class="row sub">
+        <a class="lbl" href="#">S&amp;P 500 same window</a>
+        <span class="val" data-bind="pm-sp-drawdown">−12.1%</span>
+      </div>
+
+      <div class="row">
+        <span class="lbl"><span class="lbl-tap" data-info="vol">Volatility (12M)</span></span>
+        <span class="val" data-bind="pm-vol">28.4%</span>
+      </div>
+      <div class="info-panel" data-info-for="vol" hidden>
+        <p>Annualized standard deviation of daily returns. Individual stocks run hotter than index.</p>
+        <p class="ip-formula">stdev(daily returns) × √252.</p>
+      </div>
+
+      <div class="row sub">
+        <a class="lbl" href="#">S&amp;P 500</a>
+        <span class="val" data-bind="pm-sp-vol">15.4%</span>
+      </div>
+    </section>
+
+    <!-- 4. YEARLY BREAKDOWN -->
+    <section class="section" aria-label="Yearly breakdown">
+      <span class="section-label">Yearly Breakdown</span>
+      <div class="yt-table">
+        <div class="yt-head">
+          <span>Year</span>
+          <span>ATZ</span>
+          <span>S&amp;P</span>
+          <span>Alpha</span>
+        </div>
+        <div class="yt-row ytd">
+          <span class="yt-year">2026</span>
+          <span class="yt-real">+12.4%</span>
+          <span class="yt-sp">+9.4%</span>
+          <span class="yt-alpha">+3.0pp</span>
+        </div>
+        <div class="yt-row">
+          <span class="yt-year">2025</span>
+          <span class="yt-real">+18.2%</span>
+          <span class="yt-sp">+18.2%</span>
+          <span class="yt-alpha">0.0pp</span>
+        </div>
+        <div class="yt-row">
+          <span class="yt-year">2024</span>
+          <span class="yt-real">+6.8%</span>
+          <span class="yt-sp">+24.1%</span>
+          <span class="yt-alpha">−17.3pp</span>
+        </div>
+        <div class="yt-row">
+          <span class="yt-year">2023</span>
+          <span class="yt-real">+38.4%</span>
+          <span class="yt-sp">+18.6%</span>
+          <span class="yt-alpha">+19.8pp</span>
+        </div>
+        <div class="yt-row avg">
+          <span class="yt-year">Annualized</span>
+          <span class="yt-real">+11.7%</span>
+          <span class="yt-sp">+4.5%</span>
+          <span class="yt-alpha">+7.2pp</span>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <p class="disclosure">
+    Cumulative returns measure total change since first tranche. Per-tranche shadow benchmarking compares each capital deployment to a hypothetical S&amp;P 500 buy of the same dollar amount on the same date. Alpha is the dollar and pp difference. TWR isolates stock performance from tranche timing; MWR includes it.
+  </p>
+
+  <div style="height:60px"></div>
+
+  <script>
+    const periodData = {
+      'ytd': {
+        'ann-position': '+12.4%', 'ann-alpha': '+3.0pp', 'ann-sp': '+9.4%',
+        'perf-position-cad': '+2,346.40', 'perf-position-pct': '+12.4%',
+        'perf-sp-cad': '+1,778.20', 'perf-sp-pct': '+9.4%',
+        'perf-alpha-cad': '+568.20', 'perf-alpha-pct': '+3.0pp',
+        'curve-position': 'M0,140 L80,128 L160,112 L240,98 L320,86',
+        'curve-sp':       'M0,140 L80,128 L160,98 L240,72 L320,48',
+        'y-top': '19k', 'y-mid': '18k', 'y-bot': '17k',
+        'axis-1': 'Jan 26', 'axis-2': 'Feb 26', 'axis-3': 'Apr 26', 'axis-4': 'May 26',
+        'pm-twr': '+12.4%', 'pm-mwr': '+13.1%', 'pm-gap': '+0.7pp',
+        'pm-drawdown': '−6.4%', 'pm-sp-drawdown': '−2.8%',
+        'pm-vol': '24.6%', 'pm-sp-vol': '11.2%'
+      },
+      '1y': {
+        'ann-position': '+22.8%', 'ann-alpha': '+0.8pp', 'ann-sp': '+22.0%',
+        'perf-position-cad': '+4,316.40', 'perf-position-pct': '+22.8%',
+        'perf-sp-cad': '+4,164.80', 'perf-sp-pct': '+22.0%',
+        'perf-alpha-cad': '+151.60', 'perf-alpha-pct': '+0.8pp',
+        'curve-position': 'M0,150 L80,138 L160,118 L240,95 L320,72',
+        'curve-sp':       'M0,150 L80,135 L160,110 L240,75 L320,38',
+        'y-top': '20k', 'y-mid': '17k', 'y-bot': '15k',
+        'axis-1': 'May 25', 'axis-2': 'Sep 25', 'axis-3': 'Jan 26', 'axis-4': 'May 26',
+        'pm-twr': '+22.8%', 'pm-mwr': '+23.4%', 'pm-gap': '+0.6pp',
+        'pm-drawdown': '−14.2%', 'pm-sp-drawdown': '−6.2%',
+        'pm-vol': '26.8%', 'pm-sp-vol': '13.8%'
+      },
+      '3y': {
+        'ann-position': '+11.7%', 'ann-alpha': '+7.2pp', 'ann-sp': '+4.5%',
+        'perf-position-cad': '+5,652.72', 'perf-position-pct': '+42.6%',
+        'perf-sp-cad': '+1,884.72', 'perf-sp-pct': '+14.2%',
+        'perf-alpha-cad': '+3,768.00', 'perf-alpha-pct': '+28.4pp',
+        'curve-position': 'M0,158 L70,140 L140,108 L210,72 L280,38 L320,18',
+        'curve-sp':       'M0,158 L70,150 L140,135 L210,118 L280,98 L320,88',
+        'y-top': '20k', 'y-mid': '15k', 'y-bot': '12k',
+        'axis-1': 'Feb 23', 'axis-2': 'Jan 24', 'axis-3': 'Sep 25', 'axis-4': 'May 26',
+        'pm-twr': '+11.7%', 'pm-mwr': '+13.4%', 'pm-gap': '+1.7pp',
+        'pm-drawdown': '−24.2%', 'pm-sp-drawdown': '−12.1%',
+        'pm-vol': '28.4%', 'pm-sp-vol': '15.4%'
+      },
+      'all': {
+        'ann-position': '+42.6%', 'ann-alpha': '+28.4pp', 'ann-sp': '+14.2%',
+        'perf-position-cad': '+5,652.72', 'perf-position-pct': '+42.6%',
+        'perf-sp-cad': '+1,884.72', 'perf-sp-pct': '+14.2%',
+        'perf-alpha-cad': '+3,768.00', 'perf-alpha-pct': '+28.4pp',
+        'curve-position': 'M0,158 L70,140 L140,108 L210,72 L280,38 L320,18',
+        'curve-sp':       'M0,158 L70,150 L140,135 L210,118 L280,98 L320,88',
+        'y-top': '20k', 'y-mid': '15k', 'y-bot': '12k',
+        'axis-1': 'Feb 23', 'axis-2': 'Jan 24', 'axis-3': 'Sep 25', 'axis-4': 'May 26',
+        'pm-twr': '+11.7%', 'pm-mwr': '+13.4%', 'pm-gap': '+1.7pp',
+        'pm-drawdown': '−24.2%', 'pm-sp-drawdown': '−12.1%',
+        'pm-vol': '28.4%', 'pm-sp-vol': '15.4%'
+      }
+    };
+
+    function applyPeriod(period) {
+      const data = periodData[period];
+      if (!data) return;
+      const textNodes = document.querySelectorAll('[data-bind]');
+      const pathNodes = document.querySelectorAll('[data-bind-d]');
+      textNodes.forEach(el => el.classList.add('swapping'));
+      pathNodes.forEach(p => p.classList.add('swapping'));
+      setTimeout(() => {
+        textNodes.forEach(el => {
+          const key = el.getAttribute('data-bind');
+          if (data[key] !== undefined) el.textContent = data[key];
+        });
+        pathNodes.forEach(p => {
+          const key = p.getAttribute('data-bind-d');
+          if (data[key] !== undefined) p.setAttribute('d', data[key]);
+        });
+        textNodes.forEach(el => el.classList.remove('swapping'));
+        pathNodes.forEach(p => p.classList.remove('swapping'));
+      }, 180);
+    }
+
+    const periodOpts = document.querySelectorAll('.period-opt');
+    periodOpts.forEach(opt => {
+      opt.addEventListener('click', e => {
+        e.stopPropagation();
+        if (opt.classList.contains('active')) return;
+        periodOpts.forEach(o => { o.classList.remove('active'); o.setAttribute('aria-selected','false'); });
+        opt.classList.add('active');
+        opt.setAttribute('aria-selected','true');
+        applyPeriod(opt.getAttribute('data-period'));
+      });
+    });
+
+    document.querySelectorAll('.lbl-tap').forEach(label => {
+      label.addEventListener('click', e => {
+        e.stopPropagation();
+        e.preventDefault();
+        const key = label.getAttribute('data-info');
+        const panel = document.querySelector('.info-panel[data-info-for="' + key + '"]');
+        if (!panel) return;
+        const isOpen = !panel.hidden;
+        panel.hidden = isOpen;
+        if (isOpen) label.classList.remove('open');
+        else label.classList.add('open');
+      });
+    });
+  </script>
+
+</body>
+</html>

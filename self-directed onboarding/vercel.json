@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/self-directed onboarding.html" }
+  ]
+}

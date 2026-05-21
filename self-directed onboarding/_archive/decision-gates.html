@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Decision Gates — Buy gate / Sell gate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      margin: 0; padding: 0; box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Design System — Intelligent Investing 3.0 */
+    :root {
+      --n-black: #000000;
+      --n-1000:  #1c1c1c;
+      --n-900:   #232627;
+      --n-800:   #565b5e;
+      --n-700:   #929292;
+      --n-600:   #a7a7a7;
+      --n-400:   #c7c7c7;
+      --n-200:   #e3e2e2;
+      --n-white: #ffffff;
+      --header-h: 77px;
+      --content-top: 110px;
+      --pad-x: 30px;
+    }
+
+    body {
+      background: #111;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px 24px 60px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      font-weight: 400;
+    }
+
+    .phone {
+      width: 393px;
+      height: 852px;
+      background: var(--n-black);
+      overflow: hidden;
+      position: relative;
+      flex-shrink: 0;
+      border-radius: 50px;
+    }
+
+    @media (max-width: 500px) {
+      body { padding: 0; background: var(--n-black); }
+      .phone {
+        width: 100vw; height: 100vh; height: 100dvh; border-radius: 0;
+      }
+      .screen { width: 100vw; height: 100vh; height: 100dvh; }
+    }
+
+    .screen {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--n-black);
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transition: opacity .45s cubic-bezier(.4, 0, .2, 1);
+      pointer-events: none;
+      user-select: none;
+    }
+    .screen.active { opacity: 1; pointer-events: all; user-select: auto; }
+
+    /* Header */
+    .screen-header {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 18px;
+      height: var(--header-h);
+      box-sizing: border-box;
+    }
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 27px 0 var(--pad-x);
+    }
+    .back-btn {
+      width: 44px; height: 28px;
+      background: none; border: none;
+      color: var(--n-white);
+      cursor: pointer;
+      display: flex; align-items: center;
+      padding: 0;
+    }
+    .back-btn.hidden { opacity: 0; pointer-events: none; }
+    .exit-btn {
+      background: none; border: none;
+      font-family: inherit;
+      font-size: 15px; font-weight: 400;
+      letter-spacing: -0.28px;
+      color: var(--n-400);
+      cursor: pointer; padding: 0;
+    }
+    .exit-btn.hidden { opacity: 0; pointer-events: none; }
+    .top-divider {
+      flex-shrink: 0; width: 100%; height: 1px;
+      background: var(--n-900);
+    }
+
+    /* Main column */
+    .fig-main {
+      flex: 1; min-height: 0; overflow: hidden;
+      display: flex; flex-direction: column;
+      padding: calc(var(--content-top) - var(--header-h)) var(--pad-x) 0;
+    }
+    .fig-main--scroll {
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 32px;
+    }
+    .fig-main--scroll::-webkit-scrollbar { display: none; }
+
+    .fig-col {
+      width: 280px; max-width: 100%;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+
+    /* Typography */
+    .t18-w {
+      font-size: 18px; line-height: 1.4;
+      letter-spacing: -1.08px; color: var(--n-white); font-weight: 400;
+    }
+    .t14-400 {
+      font-size: 15px; line-height: 1.5;
+      letter-spacing: -0.28px; color: var(--n-700); font-weight: 400;
+    }
+
+    /* Radio circle (used in Capital Decision) */
+    .choice-indicator {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      border: 1px solid var(--n-800);
+      position: relative;
+      flex-shrink: 0;
+      box-sizing: border-box;
+      transition: border-color .2s ease;
+    }
+    .choice-indicator::after {
+      content: '';
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--n-white);
+      transition: transform .2s cubic-bezier(.34, 1.56, .64, 1);
+    }
+
+    /* Capital Decision (s1) — Figma 10577:7741 */
+    .cd-header {
+      display: flex; flex-direction: column; align-items: flex-end;
+      gap: 4px;
+      margin-bottom: 48px;
+    }
+    .cd-eyebrow {
+      font-size: 13px; line-height: 1.5; letter-spacing: 0.5px;
+      color: var(--n-700);
+    }
+    .cd-title {
+      font-size: 18px; line-height: 1.4; letter-spacing: -0.36px;
+      color: var(--n-white); font-weight: 400;
+    }
+    .cd-list { display: flex; flex-direction: column; width: 100%; }
+    .cd-row {
+      background: none; border: none;
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%;
+      padding: 22px 0;
+      cursor: pointer;
+      font-family: inherit;
+      transition: opacity .2s ease;
+    }
+    .cd-row:hover { opacity: .7; }
+    .cd-row .cd-label {
+      font-size: 15px; line-height: 1.5; letter-spacing: -0.28px;
+      color: var(--n-white); text-align: left;
+    }
+    .cd-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 30px;
+      height: 99px;
+      flex-shrink: 0;
+    }
+    .cd-cancel {
+      background: none; border: none;
+      font-family: inherit; font-size: 15px; font-weight: 400;
+      letter-spacing: -0.28px; color: var(--n-400);
+      cursor: pointer;
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px; margin: -10px;
+    }
+    .cd-cancel:hover { color: var(--n-200); }
+
+    /* Scenario-aware row visibility */
+    #s1[data-scenario="A"] .cd-row[data-cd="increase"],
+    #s1[data-scenario="A"] .cd-row[data-cd="reduce"],
+    #s1[data-scenario="B"] .cd-row[data-cd="initiate"],
+    #s1[data-scenario="C"] .cd-row[data-cd="initiate"] { display: none; }
+
+    /* (Demo scenario toggle removed — set via URL hash: #A, #B, #C) */
+
+    /* Stock page (s0) — Figma 21902:8232 */
+    .sp-fig {
+      flex: 1; min-height: 0; overflow: hidden;
+      display: flex; flex-direction: column;
+      padding: calc(var(--content-top) - var(--header-h)) var(--pad-x) 0;
+      position: relative;
+    }
+    .sp-head {
+      display: flex; flex-direction: column; align-items: flex-end;
+      gap: 8px;
+      margin-bottom: 36px;
+    }
+    .sp-name {
+      font-size: 18px; line-height: 1.4; letter-spacing: -0.36px;
+      color: var(--n-white); font-weight: 400;
+    }
+    .sp-price {
+      font-size: 13px; line-height: 1.5; letter-spacing: -0.22px;
+      color: var(--n-700);
+    }
+    .sp-price b {
+      font-weight: 400; color: var(--n-400); margin-left: 8px;
+    }
+    .sp-stats {
+      display: flex; flex-direction: column;
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+    .sp-stat-val {
+      font-size: 15px; line-height: 1.5; letter-spacing: -0.28px;
+      color: var(--n-white);
+    }
+    .sp-stat-val .ccy {
+      color: var(--n-700); margin-left: 6px;
+    }
+    .sp-stat-val .delta {
+      color: var(--n-700); margin-left: 6px;
+    }
+    .sp-stat-label {
+      font-size: 13px; line-height: 1.5; letter-spacing: -0.22px;
+      color: var(--n-700);
+      margin-top: 2px;
+    }
+    .sp-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; line-height: 1.5; letter-spacing: -0.22px;
+      color: var(--n-400);
+      background: none; border: none; padding: 0;
+      cursor: pointer; font-family: inherit;
+      margin-bottom: 28px;
+    }
+    .sp-desc {
+      font-size: 13px; line-height: 1.5; letter-spacing: -0.22px;
+      color: var(--n-700);
+      margin-bottom: 36px;
+      max-width: 290px;
+    }
+    .sp-nav {
+      display: flex; flex-direction: column; gap: 40px;
+    }
+    .sp-nav a {
+      font-size: 15px; line-height: 1.25; letter-spacing: -0.02em;
+      color: var(--n-400); text-decoration: none;
+      text-transform: capitalize;
+      cursor: pointer;
+    }
+    .sp-nav a:hover { color: var(--n-200); }
+    .sp-cta {
+      flex-shrink: 0;
+      display: flex; justify-content: flex-end;
+      padding: 18px 30px env(safe-area-inset-bottom, 0px);
+    }
+    .sp-cta .cta {
+      background: none; border: none;
+      font-family: inherit; font-size: 15px; font-weight: 400;
+      letter-spacing: -0.28px; color: var(--n-white);
+      cursor: pointer; padding: 12px 0;
+      transition: opacity .15s ease;
+    }
+    .sp-cta .cta:hover { opacity: .7; }
+
+    /* Select Account (s4) — Figma 10671:15671 */
+    .sa-head {
+      display: flex; align-items: baseline; justify-content: flex-end;
+      gap: 14px;
+      margin-bottom: 48px;
+    }
+    .sa-ticker {
+      font-size: 18px; line-height: 1.4; letter-spacing: -0.36px;
+      color: var(--n-700); font-weight: 400;
+    }
+    .sa-action {
+      font-size: 18px; line-height: 1.4; letter-spacing: -0.36px;
+      color: var(--n-white); font-weight: 400;
+    }
+    .sa-eyebrow {
+      font-size: 13px; line-height: 1.5; letter-spacing: -0.22px;
+      color: var(--n-700);
+      margin-bottom: 24px;
+    }
+    .sa-list { display: flex; flex-direction: column; width: 100%; gap: 28px; }
+    .sa-row {
+      background: none; border: none;
+      width: 100%;
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 18px;
+      padding: 0;
+      cursor: pointer; font-family: inherit;
+      transition: opacity .2s ease;
+    }
+    .sa-row:hover { opacity: .7; }
+    .sa-row .sa-content {
+      display: flex; flex-direction: column; gap: 2px;
+      flex: 1;
+      text-align: left;
+    }
+    .sa-row .sa-name {
+      font-size: 15px; line-height: 1.5; letter-spacing: -0.28px;
+      color: var(--n-white);
+    }
+    .sa-row .sa-detail {
+      font-size: 13px; line-height: 1.5; letter-spacing: -0.22px;
+      color: var(--n-700);
+    }
+    .sa-footer {
+      flex-shrink: 0;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 30px;
+      height: 99px;
+    }
+    .sa-cancel {
+      background: none; border: none;
+      font-family: inherit; font-size: 15px; font-weight: 400;
+      letter-spacing: -0.28px; color: var(--n-400);
+      cursor: pointer;
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px; margin: -10px;
+    }
+    .sa-cancel:hover { color: var(--n-200); }
+    .sa-arrow {
+      background: none; border: none;
+      color: var(--n-900); padding: 10px; margin: -10px;
+      cursor: not-allowed;
+    }
+
+    /* Gate (s2, s3) — replay block + forced choice */
+    .gate-eyebrow {
+      font-size: 13px; line-height: 1.5; letter-spacing: 0.5px;
+      color: var(--n-700);
+      margin-bottom: 18px;
+    }
+    .gate-title {
+      font-size: 18px; line-height: 1.4; letter-spacing: -0.36px;
+      color: var(--n-white); font-weight: 400;
+      margin-bottom: 32px;
+    }
+    /* Replay block — value styling matches onboarding S10 reflect-back. */
+    .gate-replay {
+      display: flex; flex-direction: column; gap: 14px;
+      margin-bottom: 0;
+    }
+    .gate-item { display: flex; flex-direction: column; gap: 2px; }
+    .gate-item-label {
+      font-size: 13px; line-height: 1.5; letter-spacing: -0.22px;
+      color: var(--n-800);
+    }
+    .gate-item-val {
+      font-size: 15px; line-height: 1.5; letter-spacing: -0.28px;
+      color: var(--n-700);
+      overflow-wrap: anywhere;
+    }
+    /* Decision area — single grouped block. One hairline above (separator
+       from replay); inside, question + Yes + No flow as one tight unit. */
+    .gate-decision {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--n-900);
+      display: flex; flex-direction: column;
+      gap: 18px;
+    }
+    .gate-quote {
+      font-size: 13px; line-height: 1.5; letter-spacing: -0.22px;
+      color: var(--n-800);
+      margin: 0;
+    }
+    .gate-question {
+      font-size: 15px; line-height: 1.5; letter-spacing: -0.28px;
+      color: var(--n-white); font-weight: 400;
+      margin: 0;
+    }
+    .gate-actions {
+      display: flex; flex-direction: column;
+      gap: 14px;
+      margin-top: 8px;
+    }
+    .gate-action {
+      background: none; border: none;
+      padding: 0;
+      text-align: left;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 15px; line-height: 1.5; letter-spacing: -0.28px;
+      transition: opacity .2s ease;
+      align-self: flex-start;
+    }
+    .gate-action { color: var(--n-700); }
+    .gate-action:hover { color: var(--n-400); }
+    .gate-action.selected { color: var(--n-white); }
+    .sa-arrow:not([disabled]) { color: var(--n-white); cursor: pointer; }
+    .sa-arrow:not([disabled]):hover { opacity: .7; }
+  </style>
+</head>
+<body>
+
+<div class="phone">
+
+  <!-- s0 · STOCK PAGE (Figma 21902:8232) — entry point.
+       Click "Capital Decision" to open the modal. -->
+  <div class="screen active" id="s0">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn">Exit</button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="sp-fig">
+      <div class="sp-head">
+        <span class="sp-name">Aritzia Inc · ATZ</span>
+        <span class="sp-price">Last Price <b>87.60 CAD</b></span>
+      </div>
+      <div class="sp-stats">
+        <div>
+          <div class="sp-stat-val">18,950.00<span class="ccy">CAD</span></div>
+          <div class="sp-stat-label">Market Value</div>
+        </div>
+        <div>
+          <div class="sp-stat-val">42.2%</div>
+          <div class="sp-stat-label">Portfolio Weight</div>
+        </div>
+        <div>
+          <div class="sp-stat-val">+4,365.00<span class="ccy">CAD</span><span class="delta">(+26.8%)</span></div>
+          <div class="sp-stat-label">Unrealized P/L</div>
+        </div>
+      </div>
+      <button type="button" class="sp-link">
+        View Holdings
+        <svg width="6" height="9" viewBox="0 0 6 9" fill="none"><path d="M1 1L5 4.5L1 8" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <p class="sp-desc">Aritzia Inc., together with its subsidiaries, designs and sells apparels and accessories…</p>
+      <div class="sp-nav">
+        <a>History</a>
+        <a>Market</a>
+        <a>News</a>
+        <a>Research</a>
+      </div>
+    </div>
+    <div class="sp-cta">
+      <button type="button" class="cta" onclick="go(1)">Capital Decision</button>
+    </div>
+  </div>
+
+  <!-- s1 · CAPITAL DECISION (Figma 10577:7741) — opens from Capital Decision tap.
+       data-scenario: A=0 shares (Initiate only), B=1 share / C=2+ shares (Increase + Reduce) -->
+  <div class="screen" id="s1" data-scenario="A">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn" onclick="go(0)">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="fig-main">
+      <div class="cd-header">
+        <span class="cd-eyebrow">ATZ.TO</span>
+        <span class="cd-title">Capital Decision</span>
+      </div>
+      <div class="cd-list">
+        <button type="button" class="cd-row" data-cd="initiate" onclick="openGate('initiate')">
+          <span class="cd-label">Initiate position</span>
+          <span class="choice-indicator"></span>
+        </button>
+        <button type="button" class="cd-row" data-cd="increase" onclick="openGate('increase')">
+          <span class="cd-label">Increase exposure</span>
+          <span class="choice-indicator"></span>
+        </button>
+        <button type="button" class="cd-row" data-cd="reduce" onclick="openGate('reduce')">
+          <span class="cd-label">Reduce exposure</span>
+          <span class="choice-indicator"></span>
+        </button>
+      </div>
+    </div>
+    <div class="sa-footer">
+      <button type="button" class="sa-cancel" onclick="go(0)">
+        <svg width="8" height="7" viewBox="0 0 8 7" fill="none" aria-hidden="true"><path d="M4 6L1 3.5L4 1M1 3.5H8" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Cancel
+      </button>
+      <button type="button" class="sa-arrow" disabled aria-label="Continue (out of scope)">
+        <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- s2 · BUY GATE — replays calibration answers, forces Yes/No -->
+  <div class="screen" id="s2">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn" onclick="go(1)">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="fig-main fig-main--scroll">
+      <div class="cd-header">
+        <span class="cd-eyebrow">Buy gate · ATZ.TO</span>
+        <span class="cd-title">Your standard</span>
+      </div>
+      <div class="gate-replay">
+        <div class="gate-item">
+          <span class="gate-item-label">before investing, this must be true</span>
+          <span class="gate-item-val" id="g2condition"></span>
+        </div>
+        <div class="gate-item">
+          <span class="gate-item-label">your claimed edge is</span>
+          <span class="gate-item-val" id="g2edge"></span>
+        </div>
+        <div class="gate-item">
+          <span class="gate-item-label">you misjudge when</span>
+          <span class="gate-item-val" id="g2trigger"></span>
+        </div>
+      </div>
+      <div class="gate-decision">
+        <p class="gate-question">Does this trade meet your standard?</p>
+        <div class="gate-actions" data-gate="Buy">
+          <button type="button" class="gate-action" data-choice="yes" onclick="selectGateChoice(this)">Yes, proceed</button>
+          <button type="button" class="gate-action" data-choice="no" onclick="selectGateChoice(this)">No, cancel</button>
+        </div>
+      </div>
+    </div>
+    <div class="sa-footer">
+      <button type="button" class="sa-cancel" onclick="go(1)">
+        <svg width="8" height="7" viewBox="0 0 8 7" fill="none" aria-hidden="true"><path d="M4 6L1 3.5L4 1M1 3.5H8" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Cancel
+      </button>
+      <button type="button" class="sa-arrow" disabled onclick="confirmGateChoice('s2')" aria-label="Continue">
+        <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- s3 · SELL GATE — heavier ritual; replays reconsideration + weakness -->
+  <div class="screen" id="s3">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn" onclick="go(1)">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="fig-main fig-main--scroll">
+      <div class="cd-header">
+        <span class="cd-eyebrow">Sell gate · ATZ.TO</span>
+        <span class="cd-title">Your sell rule</span>
+      </div>
+      <div class="gate-replay">
+        <div class="gate-item">
+          <span class="gate-item-label">you reconsider when</span>
+          <span class="gate-item-val" id="g3reconsider"></span>
+        </div>
+        <div class="gate-item">
+          <span class="gate-item-label">you are weakest</span>
+          <span class="gate-item-val" id="g3environment"></span>
+        </div>
+      </div>
+      <div class="gate-decision">
+        <p class="gate-quote">Most investors fail like this: cut winners, hold losers.</p>
+        <p class="gate-question">Does this sell match your rule?</p>
+        <div class="gate-actions" data-gate="Sell">
+          <button type="button" class="gate-action" data-choice="yes" onclick="selectGateChoice(this)">Yes, proceed</button>
+          <button type="button" class="gate-action" data-choice="no" onclick="selectGateChoice(this)">No, cancel</button>
+        </div>
+      </div>
+    </div>
+    <div class="sa-footer">
+      <button type="button" class="sa-cancel" onclick="go(1)">
+        <svg width="8" height="7" viewBox="0 0 8 7" fill="none" aria-hidden="true"><path d="M4 6L1 3.5L4 1M1 3.5H8" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Cancel
+      </button>
+      <button type="button" class="sa-arrow" disabled onclick="confirmGateChoice('s3')" aria-label="Continue">
+        <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- s4 · SELECT ACCOUNT (Figma 10671:15671) — first downstream step after gate. -->
+  <div class="screen" id="s4">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn" onclick="go(1)">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="fig-main">
+      <div class="sa-head">
+        <span class="sa-ticker">ATZ.TO</span>
+        <span class="sa-action" id="s4Action">Buy</span>
+      </div>
+      <p class="sa-eyebrow">Select account</p>
+      <div class="sa-list">
+        <button type="button" class="sa-row">
+          <div class="sa-content">
+            <span class="sa-name">Non-Registered</span>
+            <span class="sa-detail">500.00 CAD Available</span>
+          </div>
+          <span class="choice-indicator"></span>
+        </button>
+        <button type="button" class="sa-row">
+          <div class="sa-content">
+            <span class="sa-name">TFSA</span>
+            <span class="sa-detail">531.23 CAD Available</span>
+            <span class="sa-detail">300 Shares</span>
+          </div>
+          <span class="choice-indicator"></span>
+        </button>
+        <button type="button" class="sa-row">
+          <div class="sa-content">
+            <span class="sa-name">RRSP</span>
+            <span class="sa-detail">1,545.19 CAD Available</span>
+            <span class="sa-detail">100 Shares</span>
+          </div>
+          <span class="choice-indicator"></span>
+        </button>
+      </div>
+    </div>
+    <div class="sa-footer">
+      <button type="button" class="sa-cancel" onclick="go(0)">
+        <svg width="8" height="7" viewBox="0 0 8 7" fill="none" aria-hidden="true"><path d="M4 6L1 3.5L4 1M1 3.5H8" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Cancel
+      </button>
+      <button type="button" class="sa-arrow" disabled aria-label="Continue (out of scope)">
+        <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+</div><!-- /.phone -->
+
+<script>
+  /*
+    DECISION GATES PROTOTYPE
+    ─────────────────────────
+    Standalone demo of the Decision Gate flow that fires every time a user
+    initiates a Capital Decision on a stock page.
+
+    Stored answers below are MOCK — in production they come from the
+    one-time Calibration ritual (see self-directed onboarding.html).
+  */
+
+  // --- MOCK calibration answers (would be loaded from backend per user) ---
+  const mockAnswers = {
+    s4Trigger:    'Sharp intraday drops with no new information.',
+    s6Edge:       'Patience to hold positions through volatility others cannot.',
+    s7Condition:  'A clear thesis, valuation checked, and exit condition defined.',
+    s8Reconsider: ['New information', 'Thesis broken'],
+    s9Environment:'After a sharp drop'
+  };
+
+  const TOTAL = 4;
+  let cur = 0;
+
+  function go(n) {
+    if (n < 0 || n > TOTAL) return;
+    const prev = document.getElementById('s' + cur);
+    const next = document.getElementById('s' + n);
+    prev.classList.remove('active');
+    cur = n;
+    next.classList.add('active');
+    if (n === 2) populateBuyGate();
+    if (n === 3) populateSellGate();
+  }
+
+  /* Yes path — gate passed. Lands on Select Account (first downstream step).
+     `action` is "Buy" or "Sell" — sets the header label on s4. */
+  function exitGate(action) {
+    document.getElementById('s4Action').textContent = action || 'Buy';
+    go(4);
+  }
+
+  /* Gate forced choice — user picks Yes or No, then must confirm via the
+     bottom-right arrow. No default; arrow stays disabled until a choice is made. */
+  function selectGateChoice(btn) {
+    const list = btn.parentElement;
+    list.querySelectorAll('.gate-action').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    const screen = btn.closest('.screen');
+    const arrow = screen.querySelector('.sa-arrow');
+    if (arrow) arrow.disabled = false;
+  }
+
+  function confirmGateChoice(screenId) {
+    const screen = document.getElementById(screenId);
+    const selected = screen.querySelector('.gate-action.selected');
+    if (!selected) return;
+    const gate = selected.parentElement.dataset.gate;
+    if (selected.dataset.choice === 'yes') exitGate(gate);
+    else go(0); // No, cancel — abort the trade entirely, back to stock page
+  }
+
+  function openGate(action) {
+    if (action === 'reduce') go(3);
+    else go(2); // initiate or increase
+  }
+
+  function resetGateChoice(screenId) {
+    const screen = document.getElementById(screenId);
+    screen.querySelectorAll('.gate-action.selected').forEach(b => b.classList.remove('selected'));
+    const arrow = screen.querySelector('.sa-arrow');
+    if (arrow) arrow.disabled = true;
+  }
+
+  function populateBuyGate() {
+    document.getElementById('g2condition').textContent = mockAnswers.s7Condition;
+    document.getElementById('g2edge').textContent      = mockAnswers.s6Edge;
+    document.getElementById('g2trigger').textContent   = mockAnswers.s4Trigger;
+    resetGateChoice('s2');
+  }
+
+  function populateSellGate() {
+    document.getElementById('g3reconsider').textContent  = mockAnswers.s8Reconsider.join(', ');
+    document.getElementById('g3environment').textContent = mockAnswers.s9Environment;
+    resetGateChoice('s3');
+  }
+
+  function goExitToStock() {
+    // hook for closing modal back to stock page
+    console.log('Cancel — returning to stock page');
+  }
+
+  /* Scenario-aware Capital Decision (A/B/C) — controlled by URL hash.
+     Pre-set the URL before demoing: ...decision-gates.html#A | #B | #C
+     A = 0 shares (Initiate only) · B = 1 share / C = 2+ shares (Increase + Reduce) */
+  function applyScenarioFromHash() {
+    const valid = ['A', 'B', 'C'];
+    const raw = (location.hash || '').replace('#', '').toUpperCase();
+    const scenario = valid.includes(raw) ? raw : 'A';
+    document.getElementById('s1').setAttribute('data-scenario', scenario);
+  }
+  applyScenarioFromHash();
+  window.addEventListener('hashchange', applyScenarioFromHash);
+</script>
+
+</body>
+</html>

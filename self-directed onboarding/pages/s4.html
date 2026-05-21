@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>4 · Repeat Error</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="phone">
+  <div class="screen" id="s4">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn" onclick="goBack()">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="fig-main fig-main--scroll">
+      <p class="t18-w" style="max-width:255px;">One repeated error matters more than ten isolated ones.</p>
+      <p class="t14-700" style="margin-bottom:24px;">A system improves only when failure patterns are made explicit.</p>
+      <p class="t14-800" style="margin-bottom:20px;">Which error is most likely to hurt you again?</p>
+      <div class="choice-list" id="s4choices"></div>
+      <label class="input-label" for="s4input" style="display:block; margin-top:24px; margin-bottom:16px;">What usually triggers it?</label>
+      <textarea class="text-input" id="s4input" rows="2" maxlength="180" oninput="checkS4()"></textarea>
+      <p class="input-note">A brief, concrete trigger is enough.</p>
+      <p class="input-count" data-for="s4input">0/180</p>
+    </div>
+    <div class="cta-bar">
+      <button type="button" class="arrow-btn" id="s4btn" onclick="saveState({s4error:s4SelectedError, s4trigger:document.getElementById('s4input').value.trim()}); goTo('s5.html')" disabled>
+        <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+<script src="app.js"></script>
+<script>
+  let s4SelectedError = '';
+  function checkS4() {
+    const btn = document.getElementById('s4btn');
+    const hasText = document.getElementById('s4input').value.trim().length > 0;
+    btn.disabled = !(s4SelectedError && hasText);
+  }
+  (function(){
+    const st = loadState();
+    const options = st.s3 || [];
+    const list = document.getElementById('s4choices');
+    options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'choice-btn';
+      btn.innerHTML = '<span class="choice-label">' + opt + '</span><span class="choice-indicator"></span>';
+      btn.addEventListener('click', function () {
+        list.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('sel'));
+        btn.classList.add('sel');
+        s4SelectedError = opt;
+        checkS4();
+      });
+      if (st.s4error === opt) { btn.classList.add('sel'); s4SelectedError = opt; }
+      list.appendChild(btn);
+    });
+    updateSingleItemClass(list, '.choice-btn');
+    if (st.s4trigger) document.getElementById('s4input').value = st.s4trigger;
+    checkS4();
+  })();
+  initScreen('s4');
+</script>
+</body>
+</html>

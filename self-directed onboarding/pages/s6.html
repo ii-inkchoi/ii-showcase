@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>6 · Claimed Edge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="phone">
+  <div class="screen" id="s6">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn" onclick="goBack()">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="fig-main fig-main--input">
+      <p class="t18-w" style="max-width:255px;">Active investing is not assumed.</p>
+      <div class="fig-line-group" style="margin-bottom:0;">
+        <p class="t14-400">It is not a default setting.</p>
+        <p class="t14-400">It is a claim.</p>
+        <p class="t14-400">Claims require evidence.</p>
+      </div>
+      <label class="input-label" for="s6input">What edge do you believe you have, if any?</label>
+      <textarea class="text-input" id="s6input" rows="2" maxlength="180" oninput="checkTextInput('s6input','s6btn')"></textarea>
+      <p class="input-note">One clear sentence works best.</p>
+      <p class="input-count" data-for="s6input">0/180</p>
+    </div>
+    <div class="cta-bar">
+      <button type="button" class="arrow-btn" id="s6btn" onclick="saveState({s6:document.getElementById('s6input').value.trim()}); goTo('s7.html')" disabled>
+        <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+<script src="app.js"></script>
+<script>
+  const s = loadState();
+  if (s.s6) { document.getElementById('s6input').value = s.s6; checkTextInput('s6input','s6btn'); }
+  initScreen('s6');
+</script>
+</body>
+</html>

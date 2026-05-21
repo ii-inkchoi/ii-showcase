@@ -1,0 +1,93 @@
+/* ============================================================
+   II Performance Dashboard — Design Tokens
+   ------------------------------------------------------------
+   Shared design primitives extracted from all v3 prototypes.
+   Every page declares the same palette in its own :root block;
+   this file consolidates them so engineering can wire tokens
+   into the real codebase from one source.
+   ============================================================ */
+
+:root {
+  /* ---------- COLOR PALETTE ---------- */
+  /* Pure black/white scale. No accent color (Cold/Clinical doctrine). */
+
+  --c-black:  #000000;   /* App background, primary surface */
+  --c-1000:   #1C1C1C;   /* Elevated surface (cards, chips) */
+  --c-900:    #232627;   /* Dividers, section rules, borders */
+  --c-800:    #565B5E;   /* Tertiary text (ghost / metadata) */
+  --c-700:    #929292;   /* Secondary text (labels, captions) */
+  --c-600:    #A7A7A7;   /* Mid-weight text */
+  --c-400:    #C7C7C7;   /* Near-primary text */
+  --c-200:    #E3E2E2;   /* Soft white (used sparingly) */
+  --c-white:  #FFFFFF;   /* Primary text, hero numbers */
+
+  /* ---------- OPACITY LADDER ---------- */
+  /* Hierarchy is signaled by opacity on white text, not by hue. */
+
+  --t1: 1.00;    /* Hero numbers, primary text */
+  --t2: 0.55;    /* Secondary metrics, supporting numbers */
+  --t3: 0.32;    /* Section labels, table labels */
+  --t4: 0.18;    /* Ghost tags (CAD, "Since inception") */
+
+  /* ---------- TYPOGRAPHY ---------- */
+
+  --font-sans:    'Inter', sans-serif;
+  --font-display: 'Chakra Petch', sans-serif;  /* Unified Dashboard only */
+  --num-features: 'lnum' 1, 'tnum' 1;          /* lining + tabular numerals */
+
+  --fw-light:   300;
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-semi:    600;   /* section eyebrow labels */
+
+  /* Type scale (px shipped in v3) */
+  --fs-hero:    52px;  /* Total Capital, primary portfolio value */
+  --fs-h1:      40px;
+  --fs-h2:      30px;  /* Secondary hero (Managed value) */
+  --fs-h3:      24px;
+  --fs-body:    14px;
+  --fs-small:   12px;
+  --fs-label:   11px;  /* Section eyebrow labels (weight 600) */
+  --fs-ghost:   10px;  /* CAD currency tag, "Since inception" */
+
+  /* ---------- LAYOUT ---------- */
+
+  --viewport-max: 393px;   /* Mobile-first; designs target this width */
+
+  /* 8px grid */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+
+  --inner-rule-gap:     16px;  /* between metric blocks inside a section */
+  --table-row-pad:       8px;  /* dense data row padding */
+  --section-top-pad:    32px;
+  --section-bottom-pad: 32px;
+
+  /* ---------- BORDERS ---------- */
+  --rule-thin:  1px solid var(--c-900);
+  --rule-bold:  1px solid var(--c-900);   /* full-width section divider */
+
+  --header-height: 71px;
+}
+
+/* ============================================================
+   BASE — apply on body to inherit the system defaults
+   ============================================================ */
+body {
+  background: var(--c-black);
+  color: var(--c-white);
+  font-family: var(--font-sans);
+  width: 100%;
+  max-width: var(--viewport-max);
+  margin: 0 auto;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: var(--num-features);
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>10 · System Summary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="phone">
+  <div class="screen" id="s10">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn" onclick="goBack()">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="fig-main fig-main--scroll">
+      <div class="fig-col" style="width:290px; padding-bottom:20px;">
+        <p class="t18-w">The record begins now.</p>
+        <div class="fig-line-group">
+          <p class="t14-400">This system does not promise results.</p>
+          <p class="t14-400">It improves decisions.</p>
+          <p class="t14-400">Over time, the record becomes useful.</p>
+        </div>
+        <div class="reflect-block">
+          <p class="reflect-header">You said</p>
+          <div class="reflect-item">
+            <span class="reflect-item-label">your repeated error is</span>
+            <span class="reflect-item-val" id="s10error"></span>
+          </div>
+          <div class="reflect-item">
+            <span class="reflect-item-label">it is usually triggered by</span>
+            <span class="reflect-item-val" id="s10trigger"></span>
+          </div>
+          <div class="reflect-item">
+            <span class="reflect-item-label">before investing, this must be true</span>
+            <span class="reflect-item-val" id="s10condition"></span>
+          </div>
+          <div class="reflect-item">
+            <span class="reflect-item-label">you reconsider when</span>
+            <span class="reflect-item-val" id="s10reconsider"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cta-bar--split">
+      <span></span>
+      <button type="button" class="enter-btn" onclick="void(0)">Open account</button>
+    </div>
+  </div>
+</div>
+<script src="app.js"></script>
+<script>
+  (function(){
+    const s = loadState();
+    document.getElementById('s10error').textContent      = s.s4error || '—';
+    document.getElementById('s10trigger').textContent    = s.s4trigger || '—';
+    document.getElementById('s10condition').textContent  = s.s7 || '—';
+    document.getElementById('s10reconsider').textContent = (s.s8 && s.s8.length) ? s.s8.join(', ') : '—';
+  })();
+  initScreen('s10');
+</script>
+</body>
+</html>

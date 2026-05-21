@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Active Position List — v3 Sketch (4-column final)</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #f4f4f0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 32px 16px;
+    min-height: 100vh;
+  }
+  .frame {
+    background: #000;
+    color: #EDEDED;
+    width: 360px;
+    border-radius: 32px;
+    overflow: hidden;
+    padding-bottom: 40px;
+  }
+  .chrome {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    font-size: 14px;
+  }
+  .chrome .back { font-size: 20px; line-height: 1; }
+  .header {
+    padding: 28px 20px 20px;
+    text-align: right;
+  }
+  .scope {
+    font-size: 11px;
+    color: #777;
+    margin-bottom: 6px;
+    letter-spacing: 0.4px;
+  }
+  .title {
+    font-size: 22px;
+    font-weight: 500;
+  }
+  .title .count {
+    color: #777;
+    margin-left: 12px;
+    font-weight: 400;
+  }
+  .col-headers, .row {
+    display: grid;
+    grid-template-columns: 60px 44px 76px 1fr;
+    gap: 8px;
+  }
+  .col-headers {
+    padding: 10px 20px 8px;
+    font-size: 10px;
+    color: #666;
+    border-top: 0.5px solid #222;
+  }
+  .col-headers .unit { color: #444; }
+  .row {
+    padding: 14px 20px;
+    border-top: 0.5px solid #1a1a1a;
+    font-size: 13px;
+    align-items: start;
+  }
+  .col-headers > *:not(:first-child),
+  .row > *:not(:first-child) { text-align: right; }
+  .row .secondary { color: #aaa; }
+  .row .since { font-size: 11px; color: #aaa; display: block; }
+</style>
+</head>
+<body>
+  <div class="frame">
+    <div class="chrome">
+      <span class="back">&lsaquo;</span>
+      <span>Exit</span>
+    </div>
+
+    <div class="header">
+      <div class="scope">RRSP</div>
+      <div class="title">Active Positions<span class="count">6</span></div>
+    </div>
+
+    <div class="col-headers">
+      <span>Ticker</span>
+      <span>Weight</span>
+      <span>Held / Hor</span>
+      <span>Value <span class="unit">CAD</span></span>
+    </div>
+
+    <div class="row">
+      <span>ORIO.TO</span>
+      <span>74%</span>
+      <span class="secondary">1d / 3y</span>
+      <span>513,240<span class="since">-18.3%</span></span>
+    </div>
+    <div class="row">
+      <span>BWEN</span>
+      <span>4.9%</span>
+      <span class="secondary">2w / 5y</span>
+      <span>33,600<span class="since">+10.4%</span></span>
+    </div>
+    <div class="row">
+      <span>FND</span>
+      <span>3.9%</span>
+      <span class="secondary">3w / 5y</span>
+      <span>26,862<span class="since">-2.5%</span></span>
+    </div>
+    <div class="row">
+      <span>OSCR</span>
+      <span>3.0%</span>
+      <span class="secondary">6m / 3y</span>
+      <span>20,580<span class="since">-4.7%</span></span>
+    </div>
+    <div class="row">
+      <span>RELY</span>
+      <span>2.0%</span>
+      <span class="secondary">1.5y / 3y</span>
+      <span>19,456<span class="since">+26.1%</span></span>
+    </div>
+    <div class="row">
+      <span>GOOG</span>
+      <span>0.8%</span>
+      <span class="secondary">2y / 5y</span>
+      <span>1.94M<span class="since">+26.1%</span></span>
+    </div>
+  </div>
+</body>
+</html>

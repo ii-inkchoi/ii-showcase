@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intelligent Investing — Onboarding Flow v5</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      margin: 0; padding: 0; box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Figma variables — INTELLIGENT INVESTING 3.0 */
+    :root {
+      --n-black: #000000;
+      --n-white: #ffffff;
+      --n-200:   #e3e2e2;
+      /* Figma “two greys” on body copy (e.g. screen 4) */
+      --n-400:   #c7c7c7; /* Color / Neutral / 400 — lighter */
+      --n-700:   #929292; /* Color / Neutral / 700 — darker */
+      --n-800:   #565b5e;
+      --n-900:   #232627;
+      /* Figma 42403/42427: title = Neutral/800 @ 70%; rule = hairline ≈ Neutral/900 (same as header divider) */
+      --header-h: 77px;
+      --content-top: 153px;
+      --pad-x: 30px;
+      --col-w: 255px;
+    }
+
+    body {
+      background: #111;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px 24px 60px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      font-weight: 400;
+    }
+
+    .phone {
+      width: 393px;
+      height: 852px;
+      background: var(--n-black);
+      overflow: hidden;
+      position: relative;
+      flex-shrink: 0;
+      border-radius: 50px;
+    }
+
+    @media (max-width: 500px) {
+      body { padding: 0; background: var(--n-black); }
+      .phone {
+        width: 100vw;
+        height: 100vh;
+        height: 100dvh;
+        border-radius: 0;
+      }
+      .screen { width: 100vw; height: 100vh; height: 100dvh; }
+      .screen-header { padding-top: max(0px, env(safe-area-inset-top, 0px)); }
+      .cta-bar { padding-bottom: env(safe-area-inset-bottom, 0px); }
+    }
+
+    .screen {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--n-black);
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transition: opacity .45s cubic-bezier(.4, 0, .2, 1);
+      pointer-events: none;
+      user-select: none;
+    }
+    .screen.active { opacity: 1; pointer-events: all; }
+
+    /* Header — Figma h 77, gap 18 to 1px rule */
+    .screen-header {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 18px;
+      height: var(--header-h);
+      box-sizing: border-box;
+    }
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 27px 0 var(--pad-x);
+    }
+    .back-btn {
+      width: 44px;
+      height: 28px;
+      background: none;
+      border: none;
+      color: var(--n-white);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      padding: 0;
+      transition: opacity .15s;
+    }
+    .back-btn.hidden { opacity: 0; pointer-events: none; }
+    .exit-btn {
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.25;
+      letter-spacing: -0.28px;
+      color: var(--n-400);
+      cursor: pointer;
+      padding: 0;
+      transition: color .15s;
+    }
+    .exit-btn:hover { color: var(--n-700); }
+    .exit-btn.hidden { opacity: 0; pointer-events: none; }
+    .screen.fiscal .exit-btn { color: var(--n-700); }
+
+    .top-divider {
+      flex-shrink: 0;
+      width: 100%;
+      height: 1px;
+      background: var(--n-900);
+    }
+
+    /* Main column — y=153 → padding-top 76 below 77px header */
+    .fig-main {
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      padding: calc(var(--content-top) - var(--header-h)) var(--pad-x) 0;
+    }
+    .fig-main.fig-main--scroll {
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-top: calc(140.71484375px - var(--header-h));
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .fig-main.fig-main--scroll::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+      background: transparent;
+    }
+
+    /* s13 pricing (Figma 19812:42058) */
+    #s13.screen {
+      overflow: hidden;
+    }
+    #s13 .fig-main--scroll {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scrollbar-color: transparent transparent;
+    }
+    #s13 .fig-main--scroll::-webkit-scrollbar,
+    #s13 .fig-main--scroll::-webkit-scrollbar-thumb,
+    #s13 .fig-main--scroll::-webkit-scrollbar-track {
+      display: none;
+      width: 0;
+      height: 0;
+      background: transparent;
+    }
+
+    .fig-col {
+      width: var(--col-w);
+      max-width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    /* Top title → first body block: 40px (30px margin + 10px column gap) */
+    .fig-col > :first-child {
+      margin-bottom: 30px;
+    }
+    .fig-line-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .fig-line-group p {
+      margin: 0;
+    }
+
+    /* Typography — Figma */
+    .t18-w {
+      font-size: 18px;
+      line-height: 1.4;
+      letter-spacing: -1.08px;
+      color: var(--n-white);
+      font-weight: 400;
+    }
+    .t18-w .nowrap-phrase {
+      white-space: nowrap;
+    }
+    .t14-700 {
+      font-size: 14px;
+      line-height: 1.5;
+      letter-spacing: -0.28px;
+      color: var(--n-700);
+      font-weight: 400;
+    }
+    .t14-400 {
+      font-size: 14px;
+      line-height: 1.5;
+      letter-spacing: -0.28px;
+      color: var(--n-400);
+      font-weight: 400;
+    }
+
+    /* s4 — explicit Figma 400/700 alternation (frame 19812:41939) */
+    #s4 .constraint-14-400,
+    #s4 .constraint-14-700 {
+      font-size: 14px;
+      line-height: 1.5;
+      letter-spacing: -0.28px;
+      font-weight: 400;
+    }
+    #s4 .constraint-14-400 { color: var(--n-400); }
+    #s4 .constraint-14-700 { color: var(--n-700); }
+    /* Figma 41877: 18 / 1.5 / -0.36 / white / w 305.484 */
+    .t18-cal {
+      font-size: 18px;
+      line-height: 1.5;
+      letter-spacing: -0.36px;
+      color: var(--n-white);
+      font-weight: 400;
+      width: 100%;
+      max-width: 305.484px;
+      margin: 0;
+    }
+    .t14-opt {
+      font-size: 14px;
+      line-height: 1.25;
+      letter-spacing: -0.28px;
+      color: var(--n-700);
+      font-weight: 400;
+    }
+    .cal-row.sel .t14-opt {
+      color: var(--n-400);
+    }
+
+    .body-area {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 16px;
+      overflow: hidden;
+    }
+
+    /* Wall St — Figma 5 */
+    .wall-lead { margin-bottom: 40px; }
+    /* Figma 5: stat column gap 30px, label 14px /700, value one line white 14px */
+    .wall-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      width: max-content;
+      max-width: 100%;
+      min-width: 131px;
+      margin-top: 0;
+    }
+    .wall-stat-block {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+    }
+    .wall-stat-label {
+      font-size: 14px;
+      line-height: 1.5;
+      letter-spacing: -0.28px;
+      color: var(--n-700);
+      font-weight: 400;
+    }
+    .wall-stat-value-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: nowrap;
+      font-size: 14px;
+      line-height: 1.5;
+      letter-spacing: -0.28px;
+      color: var(--n-white);
+      font-weight: 400;
+      white-space: nowrap;
+    }
+    .info-icon-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      padding: 0;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      vertical-align: middle;
+      transition: color .15s, stroke .15s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    /* Tooltip trigger: closed = grey 700 — explicit stroke (button/SVG currentColor unreliable in WebKit) */
+    button.info-icon-btn {
+      color: var(--n-700);
+    }
+    button.info-icon-btn svg circle,
+    button.info-icon-btn svg path {
+      stroke: var(--n-700);
+    }
+    button.info-icon-btn:hover,
+    button.info-icon-btn[aria-expanded="true"] {
+      color: var(--n-400);
+    }
+    button.info-icon-btn:hover svg circle,
+    button.info-icon-btn:hover svg path,
+    button.info-icon-btn[aria-expanded="true"] svg circle,
+    button.info-icon-btn[aria-expanded="true"] svg path {
+      stroke: var(--n-400);
+    }
+    .wall-foot {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 274.248px;
+      max-width: calc(100% - 0px);
+      margin-top: 44px;
+    }
+    .wall-foot .split-400 p { margin: 0; }
+    .wall-foot .split-700 p { margin: 0; }
+
+    /* Compounding — Figma 6 */
+    .compound-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      align-items: flex-start;
+      width: 274.248px;
+      max-width: 100%;
+    }
+    /* Title → rows: 40px (30px stack gap + 10px extra on title) */
+    .compound-stack > p:first-child {
+      margin-bottom: 10px;
+    }
+    .compound-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 131px;
+    }
+    .compound-row {
+      font-size: 14px;
+      letter-spacing: -0.28px;
+      line-height: 1.5;
+      color: var(--n-700);
+      font-weight: 400;
+    }
+    .compound-row .c-val { color: var(--n-white); display: block; }
+    .compound-foot {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+    .compound-foot .split-700 p,
+    .compound-foot .split-400 p { margin: 0; }
+
+    /* Fiscal editorial — Figma 20249:17702 / 20249:17716 (typography only, no hero image) */
+    .fiscal-editorial-wrap {
+      flex: 1;
+      min-height: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .fiscal-chapter-label {
+      position: absolute;
+      left: 29.95px;
+      top: calc(210px - var(--header-h));
+      width: 248px;
+      max-width: calc(100% - 29.95px);
+      margin: 0;
+      font-size: 11px;
+      line-height: 1.5;
+      letter-spacing: -0.22px;
+      font-weight: 400;
+      color: var(--n-800);
+      white-space: pre-wrap;
+    }
+    .fiscal-editorial-stack {
+      position: absolute;
+      left: 29.95px;
+      top: calc(305px - var(--header-h));
+      width: 298px;
+      max-width: calc(100% - 29.95px);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+      font-size: 18px;
+      line-height: 1.4;
+      letter-spacing: -1.08px;
+      font-weight: 400;
+    }
+    .fiscal-editorial-lead-text {
+      margin: 0;
+      width: 100%;
+      color: var(--n-400);
+    }
+    .fiscal-editorial-body-text {
+      margin: 0;
+      width: 100%;
+      color: var(--n-700);
+    }
+    .fiscal-editorial-body-tight {
+      width: 100%;
+      color: var(--n-700);
+    }
+    .fiscal-editorial-body-tight p {
+      margin: 0;
+      line-height: 1.4;
+    }
+    #s9 .fiscal-editorial-lead-block {
+      position: absolute;
+      left: 30px;
+      top: calc(305px - var(--header-h));
+      margin: 0;
+      max-width: calc(100% - 30px);
+      font-size: 18px;
+      line-height: 1.4;
+      letter-spacing: -1.08px;
+      font-weight: 400;
+      color: var(--n-400);
+    }
+    #s9 .fiscal-editorial-body-block {
+      position: absolute;
+      left: 30px;
+      top: calc(370px - var(--header-h));
+      width: 279px;
+      max-width: calc(100% - 30px);
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.4;
+      letter-spacing: -1.08px;
+      font-weight: 400;
+      color: var(--n-700);
+    }
+
+    /* Fiscal: slightly slower entrance — feels intentional, not abrupt */
+    .screen.fiscal {
+      transition: opacity .65s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    /* Calibration list — gap 38, row gap 18; title→list spacing unified 30px */
+    .cal-list {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      margin-top: 40px;
+      width: 321.193px;
+      max-width: 100%;
+    }
+    .cal-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      cursor: pointer;
+    }
+    #s12 .cal-row:nth-child(-n+2) {
+      align-items: flex-end;
+    }
+    #s12 .cal-row:nth-child(n+3) {
+      align-items: center;
+    }
+    .cal-row .cal-label {
+      flex: 1;
+      min-width: 0;
+      max-width: 293.193px;
+    }
+    .radio-circle {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 1px solid var(--n-800);
+      position: relative;
+      flex-shrink: 0;
+      box-sizing: border-box;
+      transition: border-color .2s;
+    }
+    .radio-circle::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--n-white);
+      transition: transform .2s cubic-bezier(.34, 1.56, .64, 1);
+    }
+    .cal-row.sel .radio-circle { border-color: var(--n-white); }
+    .cal-row.sel .radio-circle::after { transform: translate(-50%, -50%) scale(1); }
+
+    /* Greeting — Figma 13 */
+    .greeting-panel {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .greeting-panel.active { display: flex; }
+    .greeting-inner {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      padding: calc(130px - var(--header-h)) var(--pad-x) 0;
+      padding-left: 27.3px;
+    }
+    .greeting-hero-row {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      gap: 0;
+      min-height: 73px;
+    }
+    .greeting-accent-line {
+      width: 1px;
+      background: var(--n-white);
+      flex-shrink: 0;
+      margin-right: 21px;
+      align-self: stretch;
+      min-height: 73px;
+    }
+    .greeting-hero {
+      font-size: 18px;
+      line-height: 1.25;
+      letter-spacing: -0.36px;
+      color: var(--n-white);
+      font-weight: 400;
+      max-width: 220px;
+      padding-top: 31px;
+    }
+    .greeting-body {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 30px;
+      max-width: 325.984px;
+    }
+    .greeting-body p {
+      font-size: 14px;
+      line-height: 1.5;
+      letter-spacing: -0.28px;
+      color: var(--n-700);
+      font-weight: 400;
+      margin: 0;
+    }
+
+    /* Pricing — Figma 19812:42058 */
+    .pricing-hero {
+      width: 181px;
+      max-width: 100%;
+      font-size: 18px;
+      line-height: 1.4;
+      font-weight: 400;
+      color: var(--n-400);
+      margin: 0 0 147.6px;
+    }
+    .pricing-hero p {
+      margin: 0;
+    }
+    .pricing-sections {
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
+      width: 274px;
+      max-width: 100%;
+      padding-bottom: 120px;
+    }
+    .pricing-section {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      width: 100%;
+    }
+    .pricing-section--fiscal {
+      width: 261px;
+      max-width: 100%;
+    }
+    .pricing-h2 {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.4;
+      letter-spacing: -1.08px;
+      font-weight: 400;
+      color: var(--n-400);
+    }
+    .pricing-h2-duo {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      align-items: flex-start;
+    }
+    .pricing-h2-duo > p {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.4;
+      letter-spacing: -1.08px;
+      font-weight: 400;
+      color: var(--n-400);
+    }
+    .pricing-body {
+      font-size: 14px;
+      line-height: 1.5;
+      letter-spacing: -0.28px;
+      font-weight: 400;
+      color: var(--n-700);
+    }
+    .pricing-body--w255 {
+      max-width: 254.949px;
+    }
+    /* Figma 42076 — Fiscal.ai Max body column */
+    .pricing-body--fiscal {
+      max-width: 269.949px;
+    }
+    .pricing-body p {
+      margin: 0;
+    }
+    .pricing-body p + p {
+      margin-top: 0;
+    }
+    .pricing-body .pricing-br-gap {
+      margin: 0;
+      min-height: 1.5em;
+    }
+    .pricing-a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      cursor: pointer;
+    }
+    .pricing-a:hover {
+      color: var(--n-400);
+    }
+
+    /* Acknowledgement — Figma 15 */
+    .ack-block {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 274.146px;
+      max-width: 100%;
+      margin-top: 40px;
+    }
+    .ack-block .plain-list p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.5;
+      letter-spacing: -0.28px;
+      color: var(--n-700);
+    }
+
+    /* CTA */
+    .cta-bar {
+      flex-shrink: 0;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      height: 99px;
+      padding: 10px 30px;
+      box-sizing: border-box;
+    }
+    .cta-bar.cta-fiscal { height: 85px; }
+    .arrow-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--n-400);
+      padding: 10px;
+      margin: -10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color .2s, opacity 0.9s ease, transform 0.9s ease;
+    }
+    .arrow-btn:hover { color: var(--n-200); }
+    .arrow-btn:disabled { color: var(--n-800); pointer-events: none; }
+
+    .ack-footer-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 15px;
+      line-height: 1.15;
+      letter-spacing: -0.3px;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      margin: -10px;
+      transition: opacity .15s;
+    }
+    .ack-footer-btn--ghost { color: var(--n-700); }
+    .ack-footer-btn--primary { color: var(--n-white); }
+
+    /* Before entering — Figma 19812:42041 */
+    .fig-main--begin {
+      padding-top: calc(153px - var(--header-h));
+      padding-left: var(--pad-x);
+      padding-right: var(--pad-x);
+    }
+    .begin-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      width: 274.146px;
+      max-width: 100%;
+    }
+    .begin-title-wrap {
+      width: 255px;
+      max-width: 100%;
+    }
+    .begin-title {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.4;
+      letter-spacing: -1.08px;
+      font-weight: 400;
+      color: var(--n-400);
+    }
+    .begin-body {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+      width: 100%;
+    }
+    .begin-split {
+      font-size: 14px;
+      line-height: 1.5;
+      letter-spacing: -0.28px;
+      color: var(--n-400);
+      font-weight: 400;
+    }
+    .begin-split p { margin: 0; }
+    .begin-listed {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.5;
+      letter-spacing: -0.28px;
+      color: var(--n-700);
+      font-weight: 400;
+    }
+    .begin-list {
+      width: 168px;
+      max-width: 100%;
+      font-size: 14px;
+      line-height: 1.5;
+      letter-spacing: -0.28px;
+      color: var(--n-700);
+      font-weight: 400;
+    }
+    .begin-list p {
+      margin: 0;
+      white-space: nowrap;
+    }
+    .begin-para {
+      margin: 0;
+      max-width: 262px;
+      font-size: 14px;
+      line-height: 1.5;
+      letter-spacing: -0.28px;
+      color: var(--n-700);
+      font-weight: 400;
+    }
+    .cta-bar.cta-begin-footer {
+      height: 85px;
+      padding: 10px 30px;
+      box-sizing: border-box;
+      justify-content: flex-end;
+      align-items: center;
+    }
+    .begin-footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      width: 100%;
+      max-width: 333px;
+      margin-left: auto;
+    }
+    .begin-footer-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 15px;
+      line-height: 1.15;
+      letter-spacing: -0.3px;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      margin: -10px;
+      transition: opacity .15s;
+    }
+    .begin-footer-btn--primary { color: var(--n-white); }
+
+    .anim-ready {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .anim-in { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <div class="phone">
+
+    <!-- s1 · INTRO -->
+    <div class="screen active" id="s1">
+      <div class="screen-header">
+        <div class="top-bar">
+          <button type="button" class="back-btn hidden" aria-hidden="true">
+            <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="exit-btn">Login</button>
+        </div>
+        <div class="top-divider"></div>
+      </div>
+      <div class="fig-main">
+        <div class="fig-col">
+          <p class="t18-w">This is not a trading app.</p>
+          <p class="t14-400">It’s an investing system designed for long-term compounding.</p>
+        </div>
+      </div>
+      <div class="cta-bar">
+        <button type="button" class="arrow-btn" onclick="go(2)">
+          <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- s2 · THE SYSTEM -->
+    <div class="screen" id="s2">
+      <div class="screen-header">
+        <div class="top-bar">
+          <button type="button" class="back-btn" onclick="goBack()">
+            <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="exit-btn">Login</button>
+        </div>
+        <div class="top-divider"></div>
+      </div>
+      <div class="fig-main">
+        <div class="fig-col">
+          <p class="t18-w">Most investing platforms are built<br>to maximize activity.</p>
+          <p class="t14-700">More trades.<br>More alerts.<br>More engagement.</p>
+          <p class="t14-400">This system is built to maximize compounding.</p>
+          <p class="t14-700">Activity generates revenue<br>for platforms.</p>
+          <p class="t14-400">Compounding generates wealth<br>for investors.</p>
+          <p class="t14-700">The difference is structural.</p>
+        </div>
+      </div>
+      <div class="cta-bar">
+        <button type="button" class="arrow-btn" onclick="go(3)">
+          <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- s3 · PURPOSE -->
+    <div class="screen" id="s3">
+      <div class="screen-header">
+        <div class="top-bar">
+          <button type="button" class="back-btn" onclick="goBack()">
+            <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="exit-btn">Login</button>
+        </div>
+        <div class="top-divider"></div>
+      </div>
+      <div class="fig-main">
+        <div class="fig-col">
+          <p class="t18-w">Intelligent Investing exists to produce better investors.</p>
+          <p class="t14-700">Not more engagement.<br>Not more transactions.<br>Not entertainment.</p>
+        </div>
+      </div>
+      <div class="cta-bar">
+        <button type="button" class="arrow-btn" onclick="go(4)">
+          <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- s4 · CONSTRAINT -->
+    <div class="screen" id="s4">
+      <div class="screen-header">
+        <div class="top-bar">
+          <button type="button" class="back-btn" onclick="goBack()">
+            <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="exit-btn">Login</button>
+        </div>
+        <div class="top-divider"></div>
+      </div>
+      <div class="fig-main">
+        <div class="fig-col">
+          <p class="t18-w">Most investors underperform<br>for one reason.</p>
+          <p class="constraint-14-400">Behavior.</p>
+          <p class="constraint-14-700">Not lack of information.</p>
+          <p class="constraint-14-400">Overconfidence.<br>Impatience.<br>Fear.</p>
+          <p class="constraint-14-700">Markets punish these traits with mathematical precision.</p>
+          <p class="constraint-14-400">This system was built to counter them.</p>
+        </div>
+      </div>
+      <div class="cta-bar">
+        <button type="button" class="arrow-btn" onclick="go(5)">
+          <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- s5 · WALL STREET -->
+    <div class="screen" id="s5">
+      <div class="screen-header">
+        <div class="top-bar">
+          <button type="button" class="back-btn" onclick="goBack()">
+            <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="exit-btn">Login</button>
+        </div>
+        <div class="top-divider"></div>
+      </div>
+      <div class="fig-main">
+        <div class="body-area">
+          <p class="t18-w wall-lead">Over long periods most professional investors fail to beat the market.</p>
+          <div class="wall-stats">
+            <div class="wall-stat-block">
+              <div class="wall-stat-label">10 Years</div>
+              <div class="wall-stat-value-row">
+                <span>~90% Underperform</span>
+                <button type="button" class="info-icon-btn" aria-label="About 10-year underperformance statistic">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                    <circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1"/>
+                    <path d="M6 5.25V8.25M6 3.75h.01" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="wall-stat-block">
+              <div class="wall-stat-label">20 Years</div>
+              <div class="wall-stat-value-row">
+                <span>~98% Underperform</span>
+                <button type="button" class="info-icon-btn" aria-label="About 20-year underperformance statistic">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                    <circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1"/>
+                    <path d="M6 5.25V8.25M6 3.75h.01" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="wall-foot">
+            <div class="t14-400 split-400">
+              <p>These are highly trained professionals</p>
+              <p>with research teams and vast resources.</p>
+            </div>
+            <div class="t14-700 split-700">
+              <p>Outperformance is possible.</p>
+              <p>But it is extremely difficult.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cta-bar">
+        <button type="button" class="arrow-btn" onclick="go(6)">
+          <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- s6 · COMPOUNDING -->
+    <div class="screen" id="s6">
+      <div class="screen-header">
+        <div class="top-bar">
+          <button type="button" class="back-btn" onclick="goBack()">
+            <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="exit-btn">Login</button>
+        </div>
+        <div class="top-divider"></div>
+      </div>
+      <div class="fig-main">
+        <div class="body-area">
+          <div class="compound-stack">
+            <p class="t18-w">$10,000 invested at 11% annually.</p>
+            <div class="compound-rows" id="cRows">
+              <p class="compound-row">10 Years<br><span class="c-val">$28,000</span></p>
+              <p class="compound-row">20 Years<br><span class="c-val">$80,000</span></p>
+              <p class="compound-row">30 Years<br><span class="c-val">$230,000</span></p>
+              <p class="compound-row">40 Years<br><span class="c-val">$650,000</span></p>
+              <p class="compound-row">50 Years<br><span class="c-val">$1,800,000+</span></p>
+            </div>
+            <div class="compound-foot">
+              <p class="t14-400">Most of the growth happens in<br>the final decades.</p>
+              <div class="t14-700 split-700">
+                <p>Most investors interrupt compounding</p>
+                <p>long before it becomes powerful.</p>
+              </div>
+              <p class="t14-400">This system exists to protect it.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cta-bar">
+        <button type="button" class="arrow-btn" onclick="go(7)">
+          <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- s7 · PROFESSIONAL SYSTEMS -->
+    <div class="screen" id="s7">
+      <div class="screen-header">
+        <div class="top-bar">
+          <button type="button" class="back-btn" onclick="goBack()">
+            <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="exit-btn">Login</button>
+        </div>
+        <div class="top-divider"></div>
+      </div>
+      <div class="fig-main">
+        <div class="fig-col">
+          <p class="t18-w">Serious investors rely on systems.</p>
+          <div class="fig-line-group">
+            <p class="t14-400">Research processes.</p>
+            <p class="t14-400">Decision documentation.</p>
+            <p class="t14-400">Performance measurement.</p>
+          </div>
+          <p class="t14-700">Retail investors rely on instinct.</p>
+          <div class="fig-line-group">
+            <p class="t14-400">News.</p>
+            <p class="t14-400">Narratives.</p>
+            <p class="t14-400">Memory.</p>
+          </div>
+          <div class="fig-line-group">
+            <p class="t14-700">This system introduces the structure</p>
+            <p class="t14-700">serious investors rely on.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cta-bar">
+        <button type="button" class="arrow-btn" onclick="go(8)">
+          <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- s8 · FISCAL — Figma 20249:17702 -->
+    <div class="screen fiscal" id="s8">
+      <div class="screen-header">
+        <div class="top-bar">
+          <button type="button" class="back-btn" onclick="goBack()">
+            <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="exit-btn">Login</button>
+        </div>
+        <div class="top-divider"></div>
+      </div>
+      <div class="fiscal-editorial-wrap">
+        <p class="fiscal-chapter-label">01  Research Standard</p>
+        <div class="fiscal-editorial-stack">
+          <p class="fiscal-editorial-lead-text">Most investors rely on surface-level information.</p>
+          <p class="fiscal-editorial-body-text">Basic broker tools are common.<br>Serious research environments are not.</p>
+          <div class="fiscal-editorial-body-tight">
+            <p>Serious investing requires serious tools.</p>
+            <p>Institutional-grade research is included as part of the system.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cta-bar cta-fiscal">
+        <button type="button" class="arrow-btn" onclick="go(9)">
+          <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- s9 · FISCAL — Figma 20249:17716 -->
+    <div class="screen fiscal" id="s9">
+      <div class="screen-header">
+        <div class="top-bar">
+          <button type="button" class="back-btn" onclick="goBack()">
+            <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="exit-btn">Login</button>
+        </div>
+        <div class="top-divider"></div>
+      </div>
+      <div class="fiscal-editorial-wrap">
+        <p class="fiscal-chapter-label">02  Clear Judgment</p>
+        <p class="fiscal-editorial-lead-block">The point is not better tools.<br>It is better decisions.</p>
+        <p class="fiscal-editorial-body-block">Research supports analysis.<br>The system provides structure.<br>The user decides.</p>
+      </div>
+      <div class="cta-bar cta-fiscal">
+        <button type="button" class="arrow-btn" onclick="go(10)">
+          <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- s10 · ENVIRONMENT -->
+    <div class="screen" id="s10">
+      <div class="screen-header">
+        <div class="top-bar">
+          <button type="button" class="back-btn" onclick="goBack()">
+            <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="exit-btn">Login</button>
+        </div>
+        <div class="top-divider"></div>
+      </div>
+      <div class="fig-main">
+        <div class="fig-col">
+          <p class="t18-w">Professional investors work in <span class="nowrap-phrase">environments designed for thinking.</span></p>
+          <p class="t14-700">Not stimulation.</p>
+          <p class="t14-400">Trading apps optimize for reaction.</p>
+          <p class="t14-700">Breaking alerts.<br>Emotional color signals.<br>Constant noise.</p>
+          <p class="t14-400">This system removes them.</p>
+          <p class="t14-700">Silence improves judgment.</p>
+        </div>
+      </div>
+      <div class="cta-bar">
+        <button type="button" class="arrow-btn" onclick="go(11)">
+          <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- s11 · FINAL -->
+    <div class="screen" id="s11">
+      <div class="screen-header">
+        <div class="top-bar">
+          <button type="button" class="back-btn" onclick="goBack()">
+            <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="exit-btn">Login</button>
+        </div>
+        <div class="top-divider"></div>
+      </div>
+      <div class="fig-main">
+        <div class="fig-col">
+          <p class="t18-w">This system does not promise<br>outperformance.</p>
+          <p class="t14-700">No system can.</p>
+          <p class="t14-400">What it provides instead is rarer.</p>
+          <p class="t14-700">Fewer catastrophic mistakes.<br>Better decisions.</p>
+          <p class="t14-400">An environment designed<br>for long-term compounding.</p>
+          <p class="t14-700">Long-term investors are rare.<br>This place was built for them.</p>
+        </div>
+      </div>
+      <div class="cta-bar">
+        <button type="button" class="arrow-btn" onclick="go(12)">
+          <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- s12 · CALIBRATION -->
+    <div class="screen" id="s12">
+      <div class="screen-header">
+        <div class="top-bar">
+          <button type="button" class="back-btn" onclick="goBack()">
+            <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="exit-btn">Login</button>
+        </div>
+        <div class="top-divider"></div>
+      </div>
+      <div class="fig-main">
+        <p class="t18-cal">Over the last 5+ years, have you<br>consistently beaten the S&amp;P 500<br>after fees and taxes?</p>
+        <div class="body-area">
+          <div class="cal-list">
+            <div class="cal-row" data-choice="beat" onclick="selectOpt(this)">
+              <span class="cal-label t14-opt">I have consistently beaten the S&amp;P 500</span>
+              <div class="radio-circle"></div>
+            </div>
+            <div class="cal-row" data-choice="match" onclick="selectOpt(this)">
+              <span class="cal-label t14-opt">I have roughly matched the S&amp;P 500</span>
+              <div class="radio-circle"></div>
+            </div>
+            <div class="cal-row" data-choice="under" onclick="selectOpt(this)">
+              <span class="cal-label t14-opt">I have underperformed the S&amp;P 500</span>
+              <div class="radio-circle"></div>
+            </div>
+            <div class="cal-row" data-choice="track" onclick="selectOpt(this)">
+              <span class="cal-label t14-opt">I don’t track this</span>
+              <div class="radio-circle"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cta-bar">
+        <button type="button" class="arrow-btn" id="s12btn" onclick="go(13)" disabled>
+          <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- s13 · PRICING (Figma 19812:42058) -->
+    <div class="screen" id="s13">
+      <div class="screen-header">
+        <div class="top-bar">
+          <button type="button" class="back-btn" onclick="goBack()">
+            <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="exit-btn">Login</button>
+        </div>
+        <div class="top-divider"></div>
+      </div>
+      <div class="fig-main fig-main--scroll">
+        <div class="pricing-hero">
+          <p>The cost is</p>
+          <p>$20 per month.</p>
+        </div>
+        <div class="pricing-sections">
+          <section class="pricing-section">
+            <h2 class="pricing-h2">Membership Structure</h2>
+            <div class="pricing-body pricing-body--w255">
+              <p>Intelligent Investing operates on a flat monthly membership, combined with a minimal management fee on managed portfolios.<br><br>$20 per month.<br><br>Cancel anytime.<br><br>This structure is designed to align incentives with long-term outcomes, not activity.</p>
+            </div>
+          </section>
+          <section class="pricing-section">
+            <div class="pricing-h2-duo">
+              <p>Trading &amp; Foreign Exchange (FX)</p>
+              <p>Self-Directed Investing</p>
+            </div>
+            <div class="pricing-body">
+              <p>Trades involving US securities may incur an FX conversion.<br><br>Intelligent Investing does not charge an FX fee or apply an FX markup to member transactions.<br><br>FX is executed at the rate displayed to members by a third-party partner, and in certain circumstances, Intelligent Investing may incur a gain or a loss on FX transactions.<br><br>This does not increase the FX rate paid by members. FX is not contingent on transaction volume or frequency, and does not incentivize increased trading activity. We do not charge trading commissions.</p>
+            </div>
+          </section>
+          <section class="pricing-section pricing-section--fiscal">
+            <div class="pricing-h2-duo">
+              <p>Fiscal.ai Max</p>
+              <p>Research &amp; Analysis</p>
+            </div>
+            <div class="pricing-body pricing-body--fiscal">
+              <p>Every membership includes access to <a class="pricing-a" href="https://fiscal.ai/" target="_blank" rel="noopener noreferrer">Fiscal.ai</a> Max (normally $99/month), a professional-grade research and analysis environment.</p>
+              <p class="pricing-br-gap">&nbsp;</p>
+              <p>Most investors trade based on price and headlines.<br><br>Serious investors analyze businesses. <a class="pricing-a" href="https://fiscal.ai/" target="_blank" rel="noopener noreferrer">Fiscal.ai</a> provides structured access to:<br><br>Multi-year income statements, balance sheets, and cash flow data.<br><br>Return on capital and free cash flow analysis.<br><br>Margin trends and capital allocation history.<br><br>Clean company comparisons across time.<br><br></p>
+              <p>It also includes AI-assisted tools to:<br>Summarize filings<br>Surface financial trends<br>Accelerate research workflows<br><br>The AI supports analysis. It does not make decisions. This research layer exists to raise the standard of thinking inside the platform.</p>
+              <p><br>It is not a stock picker.</p>
+              <p><br>It is not a signal engine.</p>
+              <p><br>It is not a shortcut.</p>
+              <p><br>It is a disciplined research environment designed for investors who intend to do the work.</p>
+            </div>
+          </section>
+          <section class="pricing-section">
+            <div class="pricing-h2-duo">
+              <p>Managed Portfolio Fee</p>
+              <p>Managed Investing</p>
+            </div>
+            <div class="pricing-body">
+              <p>Access to Intelligent Investing's core portfolios includes a 0.10% annual management fee on assets held in managed strategies.<br><br>Applied only to managed portfolios.</p>
+              <p class="pricing-br-gap">&nbsp;</p>
+              <p>Calculated transparently.</p>
+              <p class="pricing-br-gap">&nbsp;</p>
+              <p>No performance fees.</p>
+              <p class="pricing-br-gap">&nbsp;</p>
+              <p>This fee exists to cover:</p>
+              <p>Portfolio management</p>
+              <p>Rebalancing</p>
+              <p>Custody and administration</p>
+              <p>Operational infrastructure</p>
+              <p class="pricing-br-gap">&nbsp;</p>
+              <p>It is a fraction of what traditional wealth managers and funds charge.</p>
+            </div>
+          </section>
+          <section class="pricing-section">
+            <h2 class="pricing-h2">Legal Structure</h2>
+            <div class="pricing-body">
+              <p>Intelligent Investing operates through two regulated entities — an investment dealer and a portfolio manager — to provide different services.</p>
+              <p><br>Each entity is separate and responsible only for the services it provides.</p>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div class="cta-bar">
+        <button type="button" class="arrow-btn" onclick="go(14)">
+          <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- s14 · BEFORE ENTERING (Figma 19812:42041) -->
+    <div class="screen" id="s14">
+      <div class="screen-header">
+        <div class="top-bar">
+          <button type="button" class="back-btn" onclick="goBack()">
+            <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="exit-btn">Login</button>
+        </div>
+        <div class="top-divider"></div>
+      </div>
+      <div class="fig-main fig-main--begin">
+        <div class="begin-stack">
+          <div class="begin-title-wrap">
+            <p class="begin-title">Before entering the system.</p>
+          </div>
+          <div class="begin-body">
+            <div class="begin-split">
+              <p>This platform is designed for long-term</p>
+              <p>investors.</p>
+            </div>
+            <p class="begin-listed">It prioritizes:</p>
+            <div class="begin-list">
+              <p>Discipline over activity</p>
+              <p>Process over prediction</p>
+              <p>Compounding over trading</p>
+            </div>
+            <p class="begin-para">If you are looking for a platform optimized for constant trading, you will not find it here.</p>
+            <div class="begin-split">
+              <p>If you are building wealth over decades,</p>
+              <p>you are in the right place.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cta-bar cta-begin-footer">
+        <div class="begin-footer-row">
+          <button type="button" class="begin-footer-btn begin-footer-btn--primary">
+            <svg width="8" height="7" viewBox="0 0 8 7" fill="none" aria-hidden="true"><path d="M4 6L7 3.5L4 1M7 3.5H0" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            I’m in the right place
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.phone -->
+
+  <script>
+    const TOTAL          = 14;
+    const STAGGER        = 700;         // ms — standard screens
+    const FISCAL_STAGGER = 900;         // ms — fiscal screens (deliberate, slower)
+    const FISCAL_ARROW_EXTRA = 800;     // extra ms before arrow appears on fiscal screens
+
+    let cur = 1;
+
+    /* ── Collect animated elements in DOM order ── */
+    function getAnimEls(screen) {
+      const els = Array.from(screen.querySelectorAll(
+        /* standard text screens */
+        '.fig-col > p, .fig-col > .fig-line-group, ' +
+        /* wall street stats */
+        '.wall-lead, .wall-stat-block, .wall-foot > div, ' +
+        /* compounding */
+        '.compound-stack > p, .compound-row, .compound-foot > p, .compound-foot > .split-700, ' +
+        /* fiscal editorial */
+        '.fiscal-chapter-label, .fiscal-editorial-stack > *, .fiscal-editorial-lead-block, .fiscal-editorial-body-block, ' +
+        /* calibration */
+        '.t18-cal, .cal-row, ' +
+        /* pricing */
+        '.pricing-hero, .pricing-section, ' +
+        /* before entering */
+        '.begin-title, .begin-body > *, .begin-footer-btn'
+      ));
+      const arrow = screen.querySelector('.arrow-btn');
+      if (arrow) els.push(arrow);
+      return els;
+    }
+
+    /* ── Instantly reset a screen's elements to hidden ── */
+    function resetScreen(screen) {
+      getAnimEls(screen).forEach(el => {
+        el.style.transition = 'none';
+        el.classList.remove('anim-in');
+        el.classList.add('anim-ready');
+        void el.offsetHeight;  // force reflow
+        el.style.transition = '';
+      });
+    }
+
+    /* ── Stagger-reveal all elements on screen ── */
+    function animateScreen(screen) {
+      const isFiscal = screen.classList.contains('fiscal');
+      const stagger  = isFiscal ? FISCAL_STAGGER : STAGGER;
+      const els      = getAnimEls(screen);
+
+      els.forEach((el, i) => {
+        let delay = i * stagger;
+        // Arrow on fiscal: extra pause after last content element
+        if (isFiscal && el.classList.contains('arrow-btn')) {
+          delay += FISCAL_ARROW_EXTRA;
+        }
+        setTimeout(() => el.classList.add('anim-in'), delay);
+      });
+    }
+
+    /* ── Navigate ── */
+    function go(n) {
+      if (n < 1 || n > TOTAL) return;
+
+      const prev = document.getElementById('s' + cur);
+      const next = document.getElementById('s' + n);
+
+      // Fiscal ↔ Fiscal: fast chapter-turn feel (same visual space)
+      // All other transitions: CSS default (.45s or .65s for fiscal entry)
+      if (prev.classList.contains('fiscal') && next.classList.contains('fiscal')) {
+        prev.style.transition = 'opacity .15s ease';
+        next.style.transition = 'opacity .15s ease';
+      } else {
+        prev.style.transition = '';
+        next.style.transition = '';
+      }
+
+      prev.classList.remove('active');
+      cur = n;
+      next.classList.add('active');
+      resetScreen(next);
+      setTimeout(() => animateScreen(next), 80);
+    }
+
+    function goBack() { go(cur - 1); }
+
+    function selectOpt(el) {
+      document.querySelectorAll('.cal-row').forEach(r => r.classList.remove('sel'));
+      el.classList.add('sel');
+      document.getElementById('s12btn').disabled = false;
+    }
+
+    /* ── Init ── */
+    document.querySelectorAll('.screen').forEach(s => resetScreen(s));
+    animateScreen(document.getElementById('s1'));
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') go(cur + 1);
+      if (e.key === 'ArrowLeft')  go(cur - 1);
+    });
+  </script>
+
+</body>
+</html>

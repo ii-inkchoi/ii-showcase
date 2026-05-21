@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>II Bottom sheet system</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  background: #000000;
+  color: #FFFFFF;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  line-height: 1.55;
+  letter-spacing: 0;
+}
+
+body {
+  min-height: 100vh;
+  padding: 0 0 80px;
+}
+
+.page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+@media (max-width: 600px) {
+  .page { padding: 0 20px; }
+}
+
+/* Header */
+.doc-header {
+  padding: 64px 0 48px;
+  border-bottom: 1px solid #2A2D2E;
+}
+.doc-eyebrow {
+  font-size: 11px;
+  color: #565B5E;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.doc-title {
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  margin-bottom: 14px;
+}
+.doc-sub {
+  font-size: 14px;
+  color: #929292;
+  line-height: 1.6;
+  max-width: 560px;
+  margin-bottom: 24px;
+}
+.doc-meta {
+  display: flex;
+  gap: 24px;
+  font-size: 12px;
+  color: #565B5E;
+  flex-wrap: wrap;
+}
+.doc-meta a { color: #929292; text-decoration: underline; text-underline-offset: 3px; }
+.doc-meta a:hover { color: #FFFFFF; }
+
+/* Section */
+section {
+  padding: 56px 0;
+  border-bottom: 1px solid #2A2D2E;
+}
+section:last-of-type { border-bottom: none; }
+.section-label {
+  font-size: 11px;
+  color: #565B5E;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.section-title {
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: -0.03em;
+  margin-bottom: 12px;
+}
+.section-desc {
+  font-size: 14px;
+  color: #929292;
+  line-height: 1.65;
+  max-width: 600px;
+  margin-bottom: 32px;
+}
+.section-desc + .section-desc { margin-top: -16px; }
+
+/* Sub-section */
+.sub-block {
+  margin-top: 40px;
+}
+.sub-block:first-child { margin-top: 0; }
+.sub-title {
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+  color: #FFFFFF;
+}
+.sub-meta {
+  font-size: 12px;
+  color: #565B5E;
+  margin-bottom: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.3px;
+}
+.sub-desc {
+  font-size: 13px;
+  color: #929292;
+  line-height: 1.65;
+  margin-bottom: 16px;
+  max-width: 560px;
+}
+
+/* Spec list */
+.spec {
+  margin: 16px 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+}
+.spec-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-top: 1px solid #2A2D2E;
+  gap: 24px;
+}
+.spec-row:last-child { border-bottom: 1px solid #2A2D2E; }
+.spec-k { color: #929292; flex-shrink: 0; }
+.spec-v { color: #FFFFFF; text-align: right; }
+
+/* Mockup grid */
+.mockup-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 24px;
+}
+@media (max-width: 600px) {
+  .mockup-grid { grid-template-columns: 1fr; }
+}
+.mockup-grid.single { grid-template-columns: 1fr; max-width: 360px; }
+
+.mockup {
+  display: flex;
+  flex-direction: column;
+}
+.mockup-label {
+  font-size: 11px;
+  color: #565B5E;
+  margin-bottom: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.3px;
+  line-height: 1.5;
+}
+.mockup-frame {
+  background: #000000;
+  height: 360px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #2A2D2E;
+}
+.mockup-frame.tall { height: 420px; }
+.mockup-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+}
+.mockup-sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #1C1C1C;
+  padding: 24px;
+}
+.mockup-x {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 14px;
+  height: 14px;
+}
+.mockup-x svg {
+  width: 14px;
+  height: 14px;
+  display: block;
+}
+.mockup-x line {
+  stroke: #929292;
+  stroke-width: 1;
+  stroke-linecap: square;
+}
+.mockup-title {
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: -0.02em;
+  margin: 12px 36px 0 0;
+}
+.mockup-body {
+  color: #929292;
+  font-size: 12.5px;
+  font-weight: 400;
+  line-height: 1.55;
+  margin-top: 12px;
+}
+.mockup-cta {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+  margin-top: 28px;
+}
+.mockup-cta + .mockup-cta { margin-top: 16px; }
+.mockup-cta-primary { color: #FFFFFF; }
+.mockup-cta-secondary { color: #929292; }
+.mockup-arr {
+  width: 9px;
+  height: 8px;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+.mockup-arr path {
+  stroke: currentColor;
+  stroke-width: 0.75;
+  fill: none;
+  stroke-linecap: square;
+}
+.mockup-s-list { margin-top: 28px; }
+.mockup-s-item {
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 12px 0;
+  border-top: 1px solid #3A3D3E;
+}
+.mockup-s-item.first { border-top: none; }
+
+/* Inline mark */
+.mark { color: #FFFFFF; }
+.dim { color: #565B5E; }
+
+/* Copy examples */
+.copy-pair {
+  margin-top: 16px;
+  padding: 12px 14px;
+  background: #0F0F10;
+  border-left: 1px solid #2A2D2E;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  line-height: 1.7;
+  letter-spacing: 0;
+}
+.copy-pair .x {
+  color: #565B5E;
+  text-decoration: line-through;
+  text-decoration-color: #565B5E;
+  display: block;
+}
+.copy-pair .ok {
+  color: #FFFFFF;
+  display: block;
+}
+.copy-pair .x::before { content: "× "; color: #565B5E; }
+.copy-pair .ok::before { content: "✓ "; color: #929292; }
+
+/* Lists */
+.list {
+  margin: 12px 0;
+  font-size: 13px;
+  color: #929292;
+  line-height: 1.75;
+}
+.list li {
+  list-style: none;
+  padding-left: 16px;
+  position: relative;
+}
+.list li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: #565B5E;
+}
+
+/* TOC */
+.toc {
+  font-size: 12px;
+  color: #929292;
+  margin: 24px 0 0;
+  font-family: 'JetBrains Mono', monospace;
+  line-height: 2;
+}
+.toc a { color: #929292; text-decoration: none; display: block; padding: 2px 0; }
+.toc a:hover { color: #FFFFFF; }
+.toc-num { color: #565B5E; margin-right: 12px; }
+
+/* Footer */
+.doc-footer {
+  padding: 48px 0 24px;
+  font-size: 11px;
+  color: #565B5E;
+  line-height: 1.7;
+}
+
+/* Demo link box */
+.demo-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 16px;
+  background: #0F0F10;
+  border: 1px solid #2A2D2E;
+  color: #FFFFFF;
+  text-decoration: none;
+  font-size: 13px;
+  margin-top: 16px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.demo-link:hover { background: #1A1A1B; }
+.demo-link svg { width: 9px; height: 8px; margin-left: 12px; }
+.demo-link svg path { stroke: currentColor; stroke-width: 0.75; fill: none; stroke-linecap: square; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute"><defs><symbol id="arr" viewBox="0 0 9 8"><path d="M0.5 4 H7.5 M5 1 L8 4 L5 7"/></symbol><symbol id="x" viewBox="0 0 14 14"><line x1="0" y1="0" x2="14" y2="14"/><line x1="14" y1="0" x2="0" y2="14"/></symbol></defs></svg>
+
+<div class="page">
+
+<header class="doc-header">
+  <div class="doc-eyebrow">II Design system</div>
+  <h1 class="doc-title">Bottom sheet</h1>
+  <p class="doc-sub">Single component, two layouts. Shared container, padding, dismiss scaffolding. Severe palette, sentence case, hierarchy by luminance only.</p>
+  <div class="doc-meta">
+    <span>Updated 2026.05</span>
+    <a href="II-bottom-sheet-demo.html">Interactive demo →</a>
+  </div>
+  <nav class="toc">
+    <a href="#overview"><span class="toc-num">01</span>Overview</a>
+    <a href="#categories"><span class="toc-num">02</span>Categories</a>
+    <a href="#anatomy"><span class="toc-num">03</span>Anatomy</a>
+    <a href="#cases"><span class="toc-num">04</span>All cases</a>
+    <a href="#cta"><span class="toc-num">05</span>CTA hierarchy and states</a>
+    <a href="#copy"><span class="toc-num">06</span>Copy rules</a>
+    <a href="#dismiss"><span class="toc-num">07</span>Dismiss behavior</a>
+    <a href="#motion"><span class="toc-num">08</span>Motion</a>
+    <a href="#component"><span class="toc-num">09</span>Component spec</a>
+  </nav>
+</header>
+
+<section id="overview">
+  <div class="section-label">01</div>
+  <h2 class="section-title">Overview</h2>
+  <p class="section-desc">II's bottom sheet pattern is a single component with two content layouts: action sheet (title plus body plus CTAs) and selection sheet (title plus value list). Hierarchy is built from luminance only — no weight variation, no color accents. The system follows II severe doctrine: declarative tone, friction at decision points, no consumer-modal flourish.</p>
+  <p class="section-desc">Friction is the primary distinction between use cases. Commitment moments (capital allocation, irreversible actions) block reflexive dismissal — only the X button works. Informational moments allow swipe-down and backdrop tap. The visual treatment is identical across both; the friction lever is invisible until the user tries to dismiss.</p>
+  <a class="demo-link" href="II-bottom-sheet-demo.html">Open interactive demo<svg viewBox="0 0 9 8"><path d="M0.5 4 H7.5 M5 1 L8 4 L5 7"/></svg></a>
+</section>
+
+<section id="categories">
+  <div class="section-label">02</div>
+  <h2 class="section-title">Categories</h2>
+  <p class="section-desc">Three categories defined by consequence and dismissal model. Visual treatment is shared; only dismissal behavior differs.</p>
+
+  <div class="sub-block">
+    <h3 class="sub-title">Commitment</h3>
+    <div class="sub-meta">strict dismiss · X only</div>
+    <p class="sub-desc">Capital allocation, irreversible actions, decisions that lose progress when dismissed. Buy gates, exit confirmations, cycle-skip commitments. Reflexive paths blocked: swipe-down and backdrop tap do nothing. The X button forces an intentional tap.</p>
+  </div>
+
+  <div class="sub-block">
+    <h3 class="sub-title">Informational</h3>
+    <div class="sub-meta">open dismiss · X, swipe, backdrop</div>
+    <p class="sub-desc">Method picker, completion status, actions without major consequence. Upload option, success notice, simple confirmations. All dismissal paths allowed — the user can leave reflexively.</p>
+  </div>
+
+  <div class="sub-block">
+    <h3 class="sub-title">Selection</h3>
+    <div class="sub-meta">open dismiss · value picker</div>
+    <p class="sub-desc">Form value picker. Items are values, not actions — equal weight, no primary or secondary. No arrow prefix. Hairline-separated rows. Tap on item commits the selection and dismisses the sheet.</p>
+  </div>
+</section>
+
+<section id="anatomy">
+  <div class="section-label">03</div>
+  <h2 class="section-title">Anatomy</h2>
+  <p class="section-desc">Two layouts. Same container, X button, padding, motion. Differ only in content treatment.</p>
+
+  <div class="sub-block">
+    <h3 class="sub-title">Action sheet</h3>
+    <div class="sub-meta">title + body + arrow CTAs</div>
+    <p class="sub-desc">Used for commitment, informational, confirmation, and action picker. Primary CTA white. Secondary CTA gray. Both prefixed with 8 by 7 arrow icon.</p>
+
+    <div class="mockup-grid single">
+      <div class="mockup">
+        <div class="mockup-frame">
+          <div class="mockup-backdrop"></div>
+          <div class="mockup-sheet">
+            <span class="mockup-x"><svg viewBox="0 0 14 14"><line x1="0" y1="0" x2="14" y2="14"/><line x1="14" y1="0" x2="0" y2="14"/></svg></span>
+            <div class="mockup-title">Title</div>
+            <div class="mockup-body">Body text describing the situation in factual terms.</div>
+            <div class="mockup-cta mockup-cta-primary"><svg class="mockup-arr" viewBox="0 0 9 8"><path d="M0.5 4 H7.5 M5 1 L8 4 L5 7"/></svg>Primary action</div>
+            <div class="mockup-cta mockup-cta-secondary"><svg class="mockup-arr" viewBox="0 0 9 8"><path d="M0.5 4 H7.5 M5 1 L8 4 L5 7"/></svg>Secondary action</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-row"><span class="spec-k">Sheet bg</span><span class="spec-v">#1C1C1C</span></div>
+      <div class="spec-row"><span class="spec-k">Screen bg</span><span class="spec-v">#000000</span></div>
+      <div class="spec-row"><span class="spec-k">Top corner</span><span class="spec-v">0 (square)</span></div>
+      <div class="spec-row"><span class="spec-k">Top hairline</span><span class="spec-v">none (color contrast only)</span></div>
+      <div class="spec-row"><span class="spec-k">Backdrop</span><span class="spec-v">rgba(0,0,0,0.55)</span></div>
+      <div class="spec-row"><span class="spec-k">Side padding</span><span class="spec-v">24</span></div>
+      <div class="spec-row"><span class="spec-k">Top padding</span><span class="spec-v">24</span></div>
+      <div class="spec-row"><span class="spec-k">X to title</span><span class="spec-v">16</span></div>
+      <div class="spec-row"><span class="spec-k">Title to body</span><span class="spec-v">12</span></div>
+      <div class="spec-row"><span class="spec-k">Body to CTA</span><span class="spec-v">32</span></div>
+      <div class="spec-row"><span class="spec-k">CTA to CTA</span><span class="spec-v">24</span></div>
+      <div class="spec-row"><span class="spec-k">Bottom padding</span><span class="spec-v">32 + safe area</span></div>
+      <div class="spec-row"><span class="spec-k">Title</span><span class="spec-v">Inter Regular 18 / 145% / -2%</span></div>
+      <div class="spec-row"><span class="spec-k">Body</span><span class="spec-v">Inter Regular 14 / 140% / 0%</span></div>
+      <div class="spec-row"><span class="spec-k">CTA</span><span class="spec-v">Inter Regular 15 / 150% / 0%</span></div>
+      <div class="spec-row"><span class="spec-k">Title color</span><span class="spec-v">#FFFFFF</span></div>
+      <div class="spec-row"><span class="spec-k">Body color</span><span class="spec-v">#929292</span></div>
+      <div class="spec-row"><span class="spec-k">Primary CTA</span><span class="spec-v">#FFFFFF</span></div>
+      <div class="spec-row"><span class="spec-k">Secondary CTA</span><span class="spec-v">#929292</span></div>
+      <div class="spec-row"><span class="spec-k">Disabled</span><span class="spec-v">#565B5E</span></div>
+      <div class="spec-row"><span class="spec-k">Arrow icon</span><span class="spec-v">8 × 7, stroke 0.75 square</span></div>
+      <div class="spec-row"><span class="spec-k">Arrow to label gap</span><span class="spec-v">10</span></div>
+      <div class="spec-row"><span class="spec-k">X icon</span><span class="spec-v">14 × 14, stroke 1 square</span></div>
+      <div class="spec-row"><span class="spec-k">X color</span><span class="spec-v">#929292</span></div>
+      <div class="spec-row"><span class="spec-k">X hit area</span><span class="spec-v">44 × 44</span></div>
+    </div>
+  </div>
+
+  <div class="sub-block">
+    <h3 class="sub-title">Selection sheet</h3>
+    <div class="sub-meta">title + value list (hairline-separated)</div>
+    <p class="sub-desc">Used for form value selection. Items are values, equal weight. No arrow prefix. Hairline between items, no hairline above first or below last.</p>
+
+    <div class="mockup-grid single">
+      <div class="mockup">
+        <div class="mockup-frame tall">
+          <div class="mockup-backdrop"></div>
+          <div class="mockup-sheet">
+            <span class="mockup-x"><svg viewBox="0 0 14 14"><line x1="0" y1="0" x2="14" y2="14"/><line x1="14" y1="0" x2="0" y2="14"/></svg></span>
+            <div class="mockup-title">Title</div>
+            <div class="mockup-s-list">
+              <div class="mockup-s-item first">Value one</div>
+              <div class="mockup-s-item">Value two</div>
+              <div class="mockup-s-item">Value three</div>
+              <div class="mockup-s-item">Value four</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-row"><span class="spec-k">Container, X, padding</span><span class="spec-v">identical to action sheet</span></div>
+      <div class="spec-row"><span class="spec-k">Title to first item</span><span class="spec-v">28</span></div>
+      <div class="spec-row"><span class="spec-k">Item padding</span><span class="spec-v">12 top + 12 bottom</span></div>
+      <div class="spec-row"><span class="spec-k">Item typography</span><span class="spec-v">Inter Regular 13 / 150% / 0%</span></div>
+      <div class="spec-row"><span class="spec-k">Item color</span><span class="spec-v">#FFFFFF (all equal)</span></div>
+      <div class="spec-row"><span class="spec-k">Hairline between items</span><span class="spec-v">1px #3A3D3E</span></div>
+      <div class="spec-row"><span class="spec-k">First item top hairline</span><span class="spec-v">none</span></div>
+      <div class="spec-row"><span class="spec-k">Last item bottom hairline</span><span class="spec-v">none</span></div>
+      <div class="spec-row"><span class="spec-k">Arrow prefix</span><span class="spec-v">none (values, not actions)</span></div>
+      <div class="spec-row"><span class="spec-k">Max items recommended</span><span class="spec-v">6 (else: scroll or full screen)</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="cases">
+  <div class="section-label">04</div>
+  <h2 class="section-title">All cases</h2>
+  <p class="section-desc">Eight cases across categories and CTA structures. Each shows the spec applied to a real situation.</p>
+
+  <div class="sub-block">
+    <h3 class="sub-title">Commitment, single CTA</h3>
+    <div class="sub-meta">strict dismiss · 1 CTA</div>
+    <div class="mockup-grid">
+      <div class="mockup">
+        <div class="mockup-label">01 · Order exceeds limit</div>
+        <div class="mockup-frame">
+          <div class="mockup-backdrop"></div>
+          <div class="mockup-sheet">
+            <span class="mockup-x"><svg viewBox="0 0 14 14"><line x1="0" y1="0" x2="14" y2="14"/><line x1="14" y1="0" x2="0" y2="14"/></svg></span>
+            <div class="mockup-title">Order exceeds limit</div>
+            <div class="mockup-body">Orders are limited to 1,000,000 CAD per transaction.</div>
+            <div class="mockup-cta mockup-cta-primary"><svg class="mockup-arr" viewBox="0 0 9 8"><path d="M0.5 4 H7.5 M5 1 L8 4 L5 7"/></svg>Adjust Order</div>
+          </div>
+        </div>
+      </div>
+      <div class="mockup">
+        <div class="mockup-label">04 · Skip scheduled investments</div>
+        <div class="mockup-frame">
+          <div class="mockup-backdrop"></div>
+          <div class="mockup-sheet">
+            <span class="mockup-x"><svg viewBox="0 0 14 14"><line x1="0" y1="0" x2="14" y2="14"/><line x1="14" y1="0" x2="0" y2="14"/></svg></span>
+            <div class="mockup-title">Skip scheduled investments</div>
+            <div class="mockup-body">Scheduled investments for this week will not occur.</div>
+            <div class="mockup-cta mockup-cta-primary"><svg class="mockup-arr" viewBox="0 0 9 8"><path d="M0.5 4 H7.5 M5 1 L8 4 L5 7"/></svg>Skip this cycle</div>
+          </div>
+        </div>
+      </div>
+      <div class="mockup">
+        <div class="mockup-label">06 · Exit bank connection</div>
+        <div class="mockup-frame">
+          <div class="mockup-backdrop"></div>
+          <div class="mockup-sheet">
+            <span class="mockup-x"><svg viewBox="0 0 14 14"><line x1="0" y1="0" x2="14" y2="14"/><line x1="14" y1="0" x2="0" y2="14"/></svg></span>
+            <div class="mockup-title">Exit bank connection</div>
+            <div class="mockup-body">Your bank accounts won't be linked.</div>
+            <div class="mockup-cta mockup-cta-primary"><svg class="mockup-arr" viewBox="0 0 9 8"><path d="M0.5 4 H7.5 M5 1 L8 4 L5 7"/></svg>Leave</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-block">
+    <h3 class="sub-title">Commitment, two CTAs</h3>
+    <div class="sub-meta">strict dismiss · primary + secondary</div>
+    <div class="mockup-grid">
+      <div class="mockup">
+        <div class="mockup-label">02 · Insufficient buying power</div>
+        <div class="mockup-frame">
+          <div class="mockup-backdrop"></div>
+          <div class="mockup-sheet">
+            <span class="mockup-x"><svg viewBox="0 0 14 14"><line x1="0" y1="0" x2="14" y2="14"/><line x1="14" y1="0" x2="0" y2="14"/></svg></span>
+            <div class="mockup-title">Insufficient buying power</div>
+            <div class="mockup-body">This order requires $619.90 CAD. You have $500.00 CAD available.</div>
+            <div class="mockup-cta mockup-cta-primary"><svg class="mockup-arr" viewBox="0 0 9 8"><path d="M0.5 4 H7.5 M5 1 L8 4 L5 7"/></svg>Adjust Order</div>
+            <div class="mockup-cta mockup-cta-secondary"><svg class="mockup-arr" viewBox="0 0 9 8"><path d="M0.5 4 H7.5 M5 1 L8 4 L5 7"/></svg>Add Funds</div>
+          </div>
+        </div>
+      </div>
+      <div class="mockup">
+        <div class="mockup-label">03 · Order exceeds execution buffer</div>
+        <div class="mockup-frame">
+          <div class="mockup-backdrop"></div>
+          <div class="mockup-sheet">
+            <span class="mockup-x"><svg viewBox="0 0 14 14"><line x1="0" y1="0" x2="14" y2="14"/><line x1="14" y1="0" x2="0" y2="14"/></svg></span>
+            <div class="mockup-title">Order exceeds execution buffer</div>
+            <div class="mockup-body">This order would use more than 95% of available funds. A 5% buffer is required prior to execution.</div>
+            <div class="mockup-cta mockup-cta-primary"><svg class="mockup-arr" viewBox="0 0 9 8"><path d="M0.5 4 H7.5 M5 1 L8 4 L5 7"/></svg>Adjust Order</div>
+            <div class="mockup-cta mockup-cta-secondary"><svg class="mockup-arr" viewBox="0 0 9 8"><path d="M0.5 4 H7.5 M5 1 L8 4 L5 7"/></svg>Switch to limit order</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-block">
+    <h3 class="sub-title">Informational, two CTAs</h3>
+    <div class="sub-meta">open dismiss · action picker</div>
+    <div class="mockup-grid">
+      <div class="mockup">
+        <div class="mockup-label">05 · Upload option</div>
+        <div class="mockup-frame">
+          <div class="mockup-backdrop"></div>
+          <div class="mockup-sheet">
+            <span class="mockup-x"><svg viewBox="0 0 14 14"><line x1="0" y1="0" x2="14" y2="14"/><line x1="14" y1="0" x2="0" y2="14"/></svg></span>
+            <div class="mockup-title">Upload option</div>
+            <div class="mockup-body">Use a digital copy from your bank where possible.</div>
+            <div class="mockup-cta mockup-cta-primary"><svg class="mockup-arr" viewBox="0 0 9 8"><path d="M0.5 4 H7.5 M5 1 L8 4 L5 7"/></svg>From photos</div>
+            <div class="mockup-cta mockup-cta-secondary"><svg class="mockup-arr" viewBox="0 0 9 8"><path d="M0.5 4 H7.5 M5 1 L8 4 L5 7"/></svg>Select a file</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-block">
+    <h3 class="sub-title">Selection</h3>
+    <div class="sub-meta">open dismiss · value list</div>
+    <div class="mockup-grid">
+      <div class="mockup">
+        <div class="mockup-label">07 · Gender</div>
+        <div class="mockup-frame tall">
+          <div class="mockup-backdrop"></div>
+          <div class="mockup-sheet">
+            <span class="mockup-x"><svg viewBox="0 0 14 14"><line x1="0" y1="0" x2="14" y2="14"/><line x1="14" y1="0" x2="0" y2="14"/></svg></span>
+            <div class="mockup-title">Gender</div>
+            <div class="mockup-s-list">
+              <div class="mockup-s-item first">Male</div>
+              <div class="mockup-s-item">Female</div>
+              <div class="mockup-s-item">Other</div>
+              <div class="mockup-s-item">Prefer not to say</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mockup">
+        <div class="mockup-label">08 · Marital status</div>
+        <div class="mockup-frame tall">
+          <div class="mockup-backdrop"></div>
+          <div class="mockup-sheet">
+            <span class="mockup-x"><svg viewBox="0 0 14 14"><line x1="0" y1="0" x2="14" y2="14"/><line x1="14" y1="0" x2="0" y2="14"/></svg></span>
+            <div class="mockup-title">Marital status</div>
+            <div class="mockup-s-list">
+              <div class="mockup-s-item first">Single</div>
+              <div class="mockup-s-item">Married</div>
+              <div class="mockup-s-item">Common-law</div>
+              <div class="mockup-s-item">Divorced</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cta">
+  <div class="section-label">05</div>
+  <h2 class="section-title">CTA hierarchy and states</h2>
+  <p class="section-desc">Two-tier hierarchy. Primary white, secondary gray. No tertiary in this pattern. Hierarchy comes from luminance only — no weight or size variation.</p>
+
+  <div class="sub-block">
+    <h3 class="sub-title">Tier definition</h3>
+    <p class="sub-desc">Primary is the in-context recovery path. Secondary is the alternative or external action. When a sheet has only one CTA, it is primary by default.</p>
+    <div class="spec">
+      <div class="spec-row"><span class="spec-k">Primary</span><span class="spec-v">in-context fix · most common path</span></div>
+      <div class="spec-row"><span class="spec-k">Secondary</span><span class="spec-v">alternative · requires external action</span></div>
+      <div class="spec-row"><span class="spec-k">Selection items</span><span class="spec-v">all equal · no nudge</span></div>
+    </div>
+  </div>
+
+  <div class="sub-block">
+    <h3 class="sub-title">State matrix</h3>
+    <p class="sub-desc">Disabled is rare in this pattern. If it appears often, the trigger logic should be reviewed. Loading uses opacity-only fade — no spinners or haptic celebration.</p>
+    <div class="spec">
+      <div class="spec-row"><span class="spec-k">Default · Primary</span><span class="spec-v">#FFFFFF</span></div>
+      <div class="spec-row"><span class="spec-k">Default · Secondary</span><span class="spec-v">#929292</span></div>
+      <div class="spec-row"><span class="spec-k">Pressed · both</span><span class="spec-v">opacity 0.6 · 100ms fade</span></div>
+      <div class="spec-row"><span class="spec-k">Loading · both</span><span class="spec-v">opacity 0.4 · sheet locks</span></div>
+      <div class="spec-row"><span class="spec-k">Disabled · both</span><span class="spec-v">#565B5E · static</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="copy">
+  <div class="section-label">06</div>
+  <h2 class="section-title">Copy rules</h2>
+  <p class="section-desc">Sentence case throughout. Declarative tone. No questions, no urgency, no reassurance. State the fact and the action — let the reader decide.</p>
+
+  <div class="sub-block">
+    <h3 class="sub-title">Title</h3>
+    <div class="sub-meta">≤ 6 words · sentence case · declarative</div>
+    <ul class="list">
+      <li>Sentence case</li>
+      <li>Declarative statement of the situation</li>
+      <li>No question marks, no exclamation marks</li>
+      <li>State what is, not what the user feels</li>
+    </ul>
+    <div class="copy-pair">
+      <span class="x">Are You Sure You Want to Exit?</span>
+      <span class="ok">Exit bank connection</span>
+    </div>
+  </div>
+
+  <div class="sub-block">
+    <h3 class="sub-title">Body</h3>
+    <div class="sub-meta">≤ 2 sentences · sentence case · factual</div>
+    <ul class="list">
+      <li>Full sentences with periods</li>
+      <li>State of fact: what will or has happened</li>
+      <li>No reassurance ("don't worry"), no apology ("sorry to interrupt")</li>
+      <li>Numbers formatted consistently ($619.90 CAD)</li>
+    </ul>
+    <div class="copy-pair">
+      <span class="x">Oops! It looks like you don't have enough funds.</span>
+      <span class="ok">This order requires $619.90 CAD. You have $500.00 CAD available.</span>
+    </div>
+  </div>
+
+  <div class="sub-block">
+    <h3 class="sub-title">CTA</h3>
+    <div class="sub-meta">≤ 4 words · sentence case · verb + object</div>
+    <ul class="list">
+      <li>Verb plus object form</li>
+      <li>Action sheets prefix with arrow icon</li>
+      <li>Selection items have no prefix (they are values)</li>
+      <li>No urgency words ("now", "today")</li>
+      <li>No persuasion words ("easy", "quick")</li>
+    </ul>
+    <div class="copy-pair">
+      <span class="x">Click Here to Adjust Now!</span>
+      <span class="ok">→ Adjust order</span>
+    </div>
+  </div>
+
+  <div class="sub-block">
+    <h3 class="sub-title">Forbidden across all surfaces</h3>
+    <ul class="list">
+      <li>Emoji or icons inside copy</li>
+      <li>Title Case (all words capitalized)</li>
+      <li>ALL CAPS</li>
+      <li>Marketing adjectives — easy, simple, powerful, amazing</li>
+      <li>Beat the market, outperform, urgency CTAs</li>
+    </ul>
+  </div>
+</section>
+
+<section id="dismiss">
+  <div class="section-label">07</div>
+  <h2 class="section-title">Dismiss behavior</h2>
+  <p class="section-desc">Friction lever. Strict dismissal blocks reflexive paths. The X button always works — but for commitment moments it is the only way out. Tapping is intention; swiping is reflex. In a discipline-driven product, reflex is the enemy.</p>
+  <div class="spec">
+    <div class="spec-row"><span class="spec-k">X button</span><span class="spec-v">always works · all variants</span></div>
+    <div class="spec-row"><span class="spec-k">Commitment · strict</span><span class="spec-v">X only · swipe blocked · backdrop blocked</span></div>
+    <div class="spec-row"><span class="spec-k">Informational · open</span><span class="spec-v">X · swipe-down · backdrop tap</span></div>
+    <div class="spec-row"><span class="spec-k">Selection · open</span><span class="spec-v">X · swipe-down · backdrop tap</span></div>
+    <div class="spec-row"><span class="spec-k">Action button completion</span><span class="spec-v">closes sheet automatically</span></div>
+  </div>
+</section>
+
+<section id="motion">
+  <div class="section-label">08</div>
+  <h2 class="section-title">Motion</h2>
+  <p class="section-desc">Heavily damped, deterministic, unremarkable. No bounce, no spring, no haptic celebration. The micro-delay introduces patience as a value — breaks reflexive scrolling.</p>
+  <div class="spec">
+    <div class="spec-row"><span class="spec-k">Entrance micro-delay</span><span class="spec-v">150ms</span></div>
+    <div class="spec-row"><span class="spec-k">Slide-up duration</span><span class="spec-v">240ms</span></div>
+    <div class="spec-row"><span class="spec-k">Slide-down duration</span><span class="spec-v">200ms</span></div>
+    <div class="spec-row"><span class="spec-k">Easing</span><span class="spec-v">cubic-bezier(0.4, 0, 0.2, 1)</span></div>
+    <div class="spec-row"><span class="spec-k">Backdrop fade</span><span class="spec-v">200ms · sync with sheet</span></div>
+    <div class="spec-row"><span class="spec-k">CTA pressed</span><span class="spec-v">100ms opacity fade only</span></div>
+    <div class="spec-row"><span class="spec-k">Disabled state animation</span><span class="spec-v">none</span></div>
+  </div>
+</section>
+
+<section id="component">
+  <div class="section-label">09</div>
+  <h2 class="section-title">Component spec</h2>
+  <p class="section-desc">Single component, two variants by type, two variants by dismiss behavior.</p>
+  <div class="spec">
+    <div class="spec-row"><span class="spec-k">type</span><span class="spec-v">"action" | "selection"</span></div>
+    <div class="spec-row"><span class="spec-k">dismissBehavior</span><span class="spec-v">"strict" | "open"</span></div>
+    <div class="spec-row"><span class="spec-k">title</span><span class="spec-v">string · sentence case · ≤6 words</span></div>
+    <div class="spec-row"><span class="spec-k">body</span><span class="spec-v">string · action only · ≤2 sentences</span></div>
+    <div class="spec-row"><span class="spec-k">primaryAction</span><span class="spec-v">{ label, onPress }</span></div>
+    <div class="spec-row"><span class="spec-k">secondaryAction</span><span class="spec-v">{ label, onPress } · optional</span></div>
+    <div class="spec-row"><span class="spec-k">items</span><span class="spec-v">[{ label, value }] · selection only</span></div>
+    <div class="spec-row"><span class="spec-k">onDismiss</span><span class="spec-v">() => void</span></div>
+  </div>
+</section>
+
+<footer class="doc-footer">
+  Maintained by Inkyung Choi · Mogo Design Team<br>
+  For interactive testing on mobile, open the demo link at top.
+</footer>
+
+</div>
+
+</body>
+</html>

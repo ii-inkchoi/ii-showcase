@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <title>Benchmark</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-black: #000000;
+      --c-1000:  #1C1C1C;
+      --c-900:   #232627;
+      --c-800:   #565B5E;
+      --c-700:   #929292;
+      --c-600:   #A7A7A7;
+      --c-400:   #C7C7C7;
+      --c-200:   #E3E2E2;
+      --c-white: #FFFFFF;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      width: 100%;
+      max-width: 393px;
+      margin: 0 auto;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+    }
+    a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+
+    .header {
+      height: 71px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 13.5px;
+      border-bottom: 1px solid var(--c-900);
+    }
+    .back {
+      width: 13px; height: 13px;
+      display: inline-flex; align-items: center; justify-content: center;
+      color: var(--c-400);
+    }
+    .back::before {
+      content: '';
+      width: 8px; height: 8px;
+      border-left: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+      transform: rotate(45deg);
+      margin-left: 2px;
+    }
+    .back:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .exit {
+      font-size: 14px;
+      letter-spacing: -0.02em;
+      color: var(--c-400);
+      text-transform: capitalize;
+    }
+    .exit:active { opacity: 0.5; transition: opacity 80ms ease; }
+
+    .title-block {
+      padding: 81px 13.5px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+    .t-primary {
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: var(--c-700);
+      text-transform: capitalize;
+      line-height: 1.15;
+    }
+    .t-secondary {
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: var(--c-white);
+      line-height: 1.15;
+    }
+
+    /* Hero statement */
+    .hero {
+      padding: 60px 13.5px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .hero-statement {
+      font-size: 14px;
+      color: var(--c-white);
+      letter-spacing: -0.02em;
+      line-height: 1.5;
+      text-align: left;
+      font-weight: 400;
+    }
+
+    .col {
+      padding: 40px 13.5px 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .section {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      border-top: 0.5px solid var(--c-1000);
+      padding-top: 24px;
+    }
+    .section:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+    .section-label {
+      font-size: 14px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      text-align: left;
+      margin-bottom: 15px;
+    }
+
+    .row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      width: 100%;
+      padding-bottom: 10px;
+      border-bottom: 0.5px solid var(--c-900);
+    }
+    .row .lbl { font-size: 14px; color: var(--c-700); letter-spacing: -0.02em; }
+    .row .val { font-size: 15px; color: var(--c-white); letter-spacing: -0.02em; text-align: right; }
+    .row .val .muted { color: var(--c-700); margin-left: 6px; font-size: 14px; }
+
+    .row.diff .lbl { color: var(--c-700); }
+    .row.diff .val { color: var(--c-white); }
+
+    .method-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 10px;
+      border-bottom: 0.5px solid var(--c-900);
+    }
+    .method-row .lbl { font-size: 14px; color: var(--c-700); letter-spacing: -0.02em; }
+    .method-row .val { font-size: 14px; color: var(--c-400); letter-spacing: -0.02em; text-align: right; }
+
+    .link-card {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 18px 0;
+      border-top: 0.5px solid var(--c-900);
+      border-bottom: 0.5px solid var(--c-900);
+      color: inherit;
+      gap: 16px;
+    }
+    .link-card:active { opacity: 0.5; transition: opacity 80ms ease; }
+
+    /* Performance time horizon section — extra breathing space */
+    section[aria-label="Performance time horizons"] {
+      margin-top: 32px;
+      margin-bottom: 32px;
+    }
+
+    /* Time horizon periods — single section (no inner dividers) */
+    .period {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 24px 0;
+    }
+    .period:first-of-type { padding-top: 8px; }
+    .period:last-of-type { padding-bottom: 8px; }
+    .period-years {
+      font-size: 16px;
+      color: var(--c-white);
+      letter-spacing: -0.02em;
+      text-align: left;
+    }
+    .period-label {
+      font-size: 16px;
+      color: var(--c-white);
+      letter-spacing: -0.02em;
+      text-align: left;
+    }
+    .period-body {
+      font-size: 14px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      line-height: 1.5;
+      text-align: left;
+      margin-top: 8px;
+    }
+    .link-card .lc-text { display: flex; flex-direction: column; gap: 4px; text-align: left; flex: 1; }
+    .link-card .lc-title { font-size: 15px; color: var(--c-white); letter-spacing: -0.02em; }
+    .link-card .lc-sub { font-size: 13px; color: var(--c-700); letter-spacing: -0.02em; line-height: 1.4; }
+    .link-card .lc-chev { color: var(--c-700); font-size: 15px; font-weight: 300; line-height: 1; }
+
+    .disclosure {
+      padding: 0 13.5px;
+      margin-top: 30px;
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      text-align: left;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <a href="javascript:history.back()" class="back" aria-label="Back"></a>
+    <a href="Unified%20Dashboard.html" class="exit" aria-label="Exit">Exit</a>
+  </header>
+
+  <div class="title-block">
+    <span class="t-primary">Benchmark</span>
+    <span class="t-secondary">S&amp;P 500</span>
+  </div>
+
+  <section class="hero" aria-label="Statement">
+    <p class="hero-statement">The baseline most active investors<br>fail to beat.</p>
+  </section>
+
+  <div class="col">
+
+    <!-- COMPARISON -->
+    <section class="section" aria-label="Comparison">
+      <span class="section-label">Same Period</span>
+      <div class="row">
+        <span class="lbl">Your Portfolio</span>
+        <span class="val">+2,353.46<span class="muted">+5.3%</span></span>
+      </div>
+      <div class="row">
+        <span class="lbl">S&amp;P 500</span>
+        <span class="val">+5,476.91<span class="muted">+12.4%</span></span>
+      </div>
+      <div class="row diff">
+        <span class="lbl">Alpha</span>
+        <span class="val">−3,123.45<span class="muted">−7.1pp</span></span>
+      </div>
+    </section>
+
+    <!-- METHODOLOGY -->
+    <section class="section" aria-label="Methodology">
+      <span class="section-label">Methodology</span>
+      <div class="method-row">
+        <span class="lbl">Return Type</span>
+        <span class="val">Time-Weighted</span>
+      </div>
+      <div class="method-row">
+        <span class="lbl">Dividends</span>
+        <span class="val">Reinvested</span>
+      </div>
+      <div class="method-row">
+        <span class="lbl">Cost Basis</span>
+        <span class="val">Matched per position</span>
+      </div>
+      <div class="method-row">
+        <span class="lbl">Period</span>
+        <span class="val">All Time · Fixed</span>
+      </div>
+      <div class="method-row">
+        <span class="lbl">Currency</span>
+        <span class="val">CAD</span>
+      </div>
+    </section>
+
+    <!-- WHEN PERFORMANCE MATTERS -->
+    <section class="section" aria-label="Performance time horizons">
+      <span class="section-label">When does performance matter</span>
+
+      <div class="period">
+        <p class="period-years">1–3 Years</p>
+        <p class="period-label">Mostly Noise</p>
+        <p class="period-body">Short-term performance is heavily influenced by market cycles, factor exposure, and luck. Many strategies outperform temporarily. Very few persist.</p>
+      </div>
+
+      <div class="period">
+        <p class="period-years">5 Years</p>
+        <p class="period-label">Early Signal But Fragile</p>
+        <p class="period-body">Five years begins to separate process from randomness. Outperformance here deserves attention, not confidence.</p>
+      </div>
+
+      <div class="period">
+        <p class="period-years">10+ Years</p>
+        <p class="period-label">Meaningful Signal</p>
+        <p class="period-body">Sustained outperformance over a decade suggests discipline, repeatability, and behavioral control. Even here, humility is required.</p>
+      </div>
+
+      <div class="period">
+        <p class="period-years">20+ Years</p>
+        <p class="period-label">Exceptionally Rare</p>
+        <p class="period-body">Fewer than 2% of professional managers outperform the S&amp;P 500 over 20 years. This reflects an edge — not activity.</p>
+      </div>
+    </section>
+
+    <!-- CORE PORTFOLIO LINK (visual placeholder, no destination yet) -->
+    <section class="section" aria-label="Passive alternative">
+      <div class="link-card">
+        <span class="lc-text">
+          <span class="lc-title">Core Portfolio</span>
+          <span class="lc-sub">S&amp;P 500 tracking. Auto-invested. No stock picking.</span>
+        </span>
+        <span class="lc-chev" aria-hidden="true">›</span>
+      </div>
+    </section>
+
+  </div>
+
+  <p class="disclosure">
+    Past performance does not predict future returns. S&amp;P 500 baseline used solely for measurement, not as investment advice.
+  </p>
+
+  <div style="height:60px"></div>
+
+</body>
+</html>

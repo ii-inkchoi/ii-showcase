@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#000000" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<title>System-Managed Capital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --white: #ffffff;
+    --n400: #c7c7c7;
+    --n700: #929292;
+    --black: #000000;
+    --line: #2a2a2a;
+
+    --pad-x: 30px;
+    --header-h: 65px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    background: var(--black);
+    height: 100%;
+    overscroll-behavior: none;
+  }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'lnum' 1, 'tnum' 1;
+    color: var(--white);
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .screen {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background: var(--black);
+    padding-left: var(--pad-x);
+    padding-right: var(--pad-x);
+  }
+
+  /* Header */
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--black);
+    height: var(--header-h);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding-bottom: 22px;
+    margin-left: calc(var(--pad-x) * -1);
+    margin-right: calc(var(--pad-x) * -1);
+    padding-left: var(--pad-x);
+    padding-right: var(--pad-x);
+    border-bottom: 1px solid var(--line);
+  }
+  .header button {
+    background: transparent;
+    border: 0;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .header .exit {
+    font-size: 14px;
+    line-height: 1;
+    color: var(--n400);
+    letter-spacing: -0.28px;
+    text-transform: capitalize;
+  }
+
+  /* Content */
+  .content {
+    flex: 1;
+    padding-bottom: 40px;
+  }
+
+  .title {
+    margin-top: 76px;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -1.32px;
+    color: var(--white);
+    text-align: right;
+    text-transform: capitalize;
+  }
+
+  .total {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 13px;
+  }
+  .total-label {
+    font-size: 14px;
+    line-height: 1.4;
+    letter-spacing: -0.28px;
+    color: var(--n700);
+    text-align: right;
+    text-transform: capitalize;
+  }
+  .total-amount {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-weight: 300;
+    font-size: 28px;
+    line-height: 1;
+    letter-spacing: -1.68px;
+    text-align: right;
+  }
+  .total-amount .value { color: var(--white); }
+  .total-amount .currency { color: var(--n700); }
+
+  .schedule {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: flex-start;
+  }
+
+  .link-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 0;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    padding: 6px 0;
+    margin: -6px 0;
+    min-height: 32px;
+  }
+  .link-row svg { flex: none; }
+  .link-row .text {
+    font-size: 14px;
+    line-height: 1.25;
+    letter-spacing: -0.28px;
+    color: var(--white);
+    white-space: nowrap;
+  }
+  .link-row.muted .text {
+    font-size: 15px;
+    letter-spacing: -0.3px;
+    color: var(--n400);
+  }
+
+  .section-heading {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  .section-heading .label {
+    font-size: 14px;
+    line-height: 1.25;
+    letter-spacing: -0.28px;
+    color: var(--n400);
+  }
+  .rule {
+    height: 1px;
+    background: var(--line);
+    width: 100%;
+  }
+
+  .goal {
+    padding: 25px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  .goal .name {
+    font-size: 17px;
+    line-height: 1.25;
+    letter-spacing: -0.34px;
+    color: var(--white);
+    text-transform: capitalize;
+  }
+  .goal .amount,
+  .goal .meta {
+    font-size: 14px;
+    line-height: 1.25;
+    letter-spacing: -0.28px;
+    color: var(--n400);
+  }
+  .goal .amount .value { color: var(--white); }
+
+  .extras {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: flex-start;
+  }
+
+  @media (hover: hover) {
+    .link-row:hover .text { opacity: 0.85; }
+  }
+  .link-row:active { opacity: 0.7; }
+</style>
+</head>
+<body>
+  <main class="screen">
+    <header class="header">
+      <button type="button" aria-label="Back">
+        <svg width="7" height="13" viewBox="0 0 7 13" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M6 1L1 6.5L6 12" stroke="#ffffff" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button type="button" class="exit">Exit</button>
+    </header>
+
+    <div class="content">
+      <h1 class="title">System-Managed Capital</h1>
+
+      <section class="total">
+        <div class="total-label">total value</div>
+        <div class="total-amount">
+          <div class="value">25,000.00</div>
+          <div class="currency">CAD</div>
+        </div>
+      </section>
+
+      <section class="schedule">
+        <button type="button" class="link-row">
+          <svg width="9" height="8" viewBox="0 0 9 8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M0.5 4H8M8 4L4.5 0.5M8 4L4.5 7.5" stroke="#ffffff" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="text">2 Scheduled Investments</span>
+        </button>
+        <button type="button" class="link-row">
+          <svg width="9" height="8" viewBox="0 0 9 8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M0.5 4H8M8 4L4.5 0.5M8 4L4.5 7.5" stroke="#ffffff" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="text">53 weeks</span>
+        </button>
+      </section>
+
+      <section class="section-heading">
+        <div class="label">Account</div>
+        <div class="rule"></div>
+      </section>
+
+      <section class="goal">
+        <div class="name">Millionaire Goal</div>
+        <div class="amount"><span class="value">55,000.00</span> CAD</div>
+        <div class="meta">TFSA · Equity Growth</div>
+      </section>
+      <div class="rule"></div>
+
+      <section class="goal">
+        <div class="name">Property Purchase</div>
+        <div class="amount"><span class="value">20,000.00</span> CAD</div>
+        <div class="meta">RRSP · Equity Growth</div>
+      </section>
+      <div class="rule"></div>
+
+      <section class="extras">
+        <button type="button" class="link-row muted">
+          <svg width="9" height="8" viewBox="0 0 9 8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M0.5 4H8M8 4L4.5 0.5M8 4L4.5 7.5" stroke="#c7c7c7" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="text">Open a New Account</span>
+        </button>
+        <button type="button" class="link-row muted">
+          <svg width="9" height="8" viewBox="0 0 9 8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M0.5 4H8M8 4L4.5 0.5M8 4L4.5 7.5" stroke="#c7c7c7" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="text">Explore Portfolios</span>
+        </button>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flow — II Performance Dashboard prototype</title>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #1c1c1c;
+    --rule: #232627;
+    --text: #ffffff;
+    --text-2: #929292;
+    --text-3: #565b5e;
+    --arrow: #c7c7c7;
+    --arrow-exit: #565b5e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; -webkit-font-smoothing: antialiased; }
+  body { min-height: 100vh; padding: 32px 24px 64px; }
+
+  .head { max-width: 1700px; margin: 0 auto 24px; }
+  .head h1 { font-size: 18px; font-weight: 500; letter-spacing: 0.02em; }
+  .head .sub { font-size: 12px; color: var(--text-2); margin-top: 4px; }
+  .legend { display: flex; gap: 24px; margin-top: 16px; font-size: 11px; color: var(--text-2); flex-wrap: wrap; }
+  .legend .item { display: flex; align-items: center; gap: 8px; }
+  .legend .swatch { width: 28px; height: 0; border-top: 1.5px solid var(--arrow); }
+  .legend .swatch.dashed { border-top-style: dashed; border-color: var(--arrow-exit); }
+  .legend .swatch.dev { width: 12px; height: 12px; border: 1px dashed var(--text-3); border-top-width: 1px; }
+
+  .canvas {
+    max-width: 1700px;
+    margin: 0 auto;
+    overflow: auto;
+    border: 1px solid var(--rule);
+    background:
+      radial-gradient(circle at 0 0, rgba(255,255,255,0.02) 1px, transparent 1px) 0 0 / 32px 32px;
+  }
+  .canvas-inner {
+    position: relative;
+    /* width/height set by JS */
+  }
+  .connections {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .frame {
+    position: absolute;
+    width: 240px;
+    z-index: 2;
+  }
+  .frame.dev .frame-window { border-style: dashed; }
+  .frame-label {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 6px 4px 8px;
+    font-size: 11px;
+    color: var(--text-2);
+  }
+  .frame-label .name { color: var(--text); font-weight: 500; }
+  .frame-label .role { color: var(--text-3); font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .frame-window {
+    position: relative;
+    width: 240px;
+    height: 520px;
+    background: #000;
+    border: 1px solid var(--rule);
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+  }
+  .frame-window:hover { border-color: var(--text); }
+  .frame-window:hover .frame-overlay { opacity: 1; }
+  .frame-window iframe {
+    width: 393px;
+    height: 852px;
+    border: 0;
+    transform: scale(0.6105);
+    transform-origin: top left;
+    pointer-events: none;
+    background: #000;
+  }
+  .frame-overlay {
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,0.55);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    pointer-events: none;
+  }
+  .frame-overlay .pill {
+    border: 1px solid var(--text);
+    padding: 6px 14px;
+    border-radius: 999px;
+  }
+
+  .foot {
+    max-width: 1700px;
+    margin: 24px auto 0;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    font-size: 12px;
+    color: var(--text-2);
+    line-height: 1.7;
+  }
+  .foot a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+  .foot strong { color: var(--text); font-weight: 500; }
+</style>
+</head>
+<body>
+
+<header class="head">
+  <h1>II Performance Dashboard — Flow</h1>
+  <div class="sub">v3 prototype · click any frame to open it full-size in a new tab · arrows show navigation between screens</div>
+  <div class="legend">
+    <div class="item"><span class="swatch"></span> Forward navigation (user action)</div>
+    <div class="item"><span class="swatch dashed"></span> Exit (drill-down → main screen)</div>
+    <div class="item"><span class="swatch dev"></span> Dev-only preview hub</div>
+  </div>
+</header>
+
+<div class="canvas">
+  <div class="canvas-inner">
+    <svg class="connections" preserveAspectRatio="xMinYMin meet">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="#c7c7c7" />
+        </marker>
+        <marker id="arrow-exit" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="#565b5e" />
+        </marker>
+      </defs>
+    </svg>
+  </div>
+</div>
+
+<footer class="foot">
+  <strong>How to use:</strong> Each card is a live miniature of the actual prototype HTML. Click anywhere on a card to open that page full-size in a new tab. Arrows label the in-app action that triggers the navigation. All four drill-down screens (Performance, Benchmark, Open Positions, Closed Positions) exit back to Unified Dashboard via the "Exit" button in their top-right (dashed arrows).<br><br>
+  Also in this folder:
+  <a href="README.md">README.md</a> ·
+  <a href="FLOW.md">FLOW.md</a> (text version) ·
+  <a href="PAGE-SPECS.md">PAGE-SPECS.md</a> ·
+  <a href="TOKENS.md">TOKENS.md</a>
+</footer>
+
+<script>
+/* === Layout — clean 3-row arrangement ===
+   Row 1: dev hub (left)        | entry (right-center)
+   Row 2:                       | performance-dashboard
+   Row 3: benchmark | open-pos  | closed-positions
+*/
+const FRAME_W = 240, FRAME_H = 520, LABEL_H = 32;
+
+const layout = {
+  'index':                 { x: 40,   y: 60,   role: 'DEV · preview hub',         dev: true  },
+  'unified-dashboard':     { x: 760,  y: 60,   role: 'ENTRY · main app',          dev: false },
+  'performance-dashboard': { x: 760,  y: 700,  role: 'DRILL · self-directed perf',dev: false },
+  'benchmark':             { x: 200,  y: 1340, role: 'DRILL · S&P explainer',     dev: false },
+  'open-positions':        { x: 760,  y: 1340, role: 'DRILL · active list',       dev: false },
+  'closed-positions':      { x: 1320, y: 1340, role: 'DRILL · closed list',       dev: false },
+};
+
+/* Edges */
+const edges = [
+  { from: 'unified-dashboard',     to: 'performance-dashboard', label: 'tap Self-Directed performance', style: 'forward' },
+  { from: 'performance-dashboard', to: 'benchmark',             label: 'S&P 500 / Would Have',          style: 'forward' },
+  { from: 'performance-dashboard', to: 'open-positions',        label: 'View All open',                 style: 'forward' },
+  { from: 'performance-dashboard', to: 'closed-positions',      label: 'View All closed · ?filter=winners|losers', style: 'forward' },
+
+  /* Exit (dashed) */
+  { from: 'performance-dashboard', to: 'unified-dashboard',     label: 'Exit', style: 'exit' },
+  { from: 'benchmark',             to: 'unified-dashboard',     label: 'Exit', style: 'exit' },
+  { from: 'open-positions',        to: 'unified-dashboard',     label: 'Exit', style: 'exit' },
+  { from: 'closed-positions',      to: 'unified-dashboard',     label: 'Exit', style: 'exit' },
+
+  /* Index links (very faint) */
+  { from: 'index', to: 'unified-dashboard',     label: '', style: 'dev' },
+  { from: 'index', to: 'performance-dashboard', label: '', style: 'dev' },
+  { from: 'index', to: 'benchmark',             label: '', style: 'dev' },
+  { from: 'index', to: 'open-positions',        label: '', style: 'dev' },
+  { from: 'index', to: 'closed-positions',      label: '', style: 'dev' },
+];
+
+/* Frames */
+const canvasInner = document.querySelector('.canvas-inner');
+for (const [name, pos] of Object.entries(layout)) {
+  const frame = document.createElement('div');
+  frame.className = 'frame' + (pos.dev ? ' dev' : '');
+  frame.style.left = pos.x + 'px';
+  frame.style.top  = pos.y + 'px';
+  frame.innerHTML = `
+    <div class="frame-label">
+      <span class="name">${name}.html</span>
+      <span class="role">${pos.role}</span>
+    </div>
+    <div class="frame-window" data-href="${name}.html" title="Open ${name}.html in a new tab">
+      <iframe src="${name}.html" loading="lazy" title="${name}"></iframe>
+      <div class="frame-overlay"><span class="pill">Open full-size →</span></div>
+    </div>
+  `;
+  canvasInner.appendChild(frame);
+}
+
+canvasInner.addEventListener('click', e => {
+  const win = e.target.closest('.frame-window');
+  if (win && win.dataset.href) window.open(win.dataset.href, '_blank');
+});
+
+/* Arrows */
+const svg = document.querySelector('.connections');
+const SVG_NS = 'http://www.w3.org/2000/svg';
+
+function anchor(name, side, offset = 0) {
+  const p = layout[name];
+  const x = p.x;
+  const y = p.y + LABEL_H;
+  switch (side) {
+    case 'top':    return { x: x + FRAME_W/2 + offset, y: y };
+    case 'bottom': return { x: x + FRAME_W/2 + offset, y: y + FRAME_H };
+    case 'left':   return { x: x,                       y: y + FRAME_H/2 + offset };
+    case 'right':  return { x: x + FRAME_W,             y: y + FRAME_H/2 + offset };
+  }
+}
+
+function pickSides(from, to) {
+  const a = layout[from], b = layout[to];
+  const ac = { x: a.x + FRAME_W/2, y: a.y + LABEL_H + FRAME_H/2 };
+  const bc = { x: b.x + FRAME_W/2, y: b.y + LABEL_H + FRAME_H/2 };
+  const dx = bc.x - ac.x, dy = bc.y - ac.y;
+  // If the source is mostly above the target, exit bottom→top
+  if (Math.abs(dy) > Math.abs(dx) * 0.7) {
+    return dy > 0 ? ['bottom', 'top'] : ['top', 'bottom'];
+  }
+  return dx > 0 ? ['right', 'left'] : ['left', 'right'];
+}
+
+function drawEdge(edge) {
+  const [sa, sb] = pickSides(edge.from, edge.to);
+  // Stagger exit arrows so they don't overlap forward arrows
+  let offA = 0, offB = 0;
+  if (edge.style === 'exit') {
+    if (sa === 'top' || sa === 'bottom') { offA = 20; offB = 20; }
+    else                                  { offA = 20; offB = 20; }
+  }
+  const p1 = anchor(edge.from, sa, offA);
+  const p2 = anchor(edge.to,   sb, offB);
+
+  let d;
+  const dx = p2.x - p1.x, dy = p2.y - p1.y;
+  if (Math.abs(dx) > Math.abs(dy)) {
+    const cx = p1.x + dx * 0.5;
+    d = `M ${p1.x} ${p1.y} C ${cx} ${p1.y}, ${cx} ${p2.y}, ${p2.x} ${p2.y}`;
+  } else {
+    const cy = p1.y + dy * 0.5;
+    d = `M ${p1.x} ${p1.y} C ${p1.x} ${cy}, ${p2.x} ${cy}, ${p2.x} ${p2.y}`;
+  }
+
+  const path = document.createElementNS(SVG_NS, 'path');
+  path.setAttribute('d', d);
+  path.setAttribute('fill', 'none');
+  if (edge.style === 'exit') {
+    path.setAttribute('stroke', '#565b5e');
+    path.setAttribute('stroke-width', '1');
+    path.setAttribute('stroke-dasharray', '4 4');
+    path.setAttribute('marker-end', 'url(#arrow-exit)');
+  } else if (edge.style === 'dev') {
+    path.setAttribute('stroke', '#565b5e');
+    path.setAttribute('stroke-width', '0.8');
+    path.setAttribute('stroke-dasharray', '2 4');
+    path.setAttribute('opacity', '0.4');
+  } else {
+    path.setAttribute('stroke', '#c7c7c7');
+    path.setAttribute('stroke-width', '1.5');
+    path.setAttribute('marker-end', 'url(#arrow)');
+  }
+  svg.appendChild(path);
+
+  // Label (forward arrows only)
+  if (edge.label && edge.style === 'forward') {
+    const midX = (p1.x + p2.x) / 2;
+    const midY = (p1.y + p2.y) / 2;
+    const label = document.createElementNS(SVG_NS, 'text');
+    label.setAttribute('x', midX);
+    label.setAttribute('y', midY);
+    label.setAttribute('fill', '#c7c7c7');
+    label.setAttribute('font-size', '10');
+    label.setAttribute('text-anchor', 'middle');
+    label.setAttribute('dominant-baseline', 'middle');
+    label.setAttribute('font-family', "'Inter', sans-serif");
+    label.textContent = edge.label;
+    svg.appendChild(label);
+    // Background rect for legibility
+    const bbox = label.getBBox();
+    const padX = 6, padY = 3;
+    const bg = document.createElementNS(SVG_NS, 'rect');
+    bg.setAttribute('x', bbox.x - padX);
+    bg.setAttribute('y', bbox.y - padY);
+    bg.setAttribute('width', bbox.width + padX * 2);
+    bg.setAttribute('height', bbox.height + padY * 2);
+    bg.setAttribute('fill', '#0a0a0a');
+    bg.setAttribute('stroke', '#232627');
+    bg.setAttribute('stroke-width', '0.5');
+    svg.insertBefore(bg, label);
+  }
+}
+
+edges.forEach(drawEdge);
+
+/* Size canvas to fit */
+const maxX = Math.max(...Object.values(layout).map(p => p.x + FRAME_W)) + 60;
+const maxY = Math.max(...Object.values(layout).map(p => p.y + LABEL_H + FRAME_H)) + 60;
+canvasInner.style.width  = maxX + 'px';
+canvasInner.style.height = maxY + 'px';
+svg.setAttribute('width',  maxX);
+svg.setAttribute('height', maxY);
+svg.setAttribute('viewBox', `0 0 ${maxX} ${maxY}`);
+</script>
+
+</body>
+</html>

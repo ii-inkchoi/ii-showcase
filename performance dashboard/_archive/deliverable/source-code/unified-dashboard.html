@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <title>Unified Dashboard · v2</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Chakra+Petch&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="unified-dashboard.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <img class="logo" src="Logo.svg" alt="logo">
+    <div class="header-icons">
+      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" alt="search"><circle cx="7.5" cy="7.5" r="5.5" stroke="#D9D9D9" stroke-width="1"/><path d="M11.5 11.5L15.5 15.5" stroke="#D9D9D9" stroke-width="1" stroke-linecap="round"/></svg>
+      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" alt="menu"><path d="M2 4H15M2 9H15M2 14H15" stroke="#666666" stroke-width="1" stroke-linecap="round"/></svg>
+    </div>
+  </header>
+
+  <!-- TOTAL VALUE -->
+  <div class="total-capital">
+    <span class="tc-label">Total Value</span>
+    <span class="tc-value"><span data-final="173,249.00" data-r="0.30">173,249.00</span> <span class="tc-ccy">CAD</span></span>
+  </div>
+
+  <!-- MANAGED / CORE SECTION -->
+  <div class="mt-managed">
+    <hr class="divider">
+    <div class="section">
+      <div class="s-inner">
+        <div class="s-title-wrap">
+          <div class="s-title-col">
+            <span class="t-primary">Core</span>
+            <span class="t-secondary">Managed</span>
+          </div>
+        </div>
+
+        <div class="data-col">
+          <!-- Value -->
+          <div class="db">
+            <span class="db-label">Value</span>
+            <span class="n22"><span data-final="126,471.77" data-r="0.55">126,471.77</span></span>
+            <div class="gain-row">
+              <span class="gt">All time</span>
+              <div class="gain-pair">
+                <span class="ga" data-final="+6,365.65" data-r="0.60">+6,365.65</span>
+                <span class="gp" data-final="(+5.3%)" data-r="0.60">(+5.3%)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Projection -->
+          <div class="db">
+            <span class="db-label">Projection</span>
+            <span class="n15" data-final="1.68M" data-r="0.65">1.68M</span>
+          </div>
+
+          <!-- Allocation -->
+          <div class="tbl">
+            <div class="tbl-row"><span class="tl">Equity (S&amp;P 500)</span><span class="tv" data-final="50%" data-r="0.70">50%</span></div>
+            <div class="tbl-row"><span class="tl">Fixed Income</span>       <span class="tv" data-final="25%" data-r="0.72">25%</span></div>
+            <div class="tbl-row"><span class="tl">Money Market</span>       <span class="tv" data-final="25%" data-r="0.74">25%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTIVE / SELF-DIRECTED SECTION -->
+  <div class="mt-active active-section">
+    <hr class="divider">
+    <div class="section">
+      <div class="s-inner">
+        <div class="s-title-wrap">
+          <div class="s-title-col">
+            <span class="t-primary">Active</span>
+            <span class="t-secondary">Self-directed</span>
+          </div>
+          <div class="acct-sw">
+            <span class="acct-label">RRSP</span>
+            <svg class="acct-chev" viewBox="0 0 7 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0.5 0.5L3.5 3.5L6.5 0.5" stroke="#c7c7c7" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="data-col" style="gap:53px;">
+          <!-- Value -->
+          <div class="db">
+            <span class="db-label">Value</span>
+            <span class="n22"><span data-final="46,777.23" data-r="0.78">46,777.23</span></span>
+          </div>
+
+          <!-- Performance vs S&P 500 — v2: chairman direction (annualized rate + tracked duration) -->
+          <a href="performance-dashboard.html" class="perf-block" aria-label="View performance dashboard">
+            <div class="perf-header">
+              <span class="perf-label">Annualized · 3 years 2 months</span>
+              <span class="perf-chev" aria-hidden="true">›</span>
+            </div>
+            <div class="perf-row">
+              <span class="perf-key">Your Portfolio</span>
+              <span class="perf-val">+18.2%</span>
+            </div>
+            <div class="perf-row">
+              <span class="perf-key">S&amp;P 500</span>
+              <span class="perf-val">+24.0%</span>
+            </div>
+            <div class="perf-row">
+              <span class="perf-key">Alpha</span>
+              <span class="perf-val">−5.8pp</span>
+            </div>
+          </a>
+
+          <!-- Cash -->
+          <div class="cash-block">
+            <span class="cash-lbl">Cash (10%)</span>
+            <span class="n15" style="width:auto;" data-final="4,677.72" data-r="0.85">4,677.72</span>
+          </div>
+
+          <!-- Active Positions -->
+          <div class="pos-group">
+            <span class="pos-head">Active Positions   <span data-final="12" data-r="0.88">12</span></span>
+            <div class="tbl">
+              <div class="tbl-row"><span class="tl-mid">ORIO.TO</span><span class="tv" data-final="25%" data-r="0.90">25%</span></div>
+              <div class="tbl-row"><span class="tl-mid">BWEN</span>   <span class="tv" data-final="20%" data-r="0.91">20%</span></div>
+              <div class="tbl-row"><span class="tl-mid">EOSCR</span>  <span class="tv" data-final="15%" data-r="0.92">15%</span></div>
+              <div class="tbl-row"><span class="tl-mid">NVDA</span>   <span class="tv" data-final="12%" data-r="0.93">12%</span></div>
+              <div class="tbl-row"><span class="tl-mid">AMD</span>    <span class="tv" data-final="8%"  data-r="0.94">8%</span></div>
+            </div>
+            <span class="view-all">View All</span>
+          </div>
+
+          <!-- Under Review -->
+          <div class="pos-group">
+            <span class="pos-head">Under Review   <span data-final="5" data-r="0.95">5</span></span>
+            <div class="tbl">
+              <div class="tbl-row"><span class="tl-mid">ORIO.TO</span></div>
+              <div class="tbl-row"><span class="tl-mid">BWEN</span></div>
+              <div class="tbl-row"><span class="tl-mid">EOSCR</span></div>
+            </div>
+            <span class="view-all">View All</span>
+          </div>
+
+          <!-- Open Orders -->
+          <div class="open-orders">
+            <span class="oo-lbl">Open Orders</span>
+            <span class="oo-n" data-final="2" data-r="0.98">2</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom"></div>
+
+</body>
+</html>

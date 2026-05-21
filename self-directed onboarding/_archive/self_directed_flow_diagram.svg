@@ -1,0 +1,314 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2200 1100" font-family="Inter, Helvetica, 'Helvetica Neue', Arial, sans-serif">
+  <style>
+    .title { font-size: 24px; font-weight: 500; letter-spacing: -0.4px; fill: #111; }
+    .subtitle { font-size: 13px; font-weight: 400; fill: #666; letter-spacing: -0.2px; }
+    .section { font-size: 12px; font-weight: 500; letter-spacing: 1.5px; fill: #888; }
+    .flow-title { font-size: 18px; font-weight: 500; letter-spacing: -0.3px; fill: #111; }
+    .step-num { font-size: 10px; font-weight: 500; fill: #888; letter-spacing: 0.8px; }
+    .step-title { font-size: 13px; font-weight: 500; fill: #111; }
+    .step-body { font-size: 11px; font-weight: 400; fill: #555; }
+    .gate-label { font-size: 10px; font-weight: 500; letter-spacing: 1.2px; fill: #c7c7c7; }
+    .gate-title { font-size: 13px; font-weight: 500; fill: #fff; }
+    .gate-body { font-size: 11px; font-weight: 400; fill: #999; }
+    .branch { font-size: 10px; font-weight: 500; fill: #111; letter-spacing: 0.5px; }
+    .legend { font-size: 11px; font-weight: 400; fill: #555; }
+    .anno { font-size: 10px; font-weight: 400; fill: #888; font-style: italic; }
+  </style>
+
+  <!-- bg -->
+  <rect width="2200" height="1100" fill="#ffffff"/>
+
+  <!-- TITLE -->
+  <text x="60" y="60" class="title">Self-Directed System — Two Flows</text>
+  <text x="60" y="84" class="subtitle">Calibration ritual fires once on mode-switch · Decision Gates fire on every trade</text>
+  <line x1="60" y1="105" x2="2140" y2="105" stroke="#e5e5e5" stroke-width="1"/>
+
+  <!-- LEGEND -->
+  <g transform="translate(1640, 50)">
+    <rect x="0" y="0" width="14" height="14" fill="#fff" stroke="#111" stroke-width="1"/>
+    <text x="22" y="11" class="legend">Screen / step</text>
+    <rect x="130" y="0" width="14" height="14" fill="#111"/>
+    <text x="152" y="11" class="legend">Gate (forced choice)</text>
+    <polygon points="290,12 297,5 304,12 297,19" fill="#fff" stroke="#111" stroke-width="1"/>
+    <text x="312" y="15" class="legend">Branch</text>
+    <line x1="380" y1="11" x2="408" y2="11" stroke="#111" stroke-width="1.5"/>
+    <polygon points="408,7 416,11 408,15" fill="#111"/>
+    <text x="424" y="15" class="legend">Sequence</text>
+  </g>
+
+  <!-- ============ FLOW A : CALIBRATION (top half) ============ -->
+  <text x="60" y="155" class="section">FLOW A — CALIBRATION RITUAL · ONCE</text>
+  <text x="60" y="178" class="anno">Triggered when user actively chooses Self-Directed in Add Account. Captures the standards replayed by Flow B.</text>
+
+  <!-- A1 Main Dashboard -->
+  <g transform="translate(60, 210)">
+    <rect width="170" height="100" fill="#fff" stroke="#111" stroke-width="1"/>
+    <text x="14" y="22" class="step-num">A1 · ENTRY</text>
+    <text x="14" y="44" class="step-title">Main Dashboard</text>
+    <text x="14" y="62" class="step-body">Active section:</text>
+    <text x="14" y="78" class="step-body">No Accounts</text>
+    <text x="14" y="94" class="step-body">+ Open Account CTA</text>
+  </g>
+  <line x1="230" y1="260" x2="270" y2="260" stroke="#111" stroke-width="1.5"/>
+  <polygon points="270,256 278,260 270,264" fill="#111"/>
+
+  <!-- A2 Add Account -->
+  <g transform="translate(280, 210)">
+    <rect width="170" height="100" fill="#fff" stroke="#111" stroke-width="1"/>
+    <text x="14" y="22" class="step-num">A2 · MODE</text>
+    <text x="14" y="44" class="step-title">Add Account</text>
+    <text x="14" y="62" class="step-body">[01] Managed</text>
+    <text x="14" y="78" class="step-body">[02] Self-Directed</text>
+    <text x="14" y="94" class="step-body" fill="#888">→ triggers calibration</text>
+  </g>
+  <line x1="450" y1="260" x2="490" y2="260" stroke="#111" stroke-width="1.5"/>
+  <polygon points="490,256 498,260 490,264" fill="#111"/>
+
+  <!-- A3 S1 Entry -->
+  <g transform="translate(500, 210)">
+    <rect width="155" height="100" fill="#fff" stroke="#111" stroke-width="1"/>
+    <text x="14" y="22" class="step-num">A3 · S1</text>
+    <text x="14" y="44" class="step-title">Responsibility transfer</text>
+    <text x="14" y="62" class="step-body">"Decisions, errors,</text>
+    <text x="14" y="78" class="step-body">and the record."</text>
+  </g>
+  <line x1="655" y1="260" x2="695" y2="260" stroke="#111" stroke-width="1.5"/>
+  <polygon points="695,256 703,260 695,264" fill="#111"/>
+
+  <!-- A4 S2 Reality -->
+  <g transform="translate(705, 210)">
+    <rect width="155" height="100" fill="#fff" stroke="#111" stroke-width="1"/>
+    <text x="14" y="22" class="step-num">A4 · S2</text>
+    <text x="14" y="44" class="step-title">Reality check</text>
+    <text x="14" y="62" class="step-body">When you misjudge</text>
+    <text x="14" y="78" class="step-body">(text input)</text>
+  </g>
+  <line x1="860" y1="260" x2="900" y2="260" stroke="#111" stroke-width="1.5"/>
+  <polygon points="900,256 908,260 900,264" fill="#111"/>
+
+  <!-- A5 S3 Past errors -->
+  <g transform="translate(910, 210)">
+    <rect width="155" height="100" fill="#fff" stroke="#111" stroke-width="1"/>
+    <text x="14" y="22" class="step-num">A5 · S3</text>
+    <text x="14" y="44" class="step-title">Past errors</text>
+    <text x="14" y="62" class="step-body">Multi-select</text>
+    <text x="14" y="78" class="step-body">7 failure modes</text>
+  </g>
+  <line x1="1065" y1="260" x2="1105" y2="260" stroke="#111" stroke-width="1.5"/>
+  <polygon points="1105,256 1113,260 1105,264" fill="#111"/>
+
+  <!-- A6 S4 Repeated -->
+  <g transform="translate(1115, 210)">
+    <rect width="155" height="100" fill="#fff" stroke="#111" stroke-width="1"/>
+    <text x="14" y="22" class="step-num">A6 · S4</text>
+    <text x="14" y="44" class="step-title">Repeated error</text>
+    <text x="14" y="62" class="step-body">Single + trigger text</text>
+    <text x="14" y="78" class="step-body" fill="#1a73e8">▸ Buy gate replay</text>
+  </g>
+  <line x1="1270" y1="260" x2="1310" y2="260" stroke="#111" stroke-width="1.5"/>
+  <polygon points="1310,256 1318,260 1310,264" fill="#111"/>
+
+  <!-- A7 S5 -->
+  <g transform="translate(1320, 210)">
+    <rect width="155" height="100" fill="#fff" stroke="#111" stroke-width="1"/>
+    <text x="14" y="22" class="step-num">A7 · S5</text>
+    <text x="14" y="44" class="step-title">Standard of entry</text>
+    <text x="14" y="62" class="step-body">Thesis / horizon /</text>
+    <text x="14" y="78" class="step-body">falsification</text>
+  </g>
+  <line x1="1475" y1="260" x2="1515" y2="260" stroke="#111" stroke-width="1.5"/>
+  <polygon points="1515,256 1523,260 1515,264" fill="#111"/>
+
+  <!-- A8 S6 Edge -->
+  <g transform="translate(1525, 210)">
+    <rect width="155" height="100" fill="#fff" stroke="#111" stroke-width="1"/>
+    <text x="14" y="22" class="step-num">A8 · S6</text>
+    <text x="14" y="44" class="step-title">Claimed edge</text>
+    <text x="14" y="62" class="step-body">One-sentence claim</text>
+    <text x="14" y="78" class="step-body" fill="#1a73e8">▸ Buy gate replay</text>
+  </g>
+  <line x1="1680" y1="260" x2="1720" y2="260" stroke="#111" stroke-width="1.5"/>
+  <polygon points="1720,256 1728,260 1720,264" fill="#111"/>
+
+  <!-- A9 S7 Condition -->
+  <g transform="translate(1730, 210)">
+    <rect width="155" height="100" fill="#fff" stroke="#111" stroke-width="1"/>
+    <text x="14" y="22" class="step-num">A9 · S7</text>
+    <text x="14" y="44" class="step-title">Action condition</text>
+    <text x="14" y="62" class="step-body">"Before opening …"</text>
+    <text x="14" y="78" class="step-body" fill="#1a73e8">▸ Buy gate primary</text>
+  </g>
+  <line x1="1885" y1="260" x2="1925" y2="260" stroke="#111" stroke-width="1.5"/>
+  <polygon points="1925,256 1933,260 1925,264" fill="#111"/>
+
+  <!-- A10 S8 Reconsider — new row -->
+  <g transform="translate(1935, 210)">
+    <rect width="155" height="100" fill="#fff" stroke="#111" stroke-width="1"/>
+    <text x="14" y="22" class="step-num">A10 · S8</text>
+    <text x="14" y="44" class="step-title">Reconsideration</text>
+    <text x="14" y="62" class="step-body">Multi-select</text>
+    <text x="14" y="78" class="step-body" fill="#d93025">▸ Sell gate replay</text>
+  </g>
+
+  <!-- Drop down to row 2 -->
+  <line x1="2012" y1="310" x2="2012" y2="370" stroke="#111" stroke-width="1.5"/>
+  <line x1="2012" y1="370" x2="60" y2="370" stroke="#111" stroke-width="1.5"/>
+  <line x1="60" y1="370" x2="60" y2="395" stroke="#111" stroke-width="1.5"/>
+  <polygon points="56,395 60,403 64,395" fill="#111"/>
+
+  <!-- A11 S9 Weakness -->
+  <g transform="translate(60, 410)">
+    <rect width="170" height="100" fill="#fff" stroke="#111" stroke-width="1"/>
+    <text x="14" y="22" class="step-num">A11 · S9</text>
+    <text x="14" y="44" class="step-title">Weakness environment</text>
+    <text x="14" y="62" class="step-body">Single-select</text>
+    <text x="14" y="78" class="step-body" fill="#d93025">▸ Sell gate replay</text>
+  </g>
+  <line x1="230" y1="460" x2="270" y2="460" stroke="#111" stroke-width="1.5"/>
+  <polygon points="270,456 278,460 270,464" fill="#111"/>
+
+  <!-- A12 S10 Reflect -->
+  <g transform="translate(280, 410)">
+    <rect width="180" height="100" fill="#fff" stroke="#111" stroke-width="1"/>
+    <text x="14" y="22" class="step-num">A12 · S10</text>
+    <text x="14" y="44" class="step-title">Reflect-back</text>
+    <text x="14" y="62" class="step-body">"You said …"</text>
+    <text x="14" y="78" class="step-body">First replay demo</text>
+  </g>
+  <line x1="460" y1="460" x2="500" y2="460" stroke="#111" stroke-width="1.5"/>
+  <polygon points="500,456 508,460 500,464" fill="#111"/>
+
+  <!-- A13 S11 Hold -->
+  <g transform="translate(510, 410)">
+    <rect width="180" height="100" fill="#111"/>
+    <text x="14" y="22" class="gate-label">A13 · S11 · RITUAL</text>
+    <text x="14" y="44" class="gate-title">Hold to Enter</text>
+    <text x="14" y="62" class="gate-body">1s hold required</text>
+    <text x="14" y="78" class="gate-body">Mode-entry boundary</text>
+  </g>
+  <line x1="690" y1="460" x2="730" y2="460" stroke="#111" stroke-width="1.5"/>
+  <polygon points="730,456 738,460 730,464" fill="#111"/>
+
+  <!-- A14 S12 Open Account -->
+  <g transform="translate(740, 410)">
+    <rect width="180" height="100" fill="#fff" stroke="#111" stroke-width="1"/>
+    <text x="14" y="22" class="step-num">A14 · S12</text>
+    <text x="14" y="44" class="step-title">Open Account</text>
+    <text x="14" y="62" class="step-body">[01] TFSA · [02] RRSP</text>
+    <text x="14" y="78" class="step-body">[03] Non-Registered</text>
+  </g>
+  <line x1="920" y1="460" x2="970" y2="460" stroke="#aaa" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <text x="970" y="465" class="anno">→ downstream account creation (out of prototype scope)</text>
+
+  <!-- ============ DIVIDER ============ -->
+  <line x1="60" y1="585" x2="2140" y2="585" stroke="#e5e5e5" stroke-width="1"/>
+
+  <!-- ============ FLOW B : DECISION GATES (bottom half) ============ -->
+  <text x="60" y="620" class="section">FLOW B — DECISION GATES · EVERY TRADE</text>
+  <text x="60" y="643" class="anno">Triggered when user attempts Capital Decision on a stock. Replays Flow A answers and forces explicit Yes / No.</text>
+
+  <!-- B1 Stock Page -->
+  <g transform="translate(60, 675)">
+    <rect width="170" height="110" fill="#fff" stroke="#111" stroke-width="1"/>
+    <text x="14" y="22" class="step-num">B1 · ENTRY</text>
+    <text x="14" y="44" class="step-title">Stock Page</text>
+    <text x="14" y="62" class="step-body">Aritzia · ATZ</text>
+    <text x="14" y="78" class="step-body">Market value, P/L, …</text>
+    <text x="14" y="100" class="step-body" fill="#888">Capital Decision CTA</text>
+  </g>
+  <line x1="230" y1="730" x2="270" y2="730" stroke="#111" stroke-width="1.5"/>
+  <polygon points="270,726 278,730 270,734" fill="#111"/>
+
+  <!-- B2-B3 Capital Decision modal (branch by scenario) -->
+  <g transform="translate(280, 675)">
+    <rect width="200" height="110" fill="#fff" stroke="#111" stroke-width="1"/>
+    <text x="14" y="22" class="step-num">B2 · MODAL</text>
+    <text x="14" y="44" class="step-title">Capital Decision</text>
+    <text x="14" y="62" class="step-body">A (0 sh): Initiate</text>
+    <text x="14" y="78" class="step-body">B/C (1+ sh): Increase</text>
+    <text x="14" y="94" class="step-body">              · Reduce</text>
+  </g>
+
+  <!-- diamond branch -->
+  <polygon points="510,730 540,710 570,730 540,750" fill="#fff" stroke="#111" stroke-width="1"/>
+  <text x="540" y="734" text-anchor="middle" class="branch">action?</text>
+
+  <!-- branch label: Initiate / Increase → Buy -->
+  <line x1="480" y1="730" x2="510" y2="730" stroke="#111" stroke-width="1.5"/>
+  <polygon points="510,726 518,730 510,734" fill="#111"/>
+
+  <!-- top branch: Buy gate -->
+  <line x1="555" y1="713" x2="555" y2="675" stroke="#111" stroke-width="1.5"/>
+  <line x1="555" y1="675" x2="640" y2="675" stroke="#111" stroke-width="1.5"/>
+  <polygon points="640,671 648,675 640,679" fill="#111"/>
+  <text x="595" y="668" class="branch">Initiate / Increase</text>
+
+  <!-- bottom branch: Sell gate -->
+  <line x1="555" y1="747" x2="555" y2="785" stroke="#111" stroke-width="1.5"/>
+  <line x1="555" y1="785" x2="640" y2="785" stroke="#111" stroke-width="1.5"/>
+  <polygon points="640,781 648,785 640,789" fill="#111"/>
+  <text x="595" y="803" class="branch">Reduce</text>
+
+  <!-- B4 Buy Gate -->
+  <g transform="translate(650, 625)">
+    <rect width="220" height="100" fill="#111"/>
+    <text x="14" y="22" class="gate-label">B4 · GATE · BUY</text>
+    <text x="14" y="44" class="gate-title">Your standard</text>
+    <text x="14" y="62" class="gate-body">Replays S7 · S6 · S4</text>
+    <text x="14" y="78" class="gate-body">Forced: Yes / No</text>
+  </g>
+
+  <!-- B5 Sell Gate -->
+  <g transform="translate(650, 735)">
+    <rect width="220" height="100" fill="#111"/>
+    <text x="14" y="22" class="gate-label">B5 · GATE · SELL</text>
+    <text x="14" y="44" class="gate-title">Your sell rule</text>
+    <text x="14" y="62" class="gate-body">Replays S8 · S9</text>
+    <text x="14" y="78" class="gate-body">Forced: Yes / No</text>
+  </g>
+
+  <!-- merge to B6 Select Account -->
+  <line x1="870" y1="675" x2="900" y2="675" stroke="#111" stroke-width="1.5"/>
+  <line x1="900" y1="675" x2="900" y2="730" stroke="#111" stroke-width="1.5"/>
+  <line x1="870" y1="785" x2="900" y2="785" stroke="#111" stroke-width="1.5"/>
+  <line x1="900" y1="785" x2="900" y2="730" stroke="#111" stroke-width="1.5"/>
+  <line x1="900" y1="730" x2="950" y2="730" stroke="#111" stroke-width="1.5"/>
+  <polygon points="950,726 958,730 950,734" fill="#111"/>
+  <text x="876" y="697" class="branch">Yes</text>
+  <text x="876" y="775" class="branch">Yes</text>
+
+  <!-- B6 Select Account -->
+  <g transform="translate(960, 675)">
+    <rect width="200" height="110" fill="#fff" stroke="#111" stroke-width="1"/>
+    <text x="14" y="22" class="step-num">B6 · DOWNSTREAM</text>
+    <text x="14" y="44" class="step-title">Select Account</text>
+    <text x="14" y="62" class="step-body">ATZ.TO · Buy / Sell</text>
+    <text x="14" y="78" class="step-body">TFSA / RRSP / Non-Reg</text>
+    <text x="14" y="100" class="step-body" fill="#888">→ shares · review · submit</text>
+  </g>
+  <line x1="1160" y1="730" x2="1210" y2="730" stroke="#aaa" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <text x="1210" y="735" class="anno">→ order entry (out of prototype scope)</text>
+
+  <!-- "No, cancel" loop back -->
+  <line x1="760" y1="625" x2="760" y2="595" stroke="#888" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="760" y1="595" x2="385" y2="595" stroke="#888" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="385" y1="595" x2="385" y2="675" stroke="#888" stroke-width="1" stroke-dasharray="3,3"/>
+  <polygon points="381,675 385,683 389,675" fill="#888"/>
+  <text x="525" y="588" class="anno">No, cancel — back to modal</text>
+
+  <line x1="760" y1="835" x2="760" y2="870" stroke="#888" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="760" y1="870" x2="145" y2="870" stroke="#888" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="145" y1="870" x2="145" y2="785" stroke="#888" stroke-width="1" stroke-dasharray="3,3"/>
+  <polygon points="141,785 145,777 149,785" fill="#888"/>
+  <text x="395" y="864" class="anno">Cancel — back to Stock Page</text>
+
+  <!-- ============ FOOTER NOTES ============ -->
+  <line x1="60" y1="930" x2="2140" y2="930" stroke="#e5e5e5" stroke-width="1"/>
+
+  <text x="60" y="965" class="flow-title">Mechanism</text>
+  <text x="60" y="990" class="step-body">Calibration captures answers (S4 trigger · S6 edge · S7 condition · S8 reconsider · S9 weakness) — stored timestamped + immutable.</text>
+  <text x="60" y="1010" class="step-body">Decision Gates replay those exact answers at every Capital Decision moment, forcing Yes / No before any trade can proceed.</text>
+  <text x="60" y="1030" class="step-body">No back, no passive dismiss on gates. Force Acknowledgment is the contract — the user wrote the rules; the system uses them against the user later.</text>
+
+  <text x="60" y="1075" class="anno">Self-Directed System · Two-Flow Placement · Updated to match prototype state (combined-flow.html · self-directed onboarding.html · decision-gates.html)</text>
+</svg>

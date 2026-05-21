@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Self-Directed Investing — Onboarding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      margin: 0; padding: 0; box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    :root {
+      --n-black: #000000;
+      --n-white: #ffffff;
+      --n-200:   #e3e2e2;
+      --n-400:   #c7c7c7;
+      --n-700:   #929292;
+      --n-800:   #565b5e;
+      --n-900:   #232627;
+      --header-h: 77px;
+      --content-top: 153px;
+      --pad-x: 30px;
+      --col-w: 255px;
+    }
+
+    body {
+      background: #111;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px 24px 60px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      font-weight: 400;
+    }
+
+    .phone {
+      width: 393px;
+      height: 852px;
+      background: var(--n-black);
+      overflow: hidden;
+      position: relative;
+      flex-shrink: 0;
+      border-radius: 50px;
+    }
+
+    @media (max-width: 500px) {
+      body { padding: 0; background: var(--n-black); }
+      .phone {
+        width: 100vw; height: 100vh; height: 100dvh; border-radius: 0;
+      }
+      .screen { width: 100vw; height: 100vh; height: 100dvh; }
+      .screen-header { padding-top: max(0px, env(safe-area-inset-top, 0px)); }
+      .cta-bar { padding-bottom: env(safe-area-inset-bottom, 0px); }
+    }
+
+    .screen {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--n-black);
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transition: opacity .45s cubic-bezier(.4, 0, .2, 1);
+      pointer-events: none;
+      user-select: none;
+    }
+    .screen.active { opacity: 1; pointer-events: all; user-select: auto; }
+
+    /* Header */
+    .screen-header {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 18px;
+      height: var(--header-h);
+      box-sizing: border-box;
+    }
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 27px 0 var(--pad-x);
+    }
+    .back-btn {
+      width: 44px; height: 28px;
+      background: none; border: none;
+      color: var(--n-white);
+      cursor: pointer;
+      display: flex; align-items: center;
+      padding: 0;
+      transition: opacity .15s;
+    }
+    .back-btn.hidden { opacity: 0; pointer-events: none; }
+    .exit-btn {
+      background: none; border: none;
+      font-family: inherit;
+      font-size: 14px; font-weight: 400;
+      line-height: 1.25; letter-spacing: -0.28px;
+      color: var(--n-400);
+      cursor: pointer; padding: 0;
+      transition: color .15s;
+    }
+    .exit-btn:hover { color: var(--n-700); }
+    .exit-btn.hidden { opacity: 0; pointer-events: none; }
+
+    .top-divider {
+      flex-shrink: 0; width: 100%; height: 1px;
+      background: var(--n-900);
+    }
+
+    /* Main column */
+    .fig-main {
+      flex: 1; min-height: 0; overflow: hidden;
+      display: flex; flex-direction: column;
+      padding: calc(var(--content-top) - var(--header-h)) var(--pad-x) 0;
+    }
+    .fig-main--scroll {
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .fig-main--scroll::-webkit-scrollbar { display: none; }
+
+    .fig-col {
+      width: var(--col-w); max-width: 100%;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .fig-col > :first-child { margin-bottom: 30px; }
+    .fig-line-group { display: flex; flex-direction: column; gap: 0; }
+    .fig-line-group p { margin: 0; }
+
+    /* Typography */
+    .t18-w {
+      font-size: 18px; line-height: 1.4;
+      letter-spacing: -1.08px; color: var(--n-white); font-weight: 400;
+    }
+    .t14-700 {
+      font-size: 14px; line-height: 1.5;
+      letter-spacing: -0.28px; color: var(--n-700); font-weight: 400;
+    }
+    .t14-400 {
+      font-size: 14px; line-height: 1.5;
+      letter-spacing: -0.28px; color: var(--n-400); font-weight: 400;
+    }
+    .t14-800 {
+      font-size: 14px; line-height: 1.5;
+      letter-spacing: -0.28px; color: var(--n-800); font-weight: 400;
+    }
+
+    /* CTA bar */
+    .cta-bar {
+      flex-shrink: 0;
+      display: flex; justify-content: flex-end; align-items: center;
+      height: 99px; padding: 10px 30px;
+      box-sizing: border-box;
+    }
+    .arrow-btn {
+      background: none; border: none; cursor: pointer;
+      color: var(--n-400); padding: 10px; margin: -10px;
+      display: flex; align-items: center; justify-content: center;
+      transition: color .2s, opacity 0.9s ease, transform 0.9s ease;
+    }
+    .arrow-btn:hover { color: var(--n-200); }
+    .arrow-btn:disabled { color: var(--n-800); pointer-events: none; }
+
+    /* Stagger animation */
+    .anim-ready {
+      opacity: 0; transform: translateY(12px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .anim-in { opacity: 1; transform: translateY(0); }
+
+    /* ─── Input styles ─── */
+    .input-label {
+      font-size: 14px; line-height: 1.5;
+      letter-spacing: -0.28px; color: var(--n-700); font-weight: 400;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .text-input {
+      width: 100%; background: none; border: none;
+      border-bottom: 1px solid var(--n-900);
+      color: var(--n-white);
+      font-family: inherit; font-size: 14px; font-weight: 400;
+      line-height: 1.5; letter-spacing: -0.28px;
+      padding: 0 0 10px 0; resize: none; outline: none;
+      transition: border-color .2s;
+      -webkit-appearance: none;
+    }
+    .text-input::placeholder { color: var(--n-800); }
+    .text-input:focus { border-color: var(--n-700); }
+
+    /* Prompt block — sits below content */
+    .prompt-block {
+      margin-top: 40px;
+      width: 100%;
+      max-width: 280px;
+    }
+
+    /* Multi-select (Screen 6) */
+    .check-list {
+      display: flex; flex-direction: column; gap: 22px;
+      width: 100%; max-width: 320px;
+    }
+    .check-row {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; gap: 18px; cursor: pointer;
+    }
+    .check-label {
+      flex: 1; min-width: 0;
+      font-size: 14px; line-height: 1.5;
+      letter-spacing: -0.28px; color: var(--n-700); font-weight: 400;
+      transition: color .2s;
+    }
+    .check-row.sel .check-label { color: var(--n-400); }
+    .check-box {
+      width: 10px; height: 10px;
+      border: 1px solid var(--n-800);
+      position: relative; flex-shrink: 0; margin-top: 3px;
+      transition: border-color .2s;
+    }
+    .check-box::after {
+      content: '';
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      width: 4px; height: 4px;
+      background: var(--n-white);
+      transition: transform .2s cubic-bezier(.34, 1.56, .64, 1);
+    }
+    .check-row.sel .check-box { border-color: var(--n-white); }
+    .check-row.sel .check-box::after { transform: translate(-50%, -50%) scale(1); }
+
+    /* Radio-style choice buttons (Screen 3) */
+    .choice-list {
+      display: flex; flex-direction: column; gap: 16px;
+      margin-top: 40px;
+    }
+    .choice-btn {
+      background: none; border: none;
+      font-family: inherit; font-size: 14px; font-weight: 400;
+      line-height: 1.5; letter-spacing: -0.28px;
+      color: var(--n-700); cursor: pointer; padding: 0;
+      text-align: left;
+      transition: color .2s;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .choice-btn:hover { color: var(--n-400); }
+    .choice-indicator {
+      width: 10px; height: 10px;
+      border-radius: 50%; border: 1px solid var(--n-800);
+      flex-shrink: 0; position: relative;
+      transition: border-color .2s;
+    }
+    .choice-indicator::after {
+      content: '';
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      width: 4px; height: 4px; border-radius: 50%;
+      background: var(--n-white);
+      transition: transform .2s cubic-bezier(.34, 1.56, .64, 1);
+    }
+    .choice-btn.sel .choice-indicator { border-color: var(--n-white); }
+    .choice-btn.sel .choice-indicator::after { transform: translate(-50%, -50%) scale(1); }
+    .choice-btn.sel { color: var(--n-400); }
+
+    /* Reflect-back block (Screen 16) */
+    .reflect-block {
+      margin-top: 30px;
+      border-left: 1px solid var(--n-900);
+      padding-left: 16px;
+    }
+    .reflect-label {
+      font-size: 11px; line-height: 1.5; letter-spacing: -0.22px;
+      color: var(--n-800); font-weight: 400; margin-bottom: 6px;
+    }
+    .reflect-text {
+      font-size: 14px; line-height: 1.5; letter-spacing: -0.28px;
+      color: var(--n-700); font-weight: 400; font-style: italic;
+    }
+
+    /* Final CTA (Screen 16) */
+    .cta-bar--split {
+      height: 99px; padding: 10px 30px;
+      display: flex; align-items: center;
+      justify-content: space-between;
+    }
+    .enter-btn {
+      background: none; border: none;
+      font-family: inherit; font-size: 13px; font-weight: 400;
+      line-height: 1.25; letter-spacing: -0.26px;
+      color: var(--n-white); cursor: pointer;
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px; margin: -10px;
+      transition: opacity .15s;
+    }
+    .enter-btn:hover { opacity: .7; }
+
+    /* Screen 17 — post */
+    .post-main {
+      flex: 1; min-height: 0;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 0 var(--pad-x) 0;
+    }
+    .post-headline {
+      font-size: 18px; line-height: 1.4; letter-spacing: -1.08px;
+      color: var(--n-white); font-weight: 400;
+      margin-bottom: 40px;
+    }
+    .research-btn {
+      background: none; border: 1px solid var(--n-900);
+      font-family: inherit; font-size: 13px; font-weight: 400;
+      line-height: 1.25; letter-spacing: -0.26px;
+      color: var(--n-400); cursor: pointer;
+      padding: 14px 20px;
+      display: inline-flex; align-items: center; gap: 10px;
+      transition: color .2s, border-color .2s;
+      margin-bottom: 60px;
+    }
+    .research-btn:hover { color: var(--n-white); border-color: var(--n-700); }
+
+    /* Final line */
+    .final-line {
+      font-size: 14px; line-height: 1.5; letter-spacing: -0.28px;
+      color: var(--n-800); font-weight: 400;
+      padding: 0 var(--pad-x); padding-bottom: 30px;
+      flex-shrink: 0;
+    }
+
+    /* Scrollable input screens */
+    .fig-main--input {
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 20px;
+    }
+    .fig-main--input::-webkit-scrollbar { display: none; }
+
+    /* Screen 6 special layout */
+    #s6 .fig-main {
+      padding-top: calc(120px - var(--header-h));
+    }
+    #s6 .t18-w { margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+
+<div class="phone">
+
+  <!-- s1 · OPENING -->
+  <div class="screen active" id="s1">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn hidden" aria-hidden="true">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="fig-main">
+      <div class="fig-col">
+        <p class="t18-w">Alpha is rare.<br>Most investors never achieve it.</p>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <button type="button" class="arrow-btn" onclick="go(2)">
+        <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- s2 · REALITY -->
+  <div class="screen" id="s2">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn" onclick="goBack()">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="fig-main fig-main--input">
+      <div class="fig-col" style="width:280px;">
+        <p class="t18-w">Most investors do not outperform over time.</p>
+        <p class="t14-700">Data from S&P Dow Jones Indices shows that the majority of professional managers underperform broad market indices over long periods.</p>
+        <p class="t14-400">Sustained outperformance is uncommon.</p>
+        <div class="prompt-block" style="margin-top:36px;">
+          <label class="input-label" for="s2input">What does that imply for you?</label>
+          <textarea class="text-input" id="s2input" rows="2" placeholder="1–2 lines" oninput="checkTextInput('s2input','s2btn')"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <button type="button" class="arrow-btn" id="s2btn" onclick="go(3)" disabled>
+        <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- s3 · THE DECISION -->
+  <div class="screen" id="s3">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn" onclick="goBack()">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="fig-main">
+      <div class="fig-col">
+        <p class="t18-w">You are choosing to invest actively.</p>
+        <p class="t14-700">This introduces:</p>
+        <div class="fig-line-group">
+          <p class="t14-400">more decisions</p>
+          <p class="t14-400">more uncertainty</p>
+          <p class="t14-400">wider outcomes</p>
+        </div>
+        <div class="choice-list">
+          <button type="button" class="choice-btn" data-choice="yes" onclick="selectChoice(this, 's3', 4)">
+            <span class="choice-indicator"></span>
+            Proceed
+          </button>
+          <button type="button" class="choice-btn" data-choice="no" onclick="selectChoice(this, 's3', null)">
+            <span class="choice-indicator"></span>
+            Not now
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <button type="button" class="arrow-btn" id="s3btn" onclick="go(4)" disabled>
+        <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- s4 · EXPECTATION RESET -->
+  <div class="screen" id="s4">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn" onclick="goBack()">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="fig-main">
+      <div class="fig-col">
+        <p class="t18-w">Early results can mislead.</p>
+        <p class="t14-700">Short-term outcomes often:</p>
+        <div class="fig-line-group">
+          <p class="t14-400">don't reflect skill</p>
+          <p class="t14-400">hide mistakes</p>
+        </div>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <button type="button" class="arrow-btn" onclick="go(5)">
+        <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- s5 · THE CORE ERROR -->
+  <div class="screen" id="s5">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn" onclick="goBack()">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="fig-main">
+      <div class="fig-col">
+        <p class="t18-w">Most investors respond incorrectly.</p>
+        <p class="t14-700">When results disappoint, they:</p>
+        <div class="fig-line-group">
+          <p class="t14-400">act more</p>
+          <p class="t14-400">change direction</p>
+          <p class="t14-400">react to price</p>
+        </div>
+        <p class="t14-700">This usually makes outcomes worse.</p>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <button type="button" class="arrow-btn" onclick="go(6)">
+        <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- s6 · LOOK BACK (multi-select) -->
+  <div class="screen" id="s6">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn" onclick="goBack()">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="fig-main fig-main--scroll" style="padding-top: calc(120px - var(--header-h));">
+      <p class="t18-w" style="margin-bottom:30px;max-width:260px;">You've likely seen this before.</p>
+      <p class="t14-800" style="margin-bottom:20px;">Select what applies:</p>
+      <div class="check-list" id="s6checks">
+        <div class="check-row" onclick="toggleCheck(this,'s6btn')">
+          <span class="check-label">Sold too early</span>
+          <div class="check-box"></div>
+        </div>
+        <div class="check-row" onclick="toggleCheck(this,'s6btn')">
+          <span class="check-label">Held too long</span>
+          <div class="check-box"></div>
+        </div>
+        <div class="check-row" onclick="toggleCheck(this,'s6btn')">
+          <span class="check-label">Acted on price, not understanding</span>
+          <div class="check-box"></div>
+        </div>
+        <div class="check-row" onclick="toggleCheck(this,'s6btn')">
+          <span class="check-label">Changed decisions quickly</span>
+          <div class="check-box"></div>
+        </div>
+        <div class="check-row" onclick="toggleCheck(this,'s6btn')">
+          <span class="check-label">Entered without full conviction</span>
+          <div class="check-box"></div>
+        </div>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <button type="button" class="arrow-btn" id="s6btn" onclick="go(7)" disabled>
+        <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- s7 · ONE DECISION -->
+  <div class="screen" id="s7">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn" onclick="goBack()">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="fig-main fig-main--input">
+      <div class="fig-col" style="width:280px;">
+        <p class="t18-w">Think of one example.</p>
+        <div class="prompt-block" style="margin-top:10px;">
+          <label class="input-label" for="s7input">What happened — and what would you do differently?</label>
+          <textarea class="text-input" id="s7input" rows="4" placeholder="Short answer" oninput="checkTextInput('s7input','s7btn')"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <button type="button" class="arrow-btn" id="s7btn" onclick="go(8)" disabled>
+        <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- s8 · REFRAME -->
+  <div class="screen" id="s8">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn" onclick="goBack()">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="fig-main">
+      <div class="fig-col">
+        <p class="t18-w">This is where outcomes are determined.</p>
+        <p class="t14-400">Not by more information.</p>
+        <p class="t14-700">By:</p>
+        <div class="fig-line-group">
+          <p class="t14-400">how decisions are made</p>
+          <p class="t14-400">how they are managed over time</p>
+        </div>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <button type="button" class="arrow-btn" onclick="go(9)">
+        <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- s9 · HOW RESULTS WORK -->
+  <div class="screen" id="s9">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn" onclick="goBack()">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="fig-main fig-main--input">
+      <div class="fig-col" style="width:280px;">
+        <p class="t18-w">Returns are not evenly distributed.</p>
+        <p class="t14-700">A small number of investments often drive most long-term results.</p>
+        <div class="prompt-block">
+          <label class="input-label" for="s9input">What does that change about how you should behave?</label>
+          <textarea class="text-input" id="s9input" rows="2" placeholder="Short answer" oninput="checkTextInput('s9input','s9btn')"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <button type="button" class="arrow-btn" id="s9btn" onclick="go(10)" disabled>
+        <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- s10 · THE RISK -->
+  <div class="screen" id="s10">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn" onclick="goBack()">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="fig-main">
+      <div class="fig-col">
+        <p class="t18-w">The risk is not just the market.</p>
+        <p class="t14-700">It is:</p>
+        <div class="fig-line-group">
+          <p class="t14-400">reacting to price</p>
+          <p class="t14-400">acting without new information</p>
+          <p class="t14-400">overestimating conviction</p>
+        </div>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <button type="button" class="arrow-btn" onclick="go(11)">
+        <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- s11 · THE WORK -->
+  <div class="screen" id="s11">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn" onclick="goBack()">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="fig-main">
+      <div class="fig-col">
+        <p class="t18-w">Doing this properly requires structure.</p>
+        <div class="fig-line-group">
+          <p class="t14-400">research before action</p>
+          <p class="t14-400">clear reasoning</p>
+          <p class="t14-400">ongoing evaluation</p>
+        </div>
+        <p class="t14-700">Not more decisions — better ones.</p>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <button type="button" class="arrow-btn" onclick="go(12)">
+        <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- s12 · RESEARCH -->
+  <div class="screen" id="s12">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn" onclick="goBack()">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="fig-main">
+      <div class="fig-col">
+        <p class="t18-w">Understanding matters.</p>
+        <p class="t14-700">Tools like Fiscal.ai support deeper analysis.</p>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <button type="button" class="arrow-btn" onclick="go(13)">
+        <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- s13 · DECISIONS -->
+  <div class="screen" id="s13">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn" onclick="goBack()">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="fig-main fig-main--input">
+      <div class="fig-col" style="width:280px;">
+        <p class="t18-w">Decisions don't end at purchase.</p>
+        <div class="prompt-block" style="margin-top:10px;">
+          <label class="input-label" for="s13input">When would you reconsider a position?</label>
+          <textarea class="text-input" id="s13input" rows="3" placeholder="Short answer" oninput="checkTextInput('s13input','s13btn')"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <button type="button" class="arrow-btn" id="s13btn" onclick="go(14)" disabled>
+        <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- s14 · TIME -->
+  <div class="screen" id="s14">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn" onclick="goBack()">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="fig-main">
+      <div class="fig-col">
+        <p class="t18-w">Time is part of the decision.</p>
+        <p class="t14-700">In some cases, no action is taken when assumptions remain unchanged.</p>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <button type="button" class="arrow-btn" onclick="go(15)">
+        <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- s15 · IDENTITY -->
+  <div class="screen" id="s15">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn" onclick="goBack()">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="fig-main fig-main--input">
+      <div class="fig-col" style="width:280px;">
+        <p class="t18-w">Consistency determines outcomes.</p>
+        <div class="prompt-block" style="margin-top:10px;">
+          <label class="input-label" for="s15input">What will determine whether you stay disciplined?</label>
+          <textarea class="text-input" id="s15input" rows="3" placeholder="Short answer" oninput="checkTextInput('s15input','s15btn')"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <button type="button" class="arrow-btn" id="s15btn" onclick="go(16)" disabled>
+        <svg width="36" height="14" viewBox="0 0 36 14" fill="none"><path d="M0 7H34M27 1L34 7L27 13" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- s16 · FINAL -->
+  <div class="screen" id="s16">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn" onclick="goBack()">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="fig-main fig-main--input" style="padding-bottom:20px;">
+      <div class="fig-col" style="width:290px;">
+        <p class="t18-w">Be precise.</p>
+        <div class="prompt-block" style="margin-top:10px;">
+          <label class="input-label" for="s16input">What kind of investor are you trying to become?</label>
+          <textarea class="text-input" id="s16input" rows="3" placeholder="Short answer" oninput="onFinalInput()"></textarea>
+        </div>
+        <div class="reflect-block" id="s16reflect" style="display:none; margin-top:30px;">
+          <p class="reflect-label">You said</p>
+          <p class="reflect-text" id="s16reflectText"></p>
+        </div>
+        <p class="t14-800" id="s16finalline" style="margin-top:30px; display:none;">Your outcomes will follow your decisions.</p>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <button type="button" class="enter-btn" id="s16btn" onclick="go(17)" style="display:none; opacity:0; transition: opacity 0.9s ease;">
+        <svg width="8" height="7" viewBox="0 0 8 7" fill="none" aria-hidden="true"><path d="M4 6L7 3.5L4 1M7 3.5H0" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Enter Self-Directed Investing
+      </button>
+    </div>
+  </div>
+
+  <!-- s17 · POST -->
+  <div class="screen" id="s17">
+    <div class="screen-header">
+      <div class="top-bar">
+        <button type="button" class="back-btn hidden" aria-hidden="true">
+          <svg width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M6 1L1 6L6 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="exit-btn hidden"></button>
+      </div>
+      <div class="top-divider"></div>
+    </div>
+    <div class="post-main">
+      <p class="post-headline">Don't start with a trade.</p>
+      <button type="button" class="research-btn">
+        <svg width="8" height="7" viewBox="0 0 8 7" fill="none" aria-hidden="true"><path d="M4 6L7 3.5L4 1M7 3.5H0" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Research companies
+      </button>
+    </div>
+  </div>
+
+</div><!-- /.phone -->
+
+<script>
+  const TOTAL   = 17;
+  const STAGGER = 700;
+
+  let cur = 1;
+
+  function getAnimEls(screen) {
+    const els = Array.from(screen.querySelectorAll(
+      '.fig-col > p, .fig-col > .fig-line-group, .fig-col > .prompt-block, .fig-col > .choice-list, ' +
+      '.fig-col > .reflect-block, .fig-col > .t14-800, ' +
+      '.t18-w, .check-list, ' +
+      '.post-headline, .research-btn'
+    ));
+    const arrow = screen.querySelector('.arrow-btn');
+    if (arrow) els.push(arrow);
+    const enterBtn = screen.querySelector('.enter-btn');
+    if (enterBtn && enterBtn.style.display !== 'none') els.push(enterBtn);
+    return els;
+  }
+
+  function resetScreen(screen) {
+    getAnimEls(screen).forEach(el => {
+      el.style.transition = 'none';
+      el.classList.remove('anim-in');
+      el.classList.add('anim-ready');
+      void el.offsetHeight;
+      el.style.transition = '';
+    });
+  }
+
+  function animateScreen(screen) {
+    const els = getAnimEls(screen);
+    els.forEach((el, i) => {
+      setTimeout(() => el.classList.add('anim-in'), i * STAGGER);
+    });
+  }
+
+  function go(n) {
+    if (n < 1 || n > TOTAL) return;
+    const prev = document.getElementById('s' + cur);
+    const next = document.getElementById('s' + n);
+    prev.classList.remove('active');
+    cur = n;
+    next.classList.add('active');
+    resetScreen(next);
+    setTimeout(() => animateScreen(next), 80);
+  }
+
+  function goBack() { go(cur - 1); }
+
+  /* Text input — enable arrow when non-empty */
+  function checkTextInput(inputId, btnId) {
+    const val = document.getElementById(inputId).value.trim();
+    const btn = document.getElementById(btnId);
+    if (btn) btn.disabled = val.length === 0;
+  }
+
+  /* Multi-select — enable arrow when at least one selected */
+  function toggleCheck(el, btnId) {
+    el.classList.toggle('sel');
+    const anySelected = document.querySelectorAll('#s6checks .check-row.sel').length > 0;
+    document.getElementById(btnId).disabled = !anySelected;
+  }
+
+  /* Choice buttons (Screen 3) */
+  function selectChoice(btn, screenId, nextScreen) {
+    const screen = document.getElementById(screenId);
+    screen.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('sel'));
+    btn.classList.add('sel');
+    const arrowBtn = document.getElementById(screenId + 'btn');
+    if (arrowBtn) {
+      arrowBtn.disabled = false;
+      if (nextScreen) {
+        arrowBtn.onclick = () => go(nextScreen);
+      } else {
+        // "Not now" — disable progression visually but keep selected state
+        arrowBtn.disabled = true;
+      }
+    }
+  }
+
+  /* Screen 16 — reflect back */
+  let s16timer = null;
+  function onFinalInput() {
+    const val = document.getElementById('s16input').value.trim();
+    const reflectBlock = document.getElementById('s16reflect');
+    const reflectText  = document.getElementById('s16reflectText');
+    const finalLine    = document.getElementById('s16finalline');
+    const enterBtn     = document.getElementById('s16btn');
+
+    if (s16timer) clearTimeout(s16timer);
+
+    if (val.length === 0) {
+      reflectBlock.style.display = 'none';
+      finalLine.style.display = 'none';
+      enterBtn.style.display = 'none';
+      return;
+    }
+
+    s16timer = setTimeout(() => {
+      reflectText.textContent = '\u201C' + val + '\u201D';
+      reflectBlock.style.display = 'block';
+      finalLine.style.display = 'block';
+      enterBtn.style.display = 'flex';
+      // Fade in
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          reflectBlock.style.opacity = '1';
+          finalLine.style.opacity = '1';
+          enterBtn.style.opacity = '1';
+        });
+      });
+    }, 600);
+
+    // Reset opacity for fade-in
+    reflectBlock.style.opacity = '0';
+    reflectBlock.style.transition = 'opacity 0.9s ease';
+    finalLine.style.opacity = '0';
+    finalLine.style.transition = 'opacity 0.9s ease';
+    enterBtn.style.opacity = '0';
+  }
+
+  /* Init */
+  document.querySelectorAll('.screen').forEach(s => resetScreen(s));
+  animateScreen(document.getElementById('s1'));
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') {
+      const btn = document.querySelector('#s' + cur + ' .arrow-btn');
+      if (btn && !btn.disabled) go(cur + 1);
+    }
+    if (e.key === 'ArrowLeft') goBack();
+  });
+</script>
+
+</body>
+</html>
