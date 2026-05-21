@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>tc-split Options</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Chakra+Petch&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #000; color: #fff;
+      font-family: 'Inter', sans-serif; font-weight: 400;
+      max-width: 393px; margin: 0 auto;
+      min-height: 100dvh; -webkit-font-smoothing: antialiased;
+      padding-bottom: 60px;
+    }
+
+    .lbl  { font-size: 11px; font-weight: 500; letter-spacing: 0.6px; text-transform: uppercase; color: #787878; }
+    .n28  { font-size: 28px; letter-spacing: -0.5px; line-height: 1.1; color: #fff; font-feature-settings: 'lnum' 1, 'pnum' 1; }
+
+    /* Option wrapper */
+    .opt {
+      padding: 50px 15px 40px;
+      border-bottom: 0.5px solid #1a1a1a;
+    }
+    .opt-tag {
+      font-size: 10px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase;
+      color: #333; margin-bottom: 36px; display: block;
+    }
+
+    /* Number block shared */
+    .num-block { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; margin-bottom: 32px; }
+
+
+    /* ── A: Thin bar ── */
+    .bar-wrap  { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+    .bar       { display: flex; width: 100%; height: 2px; gap: 2px; }
+    .bar-sd    { height: 2px; background: #787878; border-radius: 1px; }
+    .bar-mg    { height: 2px; background: #333;    border-radius: 1px; flex: 1; }
+    .bar-lbls  { display: flex; justify-content: space-between; align-items: flex-start; }
+    .bar-lbl   { display: flex; flex-direction: column; gap: 5px; }
+    .bar-lbl.r { align-items: flex-end; }
+    .bl-name   { font-size: 11px; font-weight: 500; letter-spacing: 0.6px; text-transform: uppercase; color: #555; }
+    .bl-pct    { font-size: 13px; color: #929292; font-feature-settings: 'lnum' 1, 'tnum' 1; }
+
+
+    /* ── B: Thick bar with inline labels ── */
+    .bbar-wrap { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+    .bbar      { display: flex; width: 100%; height: 28px; gap: 2px; border-radius: 2px; overflow: hidden; }
+    .bbar-sd   { background: #1e1e1e; display: flex; align-items: center; padding: 0 10px; justify-content: space-between; }
+    .bbar-mg   { background: #141414; display: flex; align-items: center; padding: 0 10px; justify-content: space-between; flex: 1; }
+    .bbar-n    { font-size: 11px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; color: #555; }
+    .bbar-p    { font-size: 12px; color: #787878; font-feature-settings: 'lnum' 1, 'tnum' 1; }
+
+
+    /* ── C: One line compressed ── */
+    .oneline {
+      display: flex; align-items: center; justify-content: flex-end; gap: 0;
+      font-size: 12px; color: #555; letter-spacing: 0.3px;
+    }
+    .oneline-seg { display: flex; align-items: center; gap: 6px; }
+    .oneline-dot { width: 4px; height: 4px; border-radius: 50%; background: #333; margin: 0 10px; }
+    .oneline-name { font-size: 11px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; color: #555; }
+    .oneline-pct  { font-size: 13px; color: #929292; font-feature-settings: 'lnum' 1, 'tnum' 1; }
+
+
+    /* ── D: Stacked with value amounts ── */
+    .stack { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+    .stack-row { display: flex; justify-content: space-between; align-items: baseline; }
+    .stack-left { display: flex; align-items: baseline; gap: 8px; }
+    .stack-name { font-size: 11px; font-weight: 500; letter-spacing: 0.6px; text-transform: uppercase; color: #555; }
+    .stack-pct  { font-size: 11px; color: #3a3a3a; font-feature-settings: 'lnum' 1, 'tnum' 1; }
+    .stack-val  { font-size: 13px; color: #787878; font-feature-settings: 'lnum' 1, 'tnum' 1; }
+    .stack-bar-track { width: 100%; height: 1px; background: #141414; margin-top: 4px; }
+    .stack-bar-fill  { height: 1px; background: #3a3a3a; }
+
+
+    /* ── E: Pill tags ── */
+    .pills { display: flex; justify-content: flex-end; gap: 8px; }
+    .pill  {
+      display: flex; align-items: center; gap: 6px;
+      border: 0.5px solid #222; border-radius: 2px; padding: 6px 10px;
+    }
+    .pill-name { font-size: 10px; font-weight: 500; letter-spacing: 0.6px; text-transform: uppercase; color: #555; }
+    .pill-pct  { font-size: 12px; color: #929292; font-feature-settings: 'lnum' 1, 'tnum' 1; }
+    .pill-div  { width: 0.5px; height: 10px; background: #222; }
+  </style>
+</head>
+<body>
+
+  <!-- ── OPTION A: Thin bar (current) ── -->
+  <div class="opt">
+    <span class="opt-tag">A — Thin bar</span>
+    <div class="num-block">
+      <span class="lbl">Total Capital</span>
+      <span class="n28">173,249.00</span>
+    </div>
+    <div class="bar-wrap">
+      <div class="bar">
+        <div class="bar-sd" style="width:51%;"></div>
+        <div class="bar-mg"></div>
+      </div>
+      <div class="bar-lbls">
+        <div class="bar-lbl">
+          <span class="bl-name">Self-Directed</span>
+          <span class="bl-pct">51%</span>
+        </div>
+        <div class="bar-lbl r">
+          <span class="bl-name">Managed</span>
+          <span class="bl-pct">49%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── OPTION B: Block bar with inline labels ── -->
+  <div class="opt">
+    <span class="opt-tag">B — Block bar</span>
+    <div class="num-block">
+      <span class="lbl">Total Capital</span>
+      <span class="n28">173,249.00</span>
+    </div>
+    <div class="bbar-wrap">
+      <div class="bbar">
+        <div class="bbar-sd" style="width:51%;">
+          <span class="bbar-n">Self-Directed</span>
+          <span class="bbar-p">51%</span>
+        </div>
+        <div class="bbar-mg">
+          <span class="bbar-n">Managed</span>
+          <span class="bbar-p">49%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── OPTION C: One line ── -->
+  <div class="opt">
+    <span class="opt-tag">C — One line</span>
+    <div class="num-block">
+      <span class="lbl">Total Capital</span>
+      <span class="n28">173,249.00</span>
+    </div>
+    <div class="oneline">
+      <div class="oneline-seg">
+        <span class="oneline-name">Self-Directed</span>
+        <span class="oneline-pct">51%</span>
+      </div>
+      <div class="oneline-dot"></div>
+      <div class="oneline-seg">
+        <span class="oneline-name">Managed</span>
+        <span class="oneline-pct">49%</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── OPTION D: Stacked with amount + mini bar ── -->
+  <div class="opt">
+    <span class="opt-tag">D — Stacked with amounts</span>
+    <div class="num-block">
+      <span class="lbl">Total Capital</span>
+      <span class="n28">173,249.00</span>
+    </div>
+    <div class="stack">
+      <div class="stack-row">
+        <div class="stack-left">
+          <span class="stack-name">Self-Directed</span>
+          <span class="stack-pct">51%</span>
+        </div>
+        <span class="stack-val">88,356.99</span>
+      </div>
+      <div class="stack-bar-track"><div class="stack-bar-fill" style="width:51%;"></div></div>
+
+      <div class="stack-row" style="margin-top:10px;">
+        <div class="stack-left">
+          <span class="stack-name">Managed</span>
+          <span class="stack-pct">49%</span>
+        </div>
+        <span class="stack-val">84,892.01</span>
+      </div>
+      <div class="stack-bar-track"><div class="stack-bar-fill" style="width:49%;"></div></div>
+    </div>
+  </div>
+
+
+  <!-- ── OPTION E: Pill tags ── -->
+  <div class="opt">
+    <span class="opt-tag">E — Pills</span>
+    <div class="num-block">
+      <span class="lbl">Total Capital</span>
+      <span class="n28">173,249.00</span>
+    </div>
+    <div class="pills">
+      <div class="pill">
+        <span class="pill-name">Self-Directed</span>
+        <div class="pill-div"></div>
+        <span class="pill-pct">51%</span>
+      </div>
+      <div class="pill">
+        <span class="pill-name">Managed</span>
+        <div class="pill-div"></div>
+        <span class="pill-pct">49%</span>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

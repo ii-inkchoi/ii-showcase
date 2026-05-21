@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <title>Open Questions · v2</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500&family=Chakra+Petch&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-black: #000000;
+      --c-1000:  #1C1C1C;
+      --c-900:   #232627;
+      --c-800:   #565B5E;
+      --c-700:   #929292;
+      --c-600:   #A7A7A7;
+      --c-400:   #C7C7C7;
+      --c-200:   #E3E2E2;
+      --c-white: #FFFFFF;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      width: 100%;
+      max-width: 393px;
+      margin: 0 auto;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      text-align: left;
+    }
+
+    /* NAV — back arrow only (no title) */
+    .nav {
+      height: 71px;
+      display: flex;
+      align-items: center;
+      padding: 0 13.5px;
+      border-bottom: 0.5px solid #1C1C1C;
+    }
+    .nav-back {
+      color: var(--c-400);
+      font-size: 22px;
+      font-weight: 300;
+      line-height: 1;
+      padding: 8px 4px 8px 0;
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .nav-back:active { opacity: 0.5; transition: opacity 80ms ease; }
+
+    /* PAGE HEAD — small, restrained, left-aligned */
+    /* PAGE HEAD — single line: "N Open Questions · Date" */
+    .page-head {
+      padding: 0 13.5px;
+      margin-top: 32px;
+      font-size: 13px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      text-align: left;
+    }
+    .ph-value { color: var(--c-400); }
+    .ph-label { color: var(--c-700); }
+
+    /* SECTIONS — every section has top + bottom hairline, consistent padding */
+    .mt-list { margin-top: 32px; }
+    .section { padding: 0 13.5px; }
+    .data-col {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      width: 100%;
+    }
+    .oq-section {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 4px;
+      width: 100%;
+      padding: 16px 0;
+      border-bottom: 0.5px solid var(--c-1000);
+    }
+    /* Section head — badge + count on left, × on right */
+    .oq-head-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .oq-head-left {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    /* Severity dot — small colored circle before the title.
+       Replaces the badge chrome; color = severity. */
+    .oq-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .oq-dot.urgent  { background: #FF3533; }  /* red.light */
+    .oq-dot.warning { background: #FDAD00; }  /* orange.default */
+    .oq-dot.review  { background: #FBC308; }  /* yellow.default */
+    .oq-dot.neutral { background: var(--c-700); }
+
+    /* Section title — neutral text, no severity color */
+    .oq-title {
+      font-size: 13px;
+      color: var(--c-400);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      text-transform: capitalize;
+    }
+    /* Count sits next to the title */
+    .oq-count {
+      font-size: 13px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+    /* × dismiss — slightly larger, thinner weight, one step darker */
+    .oq-x {
+      background: none;
+      border: none;
+      color: var(--c-700);
+      line-height: 0;
+      cursor: pointer;
+      padding: 4px 0 4px 8px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .oq-x svg { display: block; }
+    .oq-x:active { color: var(--c-400); transition: color 80ms ease; }
+
+    /* Items table — indented to align with the title text (not the dot) */
+    .oq-items {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 13px;
+      white-space: nowrap;
+      padding-left: 16px;  /* dot width 6 + gap 10 */
+    }
+    .oq-item {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+    .oq-t {
+      color: var(--c-400);
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+      flex-shrink: 0;
+    }
+    .oq-m {
+      color: var(--c-700);
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Primary action — arrow + label, aligned with title text */
+    .oq-action {
+      font-size: 13px;
+      color: var(--c-700);
+      text-transform: capitalize;
+      line-height: normal;
+      padding-top: 2px;
+      padding-left: 16px;
+      text-decoration: none;
+      align-self: flex-start;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .oq-action:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .oq-action .arrow { margin-right: 6px; }
+
+    .bottom { height: 80px; }
+
+    /* MOTION — same fade-in pattern as the dashboard */
+    .nav, .page-head, .mt-list {
+      animation: fade-in 700ms ease-out both;
+    }
+    .nav { animation-delay: 0ms; }
+    .page-head { animation-delay: 120ms; }
+    .mt-list { animation-delay: 280ms; }
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .nav, .page-head, .mt-list { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV — back arrow only -->
+  <nav class="nav">
+    <a class="nav-back" href="Unified%20Dashboard.html" aria-label="Back">‹</a>
+  </nav>
+
+  <!-- PAGE HEAD — count + timestamp, left-aligned -->
+  <div class="page-head">
+    <span class="ph-value">4 Open Questions</span> · <span class="ph-label">May 19 · 13:18</span>
+  </div>
+
+  <!-- SECTIONS — left-aligned, dot-led -->
+  <div class="mt-list">
+    <div class="section">
+      <div class="data-col">
+
+        <!-- Big Move -->
+        <div class="oq-section">
+          <div class="oq-head-row">
+            <span class="oq-head-left">
+              <span class="oq-dot urgent" aria-hidden="true"></span>
+              <span class="oq-title">Big Move</span>
+              <span class="oq-count">1</span>
+            </span>
+            <button class="oq-x" aria-label="Dismiss section"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 3L11 11M11 3L3 11" stroke="currentColor" stroke-width="0.75" stroke-linecap="round"/></svg></button>
+          </div>
+          <div class="oq-items">
+            <div class="oq-item">
+              <span class="oq-t">NVDA</span>
+              <span class="oq-m">−6.8% · guidance miss · after-hours</span>
+            </div>
+          </div>
+          <a class="oq-action" href="#"><span class="arrow">→</span>Review thesis</a>
+        </div>
+
+        <!-- Material Move -->
+        <div class="oq-section">
+          <div class="oq-head-row">
+            <span class="oq-head-left">
+              <span class="oq-dot warning" aria-hidden="true"></span>
+              <span class="oq-title">Material Move</span>
+              <span class="oq-count">2</span>
+            </span>
+            <button class="oq-x" aria-label="Dismiss section"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 3L11 11M11 3L3 11" stroke="currentColor" stroke-width="0.75" stroke-linecap="round"/></svg></button>
+          </div>
+          <div class="oq-items">
+            <div class="oq-item">
+              <span class="oq-t">AAPL</span>
+              <span class="oq-m">+4.2% · Q1 earnings · pre-mkt</span>
+            </div>
+            <div class="oq-item">
+              <span class="oq-t">EOSCR</span>
+              <span class="oq-m">−3.8% · no headline · vol +3σ</span>
+            </div>
+          </div>
+          <a class="oq-action" href="#"><span class="arrow">→</span>Investigate</a>
+        </div>
+
+        <!-- Thesis Review -->
+        <div class="oq-section">
+          <div class="oq-head-row">
+            <span class="oq-head-left">
+              <span class="oq-dot review" aria-hidden="true"></span>
+              <span class="oq-title">Thesis Review</span>
+              <span class="oq-count">1</span>
+            </span>
+            <button class="oq-x" aria-label="Dismiss section"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 3L11 11M11 3L3 11" stroke="currentColor" stroke-width="0.75" stroke-linecap="round"/></svg></button>
+          </div>
+          <div class="oq-items">
+            <div class="oq-item">
+              <span class="oq-t">AAPL</span>
+              <span class="oq-m">Q1 2026 earnings released</span>
+            </div>
+          </div>
+          <a class="oq-action" href="#"><span class="arrow">→</span>Start review</a>
+        </div>
+
+        <!-- Memo Pending -->
+        <div class="oq-section">
+          <div class="oq-head-row">
+            <span class="oq-head-left">
+              <span class="oq-dot neutral" aria-hidden="true"></span>
+              <span class="oq-title">Memo Pending</span>
+              <span class="oq-count">4</span>
+            </span>
+            <button class="oq-x" aria-label="Dismiss section"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 3L11 11M11 3L3 11" stroke="currentColor" stroke-width="0.75" stroke-linecap="round"/></svg></button>
+          </div>
+          <div class="oq-items">
+            <div class="oq-item">
+              <span class="oq-t">ORIO.TO</span>
+              <span class="oq-m">25% of book</span>
+            </div>
+            <div class="oq-item">
+              <span class="oq-t">BWEN</span>
+              <span class="oq-m">20% of book</span>
+            </div>
+            <div class="oq-item">
+              <span class="oq-t">EOSCR</span>
+              <span class="oq-m">15% of book</span>
+            </div>
+            <div class="oq-item">
+              <span class="oq-t">NVDA</span>
+              <span class="oq-m">12% of book</span>
+            </div>
+          </div>
+          <a class="oq-action" href="#"><span class="arrow">→</span>Write memo</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom"></div>
+
+  <!-- × dismiss interaction.
+       Click × on a section → fade out → remove → header count
+       recalculates from sum of remaining .oq-count values. -->
+  <script>
+    function recalcCount() {
+      var total = document.querySelectorAll('.oq-section').length;
+      var ph = document.querySelector('.ph-value');
+      if (ph) ph.textContent = total + ' Open Questions';
+      var pageHead = document.querySelector('.page-head');
+      if (pageHead) pageHead.style.display = total === 0 ? 'none' : 

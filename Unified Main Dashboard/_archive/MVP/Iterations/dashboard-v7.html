@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=393, initial-scale=1.0">
+  <title>Unified Main Dashboard — V7 (Figma)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Chakra+Petch&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-black: #000000;
+      --c-1000:  #1C1C1C;
+      --c-900:   #232627;
+      --c-800:   #565B5E;
+      --c-700:   #929292;
+      --c-600:   #A7A7A7; /* default body */
+      --c-400:   #C7C7C7;
+      --c-200:   #E3E2E2;
+      --c-white: #FFFFFF;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      width: 393px;
+      margin: 0 auto;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      text-align: right;
+    }
+
+    /* HEADER */
+    .header {
+      height: 71px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 30px;
+      border-bottom: 0.5px solid #1C1C1C;
+    }
+    .logo {
+      height: 14.4px;
+      width: auto;
+      display: block;
+    }
+    .header-icons { display: flex; align-items: center; gap: 20px; }
+    .header-icons img { width: 17px; height: 17px; opacity: 0.85; display: block; }
+
+    /* TOTAL CAPITAL */
+    .total-capital {
+      padding: 0 13.5px;
+      margin-top: 81px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+    .tc-label {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.22px;
+      line-height: 1.25;
+      text-transform: capitalize;
+    }
+    .tc-value {
+      font-size: 28px;
+      color: #fff;
+      font-feature-settings: 'lnum' 1, 'pnum' 1;
+      line-height: normal;
+    }
+
+    /* SPLIT (Managed / Self-Directed) */
+    .split {
+      margin-top: 30px;
+      padding: 0 15px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 3px;
+    }
+    .split-col {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .split-col.managed       { width: 128px; align-items: flex-start; text-align: left;  }
+    .split-col.self-directed { width: 47px;  align-items: flex-end;   text-align: right; }
+    .split-col.self-directed > span { white-space: nowrap; }
+    .split-name {
+      font-size: 12px;
+      color: var(--c-700);
+      letter-spacing: -0.18px;
+      line-height: 1.4;
+      text-transform: capitalize;
+    }
+    .split-pct {
+      font-size: 12px;
+      color: var(--c-400);
+      letter-spacing: -0.18px;
+      line-height: 1.15;
+      text-transform: capitalize;
+    }
+    .split-bar { height: 1px; }
+    .split-bar.managed       { width: 128px; background: var(--c-white); }
+    .split-bar.self-directed { width: 47px;  background: var(--c-800);   }
+
+    /* SECTIONS */
+    .divider {
+      border: none;
+      border-top: 1px solid #1C1C1C;
+      margin: 0 13.5px;
+    }
+    .section { padding: 30px 13.5px 0; }
+    .s-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+    }
+    .s-title-wrap {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+    .s-title-col {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: left;
+    }
+    .t-primary   { font-size: 18px; color: var(--c-400); font-weight: 400; letter-spacing: -0.36px; line-height: 1.15; text-transform: capitalize; }
+    .t-secondary { font-size: 18px; color: #565b5e; font-weight: 400; letter-spacing: -0.36px; line-height: 1.15; text-transform: capitalize; }
+
+    /* Data column */
+    .data-col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 50px;
+      width: 100%;
+    }
+
+    /* Data block */
+    .db {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+      width: 100%;
+    }
+    .db-label {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.22px;
+      line-height: 1.25;
+      text-transform: capitalize;
+      width: 100%;
+    }
+    .n22 {
+      font-size: 22px;
+      color: #fff;
+      font-feature-settings: 'lnum' 1, 'pnum' 1;
+      line-height: normal;
+      width: 100%;
+    }
+    .n15 {
+      font-size: 15px;
+      color: var(--c-400);
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+      line-height: normal;
+      width: 100%;
+    }
+
+    /* Gain row */
+    .gain-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      width: 100%;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .gain-pair { display: flex; align-items: center; gap: 4px; }
+    .ga { color: var(--c-400); font-feature-settings: 'lnum' 1, 'tnum' 1; }
+    .gp { color: #c7c7c7; font-feature-settings: 'lnum' 1, 'tnum' 1; }
+    .gt { color: #929292; text-transform: capitalize; }
+
+    /* Inline table (Equity/Fixed/Money, ORIO.TO/BWEN...) */
+    .tbl {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+      width: 100%;
+      font-size: 13px;
+      text-transform: capitalize;
+      white-space: nowrap;
+    }
+    .tbl-row { display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+    .tl      { color: #929292; }
+    .tl-mid  { color: var(--c-700); }
+    .tv      { color: var(--c-400); font-feature-settings: 'lnum' 1, 'tnum' 1; }
+
+    /* Cash block (label below number, aligned right) */
+    .cash-block {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .cash-lbl {
+      font-size: 13px;
+      color: #929292;
+      text-transform: capitalize;
+      line-height: normal;
+    }
+
+    /* Account switcher */
+    .acct-sw {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .acct-label {
+      font-size: 15px;
+      color: #c7c7c7;
+      letter-spacing: -0.3px;
+      line-height: 1.35;
+      text-transform: capitalize;
+    }
+    .acct-chev { width: 7px; height: 4px; display: block; }
+
+    /* Positions group (Active Positions / Under Review) */
+    .pos-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+      width: 100%;
+    }
+    .pos-head {
+      font-size: 15px;
+      color: var(--c-400);
+      letter-spacing: -0.3px;
+      line-height: 1.15;
+      text-transform: capitalize;
+      width: 100%;
+      white-space: pre-wrap;
+    }
+    .view-all {
+      font-size: 13px;
+      color: var(--c-400);
+      text-transform: capitalize;
+      line-height: normal;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    /* Open Orders inline */
+    .open-orders {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      width: 100%;
+      font-size: 15px;
+      letter-spacing: -0.3px;
+      line-height: 1.15;
+      text-transform: capitalize;
+      white-space: nowrap;
+    }
+    .oo-lbl { color: #c7c7c7; }
+    .oo-n   { color: #c7c7c7; font-feature-settings: 'lnum' 1, 'tnum' 1; }
+
+    /* Section spacing */
+    .mt-managed { margin-top: 70px; }
+    .mt-active  { margin-top: 70px; }
+
+
+    .bottom { height: 80px; }
+
+    /* ─────────────────────────
+       MOTION — reference pattern.
+       Labels/structure render immediately. Numbers scramble as placeholders
+       (dim, monospace) and lock in on a single master timeline.
+    ───────────────────────── */
+
+    /* A resolvable numeric slot. Scramble state styles are applied inline by JS. */
+    [data-final] {
+      font-variant-numeric: tabular-nums;
+    }
+    [data-final].resolving {
+      transition: opacity 320ms ease, transform 320ms ease;
+    }
+
+    /* Split bars grow during the middle of the timeline (~1050–1950ms) */
+    .split-bar {
+      transform: scaleX(0);
+      animation: bar-grow 900ms cubic-bezier(0.76, 0, 0.24, 1) 1050ms forwards;
+    }
+    .split-bar.managed       { transform-origin: left center;  }
+    .split-bar.self-directed { transform-origin: right center; }
+    @keyframes bar-grow {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .split-bar { animation: none; transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <img class="logo" src="Logo.svg" alt="logo">
+    <div class="header-icons">
+      <img src="https://www.figma.com/api/mcp/asset/ebf79e5a-03f6-463c-9c4f-72982950cb9c" alt="search">
+      <img src="https://www.figma.com/api/mcp/asset/639691d9-d10a-4f95-ae48-4fff9725d815" alt="menu">
+    </div>
+  </header>
+
+  <!-- TOTAL CAPITAL -->
+  <div class="total-capital">
+    <span class="tc-label">Total Capital</span>
+    <span class="tc-value"><span data-final="173,249.00" data-r="0.30">173,249.00</span></span>
+  </div>
+
+  <!-- MANAGED / SELF-DIRECTED SPLIT -->
+  <div class="split">
+    <div class="split-col managed">
+      <span class="split-name">Managed</span>
+      <span class="split-pct" data-final="73%" data-r="0.42">73%</span>
+      <div class="split-bar managed"></div>
+    </div>
+    <div class="split-col self-directed">
+      <span class="split-name">Self-Directed</span>
+      <span class="split-pct" data-final="27%" data-r="0.42">27%</span>
+      <div class="split-bar self-directed"></div>
+    </div>
+  </div>
+
+  <!-- MANAGED / CORE SECTION -->
+  <div class="mt-managed">
+    <hr class="divider">
+    <div class="section">
+      <div class="s-inner">
+        <div class="s-title-wrap">
+          <div class="s-title-col">
+            <span class="t-primary">Core</span>
+            <span class="t-secondary">Managed</span>
+          </div>
+        </div>
+
+        <div class="data-col">
+          <!-- Value -->
+          <div class="db">
+            <span class="db-label">Value</span>
+            <span class="n22" data-final="126,471.77" data-r="0.55">126,471.77</span>
+            <div class="gain-row">
+              <div class="gain-pair">
+                <span class="ga" data-final="+6,365.65" data-r="0.60">+6,365.65</span>
+                <span class="gp" data-final="(+5.3%)" data-r="0.60">(+5.3%)</span>
+              </div>
+              <span class="gt">Since Inception</span>
+            </div>
+          </div>
+
+          <!-- Projection -->
+          <div class="db">
+            <span class="db-label">Projection</span>
+            <span class="n15" data-final="1.23M" data-r="0.65">1.23M</span>
+          </div>
+
+          <!-- Allocation -->
+          <div class="tbl">
+            <div class="tbl-row"><span class="tl">Equity (S&amp;P 500)</span><span class="tv" data-final="50%" data-r="0.70">50%</span></div>
+            <div class="tbl-row"><span class="tl">Fixed Income</span>       <span class="tv" data-final="25%" data-r="0.72">25%</span></div>
+            <div class="tbl-row"><span class="tl">Money Market</span>       <span class="tv" data-final="25%" data-r="0.74">25%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTIVE / SELF-DIRECTED SECTION -->
+  <div class="mt-active active-section">
+    <hr class="divider">
+    <div class="section">
+      <div class="s-inner">
+        <div class="s-title-wrap">
+          <div class="s-title-col">
+            <span class="t-primary">Active</span>
+            <span class="t-secondary">Self-directed</span>
+          </div>
+          <div class="acct-sw">
+            <span class="acct-label">RRSP</span>
+            <svg class="acct-chev" viewBox="0 0 7 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0.5 0.5L3.5 3.5L6.5 0.5" stroke="#c7c7c7" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="data-col" style="gap:53px;">
+          <!-- Value -->
+          <div class="db">
+            <span class="db-label">Value</span>
+            <span class="n22" data-final="46,777.23" data-r="0.78">46,777.23</span>
+            <div class="gain-row">
+              <div class="gain-pair">
+                <span class="ga" data-final="+2,353.46" data-r="0.82">+2,353.46</span>
+                <span class="gp" data-final="(+5.3%)" data-r="0.82">(+5.3%)</span>
+              </div>
+              <span class="gt">Since Inception</span>
+            </div>
+          </div>
+
+          <!-- Cash -->
+          <div class="cash-block">
+            <span class="cash-lbl">Cash (10%)</span>
+            <span class="n15" style="width:auto;" data-final="4,677.72" data-r="0.85">4,677.72</span>
+          </div>
+
+          <!-- Active Positions -->
+          <div class="pos-group">
+            <span class="pos-head">Active Positions   <span data-final="9" data-r="0.88">9</span></span>
+            <div class="tbl">
+              <div class="tbl-row"><span class="tl-mid">ORIO.TO</span><span class="tv" data-final="25%" data-r="0.90">25%</span></div>
+              <div class="tbl-row"><span class="tl-mid">BWEN</span>   <span class="tv" data-final="20%" data-r="0.91">20%</span></div>
+              <div class="tbl-row"><span class="tl-mid">EOSCR</span>  <span class="tv" data-final="15%" data-r="0.92">15%</span></div>
+              <div class="tbl-row"><span class="tl-mid">NVDA</span>   <span class="tv" data-final="12%" data-r="0.93">12%</span></div>
+              <div class="tbl-row"><span class="tl-mid">AMD</span>    <span class="tv" data-final="8%"  data-r="0.94">8%</span></div>
+            </div>
+            <span class="view-all">View All</span>
+          </div>
+
+          <!-- Under Review -->
+          <div class="pos-group">
+            <span class="pos-head">Under Review   <span data-final="5" data-r="0.95">5</span></span>
+            <div class="tbl">
+              <div class="tbl-row"><span class="tl-mid">ORIO.TO</span></div>
+              <div class="tbl-row"><span class="tl-mid">BWEN</span></div>
+              <div class="tbl-row"><span class="tl-mid">EOSCR</span></div>
+            </div>
+            <span class="view-all">View All</span>
+          </div>
+
+          <!-- Open Orders -->
+          <div class="open-orders">
+            <span class="oo-lbl">Open Orders</span>
+            <span class="oo-n" data-final="2" data-r="0.98">2</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom"></div>
+
+  <script>
+    // Single master timeline. Structure/labels render immediately; numeric
+    // fields show a scramble placeholder (dim, monospace) and lock in at
+    // their data-r threshold. Adapted from the Managed "Computing Projection"
+    // loader in Loading States — Tabbed Carousel.
+    (function () {
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const nodes  = Array.from(document.querySelectorAll('[data-final]'));
+      if (!nodes.length) return;
+      if (reduce) { nodes.forEach(n => n.textContent = n.dataset.final); return; }
+
+      const TOTAL     = 2600;                                   // master duration (ms)
+      const CYCLE_MS  = 85;                                     // digit cycling throttle
+      const GLYPHS    = '0123456789';
+      const DIM_COLOR = '#565B5E';                              // palette 800 — computing tone
+
+      // Tabular-nums (set in CSS on [data-final]) keeps digit widths stable so
+      // the layout doesn't shift when scrambled digits resolve to final ones.
+      const state = nodes.map((n) => {
+        const cs = getComputedStyle(n);
+        return {
+          el: n,
+          final: n.dataset.final,
+          r: parseFloat(n.dataset.r) || 0.5,
+          resolved: false,
+          origColor: cs.color,
+        };
+      });
+
+      function scrambleString(final) {
+        let out = '';
+        for (let i = 0; i < final.length; i++) {
+          out += /[0-9]/.test(final[i])
+            ? GLYPHS[(Math.random() * 10) | 0]
+            : final[i];
+        }
+        return out;
+      }
+
+      // Paint initial placeholder
+      state.forEach((s) => {
+        s.el.style.color = DIM_COLOR;
+        s.el.textContent = scrambleString(s.final);
+      });
+
+      const t0 = performance.now();
+      let lastCycle = 0;
+
+      function resolve(s) {
+        s.resolved = true;
+        s.el.textContent = s.final;
+        s.el.style.color = s.origColor;
+        s.el.style.opacity = '0';
+        s.el.style.transform = 'translateY(3px)';
+        s.el.classList.add('resolving');
+        requestAnimationFrame(() => {
+          s.el.style.opacity = '1';
+          s.el.style.transform = 'translateY(0)';
+        });
+      }
+
+      function frame(now) {
+        const p = Math.min(1, (now - t0) / TOTAL);
+        const cycle = now - lastCycle >= CYCLE_MS;
+        let anyUnresolved = false;
+        for (const s of state) {
+          if (s.resolved) continue;
+          if (p >= s.r) resolve(s);
+          else {
+            anyUnresolved = true;
+            if (cycle) s.el.textContent = scrambleString(s.final);
+          }
+        }
+        if (cycle) lastCycle = now;
+        if (p < 1 || anyUnresolved) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    })();
+  </script>
+</body>
+</html>

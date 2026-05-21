@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A vs C — Full Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Chakra+Petch&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #080808;
+      display: flex;
+      height: 100dvh;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Two-column wrapper */
+    .col {
+      width: 393px;
+      height: 100dvh;
+      overflow-y: auto;
+      flex-shrink: 0;
+      background: #000;
+      position: relative;
+    }
+    .col + .col { border-left: 1px solid #111; }
+
+    /* Version label — sticky */
+    .ver-label {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(0,0,0,0.9);
+      border-bottom: 0.5px solid #1a1a1a;
+      padding: 8px 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(8px);
+    }
+    .ver-letter {
+      font-size: 10px; font-weight: 500; letter-spacing: 1.5px;
+      text-transform: uppercase; color: #3a3a3a;
+      font-family: 'Inter', sans-serif;
+    }
+    .ver-desc {
+      font-size: 10px; color: #282828; letter-spacing: 0.3px;
+    }
+
+    /* ── SHARED STYLES ── */
+    .lbl  { font-size: 11px; font-weight: 500; letter-spacing: 0.6px; text-transform: uppercase; color: #787878; }
+    .n28  { font-size: 28px; letter-spacing: -0.5px; line-height: 1.1; color: #fff; font-feature-settings: 'lnum' 1, 'pnum' 1; }
+    .n22  { font-size: 22px; letter-spacing: -0.3px; line-height: 1.1; color: #fff; font-feature-settings: 'lnum' 1, 'pnum' 1; }
+    .n15  { font-size: 15px; color: #fff; font-feature-settings: 'lnum' 1, 'tnum' 1; }
+    .g-lbl { font-size: 11px; font-weight: 500; letter-spacing: 0.6px; text-transform: uppercase; color: #555; text-align: right; display: block; width: 100%; }
+
+    .header { height: 71px; display: flex; align-items: center; justify-content: space-between; padding: 0 30px; border-bottom: 0.5px solid #2e2e2e; }
+    .logo   { font-family: 'Chakra Petch', sans-serif; font-size: 16px; color: #fff; }
+    .hicons { display: flex; align-items: center; gap: 20px; }
+
+    .tc { padding: 80px 15px 0; display: flex; flex-direction: column; align-items: flex-end; gap: 40px; }
+    .tc-num-block { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+
+    .divider { border: none; border-top: 0.5px solid #2e2e2e; }
+    .sub-div { border: none; border-top: 0.5px solid #141414; margin: 36px 0 0; }
+
+    .section  { padding: 0 15px; margin-top: 50px; }
+    .s-head   { display: flex; align-items: flex-start; justify-content: space-between; padding: 28px 0 0; }
+    .s-title  { display: flex; flex-direction: column; gap: 8px; }
+    .s-t1 { font-size: 18px; color: #fff; letter-spacing: -0.36px; line-height: 1.15; }
+    .s-t2 { font-size: 18px; color: #555; letter-spacing: -0.36px; line-height: 1.15; }
+
+    .sw { display: flex; align-items: center; gap: 5px; min-height: 44px; min-width: 44px; justify-content: flex-end; user-select: none; }
+    .sw-label { font-size: 14px; color: #929292; letter-spacing: -0.3px; }
+    .sw-count { font-size: 10px; color: #555; }
+    .sw svg   { width: 7px; height: 5px; flex-shrink: 0; opacity: 0.5; }
+
+    .group { padding-top: 24px; display: flex; flex-direction: column; gap: 10px; }
+    .primary-metric { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; width: 100%; }
+
+    .gain      { display: flex; align-items: center; justify-content: flex-end; gap: 8px; font-size: 13px; }
+    .gain-amt  { color: #929292; font-feature-settings: 'lnum' 1, 'tnum' 1; }
+    .gain-pct  { color: #666;    font-feature-settings: 'lnum' 1, 'tnum' 1; }
+    .gain-time { color: #555; }
+
+    .data-rows { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+    .dr        { display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+    .dr-l      { color: #787878; }
+    .dr-l-mid  { color: #929292; }
+    .dr-v      { color: #c7c7c7; font-feature-settings: 'lnum' 1, 'tnum' 1; flex-shrink: 0; }
+    .dr-v-hi   { color: #fff;    font-feature-settings: 'lnum' 1, 'tnum' 1; flex-shrink: 0; }
+
+    .proj-note {
+      font-size: 13px; color: #555; display: block; text-align: right; padding: 12px 0 0;
+      text-decoration: underline; text-decoration-style: dotted;
+      text-decoration-color: #333; text-underline-offset: 3px;
+    }
+
+    .pos-rows  { display: flex; flex-direction: column; width: 100%; padding-top: 4px; }
+    .pos-row   { display: flex; justify-content: space-between; align-items: center; border-bottom: 0.5px solid #141414; min-height: 44px; }
+    .pos-row:last-child { border-bottom: none; }
+    .pos-l     { font-size: 14px; color: #929292; letter-spacing: -0.2px; }
+    .pos-l-dim { font-size: 14px; color: #555;    letter-spacing: -0.2px; }
+    .pos-v     { font-size: 18px; color: #fff; font-feature-settings: 'lnum' 1, 'tnum' 1; letter-spacing: -0.3px; }
+    .pos-v-dim { font-size: 18px; color: #555; font-feature-settings: 'lnum' 1, 'tnum' 1; letter-spacing: -0.3px; }
+    .pos-right { display: flex; align-items: center; gap: 10px; }
+    .pos-chev  { opacity: 0.3; width: 5px; height: 8px; flex-shrink: 0; }
+
+    .cash-block { padding-top: 20px; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+    .bottom     { height: 80px; }
+
+    /* ── OPTION A: thin bar ── */
+    .bar-wrap { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+    .bar      { display: flex; width: 100%; height: 2px; gap: 2px; }
+    .bar-sd   { height: 2px; background: #787878; border-radius: 1px; }
+    .bar-mg   { height: 2px; background: #333;    border-radius: 1px; flex: 1; }
+    .bar-lbls { display: flex; justify-content: space-between; }
+    .bar-lbl  { display: flex; flex-direction: column; gap: 5px; }
+    .bar-lbl.r { align-items: flex-end; }
+    .bl-name  { font-size: 11px; font-weight: 500; letter-spacing: 0.6px; text-transform: uppercase; color: #555; }
+    .bl-pct   { font-size: 13px; color: #929292; font-feature-settings: 'lnum' 1, 'tnum' 1; }
+
+    /* ── OPTION C: one line ── */
+    .oneline      { display: flex; align-items: center; justify-content: flex-end; }
+    .oneline-seg  { display: flex; align-items: baseline; gap: 6px; }
+    .oneline-div  { width: 0.5px; height: 10px; background: #2e2e2e; margin: 0 12px; }
+    .oneline-name { font-size: 11px; font-weight: 500; letter-spacing: 0.6px; text-transform: uppercase; color: #555; }
+    .oneline-pct  { font-size: 13px; color: #929292; font-feature-settings: 'lnum' 1, 'tnum' 1; }
+
+    /* ── OPTION D: stacked with amounts + mini bar ── */
+    .stack          { display: flex; flex-direction: column; gap: 0; width: 100%; }
+    .stack-row      { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 0 6px; }
+    .stack-left     { display: flex; align-items: baseline; gap: 8px; }
+    .stack-name     { font-size: 11px; font-weight: 500; letter-spacing: 0.6px; text-transform: uppercase; color: #555; }
+    .stack-pct      { font-size: 11px; color: #3a3a3a; font-feature-settings: 'lnum' 1, 'tnum' 1; }
+    .stack-val      { font-size: 13px; color: #787878; font-feature-settings: 'lnum' 1, 'tnum' 1; }
+    .stack-track    { width: 100%; height: 1px; background: #141414; margin-bottom: 4px; }
+    .stack-fill-sd  { height: 1px; background: #555; }
+    .stack-fill-mg  { height: 1px; background: #3a3a3a; }
+  </style>
+</head>
+<body>
+
+  <!-- ══ COLUMN A ══ -->
+  <div class="col" id="colA">
+    <div class="ver-label">
+      <span class="ver-letter">A</span>
+      <span class="ver-desc">Thin bar</span>
+    </div>
+    <header class="header">
+      <span class="logo">//</span>
+      <div class="hicons">
+        <svg width="17" height="17" viewBox="0 0 17 17" fill="none"><circle cx="7.5" cy="7.5" r="5.5" stroke="#fff" stroke-width="1.2" opacity="0.8"/><line x1="11.5" y1="11.5" x2="15.5" y2="15.5" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/></svg>
+        <svg width="17" height="13" viewBox="0 0 17 13" fill="none"><line x1="0" y1="1" x2="17" y2="1" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/><line x1="0" y1="6.5" x2="17" y2="6.5" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/><line x1="0" y1="12" x2="17" y2="12" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/></svg>
+      </div>
+    </header>
+
+    <div class="tc">
+      <div class="tc-num-block">
+        <span class="lbl">Total Capital</span>
+        <span class="n28">173,249.00</span>
+      </div>
+      <div class="bar-wrap">
+        <div class="bar">
+          <div class="bar-sd" style="width:51%;"></div>
+          <div class="bar-mg"></div>
+        </div>
+        <div class="bar-lbls">
+          <div class="bar-lbl">
+            <span class="bl-name">Self-Directed</span>
+            <span class="bl-pct">51%</span>
+          </div>
+          <div class="bar-lbl r">
+            <span class="bl-name">Managed</span>
+            <span class="bl-pct">49%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <hr class="divider">
+      <div class="s-head">
+        <div class="s-title"><span class="s-t1">Managed</span><span class="s-t2">Core</span></div>
+      </div>
+      <div class="group">
+        <span class="g-lbl">Value</span>
+        <div class="primary-metric">
+          <span class="n22">84,892.01</span>
+          <div class="gain"><span class="gain-amt">+4,273</span><span class="gain-pct">(+5.3%)</span><span class="gain-time">Since Inception</span></div>
+        </div>
+      </div>
+      <hr class="sub-div">
+      <div class="group">
+        <span class="g-lbl">Projection</span>
+        <div class="primary-metric"><span class="n22">1.23M</span></div>
+        <span class="proj-note">11% Long-Term S&amp;P 500 Average</span>
+      </div>
+      <hr class="sub-div">
+      <div class="group">
+        <div class="data-rows">
+          <div class="dr"><span class="dr-l">Equity (S&amp;P 500)</span><span class="dr-v">50%</span></div>
+          <div class="dr"><span class="dr-l">Fixed Income</span><span class="dr-v">25%</span></div>
+          <div class="dr"><span class="dr-l">Money Market</span><span class="dr-v">25%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" style="margin-top:60px;">
+      <hr class="divider">
+      <div class="s-head">
+        <div class="s-title"><span class="s-t1">Self-Directed</span></div>
+        <div class="sw">
+          <span class="sw-label">All Accounts</span>
+          <span class="sw-count">· 3</span>
+          <svg viewBox="0 0 7 4" fill="none"><path d="M0.5 3.5L3.5 0.5L6.5 3.5" stroke="#929292" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <div class="group" style="padding-top:28px;">
+        <div class="pos-rows">
+          <div class="pos-row"><span class="pos-l">Active Positions</span><div class="pos-right"><span class="pos-v">9</span><svg class="pos-chev" viewBox="0 0 5 8" fill="none"><path d="M1 1L4 4L1 7" stroke="#c7c7c7" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          <div class="pos-row"><span class="pos-l">Under Review</span><div class="pos-right"><span class="pos-v">4</span><svg class="pos-chev" viewBox="0 0 5 8" fill="none"><path d="M1 1L4 4L1 7" stroke="#c7c7c7" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          <div class="pos-row"><span class="pos-l-dim">Open Orders</span><div class="pos-right"><span class="pos-v-dim">2</span><svg class="pos-chev" viewBox="0 0 5 8" fill="none"><path d="M1 1L4 4L1 7" stroke="#929292" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        </div>
+      </div>
+      <hr class="sub-div">
+      <div class="group">
+        <span class="g-lbl">Value</span>
+        <div class="primary-metric">
+          <span class="n22">88,356.99</span>
+          <div class="gain"><span class="gain-amt">+4,447</span><span class="gain-pct">(+5.3%)</span><span class="gain-time">Since Inception</span></div>
+        </div>
+      </div>
+      <div class="cash-block">
+        <span class="lbl">Cash (10%)</span>
+        <span class="n15">8,835.70</span>
+      </div>
+      <hr class="sub-div">
+      <div class="group">
+        <div class="data-rows">
+          <div class="dr"><span class="dr-l-mid">Portfolio</span><span class="dr-v-hi">+ 5.3%</span></div>
+          <div class="dr"><span class="dr-l">Benchmark (S&amp;P 500)</span><span class="dr-v">+ 5.1%</span></div>
+          <div class="dr"><span class="dr-l" style="color:#555;">Excess Return</span><span class="dr-v" style="color:#666;">+ 0.2%</span></div>
+        </div>
+      </div>
+      <hr class="sub-div">
+      <div class="group">
+        <div class="data-rows">
+          <div class="dr"><span class="dr-l-mid">ORIO.TO</span><span class="dr-v">50%</span></div>
+          <div class="dr"><span class="dr-l-mid">BWEN</span><span class="dr-v">35%</span></div>
+          <div class="dr"><span class="dr-l-mid">EOSCR</span><span class="dr-v">10%</span></div>
+          <div class="dr"><span class="dr-l" style="color:#555;">Cash</span><span class="dr-v" style="color:#666;">5%</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom"></div>
+  </div>
+
+
+  <!-- ══ COLUMN C ══ -->
+  <div class="col" id="colC">
+    <div class="ver-label">
+      <span class="ver-letter">C</span>
+      <span class="ver-desc">One line</span>
+    </div>
+    <header class="header">
+      <span class="logo">//</span>
+      <div class="hicons">
+        <svg width="17" height="17" viewBox="0 0 17 17" fill="none"><circle cx="7.5" cy="7.5" r="5.5" stroke="#fff" stroke-width="1.2" opacity="0.8"/><line x1="11.5" y1="11.5" x2="15.5" y2="15.5" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/></svg>
+        <svg width="17" height="13" viewBox="0 0 17 13" fill="none"><line x1="0" y1="1" x2="17" y2="1" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/><line x1="0" y1="6.5" x2="17" y2="6.5" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/><line x1="0" y1="12" x2="17" y2="12" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/></svg>
+      </div>
+    </header>
+
+    <div class="tc">
+      <div class="tc-num-block">
+        <span class="lbl">Total Capital</span>
+        <span class="n28">173,249.00</span>
+      </div>
+      <div class="oneline">
+        <div class="oneline-seg">
+          <span class="oneline-name">Self-Directed</span>
+          <span class="oneline-pct">51%</span>
+        </div>
+        <div class="oneline-div"></div>
+        <div class="oneline-seg">
+          <span class="oneline-name">Managed</span>
+          <span class="oneline-pct">49%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <hr class="divider">
+      <div class="s-head">
+        <div class="s-title"><span class="s-t1">Managed</span><span class="s-t2">Core</span></div>
+      </div>
+      <div class="group">
+        <span class="g-lbl">Value</span>
+        <div class="primary-metric">
+          <span class="n22">84,892.01</span>
+          <div class="gain"><span class="gain-amt">+4,273</span><span class="gain-pct">(+5.3%)</span><span class="gain-time">Since Inception</span></div>
+        </div>
+      </div>
+      <hr class="sub-div">
+      <div class="group">
+        <span class="g-lbl">Projection</span>
+        <div class="primary-metric"><span class="n22">1.23M</span></div>
+        <span class="proj-note">11% Long-Term S&amp;P 500 Average</span>
+      </div>
+      <hr class="sub-div">
+      <div class="group">
+        <div class="data-rows">
+          <div class="dr"><span class="dr-l">Equity (S&amp;P 500)</span><span class="dr-v">50%</span></div>
+          <div class="dr"><span class="dr-l">Fixed Income</span><span class="dr-v">25%</span></div>
+          <div class="dr"><span class="dr-l">Money Market</span><span class="dr-v">25%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" style="margin-top:60px;">
+      <hr class="divider">
+      <div class="s-head">
+        <div class="s-title"><span class="s-t1">Self-Directed</span></div>
+        <div class="sw">
+          <span class="sw-label">All Accounts</span>
+          <span class="sw-count">· 3</span>
+          <svg viewBox="0 0 7 4" fill="none"><path d="M0.5 3.5L3.5 0.5L6.5 3.5" stroke="#929292" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <div class="group" style="padding-top:28px;">
+        <div class="pos-rows">
+          <div class="pos-row"><span class="pos-l">Active Positions</span><div class="pos-right"><span class="pos-v">9</span><svg class="pos-chev" viewBox="0 0 5 8" fill="none"><path d="M1 1L4 4L1 7" stroke="#c7c7c7" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          <div class="pos-row"><span class="pos-l">Under Review</span><div class="pos-right"><span class="pos-v">4</span><svg class="pos-chev" viewBox="0 0 5 8" fill="none"><path d="M1 1L4 4L1 7" stroke="#c7c7c7" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          <div class="pos-row"><span class="pos-l-dim">Open Orders</span><div class="pos-right"><span class="pos-v-dim">2</span><svg class="pos-chev" viewBox="0 0 5 8" fill="none"><path d="M1 1L4 4L1 7" stroke="#929292" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        </div>
+      </div>
+      <hr class="sub-div">
+      <div class="group">
+        <span class="g-lbl">Value</span>
+        <div class="primary-metric">
+          <span class="n22">88,356.99</span>
+          <div class="gain"><span class="gain-amt">+4,447</span><span class="gain-pct">(+5.3%)</span><span class="gain-time">Since Inception</span></div>
+        </div>
+      </div>
+      <div class="cash-block">
+        <span class="lbl">Cash (10%)</span>
+        <span class="n15">8,835.70</span>
+      </div>
+      <hr class="sub-div">
+      <div class="group">
+        <div class="data-rows">
+          <div class="dr"><span class="dr-l-mid">Portfolio</span><span class="dr-v-hi">+ 5.3%</span></div>
+          <div class="dr"><span class="dr-l">Benchmark (S&amp;P 500)</span><span class="dr-v">+ 5.1%</span></div>
+          <div class="dr"><span class="dr-l" style="color:#555;">Excess Return</span><span class="dr-v" style="color:#666;">+ 0.2%</span></div>
+        </div>
+      </div>
+      <hr class="sub-div">
+      <div class="group">
+        <div class="data-rows">
+          <div class="dr"><span class="dr-l-mid">ORIO.TO</span><span class="dr-v">50%</span></div>
+          <div class="dr"><span class="dr-l-mid">BWEN</span><span class="dr-v">35%</span></div>
+          <div class="dr"><span class="dr-l-mid">EOSCR</span><span class="dr-v">10%</span></div>
+          <div class="dr"><span class="dr-l" style="color:#555;">Cash</span><span class="dr-v" style="color:#666;">5%</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom"></div>
+  </div>
+
+
+  <!-- ══ COLUMN D ══ -->
+  <div class="col" id="colD">
+    <div class="ver-label">
+      <span class="ver-letter">D</span>
+      <span class="ver-desc">Stacked with amounts</span>
+    </div>
+    <header class="header">
+      <span class="logo">//</span>
+      <div class="hicons">
+        <svg width="17" height="17" viewBox="0 0 17 17" fill="none"><circle cx="7.5" cy="7.5" r="5.5" stroke="#fff" stroke-width="1.2" opacity="0.8"/><line x1="11.5" y1="11.5" x2="15.5" y2="15.5" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/></svg>
+        <svg width="17" height="13" viewBox="0 0 17 13" fill="none"><line x1="0" y1="1" x2="17" y2="1" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/><line x1="0" y1="6.5" x2="17" y2="6.5" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/><line x1="0" y1="12" x2="17" y2="12" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/></svg>
+      </div>
+    </header>
+
+    <div class="tc">
+      <div class="tc-num-block">
+        <span class="lbl">Total Capital</span>
+        <span class="n28">173,249.00</span>
+      </div>
+      <div class="stack">
+        <div class="stack-row">
+          <div class="stack-left">
+            <span class="stack-name">Self-Directed</span>
+            <span class="stack-pct">51%</span>
+          </div>
+          <span class="stack-val">88,356.99</span>
+        </div>
+        <div class="stack-track"><div class="stack-fill-sd" style="width:51%;"></div></div>
+        <div class="stack-row">
+          <div class="stack-left">
+            <span class="stack-name">Managed</span>
+            <span class="stack-pct">49%</span>
+          </div>
+          <span class="stack-val">84,892.01</span>
+        </div>
+        <div class="stack-track"><div class="stack-fill-mg" style="width:49%;"></div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <hr class="divider">
+      <div class="s-head">
+        <div class="s-title"><span class="s-t1">Managed</span><span class="s-t2">Core</span></div>
+      </div>
+      <div class="group">
+        <span class="g-lbl">Value</span>
+        <div class="primary-metric">
+          <span class="n22">84,892.01</span>
+          <div class="gain"><span class="gain-amt">+4,273</span><span class="gain-pct">(+5.3%)</span><span class="gain-time">Since Inception</span></div>
+        </div>
+      </div>
+      <hr class="sub-div">
+      <div class="group">
+        <span class="g-lbl">Projection</span>
+        <div class="primary-metric"><span class="n22">1.23M</span></div>
+        <span class="proj-note">11% Long-Term S&amp;P 500 Average</span>
+      </div>
+      <hr class="sub-div">
+      <div class="group">
+        <div class="data-rows">
+          <div class="dr"><span class="dr-l">Equity (S&amp;P 500)</span><span class="dr-v">50%</span></div>
+          <div class="dr"><span class="dr-l">Fixed Income</span><span class="dr-v">25%</span></div>
+          <div class="dr"><span class="dr-l">Money Market</span><span class="dr-v">25%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" style="margin-top:60px;">
+      <hr class="divider">
+      <div class="s-head">
+        <div class="s-title"><span class="s-t1">Self-Directed</span></div>
+        <div class="sw">
+          <span class="sw-label">All Accounts</span>
+          <span class="sw-count">· 3</span>
+          <svg viewBox="0 0 7 4" fill="none"><path d="M0.5 3.5L3.5 0.5L6.5 3.5" stroke="#929292" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <div class="group" style="padding-top:28px;">
+        <div class="pos-rows">
+          <div class="pos-row"><span class="pos-l">Active Positions</span><div class="pos-right"><span class="pos-v">9</span><svg class="pos-chev" viewBox="0 0 5 8" fill="none"><path d="M1 1L4 4L1 7" stroke="#c7c7c7" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          <div class="pos-row"><span class="pos-l">Under Review</span><div class="pos-right"><span class="pos-v">4</span><svg class="pos-chev" viewBox="0 0 5 8" fill="none"><path d="M1 1L4 4L1 7" stroke="#c7c7c7" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          <div class="pos-row"><span class="pos-l-dim">Open Orders</span><div class="pos-right"><span class="pos-v-dim">2</span><svg class="pos-chev" viewBox="0 0 5 8" fill="none"><path d="M1 1L4 4L1 7" stroke="#929292" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        </div>
+      </div>
+      <hr class="sub-div">
+      <div class="group">
+        <span class="g-lbl">Value</span>
+        <div class="primary-metric">
+          <span class="n22">88,356.99</span>
+          <div class="gain"><span class="gain-amt">+4,447</span><span class="gain-pct">(+5.3%)</span><span class="gain-time">Since Inception</span></div>
+        </div>
+      </div>
+      <div class="cash-block">
+        <span class="lbl">Cash (10%)</span>
+        <span class="n15">8,835.70</span>
+      </div>
+      <hr class="sub-div">
+      <div class="group">
+        <div class="data-rows">
+          <div class="dr"><span class="dr-l-mid">Portfolio</span><span class="dr-v-hi">+ 5.3%</span></div>
+          <div class="dr"><span class="dr-l">Benchmark (S&amp;P 500)</span><span class="dr-v">+ 5.1%</span></div>
+          <div class="dr"><span class="dr-l" style="color:#555;">Excess Return</span><span class="dr-v" style="color:#666;">+ 0.2%</span></div>
+        </div>
+      </div>
+      <hr class="sub-div">
+      <div class="group">
+        <div class="data-rows">
+          <div class="dr"><span class="dr-l-mid">ORIO.TO</span><span class="dr-v">50%</span></div>
+          <div class="dr"><span class="dr-l-mid">BWEN</span><span class="dr-v">35%</span></div>
+          <div class="dr"><span class="dr-l-mid">EOSCR</span><span class="dr-v">10%</span></div>
+          <div class="dr"><span class="dr-l" style="color:#555;">Cash</span><span class="dr-v" style="color:#666;">5%</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom"></div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Unified Main Dashboard — Figma Export Catalog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111;
+      --surface-2: #161616;
+      --border: rgba(255,255,255,0.08);
+      --text: #e8e8e8;
+      --text-dim: rgba(255,255,255,0.55);
+      --text-faint: rgba(255,255,255,0.35);
+      --accent: #c9a96e;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
+    body { padding: 48px 32px 96px; max-width: 1680px; margin: 0 auto; }
+
+    /* Header */
+    .doc-head { margin-bottom: 56px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+    .doc-head h1 { font-size: 32px; font-weight: 600; margin: 0 0 12px; letter-spacing: -0.02em; }
+    .doc-head .sub { color: var(--text-dim); font-size: 15px; line-height: 1.6; max-width: 780px; margin: 0 0 20px; }
+    .meta-row { display: flex; gap: 24px; flex-wrap: wrap; font-size: 13px; color: var(--text-faint); }
+    .meta-row span strong { color: var(--text-dim); font-weight: 500; }
+
+    /* Instructions */
+    .instructions { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-bottom: 48px; font-size: 13.5px; line-height: 1.7; color: var(--text-dim); }
+    .instructions strong { color: var(--text); font-weight: 600; }
+    .instructions ol { margin: 8px 0 0; padding-left: 20px; }
+    .instructions li { margin-bottom: 4px; }
+
+    /* Section */
+    section.category { margin-bottom: 72px; }
+    .cat-head { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+    .cat-head .eyebrow { font-size: 11px; letter-spacing: 0.18em; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; font-weight: 500; }
+    .cat-head h2 { font-size: 22px; font-weight: 600; margin: 0 0 10px; letter-spacing: -0.01em; }
+    .cat-head .desc { color: var(--text-dim); font-size: 14px; line-height: 1.65; max-width: 820px; margin: 0; }
+
+    /* Grid of scenarios */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 28px; }
+
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .card-head { padding: 18px 20px 16px; border-bottom: 1px solid var(--border); }
+    .card-head .tag-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+    .card-head .tag { font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 8px; border: 1px solid var(--border); border-radius: 4px; color: var(--text-faint); font-weight: 500; }
+    .card-head .tag.target { color: var(--accent); border-color: rgba(201,169,110,0.35); }
+    .card-head h3 { font-size: 16px; font-weight: 600; margin: 0 0 6px; letter-spacing: -0.005em; }
+    .card-head p { font-size: 13px; line-height: 1.6; color: var(--text-dim); margin: 0; }
+    .card-head a.link { display: inline-block; margin-top: 10px; font-size: 12px; color: var(--text-faint); text-decoration: none; border-bottom: 1px dashed var(--border); padding-bottom: 1px; }
+    .card-head a.link:hover { color: var(--accent); border-color: var(--accent); }
+
+    .frame-wrap { background: #000; padding: 16px; display: flex; justify-content: center; }
+    .frame-wrap iframe { width: 390px; height: 780px; border: none; background: #000; display: block; border-radius: 8px; }
+
+    /* Hide frame but keep descriptors for text-only category */
+    .card.text-only .frame-wrap { display: none; }
+  </style>
+</head>
+<body>
+
+  <header class="doc-head">
+    <h1>Unified Main Dashboard — Figma Export Catalog</h1>
+    <p class="sub">
+      A single catalog of every prototype state across the Unified Main Dashboard (Post-MVP). Organized by category with descriptions of what each section and scenario represents. Intended for import into Figma via the <strong>html.to.design</strong> plugin.
+    </p>
+    <div class="meta-row">
+      <span><strong>Project:</strong> Unified Main Dashboard · Post-MVP</span>
+      <span><strong>Surface:</strong> Mobile (390 × 780)</span>
+      <span><strong>Total Value (fully-active):</strong> 173,249.00 CAD</span>
+    </div>
+  </header>
+
+  <div class="instructions">
+    <strong>How to import into Figma</strong>
+    <ol>
+      <li>Open this file locally in a browser (double-click <code>Figma_Catalog.html</code> inside the <code>Final/</code> folder). iframes load via relative paths, so no password is needed.</li>
+      <li>In Figma, run the <strong>html.to.design</strong> plugin and point it to this local file (or to each deployed scenario URL individually if iframe import is not supported).</li>
+      <li>Each scenario card includes a title, short description, scenario ID, and a live render of the mobile screen.</li>
+    </ol>
+  </div>
+
+  <!-- ================= GALLERY ================= -->
+  <section class="category">
+    <div class="cat-head">
+      <div class="eyebrow">01 · Index</div>
+      <h2>Gallery</h2>
+      <p class="desc">Master index of every prototype state across the Unified Main Dashboard. Useful as a navigation starting point — not a product screen itself.</p>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="card-head">
+          <div class="tag-row"><span class="tag">Index</span></div>
+          <h3>All Scenarios Gallery</h3>
+          <p>Navigable index of every Managed, Self-Directed, and combined prototype state.</p>
+        </div>
+        <div class="frame-wrap"><iframe src="./Unified_Dashboard_Gallery.html" loading="lazy"></iframe></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= UNIFIED DASHBOARD ================= -->
+  <section class="category">
+    <div class="cat-head">
+      <div class="eyebrow">02 · Combined View</div>
+      <h2>Unified Dashboard</h2>
+      <p class="desc">Single-screen view combining Managed and Self-Directed portfolios in a fully-active state. Shows total capital breakdown, gains, and cash on hand. This is the primary "target" state for a user with both portfolios funded and active.</p>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="card-head">
+          <div class="tag-row"><span class="tag target">Target State</span></div>
+          <h3>Unified Dashboard — Fully Active</h3>
+          <p>Managed (126,471.77) + Self-Directed (46,777.23) = 173,249.00 CAD. Shows active Managed portfolio, Self-Directed positions, daily gain, and cash balance.</p>
+        </div>
+        <div class="frame-wrap"><iframe src="./Unified Dashboard.html" loading="lazy"></iframe></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MANAGED ================= -->
+  <section class="category">
+    <div class="cat-head">
+      <div class="eyebrow">03 · Managed-only</div>
+      <h2>Managed</h2>
+      <p class="desc">Prototype states for users on the Managed portfolio only. Covers every combination of capital presence, activity status, and scheduling. Used to validate empty-state, inactive, scheduled, and fully-active flows.</p>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="card-head">
+          <div class="tag-row"><span class="tag">core-open-no-investment</span></div>
+          <h3>Core Account · No Investment</h3>
+          <p>User has a Core Account open but has not started any Managed investment. Entry point for first-time users.</p>
+        </div>
+        <div class="frame-wrap"><iframe src="./Managed.html?s=core-open-no-investment" loading="lazy"></iframe></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div class="tag-row"><span class="tag">no-managed-accounts</span></div>
+          <h3>No Managed Accounts</h3>
+          <p>Empty state — user has no Managed accounts yet. Prompts account creation.</p>
+        </div>
+        <div class="frame-wrap"><iframe src="./Managed.html?s=no-managed-accounts" loading="lazy"></iframe></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div class="tag-row"><span class="tag">no-capital-active-unscheduled</span></div>
+          <h3>No Capital · Active · No Schedule</h3>
+          <p>Managed account is active but has zero capital and no recurring deposit scheduled.</p>
+        </div>
+        <div class="frame-wrap"><iframe src="./Managed.html?s=no-capital-active-unscheduled" loading="lazy"></iframe></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div class="tag-row"><span class="tag">no-capital-active-scheduled</span></div>
+          <h3>No Capital · Active · Scheduled</h3>
+          <p>Active with a recurring deposit scheduled, but no capital deposited yet. Shows first-investment projection.</p>
+        </div>
+        <div class="frame-wrap"><iframe src="./Managed.html?s=no-capital-active-scheduled" loading="lazy"></iframe></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div class="tag-row"><span class="tag">no-capital-inactive-unscheduled</span></div>
+          <h3>No Capital · Inactive · No Schedule</h3>
+          <p>Dormant account — no capital, no schedule, not active. Activation prompt.</p>
+        </div>
+        <div class="frame-wrap"><iframe src="./Managed.html?s=no-capital-inactive-unscheduled" loading="lazy"></iframe></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div class="tag-row"><span class="tag">no-capital-inactive-scheduled</span></div>
+          <h3>No Capital · Inactive · Scheduled</h3>
+          <p>Inactive but with a scheduled deposit queued. Reactivation state.</p>
+        </div>
+        <div class="frame-wrap"><iframe src="./Managed.html?s=no-capital-inactive-scheduled" loading="lazy"></iframe></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div class="tag-row"><span class="tag">capital-inactive</span></div>
+          <h3>Capital · Inactive</h3>
+          <p>Has capital but strategy is inactive — most common state for lapsed users. Prompts re-activation.</p>
+        </div>
+        <div class="frame-wrap"><iframe src="./Managed.html?s=capital-inactive" loading="lazy"></iframe></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div class="tag-row"><span class="tag target">capital-active</span><span class="tag target">Target</span></div>
+          <h3>Capital · Active (target)</h3>
+          <p>Fully-funded, active Managed portfolio — the target state. Total Value 173,249.00 CAD with projected long-term growth.</p>
+        </div>
+        <div class="frame-wrap"><iframe src="./Managed.html?s=capital-active" loading="lazy"></iframe></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SELF-DIRECTED ================= -->
+  <section class="category">
+    <div class="cat-head">
+      <div class="eyebrow">04 · Self-Directed-only</div>
+      <h2>Self-Directed</h2>
+      <p class="desc">Prototype states for users on the Self-Directed product only. Covers onboarding, account-opening lifecycle, identity verification, funding, and the fully-active trading state.</p>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="card-head">
+          <div class="tag-row"><span class="tag">no-accounts</span></div>
+          <h3>No Accounts</h3>
+          <p>Empty state — no Self-Directed accounts opened yet. Entry to account-opening flow.</p>
+        </div>
+        <div class="frame-wrap"><iframe src="./SelfDirected.html?s=no-accounts" loading="lazy"></iframe></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div class="tag-row"><span class="tag">no-capital-add-funds</span></div>
+          <h3>No Capital · Add Funds</h3>
+          <p>Accounts open but not funded yet. Prompt to add funds to start trading.</p>
+        </div>
+        <div class="frame-wrap"><iframe src="./SelfDirected.html?s=no-capital-add-funds" loading="lazy"></iframe></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div class="tag-row"><span class="tag">tfsa-transfer-pending</span></div>
+          <h3>TFSA · Transfer Pending</h3>
+          <p>TFSA external transfer in progress — funds not yet available.</p>
+        </div>
+        <div class="frame-wrap"><iframe src="./SelfDirected.html?s=tfsa-transfer-pending" loading="lazy"></iframe></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div class="tag-row"><span class="tag">core-inactive-tfsa</span></div>
+          <h3>All Inactive · TFSA</h3>
+          <p>All accounts inactive; TFSA shown with add-funds CTA.</p>
+        </div>
+        <div class="frame-wrap"><iframe src="./SelfDirected.html?s=core-inactive-tfsa" loading="lazy"></iframe></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div class="tag-row"><span class="tag target">active-rrsp</span><span class="tag target">Target</span></div>
+          <h3>Active · RRSP</h3>
+          <p>Fully-active Self-Directed state with RRSP settlement message. Total Value 173,249.00 CAD across all accounts.</p>
+        </div>
+        <div class="frame-wrap"><iframe src="./SelfDirected.html?s=active-rrsp" loading="lazy"></iframe></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div class="tag-row"><span class="tag">tfsa-opening</span></div>
+          <h3>TFSA · Opening</h3>
+          <p>TFSA account-opening flow in progress, with identity review.</p>
+        </div>
+        <div class="frame-wrap"><iframe src="./SelfDirected.html?s=tfsa-opening" loading="lazy"></iframe></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div class="tag-row"><span class="tag">rrsp-opening</span></div>
+          <h3>RRSP · Opening</h3>
+          <p>RRSP account-opening flow in progress.</p>
+        </div>
+        <div class="frame-wrap"><iframe src="./SelfDirected.html?s=rrsp-opening" loading="lazy"></iframe></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div class="tag-row"><span class="tag">nonreg-opening</span></div>
+          <h3>Non-Registered · Opening</h3>
+          <p>Non-registered account opening flow with ID review.</p>
+        </div>
+        <div class="frame-wrap"><iframe src="./SelfDirected.html?s=nonreg-opening" loading="lazy"></iframe></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div class="tag-row"><span class="tag">identity-in-review</span></div>
+          <h3>Identity · In Review</h3>
+          <p>ID verification in progress. Transfers and trading unavailable until cleared.</p>
+        </div>
+        <div class="frame-wrap"><iframe src="./SelfDirected.html?s=identity-in-review" loading="lazy"></iframe></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div class="tag-row"><span class="tag">identity-failed</span></div>
+          <h3>Identity · Failed</h3>
+          <p>ID verification failed — retry prompt.</p>
+        </div>
+        <div class="frame-wrap"><iframe src="./SelfDirected.html?s=identity-failed" loading="lazy"></iframe></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MANAGED + SELF-DIRECTED ================= -->
+  <section class="category">
+    <div class="cat-head">
+      <div class="eyebrow">05 · Combined Product</div>
+      <h2>Managed + Self-Directed</h2>
+      <p class="desc">Prototype states for users with both Managed and Self-Directed products. Covers fully-active with/without pending orders, and the various empty/partial setup states for mixed-product users.</p>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="card-head">
+          <div class="tag-row"><span class="tag target">fully-active-orders</span><span class="tag target">Target</span></div>
+          <h3>Fully Active · With Orders</h3>
+          <p>Both Managed and Self-Directed active, with pending Self-Directed orders. Total Value 173,249.00 CAD.</p>
+        </div>
+        <div class="frame-wrap"><iframe src="./ManagedSelfDirected.html?s=fully-active-orders" loading="lazy"></iframe></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div class="tag-row"><span class="tag target">fully-active-no-orders</span><span class="tag target">Target</span></div>
+          <h3>Fully Active · No Orders</h3>
+          <p>Both Managed and Self-Directed active with no pending orders. Total Value 173,249.00 CAD.</p>
+        </div>
+        <div class="frame-wrap"><iframe src="./ManagedSelfDirected.html?s=fully-active-no-orders" loading="lazy"></iframe></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div class="tag-row"><span class="tag">no-capital</span></div>
+          <h3>No Capital</h3>
+          <p>Both products set up but with zero capital. Prompts funding.</p>
+        </div>
+        <div class="frame-wrap"><iframe src="./ManagedSelfDirected.html?s=no-capital" loading="lazy"></iframe></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div class="tag-row"><span class="tag">no-accounts</span></div>
+          <h3>No Accounts</h3>
+          <p>Neither Managed nor Self-Directed accounts exist — full cold start.</p>
+        </div>
+        <div class="frame-wrap"><iframe src="./ManagedSelfDirected.html?s=no-accounts" loading="lazy"></iframe></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div class="tag-row"><span class="tag">no-managed-sched-no-sd</span></div>
+          <h3>No Managed Schedule · No SD Accounts</h3>
+          <p>Managed set up without a schedule; no Self-Directed accounts present.</p>
+        </div>
+        <div class="frame-wrap"><iframe src="./ManagedSelfDirected.html?s=no-managed-sched-no-sd" loading="lazy"></iframe></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div class="tag-row"><span class="tag">managed-sched-no-accts</span></div>
+          <h3>Managed Scheduled · No SD Accounts</h3>
+          <p>Managed with recurring schedule but Self-Directed accounts missing.</p>
+        </div>
+        <div class="frame-wrap"><iframe src="./ManagedSelfDirected.html?s=managed-sched-no-accts" loading="lazy"></iframe></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ACCOUNT SHEET ================= -->
+  <section class="category">
+    <div class="cat-head">
+      <div class="eyebrow">06 · Reference</div>
+      <h2>Account Sheet</h2>
+      <p class="desc">Reference sheet summarizing the account configurations used across the prototypes. Not a user-facing screen — used internally to cross-check totals, account types, and balances.</p>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="card-head">
+          <div class="tag-row"><span class="tag">Reference</span></div>
+          <h3>Account Sheet</h3>
+          <p>Configuration reference for Managed, Self-Directed, and combined accounts.</p>
+        </div>
+        <div class="frame-wrap"><iframe src="./Account_Sheet.html" loading="lazy"></iframe></div>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

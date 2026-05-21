@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <title>Open Positions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-black: #000000;
+      --c-1000:  #1C1C1C;
+      --c-900:   #232627;
+      --c-800:   #565B5E;
+      --c-700:   #929292;
+      --c-600:   #A7A7A7;
+      --c-400:   #C7C7C7;
+      --c-200:   #E3E2E2;
+      --c-white: #FFFFFF;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      width: 100%;
+      max-width: 393px;
+      margin: 0 auto;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+    }
+    a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+
+    .header {
+      height: 71px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 13.5px;
+      border-bottom: 1px solid var(--c-900);
+    }
+    .back {
+      width: 13px; height: 13px;
+      display: inline-flex; align-items: center; justify-content: center;
+      color: var(--c-400);
+    }
+    .back::before {
+      content: '';
+      width: 8px; height: 8px;
+      border-left: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+      transform: rotate(45deg);
+      margin-left: 2px;
+    }
+    .back:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .exit {
+      font-size: 14px;
+      letter-spacing: -0.02em;
+      color: var(--c-400);
+      text-transform: capitalize;
+    }
+    .exit:active { opacity: 0.5; transition: opacity 80ms ease; }
+
+    .title-block {
+      padding: 81px 13.5px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+    .t-primary {
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: var(--c-700);
+      text-transform: capitalize;
+      line-height: 1.15;
+    }
+    .t-secondary {
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: var(--c-white);
+      line-height: 1.15;
+    }
+
+    .summary {
+      padding: 60px 13.5px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .summary-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 10px;
+      border-bottom: 0.5px solid var(--c-900);
+    }
+    .summary-row .lbl {
+      font-size: 14px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+    }
+    .summary-row .val {
+      font-size: 15px;
+      color: var(--c-white);
+      letter-spacing: -0.02em;
+    }
+
+    .col {
+      padding: 48px 13.5px 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .section-label {
+      font-size: 14px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      text-align: left;
+    }
+
+    /* Sort control — sticky on scroll, same pattern as Closed Positions */
+    .sort-bar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      padding: 16px 13.5px;
+      margin-left: -13.5px;
+      margin-right: -13.5px;
+      background: var(--c-black);
+      border-bottom: 0.5px solid var(--c-1000);
+      flex-wrap: wrap;
+    }
+    .sort-bar .sort-lbl {
+      font-size: 12px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+    }
+    .sort-bar .sort-opt {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .sort-bar .sort-opt.active {
+      color: var(--c-white);
+    }
+    .sort-bar .sort-opt:active { opacity: 0.5; transition: opacity 80ms ease; }
+
+    .sort-note {
+      font-size: 12px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      margin-top: 12px;
+      text-align: left;
+      line-height: 1.5;
+    }
+
+    .hold-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      column-gap: 16px;
+      row-gap: 4px;
+      padding: 16px 0;
+      border-top: 0.5px solid var(--c-1000);
+      align-items: baseline;
+    }
+    .hold-row:last-child { border-bottom: 0.5px solid var(--c-1000); }
+
+    .hold-row .h-symbol {
+      font-size: 15px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      text-align: left;
+    }
+    .hold-row .h-pct {
+      font-size: 15px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      text-align: right;
+    }
+    .hold-row .h-cap-lbl {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      text-align: left;
+    }
+    .hold-row .h-value {
+      font-size: 13px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      text-align: right;
+    }
+    .hold-row .h-sp {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      text-align: left;
+    }
+    .hold-row .h-alpha {
+      font-size: 13px;
+      color: var(--c-white);
+      letter-spacing: -0.02em;
+      text-align: right;
+    }
+    .hold-row .h-meta {
+      font-size: 12px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      text-align: left;
+      grid-column: 1 / -1;
+      margin-top: 2px;
+    }
+    .hold-row .h-meta .status {
+      color: var(--c-400);
+      margin-left: 6px;
+    }
+    .hold-row.flagged .h-meta .status {
+      color: var(--c-white);
+    }
+
+    .group-label {
+      font-size: 12px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      text-transform: none;
+      margin-top: 24px;
+      margin-bottom: 4px;
+    }
+    .group-label:first-of-type { margin-top: 8px; }
+
+    .disclosure {
+      padding: 0 13.5px;
+      margin-top: 30px;
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      text-align: left;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <a href="javascript:history.back()" class="back" aria-label="Back"></a>
+    <a href="Unified%20Dashboard.html" class="exit" aria-label="Exit">Exit</a>
+  </header>
+
+  <div class="title-block">
+    <span class="t-primary">Open Positions</span>
+    <span class="t-secondary">Active · Self-Directed</span>
+  </div>
+
+  <section class="summary" aria-label="Open positions summary">
+    <div class="summary-row">
+      <span class="lbl">Total Open</span>
+      <span class="val">12</span>
+    </div>
+    <div class="summary-row">
+      <span class="lbl">Discipline Flags</span>
+      <span class="val">7</span>
+    </div>
+    <div class="summary-row">
+      <span class="lbl">Beating S&amp;P / Trailing</span>
+      <span class="val">5 / 7</span>
+    </div>
+    <div class="summary-row">
+      <span class="lbl">Capital Deployed</span>
+      <span class="val">125,000.00</span>
+    </div>
+    <div class="summary-row">
+      <span class="lbl">Current Value</span>
+      <span class="val">131,820.00</span>
+    </div>
+    <div class="summary-row">
+      <span class="lbl">Unrealized Alpha</span>
+      <span class="val">−1,375.25</span>
+    </div>
+    <div class="summary-row">
+      <span class="lbl">Avg Hold</span>
+      <span class="val">1y 1m</span>
+    </div>
+  </section>
+
+  <div class="col">
+    <span class="section-label">All Open</span>
+
+    <div class="sort-bar" role="tablist" aria-label="Sort open positions">
+      <span class="sort-opt active" data-sort="discipline" role="tab" aria-selected="true">Discipline</span>
+      <span class="sort-opt" data-sort="impact" role="tab" aria-selected="false">Impact</span>
+      <span class="sort-opt" data-sort="alpha" role="tab" aria-selected="false">Alpha</span>
+    </div>
+    <p class="sort-note" id="sortNote">Rule violations first (kill line, past horizon, overdue review), then worst alpha.</p>
+
+    <div class="holdings">
+
+      <!-- BELOW KILL LINE (rule violations, top of page) -->
+      <p class="group-label" data-group="below-kill">Below Kill Line · 2</p>
+
+      <div class="hold-row flagged" data-alpha="-5200" data-discipline="1">
+        <span class="h-symbol">BWEN</span>
+        <span class="h-pct">−8.4%</span>
+        <span class="h-cap-lbl">Capital 25,000.00</span>
+        <span class="h-value">22,900.00</span>
+        <span class="h-sp">S&amp;P +3,100.00</span>
+        <span class="h-alpha">Alpha −5,200.00</span>
+        <span class="h-meta">Held 1y 4m · 20% weight<span class="status">· Below kill line</span></span>
+      </div>
+
+      <div class="hold-row flagged" data-alpha="-436.25" data-discipline="1">
+        <span class="h-symbol">SHOP.TO</span>
+        <span class="h-pct">−22.5%</span>
+        <span class="h-cap-lbl">Capital 1,250.00</span>
+        <span class="h-value">969.00</span>
+        <span class="h-sp">S&amp;P +155.00</span>
+        <span class="h-alpha">Alpha −436.25</span>
+        <span class="h-meta">Held 7m · 1% weight<span class="status">· Below kill line</span></span>
+      </div>
+
+      <!-- PAST HORIZON / TARGET / EARNINGS (warnings) -->
+      <p class="group-label" data-group="needs-review">Needs Review · 5</p>
+
+      <div class="hold-row flagged" data-alpha="-2450" data-discipline="2">
+        <span class="h-symbol">AMD</span>
+        <span class="h-pct">−12.1%</span>
+        <span class="h-cap-lbl">Capital 10,000.00</span>
+        <span class="h-value">8,790.00</span>
+        <span class="h-sp">S&amp;P +1,240.00</span>
+        <span class="h-alpha">Alpha −2,450.00</span>
+        <span class="h-meta">Held 9m · 8% weight<span class="status">· Past horizon</span></span>
+      </div>
+
+      <div class="hold-row flagged" data-alpha="-795" data-discipline="2">
+        <span class="h-symbol">GOOGL</span>
+        <span class="h-pct">−3.5%</span>
+        <span class="h-cap-lbl">Capital 5,000.00</span>
+        <span class="h-value">4,825.00</span>
+        <span class="h-sp">S&amp;P +620.00</span>
+        <span class="h-alpha">Alpha −795.00</span>
+        <span class="h-meta">Held 1y 2m · 4% weight<span class="status">· Past horizon</span></span>
+      </div>
+
+      <div class="hold-row flagged" data-alpha="-520" data-discipline="2">
+        <span class="h-symbol">V</span>
+        <span class="h-pct">−8.4%</span>
+        <span class="h-cap-lbl">Capital 2,500.00</span>
+        <span class="h-value">2,290.00</span>
+        <span class="h-sp">S&amp;P +310.00</span>
+        <span class="h-alpha">Alpha −520.00</span>
+        <span class="h-meta">Held 8m · 2% weight<span class="status">· Past horizon</span></span>
+      </div>
+
+      <div class="hold-row flagged" data-alpha="-210" data-discipline="2">
+        <span class="h-symbol">AAPL</span>
+        <span class="h-pct">+6.8%</span>
+        <span class="h-cap-lbl">Capital 3,750.00</span>
+        <span class="h-value">4,005.00</span>
+        <span class="h-sp">S&amp;P +465.00</span>
+        <span class="h-alpha">Alpha −210.00</span>
+        <span class="h-meta">Held 1y 6m · 3% weight<span class="status">· Earnings in 2 days</span></span>
+      </div>
+
+      <div class="hold-row flagged" data-alpha="5985" data-discipline="2">
+        <span class="h-symbol">NVDA</span>
+        <span class="h-pct">+52.3%</span>
+        <span class="h-cap-lbl">Capital 15,000.00</span>
+        <span class="h-value">22,845.00</span>
+        <span class="h-sp">S&amp;P +1,860.00</span>
+        <span class="h-alpha">Alpha +5,985.00</span>
+        <span class="h-meta">Held 6m · 12% weight<span class="status">· Past target</span></span>
+      </div>
+
+      <!-- ON TRACK (no flags, sorted by alpha ascending) -->
+      <p class="group-label" data-group="on-track">On Track · 5</p>
+
+      <div class="hold-row" data-alpha="-410" data-discipline="3">
+        <span class="h-symbol">JPM</span>
+        <span class="h-pct">−4.0%</span>
+        <span class="h-cap-lbl">Capital 2,500.00</span>
+        <span class="h-value">2,400.00</span>
+        <span class="h-sp">S&amp;P +310.00</span>
+        <span class="h-alpha">Alpha −410.00</span>
+        <span class="h-meta">Held 4m · 2% weight<span class="status">· On track</span></span>
+      </div>
+
+      <div class="hold-row" data-alpha="243.75" data-discipline="3">
+        <span class="h-symbol">COST</span>
+        <span class="h-pct">+18.9%</span>
+        <span class="h-cap-lbl">Capital 3,750.00</span>
+        <span class="h-value">4,459.00</span>
+        <span class="h-sp">S&amp;P +465.00</span>
+        <span class="h-alpha">Alpha +243.75</span>
+        <span class="h-meta">Held 2y · 3% weight<span class="status">· On track</span></span>
+      </div>
+
+      <div class="hold-row" data-alpha="1006.25" data-discipline="3">
+        <span class="h-symbol">MSFT</span>
+        <span class="h-pct">+28.5%</span>
+        <span class="h-cap-lbl">Capital 6,250.00</span>
+        <span class="h-value">8,031.00</span>
+        <span class="h-sp">S&amp;P +775.00</span>
+        <span class="h-alpha">Alpha +1,006.25</span>
+        <span class="h-meta">Held 1y 8m · 5% weight<span class="status">· On track</span></span>
+      </div>
+
+      <div class="hold-row" data-alpha="1800" data-discipline="3">
+        <span class="h-symbol">EOSCR</span>
+        <span class="h-pct">+22.0%</span>
+        <span class="h-cap-lbl">Capital 18,750.00</span>
+        <span class="h-value">22,875.00</span>
+        <span class="h-sp">S&amp;P +2,325.00</span>
+        <span class="h-alpha">Alpha +1,800.00</span>
+        <span class="h-meta">Held 11m · 15% weight<span class="status">· On track</span></span>
+      </div>
+
+      <div class="hold-row" data-alpha="1812.50" data-discipline="3">
+        <span class="h-symbol">ORIO.TO</span>
+        <span class="h-pct">+18.2%</span>
+        <span class="h-cap-lbl">Capital 31,250.00</span>
+        <span class="h-value">36,938.00</span>
+        <span class="h-sp">S&amp;P +3,875.00</span>
+        <span class="h-alpha">Alpha +1,812.50</span>
+        <span class="h-meta">Held 2y 1m · 25% weight<span class="status">· On track</span></span>
+      </div>
+
+    </div>
+  </div>
+
+  <p class="disclosure">
+    Capital reflects cost basis at entry. Current value, return, and S&amp;P impact are time-weighted to today. Alpha = current value − S&amp;P would have. Discipline severity surfaces rule violations first. Open positions are not locked in — performance changes daily.
+  </p>
+
+  <div style="height:60px"></div>
+
+  <script>
+    const holdingsContainer = document.querySelector('.holdings');
+    const allRows = Array.from(holdingsContainer.querySelectorAll('.hold-row'));
+    const allGroupLabels = Array.from(holdingsContainer.querySelectorAll('.group-label'));
+    const originalChildren = Array.from(holdingsContainer.children);
+
+    // Hold-row drill-down to Stock Page v2
+    allRows.forEach(row => {
+      row.style.cursor = 'pointer';
+      row.addEventListener('click', () => {
+        window.location.href = '../../Stock%20Pages/Post%20MVP/Stock%20Page%20v2.html';
+      });
+    });
+
+    const sortNotes = {
+      discipline: 'Rule violations first (kill line, past horizon, overdue review), then worst alpha.',
+      impact: 'Biggest absolute dollar moves first.',
+      alpha: 'Worst alpha first — biggest underperformers vs S&P 500 at the top.'
+    };
+    const sortNoteEl = document.getElementById('sortNote');
+
+    function applySort(sortKey) {
+      // Update note
+      if (sortNoteEl && sortNotes[sortKey]) sortNoteEl.textContent = sortNotes[sortKey];
+
+      // Clear container
+      while (holdingsContainer.firstChild) holdingsContainer.removeChild(holdingsContainer.firstChild);
+
+      if (sortKey === 'discipline') {
+        // Restore original order with group labels
+        originalChildren.forEach(el => holdingsContainer.appendChild(el));
+        return;
+      }
+
+      // Hide group labels for non-discipline sorts — flat list
+      let sorted = [...allRows];
+      if (sortKey === 'impact') {
+        sorted.sort((a, b) => Math.abs(parseFloat(b.dataset.alpha)) - Math.abs(parseFloat(a.dataset.alpha)));
+      } else if (sortKey === 'alpha') {
+        sorted.sort((a, b) => parseFloat(a.dataset.alpha) - parseFloat(b.dataset.alpha));
+      }
+      sorted.forEach(row => holdingsContainer.appendChild(row));
+    }
+
+    const sortOpts = document.querySelectorAll('.sort-opt');
+    sortOpts.forEach(opt => {
+      opt.addEventListener('click', e => {
+        e.stopPropagation();
+        if (opt.classList.contains('active')) return;
+        sortOpts.forEach(o => { o.classList.remove('active'); o.setAttribute('aria-selected','false'); });
+        opt.classList.add('active');
+        opt.setAttribute('aria-selected','true');
+        applySort(opt.dataset.sort);
+      });
+    });
+  </script>
+
+</body>
+</html>

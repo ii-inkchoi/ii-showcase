@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Unified Main Dashboard — V3 Revised</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Chakra+Petch&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #1C1C1C;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      max-width: 393px;
+      margin: 0 auto;
+      min-height: 100dvh;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    /* ── HEADER ── */
+    .header {
+      height: 71px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 30px;
+      border-bottom: 0.5px solid #232627;
+    }
+    .logo { font-family: 'Chakra Petch', sans-serif; font-size: 16px; color: #fff; }
+    .logo-img { height: 20px; width: auto; }
+    .header-icons { display: flex; align-items: center; gap: 20px; }
+
+    /* ── TYPE SCALE: 11 / 13 / 14 / 15 / 18 / 22 / 28 ── */
+    .lbl  { font-size: 11px; font-weight: 500; letter-spacing: 0.6px; text-transform: uppercase; color: #565B5E; }
+    .n28  { font-size: 40px; letter-spacing: -1px; line-height: 1.1; color: #fff; font-feature-settings: 'lnum' 1, 'pnum' 1; }
+    .n22  { font-size: 22px; letter-spacing: -0.3px; line-height: 1.1; color: #fff; font-feature-settings: 'lnum' 1, 'pnum' 1; }
+    .n15  { font-size: 15px; color: #fff; font-feature-settings: 'lnum' 1, 'tnum' 1; }
+    .g-lbl { font-size: 11px; font-weight: 500; letter-spacing: 0.6px; text-transform: uppercase; color: #565B5E; text-align: right; display: block; width: 100%; }
+
+    /* ── MESSAGE ── */
+    .msg-zone { padding: 20px 22px 0; }
+    .msg-divider { height: 1px; width: 105px; background: #232627; }
+    .msg-card {
+      display: flex;
+      flex-direction: column;
+      gap: 9.5px;
+      padding: 20px 0;
+    }
+    .msg-text {
+      font-size: 13px; color: #929292;
+      line-height: 1.4; letter-spacing: -0.28px;
+      max-width: 100%;
+    }
+    .msg-dismiss {
+      font-size: 13px; color: #929292;
+      text-decoration: underline; text-underline-offset: 3px;
+      text-decoration-color: #565B5E;
+      letter-spacing: -0.28px;
+    }
+
+    /* ── TOTAL CAPITAL ── */
+    .tc {
+      padding: 72px 22px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 24px;
+    }
+    .tc-num-block { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+
+    /* One line */
+    .oneline      { display: flex; align-items: center; justify-content: flex-end; }
+    .oneline-seg  { display: flex; align-items: baseline; gap: 6px; }
+    .oneline-div  { width: 0.5px; height: 10px; background: #232627; margin: 0 12px; }
+    .oneline-name { font-size: 11px; font-weight: 500; letter-spacing: 0.6px; text-transform: uppercase; color: #929292; }
+    .oneline-pct  { font-size: 13px; color: #A7A7A7; font-feature-settings: 'lnum' 1, 'tnum' 1; }
+
+    /* ── DIVIDERS ── */
+    .divider { border: none; border-top: 0.5px solid #565B5E; }
+    .sub-div { border: none; border-top: 0.5px solid #1C1C1C; margin: 36px 0 0; }
+
+    /* ── SECTION ── */
+    .section { padding: 0 22px; margin-top: 60px; }
+    .s-head  { display: flex; align-items: center; justify-content: space-between; padding: 28px 0 0; }
+    .s-title { display: flex; flex-direction: column; gap: 8px; }
+    .s-t1 { font-size: 18px; color: #fff; letter-spacing: -0.36px; line-height: 1.15; text-transform: capitalize; }
+    .s-t2 { font-size: 18px; color: #929292; letter-spacing: -0.36px; line-height: 1.15; text-transform: capitalize; }
+
+    /* Account switcher */
+    .sw {
+      display: flex; align-items: center; gap: 5px;
+      min-height: 44px; min-width: 44px; justify-content: flex-end;
+      -webkit-tap-highlight-color: transparent; user-select: none;
+    }
+    .sw:active { opacity: 0.5; }
+    .sw-label { font-size: 14px; color: #929292; letter-spacing: -0.3px; }
+    .sw-count { font-size: 10px; color: #929292; }
+    .sw svg   { width: 7px; height: 5px; flex-shrink: 0; opacity: 0.5; }
+
+    /* ── GROUP ── */
+    .group { padding-top: 24px; display: flex; flex-direction: column; gap: 10px; }
+    .primary-metric { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; width: 100%; }
+
+    .gain { display: flex; align-items: center; justify-content: flex-end; gap: 8px; font-size: 13px; }
+    .gain-amt { color: #929292;    font-feature-settings: 'lnum' 1, 'tnum' 1; }
+    .gain-pct { color: #A7A7A7; font-feature-settings: 'lnum' 1, 'tnum' 1; }
+    .gain-time { color: #565B5E; }
+
+    /* Data rows */
+    .data-rows { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+    .dr { display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+    .dr-l     { color: #929292; text-transform: capitalize; }
+    .dr-l-mid { color: #929292; text-transform: capitalize; }
+    .dr-v     { color: #c7c7c7; font-feature-settings: 'lnum' 1, 'tnum' 1; flex-shrink: 0; }
+    .dr-v-hi  { color: #fff;    font-feature-settings: 'lnum' 1, 'tnum' 1; flex-shrink: 0; }
+
+    /* Projection note */
+    .proj-note {
+      font-size: 13px; color: #929292; display: block; text-align: right;
+      padding: 0;
+      text-decoration: underline; text-decoration-style: dotted;
+      text-decoration-color: #565B5E; text-underline-offset: 3px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .proj-note:active { color: #929292; }
+
+    /* Metric block */
+    .mb { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; width: 100%; }
+
+    /* Position rows */
+    .pos-rows { display: flex; flex-direction: column; width: 100%; padding-top: 4px; }
+    .pos-row  { display: flex; justify-content: space-between; align-items: center; border-bottom: 0.5px solid #1C1C1C; min-height: 44px; -webkit-tap-highlight-color: transparent; }
+    .pos-row:last-child  { border-bottom: none; }
+    .pos-row:active      { opacity: 0.5; }
+    .pos-l     { font-size: 14px; color: #929292; text-transform: capitalize; letter-spacing: -0.2px; }
+    .pos-l-dim { font-size: 14px; color: #565B5E;    text-transform: capitalize; letter-spacing: -0.2px; }
+    .pos-v     { font-size: 15px; color: #fff; font-feature-settings: 'lnum' 1, 'tnum' 1; letter-spacing: -0.3px; }
+    .pos-v-dim { font-size: 15px; color: #929292; font-feature-settings: 'lnum' 1, 'tnum' 1; letter-spacing: -0.3px; }
+    .pos-right { display: flex; align-items: center; gap: 10px; }
+    .pos-chev  { opacity: 0.3; width: 5px; height: 8px; flex-shrink: 0; }
+
+    /* Cash inline */
+    .cash-block { padding-top: 20px; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+
+    /* ── BOTTOM ── */
+    .bottom { height: 80px; }
+
+    /* ── OVERLAYS ── */
+    .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: flex-end; justify-content: center; }
+    .overlay.open { display: flex; }
+    .drawer {
+      background: #232627; border-top: 0.5px solid #565B5E;
+      width: 100%; max-width: 393px;
+      padding: 32px 24px calc(40px + env(safe-area-inset-bottom));
+      display: flex; flex-direction: column; gap: 20px;
+    }
+    .d-rows { display: flex; flex-direction: column; gap: 14px; border-top: 0.5px solid #1C1C1C; padding-top: 20px; }
+    .d-row  { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; }
+    .d-rl { color: #565B5E; }
+    .d-rv { color: #A7A7A7; font-feature-settings: 'lnum' 1, 'tnum' 1; }
+    .d-rv-dim { color: #929292; font-size: 12px; font-feature-settings: 'lnum' 1, 'tnum' 1; }
+    .d-fine { font-size: 11px; color: #565B5E; line-height: 1.7; border-top: 0.5px solid #565B5E; padding-top: 18px; }
+
+    /* Account drawer */
+    .acct-opt { display: flex; justify-content: space-between; align-items: center; min-height: 56px; padding: 16px 0; border-bottom: 0.5px solid #1C1C1C; -webkit-tap-highlight-color: transparent; }
+    .acct-opt:active { opacity: 0.5; }
+    .acct-opt:last-child { border-bottom: none; }
+    .ao-n     { font-size: 15px; color: #929292; letter-spacing: -0.3px; }
+    .ao-n.sel { color: #fff; }
+    .ao-v     { font-size: 13px; color: #929292; font-feature-settings: 'lnum' 1, 'tnum' 1; }
+    .ao-v.sel { color: #C7C7C7; }
+    .sel-dot  { display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: #fff; margin-right: 10px; vertical-align: middle; position: relative; top: -1px; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <svg width="12" height="14" viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5.59903 0H7.79315L2.19412 17.6523H0L5.59903 0Z" fill="white"/>
+      <path d="M12.8061 0H15.0002L9.40115 17.6523H7.20703L12.8061 0Z" fill="white"/>
+    </svg>
+    <div class="header-icons">
+      <svg width="17" height="17" viewBox="0 0 17 17" fill="none">
+        <circle cx="7.5" cy="7.5" r="5.5" stroke="#fff" stroke-width="1.2" opacity="0.8"/>
+        <line x1="11.5" y1="11.5" x2="15.5" y2="15.5" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/>
+      </svg>
+      <svg width="17" height="13" viewBox="0 0 17 13" fill="none">
+        <line x1="0" y1="1"   x2="17" y2="1"   stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/>
+        <line x1="0" y1="6.5" x2="17" y2="6.5" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/>
+        <line x1="0" y1="12"  x2="17" y2="12"  stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/>
+      </svg>
+    </div>
+  </header>
+
+  <!--
+    NUMBER LOGIC
+    ─────────────────────────────
+    Total Capital:   173,249.00
+      Managed  49%:  84,892.01
+      Self-Dir 51%:  88,356.99
+
+    Self-Directed accounts:
+      RRSP:    53,847.32
+      TFSA:    22,067.50
+      Margin:  12,442.17
+      Total:   88,356.99 ✓
+
+    Gain all at +5.3% since inception
+  -->
+
+  <!-- MESSAGE -->
+  <div class="msg-zone">
+    <div class="msg-divider"></div>
+    <div class="msg-card">
+      <p class="msg-text">There was an issue processing<br>your withdrawal.</p>
+      <span class="msg-dismiss">Dismiss</span>
+    </div>
+    <div class="msg-divider"></div>
+  </div>
+
+  <!-- TOTAL CAPITAL -->
+  <div class="tc">
+    <div class="tc-num-block">
+      <span class="lbl">Total Capital</span>
+      <span class="n28">173,249.00</span>
+    </div>
+    <div class="oneline">
+      <div class="oneline-seg">
+        <span class="oneline-name">Self-Directed</span>
+        <span class="oneline-pct">51%</span>
+      </div>
+      <div class="oneline-div"></div>
+      <div class="oneline-seg">
+        <span class="oneline-name">Managed</span>
+        <span class="oneline-pct">49%</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════ MANAGED ══════ -->
+  <div class="section">
+    <hr class="divider">
+    <div class="s-head">
+      <div class="s-title">
+        <span class="s-t1">Managed</span>
+        <span class="s-t2">Core</span>
+      </div>
+    </div>
+
+    <!-- Projection -->
+    <div class="group">
+      <span class="g-lbl">Projection</span>
+      <div class="primary-metric">
+        <span class="n22">1.23M</span>
+        <span class="proj-note" onclick="document.getElementById('projD').classList.add('open')">
+          11% Long-Term S&amp;P 500 Average
+        </span>
+      </div>
+    </div>
+
+    <!-- Value -->
+    <hr class="sub-div">
+    <div class="group">
+      <span class="g-lbl">Value</span>
+      <div class="primary-metric">
+        <span class="n22">84,892.01</span>
+        <div class="gain">
+          <span class="gain-amt">+4,273</span>
+          <span class="gain-pct">(+5.3%)</span>
+          <span class="gain-time">Since Inception</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Composition -->
+    <hr class="sub-div">
+    <div class="group">
+      <div class="data-rows">
+        <div class="dr"><span class="dr-l">Equity (S&amp;P 500)</span><span class="dr-v">50%</span></div>
+        <div class="dr"><span class="dr-l">Fixed Income</span>        <span class="dr-v">25%</span></div>
+        <div class="dr"><span class="dr-l">Money Market</span>        <span class="dr-v">25%</span></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════ SELF-DIRECTED ══════ -->
+  <div class="section">
+    <hr class="divider">
+    <div class="s-head">
+      <div class="s-title">
+        <span class="s-t1">Self-Directed</span>
+      </div>
+      <div class="sw" onclick="document.getElementById('acctD').classList.add('open')">
+        <span class="sw-label" id="sw-label">All Accounts</span>
+        <svg viewBox="0 0 7 4" fill="none">
+          <path d="M0.5 3.5L3.5 0.5L6.5 3.5" stroke="#929292" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Value -->
+    <div class="group" style="padding-top:28px;">
+      <span class="g-lbl">Value</span>
+      <div class="primary-metric">
+        <span class="n22" id="sd-value">88,356.99</span>
+        <div class="gain">
+          <span class="gain-amt" id="sd-gain-amt">+4,447</span>
+          <span class="gain-pct" id="sd-gain-pct">(+5.3%)</span>
+          <span class="gain-time">Since Inception</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cash -->
+    <hr class="sub-div">
+    <div class="group">
+      <span class="g-lbl">Cash (10%)</span>
+      <div class="primary-metric">
+        <span class="n15" id="sd-cash">8,835.70</span>
+      </div>
+    </div>
+
+    <!-- Position Status -->
+    <hr class="sub-div">
+    <div class="group">
+      <div class="pos-rows">
+        <div class="pos-row">
+          <span class="pos-l" id="pos-lbl-1">Active Positions</span>
+          <div class="pos-right">
+            <span class="pos-v" id="pos-val-1">9</span>
+            <svg class="pos-chev" viewBox="0 0 5 8" fill="none">
+              <path d="M1 1L4 4L1 7" stroke="#c7c7c7" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="pos-row">
+          <span class="pos-l" id="pos-lbl-2">Under Review</span>
+          <div class="pos-right">
+            <span class="pos-v" id="pos-val-2">4</span>
+            <svg class="pos-chev" viewBox="0 0 5 8" fill="none">
+              <path d="M1 1L4 4L1 7" stroke="#c7c7c7" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="pos-row">
+          <span class="pos-l-dim" id="pos-lbl-3">Open Orders</span>
+          <div class="pos-right">
+            <span class="pos-v-dim" id="pos-val-3">2</span>
+            <svg class="pos-chev" viewBox="0 0 5 8" fill="none">
+              <path d="M1 1L4 4L1 7" stroke="#929292" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Performance -->
+    <hr class="sub-div">
+    <div class="group">
+      <span class="g-lbl">Performance</span>
+      <div class="data-rows">
+        <div class="dr"><span class="dr-l-mid">Portfolio</span>             <span class="dr-v-hi">+ 5.3%</span></div>
+        <div class="dr"><span class="dr-l">Benchmark (S&amp;P 500)</span> <span class="dr-v">+ 5.1%</span></div>
+        <div class="dr"><span class="dr-l" style="color:#929292;">Excess Return</span><span class="dr-v" style="color:#929292;">+ 0.2%</span></div>
+      </div>
+    </div>
+
+    <!-- Capital Allocation -->
+    <hr class="sub-div">
+    <div class="group" id="sd-alloc">
+      <span class="g-lbl">Allocation</span>
+      <div class="data-rows">
+        <div class="dr"><span class="dr-l-mid">ORIO.TO</span><span class="dr-v">50%</span></div>
+        <div class="dr"><span class="dr-l-mid">BWEN</span>   <span class="dr-v">35%</span></div>
+        <div class="dr"><span class="dr-l-mid">EOSCR</span>  <span class="dr-v">10%</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="bottom"></div>
+
+
+  <!-- PROJECTION DRAWER -->
+  <div class="overlay" id="projD" onclick="if(event.target===this)this.classList.remove('open')">
+    <div class="drawer">
+      <span class="lbl">Projection Basis</span>
+      <span class="n28">1.23M</span>
+      <div class="d-rows">
+        <div class="d-row"><span class="d-rl">Time Horizon</span>          <span class="d-rv">20 years</span></div>
+        <div class="d-row"><span class="d-rl">Assumed Annual Return</span> <span class="d-rv">11.0%</span></div>
+        <div class="d-row"><span class="d-rl">Benchmark</span>             <span class="d-rv">S&amp;P 500 Historical Avg</span></div>
+        <div class="d-row"><span class="d-rl">Current Value</span>         <span class="d-rv">84,892.01</span></div>
+        <div class="d-row"><span class="d-rl">Projected Range</span>       <span class="d-rv-dim">0.8M – 1.8M</span></div>
+      </div>
+      <p class="d-fine">Based on S&amp;P 500 historical average. Past performance does not guarantee future results. Range reflects ±2σ variance over the stated horizon.</p>
+    </div>
+  </div>
+
+  <!-- ACCOUNT SWITCHER DRAWER -->
+  <div class="overlay" id="acctD" onclick="if(event.target===this)this.classList.remove('open')">
+    <div class="drawer" style="gap:0;">
+      <span class="lbl" style="display:block;margin-bottom:20px;">Self-Directed Accounts</span>
+      <div class="acct-opt" onclick="selectAccount('all')">
+        <span class="ao-n sel" id="ao-all"><span class="sel-dot" id="dot-all"></span>All Accounts</span>
+        <span class="ao-v sel" id="aov-all">88,356.99</span>
+      </div>
+      <div class="acct-opt" onclick="selectAccount('rrsp')">
+        <span class="ao-n" id="ao-rrsp" style="padding-left:14px;">RRSP</span>
+        <span class="ao-v" id="aov-rrsp">53,847.32</span>
+      </div>
+      <div class="acct-opt" onclick="selectAccount('tfsa')">
+        <span class="ao-n" id="ao-tfsa" style="padding-left:14px;">TFSA</span>
+        <span class="ao-v" id="aov-tfsa">22,067.50</span>
+      </div>
+      <div class="acct-opt" onclick="selectAccount('margin')">
+        <span class="ao-n" id="ao-margin" style="padding-left:14px;">Margin</span>
+        <span class="ao-v" id="aov-margin">12,442.17</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const ACCOUNTS = {
+      all:    { label: 'All Accounts', value: '88,356.99', gainAmt: '+4,447', gainPct: '(+5.3%)', cash: '8,835.70',
+                active: 9, review: 4, orders: 2,
+                alloc: [['ORIO.TO','50%'],['BWEN','35%'],['EOSCR','10%'],['Cash','5%']] },
+      rrsp:   { label: 'RRSP',         value: '53,847.32', gainAmt: '+2,713', gainPct: '(+5.3%)', cash: '5,384.73',
+                active: 5, review: 2, orders: 1,
+                alloc: [['ORIO.TO','55%'],['BWEN','35%'],['EOSCR','10%']] },
+      tfsa:   { label: 'TFSA',         value: '22,067.50', gainAmt: '+1,111', gainPct: '(+5.3%)', cash: '2,206.75',
+                active: 3, review: 2, orders: 1,
+                alloc: [['ORIO.TO','40%'],['BWEN','35%'],['EOSCR','25%']] },
+      margin: { label: 'Margin',       value: '12,442.17', gainAmt: '+627',   gainPct: '(+5.3%)', cash: '1,244.22',
+                active: 1, review: 0, orders: 0,
+                alloc: [['ORIO.TO','50%'],['BWEN','50%']] }
+    };
+
+    function selectAccount(id) {
+      const d = ACCOUNTS[id];
+
+      // header switcher label
+      document.getElementById('sw-label').textContent = d.label;
+
+      // value + gain + cash
+      document.getElementById('sd-value').textContent    = d.value;
+      document.getElementById('sd-gain-amt').textContent = d.gainAmt;
+      document.getElementById('sd-gain-pct').textContent = d.gainPct;
+      document.getElementById('sd-cash').textContent     = d.cash;
+
+      // position counts
+      document.getElementById('pos-val-1').textContent = d.active;
+      document.getElementById('pos-val-2').textContent = d.review;
+      document.getElementById('pos-val-3').textContent = d.orders;
+
+      // capital allocation
+      const allocEl = document.getElementById('sd-alloc');
+      allocEl.innerHTML = '<div class="data-rows">' +
+        d.alloc.map(([lbl, val]) =>
+          `<div class="dr"><span class="dr-l-mid">${lbl}</span><span class="dr-v">${val}</span></div>`
+        ).join('') +
+      '</div>';
+
+      // drawer selection state
+      ['all','rrsp','tfsa','margin'].forEach(key => {
+        const n   = document.getElementById('ao-' + key);
+        const v   = document.getElementById('aov-' + key);
+        const dot = document.getElementById('dot-' + key);
+        n.classList.remove('sel'); v.classList.remove('sel');
+        n.style.paddingLeft = '14px';
+        if (dot) dot.remove();
+      });
+      const selN = document.getElementById('ao-' + id);
+      const selV = document.getElementById('aov-' + id);
+      selN.classList.add('sel'); selV.classList.add('sel');
+      selN.style.paddingLeft = '0';
+      const dot = document.createElement('span');
+      dot.className = 'sel-dot'; dot.id = 'dot-' + id;
+      selN.prepend(dot);
+
+      document.getElementById('acctD').classList.remove('open');
+    }
+  </script>
+
+</body>
+</html>

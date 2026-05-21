@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <title>Closed Positions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-black: #000000;
+      --c-1000:  #1C1C1C;
+      --c-900:   #232627;
+      --c-800:   #565B5E;
+      --c-700:   #929292;
+      --c-600:   #A7A7A7;
+      --c-400:   #C7C7C7;
+      --c-200:   #E3E2E2;
+      --c-white: #FFFFFF;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      width: 100%;
+      max-width: 393px;
+      margin: 0 auto;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+    }
+    a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+
+    .header {
+      height: 71px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 13.5px;
+      border-bottom: 1px solid var(--c-900);
+    }
+    .back {
+      width: 13px; height: 13px;
+      display: inline-flex; align-items: center; justify-content: center;
+      color: var(--c-400);
+    }
+    .back::before {
+      content: '';
+      width: 8px; height: 8px;
+      border-left: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+      transform: rotate(45deg);
+      margin-left: 2px;
+    }
+    .back:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .exit {
+      font-size: 14px;
+      letter-spacing: -0.02em;
+      color: var(--c-400);
+      text-transform: capitalize;
+    }
+    .exit:active { opacity: 0.5; transition: opacity 80ms ease; }
+
+    .title-block {
+      padding: 81px 13.5px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+    .t-primary {
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: var(--c-700);
+      text-transform: capitalize;
+      line-height: 1.15;
+    }
+    .t-secondary {
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: var(--c-white);
+      line-height: 1.15;
+    }
+
+    .summary {
+      padding: 60px 13.5px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .summary-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 10px;
+      border-bottom: 0.5px solid var(--c-900);
+    }
+    .summary-row .lbl {
+      font-size: 14px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+    }
+    .summary-row .val {
+      font-size: 15px;
+      color: var(--c-white);
+      letter-spacing: -0.02em;
+    }
+
+    .col {
+      padding: 48px 13.5px 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .section-label {
+      font-size: 14px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      text-align: left;
+    }
+
+    /* Sort control — sticky on scroll, severe text-based switch */
+    .sort-bar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      padding: 16px 13.5px;
+      margin-left: -13.5px;
+      margin-right: -13.5px;
+      background: var(--c-black);
+      border-bottom: 0.5px solid var(--c-1000);
+      flex-wrap: wrap;
+    }
+    .sort-bar .sort-lbl {
+      font-size: 12px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+    }
+    .sort-bar .sort-opt {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .sort-bar .sort-opt.active {
+      color: var(--c-white);
+    }
+    .sort-bar .sort-opt:active { opacity: 0.5; transition: opacity 80ms ease; }
+
+    .sort-note {
+      font-size: 12px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      margin-top: 12px;
+      text-align: left;
+      line-height: 1.5;
+    }
+
+    .hold-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      column-gap: 16px;
+      row-gap: 4px;
+      padding: 16px 0;
+      border-top: 0.5px solid var(--c-1000);
+      align-items: baseline;
+    }
+    .hold-row:last-child { border-bottom: 0.5px solid var(--c-1000); }
+
+    .hold-row .h-symbol {
+      font-size: 15px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      text-align: left;
+    }
+    .hold-row .h-pct {
+      font-size: 15px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      text-align: right;
+    }
+    .hold-row .h-cap-lbl {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      text-align: left;
+    }
+    .hold-row .h-return {
+      font-size: 13px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      text-align: right;
+    }
+    .hold-row .h-sp {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      text-align: left;
+    }
+    .hold-row .h-alpha {
+      font-size: 13px;
+      color: var(--c-white);
+      letter-spacing: -0.02em;
+      text-align: right;
+    }
+    .hold-row .h-meta {
+      font-size: 12px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      text-align: left;
+      grid-column: 1 / -1;
+      margin-top: 2px;
+    }
+
+    .disclosure {
+      padding: 0 13.5px;
+      margin-top: 30px;
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      text-align: left;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <a href="javascript:history.back()" class="back" aria-label="Back"></a>
+    <a href="Unified%20Dashboard.html" class="exit" aria-label="Exit">Exit</a>
+  </header>
+
+  <div class="title-block">
+    <span class="t-primary">Closed Positions</span>
+    <span class="t-secondary">Active · Self-Directed</span>
+  </div>
+
+  <section class="summary" aria-label="Closed positions summary">
+    <div class="summary-row">
+      <span class="lbl">Total Closed</span>
+      <span class="val">38</span>
+    </div>
+    <div class="summary-row">
+      <span class="lbl">Win Rate vs S&amp;P</span>
+      <span class="val">36.8%</span>
+    </div>
+    <div class="summary-row">
+      <span class="lbl">Capital Deployed</span>
+      <span class="val">273,500.00</span>
+    </div>
+    <div class="summary-row">
+      <span class="lbl">Total Return</span>
+      <span class="val">+4,727.50</span>
+    </div>
+    <div class="summary-row">
+      <span class="lbl">S&amp;P Would Have</span>
+      <span class="val">+33,914.00</span>
+    </div>
+    <div class="summary-row">
+      <span class="lbl">Alpha</span>
+      <span class="val">−29,186.50</span>
+    </div>
+    <div class="summary-row">
+      <span class="lbl">Avg Hold</span>
+      <span class="val">14m</span>
+    </div>
+  </section>
+
+  <div class="col">
+    <span class="section-label">All Closed</span>
+
+    <div class="sort-bar" role="tablist" aria-label="Sort closed positions">
+      <span class="sort-opt active" data-sort="alpha-asc" role="tab" aria-selected="true">Alpha</span>
+      <span class="sort-opt" data-sort="impact" role="tab" aria-selected="false">Impact</span>
+      <span class="sort-opt" data-sort="recent" role="tab" aria-selected="false">Recent</span>
+    </div>
+    <p class="sort-note" id="sortNote">Worst alpha first — biggest underperformers vs S&amp;P 500 at the top.</p>
+
+    <div class="holdings">
+
+      <div class="hold-row">
+        <span class="h-symbol">PYPL</span>
+        <span class="h-pct">−42.0%</span>
+        <span class="h-cap-lbl">Capital 15,000.00</span>
+        <span class="h-return">−6,300.00</span>
+        <span class="h-sp">S&amp;P +1,860.00</span>
+        <span class="h-alpha">Alpha −8,160.00</span>
+        <span class="h-meta">Closed Aug 2025 · 2y</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">ZM</span>
+        <span class="h-pct">−55.0%</span>
+        <span class="h-cap-lbl">Capital 7,000.00</span>
+        <span class="h-return">−3,850.00</span>
+        <span class="h-sp">S&amp;P +868.00</span>
+        <span class="h-alpha">Alpha −4,718.00</span>
+        <span class="h-meta">Closed Apr 2025 · 1y 8m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">LCID</span>
+        <span class="h-pct">−72.0%</span>
+        <span class="h-cap-lbl">Capital 5,500.00</span>
+        <span class="h-return">−3,960.00</span>
+        <span class="h-sp">S&amp;P +682.00</span>
+        <span class="h-alpha">Alpha −4,642.00</span>
+        <span class="h-meta">Closed Jul 2023 · 1y</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">PTON</span>
+        <span class="h-pct">−78.0%</span>
+        <span class="h-cap-lbl">Capital 5,000.00</span>
+        <span class="h-return">−3,900.00</span>
+        <span class="h-sp">S&amp;P +620.00</span>
+        <span class="h-alpha">Alpha −4,520.00</span>
+        <span class="h-meta">Closed Jul 2024 · 1y 4m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">BYND</span>
+        <span class="h-pct">−65.0%</span>
+        <span class="h-cap-lbl">Capital 5,500.00</span>
+        <span class="h-return">−3,575.00</span>
+        <span class="h-sp">S&amp;P +682.00</span>
+        <span class="h-alpha">Alpha −4,257.00</span>
+        <span class="h-meta">Closed Mar 2024 · 11m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">AFRM</span>
+        <span class="h-pct">−58.0%</span>
+        <span class="h-cap-lbl">Capital 6,000.00</span>
+        <span class="h-return">−3,480.00</span>
+        <span class="h-sp">S&amp;P +744.00</span>
+        <span class="h-alpha">Alpha −4,224.00</span>
+        <span class="h-meta">Closed Aug 2023 · 11m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">AMC</span>
+        <span class="h-pct">−78.0%</span>
+        <span class="h-cap-lbl">Capital 4,500.00</span>
+        <span class="h-return">−3,510.00</span>
+        <span class="h-sp">S&amp;P +558.00</span>
+        <span class="h-alpha">Alpha −4,068.00</span>
+        <span class="h-meta">Closed Nov 2023 · 10m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">CLOV</span>
+        <span class="h-pct">−68.0%</span>
+        <span class="h-cap-lbl">Capital 5,000.00</span>
+        <span class="h-return">−3,400.00</span>
+        <span class="h-sp">S&amp;P +620.00</span>
+        <span class="h-alpha">Alpha −4,020.00</span>
+        <span class="h-meta">Closed Feb 2023 · 7m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">SPCE</span>
+        <span class="h-pct">−88.0%</span>
+        <span class="h-cap-lbl">Capital 4,000.00</span>
+        <span class="h-return">−3,520.00</span>
+        <span class="h-sp">S&amp;P +496.00</span>
+        <span class="h-alpha">Alpha −4,016.00</span>
+        <span class="h-meta">Closed May 2023 · 1y</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">WISH</span>
+        <span class="h-pct">−72.0%</span>
+        <span class="h-cap-lbl">Capital 4,500.00</span>
+        <span class="h-return">−3,240.00</span>
+        <span class="h-sp">S&amp;P +558.00</span>
+        <span class="h-alpha">Alpha −3,798.00</span>
+        <span class="h-meta">Closed Mar 2023 · 9m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">UPST</span>
+        <span class="h-pct">−82.0%</span>
+        <span class="h-cap-lbl">Capital 4,000.00</span>
+        <span class="h-return">−3,280.00</span>
+        <span class="h-sp">S&amp;P +496.00</span>
+        <span class="h-alpha">Alpha −3,776.00</span>
+        <span class="h-meta">Closed Apr 2024 · 1y 6m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">HOOD</span>
+        <span class="h-pct">−45.0%</span>
+        <span class="h-cap-lbl">Capital 6,500.00</span>
+        <span class="h-return">−2,925.00</span>
+        <span class="h-sp">S&amp;P +806.00</span>
+        <span class="h-alpha">Alpha −3,731.00</span>
+        <span class="h-meta">Closed Jun 2024 · 8m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">RIVN</span>
+        <span class="h-pct">−68.0%</span>
+        <span class="h-cap-lbl">Capital 4,500.00</span>
+        <span class="h-return">−3,060.00</span>
+        <span class="h-sp">S&amp;P +558.00</span>
+        <span class="h-alpha">Alpha −3,618.00</span>
+        <span class="h-meta">Closed Jun 2025 · 1y 4m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">NIO</span>
+        <span class="h-pct">−52.0%</span>
+        <span class="h-cap-lbl">Capital 5,500.00</span>
+        <span class="h-return">−2,860.00</span>
+        <span class="h-sp">S&amp;P +682.00</span>
+        <span class="h-alpha">Alpha −3,542.00</span>
+        <span class="h-meta">Closed Oct 2024 · 1y 1m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">CHWY</span>
+        <span class="h-pct">−38.0%</span>
+        <span class="h-cap-lbl">Capital 7,000.00</span>
+        <span class="h-return">−2,660.00</span>
+        <span class="h-sp">S&amp;P +868.00</span>
+        <span class="h-alpha">Alpha −3,528.00</span>
+        <span class="h-meta">Closed Sep 2024 · 1y</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">WBD</span>
+        <span class="h-pct">−45.0%</span>
+        <span class="h-cap-lbl">Capital 6,000.00</span>
+        <span class="h-return">−2,700.00</span>
+        <span class="h-sp">S&amp;P +744.00</span>
+        <span class="h-alpha">Alpha −3,444.00</span>
+        <span class="h-meta">Closed Apr 2024 · 11m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">OPEN</span>
+        <span class="h-pct">−55.0%</span>
+        <span class="h-cap-lbl">Capital 5,000.00</span>
+        <span class="h-return">−2,750.00</span>
+        <span class="h-sp">S&amp;P +620.00</span>
+        <span class="h-alpha">Alpha −3,370.00</span>
+        <span class="h-meta">Closed Jan 2024 · 8m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">SOFI</span>
+        <span class="h-pct">−28.0%</span>
+        <span class="h-cap-lbl">Capital 7,500.00</span>
+        <span class="h-return">−2,100.00</span>
+        <span class="h-sp">S&amp;P +930.00</span>
+        <span class="h-alpha">Alpha −3,030.00</span>
+        <span class="h-meta">Closed Feb 2024 · 7m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">INTC</span>
+        <span class="h-pct">−18.0%</span>
+        <span class="h-cap-lbl">Capital 9,500.00</span>
+        <span class="h-return">−1,710.00</span>
+        <span class="h-sp">S&amp;P +1,178.00</span>
+        <span class="h-alpha">Alpha −2,888.00</span>
+        <span class="h-meta">Closed Dec 2024 · 1y 6m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">RBLX</span>
+        <span class="h-pct">−32.0%</span>
+        <span class="h-cap-lbl">Capital 6,500.00</span>
+        <span class="h-return">−2,080.00</span>
+        <span class="h-sp">S&amp;P +806.00</span>
+        <span class="h-alpha">Alpha −2,886.00</span>
+        <span class="h-meta">Closed Nov 2023 · 1y 2m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">GME</span>
+        <span class="h-pct">−42.0%</span>
+        <span class="h-cap-lbl">Capital 4,500.00</span>
+        <span class="h-return">−1,890.00</span>
+        <span class="h-sp">S&amp;P +558.00</span>
+        <span class="h-alpha">Alpha −2,448.00</span>
+        <span class="h-meta">Closed Dec 2023 · 6m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">PARA</span>
+        <span class="h-pct">−28.0%</span>
+        <span class="h-cap-lbl">Capital 6,000.00</span>
+        <span class="h-return">−1,680.00</span>
+        <span class="h-sp">S&amp;P +744.00</span>
+        <span class="h-alpha">Alpha −2,424.00</span>
+        <span class="h-meta">Closed Aug 2024 · 9m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">F</span>
+        <span class="h-pct">−22.0%</span>
+        <span class="h-cap-lbl">Capital 6,000.00</span>
+        <span class="h-return">−1,320.00</span>
+        <span class="h-sp">S&amp;P +744.00</span>
+        <span class="h-alpha">Alpha −2,064.00</span>
+        <span class="h-meta">Closed Jan 2026 · 8m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">T</span>
+        <span class="h-pct">−8.0%</span>
+        <span class="h-cap-lbl">Capital 8,000.00</span>
+        <span class="h-return">−640.00</span>
+        <span class="h-sp">S&amp;P +992.00</span>
+        <span class="h-alpha">Alpha −1,632.00</span>
+        <span class="h-meta">Closed Sep 2023 · 7m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">TEAM</span>
+        <span class="h-pct">+14.0%</span>
+        <span class="h-cap-lbl">Capital 8,000.00</span>
+        <span class="h-return">+1,120.00</span>
+        <span class="h-sp">S&amp;P +992.00</span>
+        <span class="h-alpha">Alpha +128.00</span>
+        <span class="h-meta">Closed Aug 2024 · 5m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">SQ</span>
+        <span class="h-pct">+18.5%</span>
+        <span class="h-cap-lbl">Capital 8,500.00</span>
+        <span class="h-return">+1,572.50</span>
+        <span class="h-sp">S&amp;P +1,054.00</span>
+        <span class="h-alpha">Alpha +518.50</span>
+        <span class="h-meta">Closed Apr 2025 · 8m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">ROKU</span>
+        <span class="h-pct">+22.0%</span>
+        <span class="h-cap-lbl">Capital 6,500.00</span>
+        <span class="h-return">+1,430.00</span>
+        <span class="h-sp">S&amp;P +806.00</span>
+        <span class="h-alpha">Alpha +624.00</span>
+        <span class="h-meta">Closed Jan 2025 · 7m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">ABNB</span>
+        <span class="h-pct">+28.0%</span>
+        <span class="h-cap-lbl">Capital 8,000.00</span>
+        <span class="h-return">+2,240.00</span>
+        <span class="h-sp">S&amp;P +992.00</span>
+        <span class="h-alpha">Alpha +1,248.00</span>
+        <span class="h-meta">Closed Feb 2026 · 11m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">TSLA</span>
+        <span class="h-pct">+35.0%</span>
+        <span class="h-cap-lbl">Capital 10,000.00</span>
+        <span class="h-return">+3,500.00</span>
+        <span class="h-sp">S&amp;P +1,240.00</span>
+        <span class="h-alpha">Alpha +2,260.00</span>
+        <span class="h-meta">Closed Mar 2026 · 1y 4m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">SNOW</span>
+        <span class="h-pct">+42.0%</span>
+        <span class="h-cap-lbl">Capital 8,000.00</span>
+        <span class="h-return">+3,360.00</span>
+        <span class="h-sp">S&amp;P +992.00</span>
+        <span class="h-alpha">Alpha +2,368.00</span>
+        <span class="h-meta">Closed Nov 2024 · 1y 3m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">UBER</span>
+        <span class="h-pct">+52.0%</span>
+        <span class="h-cap-lbl">Capital 9,000.00</span>
+        <span class="h-return">+4,680.00</span>
+        <span class="h-sp">S&amp;P +1,116.00</span>
+        <span class="h-alpha">Alpha +3,564.00</span>
+        <span class="h-meta">Closed Aug 2025 · 1y 6m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">CRM</span>
+        <span class="h-pct">+48.5%</span>
+        <span class="h-cap-lbl">Capital 12,000.00</span>
+        <span class="h-return">+5,820.00</span>
+        <span class="h-sp">S&amp;P +1,488.00</span>
+        <span class="h-alpha">Alpha +4,332.00</span>
+        <span class="h-meta">Closed Sep 2025 · 1y 8m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">NFLX</span>
+        <span class="h-pct">+62.0%</span>
+        <span class="h-cap-lbl">Capital 11,000.00</span>
+        <span class="h-return">+6,820.00</span>
+        <span class="h-sp">S&amp;P +1,364.00</span>
+        <span class="h-alpha">Alpha +5,456.00</span>
+        <span class="h-meta">Closed Jul 2025 · 2y 1m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">CRWD</span>
+        <span class="h-pct">+75.0%</span>
+        <span class="h-cap-lbl">Capital 10,500.00</span>
+        <span class="h-return">+7,875.00</span>
+        <span class="h-sp">S&amp;P +1,302.00</span>
+        <span class="h-alpha">Alpha +6,573.00</span>
+        <span class="h-meta">Closed Mar 2025 · 1y 11m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">DDOG</span>
+        <span class="h-pct">+88.0%</span>
+        <span class="h-cap-lbl">Capital 9,000.00</span>
+        <span class="h-return">+7,920.00</span>
+        <span class="h-sp">S&amp;P +1,116.00</span>
+        <span class="h-alpha">Alpha +6,804.00</span>
+        <span class="h-meta">Closed May 2024 · 2y</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">NET</span>
+        <span class="h-pct">+110.0%</span>
+        <span class="h-cap-lbl">Capital 7,500.00</span>
+        <span class="h-return">+8,250.00</span>
+        <span class="h-sp">S&amp;P +930.00</span>
+        <span class="h-alpha">Alpha +7,320.00</span>
+        <span class="h-meta">Closed Jun 2024 · 2y 2m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">PLTR</span>
+        <span class="h-pct">+185.0%</span>
+        <span class="h-cap-lbl">Capital 5,000.00</span>
+        <span class="h-return">+9,250.00</span>
+        <span class="h-sp">S&amp;P +620.00</span>
+        <span class="h-alpha">Alpha +8,630.00</span>
+        <span class="h-meta">Closed Dec 2025 · 2y 4m</span>
+      </div>
+
+      <div class="hold-row">
+        <span class="h-symbol">SHOP.TO</span>
+        <span class="h-pct">+94.0%</span>
+        <span class="h-cap-lbl">Capital 12,000.00</span>
+        <span class="h-return">+11,280.00</span>
+        <span class="h-sp">S&amp;P +1,488.00</span>
+        <span class="h-alpha">Alpha +9,792.00</span>
+        <span class="h-meta">Closed Oct 2024 · 2y 6m</span>
+      </div>
+
+    </div>
+  </div>
+
+  <p class="disclosure">
+    Capital reflects cost basis at entry. Return and S&amp;P impact are time-weighted over the exact holding period of each position. Alpha = Return − S&amp;P would have. Win Rate vs S&amp;P = % of closed positions with positive alpha. Default sort surfaces worst alpha first by design — anti-hiding.
+  </p>
+
+  <div style="height:60px"></div>
+
+  <script>
+    const holdingsContainer = document.querySelector('.holdings');
+    let allRows = Array.from(holdingsContainer.querySelectorAll('.hold-row'));
+
+    // URL parameter filter: ?filter=winners or ?filter=losers
+    const urlParams = new URLSearchParams(window.location.search);
+    const filter = urlParams.get('filter');
+
+    function parseSignedDollar(text) {
+      const m = text.match(/([+−-])\s*([\d,]+\.?\d*)/);
+      if (!m) return 0;
+      let v = parseFloat(m[2].replace(/,/g, ''));
+      if (m[1] === '−' || m[1] === '-') v = -v;
+      return v;
+    }
+
+    function fmtMoney(v) {
+      const sign = v > 0 ? '+' : (v < 0 ? '−' : '');
+      const abs = Math.abs(v);
+      return sign + abs.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function parseHoldingMonths(metaText) {
+      // Parses things like "1y 8m" or "11m" or "2y" — returns total months
+      const m = metaText.match(/(?:(\d+)y)?\s*(?:(\d+)m)?/);
+      if (!m) return 0;
+      const y = parseInt(m[1] || '0');
+      const mo = parseInt(m[2] || '0');
+      return y * 12 + mo;
+    }
+
+    function recalculateSummary(rows) {
+      let capital = 0, returnSum = 0, spSum = 0, alphaSum = 0, holdMonths = 0;
+      rows.forEach(row => {
+        const capText = row.querySelector('.h-cap-lbl').textContent;
+        const capMatch = capText.match(/Capital\s+([\d,]+\.?\d*)/);
+        if (capMatch) capital += parseFloat(capMatch[1].replace(/,/g, ''));
+        returnSum += parseSignedDollar(row.querySelector('.h-return').textContent);
+        const spText = row.querySelector('.h-sp').textContent.replace(/^S&P\s+/, '');
+        spSum += parseSignedDollar(spText);
+        alphaSum += parseSignedDollar(row.querySelector('.h-alpha').textContent.replace(/^Alpha\s+/, ''));
+        holdMonths += parseHoldingMonths(row.querySelector('.h-meta').textContent);
+      });
+      const winRate = rows.length > 0 ? (rows.filter(r => parseSignedDollar(r.querySelector('.h-alpha').textContent.replace(/^Alpha\s+/, '')) > 0).length / rows.length * 100).toFixed(1) + '%' : '0%';
+      const avgHold = rows.length > 0 ? Math.round(holdMonths / rows.length) : 0;
+      const avgHoldStr = avgHold >= 12 ? Math.floor(avgHold / 12) + 'y ' + (avgHold % 12) + 'm' : avgHold + 'm';
+
+      const summaryRows = document.querySelectorAll('.summary-row');
+      if (summaryRows[0]) summaryRows[0].querySelector('.val').textContent = rows.length;
+      if (summaryRows[1]) summaryRows[1].querySelector('.val').textContent = winRate;
+      if (summaryRows[2]) summaryRows[2].querySelector('.val').textContent = capital.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      if (summaryRows[3]) summaryRows[3].querySelector('.val').textContent = fmtMoney(returnSum);
+      if (summaryRows[4]) summaryRows[4].querySelector('.val').textContent = fmtMoney(spSum);
+      if (summaryRows[5]) summaryRows[5].querySelector('.val').textContent = fmtMoney(alphaSum);
+      if (summaryRows[6]) summaryRows[6].querySelector('.val').textContent = avgHoldStr;
+    }
+
+    if (filter === 'winners' || filter === 'losers') {
+      // Update title to reflect filter
+      const titlePrimary = document.querySelector('.t-primary');
+      if (titlePrimary) {
+        titlePrimary.textContent = filter === 'winners' ? 'Winners' : 'Losers';
+      }
+      // Update first summary row label
+      const firstSummaryLabel = document.querySelector('.summary-row .lbl');
+      if (firstSummaryLabel) firstSummaryLabel.textContent = filter === 'winners' ? 'Total Winners' : 'Total Losers';
+
+      // Update section label
+      const sectionLabel = document.querySelector('.section-label');
+      if (sectionLabel) sectionLabel.textContent = filter === 'winners' ? 'Winners (Alpha+)' : 'Losers (Alpha−)';
+
+      // Filter rows
+      allRows = allRows.filter(row => {
+        const v = parseSignedDollar(row.querySelector('.h-alpha').textContent.replace(/^Alpha\s+/, ''));
+        if (filter === 'winners') return v > 0;
+        else return v < 0;
+      });
+      // Rebuild container with filtered rows
+      while (holdingsContainer.firstChild) holdingsContainer.removeChild(holdingsContainer.firstChild);
+      allRows.forEach(r => holdingsContainer.appendChild(r));
+
+      // Recalculate ALL summary stats from filtered rows
+      recalculateSummary(allRows);
+    }
+
+    // Parse alpha + date from each row's DOM content (cache for sort)
+    const months = { Jan:1, Feb:2, Mar:3, Apr:4, May:5, Jun:6, Jul:7, Aug:8, Sep:9, Oct:10, Nov:11, Dec:12 };
+    allRows.forEach((row, i) => {
+      const alphaText = row.querySelector('.h-alpha').textContent;
+      const am = alphaText.match(/([+−-])\s*([\d,]+\.?\d*)/);
+      let alpha = 0;
+      if (am) {
+        alpha = parseFloat(am[2].replace(/,/g, ''));
+        if (am[1] === '−' || am[1] === '-') alpha = -alpha;
+      }
+      row.dataset.alpha = alpha;
+
+      const metaText = row.querySelector('.h-meta').textContent;
+      const dm = metaText.match(/Closed\s+(\w+)\s+(\d{4})/);
+      let dateNum = 0;
+      if (dm) {
+        const m = months[dm[1]] || 0;
+        const y = parseInt(dm[2]);
+        dateNum = y * 100 + m;
+      }
+      row.dataset.date = dateNum;
+      row.dataset.origIdx = i;
+    });
+
+    // Drill-down to Stock Page v2
+    allRows.forEach(row => {
+      row.style.cursor = 'pointer';
+      row.addEventListener('click', () => {
+        window.location.href = '../../Stock%20Pages/Post%20MVP/Stock%20Page%20v2.html';
+      });
+    });
+
+    const sortNotes = {
+      'alpha-asc': 'Worst alpha first — biggest underperformers vs S&P 500 at the top.',
+      'impact': 'Biggest absolute dollar moves first.',
+      'recent': 'Most recently closed first.'
+    };
+    const sortNoteEl = document.getElementById('sortNote');
+
+    function applySort(sortKey) {
+      if (sortNoteEl && sortNotes[sortKey]) sortNoteEl.textContent = sortNotes[sortKey];
+
+      let sorted = [...allRows];
+      if (sortKey === 'alpha-asc') {
+        sorted.sort((a, b) => parseFloat(a.dataset.alpha) - parseFloat(b.dataset.alpha));
+      } else if (sortKey === 'impact') {
+        sorted.sort((a, b) => Math.abs(parseFloat(b.dataset.alpha)) - Math.abs(parseFloat(a.dataset.alpha)));
+      } else if (sortKey === 'recent') {
+        sorted.sort((a, b) => parseInt(b.dataset.date) - parseInt(a.dataset.date));
+      }
+      while (holdingsContainer.firstChild) holdingsContainer.removeChild(holdingsContainer.firstChild);
+      sorted.forEach(row => holdingsContainer.appendChild(row));
+    }
+
+    const sortOpts = document.querySelectorAll('.sort-opt');
+    sortOpts.forEach(opt => {
+      opt.addEventListener('click', e => {
+        e.stopPropagation();
+        if (opt.classList.contains('active')) return;
+        sortOpts.forEach(o => { o.classList.remove('active'); o.setAttribute('aria-selected','false'); });
+        opt.classList.add('active');
+        opt.setAttribute('aria-selected','true');
+        applySort(opt.dataset.sort);
+      });
+    });
+  </script>
+
+</body>
+</html>

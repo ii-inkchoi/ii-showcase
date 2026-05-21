@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<title>Unified Dashboard — Gallery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #0A0B0C;
+    --white:    #FFFFFF;
+    --n-400:    #C7C7C7;
+    --n-500:    #A7A7A7;
+    --n-700:    #929292;
+    --n-800:    #565B5E;
+    --hairline: #232627;
+    --accent:   #7aa2ff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); min-height: 100vh; }
+  body {
+    font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: var(--white);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding: 48px 32px 120px;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; }
+  header { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--hairline); }
+  h1 { font-size: 24px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 6px; }
+  header p { font-size: 13px; color: var(--n-700); letter-spacing: -0.01em; }
+  header p a { color: var(--accent); text-decoration: none; }
+  header p a:hover { text-decoration: underline; }
+
+  section { margin-top: 40px; }
+  h2 {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--n-700);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 8px;
+  }
+
+  .list { display: flex; flex-direction: column; }
+  .row {
+    display: flex;
+    align-items: stretch;
+    border-bottom: 1px solid var(--hairline);
+    transition: background 120ms ease;
+  }
+  .row:hover { background: rgba(255,255,255,0.02); }
+  .row[data-pending="1"] { opacity: 0.55; }
+
+  .row .main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 4px;
+    text-decoration: none;
+    color: var(--white);
+    min-width: 0;
+  }
+  .name {
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    white-space: nowrap;
+  }
+  .desc {
+    font-size: 13px;
+    color: var(--n-500);
+    letter-spacing: -0.01em;
+    flex: 1;
+  }
+  .arrow {
+    font-size: 16px;
+    color: var(--n-500);
+    width: 20px;
+    text-align: right;
+  }
+  .row[data-pending="1"] .arrow { color: var(--n-800); }
+
+  .figma {
+    display: flex;
+    align-items: center;
+    padding: 18px 12px;
+    font-size: 11px;
+    color: var(--n-800);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .figma:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Unified Dashboard</h1>
+      <p>State design · all scenarios in one index · <a href="https://www.figma.com/design/mQhJFtyphUZhzApAeM6OtV/MVP---II-3.0---Locked--?node-id=7444-28407" target="_blank">Figma source</a> (reference only)</p>
+      <p style="margin-top:4px;">Base: <a href="./Unified Dashboard.html">Unified Dashboard.html</a></p>
+    </header>
+
+    <section>
+      <h2>Managed</h2>
+      <div class="list">
+        <div class="row">
+          <a class="main" href="./Managed.html"><span class="name">All Managed Scenarios</span><span class="desc">8 states · tap chips to switch</span><span class="arrow">→</span></a>
+
+        </div>
+        <div class="row">
+          <a class="main" href="./Managed.html?s=core-open-no-investment"><span class="name">Core Account · No Investment</span><span class="desc">Core account open but no investment scheduled</span><span class="arrow">→</span></a>
+
+        </div>
+        <div class="row">
+          <a class="main" href="./Managed.html?s=no-managed-accounts"><span class="name">No Managed Accounts</span><span class="desc">No managed accounts exist</span><span class="arrow">→</span></a>
+
+        </div>
+        <div class="row">
+          <a class="main" href="./Managed.html?s=no-capital-active-unscheduled"><span class="name">No Capital · Active · No Schedule</span><span class="desc">Account exists · no capital · no scheduled investments · portfolio active</span><span class="arrow">→</span></a>
+
+        </div>
+        <div class="row">
+          <a class="main" href="./Managed.html?s=no-capital-active-scheduled"><span class="name">No Capital · Active · Scheduled</span><span class="desc">Account exists · no capital · scheduled investments · portfolio active</span><span class="arrow">→</span></a>
+
+        </div>
+        <div class="row">
+          <a class="main" href="./Managed.html?s=no-capital-inactive-unscheduled"><span class="name">No Capital · Inactive · No Schedule</span><span class="desc">Account exists · no capital · no scheduled investments · portfolio inactive</span><span class="arrow">→</span></a>
+
+        </div>
+        <div class="row">
+          <a class="main" href="./Managed.html?s=no-capital-inactive-scheduled"><span class="name">No Capital · Inactive · Scheduled</span><span class="desc">Account exists · no capital · scheduled investments · portfolio inactive</span><span class="arrow">→</span></a>
+
+        </div>
+        <div class="row">
+          <a class="main" href="./Managed.html?s=capital-inactive"><span class="name">Capital · Inactive</span><span class="desc">Has capital · portfolio inactive (most existing managed users)</span><span class="arrow">→</span></a>
+
+        </div>
+        <div class="row">
+          <a class="main" href="./Managed.html?s=capital-active"><span class="name">Capital · Active</span><span class="desc">Has capital · portfolio active (target state)</span><span class="arrow">→</span></a>
+
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Self-Directed</h2>
+      <div class="list">
+        <div class="row">
+          <a class="main" href="./SelfDirected.html"><span class="name">All Self-Directed Scenarios</span><span class="desc">10 states · tap chips to switch</span><span class="arrow">→</span></a>
+
+        </div>
+        <div class="row">
+          <a class="main" href="./SelfDirected.html?s=no-accounts"><span class="name">No Accounts</span><span class="desc">no self-directed accounts · open account CTA</span><span class="arrow">→</span></a>
+
+        </div>
+        <div class="row">
+          <a class="main" href="./SelfDirected.html?s=no-capital-add-funds"><span class="name">No Capital · Add Funds</span><span class="desc">0.00 · no capital deployed · add funds · under review 4</span><span class="arrow">→</span></a>
+
+        </div>
+        <div class="row">
+          <a class="main" href="./SelfDirected.html?s=tfsa-transfer-pending"><span class="name">TFSA · Transfer Pending</span><span class="desc">TFSA · 0.00 · no capital deployed · transfer pending</span><span class="arrow">→</span></a>
+
+        </div>
+        <div class="row">
+          <a class="main" href="./SelfDirected.html?s=core-inactive-tfsa"><span class="name">All Inactive · TFSA</span><span class="desc">Total 0 · Core Portfolio inactive · TFSA add funds</span><span class="arrow">→</span></a>
+
+        </div>
+        <div class="row">
+          <a class="main" href="./SelfDirected.html?s=active-rrsp"><span class="name">Active · RRSP</span><span class="desc">full active state · RRSP settlement message · 152,000 total</span><span class="arrow">→</span></a>
+
+        </div>
+        <div class="row">
+          <a class="main" href="./SelfDirected.html?s=tfsa-opening"><span class="name">TFSA · Opening</span><span class="desc">account opening message · ID in review</span><span class="arrow">→</span></a>
+
+        </div>
+        <div class="row">
+          <a class="main" href="./SelfDirected.html?s=rrsp-opening"><span class="name">RRSP · Opening</span><span class="desc">account opening message · ID in review</span><span class="arrow">→</span></a>
+
+        </div>
+        <div class="row">
+          <a class="main" href="./SelfDirected.html?s=nonreg-opening"><span class="name">Non-Registered · Opening</span><span class="desc">account opening message · ID in review</span><span class="arrow">→</span></a>
+
+        </div>
+        <div class="row">
+          <a class="main" href="./SelfDirected.html?s=identity-in-review"><span class="name">Identity · In Review</span><span class="desc">ID under review · verification in progress · transfers unavailable</span><span class="arrow">→</span></a>
+
+        </div>
+        <div class="row">
+          <a class="main" href="./SelfDirected.html?s=identity-failed"><span class="name">Identity · Failed</span><span class="desc">ID verification failed · try again</span><span class="arrow">→</span></a>
+
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Managed + Self-Directed</h2>
+      <div class="list">
+        <div class="row">
+          <a class="main" href="./ManagedSelfDirected.html"><span class="name">All UMD Scenarios</span><span class="desc">5 states · tap chips to switch</span><span class="arrow">→</span></a>
+
+        </div>
+        <div class="row">
+          <a class="main" href="./ManagedSelfDirected.html?s=fully-active"><span class="name">Fully Active</span><span class="desc">Managed + RRSP Self-directed both fully active · 152,000 total</span><span class="arrow">→</span></a>
+
+        </div>
+        <div class="row">
+          <a class="main" href="./ManagedSelfDirected.html?s=no-capital"><span class="name">No Capital</span><span class="desc">Core inactive · Self-directed 0.00 · Add Funds</span><span class="arrow">→</span></a>
+
+        </div>
+        <div class="row">
+          <a class="main" href="./ManagedSelfDirected.html?s=no-accounts"><span class="name">No Accounts</span><span class="desc">Core inactive · no Self-directed accounts</span><span class="arrow">→</span></a>
+
+        </div>
+        <div class="row">
+          <a class="main" href="./ManagedSelfDirected.html?s=no-managed-sched-no-sd"><span class="name">No Managed Schedule · No SD Accounts</span><span class="desc">Core inactive · no capital deployed · no Self-directed accounts</span><span class="arrow">→</span></a>
+
+        </div>
+        <div class="row">
+          <a class="main" href="./ManagedSelfDirected.html?s=managed-sched-no-accts"><span class="name">Managed Scheduled · No SD Accounts</span><span class="desc">Managed first investment scheduled · no Self-directed accounts</span><span class="arrow">→</span></a>
+
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
