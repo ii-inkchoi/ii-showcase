@@ -122,6 +122,16 @@ It is a *thinking surface for one position*. Every design decision was tested ag
 
 ---
 
+## Considered and Decided Against
+
+Team feedback proposed grouping the four Position fields into two semantic clusters: Market Value + Unrealized P/L (outcome) and Portfolio Weight + Hold period (discipline). The logic is sound — these fields genuinely answer different questions. We tried it. The result felt either broken (small gap differential read as misalignment) or like two separate sections (larger gap differential broke the "one Position section" frame). Every visual treatment we tried — added hairline divider, color differential, cluster labels — either added ornament or invented vocabulary the user has to learn. We reverted to uniform 25px spacing across all four rows.
+
+The doctrine call: each field has its own label (Market Value, Portfolio Weight, Unrealized P/L, Hold period) that already declares its character. The reader does not need spatial grouping to understand the semantic difference. Uniform spacing communicates "these are peer attributes of one position" — itself a true statement. We chose adequacy over visual encoding of every semantic distinction. This is II — not every difference deserves typographic emphasis.
+
+If the same feedback surfaces again, the answer is the same: considered, intentionally declined. Reorder (without spacing change) is a low-risk fallback if a future round insists on some grouping signal — adjacent semantic pairs without visual differentiation.
+
+---
+
 ## Open Questions
 
 A few items remain undecided. Flagging them so the team can weigh in.
