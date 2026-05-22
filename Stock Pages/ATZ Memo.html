@@ -18,6 +18,7 @@
       --c-700:    #929292;
       --c-400:    #C7C7C7;
       --c-white:  #FFFFFF;
+      --c-live:   #30D158;
     }
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -84,10 +85,12 @@
       background: var(--c-400);
       flex-shrink: 0;
     }
-    .memo-state.armed .state-dot { background: var(--c-400); }
+    .memo-state.live { color: var(--c-live); }
+    .memo-state.live .state-dot { background: var(--c-live); animation: live-pulse 2.4s cubic-bezier(0.45,0,0.55,1) infinite; }
     .memo-state.triggered .state-dot { background: #FDAD00; animation: state-pulse 2.4s cubic-bezier(0.45,0,0.55,1) infinite; }
     .memo-state.stale .state-dot { background: var(--c-800); }
     .memo-state.closed .state-dot { background: var(--c-800); }
+    @keyframes live-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
     @keyframes state-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.32; } }
     @media (prefers-reduced-motion: reduce) { .memo-state .state-dot { animation: none !important; } }
 
@@ -120,6 +123,31 @@
     }
     .sub-row + .sub-row {
       margin-top: 18px;
+    }
+
+    /* Kill criteria list — numbered points (K.01, K.02, K.03) */
+    .kill-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      margin-top: 8px;
+    }
+    .kill-list li {
+      display: flex;
+      gap: 10px;
+      font-size: 15px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      line-height: 1.5;
+      padding: 6px 0;
+    }
+    .kill-list .k-num {
+      color: var(--c-800);
+      font-size: 15px;
+      width: 14px;
+      flex-shrink: 0;
+      display: inline-block;
+      line-height: 1.5;
     }
     .back {
       width: 13px; height: 13px;
@@ -176,6 +204,9 @@
       font-size: 13px;
       color: var(--c-400);
       letter-spacing: -0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
     }
     .memo-status .reviewed {
       font-size: 11px;
@@ -405,12 +436,12 @@
   </div>
 
   <div class="title-block">
-    <span class="t-primary">Memo</span>
+    <span class="t-primary">The Memo</span>
     <span class="t-secondary">Aritzia Inc · ATZ</span>
   </div>
 
   <section class="memo-status" aria-label="Memo status">
-    <span class="version">V3 <span class="memo-state armed"><span class="state-dot" aria-hidden="true"></span>Armed</span></span>
+    <span class="version">V3 <span class="memo-state live"><span class="state-dot" aria-hidden="true"></span>Live</span></span>
     <span class="reviewed">Reviewed Apr 12, 2026 · 26d ago · 2 prior versions</span>
     <p class="doctrine-note">Memos are immutable once sealed. Each edit creates a new version. Prior versions stay on the record.</p>
   </section>
@@ -460,13 +491,17 @@
       </div>
     </section>
 
-    <!-- 04 KILL LINE — single condition + response + floor -->
+    <!-- 04 KILL LINE — numbered conditions (K.01/K.02/K.03) + response + floor -->
     <section class="section" aria-label="Kill line">
       <div class="section-header">
-        <span class="section-title"><span class="section-num">04</span>Kill Line <span class="section-meta">· holding</span></span>
+        <span class="section-title"><span class="section-num">04</span>Kill Line</span>
       </div>
-      <p class="prose">ATZ thesis dies if same-store sales go negative for two consecutive quarters, or US expansion stalls below 8 new stores per year, or operating margin contracts below 12% TTM. Exit on trigger, not on narrative.</p>
-      <p class="prose"><span class="kc-label">Response:</span> Exit position.</p>
+      <ul class="kill-list">
+        <li><span class="k-num">·</span>Same-store sales go negative for two consecutive quarters</li>
+        <li><span class="k-num">·</span>US expansion stalls below 8 new stores per year</li>
+        <li><span class="k-num">·</span>Operating margin contracts below 12% TTM</li>
+      </ul>
+      <p class="prose" style="margin-top:18px;"><span class="kc-label">Response:</span> Exit on trigger, not on narrative. Exit position.</p>
       <p class="prose"><span class="kc-label">Floor:</span> Brand equity remains tier-one even in same-store softening; US store base profitable at current trajectory; cash-rich balance sheet ($142M) supports re-allocation without forced sale.</p>
     </section>
 

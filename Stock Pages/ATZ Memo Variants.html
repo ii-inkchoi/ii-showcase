@@ -17,6 +17,7 @@
       --c-400:    #C7C7C7;
       --c-white:  #FFFFFF;
       --c-warning:#FDAD00;
+      --c-live:#30D158;
     }
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -167,14 +168,15 @@
     /* state colors */
     .memo-state.draft     { color: var(--c-800); }
     .memo-state.draft .state-dot { background: var(--c-800); }
-    .memo-state.armed     { color: var(--c-400); }
-    .memo-state.armed .state-dot { background: var(--c-400); }
+    .memo-state.live      { color: var(--c-live); }
+    .memo-state.live .state-dot { background: var(--c-live); animation: live-pulse 2.4s cubic-bezier(0.45,0,0.55,1) infinite; }
     .memo-state.triggered { color: var(--c-warning); }
     .memo-state.triggered .state-dot { background: var(--c-warning); animation: state-pulse 2.4s cubic-bezier(0.45,0,0.55,1) infinite; }
     .memo-state.stale     { color: var(--c-800); }
     .memo-state.stale .state-dot { background: var(--c-800); }
     .memo-state.closed    { color: var(--c-800); }
     .memo-state.closed .state-dot { background: var(--c-800); }
+    @keyframes live-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
     @keyframes state-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.32; } }
     @media (prefers-reduced-motion: reduce) { .memo-state .state-dot { animation: none !important; } }
 
@@ -265,7 +267,7 @@
         <div class="frame">
           <div class="compliance-strip">Self-Authored · No Suitability Review · Not Advice</div>
           <div class="title-block">
-            <span class="t-primary">Memo</span>
+            <span class="t-primary">The Memo</span>
             <span class="t-secondary">Aritzia Inc · ATZ</span>
           </div>
           <section class="memo-status">
@@ -283,24 +285,24 @@
         </div>
       </div>
 
-      <!-- ARMED -->
+      <!-- LIVE -->
       <div class="column">
-        <span class="col-label">Armed</span>
-        <p class="col-tagline">Default live state. Memo locked, kill criteria armed, monitoring active.</p>
+        <span class="col-label">Live</span>
+        <p class="col-tagline">Default state. Memo locked, currently being managed. Green pulse signals active management.</p>
         <div class="col-spec">
-          <strong>Dot:</strong> c-400, static<br>
+          <strong>Dot:</strong> Green (c-live), gentle pulse<br>
           <strong>Version:</strong> V3 (locked)<br>
           <strong>Meta:</strong> "Reviewed Apr 12 · 26d ago"<br>
-          <strong>Doctrine:</strong> Most common state
+          <strong>Doctrine:</strong> Most common state — your current live thesis
         </div>
         <div class="frame">
           <div class="compliance-strip">Self-Authored · No Suitability Review · Not Advice</div>
           <div class="title-block">
-            <span class="t-primary">Memo</span>
+            <span class="t-primary">The Memo</span>
             <span class="t-secondary">Aritzia Inc · ATZ</span>
           </div>
           <section class="memo-status">
-            <span class="version">V3 <span class="memo-state armed"><span class="state-dot"></span>Armed</span></span>
+            <span class="version">V3 <span class="memo-state live"><span class="state-dot"></span>Live</span></span>
             <span class="reviewed">Reviewed Apr 12, 2026 · 26d ago · 2 prior versions</span>
             <p class="doctrine-note">Memos are immutable once sealed. Each edit creates a new version. Prior versions stay on the record.</p>
           </section>
@@ -327,7 +329,7 @@
         <div class="frame">
           <div class="compliance-strip">Self-Authored · No Suitability Review · Not Advice</div>
           <div class="title-block">
-            <span class="t-primary">Memo</span>
+            <span class="t-primary">The Memo</span>
             <span class="t-secondary">Aritzia Inc · ATZ</span>
           </div>
           <section class="memo-status">
@@ -358,7 +360,7 @@
         <div class="frame">
           <div class="compliance-strip">Self-Authored · No Suitability Review · Not Advice</div>
           <div class="title-block">
-            <span class="t-primary">Memo</span>
+            <span class="t-primary">The Memo</span>
             <span class="t-secondary">Aritzia Inc · ATZ</span>
           </div>
           <section class="memo-status">
@@ -389,7 +391,7 @@
         <div class="frame">
           <div class="compliance-strip">Self-Authored · No Suitability Review · Not Advice</div>
           <div class="title-block">
-            <span class="t-primary">Memo</span>
+            <span class="t-primary">The Memo</span>
             <span class="t-secondary">Aritzia Inc · ATZ</span>
           </div>
           <section class="memo-status">

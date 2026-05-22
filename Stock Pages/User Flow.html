@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1400">
+  <title>User Flow — Stock Page Navigation Map</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-black:    #000000;
+      --c-1000:     #1C1C1C;
+      --c-900:      #232627;
+      --c-800:      #565B5E;
+      --c-700:      #929292;
+      --c-400:      #C7C7C7;
+      --c-white:    #FFFFFF;
+      --c-live:     #30D158;
+      --line:       #565B5E;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--c-1000);
+      color: var(--c-white);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      padding: 48px 24px 80px;
+      -webkit-font-smoothing: antialiased;
+      font-feature-settings: 'tnum' 1;
+    }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    /* HEADER */
+    .header { text-align: center; margin-bottom: 56px; }
+    .header h1 { font-size: 22px; font-weight: 400; letter-spacing: -0.02em; margin-bottom: 8px; }
+    .header p { font-size: 13px; color: var(--c-700); letter-spacing: -0.02em; max-width: 640px; margin: 0 auto; line-height: 1.6; }
+
+    /* ─────────────────────────────────────────
+       FLOW GRID — 12-column grid
+       ───────────────────────────────────────── */
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 0;
+      row-gap: 0;
+    }
+
+    /* Row positioning helpers (12-col) */
+    .span-12 { grid-column: 1 / 13; }
+    .span-center-4 { grid-column: 5 / 9; }      /* center 4 cols */
+    .span-2-4 { grid-column: 2 / 5; }            /* left third */
+    .span-5-8 { grid-column: 5 / 9; }            /* center third */
+    .span-9-11 { grid-column: 9 / 12; }          /* right third */
+    .span-3-6 { grid-column: 3 / 7; }            /* left half */
+    .span-7-10 { grid-column: 7 / 11; }          /* right half */
+
+    /* NODE — II doctrine box */
+    .node {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 16px 20px;
+      background: var(--c-black);
+      border: 0.5px solid var(--c-900);
+      text-align: left;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 120ms ease;
+    }
+    .node:hover { border-color: var(--c-700); cursor: pointer; }
+    .node .n-label {
+      font-size: 10px;
+      color: var(--c-800);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .node .n-title {
+      font-size: 14px;
+      color: var(--c-white);
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+    }
+    .node .n-meta {
+      font-size: 11px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      line-height: 1.5;
+    }
+    .node.hero { background: #0A0A0A; border-color: var(--c-800); }
+    .node.terminal .n-label { color: var(--c-live); }
+
+    /* Delivered by Inkyung — subtle green tint */
+    .node.ready {
+      background: rgba(48, 209, 88, 0.03);
+      border-color: rgba(48, 209, 88, 0.22);
+    }
+    .node.ready.hero {
+      background: rgba(48, 209, 88, 0.05);
+    }
+
+    /* CONNECTOR SVG — spans columns precisely with percentages */
+    .connector {
+      grid-column: 1 / 13;
+      width: 100%;
+      display: block;
+    }
+    .connector svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    /* SECTION LABEL — between major stages */
+    .stage-label {
+      grid-column: 1 / 13;
+      font-size: 10px;
+      color: var(--c-800);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 32px 0 16px;
+      position: relative;
+    }
+    .stage-label::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 0.5px;
+      background: var(--c-900);
+      z-index: 0;
+    }
+    .stage-label span {
+      position: relative;
+      z-index: 1;
+      background: var(--c-1000);
+      padding: 0 16px;
+    }
+
+    /* LOOPBACK label */
+    .loopback {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      padding: 14px 0;
+    }
+    .loopback .arrow { color: var(--c-live); font-size: 14px; line-height: 1; }
+    .loopback strong { color: var(--c-400); font-weight: 400; }
+
+    /* SEE ALSO reference */
+    .see-also {
+      text-align: center;
+      font-size: 11px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      padding-top: 32px;
+      margin-top: 16px;
+      border-top: 0.5px solid var(--c-900);
+    }
+    .see-also a {
+      color: var(--c-400);
+      text-decoration: none;
+      transition: color 120ms ease;
+    }
+    .see-also a:hover { color: var(--c-white); }
+
+    /* LEGEND */
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 80px;
+      padding: 24px;
+      border-top: 0.5px solid var(--c-900);
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+    }
+    .legend-swatch {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+    }
+    .legend-swatch.hero { background: #0A0A0A; border: 0.5px solid var(--c-800); }
+    .legend-swatch.standard { background: var(--c-black); border: 0.5px solid var(--c-900); }
+    .legend-swatch.terminal { background: var(--c-black); border: 0.5px solid var(--c-800); }
+    .legend-swatch.terminal::after {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 3px;
+      background: var(--c-live);
+      margin: 4px;
+    }
+
+    .footer-note {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 12px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      line-height: 1.6;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .footer-note strong { color: var(--c-400); font-weight: 400; }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="header">
+      <h1>Stock Page · User Flow</h1>
+      <p>Three entry routes converge on the Stock Page. Stock Page branches by persona. Memo creation and edit loop back to the Stock Page.</p>
+    </div>
+
+    <div class="flow">
+
+      <!-- ═══ STAGE 1: ENTRY ═══ -->
+      <div class="stage-label"><span>Entry</span></div>
+
+      <a class="node hero span-center-4" href="../Unified Main Dashboard/Post MVP/Unified Dashboard.html" target="_blank">
+        <span class="n-label">01 · Entry</span>
+        <span class="n-title">Main Dashboard</span>
+        <span class="n-meta">Unified home view — positions, performance, open questions, search.</span>
+      </a>
+
+      <!-- Connector: 1 → 3 diverge -->
+      <div class="connector" style="height: 100px;">
+        <svg viewBox="0 0 1200 100" preserveAspectRatio="none">
+          <!-- vertical from center down 30px -->
+          <line x1="600" y1="0" x2="600" y2="30" stroke="var(--line)" stroke-width="1"/>
+          <!-- horizontal across to 3 branch points -->
+          <line x1="200" y1="30" x2="1000" y2="30" stroke="var(--line)" stroke-width="1"/>
+          <!-- 3 verticals down to boxes (col centers: 250, 600, 950 in 1200-wide grid) -->
+          <line x1="250" y1="30" x2="250" y2="90" stroke="var(--line)" stroke-width="1"/>
+          <line x1="600" y1="30" x2="600" y2="90" stroke="var(--line)" stroke-width="1"/>
+          <line x1="950" y1="30" x2="950" y2="90" stroke="var(--line)" stroke-width="1"/>
+          <!-- arrowheads -->
+          <polygon points="250,98 244,88 256,88" fill="var(--line)"/>
+          <polygon points="600,98 594,88 606,88" fill="var(--line)"/>
+          <polygon points="950,98 944,88 956,88" fill="var(--line)"/>
+          <!-- labels -->
+          <text x="250" y="58" text-anchor="middle" fill="var(--c-700)" font-size="11" font-family="Inter" font-weight="400">Active Positions</text>
+          <text x="600" y="58" text-anchor="middle" fill="var(--c-700)" font-size="11" font-family="Inter" font-weight="400">Search company</text>
+          <text x="950" y="58" text-anchor="middle" fill="var(--c-700)" font-size="11" font-family="Inter" font-weight="400">Under Review</text>
+        </svg>
+      </div>
+
+      <!-- ═══ STAGE 2: ROUTES ═══ -->
+      <a class="node span-2-4" href="#" onclick="event.preventDefault()">
+        <span class="n-label">02a · List</span>
+        <span class="n-title">Active Positions (Full Page)</span>
+        <span class="n-meta">All currently held names with thesis-health status.</span>
+      </a>
+
+      <!-- center cell empty (direct route) -->
+      <div class="span-5-8"></div>
+
+      <a class="node span-9-11" href="#" onclick="event.preventDefault()">
+        <span class="n-label">02c · List</span>
+        <span class="n-title">Under Review (Full Page)</span>
+        <span class="n-meta">Watchlist names — pre-position evaluation.</span>
+      </a>
+
+      <!-- Connector: 3 → 1 converge into Stock Page -->
+      <div class="connector" style="height: 100px;">
+        <svg viewBox="0 0 1200 100" preserveAspectRatio="none">
+          <!-- 3 verticals from boxes (col centers: 250, 600, 950) down 60px -->
+          <line x1="250" y1="0" x2="250" y2="60" stroke="var(--line)" stroke-width="1"/>
+          <line x1="600" y1="0" x2="600" y2="60" stroke="var(--line)" stroke-width="1"/>
+          <line x1="950" y1="0" x2="950" y2="60" stroke="var(--line)" stroke-width="1"/>
+          <!-- horizontal at y=60 connecting all 3 -->
+          <line x1="250" y1="60" x2="950" y2="60" stroke="var(--line)" stroke-width="1"/>
+          <!-- vertical from center down to arrowhead -->
+          <line x1="600" y1="60" x2="600" y2="90" stroke="var(--line)" stroke-width="1"/>
+          <polygon points="600,98 594,88 606,88" fill="var(--line)"/>
+          <!-- labels -->
+          <text x="250" y="28" text-anchor="middle" fill="var(--c-700)" font-size="11" font-family="Inter">Select ticker</text>
+          <text x="600" y="28" text-anchor="middle" fill="var(--c-700)" font-size="11" font-family="Inter">Direct to ticker</text>
+          <text x="950" y="28" text-anchor="middle" fill="var(--c-700)" font-size="11" font-family="Inter">Select ticker</text>
+        </svg>
+      </div>
+
+      <!-- ═══ STAGE 3: STOCK PAGE ═══ -->
+      <div class="stage-label"><span>Stock Page</span></div>
+
+      <a class="node hero ready span-center-4" href="Stock Page v6d.html" target="_blank">
+        <span class="n-label">03 · Page</span>
+        <span class="n-title">Stock Page</span>
+        <span class="n-meta">Branches by persona below — first-time (no memo) vs returning (memo Live).</span>
+      </a>
+
+      <!-- Connector: 1 → 2 diverge by persona -->
+      <div class="connector" style="height: 100px;">
+        <svg viewBox="0 0 1200 100" preserveAspectRatio="none">
+          <line x1="600" y1="0" x2="600" y2="30" stroke="var(--line)" stroke-width="1"/>
+          <line x1="350" y1="30" x2="850" y2="30" stroke="var(--line)" stroke-width="1"/>
+          <line x1="350" y1="30" x2="350" y2="90" stroke="var(--line)" stroke-width="1"/>
+          <line x1="850" y1="30" x2="850" y2="90" stroke="var(--line)" stroke-width="1"/>
+          <polygon points="350,98 344,88 356,88" fill="var(--line)"/>
+          <polygon points="850,98 844,88 856,88" fill="var(--line)"/>
+          <text x="350" y="58" text-anchor="middle" fill="var(--c-700)" font-size="11" font-family="Inter">No memo yet</text>
+          <text x="850" y="58" text-anchor="middle" fill="var(--c-700)" font-size="11" font-family="Inter">Memo sealed</text>
+        </svg>
+      </div>
+
+      <!-- ═══ STAGE 4: PERSONA SPLIT ═══ -->
+      <a class="node ready span-3-6" href="Stock Page First.html" target="_blank">
+        <span class="n-label">First-time user</span>
+        <span class="n-title">Stock Page (First-time)</span>
+        <span class="n-meta">No position, no memo. About company + Draft Memo CTA.</span>
+      </a>
+
+      <a class="node ready span-7-10" href="Stock Page v6d.html" target="_blank">
+        <span class="n-label">Returning user</span>
+        <span class="n-title">Stock Page (Memo Live)</span>
+        <span class="n-meta">Position held. Memo box with Thesis + Kill conditions + IV/MoS/Probability.</span>
+      </a>
+
+      <!-- Connector: arrows down to next row, with labels -->
+      <div class="connector" style="height: 70px;">
+        <svg viewBox="0 0 1200 70" preserveAspectRatio="none">
+          <line x1="350" y1="0" x2="350" y2="60" stroke="var(--line)" stroke-width="1"/>
+          <line x1="850" y1="0" x2="850" y2="60" stroke="var(--line)" stroke-width="1"/>
+          <polygon points="350,68 344,58 356,58" fill="var(--line)"/>
+          <polygon points="850,68 844,58 856,58" fill="var(--line)"/>
+          <text x="350" y="40" text-anchor="middle" fill="var(--c-700)" font-size="11" font-family="Inter">Draft Memo CTA</text>
+          <text x="850" y="40" text-anchor="middle" fill="var(--c-700)" font-size="11" font-family="Inter">Open Memo (alert) · Re-underwrite (footer)</text>
+        </svg>
+      </div>
+
+      <!-- ═══ STAGE 5: DESTINATIONS ═══ -->
+      <a class="node terminal span-3-6" href="#" onclick="event.preventDefault()">
+        <span class="n-label">Creation flow · spec by Leo</span>
+        <span class="n-title">9-Step Memo Creation</span>
+        <span class="n-meta">Classify → Size → Thesis → Kill → IV → Compounding → Source → Note → Review (Hold to seal).</span>
+      </a>
+
+      <a class="node terminal ready span-7-10" href="ATZ Memo.html" target="_blank">
+        <span class="n-label">Detail · Edit</span>
+        <span class="n-title">The Memo (Full Detail)</span>
+        <span class="n-meta">8 numbered sections matching the 9-step flow. Read or edit. Hold to seal creates new version.</span>
+      </a>
+
+      <!-- Loopback row -->
+      <div class="loopback span-3-6">
+        <span class="arrow">↺</span>
+        <span>Hold to seal → back to <strong>Stock Page</strong> (now Returning, memo Live)</span>
+      </div>
+
+      <div class="loopback span-7-10">
+        <span class="arrow">↺</span>
+        <span>New version (V3 → V4) → back to <strong>Stock Page</strong> (updated)</span>
+      </div>
+
+      <!-- Reference to memo lifecycle states -->
+      <div class="see-also span-12">
+        Memo can be in 5 lifecycle states (Draft / Live / Triggered / Stale / Closed) —
+        <a href="ATZ Memo Variants.html" onclick="if(window.parent !== window && window.parent.setScreen){window.parent.setScreen('memo-variants', window.parent.document.querySelector('[data-screen=memo-variants]')); event.preventDefault();}" target="_blank">see Memo Lifecycle States ↗</a>
+      </div>
+
+    </div>
+
+  </div>
+</body>
+</html>

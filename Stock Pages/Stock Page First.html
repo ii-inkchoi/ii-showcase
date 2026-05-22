@@ -53,6 +53,19 @@
       padding: 0 13.5px;
       border-bottom: 1px solid var(--c-900);
     }
+
+    /* COMPLIANCE STRIP — institutional disclosure as system metadata */
+    .compliance-strip {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 8px 20px;
+      font-size: 9px;
+      letter-spacing: -0.02em;
+      color: var(--c-800);
+      border-bottom: 0.5px solid var(--c-1000);
+      line-height: 1.3;
+    }
     .back {
       width: 13px; height: 13px;
       display: inline-flex; align-items: center; justify-content: center;
@@ -106,10 +119,10 @@
 
     /* COLUMN */
     .col {
-      padding: 60px 20px 120px;
+      padding: 48px 20px 120px;
       display: flex;
       flex-direction: column;
-      gap: 56px;
+      gap: 48px;
     }
 
     /* SECTION (header + content pattern, matches Stock Page v5) */
@@ -244,12 +257,17 @@
 <body>
 
   <header class="header">
-    <a href="javascript:history.back()" class="back" aria-label="Back"></a>
+    <a href="#" onclick="event.preventDefault()" class="back" aria-label="Back"></a>
     <span style="display:flex;align-items:center;gap:14px;">
-      <a href="#" class="star" aria-label="Star">☆</a>
-      <a href="#" class="exit" aria-label="Exit">Exit</a>
+      <a href="#" onclick="event.preventDefault()" class="star" aria-label="Star">☆</a>
+      <a href="#" onclick="event.preventDefault()" class="exit" aria-label="Exit">Exit</a>
     </span>
   </header>
+
+  <!-- COMPLIANCE STRIP — persistent disclosure as system metadata -->
+  <div class="compliance-strip" aria-label="Disclosure">
+    Self-Authored · No Suitability Review · Not Advice
+  </div>
 
   <div class="title-block">
     <span class="t-primary">Aritzia Inc · ATZ</span>
@@ -258,14 +276,14 @@
 
   <div class="col">
 
-    <!-- 1. DRAFT MEMO — explainer; action lives in Capital Decision CTA -->
+    <!-- 1. DRAFT MEMO — entry to 9-step memo creation flow (spec by Leo) -->
     <section class="section draft-memo" aria-label="Draft memo">
-      <a href="#" class="section-header">
+      <a href="#" onclick="event.preventDefault()" class="section-header">
         <span class="section-title">Draft Memo · ATZ</span>
         <span class="section-chev" aria-hidden="true">›</span>
       </a>
       <p class="prose">Walk the protocol before execution. Ten fields, staged. SEAL writes the record.</p>
-      <a href="#" class="view-link">View Field Reference <span class="chev" aria-hidden="true">›</span></a>
+      <a href="#" onclick="event.preventDefault()" class="view-link">View Field Reference <span class="chev" aria-hidden="true">›</span></a>
     </section>
 
     <!-- 2. ABOUT THE COMPANY -->
@@ -274,21 +292,21 @@
         <span class="section-title">About Aritzia Inc.</span>
       </div>
       <p class="prose">Aritzia Inc. designs and sells in-house women's fashion brands — including Wilfred, TNA, Babaton, and Super Puff — through 110+ boutiques in Canada and the US, plus a growing ecommerce business. Founded in Vancouver in 1984.</p>
-      <a href="#" class="view-link">Read More on the Company <span class="chev" aria-hidden="true">›</span></a>
+      <a href="#" onclick="event.preventDefault()" class="view-link">Read More on the Company <span class="chev" aria-hidden="true">›</span></a>
     </section>
 
     <!-- 3. NAV — Market / News / Research -->
     <nav class="section nav" aria-label="Sections">
-      <a href="#">Market</a>
-      <a href="#">News</a>
-      <a href="#">Research</a>
+      <a href="#" onclick="event.preventDefault()">Market</a>
+      <a href="#" onclick="event.preventDefault()">News</a>
+      <a href="#" onclick="event.preventDefault()">Research</a>
     </nav>
 
   </div>
 
   <!-- Capital Decision CTA (fixed bottom) -->
   <div class="capital-decision">
-    <a href="#" aria-label="Capital Decision">
+    <a href="#" onclick="event.preventDefault()" aria-label="Capital Decision">
       <span class="arrow">→</span> Capital Decision
     </a>
   </div>

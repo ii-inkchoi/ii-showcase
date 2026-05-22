@@ -12,7 +12,7 @@
   <style>
     :root {
       --c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-800:#565B5E;--c-700:#929292;--c-400:#C7C7C7;--c-white:#FFFFFF;
-      --c-urgent:#FF3533;--c-warning:#FDAD00;--c-review:#FBC308;
+      --c-urgent:#FF3533;--c-warning:#FDAD00;--c-review:#FBC308;--c-live:#30D158;
     }
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
     body{background:var(--c-black);color:var(--c-white);font-family:'Inter',sans-serif;width:100%;max-width:393px;margin:0 auto;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-feature-settings:'lnum' 1,'tnum' 1;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch}
@@ -56,7 +56,7 @@
     .oq-body{display:flex;flex-direction:column;align-items:stretch;gap:4px;flex:1;min-width:0}
     .oq-head-row{display:flex;align-items:center;justify-content:flex-start;gap:12px}
     .oq-head-left{display:inline-flex;align-items:center;gap:10px}
-    .oq-dot{display:inline-block;width:6px;height:6px;border-radius:50%;flex-shrink:0}
+    .oq-dot{display:inline-block;width:5px;height:5px;border-radius:50%;flex-shrink:0}
     .oq-dot.urgent{background:#FF3533}
     .oq-dot.warning{background:#FDAD00}
     .oq-dot.review{background:#FBC308}
@@ -73,7 +73,7 @@
     .oq-action .chev{font-size:13px;font-weight:300;color:var(--c-700)}
 
     /* COLUMN */
-    .col{padding:48px 20px 120px;display:flex;flex-direction:column;gap:56px}
+    .col{padding:48px 20px 120px;display:flex;flex-direction:column;gap:48px}
 
     /* ─────────────────────────────────────────
        MEMO BLOCK — v6c box, with 3-cell data grid restored
@@ -91,7 +91,7 @@
       display:flex;
       align-items:center;
       justify-content:space-between;
-      padding:14px 16px;
+      padding:16px;
       border-bottom:0.5px solid var(--c-1000);
       gap:12px;
     }
@@ -119,10 +119,12 @@
       background:var(--c-400);
       flex-shrink:0;
     }
-    .memo-state.armed .state-dot{background:var(--c-400)}
+    .memo-state.live{color:var(--c-live)}
+    .memo-state.live .state-dot{background:var(--c-live);animation:live-pulse 2.4s cubic-bezier(0.45,0,0.55,1) infinite}
     .memo-state.triggered .state-dot{background:var(--c-warning);animation:state-pulse 2.4s cubic-bezier(0.45,0,0.55,1) infinite}
     .memo-state.stale .state-dot{background:var(--c-800)}
     .memo-state.closed .state-dot{background:var(--c-800)}
+    @keyframes live-pulse{0%,100%{opacity:1}50%{opacity:.6}}
     @keyframes state-pulse{0%,100%{opacity:1}50%{opacity:.32}}
     @media (prefers-reduced-motion:reduce){.memo-state .state-dot{animation:none!important}}
     .memo-status-right{
@@ -133,14 +135,40 @@
 
     /* Memo content */
     .memo-content{
-      padding:18px 16px;
+      padding:16px;
       display:flex;
       flex-direction:column;
       gap:16px;
     }
     .mc-row{display:flex;flex-direction:column;gap:4px}
+    .mc-row + .mc-row{border-top:0.5px solid var(--c-1000);padding-top:16px;margin-top:0}
     .mc-lbl{font-size:13px;color:var(--c-700);letter-spacing:-.02em}
     .mc-lbl .mc-num{color:var(--c-800);margin-right:10px;font-feature-settings:'tnum' 1}
+
+    /* Kill criteria list — numbered points (K.01, K.02, K.03) */
+    .kill-list{
+      list-style:none;
+      display:flex;
+      flex-direction:column;
+      margin-top:6px;
+    }
+    .kill-list li{
+      display:flex;
+      gap:10px;
+      font-size:14px;
+      color:var(--c-400);
+      letter-spacing:-.02em;
+      line-height:1.5;
+      padding:4px 0;
+    }
+    .kill-list .k-num{
+      color:var(--c-800);
+      font-size:14px;
+      width:14px;
+      flex-shrink:0;
+      display:inline-block;
+      line-height:1.5;
+    }
     .mc-body{font-size:14px;color:var(--c-400);letter-spacing:-.02em;line-height:1.55}
     .mc-sub{font-size:12px;color:var(--c-700);letter-spacing:-.02em;line-height:1.5;margin-top:6px}
     .mc-sub .kc-label{color:var(--c-700)}
@@ -151,10 +179,20 @@
       display:grid;
       grid-template-columns:repeat(3,1fr);
       gap:14px;
-      padding:14px 16px;
-      border-top:0.5px solid var(--c-1000);
-      border-bottom:0.5px solid var(--c-1000);
+      padding:16px;
+      position:relative;
     }
+    .memo-grid::before,
+    .memo-grid::after{
+      content:'';
+      position:absolute;
+      left:16px;
+      right:16px;
+      height:0.5px;
+      background:var(--c-1000);
+    }
+    .memo-grid::before{top:0}
+    .memo-grid::after{bottom:0}
     .memo-metric{display:flex;flex-direction:column;gap:4px}
     .metric-label{font-size:10px;color:var(--c-700);letter-spacing:-.02em}
     .metric-value{font-size:15px;color:var(--c-white);letter-spacing:-.02em;line-height:1.1}
@@ -175,7 +213,7 @@
       display:flex;
       align-items:center;
       justify-content:space-between;
-      padding:14px 16px;
+      padding:16px;
       gap:12px;
     }
     .memo-footer .mf-reviewed{
@@ -237,10 +275,10 @@
 <body>
 
   <header class="header">
-    <a href="javascript:history.back()" class="back" aria-label="Back"></a>
+    <a href="#" onclick="event.preventDefault()" class="back" aria-label="Back"></a>
     <span style="display:flex;align-items:center;gap:14px;">
-      <a href="#" class="star" aria-label="Star">☆</a>
-      <a href="#" class="exit" aria-label="Exit">Exit</a>
+      <a href="#" onclick="event.preventDefault()" class="star" aria-label="Star">☆</a>
+      <a href="#" onclick="event.preventDefault()" class="exit" aria-label="Exit">Exit</a>
     </span>
   </header>
 
@@ -276,10 +314,10 @@
     <section class="memo-block" aria-label="Memo">
       <div class="memo-status-bar">
         <span class="memo-status-left">
-          <span>Memo · Compounder</span>
-          <span class="memo-state armed">
+          <span>The Memo · Compounder</span>
+          <span class="memo-state live">
             <span class="state-dot" aria-hidden="true"></span>
-            Armed
+            Live
           </span>
         </span>
         <span class="memo-status-right">v3</span>
@@ -292,8 +330,12 @@
         </div>
         <div class="mc-row">
           <span class="mc-lbl"><span class="mc-num">02</span>Kill Line</span>
-          <p class="mc-body">ATZ thesis dies if same-store sales go negative for two consecutive quarters, or US expansion stalls below 8 new stores per year, or operating margin contracts below 12% TTM. Exit on trigger, not on narrative.</p>
-          <p class="mc-sub"><span class="kc-label">Response:</span> <span class="kc-value">Exit position.</span></p>
+          <ul class="kill-list">
+            <li><span class="k-num">·</span>Same-store sales go negative for two consecutive quarters</li>
+            <li><span class="k-num">·</span>US expansion stalls below 8 new stores per year</li>
+            <li><span class="k-num">·</span>Operating margin contracts below 12% TTM</li>
+          </ul>
+          <p class="mc-sub"><span class="kc-label">Response:</span> <span class="kc-value">Exit on trigger, not on narrative. Exit position.</span></p>
         </div>
       </div>
 
@@ -318,7 +360,7 @@
 
       <div class="memo-footer">
         <span class="mf-reviewed">Reviewed Apr 12, 2026 · 26d ago</span>
-        <a href="ATZ%20Memo%20-%20Approaching.html" class="mf-action"><span class="arrow">→</span>Re-underwrite</a>
+        <a href="ATZ%20Memo.html" class="mf-action"><span class="arrow">→</span>Re-underwrite</a>
       </div>
     </section>
 
@@ -331,7 +373,7 @@
       <div class="pos-row"><span class="pos-key">Portfolio Weight</span><span class="pos-val"><span class="pos-prev">6.1%</span> <span class="pos-arrow">→</span> 12.2%</span></div>
       <div class="pos-row"><span class="pos-key">Unrealized P/L</span><span class="pos-val">+5,652.72 <span class="ccy">CAD</span></span></div>
       <div class="pos-row"><span class="pos-key">Held</span><span class="pos-val">3y 2m</span></div>
-      <a href="../Holdings_Position/Holdings.html" class="view-link">View Position Detail <span class="chev" aria-hidden="true">›</span></a>
+      <a href="#" onclick="event.preventDefault()" class="view-link">View Position Detail <span class="chev" aria-hidden="true">›</span></a>
     </section>
 
     <!-- 3. PERFORMANCE -->
@@ -343,12 +385,12 @@
       <div class="perf-row"><span class="perf-key">ATZ</span><span class="perf-val">+42.6%</span></div>
       <div class="perf-row"><span class="perf-key">S&amp;P 500</span><span class="perf-val">+14.2%</span></div>
       <div class="perf-row diff"><span class="perf-key">Alpha</span><span class="perf-val">+28.4pp</span></div>
-      <a href="ATZ%20Performance%20Detail.html" class="view-link">View Performance Detail <span class="chev" aria-hidden="true">›</span></a>
+      <a href="#" onclick="event.preventDefault()" class="view-link">View Performance Detail <span class="chev" aria-hidden="true">›</span></a>
     </section>
 
     <!-- 4. PRIMARY SOURCE — Fiscal AI (under Performance, v6a placement) -->
     <section class="section" aria-label="Primary source">
-      <a href="#" class="nav-row primary">
+      <a href="#" onclick="event.preventDefault()" class="nav-row primary">
         <span class="nav-row-text">
           <span class="nav-row-title">Open in Fiscal AI</span>
           <span class="nav-row-meta">Dedicated workspace for ATZ — filings, transcripts, comps, and live fundamentals.</span>
@@ -359,15 +401,15 @@
 
     <!-- 5. MORE SOURCES -->
     <section class="nav-rows" aria-label="More sources">
-      <a href="ATZ%20Market.html" class="nav-row">
+      <a href="#" onclick="event.preventDefault()" class="nav-row">
         <span class="nav-row-text"><span class="nav-row-title">Market</span><span class="nav-row-meta">Price · Overview · Valuation</span></span>
         <span class="nav-row-arrow">›</span>
       </a>
-      <a href="ATZ%20News.html" class="nav-row">
+      <a href="#" onclick="event.preventDefault()" class="nav-row">
         <span class="nav-row-text"><span class="nav-row-title">News</span><span class="nav-row-meta">Headlines · Coverage</span></span>
         <span class="nav-row-arrow">›</span>
       </a>
-      <a href="ATZ%20History.html" class="nav-row">
+      <a href="#" onclick="event.preventDefault()" class="nav-row">
         <span class="nav-row-text"><span class="nav-row-title">History</span><span class="nav-row-meta">Open Orders · Past Trades</span></span>
         <span class="nav-row-arrow">›</span>
       </a>
@@ -376,7 +418,7 @@
   </div>
 
   <div class="capital-decision">
-    <a href="#" aria-label="Capital Decision"><span class="arrow">→</span> Capital Decision</a>
+    <a href="#" onclick="event.preventDefault()" aria-label="Capital Decision"><span class="arrow">→</span> Capital Decision</a>
   </div>
 
   <script>
