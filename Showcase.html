@@ -397,6 +397,9 @@
       border: 0.5px solid var(--c-800);
       position: relative;
       box-shadow: 0 24px 48px rgba(0,0,0,0.6);
+      transform: scale(1.2);
+      transform-origin: top center;
+      margin-bottom: 174px; /* compensate for 20% scale (872 × 0.2) */
       transition: width 200ms ease, height 200ms ease, border-radius 200ms ease, padding 200ms ease;
     }
     /* Responsive (desktop) mode — used for Landing Page, full-width preview */
@@ -613,25 +616,18 @@
         </div>
         <div class="sb-group-content">
           <div class="sb-jump-label">Stock Page</div>
+          <a class="sb-jump-link" data-screen="user-flow" onclick="setScreen('user-flow', this)">User Flow ↗</a>
 
           <!-- Persona filter (inline segmented) -->
           <div id="persona-section" class="sb-filter">
             <span class="sb-filter-label">Persona</span>
             <a class="sb-filter-item" data-persona="first" data-screen="first" onclick="setScreen('first', this)">First-time</a>
-            <a class="sb-filter-item active" data-persona="returning" data-screen="v5" onclick="setScreen('v5', this)">Returning</a>
+            <a class="sb-filter-item active" data-persona="returning" data-screen="v6d" onclick="setScreen('v6d', this)">Returning</a>
           </div>
 
-          <!-- Thesis Health filter (returning-user only) -->
-          <div id="thesis-section" class="sb-filter">
-            <span class="sb-filter-label">Thesis</span>
-            <a class="sb-filter-item active" data-screen="v5" onclick="setScreen('v5', this)">Intact</a>
-            <a class="sb-filter-item" data-screen="approaching" onclick="setScreen('approaching', this)">Approaching</a>
-            <a class="sb-filter-item" data-screen="invalidated" onclick="setScreen('invalidated', this)">Invalidated</a>
-          </div>
-
-          <div class="sb-jump-label">Memo Drill-ins</div>
-          <a class="sb-jump-link" data-screen="memo" onclick="setScreen('memo', this)">Memo (full)</a>
-          <a class="sb-jump-link" data-screen="notes" onclick="setScreen('notes', this)">Notes</a>
+          <div class="sb-jump-label">The Memo</div>
+          <a class="sb-jump-link" data-screen="memo" onclick="setScreen('memo', this)">Memo (Full)</a>
+          <a class="sb-jump-link" data-screen="memo-variants" onclick="setScreen('memo-variants', this)">Memo Lifecycle States</a>
 
           <div class="sb-jump-label">Performance</div>
           <a class="sb-jump-link" data-screen="unified-performance" onclick="setScreen('unified-performance', this)">Performance Dashboard</a>
@@ -739,44 +735,44 @@
         </div>
 
         <div class="iframe-wrap">
-          <iframe id="preview-frame" src="Stock Pages/Stock Page v5.html" title="Stock page preview"></iframe>
+          <iframe id="preview-frame" src="Stock Pages/Stock Page v6d.html" title="Stock page preview"></iframe>
         </div>
       </div>
     </div>
 
     <div class="caption">
-      <div class="caption-title" id="caption-title">Recurring user · Thesis intact</div>
-      <div class="caption-sub" id="caption-sub">Holds the position. Memo sealed at V3. Returns to check whether the thesis still holds. Kill Line status reads 0 of 3 firing — no invalidation triggers active.</div>
+      <div class="caption-title" id="caption-title">Stock Page · Returning user (Live memo)</div>
+      <div class="caption-sub" id="caption-sub">Main page. User holds position with sealed memo (v3, Live). Top to bottom: Compliance strip → Title + Last Price vs entry → Alert mirror (Q4 earnings, dismissible) → Memo box (Thesis + Kill Line bullets + IV/MoS/Probability with assumption trails + Reviewed + Re-underwrite) → Position (Market Value, Portfolio Weight entry→current, P/L, Held) → Performance vs SPY (Alpha shown) → Fiscal AI (primary source) → Market/News/History (secondary nav) → Capital Decision CTA.</div>
     </div>
 
   </main>
 
   <script>
     const screens = {
+      'user-flow': {
+        src: 'Stock Pages/User Flow.html',
+        title: 'Stock Page · User Flow',
+        sub: 'Navigation map for developers. Three entry routes (Active Positions / Search / Under Review) converge on Stock Page. Stock Page branches by persona (First-time vs Returning). Memo creation and edit loop back to the Stock Page. Click any node to open the actual prototype.',
+      },
       first: {
         src: 'Stock Pages/Stock Page First.html',
-        title: 'First-time user',
-        sub: 'No position. No memo. Just curiosity. The page asks whether to underwrite this name. Draft Memo CTA is the primary entry point; Capital Decision sits at the bottom as the action commit.',
+        title: 'Stock Page · First-time user',
+        sub: 'No position, no memo yet. The user is exploring this name. Primary entry: Draft Memo (kicks off the 9-step memo creation flow). About Aritzia gives company context. Capital Decision CTA at the bottom is disabled until a memo exists.',
       },
-      v5: {
-        src: 'Stock Pages/Stock Page v5.html',
-        title: 'Recurring user · Thesis intact',
-        sub: 'Holds the position. Memo sealed at V3. Returns to check whether the thesis still holds. Kill Line status reads 0 of 3 firing — no invalidation triggers active.',
-      },
-      approaching: {
-        src: 'Stock Pages/Stock Page v5 - Approaching.html',
-        title: 'Recurring user · Thesis approaching',
-        sub: 'One invalidation trigger near threshold. Status indicator shifts to c-400 (warning, audible). The page asks the user to watch — not yet to act.',
-      },
-      invalidated: {
-        src: 'Stock Pages/Stock Page v5 - Invalidated.html',
-        title: 'Recurring user · Thesis invalidated',
-        sub: 'Two invalidation triggers firing. Status indicator goes white — the loudest signal in the monochrome palette. The Capital Decision CTA at the bottom is no longer optional.',
+      v6d: {
+        src: 'Stock Pages/Stock Page v6d.html',
+        title: 'Stock Page · Returning user (Live memo)',
+        sub: 'Main page. User holds position with sealed memo (v3, Live). Top to bottom: Compliance strip → Title + Last Price vs entry → Alert mirror (Q4 earnings, dismissible) → Memo box (Thesis + Kill Line bullets + IV/MoS/Probability with assumption trails + Reviewed + Re-underwrite) → Position (Market Value, Portfolio Weight entry→current, P/L, Held) → Performance vs SPY (Alpha shown) → Fiscal AI (primary source) → Market/News/History (secondary nav) → Capital Decision CTA.',
       },
       memo: {
         src: 'Stock Pages/ATZ Memo.html',
-        title: 'Memo · Full detail',
-        sub: 'Drill-in from the Stock Page memo header. Shows the complete sealed document — Thesis, Kill Line, Margin of Safety, Confidence, Research, Notes. Version metadata at top makes immutability visible.',
+        title: 'The Memo · Full detail',
+        sub: 'Drill-in from Stock Page memo footer Re-underwrite. 8 numbered sections matching the 9-step memo creation flow: 01 Classify (Compounder/Emerging/Situational/Speculative) → 02 Size (Core/High Conviction/Starter/Speculative) → 03 Thesis (Why wrong + Why now) → 04 Kill Line (conditions + Response + Floor) → 05 Intrinsic Value (+ Method + MoS) → 06 Exceptional Compounding (Hurdle + Horizon + Calibration) → 07 Source → 08 Note. Compliance strip persistent at top. Step 9/9 (Review + Hold to seal) is the commit screen, not shown here.',
+      },
+      'memo-variants': {
+        src: 'Stock Pages/ATZ Memo Variants.html',
+        title: 'The Memo · Lifecycle States (5 variants)',
+        sub: 'Reference page. All 5 lifecycle states side-by-side. Draft (in progress, kill not armed) → Live (default, c-live green dot with gentle pulse — monitoring active) → Triggered (c-warning amber dot with dramatic pulse — kill condition fired, requires review) → Stale (c-800 dim, review window expired) → Closed (c-800 dim, position exited, archived). Only state badge + meta line + lock semantics change between variants.',
       },
       notes: {
         src: 'Stock Pages/ATZ Notes.html',
@@ -898,7 +894,7 @@
       if (!screen) return;
 
       // Screens that need the desktop/responsive frame (not the iPhone frame)
-      const responsiveKeys = new Set(['landing']);
+      const responsiveKeys = new Set(['landing', 'memo-variants', 'user-flow']);
       const isResponsive = responsiveKeys.has(key);
       const phone = document.querySelector('.phone');
       const deviceMeta = document.querySelector('.device-meta');
@@ -960,7 +956,7 @@
     }
 
     function setPersona(persona) {
-      const target = persona === 'first' ? 'first' : 'v5';
+      const target = persona === 'first' ? 'first' : 'v6d';
       const link = document.querySelector(`.sb-jump-link[data-screen="${target}"]`);
       setScreen(target, link);
     }
@@ -979,7 +975,7 @@
     __iframe.onload = () => hideIframeScrollbars(__iframe);
     // If the initial src already loaded before onload was wired, try now too
     hideIframeScrollbars(__iframe);
-    setScreen('v5', document.querySelector('.sb-jump-link[data-screen="v5"]'));
+    setScreen('v6d', document.querySelector('[data-screen="v6d"]'));
   </script>
 
 </body>
