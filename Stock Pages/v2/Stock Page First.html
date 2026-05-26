@@ -136,7 +136,6 @@
       align-items: baseline;
       justify-content: space-between;
       padding: 0 0 14px;
-      margin-bottom: 4px;
       border-bottom: 0.5px solid var(--c-900);
       width: 100%;
     }
@@ -206,6 +205,39 @@
     }
     .view-link:active { opacity: 0.5; transition: opacity 80ms ease; }
 
+    /* MEMO ENTRY — minimal row, drill-in to memo experience */
+    .memo-entry-field {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 2px 0;
+      gap: 14px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .memo-entry-field:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .memo-entry-placeholder {
+      font-size: 14px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      line-height: 1.4;
+    }
+    .memo-entry-hint {
+      font-size: 11px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      line-height: 1.5;
+      margin-top: 8px;
+    }
+    .memo-entry-chev {
+      color: var(--c-700);
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
     /* NAV ROWS — v6d pattern (title + meta + chevron) */
     .nav-rows { display: flex; flex-direction: column; }
     .nav-row {
@@ -225,6 +257,107 @@
     }
     .nav-row.primary .nav-row-arrow { color: var(--c-700); font-size: 14px; }
     .nav-row.primary .nav-row-meta { font-size: 12px; line-height: 1.5; max-width: 280px; }
+    button.nav-row.primary {
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      font-family: inherit;
+      color: inherit;
+    }
+    button.nav-row.primary:active { opacity: 0.5; transition: opacity 80ms ease; }
+    button.nav-row.primary.copied .nav-row-arrow { color: var(--c-white); }
+
+    /* Compound primary card — matches v6d */
+    .primary-card{background:#0A0A0A;border:0.5px solid var(--c-900);display:flex;flex-direction:column}
+    .primary-card-action{
+      width:100%;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+      padding:16px;
+      background:none;
+      border:none;
+      font-family:inherit;
+      text-align:left;
+      cursor:pointer;
+      color:inherit;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .primary-card-action:active{opacity:.5;transition:opacity 80ms ease}
+    .primary-card-action .nav-row-arrow{color:var(--c-700);font-size:14px}
+    .primary-card-action .nav-row-meta{font-size:12px;line-height:1.5;max-width:280px}
+    .primary-card-action.copied .nav-row-arrow{color:var(--c-white)}
+    .primary-card-footer{border-top:0.5px solid var(--c-900);padding:12px 16px}
+    /* Output structure block */
+    .primary-card-structure{user-select:none}
+    .pc-structure-toggle{
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:flex-start;
+      gap:6px;
+      padding:12px 16px;
+      background:none;
+      border:none;
+      font-family:inherit;
+      cursor:pointer;
+      text-align:left;
+      -webkit-tap-highlight-color:transparent;
+      color:inherit;
+    }
+    .pc-structure-toggle:active{opacity:.5;transition:opacity 80ms ease}
+    .pc-structure-label{font-size:11px;color:var(--c-700);letter-spacing:-.02em}
+    .pc-structure-chev{
+      font-size:14px;
+      font-weight:300;
+      color:var(--c-700);
+      transition:transform 160ms ease;
+      flex-shrink:0;
+      line-height:1;
+      display:inline-block;
+      transform:rotate(0deg);
+    }
+    .primary-card-structure.open .pc-structure-chev{transform:rotate(90deg)}
+    .pc-structure-body{padding:0 16px 14px}
+    .pc-structure-body[hidden]{display:none}
+    .pc-structure-list{
+      list-style:none;
+      margin:0;
+      padding:0;
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+    .pc-structure-list li{
+      font-size:12px;
+      color:var(--c-400);
+      letter-spacing:-.02em;
+      line-height:1.45;
+      display:flex;
+      align-items:baseline;
+      gap:8px;
+    }
+    .pc-num{color:var(--c-800);font-feature-settings:'tnum' 1;flex-shrink:0}
+
+    /* AI Tools inline row (lives inside primary-card-footer) */
+    .ai-tools-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 6px;
+      font-size: 12px;
+      letter-spacing: -0.02em;
+    }
+    .ai-tools-label { color: var(--c-700); }
+    .ai-tool {
+      color: var(--c-400);
+      padding: 2px 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .ai-tool:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .ai-tools-sep { color: var(--c-1000); }
     .nav-row-text { flex: 1; display: flex; flex-direction: column; gap: 4px; }
     .nav-row-title {
       font-size: 15px;
@@ -298,14 +431,16 @@
 
   <div class="col">
 
-    <!-- 1. DRAFT MEMO — entry to 9-step memo creation flow (spec by Leo) -->
-    <section class="section draft-memo" aria-label="Draft memo">
-      <a href="#" onclick="event.preventDefault()" class="section-header">
-        <span class="section-title">Draft Memo · ATZ</span>
-        <span class="section-chev" aria-hidden="true">›</span>
+    <!-- 1. MEMO ENTRY — opens memo experience (Leo's flow) -->
+    <section class="section memo-entry" aria-label="Memo">
+      <div class="section-header">
+        <span class="section-title">Memo</span>
+      </div>
+      <a href="ATZ%20Memo.html" class="memo-entry-field" aria-label="Write your memo">
+        <span class="memo-entry-placeholder">Write your memo</span>
+        <span class="memo-entry-chev" aria-hidden="true">›</span>
       </a>
-      <p class="prose">Walk the protocol before execution. Ten fields, staged. SEAL writes the record.</p>
-      <a href="#" onclick="event.preventDefault()" class="view-link">View Field Reference <span class="chev" aria-hidden="true">›</span></a>
+      <p class="memo-entry-hint">Tip · Run the Research Prompt below first, then paste the AI's response here.</p>
     </section>
 
     <!-- 2. ABOUT THE COMPANY -->
@@ -313,12 +448,12 @@
       <div class="section-header">
         <span class="section-title">About Aritzia Inc.</span>
       </div>
-      <p class="prose">Aritzia Inc. designs and sells in-house women's fashion brands — including Wilfred, TNA, Babaton, and Super Puff — through 110+ boutiques in Canada and the US, plus a growing ecommerce business. Founded in Vancouver in 1984.</p>
+      <p class="prose">Aritzia Inc. designs and sells in-house women's fashion brands (Wilfred, TNA, Babaton, Super Puff) through 110+ boutiques in Canada and the US, plus a growing ecommerce business. Founded in Vancouver in 1984.</p>
       <a href="#" onclick="event.preventDefault()" class="view-link">Read More on the Company <span class="chev" aria-hidden="true">›</span></a>
     </section>
 
-    <!-- 3. PRIMARY SOURCE — Fiscal AI + AI Research -->
-    <section class="section" aria-label="Primary source" style="gap:12px;">
+    <!-- 3. PRIMARY SOURCE — Fiscal AI + Research Prompt (compound card) -->
+    <section class="section" aria-label="Primary source" style="gap:20px;">
       <a href="ATZ Fiscal.html" class="nav-row primary">
         <span class="nav-row-text">
           <span class="nav-row-title">Fiscal AI · ATZ</span>
@@ -326,13 +461,45 @@
         </span>
         <span class="nav-row-arrow">›</span>
       </a>
-      <a href="ATZ AI Research v2.html" class="nav-row primary">
-        <span class="nav-row-text">
-          <span class="nav-row-title">AI Research &amp; Analysis · ATZ</span>
-          <span class="nav-row-meta">Prompts to build your thesis. Paste into Claude or ChatGPT.</span>
-        </span>
-        <span class="nav-row-arrow">›</span>
-      </a>
+      <div class="primary-card">
+        <button type="button" class="primary-card-action" id="copyPromptCard" onclick="copyResearchPrompt(this)">
+          <span class="nav-row-text">
+            <span class="nav-row-title">Research Prompt · ATZ</span>
+            <span class="nav-row-meta" id="copyPromptMeta">Tailored to ATZ at 20% hurdle. Copy and paste into your AI tool.</span>
+          </span>
+          <span class="nav-row-arrow" id="copyPromptSymbol" aria-label="Copy prompt"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3.5" y="3.5" width="7" height="9" stroke="currentColor" stroke-width="0.7"/><rect x="6" y="1" width="7" height="9" stroke="currentColor" stroke-width="0.7" fill="none"/></svg></span>
+        </button>
+        <div class="primary-card-structure" id="promptStructure" aria-label="Output structure">
+          <button type="button" class="pc-structure-toggle" id="promptStructureToggle" onclick="togglePromptStructure()" aria-expanded="false" aria-controls="promptStructureBody">
+            <span class="pc-structure-label">Output · 9 sections · 2,500–3,500 words</span>
+            <span class="pc-structure-chev" aria-hidden="true">›</span>
+          </button>
+          <div class="pc-structure-body" id="promptStructureBody" hidden>
+            <ol class="pc-structure-list">
+              <li><span class="pc-num">01</span>Business Overview</li>
+              <li><span class="pc-num">02</span>Classification</li>
+              <li><span class="pc-num">03</span>Thesis + Decomposition</li>
+              <li><span class="pc-num">04</span>Why Now</li>
+              <li><span class="pc-num">05</span>Kill Criteria</li>
+              <li><span class="pc-num">06</span>Intrinsic Value</li>
+              <li><span class="pc-num">07</span>Probability</li>
+              <li><span class="pc-num">08</span>Deeper Work</li>
+              <li><span class="pc-num">09</span>Verify on Fiscal</li>
+            </ol>
+          </div>
+        </div>
+        <div class="primary-card-footer ai-tools-row" aria-label="Open in AI tool">
+          <span class="ai-tools-label">Open in</span>
+          <span class="ai-tools-sep">·</span>
+          <a href="https://claude.ai/new" target="_blank" rel="noopener" class="ai-tool">Claude</a>
+          <span class="ai-tools-sep">·</span>
+          <a href="https://chatgpt.com/" target="_blank" rel="noopener" class="ai-tool">ChatGPT</a>
+          <span class="ai-tools-sep">·</span>
+          <a href="https://gemini.google.com/app" target="_blank" rel="noopener" class="ai-tool">Gemini</a>
+          <span class="ai-tools-sep">·</span>
+          <a href="https://www.perplexity.ai/" target="_blank" rel="noopener" class="ai-tool">Perplexity</a>
+        </div>
+      </div>
     </section>
 
     <!-- 4. MORE SOURCES -->
@@ -359,6 +526,90 @@
       <span class="arrow">→</span> Capital Decision
     </a>
   </div>
+
+  <script id="researchPromptText" type="text/plain">You are conducting investment research on Aritzia Inc. (ATZ) for a serious investor evaluating whether this name deserves the next layer of diligence.
+
+CONTEXT
+Company: Aritzia Inc.
+Ticker: ATZ
+Sector: Consumer Discretionary
+Segment: Premium Apparel Retail · Women's Fashion · DTC
+Business: In-house multi-brand women's fashion portfolio (Wilfred, TNA, Babaton, Super Puff) sold through 110+ boutiques across Canada and the US, plus a growing ecommerce business. Founded in Vancouver in 1984.
+Return hurdle: 20%
+
+Produce a research document with the nine sections below: Business Overview, Classification (compounder / emerging compounder / situational mispricing / speculative), Thesis and Structural Decomposition (including the load-bearing assumption), Why Now, Kill Criteria (4–6, with metric, threshold, action), Intrinsic Value (method selection, three scenarios, conservative IV, margin of safety), Probability of Clearing the Hurdle (1, 3, 5 year), Where Deeper Work Would Move the Probability (if Promote), Verify on Fiscal (10–15 fact-checks).
+
+Be direct, declarative, decisive. State a specific number when a number is asked for. Pick one classification. Do not soften the triage output. The conclusion in section 7 is binding — Promote if 3-year probability ≥ 50%, Pass otherwise.
+
+Begin with BUSINESS OVERVIEW. No preamble.</script>
+
+  <script>
+    /* Stock Page First represents the first-time user persona.
+       Reset memo to empty state ONLY ONCE per session, then preserve any subsequent edits.
+       This prevents destructive overwrites if the user seals a memo and navigates back to First.
+       Uses sessionStorage so a new tab/session re-establishes the first-time demo state. */
+    try {
+      if (!sessionStorage.getItem('first-time-initialized')) {
+        localStorage.setItem('atz-memo-live', '');
+        localStorage.setItem('atz-memo-draft', '');
+        localStorage.setItem('atz-memo-state', 'draft');
+        localStorage.setItem('atz-memo-version', '0');
+        localStorage.removeItem('atz-memo-sealed-at');
+        sessionStorage.setItem('first-time-initialized', '1');
+      }
+    } catch (e) {}
+
+    function togglePromptStructure() {
+      var wrap = document.getElementById('promptStructure');
+      var body = document.getElementById('promptStructureBody');
+      var toggle = document.getElementById('promptStructureToggle');
+      if (!wrap || !body || !toggle) return;
+      var isHidden = body.hasAttribute('hidden');
+      if (isHidden) {
+        body.removeAttribute('hidden');
+        wrap.classList.add('open');
+        toggle.setAttribute('aria-expanded', 'true');
+      } else {
+        body.setAttribute('hidden', '');
+        wrap.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    }
+
+    function fallbackCopy(text) {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.focus(); ta.select();
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+      document.body.removeChild(ta);
+      return ok;
+    }
+
+    async function copyResearchPrompt(btn) {
+      var text = document.getElementById('researchPromptText').textContent.trim();
+      var sym = document.getElementById('copyPromptSymbol');
+      var meta = document.getElementById('copyPromptMeta');
+      var originalSymbol = sym ? sym.innerHTML : '';
+      var originalMeta = meta ? meta.textContent : '';
+      var ok = false;
+      if (navigator.clipboard && window.isSecureContext) {
+        try { await navigator.clipboard.writeText(text); ok = true; } catch (e) { ok = fallbackCopy(text); }
+      } else { ok = fallbackCopy(text); }
+      if (btn) btn.classList.add('copied');
+      if (sym) sym.textContent = ok ? '✓' : '!';
+      if (meta) meta.textContent = ok ? 'Copied. Paste into your AI tool.' : 'Copy failed. Try selecting + Cmd-C in the prompt source.';
+      setTimeout(function () {
+        if (btn) btn.classList.remove('copied');
+        if (sym) sym.innerHTML = originalSymbol;
+        if (meta) meta.textContent = originalMeta;
+      }, 1800);
+    }
+  </script>
 
 </body>
 </html>

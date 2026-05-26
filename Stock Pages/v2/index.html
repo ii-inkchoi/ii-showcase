@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
-  <title>Stock Page + Memo · Engineering Handoff</title>
+  <title>Stock Page + Memo · V3 Handoff</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -34,7 +34,6 @@
 
     .container { max-width: 880px; margin: 0 auto; }
 
-    /* Compliance strip (consistent with v6d) */
     .compliance-strip {
       font-size: 9px;
       letter-spacing: -0.02em;
@@ -44,7 +43,6 @@
       margin-bottom: 32px;
     }
 
-    /* Title */
     .title-block {
       display: flex;
       flex-direction: column;
@@ -70,7 +68,6 @@
       margin-top: 6px;
     }
 
-    /* Section */
     .section {
       margin-top: 56px;
     }
@@ -99,11 +96,10 @@
       letter-spacing: -0.02em;
       margin-bottom: 18px;
       margin-top: 12px;
-      max-width: 600px;
+      max-width: 640px;
       line-height: 1.6;
     }
 
-    /* Page list */
     .page-list {
       display: flex;
       flex-direction: column;
@@ -118,7 +114,6 @@
       transition: opacity 80ms ease;
     }
     .page-link:hover { opacity: 0.7; cursor: pointer; }
-    .page-link.ready { background: rgba(48, 209, 88, 0.02); padding-left: 16px; padding-right: 16px; margin: 0 -16px; }
     .pl-left { flex: 1; min-width: 0; }
     .pl-title {
       font-size: 15px;
@@ -145,10 +140,6 @@
       color: var(--c-400);
       border-color: var(--c-700);
     }
-    .pl-title .pl-tag.external {
-      color: var(--c-800);
-      border-color: var(--c-900);
-    }
     .pl-meta {
       font-size: 12px;
       color: var(--c-700);
@@ -164,7 +155,29 @@
       padding-top: 2px;
     }
 
-    /* Footer */
+    .principles {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 8px;
+    }
+    .principle {
+      padding: 14px 0;
+      border-bottom: 0.5px solid var(--c-1000);
+    }
+    .principle-title {
+      font-size: 13px;
+      color: var(--c-white);
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+    .principle-body {
+      font-size: 12px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      line-height: 1.6;
+    }
+
     .footer {
       margin-top: 80px;
       padding-top: 24px;
@@ -177,7 +190,6 @@
     .footer strong { color: var(--c-400); font-weight: 400; }
     .footer p + p { margin-top: 8px; }
 
-    /* Inline state legend */
     .legend-inline {
       display: flex;
       align-items: center;
@@ -198,7 +210,6 @@
     }
     .legend-inline .dot.ready { background: var(--c-live); }
     .legend-inline .dot.spec { background: var(--c-400); }
-    .legend-inline .dot.ext { background: var(--c-800); }
   </style>
 </head>
 <body>
@@ -207,26 +218,39 @@
     <div class="compliance-strip">Self-Authored · No Suitability Review · Not Advice</div>
 
     <div class="title-block">
-      <h1>Stock Page + Memo · Engineering Handoff</h1>
-      <p class="subtitle">Curated package for the engineer building Stock Page and The Memo. Mobile prototype (393×852), II doctrine.</p>
-      <p class="meta-line">Designer · Inkyung · Updated May 25, 2026</p>
+      <h1>Stock Page + Memo · V3 Handoff</h1>
+      <p class="subtitle">V3 simplification of Stock Page and The Memo. Memo is now a single free-form textarea. Stock Page surfaces Fiscal AI, the Research Prompt, and the four AI tools directly — no separate research workspace.</p>
+      <p class="meta-line">Designer · Inkyung · Updated May 26, 2026</p>
     </div>
 
-    <!-- 01 START HERE -->
+    <!-- 01 V3 DIRECTION -->
     <div class="section">
       <div class="section-header">
         <span class="section-num">01</span>
-        <span class="section-title">Start Here · User Flow</span>
+        <span class="section-title">What Changed in V3</span>
       </div>
-      <p class="section-desc">Open this first. Navigation map showing how all pages connect — three entry routes converge on Stock Page, which branches by persona (First-time vs Returning), with memo creation and edit looping back to the same page.</p>
-      <div class="page-list">
-        <a href="User Flow.html" class="page-link ready" target="_blank">
-          <div class="pl-left">
-            <div class="pl-title">User Flow <span class="pl-tag ready">Map</span></div>
-            <div class="pl-meta">Interactive diagram. Click any node to open that page.</div>
-          </div>
-          <span class="pl-arrow">↗</span>
-        </a>
+      <p class="section-desc">CEO direction from the 2026-05-26 review. The V2 structured memo (eight fields, 9-step creation flow) is retired. V1 ships the minimum viable shape, then we add back complexity as user behavior demands it.</p>
+      <div class="principles">
+        <div class="principle">
+          <div class="principle-title">Memo is a single textarea</div>
+          <div class="principle-body">No more Classification / Thesis / Kill / IV / MoS / Probability fields. One free-form prose box. Paste the full AI response or write your own. The first paragraph surfaces as a preview on the Stock Page.</div>
+        </div>
+        <div class="principle">
+          <div class="principle-title">Stock Page absorbs research</div>
+          <div class="principle-body">No separate AI Research page. Fiscal AI link + Research Prompt card + four AI tool deep-links (Claude · ChatGPT · Gemini · Perplexity) live directly on the Stock Page.</div>
+        </div>
+        <div class="principle">
+          <div class="principle-title">Draft / Live separation</div>
+          <div class="principle-body">Editing the memo writes to a draft. Stock Page keeps showing the previously sealed version until the user clicks Re-seal Memo. Draft and Live are stored under separate localStorage keys.</div>
+        </div>
+        <div class="principle">
+          <div class="principle-title">Capital Decision → Classification</div>
+          <div class="principle-body">No intro pages. Capital Decision footer leads straight to classification. Removed legacy stepper pages.</div>
+        </div>
+        <div class="principle">
+          <div class="principle-title">Return Hurdle as first-class concept</div>
+          <div class="principle-body">Hurdle ladder is 15% / 20% / 25% / 30% / 50%+. The Research Prompt is filled with the active hurdle so the AI's output is tailored.</div>
+        </div>
       </div>
     </div>
 
@@ -236,95 +260,96 @@
         <span class="section-num">02</span>
         <span class="section-title">Pages</span>
       </div>
-      <p class="section-desc">The four pages in this handoff. Click to open the prototype in a new tab.</p>
+      <p class="section-desc">Three working pages in this handoff. Click to open the prototype in a new tab.</p>
       <div class="page-list">
-        <a href="Stock Page v6d.html" class="page-link ready" target="_blank">
+        <a href="Stock Page v6d.html" class="page-link" target="_blank">
           <div class="pl-left">
             <div class="pl-title">Stock Page · Returning User <span class="pl-tag ready">Main</span></div>
-            <div class="pl-meta">Position held, memo sealed (Live). Compliance strip → Title + vs entry → Alert mirror → Memo box (Thesis + Kill + IV/MoS/Probability) → Position → Performance vs SPY → Fiscal AI → Market/News/History → Capital Decision.</div>
+            <div class="pl-meta">Position held, memo sealed (Live). Header → Alert mirror → Memo block (preview + Read More + Re-underwrite) → Position → Performance vs SPY → Fiscal AI → Research Prompt (with output structure + 4 AI tools) → Market/News/History → Capital Decision.</div>
           </div>
           <span class="pl-arrow">↗</span>
         </a>
-        <a href="Stock Page First.html" class="page-link ready" target="_blank">
+        <a href="Stock Page First.html" class="page-link" target="_blank">
           <div class="pl-left">
             <div class="pl-title">Stock Page · First-time User <span class="pl-tag ready">Main</span></div>
-            <div class="pl-meta">No position, no memo. Draft Memo CTA entry to 9-step creation flow. About Aritzia + Market/News/Research nav.</div>
+            <div class="pl-meta">No position, no memo. Memo entry row leads to a blank ATZ Memo. Same Fiscal AI + Research Prompt + 4 AI tools as the Returning page. About-the-business preamble + Market/News/Research nav.</div>
           </div>
           <span class="pl-arrow">↗</span>
         </a>
-        <a href="ATZ Memo.html" class="page-link ready" target="_blank">
+        <a href="ATZ Memo.html" class="page-link" target="_blank">
           <div class="pl-left">
-            <div class="pl-title">The Memo · Full Detail <span class="pl-tag ready">Drill-in</span></div>
-            <div class="pl-meta">8 numbered sections matching the 9-step creation flow. Classify → Size → Thesis → Kill Criteria → Intrinsic Value → Exceptional Compounding → Source → Note. Compliance strip + Armed/Live state badge.</div>
-          </div>
-          <span class="pl-arrow">↗</span>
-        </a>
-        <a href="ATZ Memo Variants.html" class="page-link ready" target="_blank">
-          <div class="pl-left">
-            <div class="pl-title">The Memo · Lifecycle States (5) <span class="pl-tag ready">Reference</span></div>
-            <div class="pl-meta">All 5 states side-by-side: Draft / Live (green pulse, white text) / Triggered (amber pulse) / Stale / Closed. Only status badge + meta line change between states.</div>
-          </div>
-          <span class="pl-arrow">↗</span>
-        </a>
-        <a href="ATZ AI Research v2.html" class="page-link ready" target="_blank">
-          <div class="pl-left">
-            <div class="pl-title">AI Research &amp; Analysis · ATZ <span class="pl-tag ready">Drill-in</span></div>
-            <div class="pl-meta">11-step research protocol page. Pre-memo. Grouped into 4 phases (Discovery / Stress / Value &amp; Size / Synthesis). Each step: prompt body + output hint + Copy Prompt action. Top-level Copy All Prompts bundle. Quick stats (Steps · Est. Time · Phases).</div>
+            <div class="pl-title">The Memo <span class="pl-tag ready">Drill-in</span></div>
+            <div class="pl-meta">Single textarea, auto-save to draft, Seal Memo button (right-aligned under the box). State badge: Live (sealed and unchanged), Draft (unsealed edits pending), hidden (sealed empty). Paste icon inside the textarea, View Example Memo for reference.</div>
           </div>
           <span class="pl-arrow">↗</span>
         </a>
       </div>
     </div>
 
-    <!-- 02b — also planned -->
-    <div class="section">
-      <div class="section-header">
-        <span class="section-num">02b</span>
-        <span class="section-title">Planned (Spec Only)</span>
-      </div>
-      <p class="section-desc">Surfaces specced but not prototyped yet. Build after Pressure Test prompt copy is finalized.</p>
-      <div class="page-list">
-        <a href="#" onclick="event.preventDefault()" class="page-link" style="opacity:0.5;cursor:default;">
-          <div class="pl-left">
-            <div class="pl-title">Pressure Test Drawer <span class="pl-tag spec">Planned</span></div>
-            <div class="pl-meta">Bottom drawer at Memo Review step. 4 prompt options (Bear / Valuation / Kill Criteria stress / Compounding stress). Copy Prompt + Memo bundle. Optional fail-safe before Seal.</div>
-          </div>
-          <span class="pl-arrow">·</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- 03 SPECIFICATION -->
+    <!-- 03 FLOW -->
     <div class="section">
       <div class="section-header">
         <span class="section-num">03</span>
+        <span class="section-title">User Flow</span>
+      </div>
+      <p class="section-desc">Map of how the pages connect. Same diagram as before, updated for V3 (Memo is single textarea, AI Research page removed).</p>
+      <div class="page-list">
+        <a href="User Flow.html" class="page-link" target="_blank">
+          <div class="pl-left">
+            <div class="pl-title">User Flow <span class="pl-tag ready">Map</span></div>
+            <div class="pl-meta">Interactive diagram. Click any node to open that page.</div>
+          </div>
+          <span class="pl-arrow">↗</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 04 SPECIFICATION -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">04</span>
         <span class="section-title">Specification</span>
       </div>
-      <p class="section-desc">Complete spec doc — section-by-section field definitions, calculation formulas, design tokens, component patterns, state machine, animations, loading/error states, mock data JSON, edge cases. Renders on GitHub.</p>
+      <p class="section-desc">Section-by-section field definitions, tokens, component patterns, state machine, animations, edge cases. The spec is in transition — V3 memo simplification is partially reflected. Open Questions live at the bottom.</p>
       <div class="page-list">
         <a href="DEV_HANDOFF.md" class="page-link" target="_blank">
           <div class="pl-left">
             <div class="pl-title">DEV_HANDOFF.md <span class="pl-tag spec">Spec</span></div>
-            <div class="pl-meta">12 sections — Page Map / Stock Page section-by-section / The Memo / Lifecycle / Tokens / Components / Animations / MVP scope / Edge Cases / Loading-Error / Mock Data / Open Questions.</div>
+            <div class="pl-meta">Page Map · Stock Page · The Memo · Lifecycle · Tokens · Components · Animations · MVP scope · Edge Cases · Loading / Error · Mock Data · Open Questions.</div>
+          </div>
+          <span class="pl-arrow">↗</span>
+        </a>
+        <a href="RATIONALE.md" class="page-link" target="_blank">
+          <div class="pl-left">
+            <div class="pl-title">RATIONALE.md <span class="pl-tag spec">Rationale</span></div>
+            <div class="pl-meta">Why each pattern exists. Read before deviating from the spec.</div>
+          </div>
+          <span class="pl-arrow">↗</span>
+        </a>
+        <a href="EDGE_CASES.md" class="page-link" target="_blank">
+          <div class="pl-left">
+            <div class="pl-title">EDGE_CASES.md <span class="pl-tag spec">Edge</span></div>
+            <div class="pl-meta">Empty states, partial data, error boundaries. Includes the new V3 sealed-empty state.</div>
           </div>
           <span class="pl-arrow">↗</span>
         </a>
       </div>
     </div>
 
-    <!-- 04 LEGEND -->
+    <!-- 05 LEGEND -->
     <div class="section">
       <div class="legend-inline">
-        <span><span class="dot ready"></span>Ready to build (delivered by designer)</span>
+        <span><span class="dot ready"></span>Ready to build (prototype delivered)</span>
         <span><span class="dot spec"></span>Spec document</span>
       </div>
     </div>
 
     <!-- FOOTER -->
     <div class="footer">
-      <p><strong>Suggested reading order:</strong> User Flow → Stock Page (Returning) → The Memo (Full) → DEV_HANDOFF.md → other variants.</p>
-      <p><strong>Out of scope for this handoff:</strong> The 9-step Memo Creation flow (spec by Leo). The Unified Dashboard, Managed track, Onboarding flow, Components system are separate workstreams.</p>
-      <p><strong>Open questions live at the end of DEV_HANDOFF.md.</strong> Anything unclear, surface there.</p>
+      <p><strong>Suggested reading order:</strong> V3 direction (this page §01) → User Flow → Stock Page (Returning) → The Memo → DEV_HANDOFF.md.</p>
+      <p><strong>Out of scope for this handoff:</strong> Memo creation flow internals (Leo's territory). Pressure Test prompt (deferred to V2). The Unified Dashboard, Managed track, Onboarding, Components system are separate workstreams.</p>
+      <p><strong>Removed in V3:</strong> ATZ AI Research v2 (research now lives on Stock Page), ATZ Memo Variants (single textarea has no multi-field variants), 9-step creation flow, Pressure Test drawer, structured 8-field memo grid.</p>
+      <p><strong>Questions:</strong> log in DEV_HANDOFF.md → Open Questions section.</p>
     </div>
 
   </div>

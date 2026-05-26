@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=2050">
-  <title>ATZ Memo — State Variants</title>
+  <meta name="viewport" content="width=1400">
+  <title>The Memo · State Variants (V3)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -16,11 +16,9 @@
       --c-700:    #929292;
       --c-400:    #C7C7C7;
       --c-white:  #FFFFFF;
-      --c-warning:#FDAD00;
-      --c-live:#30D158;
+      --c-live:   #30D158;
     }
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
     body {
       background: var(--c-1000);
       color: var(--c-white);
@@ -28,391 +26,139 @@
       min-height: 100vh;
       padding: 48px 0 80px;
       -webkit-font-smoothing: antialiased;
+      font-feature-settings: 'tnum' 1;
       overflow-x: auto;
     }
+    .container { max-width: 1320px; margin: 0 auto; padding: 0 24px; }
 
-    .container {
-      width: max-content;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
+    .meta { text-align: center; margin-bottom: 56px; }
+    .meta h1 { font-size: 22px; color: var(--c-white); font-weight: 400; letter-spacing: -0.02em; margin-bottom: 8px; }
+    .meta p { font-size: 13px; color: var(--c-700); letter-spacing: -0.02em; max-width: 720px; margin: 0 auto; line-height: 1.6; }
+    .meta code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; color: var(--c-400); }
 
-    .meta {
-      text-align: center;
-      margin-bottom: 48px;
-    }
-    .meta h1 {
-      font-size: 18px;
-      color: var(--c-white);
-      font-weight: 400;
-      letter-spacing: -0.02em;
-      margin-bottom: 6px;
-    }
-    .meta p {
-      font-size: 13px;
-      color: var(--c-700);
-      letter-spacing: -0.02em;
-    }
+    .columns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: start; }
+    .column { display: flex; flex-direction: column; gap: 16px; }
 
-    .columns {
-      display: flex;
-      gap: 24px;
-      justify-content: flex-start;
-      align-items: flex-start;
-      flex-wrap: nowrap;
-    }
-    .column {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-      width: 393px;
-    }
-    .col-label {
-      font-size: 12px;
-      color: var(--c-white);
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      font-weight: 500;
-    }
-    .col-tagline {
-      font-size: 11px;
-      color: var(--c-400);
-      letter-spacing: -0.02em;
-      max-width: 393px;
-      text-align: center;
-      line-height: 1.5;
-      min-height: 48px;
-    }
-    .col-spec {
-      font-size: 10px;
-      color: var(--c-700);
-      letter-spacing: -0.02em;
-      max-width: 393px;
-      text-align: left;
-      line-height: 1.7;
-      padding: 12px 16px;
-      border-top: 0.5px solid var(--c-900);
-      border-bottom: 0.5px solid var(--c-900);
-      width: 100%;
-    }
-    .col-spec strong { color: var(--c-400); font-weight: 500; }
+    .col-head { display: flex; flex-direction: column; gap: 6px; padding-bottom: 14px; border-bottom: 0.5px solid var(--c-900); }
+    .col-label { font-size: 11px; color: var(--c-800); letter-spacing: 0.08em; text-transform: uppercase; }
+    .col-title { font-size: 17px; color: var(--c-white); letter-spacing: -0.02em; }
+    .col-tagline { font-size: 12px; color: var(--c-700); letter-spacing: -0.02em; line-height: 1.55; margin-top: 2px; }
 
-    /* MOCKUP FRAME */
-    .frame {
-      width: 393px;
-      background: var(--c-black);
-      border: 0.5px solid var(--c-900);
-      padding: 40px 20px 40px;
-    }
+    .mockup { background: var(--c-black); border: 0.5px solid var(--c-900); padding: 20px; display: flex; flex-direction: column; }
+    .mockup-label { font-size: 10px; color: var(--c-800); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 14px; }
 
-    /* MEMO STATUS BAR — replicated from ATZ Memo.html */
-    .title-block {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 6px;
-      margin-bottom: 32px;
-    }
-    .t-primary {
-      font-size: 18px;
-      letter-spacing: -0.02em;
-      color: var(--c-700);
-      line-height: 1.15;
-    }
-    .t-secondary {
-      font-size: 18px;
-      letter-spacing: -0.02em;
-      color: var(--c-white);
-      line-height: 1.15;
-    }
-
-    .memo-status {
-      padding-bottom: 14px;
-      border-bottom: 0.5px solid var(--c-900);
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .memo-status .version {
-      font-size: 13px;
-      color: var(--c-400);
-      letter-spacing: -0.02em;
-    }
-    .memo-status .reviewed {
-      font-size: 11px;
-      color: var(--c-700);
-      letter-spacing: -0.02em;
-    }
-    .memo-status .doctrine-note {
-      font-size: 11px;
-      color: var(--c-700);
-      letter-spacing: -0.02em;
-      line-height: 1.5;
-      margin-top: 12px;
-    }
-    .memo-state {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      letter-spacing: -0.02em;
-      padding-left: 10px;
-    }
-    .memo-state .state-dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-    /* state colors */
-    .memo-state.draft     { color: var(--c-800); }
-    .memo-state.draft .state-dot { background: var(--c-800); }
-    .memo-state.live      { color: var(--c-400); }
-    .memo-state.live .state-dot { background: var(--c-live); animation: live-pulse 2.4s cubic-bezier(0.45,0,0.55,1) infinite; }
-    .memo-state.triggered { color: var(--c-warning); }
-    .memo-state.triggered .state-dot { background: var(--c-warning); animation: state-pulse 2.4s cubic-bezier(0.45,0,0.55,1) infinite; }
-    .memo-state.stale     { color: var(--c-800); }
-    .memo-state.stale .state-dot { background: var(--c-800); }
-    .memo-state.closed    { color: var(--c-800); }
-    .memo-state.closed .state-dot { background: var(--c-800); }
+    .memo-status { padding-bottom: 14px; border-bottom: 0.5px solid var(--c-900); display: flex; flex-direction: column; gap: 4px; }
+    .memo-status .state-line { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--c-400); letter-spacing: -0.02em; }
+    .memo-status .state-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--c-800); flex-shrink: 0; }
+    .memo-status.live .state-dot { background: var(--c-live); animation: live-pulse 2.4s cubic-bezier(0.45,0,0.55,1) infinite; }
     @keyframes live-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
-    @keyframes state-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.32; } }
-    @media (prefers-reduced-motion: reduce) { .memo-state .state-dot { animation: none !important; } }
+    @media (prefers-reduced-motion: reduce) { .memo-status .state-dot { animation: none !important; } }
+    .memo-status .meta-line { font-size: 11px; color: var(--c-700); letter-spacing: -0.02em; line-height: 1.5; }
 
-    /* Sample section preview (just to show context) */
-    .preview-section {
-      margin-top: 32px;
-      padding-top: 14px;
-    }
-    .preview-section .section-title {
-      font-size: 15px;
-      color: var(--c-400);
-      letter-spacing: -0.02em;
-      padding-bottom: 14px;
-      border-bottom: 0.5px solid var(--c-900);
-    }
-    .preview-section .section-title .section-num {
-      color: var(--c-800);
-      margin-right: 10px;
-      font-feature-settings: 'tnum' 1;
-    }
-    .preview-section .prose {
-      font-size: 15px;
-      color: var(--c-400);
-      letter-spacing: -0.02em;
-      line-height: 1.65;
-      margin-top: 14px;
-    }
-    .preview-section .data-key {
-      font-size: 14px;
-      color: var(--c-700);
-      letter-spacing: -0.02em;
-    }
-    .preview-section .data-val {
-      font-size: 14px;
-      color: var(--c-white);
-      letter-spacing: -0.02em;
-    }
-    .preview-section .data-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-top: 14px;
-    }
+    .textarea-mock { margin-top: 18px; border: 0.5px solid var(--c-900); padding: 14px; min-height: 110px; font-size: 12px; color: var(--c-400); letter-spacing: -0.02em; line-height: 1.65; white-space: pre-wrap; }
+    .textarea-mock.empty { color: var(--c-800); }
+    .seal-btn { align-self: flex-end; margin-top: 12px; color: var(--c-white); font-size: 13px; letter-spacing: -0.02em; padding: 6px 0; }
 
-    /* compliance strip */
-    .compliance-strip {
-      display: flex;
-      padding: 8px 0;
-      font-size: 9px;
-      letter-spacing: -0.02em;
-      color: var(--c-800);
-      border-bottom: 0.5px solid var(--c-1000);
-      line-height: 1.3;
-      margin-bottom: 24px;
-    }
+    .spec { display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; border-top: 0.5px solid var(--c-900); border-bottom: 0.5px solid var(--c-900); font-size: 11px; color: var(--c-700); letter-spacing: -0.02em; line-height: 1.55; }
+    .spec-row { display: flex; gap: 8px; align-items: baseline; }
+    .spec-key { flex-shrink: 0; min-width: 80px; color: var(--c-400); }
+    .spec-val { flex: 1; color: var(--c-700); }
+    .spec-val code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; color: var(--c-400); background: var(--c-900); padding: 1px 4px; }
 
-    .footer {
-      max-width: 1100px;
-      margin: 56px auto 0;
-      color: var(--c-700);
-      font-size: 13px;
-      line-height: 1.7;
-      letter-spacing: -0.02em;
-    }
-    .footer strong { color: var(--c-400); font-weight: 400; }
+    .footer-note { max-width: 720px; margin: 64px auto 0; padding-top: 24px; border-top: 0.5px solid var(--c-900); text-align: center; color: var(--c-700); font-size: 12px; line-height: 1.65; letter-spacing: -0.02em; }
+    .footer-note strong { color: var(--c-400); font-weight: 400; }
+    .footer-note p + p { margin-top: 10px; }
+    .footer-note code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; color: var(--c-400); }
   </style>
 </head>
 <body>
   <div class="container">
 
     <div class="meta">
-      <h1>ATZ Memo — State Variants</h1>
-      <p>Same memo, five lifecycle states. Status bar + dot color + meta line shift per state.</p>
+      <h1>The Memo · State Variants · V3</h1>
+      <p>Three states in V3. Each state is fully determined by two localStorage values: <code>atz-memo-live</code> and <code>atz-memo-draft</code>. V2's five-state machinery (Triggered / Stale / Closed) is deferred until alerts and position state are wired into the memo layer.</p>
     </div>
 
     <div class="columns">
 
-      <!-- DRAFT -->
-      <div class="column">
-        <span class="col-label">Draft</span>
-        <p class="col-tagline">In progress. Not yet locked. Kill criteria not armed. User still composing the thesis.</p>
-        <div class="col-spec">
-          <strong>Dot:</strong> Dim (c-800), static<br>
-          <strong>Version:</strong> v0.1 (pre-lock)<br>
-          <strong>Meta:</strong> "In progress · saved 2h ago"<br>
-          <strong>Doctrine:</strong> Once locked, becomes Armed
-        </div>
-        <div class="frame">
-          <div class="compliance-strip">Self-Authored · No Suitability Review · Not Advice</div>
-          <div class="title-block">
-            <span class="t-primary">The Memo</span>
-            <span class="t-secondary">Aritzia Inc · ATZ</span>
-          </div>
-          <section class="memo-status">
-            <span class="version">v0.1 <span class="memo-state draft"><span class="state-dot"></span>Draft</span></span>
-            <span class="reviewed">In progress · saved 2h ago</span>
-            <p class="doctrine-note">Memo is being drafted. Lock to arm kill criteria and begin monitoring.</p>
-          </section>
-          <div class="preview-section">
-            <span class="section-title"><span class="section-num">01</span>Classify</span>
-            <div class="data-row">
-              <span class="data-key">Type</span>
-              <span class="data-val" style="color:var(--c-700);">— Pending</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <!-- LIVE -->
       <div class="column">
-        <span class="col-label">Live</span>
-        <p class="col-tagline">Default state. Memo locked, currently being managed. Green pulse signals active management.</p>
-        <div class="col-spec">
-          <strong>Dot:</strong> Green (c-live), gentle pulse<br>
-          <strong>Version:</strong> V3 (locked)<br>
-          <strong>Meta:</strong> "Reviewed Apr 12 · 26d ago"<br>
-          <strong>Doctrine:</strong> Most common state — your current live thesis
+        <div class="col-head">
+          <span class="col-label">01 · Live</span>
+          <span class="col-title">Live</span>
+          <p class="col-tagline">Memo is sealed and current. Textarea content matches the sealed (live) version. Stock Page reflects this content.</p>
         </div>
-        <div class="frame">
-          <div class="compliance-strip">Self-Authored · No Suitability Review · Not Advice</div>
-          <div class="title-block">
-            <span class="t-primary">The Memo</span>
-            <span class="t-secondary">Aritzia Inc · ATZ</span>
-          </div>
-          <section class="memo-status">
-            <span class="version">V3 <span class="memo-state live"><span class="state-dot"></span>Live</span></span>
-            <span class="reviewed">Reviewed Apr 12, 2026 · 26d ago · 2 prior versions</span>
-            <p class="doctrine-note">Memos are immutable once sealed. Each edit creates a new version. Prior versions stay on the record.</p>
+        <div class="mockup">
+          <span class="mockup-label">ATZ Memo · Header</span>
+          <section class="memo-status live">
+            <span class="state-line"><span class="state-dot"></span>Live</span>
+            <span class="meta-line">Sealed memo. Editing replaces the live version.</span>
           </section>
-          <div class="preview-section">
-            <span class="section-title"><span class="section-num">01</span>Classify</span>
-            <div class="data-row">
-              <span class="data-key">Type</span>
-              <span class="data-val">Compounder</span>
-            </div>
-          </div>
+          <div class="textarea-mock">Classification. Compounder. Aritzia is a high-quality DTC women's fashion business with a durable in-house brand portfolio…</div>
+          <span class="seal-btn">Re-seal Memo</span>
+        </div>
+        <div class="spec">
+          <div class="spec-row"><span class="spec-key">Dot</span><span class="spec-val">Green pulse · c-live</span></div>
+          <div class="spec-row"><span class="spec-key">Storage</span><span class="spec-val"><code>live === draft</code> · both non-empty</span></div>
+          <div class="spec-row"><span class="spec-key">Stock Page</span><span class="spec-val">Shows preview + ● Live + "Reviewed Xd ago"</span></div>
+          <div class="spec-row"><span class="spec-key">Trigger</span><span class="spec-val">Seal Memo or Re-seal Memo committed the current draft</span></div>
         </div>
       </div>
 
-      <!-- TRIGGERED -->
+      <!-- DRAFT -->
       <div class="column">
-        <span class="col-label">Triggered</span>
-        <p class="col-tagline">Kill condition fired. Review required. Amber pulse signals active alert.</p>
-        <div class="col-spec">
-          <strong>Dot:</strong> Amber (c-warning) + pulse<br>
-          <strong>Version:</strong> V3 (locked)<br>
-          <strong>Meta:</strong> "Q4 earnings posted 14d ago"<br>
-          <strong>Doctrine:</strong> Forces user attention
+        <div class="col-head">
+          <span class="col-label">02 · Draft</span>
+          <span class="col-title">Draft</span>
+          <p class="col-tagline">Editing the sealed memo. Pending changes that haven't been re-sealed. Stock Page still shows the old live version.</p>
         </div>
-        <div class="frame">
-          <div class="compliance-strip">Self-Authored · No Suitability Review · Not Advice</div>
-          <div class="title-block">
-            <span class="t-primary">The Memo</span>
-            <span class="t-secondary">Aritzia Inc · ATZ</span>
-          </div>
+        <div class="mockup">
+          <span class="mockup-label">ATZ Memo · Header</span>
           <section class="memo-status">
-            <span class="version">V3 <span class="memo-state triggered"><span class="state-dot"></span>Triggered</span></span>
-            <span class="reviewed">Q4 earnings posted 14d ago · review required</span>
-            <p class="doctrine-note">Kill condition under review. Re-underwrite to confirm thesis still holds or exit on trigger.</p>
+            <span class="state-line"><span class="state-dot"></span>Draft</span>
+            <span class="meta-line">Editing the sealed memo. Seal to update.</span>
           </section>
-          <div class="preview-section">
-            <span class="section-title"><span class="section-num">01</span>Classify</span>
-            <div class="data-row">
-              <span class="data-key">Type</span>
-              <span class="data-val">Compounder</span>
-            </div>
-          </div>
+          <div class="textarea-mock">Classification. Compounder. Aritzia is a high-quality DTC women's fashion business. Updated US store productivity to $1,900/sqft…</div>
+          <span class="seal-btn">Re-seal Memo</span>
+        </div>
+        <div class="spec">
+          <div class="spec-row"><span class="spec-key">Dot</span><span class="spec-val">Static grey · c-800</span></div>
+          <div class="spec-row"><span class="spec-key">Storage</span><span class="spec-val"><code>live !== draft</code> · or first edit since seal</span></div>
+          <div class="spec-row"><span class="spec-key">Stock Page</span><span class="spec-val">Unchanged · still shows previous live version (does not propagate)</span></div>
+          <div class="spec-row"><span class="spec-key">Trigger</span><span class="spec-val">User edited textarea after a previous seal · or never sealed yet (version 0)</span></div>
         </div>
       </div>
 
-      <!-- STALE -->
+      <!-- SEALED EMPTY -->
       <div class="column">
-        <span class="col-label">Stale</span>
-        <p class="col-tagline">Not reviewed in too long. System flags for refresh — thesis assumptions may be outdated.</p>
-        <div class="col-spec">
-          <strong>Dot:</strong> Dim (c-800), static<br>
-          <strong>Version:</strong> V3 (locked)<br>
-          <strong>Meta:</strong> "Last reviewed 6mo ago — overdue"<br>
-          <strong>Doctrine:</strong> Discipline reminder
+        <div class="col-head">
+          <span class="col-label">03 · Sealed Empty</span>
+          <span class="col-title">Sealed Empty</span>
+          <p class="col-tagline">User cleared and sealed an empty memo. No content, no badge dot. A deliberate reset state distinct from never-sealed.</p>
         </div>
-        <div class="frame">
-          <div class="compliance-strip">Self-Authored · No Suitability Review · Not Advice</div>
-          <div class="title-block">
-            <span class="t-primary">The Memo</span>
-            <span class="t-secondary">Aritzia Inc · ATZ</span>
-          </div>
+        <div class="mockup">
+          <span class="mockup-label">ATZ Memo · Header</span>
           <section class="memo-status">
-            <span class="version">V3 <span class="memo-state stale"><span class="state-dot"></span>Stale</span></span>
-            <span class="reviewed">Last reviewed Nov 12, 2025 · 6mo ago — overdue</span>
-            <p class="doctrine-note">Memo has not been re-underwritten within the review window. Refresh assumptions or accept staleness.</p>
+            <span class="state-line" style="visibility:hidden;">·</span>
+            <span class="meta-line">Sealed empty. Write below to start a new draft.</span>
           </section>
-          <div class="preview-section">
-            <span class="section-title"><span class="section-num">01</span>Classify</span>
-            <div class="data-row">
-              <span class="data-key">Type</span>
-              <span class="data-val">Compounder</span>
-            </div>
-          </div>
+          <div class="textarea-mock empty">Write or paste your memo…</div>
+          <span class="seal-btn">Seal Memo</span>
         </div>
-      </div>
-
-      <!-- CLOSED -->
-      <div class="column">
-        <span class="col-label">Closed</span>
-        <p class="col-tagline">Position exited. Memo archived as part of permanent record for calibration tracking.</p>
-        <div class="col-spec">
-          <strong>Dot:</strong> Dim (c-800), static<br>
-          <strong>Version:</strong> V4 (final)<br>
-          <strong>Meta:</strong> "Closed May 15, 2026 · exited"<br>
-          <strong>Doctrine:</strong> Contributes to track record
-        </div>
-        <div class="frame">
-          <div class="compliance-strip">Self-Authored · No Suitability Review · Not Advice</div>
-          <div class="title-block">
-            <span class="t-primary">The Memo</span>
-            <span class="t-secondary">Aritzia Inc · ATZ</span>
-          </div>
-          <section class="memo-status">
-            <span class="version">V4 <span class="memo-state closed"><span class="state-dot"></span>Closed</span></span>
-            <span class="reviewed">Closed May 15, 2026 · position exited · final version</span>
-            <p class="doctrine-note">Memo archived. Scored against actual outcome. Contributes to Edge Analysis calibration data.</p>
-          </section>
-          <div class="preview-section">
-            <span class="section-title"><span class="section-num">01</span>Classify</span>
-            <div class="data-row">
-              <span class="data-key">Type</span>
-              <span class="data-val">Compounder</span>
-            </div>
-          </div>
+        <div class="spec">
+          <div class="spec-row"><span class="spec-key">Dot</span><span class="spec-val">Hidden · state-line set to visibility:hidden</span></div>
+          <div class="spec-row"><span class="spec-key">Storage</span><span class="spec-val"><code>live === ""</code> · draft also <code>""</code></span></div>
+          <div class="spec-row"><span class="spec-key">Stock Page</span><span class="spec-val">Badge hidden · preview shows "Memo cleared. Re-underwrite or run the Research Prompt below to start again."</span></div>
+          <div class="spec-row"><span class="spec-key">Trigger</span><span class="spec-val">User erased all content and clicked Re-seal Memo</span></div>
         </div>
       </div>
 
     </div>
 
-    <div class="footer">
-      <p><strong>Five lifecycle states.</strong> Memos flow through Draft → Armed → (Triggered / Stale) → Closed. The state badge in the status bar reflects where the memo is in its lifecycle. Only <strong>Triggered</strong> uses an active signal (amber + pulse) to demand user attention. The other four states are static dots in monochrome doctrine — Draft and Stale/Closed use dim c-800 to indicate non-active monitoring; Armed uses c-400 to signal the memo is in its primary operating state.</p>
+    <div class="footer-note">
+      <p><strong>Removed in V3:</strong> Triggered (kill criteria armed and breached), Stale (memo not re-underwritten in N days), Closed (position exited). These were V2 lifecycle ambitions on a structured memo. V3 single-textarea memo doesn't carry that machinery yet.</p>
+      <p><strong>Future:</strong> Triggered may return when alerts surface on Stock Page reference the memo. Stale could return as a "Reviewed Xd ago" threshold-driven UI hint. Closed becomes a position-state concern, not a memo-state concern.</p>
+      <p><strong>Implementation:</strong> see <code>ATZ Memo.html</code> · <code>applyStateUI()</code> and <code>seedExampleMemoIfMissing()</code>. Stock Page reads via <code>syncMemoFromStorage()</code> in <code>Stock Page v6d.html</code>.</p>
     </div>
 
   </div>

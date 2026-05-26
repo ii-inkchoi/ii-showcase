@@ -224,9 +224,9 @@
   <div class="container">
 
     <div class="header">
-      <h1>Stock Page · User Flow · v2</h1>
-      <p>Three entry routes converge on the Stock Page. Stock Page branches by persona. Both personas can drill into pre-memo research tools (Fiscal AI for data, AI Research for protocol). Memo creation includes a planned Pressure Test fail-safe before seal. Memo loop-back returns to the Stock Page.</p>
-      <p style="margin-top: 12px; color: var(--c-700); font-size: 11px;">Full step-by-step in <code>Structure/mogo-ii-ia.md §6.13.14.7</code>. Doctrine references: <code>Doctrine/Product Design Principles.md</code> · <code>Doctrine/Stock Page + Memo - Doctrine Update (May 2026).md §14–§16</code>.</p>
+      <h1>Stock Page · User Flow · V3</h1>
+      <p>Three entry routes converge on the Stock Page. Stock Page branches by persona (first-time vs returning). Both personas surface Fiscal AI, the Research Prompt, and four external AI tools directly on the page — no separate research workspace. Memo is a single free-form textarea. Re-seal loops back to the Stock Page.</p>
+      <p style="margin-top: 12px; color: var(--c-700); font-size: 11px;">V3 simplification (2026-05-26). Removed in V3: 9-step memo creation flow, AI Research v2 page, 8-field structured memo, Pressure Test drawer.</p>
     </div>
 
     <div class="flow">
@@ -324,100 +324,90 @@
       <a class="node ready span-3-6" href="Stock Page First.html" target="_blank">
         <span class="n-label">First-time user</span>
         <span class="n-title">Stock Page (First-time)</span>
-        <span class="n-meta">No position, no memo. About company + Draft Memo CTA + drill-ins to research tools.</span>
+        <span class="n-meta">No position, no memo. About company + empty Memo entry + Fiscal AI + Research Prompt + 4 AI tools.</span>
       </a>
 
       <a class="node ready span-7-10" href="Stock Page v6d.html" target="_blank">
         <span class="n-label">Returning user</span>
         <span class="n-title">Stock Page (Memo Live)</span>
-        <span class="n-meta">Position held. Memo box with Thesis + Kill Criteria + IV/MoS/Probability + drill-ins to research tools.</span>
+        <span class="n-meta">Position held. Memo block (preview + Read More + Re-underwrite) + Fiscal AI + Research Prompt + 4 AI tools.</span>
       </a>
 
-      <!-- Connector: persona → pre-memo research tools (both personas) -->
+      <!-- Connector: both personas → on-page surfaces -->
       <div class="connector" style="height: 80px;">
         <svg viewBox="0 0 1200 80" preserveAspectRatio="none">
-          <!-- verticals from personas to research tools row -->
           <line x1="350" y1="0" x2="350" y2="20" stroke="var(--line)" stroke-width="1"/>
           <line x1="850" y1="0" x2="850" y2="20" stroke="var(--line)" stroke-width="1"/>
-          <!-- horizontal at y=20 spanning both personas -->
           <line x1="350" y1="20" x2="850" y2="20" stroke="var(--line)" stroke-width="1"/>
-          <!-- two target verticals at fiscal (450) and ai research (750) column centers -->
-          <line x1="450" y1="20" x2="450" y2="70" stroke="var(--line)" stroke-width="1"/>
-          <line x1="750" y1="20" x2="750" y2="70" stroke="var(--line)" stroke-width="1"/>
-          <polygon points="450,78 444,68 456,68" fill="var(--line)"/>
-          <polygon points="750,78 744,68 756,68" fill="var(--line)"/>
-          <text x="600" y="44" text-anchor="middle" fill="var(--c-700)" font-size="11" font-family="Inter">Both personas can drill into pre-memo research tools</text>
+          <line x1="350" y1="20" x2="350" y2="70" stroke="var(--line)" stroke-width="1"/>
+          <line x1="600" y1="20" x2="600" y2="70" stroke="var(--line)" stroke-width="1"/>
+          <line x1="850" y1="20" x2="850" y2="70" stroke="var(--line)" stroke-width="1"/>
+          <polygon points="350,78 344,68 356,68" fill="var(--line)"/>
+          <polygon points="600,78 594,68 606,68" fill="var(--line)"/>
+          <polygon points="850,78 844,68 856,68" fill="var(--line)"/>
+          <text x="600" y="44" text-anchor="middle" fill="var(--c-700)" font-size="11" font-family="Inter">Both personas surface the same data, research, and AI tools</text>
         </svg>
       </div>
 
-      <!-- ═══ STAGE 4b: PRE-MEMO RESEARCH TOOLS (NEW v2) ═══ -->
-      <div class="stage-label"><span>Pre-Memo Research</span></div>
+      <!-- ═══ STAGE 5: ON-PAGE SURFACES (V3) ═══ -->
+      <div class="stage-label"><span>On-Page Surfaces</span></div>
 
-      <a class="node ready span-3-6" href="ATZ Fiscal.html" target="_blank">
-        <span class="n-label">Data surface · drill-in</span>
+      <a class="node ready span-2-4" href="ATZ Fiscal.html" target="_blank">
+        <span class="n-label">Data · drill-in</span>
         <span class="n-title">Fiscal AI · ATZ</span>
-        <span class="n-meta">Dedicated workspace. Live Fundamentals, Valuation, Filings, Transcripts, Peer Comps. Bloomberg-style density.</span>
+        <span class="n-meta">Dedicated workspace. Filings, financials, live fundamentals. Bloomberg-style density.</span>
       </a>
 
-      <a class="node ready span-7-10" href="ATZ AI Research v2.html" target="_blank">
-        <span class="n-label">Protocol · drill-in</span>
-        <span class="n-title">AI Research &amp; Analysis · ATZ</span>
-        <span class="n-meta">11-step protocol. 4 phases (Discovery / Stress / Value &amp; Size / Synthesis). Copy each prompt → paste into Claude or ChatGPT.</span>
-      </a>
+      <div class="node span-5-8">
+        <span class="n-label">Inline action · Copy</span>
+        <span class="n-title">Research Prompt · ATZ</span>
+        <span class="n-meta">Tailored to ATZ at 20% hurdle. ~9 output sections, 2,500–3,500 words. ⊕ copies, pastes anywhere.</span>
+      </div>
 
-      <!-- Connector: research tools → external (Claude/ChatGPT) → back to memo -->
+      <div class="node span-9-11">
+        <span class="n-label">External · 4 links</span>
+        <span class="n-title">AI Tools</span>
+        <span class="n-meta">Claude · ChatGPT · Gemini · Perplexity. Open, paste prompt, get the research document.</span>
+      </div>
+
+      <!-- Connector: external → return → Memo -->
       <div class="connector" style="height: 100px;">
         <svg viewBox="0 0 1200 100" preserveAspectRatio="none">
-          <!-- Fiscal flow: data informs but doesn't directly feed memo -->
-          <line x1="450" y1="0" x2="450" y2="40" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 3"/>
-          <text x="450" y="22" text-anchor="middle" fill="var(--c-700)" font-size="11" font-family="Inter">Data check</text>
-          <!-- AI Research flow: copy prompts → Claude → return with thesis -->
-          <line x1="750" y1="0" x2="750" y2="40" stroke="var(--line)" stroke-width="1"/>
-          <text x="750" y="22" text-anchor="middle" fill="var(--c-700)" font-size="11" font-family="Inter">Copy prompts → Claude → return with thesis</text>
-          <!-- both converge to memo creation/edit -->
-          <line x1="450" y1="40" x2="750" y2="40" stroke="var(--line)" stroke-width="1"/>
+          <!-- Fiscal: data check (dashed, doesn't directly feed memo) -->
+          <line x1="250" y1="0" x2="250" y2="40" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 3"/>
+          <text x="250" y="22" text-anchor="middle" fill="var(--c-700)" font-size="11" font-family="Inter">Data check</text>
+          <!-- Prompt: copy → external AI → response back -->
+          <line x1="600" y1="0" x2="600" y2="40" stroke="var(--line)" stroke-width="1"/>
+          <text x="600" y="22" text-anchor="middle" fill="var(--c-700)" font-size="11" font-family="Inter">Copy → paste → AI runs → response</text>
+          <!-- AI Tools: external -->
+          <line x1="950" y1="0" x2="950" y2="40" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 3"/>
+          <text x="950" y="22" text-anchor="middle" fill="var(--c-700)" font-size="11" font-family="Inter">External tabs</text>
+          <!-- converge to Memo -->
+          <line x1="250" y1="40" x2="950" y2="40" stroke="var(--line)" stroke-width="1"/>
           <line x1="600" y1="40" x2="600" y2="90" stroke="var(--line)" stroke-width="1"/>
           <polygon points="600,98 594,88 606,88" fill="var(--line)"/>
-          <text x="600" y="74" text-anchor="middle" fill="var(--c-700)" font-size="11" font-family="Inter">Begin Memo flow</text>
+          <text x="600" y="74" text-anchor="middle" fill="var(--c-700)" font-size="11" font-family="Inter">Paste response into The Memo</text>
         </svg>
       </div>
 
-      <!-- ═══ STAGE 5 connector restored: persona → memo (legacy direct path still valid) ═══ -->
-      <div style="display: none;">Direct path from persona to memo creation also valid for users who skip pre-memo research tools.</div>
+      <!-- ═══ STAGE 6: THE MEMO ═══ -->
+      <div class="stage-label"><span>The Memo</span></div>
 
-      <!-- ═══ STAGE 5: DESTINATIONS ═══ -->
-      <a class="node terminal span-3-6" href="#" onclick="event.preventDefault()">
-        <span class="n-label">Creation flow · spec by Leo</span>
-        <span class="n-title">9-Step Memo Creation</span>
-        <span class="n-meta">Classify → Size → Thesis → Kill Criteria → IV → Compounding → Source → Note → Review (incl. Pressure Test drawer · planned) → Hold to seal.</span>
+      <a class="node terminal ready span-center-4" href="ATZ Memo.html" target="_blank">
+        <span class="n-label">Editor · Single textarea</span>
+        <span class="n-title">The Memo</span>
+        <span class="n-meta">Free-form prose. Paste AI response or write your own. Auto-save to draft. Seal Memo commits draft → live. First lines surface as preview on Stock Page.</span>
       </a>
 
-      <a class="node terminal ready span-7-10" href="ATZ Memo.html" target="_blank">
-        <span class="n-label">Detail · Edit</span>
-        <span class="n-title">The Memo (Full Detail)</span>
-        <span class="n-meta">8 numbered sections matching the 9-step flow. Read or edit. Re-underwrite triggers a new version. Hold to seal returns to Stock Page.</span>
-      </a>
-
-      <!-- Loopback row -->
-      <div class="loopback span-3-6">
+      <!-- Loopback -->
+      <div class="loopback span-12">
         <span class="arrow">↺</span>
-        <span>Hold to seal → back to <strong>Stock Page</strong> (now Returning, memo Live)</span>
+        <span>Seal Memo → back to <strong>Stock Page</strong> (memo Live, preview reflects first paragraph)</span>
       </div>
 
-      <div class="loopback span-7-10">
-        <span class="arrow">↺</span>
-        <span>New version (V3 → V4) → back to <strong>Stock Page</strong> (updated)</span>
-      </div>
-
-      <!-- Pressure Test drawer (planned) reference -->
+      <!-- States note -->
       <div class="see-also span-12">
-        At Memo Review (planned) — <strong>Pressure Test drawer</strong> with 4 prompt options (Bear / Valuation / Kill Criteria / Compounding stress). Copy prompt + memo → paste into Claude → return to seal or revise. Optional fail-safe, not a gate.
-      </div>
-
-      <!-- Reference to memo lifecycle states -->
-      <div class="see-also span-12">
-        Memo can be in 5 lifecycle states (Draft / Live / Triggered / Stale / Closed) —
-        <a href="ATZ Memo Variants.html" onclick="if(window.parent !== window && window.parent.setScreen){window.parent.setScreen('memo-variants', window.parent.document.querySelector('[data-screen=memo-variants]')); event.preventDefault();}" target="_blank">see Memo Lifecycle States ↗</a>
+        Memo states: <strong>Draft</strong> (unsealed edits) · <strong>Live</strong> (sealed, content matches) · <strong>Sealed empty</strong> (user cleared). Stock Page only reflects the sealed (Live) version. Editing creates a Draft that doesn't propagate until Re-seal.
       </div>
 
     </div>

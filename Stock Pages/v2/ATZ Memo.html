@@ -38,10 +38,7 @@
       -webkit-overflow-scrolling: touch;
     }
     body::-webkit-scrollbar { display: none; }
-    html {
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
+    html { scrollbar-width: none; -ms-overflow-style: none; }
     html::-webkit-scrollbar { display: none; }
     a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
 
@@ -53,101 +50,6 @@
       justify-content: space-between;
       padding: 0 13.5px;
       border-bottom: 1px solid var(--c-900);
-    }
-
-    /* COMPLIANCE STRIP — institutional disclosure as system metadata */
-    .compliance-strip {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      padding: 8px 20px;
-      font-size: 9px;
-      letter-spacing: -0.02em;
-      color: var(--c-800);
-      border-bottom: 0.5px solid var(--c-1000);
-      line-height: 1.3;
-    }
-
-    /* ARMED STATE BADGE — memo lifecycle indicator */
-    .memo-state {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      color: var(--c-400);
-      letter-spacing: -0.02em;
-      padding-left: 10px;
-    }
-    .memo-state .state-dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--c-400);
-      flex-shrink: 0;
-    }
-    .memo-state.live { color: var(--c-400); }
-    .memo-state.live .state-dot { background: var(--c-live); animation: live-pulse 2.4s cubic-bezier(0.45,0,0.55,1) infinite; }
-    .memo-state.triggered .state-dot { background: #FDAD00; animation: state-pulse 2.4s cubic-bezier(0.45,0,0.55,1) infinite; }
-    .memo-state.stale .state-dot { background: var(--c-800); }
-    .memo-state.closed .state-dot { background: var(--c-800); }
-    @keyframes live-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
-    @keyframes state-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.32; } }
-    @media (prefers-reduced-motion: reduce) { .memo-state .state-dot { animation: none !important; } }
-
-    /* Setup classification line (Compounder · Starter Position) */
-    .setup-line {
-      font-size: 11px;
-      color: var(--c-700);
-      letter-spacing: -0.02em;
-      margin-top: 4px;
-    }
-    .setup-line .setup-sep { margin: 0 6px; color: var(--c-800); }
-
-    /* Section number prefix */
-    .section-title .section-num {
-      color: var(--c-800);
-      margin-right: 10px;
-      font-feature-settings: 'tnum' 1;
-    }
-
-    /* Sub-section for splitting Thesis (Why wrong / Why now) */
-    .sub-row {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .sub-lbl {
-      font-size: 13px;
-      color: var(--c-700);
-      letter-spacing: -0.02em;
-    }
-    .sub-row + .sub-row {
-      margin-top: 18px;
-    }
-
-    /* Kill criteria list — numbered points (K.01, K.02, K.03) */
-    .kill-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      margin-top: 8px;
-    }
-    .kill-list li {
-      display: flex;
-      gap: 10px;
-      font-size: 15px;
-      color: var(--c-400);
-      letter-spacing: -0.02em;
-      line-height: 1.5;
-      padding: 6px 0;
-    }
-    .kill-list .k-num {
-      color: var(--c-800);
-      font-size: 15px;
-      width: 14px;
-      flex-shrink: 0;
-      display: inline-block;
-      line-height: 1.5;
     }
     .back {
       width: 13px; height: 13px;
@@ -170,7 +72,20 @@
     }
     .exit:active { opacity: 0.5; transition: opacity 80ms ease; }
 
-    /* TITLE — Performance Dashboard pattern (Memo / Aritzia · ATZ) */
+    /* COMPLIANCE STRIP */
+    .compliance-strip {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 8px 20px;
+      font-size: 9px;
+      letter-spacing: -0.02em;
+      color: var(--c-800);
+      border-bottom: 0.5px solid var(--c-1000);
+      line-height: 1.3;
+    }
+
+    /* TITLE */
     .title-block {
       padding: 40px 20px 0;
       display: flex;
@@ -191,7 +106,7 @@
       line-height: 1.15;
     }
 
-    /* MEMO METADATA bar */
+    /* STATUS bar */
     .memo-status {
       margin: 60px 20px 0;
       padding-bottom: 14px;
@@ -200,408 +115,620 @@
       flex-direction: column;
       gap: 4px;
     }
-    .memo-status .version {
+    .memo-status .state-line {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       font-size: 13px;
       color: var(--c-400);
       letter-spacing: -0.02em;
-      display: inline-flex;
-      align-items: center;
-      gap: 0;
     }
-    .memo-status .reviewed {
+    .memo-status .state-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--c-800);
+      flex-shrink: 0;
+    }
+    .memo-status.live .state-dot {
+      background: var(--c-live);
+      animation: live-pulse 2.4s cubic-bezier(0.45,0,0.55,1) infinite;
+    }
+    @keyframes live-pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
+    @media (prefers-reduced-motion: reduce) { .memo-status .state-dot { animation: none !important; } }
+    .memo-status .meta-line {
       font-size: 11px;
       color: var(--c-700);
       letter-spacing: -0.02em;
     }
-    .memo-status .doctrine-note {
+    .save-status {
       font-size: 11px;
-      color: var(--c-700);
-      letter-spacing: -0.02em;
-      line-height: 1.5;
-      margin-top: 12px;
-      max-width: 92%;
-    }
-
-    /* COLUMN */
-    .col {
-      padding: 56px 20px 120px;
-      display: flex;
-      flex-direction: column;
-      gap: 56px;
-    }
-
-    /* SECTION (memo content) */
-    .section {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .section-header {
-      padding: 0 0 14px;
-      margin-bottom: 4px;
-      border-bottom: 0.5px solid var(--c-900);
-    }
-    .section-title {
-      font-size: 15px;
-      color: var(--c-400);
-      letter-spacing: -0.02em;
-    }
-    .section-meta {
-      font-size: 11px;
-      color: var(--c-700);
+      color: var(--c-800);
       letter-spacing: -0.02em;
       margin-left: 6px;
     }
-    .section-meta.warn { color: var(--c-400); }
-    .section-meta.fire { color: var(--c-white); }
+    .save-status.saving { color: var(--c-700); }
+    .save-status.saved { color: var(--c-700); }
 
-    /* Kill condition inline label + state tag */
-    .kc-label {
-      color: var(--c-700);
-    }
-    .kc-state {
-      font-size: 13px;
-      color: var(--c-700);
-      letter-spacing: -0.02em;
-      margin: 0 2px;
-    }
-    .kc-state.warn { color: var(--c-400); }
-    .kc-state.fire { color: var(--c-white); }
-
-    /* PROSE */
-    .prose {
-      font-size: 15px;
-      color: var(--c-400);
-      letter-spacing: -0.02em;
-      line-height: 1.65;
-    }
-    .prose + .prose {
-      margin-top: 12px;
+    /* COLUMN */
+    .col {
+      padding: 48px 20px 140px;
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
     }
 
-    /* DATA rows (margin of safety) */
-    .data-rows {
+    /* MEMO INPUT */
+    .memo-input-section {
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
-    .data-row {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 16px;
+    .memo-input-wrap {
+      position: relative;
     }
-    .data-key {
+    /* Bottom fade — masks overlap between scrolling text and Saved/Paste indicators.
+       bottom: 6px keeps the textarea's bottom border visible (not covered by gradient). */
+    .memo-input-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: 6px;
+      left: 1px;
+      right: 16px; /* leave room for scrollbar */
+      height: 56px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 35%, rgba(0,0,0,0.95) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .memo-input {
+      width: 100%;
+      min-height: 420px;
+      background: transparent;
+      border: 0.5px solid var(--c-900);
+      padding: 16px 16px 56px 16px;
+      font-family: inherit;
       font-size: 14px;
+      color: var(--c-white);
+      letter-spacing: -0.02em;
+      line-height: 1.7;
+      resize: vertical;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+      transition: border-color 120ms ease;
+    }
+    .paste-icon-btn {
+      position: absolute;
+      bottom: 14px;
+      right: 26px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
       color: var(--c-700);
+      -webkit-tap-highlight-color: transparent;
+      transition: color 120ms ease;
+      padding: 0;
+      z-index: 2;
+    }
+    .paste-icon-btn:hover { color: var(--c-white); }
+    .paste-icon-btn:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .paste-icon-btn.pasted { color: var(--c-white); }
+    .paste-icon-btn svg { display: block; }
+    .memo-save-status {
+      position: absolute;
+      bottom: 14px;
+      left: 16px;
+      font-size: 11px;
+      color: var(--c-800);
+      letter-spacing: -0.02em;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .memo-save-status.saving { color: var(--c-700); }
+    .memo-save-status.saved { color: var(--c-700); }
+    .memo-input::placeholder {
+      color: var(--c-800);
       letter-spacing: -0.02em;
     }
-    .data-val {
+    .memo-input:focus { border-color: var(--c-700); }
+    .memo-hint {
+      font-size: 11px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      line-height: 1.5;
+    }
+    .memo-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .memo-action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      padding: 10px 14px;
+      cursor: pointer;
+      background: transparent;
+      border: 0.5px solid var(--c-900);
+      font-family: inherit;
+      -webkit-tap-highlight-color: transparent;
+      transition: border-color 120ms ease, color 120ms ease;
+    }
+    .memo-action-btn:hover { border-color: var(--c-400); color: var(--c-white); }
+    .memo-action-btn:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .memo-action-btn .icon {
+      width: 14px;
+      height: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--c-400);
+      flex-shrink: 0;
+    }
+    .memo-action-btn .icon svg { display: block; }
+    .memo-action-btn.pasted { border-color: var(--c-400); color: var(--c-white); }
+    .memo-action-btn.pasted .icon { color: var(--c-white); }
+
+    /* EXIT MODAL */
+    .exit-modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .exit-modal-backdrop.open { display: flex; }
+    .exit-modal {
+      background: var(--c-black);
+      border: 0.5px solid var(--c-900);
+      max-width: 320px;
+      width: 100%;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .exit-modal-title {
       font-size: 15px;
       color: var(--c-white);
       letter-spacing: -0.02em;
     }
-    .data-val .ccy {
-      color: var(--c-700);
-      margin-left: 4px;
-      font-size: 14px;
-    }
-    .data-note {
+    .exit-modal-desc {
       font-size: 13px;
       color: var(--c-700);
       letter-spacing: -0.02em;
       line-height: 1.5;
-      margin-top: 8px;
     }
-
-    /* CONFIDENCE meta */
-    .conf-meta {
-      font-size: 13px;
-      color: var(--c-700);
-      letter-spacing: -0.02em;
+    .exit-modal-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
       margin-top: 4px;
     }
-
-    /* NOTES LIST (mixed: // AI insights + sources + user notes) */
-    .notes-list {
+    .exit-modal-btn {
       display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-    .note-item {
-      padding: 14px 0;
-      border-bottom: 0.5px solid var(--c-900);
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .note-item:first-child {
-      padding-top: 0;
-    }
-    .note-item:last-child {
-      border-bottom: none;
-    }
-    .note-header-row {
-      display: flex;
-      align-items: baseline;
+      align-items: center;
       justify-content: space-between;
-      gap: 12px;
-    }
-    .note-source {
-      font-size: 13px;
-      color: var(--c-400);
-      letter-spacing: -0.02em;
-    }
-    .note-source .ai-mark {
-      color: var(--c-700);
-      margin-right: 4px;
-    }
-    .note-date {
-      font-size: 11px;
-      color: var(--c-700);
-      letter-spacing: -0.02em;
-      white-space: nowrap;
-    }
-    .note-body {
+      padding: 12px 0;
+      border-top: 0.5px solid var(--c-1000);
       font-size: 14px;
       color: var(--c-400);
       letter-spacing: -0.02em;
-      line-height: 1.55;
+      background: none;
+      border-left: none;
+      border-right: none;
+      border-bottom: none;
+      cursor: pointer;
+      font-family: inherit;
+      text-align: left;
+      -webkit-tap-highlight-color: transparent;
     }
-    .note-item.user .note-body {
-      color: var(--c-white);
-    }
+    .exit-modal-btn:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .exit-modal-btn.save { color: var(--c-white); }
+    .exit-modal-btn.discard { color: var(--c-700); }
+    .exit-modal-btn .arrow { color: var(--c-700); font-size: 14px; font-weight: 300; }
 
-    /* VIEW LINK — Title Case written in HTML directly */
-    .view-link {
+    /* ACTION LINK (View Example) */
+    .action-link {
+      font-size: 11px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
       display: inline-flex;
       align-items: baseline;
       gap: 4px;
-      font-size: 11px;
-      font-weight: 400;
-      color: var(--c-700);
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      margin-top: 4px;
-      align-self: flex-start;
+      padding: 4px 0;
+      cursor: pointer;
+      background: none;
+      border: none;
+      -webkit-tap-highlight-color: transparent;
     }
-    .view-link .chev {
+    .action-link:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .action-link .chev {
       font-size: 13px;
       font-weight: 300;
       color: var(--c-700);
+      transition: transform 200ms ease;
     }
-    .view-link:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .action-link.open .chev { transform: rotate(90deg); }
 
-    /* CAPITAL DECISION CTA — fixed bottom */
-    .capital-decision {
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 393px;
-      padding: 40px 13.5px 24px;
-      display: flex;
-      justify-content: flex-end;
-      background: linear-gradient(to top, var(--c-black) 0%, var(--c-black) 60%, rgba(0,0,0,0) 100%);
-      pointer-events: none;
-      z-index: 10;
+    /* EXAMPLE PANEL */
+    .example-panel {
+      display: none;
+      margin-top: 12px;
+      padding: 16px;
+      border: 0.5px solid var(--c-900);
+      background: #0A0A0A;
+      font-size: 13px;
+      color: var(--c-400);
+      letter-spacing: -0.01em;
+      line-height: 1.7;
+      white-space: pre-wrap;
     }
-    .capital-decision a {
-      pointer-events: auto;
+    .example-panel.open { display: block; }
+    .example-panel strong {
+      color: var(--c-white);
+      font-weight: 500;
+    }
+    .example-panel .ex-header {
+      font-size: 11px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      padding-bottom: 12px;
+      margin-bottom: 12px;
+      border-bottom: 0.5px solid var(--c-1000);
+      display: block;
+    }
+
+    /* SEAL BUTTON — right-aligned under memo box (submit position) */
+    .seal-btn {
       display: inline-flex;
       align-items: baseline;
+      align-self: flex-end;
       gap: 8px;
-      font-size: 15px;
+      padding: 8px 0;
+      margin: 0;
+      background: none;
+      border: none;
       color: var(--c-white);
+      font-family: inherit;
+      font-size: 15px;
       letter-spacing: -0.02em;
-      padding: 8px 4px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      text-align: left;
     }
-    .capital-decision a:active { opacity: 0.5; transition: opacity 80ms ease; }
-    .capital-decision a .arrow {
-      font-weight: 300;
-    }
+    .seal-btn:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .seal-btn .arrow { font-weight: 500; }
   </style>
 </head>
 <body>
 
   <header class="header">
-    <a href="Stock%20Page%20v6d.html" class="back" aria-label="Back"></a>
-    <a href="Stock%20Page%20v6d.html" class="exit" aria-label="Exit">Exit</a>
+    <a href="Stock Page v6d.html" class="back" aria-label="Back"></a>
+    <a href="Stock Page v6d.html" class="exit" aria-label="Exit">Exit</a>
   </header>
 
-  <!-- COMPLIANCE STRIP — persistent disclosure as system metadata -->
   <div class="compliance-strip" aria-label="Disclosure">
     Self-Authored · No Suitability Review · Not Advice
   </div>
 
   <div class="title-block">
-    <span class="t-primary">The Memo</span>
-    <span class="t-secondary">Aritzia Inc · ATZ</span>
+    <span class="t-primary">Memo</span>
+    <span class="t-secondary">Aritzia Inc · ATZ · Hurdle 20%</span>
   </div>
 
-  <section class="memo-status" aria-label="Memo status">
-    <span class="version">V3 <span class="memo-state live"><span class="state-dot" aria-hidden="true"></span>Live</span></span>
-    <span class="reviewed">Reviewed Apr 12, 2026 · 26d ago · 2 prior versions</span>
-    <p class="doctrine-note">Memos are immutable once sealed. Each edit creates a new version. Prior versions stay on the record.</p>
+  <section class="memo-status" aria-label="Memo state" id="memoStatusSection">
+    <span class="state-line"><span class="state-dot"></span><span id="stateLabel">Draft</span></span>
+    <span class="meta-line" id="metaLine">Not yet sealed. Sealing creates an immutable version.</span>
   </section>
 
   <div class="col">
 
-    <!-- 01 CLASSIFY -->
-    <section class="section" aria-label="Classify">
-      <div class="section-header">
-        <span class="section-title"><span class="section-num">01</span>Classify</span>
+    <section class="memo-input-section" aria-label="Memo body">
+      <div class="memo-input-wrap">
+        <textarea
+          class="memo-input"
+          id="memoInput"
+          placeholder="Write or paste your memo. Run the research prompt on the Stock Page, then paste the AI's response here directly. Edit as you go."
+          spellcheck="false"
+          aria-label="Memo content"></textarea>
+        <span class="memo-save-status" id="saveStatus">Not started</span>
+        <button type="button" class="paste-icon-btn" id="pasteBtn" onclick="pasteFromClipboard()" aria-label="Paste from clipboard">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3.5" y="3.5" width="7" height="9" stroke="currentColor" stroke-width="0.7"/><rect x="6" y="1" width="7" height="9" stroke="currentColor" stroke-width="0.7" fill="none"/></svg>
+        </button>
       </div>
-      <div class="data-rows">
-        <div class="data-row">
-          <span class="data-key">Type</span>
-          <span class="data-val">Compounder</span>
-        </div>
-      </div>
-      <p class="data-note">Durable business. Long runway.</p>
-    </section>
+      <button type="button" class="seal-btn" id="sealMemoBtn" onclick="sealMemo(event)">
+        <span id="sealBtnText">Seal Memo</span>
+      </button>
+      <p class="memo-hint">The first lines show on the Stock Page as a preview. Paste the full AI response if you like. No need to break it into fields.</p>
+      <button type="button" class="action-link" id="exampleToggle" onclick="toggleExample()">
+        View Example Memo <span class="chev">›</span>
+      </button>
+      <div class="example-panel" id="examplePanel" aria-hidden="true"><span class="ex-header">Sample output from the research prompt run on Aritzia (ATZ). Yours will look similar.</span><strong>Classification.</strong> Compounder. Aritzia is a high-quality DTC women's fashion business with a durable in-house brand portfolio (Wilfred, TNA, Babaton, Super Puff), proven Canadian unit economics, and a long US runway. Returns expected through long-duration earnings growth, not transient mispricing.
 
-    <!-- 02 SIZE -->
-    <section class="section" aria-label="Size">
-      <div class="section-header">
-        <span class="section-title"><span class="section-num">02</span>Size</span>
-      </div>
-      <div class="data-rows">
-        <div class="data-row">
-          <span class="data-key">Position</span>
-          <span class="data-val">Starter Position</span>
-        </div>
-      </div>
-      <p class="data-note">Used while building conviction or validating assumptions.</p>
-    </section>
+<strong>Thesis.</strong> US store rollout is the primary growth driver for the next five years. Canadian boutiques have demonstrated proven unit economics: high productivity per square foot, consistent same-store growth, durable margins. US openings are tracking to similar productivity at scale. The market underweights the long runway because US fashion DTC is unfamiliar territory and Aritzia does not fit clean category buckets.
 
-    <!-- 03 THESIS — split into Why wrong + Why now -->
-    <section class="section" aria-label="Thesis">
-      <div class="section-header">
-        <span class="section-title"><span class="section-num">03</span>Thesis</span>
-      </div>
-      <div class="sub-row">
-        <span class="sub-lbl">Why the market is wrong</span>
-        <p class="prose">Aritzia is undervalued by ~40% on a SOTP basis. Brand momentum, US store rollout, and operating leverage drive multi-year compounding. Two conditions: First, US revenue continues compounding above 30% as the store rollout scales. Second, operating margins expand toward 18% as the ecommerce mix grows and the supply chain stabilizes.</p>
-      </div>
-      <div class="sub-row">
-        <span class="sub-lbl">Why now</span>
-        <p class="prose">Q4 earnings confirmed US comp growth at 32%, store rollout pace at 18 net-new locations YoY, and gross margin expansion of 220bps. Market still pricing ATZ as a domestic apparel retailer rather than a North American compounding brand. Window narrows as US store productivity data accumulates.</p>
-      </div>
-    </section>
+<strong>Why Now.</strong> Q4 FY2026 showed 62 US stores (up 11 YTD) at ~CAD $1,800/sqft productivity, matching Canadian levels. US revenue mix crossed 50% for the first time. Stock has retraced about 25% from its 24-month high after slight Q3 margin compression. Long-term compounding case intact, entry point reasonable.
 
-    <!-- 04 KILL LINE — numbered conditions (K.01/K.02/K.03) + response + floor -->
-    <section class="section" aria-label="Kill criteria">
-      <div class="section-header">
-        <span class="section-title"><span class="section-num">04</span>Kill Criteria</span>
-      </div>
-      <ul class="kill-list">
-        <li><span class="k-num">·</span>Same-store sales go negative for two consecutive quarters</li>
-        <li><span class="k-num">·</span>US expansion stalls below 8 new stores per year</li>
-        <li><span class="k-num">·</span>Operating margin contracts below 12% TTM</li>
-      </ul>
-      <p class="prose" style="margin-top:18px;"><span class="kc-label">Response:</span> Exit on trigger, not on narrative. Exit position.</p>
-      <p class="prose"><span class="kc-label">Floor:</span> Brand equity remains tier-one even in same-store softening; US store base profitable at current trajectory; cash-rich balance sheet ($142M) supports re-allocation without forced sale.</p>
-    </section>
+<strong>Kill Criteria.</strong>
+· US same-store sales declines two consecutive quarters
+· Gross margin compression greater than 200bps sustained for two quarters
+· US opening pace below 8 net new stores per year
+· Founder / CEO Jennifer Wong departure or material strategic pivot
 
-    <!-- 05 INTRINSIC VALUE (with Method + Margin of Safety embedded) -->
-    <section class="section" aria-label="Intrinsic value">
-      <div class="section-header">
-        <span class="section-title"><span class="section-num">05</span>Intrinsic Value</span>
-      </div>
-      <div class="data-rows">
-        <div class="data-row">
-          <span class="data-key">Fair value</span>
-          <span class="data-val">120.00 <span class="ccy">CAD</span></span>
-        </div>
-      </div>
-      <p class="data-note">Method · SOTP — 22× FY26 earnings on retail segment + 15× multiple on online sales, blended and discounted 12% for execution risk.</p>
+<strong>Intrinsic Value.</strong> SOTP estimate 105–120 CAD per share, five-year horizon.
+· DCF base: 12% revenue CAGR, 18% EBITDA margin, 10% WACC → 110 CAD
+· Conservative (assumes 15% margin contraction risk): 90 CAD
+· Aggressive (US productivity matches Canadian peak): 135 CAD
 
-      <div class="sub-row" style="margin-top:20px;">
-        <span class="sub-lbl">Margin of Safety</span>
-        <div class="data-rows">
-          <div class="data-row">
-            <span class="data-key">At entry</span>
-            <span class="data-val">28%</span>
-          </div>
-          <div class="data-row">
-            <span class="data-key">Today</span>
-            <span class="data-val">25%</span>
-          </div>
-        </div>
-      </div>
-    </section>
+<strong>Sizing.</strong> Conviction position. Suggested 3–7% of total portfolio. Aritzia clears multiple compounder tests but US execution remains the primary uncertainty, capping the position below Core territory.
 
-    <!-- 06 EXCEPTIONAL COMPOUNDING — Hurdle + Horizon + Calibration -->
-    <section class="section" aria-label="Exceptional compounding">
-      <div class="section-header">
-        <span class="section-title"><span class="section-num">06</span>Exceptional Compounding</span>
-      </div>
-      <div class="data-rows">
-        <div class="data-row">
-          <span class="data-key">Hurdle</span>
-          <span class="data-val">20% / year</span>
-        </div>
-        <div class="data-row">
-          <span class="data-key">Horizon</span>
-          <span class="data-val">3 Years</span>
-        </div>
-        <div class="data-row">
-          <span class="data-key">Calibration</span>
-          <span class="data-val">70%</span>
-        </div>
-      </div>
-      <p class="data-note">User-set probability that the thesis holds across the underwriting horizon. Estimates are inherently uncertain and reflect own underwriting assumptions.</p>
-    </section>
-
-    <!-- 07 SOURCE — Origin of the idea -->
-    <section class="section" aria-label="Source">
-      <div class="section-header">
-        <span class="section-title"><span class="section-num">07</span>Source</span>
-      </div>
-      <div class="data-rows">
-        <div class="data-row">
-          <span class="data-key">Origin</span>
-          <span class="data-val">Own analysis</span>
-        </div>
-      </div>
-      <p class="data-note">Tracks which inputs convert into good positions over time. Per-source track record surfaces in Edge Analysis.</p>
-    </section>
-
-    <!-- 08 NOTE (user observations — the work behind it) -->
-    <section class="section" aria-label="Note">
-      <div class="section-header">
-        <span class="section-title"><span class="section-num">08</span>Note <span class="section-meta">· 2</span></span>
-      </div>
-      <div class="notes-list">
-
-        <article class="note-item user">
-          <div class="note-header-row">
-            <span class="note-date">Apr 27, 2026</span>
-          </div>
-          <p class="note-body">Considering whether to size up. Want to see US store rollout exceed 12 per year before adding.</p>
-        </article>
-
-        <article class="note-item user">
-          <div class="note-header-row">
-            <span class="note-date">May 4, 2026</span>
-          </div>
-          <p class="note-body">Q4 earnings beat. US revenue grew 32% YoY — reinforces the long thesis.</p>
-        </article>
-
-      </div>
-      <a href="ATZ%20Notes.html" class="view-link">View All · Add Note <span class="chev" aria-hidden="true">›</span></a>
+<strong>Sources.</strong> FY2026 Annual Report (April 22, 2026), Q4 earnings call transcript, comparable analysis vs Lululemon US trajectory FY2014–2018, store-level productivity data from SEDAR+ filings.</div>
     </section>
 
   </div>
 
-  <!-- Capital Decision CTA (fixed bottom) -->
-  <div class="capital-decision">
-    <a href="#" aria-label="Capital Decision">
-      <span class="arrow">→</span> Capital Decision
-    </a>
+  <div class="exit-modal-backdrop" id="exitModal" role="dialog" aria-modal="true" aria-labelledby="exitModalTitle">
+    <div class="exit-modal">
+      <span class="exit-modal-title" id="exitModalTitle">Unsaved changes</span>
+      <p class="exit-modal-desc">You have edits that have not been saved. Save the draft to keep working, or discard to throw them away.</p>
+      <div class="exit-modal-actions">
+        <button type="button" class="exit-modal-btn save" onclick="modalSaveAndExit()">Save Draft &amp; Exit<span class="arrow">→</span></button>
+        <button type="button" class="exit-modal-btn discard" onclick="modalDiscardAndExit()">Discard Changes<span class="arrow">→</span></button>
+        <button type="button" class="exit-modal-btn" onclick="modalCancel()">Keep Editing<span class="arrow">·</span></button>
+      </div>
+    </div>
   </div>
+
+  <script>
+    const MEMO_KEY = 'atz-memo-draft';
+    const MEMO_LIVE_KEY = 'atz-memo-live';
+    const MEMO_STATE_KEY = 'atz-memo-state';
+    const MEMO_VERSION_KEY = 'atz-memo-version';
+    const MEMO_SEALED_AT_KEY = 'atz-memo-sealed-at';
+    let saveTimer = null;
+    let lastSavedContent = '';
+    let pendingExitUrl = null;
+    let currentState = 'draft';
+    let currentVersion = 0;
+
+    function toggleExample() {
+      const panel = document.getElementById('examplePanel');
+      const btn = document.getElementById('exampleToggle');
+      const isOpen = panel.classList.toggle('open');
+      btn.classList.toggle('open', isOpen);
+      panel.setAttribute('aria-hidden', String(!isOpen));
+    }
+
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      let ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+      document.body.removeChild(ta);
+      return ok;
+    }
+
+    /* ── PASTE FROM CLIPBOARD ── */
+    async function pasteFromClipboard() {
+      const ta = document.getElementById('memoInput');
+      const btn = document.getElementById('pasteBtn');
+      let text = '';
+      try {
+        if (navigator.clipboard && navigator.clipboard.readText) {
+          text = await navigator.clipboard.readText();
+        }
+      } catch (e) {
+        text = '';
+      }
+      const original = btn.innerHTML;
+      if (text) {
+        ta.value = (ta.value.trim() ? ta.value.trim() + '\n\n' : '') + text;
+        ta.dispatchEvent(new Event('input'));
+        btn.classList.add('pasted');
+        btn.innerHTML = '<span style="font-size:14px;line-height:1">✓</span>';
+        setTimeout(() => {
+          btn.classList.remove('pasted');
+          btn.innerHTML = original;
+        }, 1400);
+      } else {
+        btn.innerHTML = '<span style="font-size:14px;line-height:1">!</span>';
+        setTimeout(() => { btn.innerHTML = original; }, 1800);
+      }
+    }
+
+    /* ── AUTO-SAVE ── */
+    function updateSaveStatus(state, ts) {
+      const el = document.getElementById('saveStatus');
+      if (!el) return;
+      el.classList.remove('saving', 'saved');
+      if (state === 'saving') {
+        el.classList.add('saving');
+        el.textContent = 'Saving…';
+      } else if (state === 'saved') {
+        el.classList.add('saved');
+        el.textContent = 'Saved just now';
+      } else if (state === 'none') {
+        el.textContent = 'Not started';
+      }
+    }
+
+    function doSave() {
+      const ta = document.getElementById('memoInput');
+      try { localStorage.setItem(MEMO_KEY, ta.value); } catch (e) {}
+      lastSavedContent = ta.value;
+      updateSaveStatus('saved');
+    }
+
+    function scheduleAutoSave() {
+      // If Live and user edits, revert to Draft state (pending re-seal)
+      if (currentState === 'live') {
+        currentState = 'draft';
+        try { localStorage.setItem(MEMO_STATE_KEY, 'draft'); } catch (e) {}
+        applyStateUI();
+      }
+      updateSaveStatus('saving');
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(doSave, 600);
+    }
+
+    /* Seed example memo on first load so v6d (Stock Page) and Memo
+       page stay in sync. Mirrors the seed on Stock Page v6d. */
+    function seedExampleMemoIfMissing() {
+      try {
+        // Use !== null so empty sealed state is preserved (user intentionally erased).
+        if (localStorage.getItem(MEMO_LIVE_KEY) !== null) return;
+        var seed = "Classification. Compounder. Aritzia is a high-quality DTC women's fashion business with a durable in-house brand portfolio (Wilfred, TNA, Babaton, Super Puff), proven Canadian unit economics, and a long US runway. Returns expected through long-duration earnings growth, not transient mispricing.\n\nThesis. US store rollout is the primary growth driver for the next five years. Canadian boutiques have demonstrated proven unit economics: high productivity per square foot, consistent same-store growth, durable margins. US openings are tracking to similar productivity at scale. The market underweights the long runway because US fashion DTC is unfamiliar territory and Aritzia does not fit clean category buckets.\n\nWhy Now. Q4 FY2026 showed 62 US stores (up 11 YTD) at ~CAD $1,800/sqft productivity, matching Canadian levels. US revenue mix crossed 50% for the first time. Stock has retraced about 25% from its 24-month high after slight Q3 margin compression. Long-term compounding case intact, entry point reasonable.\n\nKill Criteria.\n- US same-store sales declines two consecutive quarters\n- Gross margin compression greater than 200bps sustained for two quarters\n- US opening pace below 8 net new stores per year\n- Founder / CEO Jennifer Wong departure or material strategic pivot\n\nIntrinsic Value. SOTP estimate 105–120 CAD per share, five-year horizon.\n- DCF base: 12% revenue CAGR, 18% EBITDA margin, 10% WACC → 110 CAD\n- Conservative (assumes 15% margin contraction risk): 90 CAD\n- Aggressive (US productivity matches Canadian peak): 135 CAD\n\nSizing. Conviction position. Suggested 3–7% of total portfolio. Aritzia clears multiple compounder tests but US execution remains the primary uncertainty, capping the position below Core territory.\n\nSources. FY2026 Annual Report (April 22, 2026), Q4 earnings call transcript, comparable analysis vs Lululemon US trajectory FY2014–2018, store-level productivity data from SEDAR+ filings.";
+        localStorage.setItem(MEMO_LIVE_KEY, seed);
+        localStorage.setItem(MEMO_KEY, seed);
+        localStorage.setItem(MEMO_STATE_KEY, 'live');
+        localStorage.setItem(MEMO_VERSION_KEY, '1');
+        var sealedAt = new Date(Date.now() - 26 * 24 * 60 * 60 * 1000).toISOString();
+        localStorage.setItem(MEMO_SEALED_AT_KEY, sealedAt);
+      } catch (e) {}
+    }
+
+    function loadDraft() {
+      try {
+        const saved = localStorage.getItem(MEMO_KEY) || '';
+        const ta = document.getElementById('memoInput');
+        ta.value = saved;
+        lastSavedContent = saved;
+        if (saved.length > 0) updateSaveStatus('saved');
+        else updateSaveStatus('none');
+        // Load state
+        currentState = localStorage.getItem(MEMO_STATE_KEY) || 'draft';
+        currentVersion = parseInt(localStorage.getItem(MEMO_VERSION_KEY) || '0', 10);
+        applyStateUI();
+      } catch (e) {}
+    }
+
+    function applyStateUI() {
+      const section = document.getElementById('memoStatusSection');
+      const label = document.getElementById('stateLabel');
+      const dotWrap = section ? section.querySelector('.state-line') : null;
+      const meta = document.getElementById('metaLine');
+      const btn = document.getElementById('sealBtnText');
+      section.classList.remove('live', 'draft');
+
+      // Detect "sealed empty" — live exists but is empty string.
+      const liveRaw = localStorage.getItem(MEMO_LIVE_KEY);
+      const isSealedEmpty = currentState === 'live' && liveRaw === '';
+
+      if (isSealedEmpty) {
+        // No badge dot for sealed-empty — only meta + button visible.
+        if (dotWrap) dotWrap.style.display = 'none';
+        meta.textContent = 'Sealed empty. Write below to start a new draft.';
+        if (btn) btn.textContent = 'Seal Memo';
+      } else if (currentState === 'live') {
+        if (dotWrap) dotWrap.style.display = '';
+        section.classList.add('live');
+        label.textContent = 'Live';
+        meta.textContent = 'Sealed memo. Editing replaces the live version.';
+        if (btn) btn.textContent = 'Re-seal Memo';
+      } else {
+        if (dotWrap) dotWrap.style.display = '';
+        section.classList.add('draft');
+        label.textContent = 'Draft';
+        meta.textContent = currentVersion > 0
+          ? 'Editing the sealed memo. Seal to update.'
+          : 'Not yet sealed. Sealing creates the live record.';
+        if (btn) btn.textContent = currentVersion > 0 ? 'Re-seal Memo' : 'Seal Memo';
+      }
+    }
+
+    function sealMemo(e) {
+      if (e) e.preventDefault();
+      doSave();
+      currentVersion = currentVersion + 1;
+      currentState = 'live';
+      try {
+        // Commit draft → live. This is the only path that updates the Stock Page.
+        const ta = document.getElementById('memoInput');
+        localStorage.setItem(MEMO_LIVE_KEY, ta.value);
+        localStorage.setItem(MEMO_STATE_KEY, currentState);
+        localStorage.setItem(MEMO_VERSION_KEY, String(currentVersion));
+        localStorage.setItem(MEMO_SEALED_AT_KEY, new Date().toISOString());
+      } catch (err) {}
+      applyStateUI();
+    }
+
+    function hasUnsavedChanges() {
+      const ta = document.getElementById('memoInput');
+      return ta.value !== lastSavedContent;
+    }
+
+    /* ── EXIT MODAL ── */
+    function openExitModal(url) {
+      pendingExitUrl = url;
+      document.getElementById('exitModal').classList.add('open');
+    }
+    function closeExitModal() {
+      document.getElementById('exitModal').classList.remove('open');
+    }
+    function modalSaveAndExit() {
+      doSave();
+      closeExitModal();
+      if (pendingExitUrl) window.location.href = pendingExitUrl;
+    }
+    function modalDiscardAndExit() {
+      try { localStorage.setItem(MEMO_KEY, lastSavedContent); } catch (e) {}
+      closeExitModal();
+      if (pendingExitUrl) window.location.href = pendingExitUrl;
+    }
+    function modalCancel() {
+      pendingExitUrl = null;
+      closeExitModal();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      seedExampleMemoIfMissing();
+      loadDraft();
+      const ta = document.getElementById('memoInput');
+      ta.addEventListener('input', scheduleAutoSave);
+
+      /* bfcache + back button — re-sync state from localStorage on page restore */
+      window.addEventListener('pageshow', function (e) {
+        if (e.persisted) loadDraft();
+      });
+
+      /* Multi-tab sync — if another tab updates the memo, refresh here */
+      window.addEventListener('storage', function (e) {
+        if (e.key && e.key.indexOf('atz-memo-') === 0) {
+          /* Don't clobber the user's in-flight typing — only re-sync if they aren't editing */
+          if (document.activeElement !== ta) loadDraft();
+        }
+      });
+
+      /* Intercept Back/Exit if unsaved */
+      document.querySelectorAll('.back, .exit').forEach(el => {
+        el.addEventListener('click', e => {
+          if (hasUnsavedChanges()) {
+            e.preventDefault();
+            openExitModal(el.getAttribute('href'));
+          }
+        });
+      });
+    });
+  </script>
 
 </body>
 </html>
