@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <title>Stock Page + Memo · Engineering Handoff</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-black:    #000000;
+      --c-1000:     #1C1C1C;
+      --c-900:      #232627;
+      --c-800:      #565B5E;
+      --c-700:      #929292;
+      --c-400:      #C7C7C7;
+      --c-white:    #FFFFFF;
+      --c-live:     #30D158;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--c-1000);
+      color: var(--c-white);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      padding: 64px 24px 80px;
+      -webkit-font-smoothing: antialiased;
+      font-feature-settings: 'tnum' 1;
+      line-height: 1.5;
+    }
+    a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+
+    .container { max-width: 880px; margin: 0 auto; }
+
+    /* Compliance strip (consistent with v6d) */
+    .compliance-strip {
+      font-size: 9px;
+      letter-spacing: -0.02em;
+      color: var(--c-800);
+      padding-bottom: 8px;
+      border-bottom: 0.5px solid var(--c-1000);
+      margin-bottom: 32px;
+    }
+
+    /* Title */
+    .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: 22px;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      color: var(--c-white);
+    }
+    .subtitle {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      max-width: 640px;
+    }
+    .meta-line {
+      font-size: 11px;
+      color: var(--c-800);
+      letter-spacing: 0.02em;
+      margin-top: 6px;
+    }
+
+    /* Section */
+    .section {
+      margin-top: 56px;
+    }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding-bottom: 14px;
+      border-bottom: 0.5px solid var(--c-900);
+      margin-bottom: 4px;
+    }
+    .section-num {
+      font-size: 13px;
+      color: var(--c-800);
+      letter-spacing: 0.02em;
+      font-feature-settings: 'tnum' 1;
+    }
+    .section-title {
+      font-size: 15px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+    }
+    .section-desc {
+      font-size: 12px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      margin-bottom: 18px;
+      margin-top: 12px;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    /* Page list */
+    .page-list {
+      display: flex;
+      flex-direction: column;
+    }
+    .page-link {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 0;
+      border-bottom: 0.5px solid var(--c-1000);
+      transition: opacity 80ms ease;
+    }
+    .page-link:hover { opacity: 0.7; cursor: pointer; }
+    .page-link.ready { background: rgba(48, 209, 88, 0.02); padding-left: 16px; padding-right: 16px; margin: 0 -16px; }
+    .pl-left { flex: 1; min-width: 0; }
+    .pl-title {
+      font-size: 15px;
+      color: var(--c-white);
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pl-title .pl-tag {
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border: 0.5px solid;
+      color: var(--c-700);
+      border-color: var(--c-800);
+    }
+    .pl-title .pl-tag.ready {
+      color: var(--c-live);
+      border-color: rgba(48, 209, 88, 0.4);
+    }
+    .pl-title .pl-tag.spec {
+      color: var(--c-400);
+      border-color: var(--c-700);
+    }
+    .pl-title .pl-tag.external {
+      color: var(--c-800);
+      border-color: var(--c-900);
+    }
+    .pl-meta {
+      font-size: 12px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+    .pl-arrow {
+      color: var(--c-700);
+      font-size: 14px;
+      font-weight: 300;
+      flex-shrink: 0;
+      padding-top: 2px;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 80px;
+      padding-top: 24px;
+      border-top: 0.5px solid var(--c-900);
+      font-size: 11px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      line-height: 1.6;
+    }
+    .footer strong { color: var(--c-400); font-weight: 400; }
+    .footer p + p { margin-top: 8px; }
+
+    /* Inline state legend */
+    .legend-inline {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 10px;
+      color: var(--c-800);
+      letter-spacing: 0.02em;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+    .legend-inline .dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 4px;
+      vertical-align: middle;
+    }
+    .legend-inline .dot.ready { background: var(--c-live); }
+    .legend-inline .dot.spec { background: var(--c-400); }
+    .legend-inline .dot.ext { background: var(--c-800); }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="compliance-strip">Self-Authored · No Suitability Review · Not Advice</div>
+
+    <div class="title-block">
+      <h1>Stock Page + Memo · Engineering Handoff</h1>
+      <p class="subtitle">Curated package for the engineer building Stock Page and The Memo. Mobile prototype (393×852), II doctrine.</p>
+      <p class="meta-line">Designer · Inkyung · Updated May 25, 2026</p>
+    </div>
+
+    <!-- 01 START HERE -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <span class="section-title">Start Here · User Flow</span>
+      </div>
+      <p class="section-desc">Open this first. Navigation map showing how all pages connect — three entry routes converge on Stock Page, which branches by persona (First-time vs Returning), with memo creation and edit looping back to the same page.</p>
+      <div class="page-list">
+        <a href="User Flow.html" class="page-link ready" target="_blank">
+          <div class="pl-left">
+            <div class="pl-title">User Flow <span class="pl-tag ready">Map</span></div>
+            <div class="pl-meta">Interactive diagram. Click any node to open that page.</div>
+          </div>
+          <span class="pl-arrow">↗</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 02 PAGES -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <span class="section-title">Pages</span>
+      </div>
+      <p class="section-desc">The four pages in this handoff. Click to open the prototype in a new tab.</p>
+      <div class="page-list">
+        <a href="Stock Page v6d.html" class="page-link ready" target="_blank">
+          <div class="pl-left">
+            <div class="pl-title">Stock Page · Returning User <span class="pl-tag ready">Main</span></div>
+            <div class="pl-meta">Position held, memo sealed (Live). Compliance strip → Title + vs entry → Alert mirror → Memo box (Thesis + Kill + IV/MoS/Probability) → Position → Performance vs SPY → Fiscal AI → Market/News/History → Capital Decision.</div>
+          </div>
+          <span class="pl-arrow">↗</span>
+        </a>
+        <a href="Stock Page First.html" class="page-link ready" target="_blank">
+          <div class="pl-left">
+            <div class="pl-title">Stock Page · First-time User <span class="pl-tag ready">Main</span></div>
+            <div class="pl-meta">No position, no memo. Draft Memo CTA entry to 9-step creation flow. About Aritzia + Market/News/Research nav.</div>
+          </div>
+          <span class="pl-arrow">↗</span>
+        </a>
+        <a href="ATZ Memo.html" class="page-link ready" target="_blank">
+          <div class="pl-left">
+            <div class="pl-title">The Memo · Full Detail <span class="pl-tag ready">Drill-in</span></div>
+            <div class="pl-meta">8 numbered sections matching the 9-step creation flow. Classify → Size → Thesis → Kill Criteria → Intrinsic Value → Exceptional Compounding → Source → Note. Compliance strip + Armed/Live state badge.</div>
+          </div>
+          <span class="pl-arrow">↗</span>
+        </a>
+        <a href="ATZ Memo Variants.html" class="page-link ready" target="_blank">
+          <div class="pl-left">
+            <div class="pl-title">The Memo · Lifecycle States (5) <span class="pl-tag ready">Reference</span></div>
+            <div class="pl-meta">All 5 states side-by-side: Draft / Live (green pulse, white text) / Triggered (amber pulse) / Stale / Closed. Only status badge + meta line change between states.</div>
+          </div>
+          <span class="pl-arrow">↗</span>
+        </a>
+        <a href="ATZ AI Research v2.html" class="page-link ready" target="_blank">
+          <div class="pl-left">
+            <div class="pl-title">AI Research &amp; Analysis · ATZ <span class="pl-tag ready">Drill-in</span></div>
+            <div class="pl-meta">11-step research protocol page. Pre-memo. Grouped into 4 phases (Discovery / Stress / Value &amp; Size / Synthesis). Each step: prompt body + output hint + Copy Prompt action. Top-level Copy All Prompts bundle. Quick stats (Steps · Est. Time · Phases).</div>
+          </div>
+          <span class="pl-arrow">↗</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 02b — also planned -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">02b</span>
+        <span class="section-title">Planned (Spec Only)</span>
+      </div>
+      <p class="section-desc">Surfaces specced but not prototyped yet. Build after Pressure Test prompt copy is finalized.</p>
+      <div class="page-list">
+        <a href="#" onclick="event.preventDefault()" class="page-link" style="opacity:0.5;cursor:default;">
+          <div class="pl-left">
+            <div class="pl-title">Pressure Test Drawer <span class="pl-tag spec">Planned</span></div>
+            <div class="pl-meta">Bottom drawer at Memo Review step. 4 prompt options (Bear / Valuation / Kill Criteria stress / Compounding stress). Copy Prompt + Memo bundle. Optional fail-safe before Seal.</div>
+          </div>
+          <span class="pl-arrow">·</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 03 SPECIFICATION -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <span class="section-title">Specification</span>
+      </div>
+      <p class="section-desc">Complete spec doc — section-by-section field definitions, calculation formulas, design tokens, component patterns, state machine, animations, loading/error states, mock data JSON, edge cases. Renders on GitHub.</p>
+      <div class="page-list">
+        <a href="DEV_HANDOFF.md" class="page-link" target="_blank">
+          <div class="pl-left">
+            <div class="pl-title">DEV_HANDOFF.md <span class="pl-tag spec">Spec</span></div>
+            <div class="pl-meta">12 sections — Page Map / Stock Page section-by-section / The Memo / Lifecycle / Tokens / Components / Animations / MVP scope / Edge Cases / Loading-Error / Mock Data / Open Questions.</div>
+          </div>
+          <span class="pl-arrow">↗</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 04 LEGEND -->
+    <div class="section">
+      <div class="legend-inline">
+        <span><span class="dot ready"></span>Ready to build (delivered by designer)</span>
+        <span><span class="dot spec"></span>Spec document</span>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <p><strong>Suggested reading order:</strong> User Flow → Stock Page (Returning) → The Memo (Full) → DEV_HANDOFF.md → other variants.</p>
+      <p><strong>Out of scope for this handoff:</strong> The 9-step Memo Creation flow (spec by Leo). The Unified Dashboard, Managed track, Onboarding flow, Components system are separate workstreams.</p>
+      <p><strong>Open questions live at the end of DEV_HANDOFF.md.</strong> Anything unclear, surface there.</p>
+    </div>
+
+  </div>
+</body>
+</html>
