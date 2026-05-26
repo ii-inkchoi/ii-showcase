@@ -12,7 +12,7 @@
   <style>
     :root {
       --c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-800:#565B5E;--c-700:#929292;--c-400:#C7C7C7;--c-white:#FFFFFF;
-      --c-urgent:#FF3533;--c-warning:#FDAD00;--c-review:#FBC308;--c-live:#30D158;
+      --c-urgent:#FF3533;--c-warning:#FDAD00;--c-review:#FBC308;--c-live:#30D158;--c-elev:#0A0A0A;
     }
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
     body{background:var(--c-black);color:var(--c-white);font-family:'Inter',sans-serif;width:100%;max-width:393px;margin:0 auto;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-feature-settings:'lnum' 1,'tnum' 1;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch}
@@ -277,7 +277,7 @@
     .nav-row{padding:18px 0;border-bottom:0.5px solid var(--c-900);display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
     .nav-rows .nav-row:first-child{border-top:0.5px solid var(--c-900)}
     .nav-row:active{opacity:.5;transition:opacity 80ms ease}
-    .nav-row.primary{background:#0A0A0A;border:0.5px solid var(--c-900);padding:16px}
+    .nav-row.primary{background:var(--c-elev);border:0.5px solid var(--c-900);padding:16px}
     .nav-row.primary .nav-row-arrow{color:var(--c-700);font-size:14px}
     .nav-row.primary .nav-row-meta{font-size:12px;line-height:1.5;max-width:280px}
     button.nav-row.primary{width:100%;text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent;font-family:inherit;color:inherit}
@@ -285,7 +285,7 @@
     button.nav-row.primary.copied .nav-row-arrow{color:var(--c-white)}
 
     /* Compound primary card — stacked action + footer with hairline */
-    .primary-card{background:#0A0A0A;border:0.5px solid var(--c-900);display:flex;flex-direction:column}
+    .primary-card{background:var(--c-elev);border:0.5px solid var(--c-900);display:flex;flex-direction:column}
     .primary-card-action{
       width:100%;
       display:flex;
