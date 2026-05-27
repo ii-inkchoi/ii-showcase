@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <title>Performance Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-black: #000000;
+      --c-1000:  #1C1C1C;
+      --c-900:   #232627;
+      --c-800:   #565B5E;
+      --c-700:   #929292;
+      --c-600:   #A7A7A7;
+      --c-400:   #C7C7C7;
+      --c-200:   #E3E2E2;
+      --c-white: #FFFFFF;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      width: 100%;
+      max-width: 393px;
+      margin: 0 auto;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+    }
+    a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+
+    /* HEADER */
+    .header {
+      height: 71px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 13.5px;
+      border-bottom: 1px solid var(--c-900);
+    }
+    .back {
+      width: 13px; height: 13px;
+      display: inline-flex; align-items: center; justify-content: center;
+      color: var(--c-400);
+    }
+    .back::before {
+      content: '';
+      width: 8px; height: 8px;
+      border-left: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+      transform: rotate(45deg);
+      margin-left: 2px;
+    }
+    .back:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .exit {
+      font-size: 14px;
+      letter-spacing: -0.02em;
+      color: var(--c-400);
+    }
+    .exit:active { opacity: 0.5; transition: opacity 80ms ease; }
+
+    /* TITLE — right-aligned per system convention */
+    .title-block {
+      padding: 81px 13.5px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+    .t-primary {
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: var(--c-700);
+      line-height: 1.15;
+    }
+    .t-secondary {
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: var(--c-white);
+      line-height: 1.15;
+    }
+
+    /* HERO — Tracked for (v1 pattern, left-aligned) */
+    .hero {
+      padding: 60px 13.5px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+    .hero-meta {
+      font-size: 11px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+    }
+    .hero-value {
+      font-size: 18px;
+      color: var(--c-white);
+      letter-spacing: -0.02em;
+      font-weight: 400;
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+      line-height: 1.15;
+    }
+
+    /* SECTIONS */
+    .col {
+      padding: 64px 13.5px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 64px;
+    }
+    .section { display: flex; flex-direction: column; gap: 10px; }
+    .section-label {
+      font-size: 14px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      text-align: left;
+      margin-bottom: 15px;
+    }
+
+    /* ROWS */
+    .row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      width: 100%;
+      padding-bottom: 10px;
+      border-bottom: 0.5px solid var(--c-900);
+    }
+    .row:has(+ .row.sub) { border-bottom: none; padding-bottom: 4px; }
+    .row .lbl { font-size: 14px; color: var(--c-700); letter-spacing: -0.02em; text-align: left; }
+    .row .val { font-size: 15px; color: var(--c-white); letter-spacing: -0.02em; text-align: right; }
+    .row .val .muted { color: var(--c-700); margin-left: 6px; font-size: 14px; }
+
+    .row.sub {
+      padding-left: 14px;
+      padding-top: 2px;
+      padding-bottom: 10px;
+      border-bottom: 0.5px solid var(--c-900);
+    }
+    .row.sub:has(+ .row.sub) { border-bottom: none; padding-bottom: 4px; }
+    .row.sub .lbl { font-size: 13px; color: var(--c-700); }
+    .row.sub .val { font-size: 14px; color: var(--c-400); }
+
+    .row.diff {
+      padding-top: 0;
+      padding-bottom: 10px;
+      border-top: none;
+      border-bottom: 0.5px solid var(--c-900);
+    }
+    .row.diff .lbl { color: var(--c-700); }
+    .row.diff .val { color: var(--c-white); }
+
+    /* TAPPABLE LABEL — text is the affordance (II doctrine) */
+    .lbl-tap {
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      border-bottom: 0.5px dotted var(--c-800);
+      padding-bottom: 1px;
+      transition: color 120ms ease, border-color 120ms ease;
+    }
+    .lbl-tap:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .lbl-tap.open { color: var(--c-white); border-bottom-color: var(--c-700); }
+
+    .info-panel {
+      padding: 10px 14px 14px;
+      margin-top: -10px;
+      border-bottom: 0.5px solid var(--c-900);
+      font-size: 13px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      line-height: 1.55;
+    }
+    .info-panel[hidden] { display: none; }
+    .info-panel .ip-formula {
+      font-size: 12px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      margin-top: 6px;
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+    }
+
+    /* EQUITY CURVE — same pattern as v1 */
+    .curve-wrap { display: flex; flex-direction: column; gap: 12px; }
+    .curve-svg { width: 100%; height: 180px; display: block; overflow: visible; }
+    .curve-svg text { font-family: 'Inter', sans-serif; }
+    .curve-axis {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      padding: 0 0 0 10.1%;
+    }
+
+    /* EXTERNAL CASH FLOWS — yt-table pattern from v1 */
+    .cf-table {
+      display: grid;
+      grid-template-columns: 92px 90px 1fr 72px;
+      column-gap: 14px;
+    }
+    .cf-head, .cf-row { display: contents; }
+    .cf-head > span {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      padding-bottom: 8px;
+      border-bottom: 0.5px solid var(--c-900);
+      text-align: right;
+    }
+    .cf-head > span:first-child,
+    .cf-head > span:nth-child(2) { text-align: left; }
+    .cf-row > span {
+      padding: 10px 0;
+      border-bottom: 0.5px solid var(--c-900);
+      font-size: 14px;
+      letter-spacing: -0.02em;
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+    }
+    .cf-date { color: var(--c-700); text-align: left; }
+    .cf-type { color: var(--c-400); text-align: left; }
+    .cf-amt  { color: var(--c-white); text-align: right; }
+    .cf-px   { color: var(--c-700); text-align: right; }
+
+    /* METHODOLOGY — prose pattern from v1 disclosure */
+    .methodology {
+      font-size: 13px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      line-height: 1.55;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <a href="../../Unified%20Main%20Dashboard/Post%20MVP/Unified%20Dashboard.html" class="back" aria-label="Back"></a>
+    <a href="../../Unified%20Main%20Dashboard/Post%20MVP/Unified%20Dashboard.html" class="exit" aria-label="Exit">Exit</a>
+  </header>
+
+  <div class="title-block">
+    <span class="t-primary">Performance</span>
+    <span class="t-secondary">All Accounts</span>
+  </div>
+
+  <!-- HERO: Tracked since (v1 pattern) -->
+  <section class="hero" aria-label="Tracked duration">
+    <span class="hero-meta">Tracked since Nov 12, 2024</span>
+    <span class="hero-value">18 months</span>
+  </section>
+
+  <div class="col">
+
+    <!-- 1. PERFORMANCE vs S&P 500 -->
+    <section class="section" aria-label="Performance vs S&P 500">
+      <span class="section-label">Performance vs S&amp;P 500</span>
+
+      <div class="row">
+        <span class="lbl">Your Portfolio</span>
+        <span class="val">+8,420.18<span class="muted">+16.84%</span></span>
+      </div>
+      <div class="row">
+        <span class="lbl">S&amp;P 500 Mirror</span>
+        <span class="val">+6,236.00<span class="muted">+12.47%</span></span>
+      </div>
+      <div class="row diff">
+        <span class="lbl"><span class="lbl-tap" data-info="alpha">Alpha</span></span>
+        <span class="val">+2,184.18<span class="muted">+412 bps</span></span>
+      </div>
+      <div class="info-panel" data-info-for="alpha" hidden>
+        <p>What your portfolio earned beyond a matched S&amp;P 500 deposit schedule over the same window.</p>
+        <p class="ip-formula">Portfolio gain − Matched S&amp;P gain.</p>
+      </div>
+    </section>
+
+    <!-- 2. EQUITY CURVE -->
+    <section class="section" aria-label="Equity curve">
+      <span class="section-label">Equity Curve</span>
+      <div class="curve-wrap">
+        <svg class="curve-svg" viewBox="-36 0 356 180" preserveAspectRatio="none" aria-hidden="true">
+          <text x="-36" y="11"  fill="#929292" font-size="9" text-anchor="start">60k</text>
+          <text x="-36" y="92"  fill="#929292" font-size="9" text-anchor="start">30k</text>
+          <text x="-36" y="174" fill="#929292" font-size="9" text-anchor="start">0</text>
+
+          <!-- Legend pill (same shape as v1) -->
+          <rect x="12" y="3" width="284" height="26" rx="10" ry="10" fill="#000000" stroke="#565B5E" stroke-width="0.5" vector-effect="non-scaling-stroke" />
+          <g font-size="9">
+            <line x1="24" y1="17" x2="38" y2="17" stroke="#C7C7C7" stroke-width="1" vector-effect="non-scaling-stroke" />
+            <text x="42" y="20" fill="#929292">Your Portfolio</text>
+            <line x1="118" y1="17" x2="132" y2="17" stroke="#929292" stroke-width="1" stroke-dasharray="3 3" vector-effect="non-scaling-stroke" />
+            <text x="136" y="20" fill="#929292">S&amp;P 500 Mirror</text>
+            <circle cx="225" cy="17" r="2.5" fill="#A7A7A7" />
+            <text x="232" y="20" fill="#929292">Deposit</text>
+          </g>
+
+          <!-- Gridlines (same as v1) -->
+          <g stroke="#1C1C1C" stroke-width="0.5">
+            <line x1="0" y1="0"   x2="320" y2="0"   vector-effect="non-scaling-stroke" />
+            <line x1="0" y1="88"  x2="320" y2="88"  vector-effect="non-scaling-stroke" />
+          </g>
+          <line x1="0" y1="0"   x2="0"   y2="176" stroke="#565B5E" stroke-width="0.5" vector-effect="non-scaling-stroke" />
+          <line x1="0" y1="176" x2="320" y2="176" stroke="#565B5E" stroke-width="0.5" vector-effect="non-scaling-stroke" />
+
+          <!-- S&P 500 Mirror (dashed) -->
+          <path d="M0,166 L53,150 L107,130 L160,108 L213,86 L267,70 L320,58"
+                fill="none" stroke="#929292" stroke-width="1"
+                stroke-dasharray="3 3" vector-effect="non-scaling-stroke" />
+
+          <!-- Your Portfolio (solid, same color as v1) -->
+          <path d="M0,166 L53,152 L107,132 L160,112 L213,90 L267,62 L320,32"
+                fill="none" stroke="#C7C7C7" stroke-width="1"
+                vector-effect="non-scaling-stroke" stroke-linejoin="round" />
+
+          <!-- Deposit dots on the deposit timestamps -->
+          <circle cx="0"   cy="166" r="2.5" fill="#A7A7A7" />
+          <circle cx="46"  cy="151" r="2.5" fill="#A7A7A7" />
+          <circle cx="106" cy="130" r="2.5" fill="#A7A7A7" />
+          <circle cx="180" cy="102" r="2.5" fill="#A7A7A7" />
+          <circle cx="262" cy="72"  r="2.5" fill="#A7A7A7" />
+        </svg>
+        <div class="curve-axis">
+          <span>Nov 24</span>
+          <span>May 25</span>
+          <span>Nov 25</span>
+          <span>May 26</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. EXTERNAL CASH FLOWS — yt-table grid pattern -->
+    <section class="section" aria-label="External cash flows">
+      <span class="section-label">External Cash Flows</span>
+      <div class="cf-table">
+        <div class="cf-head">
+          <span>Date</span>
+          <span>Type</span>
+          <span>Amount</span>
+          <span>SPXTR</span>
+        </div>
+        <div class="cf-row">
+          <span class="cf-date">Nov 12, 2024</span>
+          <span class="cf-type">Deposit</span>
+          <span class="cf-amt">15,000.00</span>
+          <span class="cf-px">1,847.22</span>
+        </div>
+        <div class="cf-row">
+          <span class="cf-date">Feb 8, 2025</span>
+          <span class="cf-type">Deposit</span>
+          <span class="cf-amt">10,000.00</span>
+          <span class="cf-px">1,924.61</span>
+        </div>
+        <div class="cf-row">
+          <span class="cf-date">May 20, 2025</span>
+          <span class="cf-type">Transfer In</span>
+          <span class="cf-amt">8,500.00</span>
+          <span class="cf-px">2,012.40</span>
+        </div>
+        <div class="cf-row">
+          <span class="cf-date">Sep 15, 2025</span>
+          <span class="cf-type">Deposit</span>
+          <span class="cf-amt">8,500.00</span>
+          <span class="cf-px">2,098.55</span>
+        </div>
+        <div class="cf-row">
+          <span class="cf-date">Feb 4, 2026</span>
+          <span class="cf-type">Deposit</span>
+          <span class="cf-amt">8,000.00</span>
+          <span class="cf-px">2,251.18</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. METHODOLOGY -->
+    <section class="section" aria-label="Methodology">
+      <span class="section-label">Methodology</span>
+      <p class="methodology">
+        Matched-mirror comparison. For each external deposit and in-kind transfer, the same CAD amount is allocated to S&amp;P 500 total return (SPXTR) at that date's close, converted to CAD. Withdrawals reduce both sides proportionally. Cash held in your account is included in your return. We don't adjust for it.
+      </p>
+    </section>
+
+  </div>
+
+  <div style="height:80px"></div>
+
+  <script>
+    document.querySelectorAll('.lbl-tap').forEach(label => {
+      label.addEventListener('click', e => {
+        e.stopPropagation();
+        e.preventDefault();
+        const key = label.getAttribute('data-info');
+        const panel = document.querySelector('.info-panel[data-info-for="' + key + '"]');
+        if (!panel) return;
+        const isOpen = !panel.hidden;
+        panel.hidden = isOpen;
+        if (isOpen) label.classList.remove('open');
+        else label.classList.add('open');
+      });
+    });
+  </script>
+
+</body>
+</html>
