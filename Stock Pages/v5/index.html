@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ATZ Stock Page · V5 Prototype Index</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #000;
+    color: #C7C7C7;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.5;
+    padding: 48px 24px 80px;
+    max-width: 920px;
+    margin: 0 auto;
+  }
+  a { color: inherit; text-decoration: none; }
+  h1 { font-size: 28px; color: #FFFFFF; letter-spacing: -0.02em; margin-bottom: 6px; font-weight: 400; }
+  .subtitle { font-size: 13px; color: #929292; margin-bottom: 24px; }
+  .startbox {
+    border: 0.5px solid #232627; background: #0A0A0A; padding: 16px 18px;
+    margin-bottom: 48px; border-left: 2px solid #565B5E;
+  }
+  .startbox-label { font-size: 9px; color: #565B5E; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 6px; }
+  .startbox-text { font-size: 13px; color: #C7C7C7; line-height: 1.55; }
+  .startbox-text strong { color: #FFFFFF; font-weight: 500; }
+  h2 { font-size: 15px; color: #FFFFFF; letter-spacing: -0.02em; padding-bottom: 10px; border-bottom: 0.5px solid #232627; margin-bottom: 16px; margin-top: 40px; font-weight: 400; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid.three { grid-template-columns: 1fr 1fr 1fr; }
+  @media (max-width: 600px) { .grid, .grid.three { grid-template-columns: 1fr; } }
+  .card {
+    border: 0.5px solid #232627;
+    padding: 16px;
+    background: #0A0A0A;
+    transition: border-color 120ms ease;
+  }
+  .card:hover { border-color: #565B5E; }
+  .card-title { font-size: 14px; color: #FFFFFF; letter-spacing: -0.02em; margin-bottom: 4px; }
+  .card-meta { font-size: 11px; color: #929292; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .card-desc { font-size: 12px; color: #929292; line-height: 1.5; }
+  .badge {
+    display: inline-block;
+    font-size: 9px;
+    color: #565B5E;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+</style>
+</head>
+<body>
+  <h1>ATZ Stock Page · V5</h1>
+  <div class="subtitle">Prototype index — preview pages by state and flow.</div>
+
+  <div class="startbox">
+    <div class="startbox-label">Start here</div>
+    <div class="startbox-text">Begin with <strong>Stock Page · First-time</strong> to see the empty state. Click the memo card to enter <strong>Memo Review</strong>, fill in fields, then Save Changes to commit V1. Each subsequent edit creates V2, V3 … all viewable in <strong>Memo History</strong>.</div>
+  </div>
+
+  <h2>1. Stock Page</h2>
+  <div class="grid">
+    <a href="Stock%20Page%20Firsttime%20User.html" class="card">
+      <div class="badge">First-time · Empty</div>
+      <div class="card-title">Stock Page · First-time</div>
+      <div class="card-meta">No memo · No position</div>
+      <div class="card-desc">User just discovered ATZ. Memo card prompts "Write or paste your memo".</div>
+    </a>
+    <a href="Stock%20Page%20Memo%20Only.html" class="card">
+      <div class="badge">Memo only · No position</div>
+      <div class="card-title">Stock Page · Memo Only</div>
+      <div class="card-meta">V1 · Live · No position yet</div>
+      <div class="card-desc">User wrote a memo but hasn't bought yet (research mode).</div>
+    </a>
+    <a href="Stock%20Page%20Return%20User.html" class="card">
+      <div class="badge">Returning · V1</div>
+      <div class="card-title">Stock Page · Return User (V1)</div>
+      <div class="card-meta">V1 · Live · 12.2% portfolio weight</div>
+      <div class="card-desc">User holds ATZ with first memo. Q4 earnings alert active.</div>
+    </a>
+    <a href="Stock%20Page%20Return%20User%20-%20History.html" class="card">
+      <div class="badge">Returning · V50 + History</div>
+      <div class="card-title">Stock Page · Return User (V50)</div>
+      <div class="card-meta">V50 · Live · 50 versions across 4 years</div>
+      <div class="card-desc">Deep history demo. 50 memo versions with diverse edits + trade events. Tap "50 versions ›" to view history.</div>
+    </a>
+  </div>
+
+  <h2>2. Memo Review</h2>
+  <div class="grid">
+    <a href="Firstime%20user_Memo%20Review.html" class="card">
+      <div class="badge">Unified · All states</div>
+      <div class="card-title">Memo Review</div>
+      <div class="card-meta">Draft → V1 → V2 → V3 …</div>
+      <div class="card-desc">One page for every state. Header badge, section hint, save sheet text, and history affordance all adapt to current version. Edits create the next version.</div>
+    </a>
+  </div>
+
+  <h2>3. Quarterly Alerts</h2>
+  <div class="grid">
+    <a href="Stock%20Page%20Multi-Quarter%20Alerts.html" class="card">
+      <div class="badge">Multi-quarter · 4 pending</div>
+      <div class="card-title">Stock Page · Multi-Quarter Alerts</div>
+      <div class="card-meta">Q1 / Q2 / Q3 / Q4 all unreviewed</div>
+      <div class="card-desc">V1 saved 14 months ago, never reviewed since. 4 consecutive quarterly alerts stacked. X dismisses temporarily — only a new memo save permanently clears each quarter.</div>
+    </a>
+  </div>
+
+  <h2>4. History</h2>
+  <div class="grid">
+    <a href="Memo%20History.html" class="card">
+      <div class="badge">Version list</div>
+      <div class="card-title">Memo History</div>
+      <div class="card-meta">All versions, grouped by year</div>
+      <div class="card-desc">Diff-based list. Current year expanded, older years collapsed. Tap row to view that version.</div>
+    </a>
+    <a href="Memo%20V1%20Historical.html" class="card">
+      <div class="badge">Read-only · Immutable</div>
+      <div class="card-title">Memo Historical (dynamic)</div>
+      <div class="card-meta">Renders the version selected from History</div>
+      <div class="card-desc">Read-only view of any past version. No edit, no save. Permanent record.</div>
+    </a>
+  </div>
+
+  <h2>5. Edit Field Pages</h2>
+  <div class="subtitle" style="font-size:12px; margin-top:-8px; margin-bottom:16px;">Sub-pages reachable from Memo Review row clicks. Each saves to localStorage and returns.</div>
+  <div class="grid three">
+    <a href="Edit%20Decision.html" class="card">
+      <div class="badge">Field · Decision</div>
+      <div class="card-title">Decision</div>
+      <div class="card-meta">Active / Core · Treasury</div>
+      <div class="card-desc">2-option radio. Matches Leo's mfork pattern (no large title, question as heading).</div>
+    </a>
+    <a href="Edit%20Classification.html" class="card">
+      <div class="badge">Field · Classify</div>
+      <div class="card-title">Classify</div>
+      <div class="card-meta">Compounder / Emerging / Situational / Speculative</div>
+      <div class="card-desc">Radio with descriptions + info modal.</div>
+    </a>
+    <a href="Edit%20Sizing.html" class="card">
+      <div class="badge">Field · Size</div>
+      <div class="card-title">Size</div>
+      <div class="card-meta">Core / Conviction / Starter / Speculative</div>
+      <div class="card-desc">Radio with % range guidance + info modal.</div>
+    </a>
+    <a href="Edit%20Memo.html" class="card">
+      <div class="badge">Field · Memo</div>
+      <div class="card-title">Memo</div>
+      <div class="card-meta">Free text · paste · attach</div>
+      <div class="card-desc">Bracket composer (only optional field).</div>
+    </a>
+    <a href="Edit%20Probability.html" class="card">
+      <div class="badge">Field · Exceptional Compounding</div>
+      <div class="card-title">Probability &amp; Horizon</div>
+      <div class="card-meta">Slider 10–90% + 1Y / 3Y / 5Y+</div>
+      <div class="card-desc">Combined hurdle, horizon, calibration. Edit Horizon URL redirects here.</div>
+    </a>
+  </div>
+
+  <h2>6. Reference</h2>
+  <div class="grid">
+    <a href="Example%20Memo.html" class="card">
+      <div class="badge">Reference · Full memo</div>
+      <div class="card-title">Example Memo</div>
+      <div class="card-meta">Complete reference</div>
+      <div class="card-desc">Sample of a finished memo. Also surfaced as info modal from Edit Memo page.</div>
+    </a>
+  </div>
+</body>
+</html>

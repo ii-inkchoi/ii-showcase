@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-800:#565B5E;--c-700:#929292;--c-400:#C7C7C7;--c-white:#FFFFFF;
+      --c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-800:#565B5E;--c-700:#929292;--c-600:#A7A7A7;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFFFFF;
       --c-urgent:#FF3533;--c-warning:#FDAD00;--c-review:#FBC308;--c-live:#30D158;--c-elev:#0A0A0A;
     }
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -49,6 +49,7 @@
     .t-secondary{font-size:13px;letter-spacing:-.02em;color:var(--c-700);line-height:1.15}
     .t-secondary .price{color:var(--c-white);margin-left:4px}
     .t-secondary .t-entry{color:var(--c-700);margin-left:6px}
+    .t-state{font-size:11px;letter-spacing:-.02em;color:var(--c-700);line-height:1.4;margin-top:2px}
 
     /* ALERT MIRROR — v6a pattern (dashboard mirror, pulsating dot, ABOVE memo) */
     .oq-list{display:flex;flex-direction:column;padding:0 20px;margin-top:48px}
@@ -81,10 +82,119 @@
        ───────────────────────────────────────── */
     .memo-block{
       border:0.5px solid var(--c-900);
-      padding:0;
+      padding:16px;
       display:flex;
       flex-direction:column;
+      gap:8px;
     }
+    .memo-block .uw-rows{display:flex;flex-direction:column;gap:10px}
+    .memo-block-divider{
+      height:0.5px;
+      background:var(--c-900);
+      margin:4px 0;
+    }
+    .memo-block-toggle{
+      align-self:flex-start;
+      cursor:pointer;
+      -webkit-tap-highlight-color:transparent;
+      border:none;
+      background:none;
+      border-bottom:0.5px dotted var(--c-800);
+      padding:1px 0 2px;
+      margin-top:4px;
+      font-family:inherit;
+      font-size:12px;
+      color:var(--c-700);
+      letter-spacing:-.02em;
+    }
+    .memo-block-toggle:active{opacity:.5;transition:opacity 80ms ease}
+    .memo-block-prose.expanded{white-space:pre-wrap}
+
+    .memo-block-foot{
+      display:flex;
+      align-items:baseline;
+      justify-content:space-between;
+      gap:12px;
+      margin-top:8px;
+    }
+    .memo-block-version{
+      font-size:11px;
+      color:var(--c-700);
+      letter-spacing:-.02em;
+    }
+    .memo-block-cta{
+      display:inline-flex;
+      align-items:baseline;
+      gap:4px;
+      font-size:11px;
+      color:var(--c-white);
+      letter-spacing:-.02em;
+      padding:4px 0 0;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .memo-block-cta:active{opacity:.5;transition:opacity 80ms ease}
+    .memo-block-cta .chev{font-size:13px;font-weight:300;color:var(--c-white)}
+
+    /* Whole memo card is a tap target → Memo Review */
+    a.memo-block-link{
+      color:inherit;
+      text-decoration:none;
+      cursor:pointer;
+      -webkit-tap-highlight-color:transparent;
+    }
+    a.memo-block-link:active{opacity:.7;transition:opacity 80ms ease}
+
+    /* Live status dot — pulsing green */
+    .live-dot{
+      display:inline-block;
+      width:5px;
+      height:5px;
+      border-radius:50%;
+      background:var(--c-live);
+      margin-right:6px;
+      vertical-align:middle;
+      animation:live-pulse 2.4s cubic-bezier(0.45,0,0.55,1) infinite;
+    }
+    @keyframes live-pulse{0%,100%{opacity:1}50%{opacity:.6}}
+    @media (prefers-reduced-motion: reduce){.live-dot{animation:none !important}}
+    .memo-block-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .memo-block-title{
+      font-size:15px;
+      color:var(--c-white);
+      letter-spacing:-.02em;
+    }
+    .memo-block-chev{
+      font-size:13px;
+      font-weight:300;
+      color:var(--c-700);
+      flex-shrink:0;
+    }
+    .memo-block-meta{
+      font-size:12px;
+      color:var(--c-700);
+      letter-spacing:-.02em;
+      line-height:1.45;
+    }
+    .memo-block-prose{
+      font-size:13px;
+      color:var(--c-400);
+      letter-spacing:-.02em;
+      line-height:1.65;
+      margin-top:4px;
+    }
+
+    /* UNDERWRITING / Probability — row pattern (matches Position) */
+    .uw-section{gap:14px}
+    .prob-section{gap:14px}
+    .uw-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+    .uw-key{font-size:13px;color:var(--c-700);letter-spacing:-.02em}
+    .uw-val{font-size:13px;color:var(--c-400);letter-spacing:-.02em;text-align:right;font-feature-settings:'tnum' 1}
+    .uw-val .uw-meta{color:var(--c-700);margin-left:6px;font-size:12px}
 
     /* Memo status bar (top of box) */
     .memo-status-bar{
@@ -261,10 +371,34 @@
     /* PERFORMANCE (same row pattern) */
     .section{display:flex;flex-direction:column;gap:14px}
     .section-header{display:flex;align-items:baseline;justify-content:space-between;padding:0 0 14px;border-bottom:0.5px solid var(--c-900)}
-    .section-title{font-size:15px;color:var(--c-400);letter-spacing:-.02em}
+    .memo-section .section-header{border-bottom:none;padding-bottom:10px}
+    .memo-history-link{
+      font-size:11px;
+      color:var(--c-700);
+      letter-spacing:-.02em;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:baseline;
+      gap:4px;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .memo-history-link:active{opacity:.5;transition:opacity 80ms ease}
+    .memo-history-link .chev{font-size:13px;font-weight:300;color:var(--c-700)}
+    .section-title{font-size:15px;color:var(--c-white);letter-spacing:-.02em}
     .section-meta{font-size:11px;color:var(--c-700);letter-spacing:-.02em}
     .perf-vs-sp.section{gap:16px}
-    .perf-row{display:flex;justify-content:space-between;align-items:baseline}
+    .perf-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+    .perf-pct{color:var(--c-700);margin-left:8px;font-size:13px;letter-spacing:-.02em}
+    .perf-row.diff .perf-pct{color:var(--c-700)}
+    .perf-method{
+      font-size:11px;
+      color:var(--c-700);
+      letter-spacing:-.02em;
+      line-height:1.5;
+      padding-top:8px;
+      border-top:0.5px solid var(--c-1000);
+      max-width:100%;
+    }
     .perf-key{font-size:14px;color:var(--c-700);letter-spacing:-.02em}
     .perf-val{font-size:14px;color:var(--c-400);letter-spacing:-.02em}
     .perf-row.diff .perf-val{color:var(--c-white)}
@@ -305,6 +439,16 @@
     .primary-card-action .nav-row-arrow{color:var(--c-700);font-size:14px}
     .primary-card-action .nav-row-meta{font-size:12px;line-height:1.5;max-width:280px}
     .primary-card-action.copied .nav-row-arrow{color:var(--c-white)}
+    .copy-feedback{
+      display:inline-block;
+      margin-left:10px;
+      font-size:13px;
+      color:var(--c-700);
+      letter-spacing:-.02em;
+      opacity:0;
+      transition:opacity 120ms ease;
+    }
+    .primary-card-action.copied .copy-feedback{opacity:1}
     .primary-card-footer{
       border-top:0.5px solid var(--c-900);
       padding:12px 16px;
@@ -385,7 +529,7 @@
     }
     .ai-tools-label{color:var(--c-700)}
     .ai-tool{
-      color:var(--c-400);
+      color:var(--c-600);
       padding:2px 0;
       -webkit-tap-highlight-color:transparent;
     }
@@ -397,10 +541,12 @@
     .nav-row-arrow{color:var(--c-400);font-size:16px;font-weight:300;line-height:1.2}
 
     /* Capital Decision CTA */
-    .capital-decision{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:393px;padding:40px 13.5px 24px;display:flex;justify-content:flex-end;background:linear-gradient(to top,var(--c-black) 0%,var(--c-black) 60%,rgba(0,0,0,0) 100%);pointer-events:none;z-index:10}
+    .capital-decision{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:393px;padding:40px 13.5px 24px;display:flex;justify-content:flex-end;align-items:baseline;background:linear-gradient(to top,var(--c-black) 0%,var(--c-black) 60%,rgba(0,0,0,0) 100%);pointer-events:none;z-index:10;gap:12px}
     .capital-decision a{pointer-events:auto;display:inline-flex;align-items:baseline;gap:8px;font-size:15px;color:var(--c-white);letter-spacing:-.02em;padding:8px 4px}
     .capital-decision a:active{opacity:.5;transition:opacity 80ms ease}
     .capital-decision a .arrow{font-weight:500}
+    .capital-decision a.reunder{color:var(--c-700);font-size:15px}
+    .capital-decision a.reunder .arrow{color:var(--c-700)}
   </style>
 </head>
 <body>
@@ -424,7 +570,7 @@
   </div>
 
   <!-- ALERT MIRROR — v6a pattern, ABOVE memo (max visibility, pulsating dot) -->
-  <section class="oq-list" aria-label="Re-underwrite alert">
+  <section class="oq-list" aria-label="Review Memo alert">
     <div class="oq-section">
       <div class="oq-body">
         <div class="oq-head-row">
@@ -433,7 +579,7 @@
             <span class="oq-title">Q4 earnings posted 14d ago</span>
           </span>
         </div>
-        <a class="oq-action" href="ATZ%20Memo.html">Re-underwrite <span class="chev" aria-hidden="true">›</span></a>
+        <a class="oq-action" href="Firstime%20user_Memo%20Review.html" onclick="try{sessionStorage.setItem('atz-memo-stock-source',window.location.href);}catch(e){}">Review Memo <span class="chev" aria-hidden="true">›</span></a>
       </div>
       <button class="oq-x" aria-label="Dismiss"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 3L11 11M11 3L3 11" stroke="currentColor" stroke-width="0.75" stroke-linecap="round"/></svg></button>
     </div>
@@ -441,28 +587,38 @@
 
   <div class="col">
 
-    <!-- 1. MEMO BLOCK — v6c box, with 3-cell data grid restored from v6a -->
-    <section class="memo-block" aria-label="Memo">
-      <div class="memo-status-bar">
-        <span class="memo-status-left">
-          <span>The Memo · Compounder · Hurdle 20%</span>
-          <span class="memo-state live" id="memoStateBadge">
-            <span class="state-dot" aria-hidden="true"></span>
-            <span id="memoStateLabel">Live</span>
-          </span>
-        </span>
-        <span class="memo-status-right" id="memoVersionLabel"></span>
+    <!-- 1. MEMO — section with title + history affordance -->
+    <section class="section memo-section" aria-label="Memo">
+      <div class="section-header">
+        <span class="section-title">Memo</span>
+        <a href="#" id="memoHistoryLink" onclick="event.preventDefault();openHistory()" class="memo-history-link">3 versions <span class="chev" aria-hidden="true">›</span></a>
       </div>
-
-      <div class="memo-content">
-        <p class="mc-preview" id="memoPreview"></p>
-        <button type="button" class="mc-toggle" id="memoToggle" onclick="toggleMemoExpand()" aria-expanded="false">Read More</button>
-      </div>
-
-      <div class="memo-footer">
-        <span class="mf-reviewed" id="memoReviewedLabel">Reviewed 26d ago</span>
-        <a href="ATZ%20Memo.html" class="mf-action">Re-underwrite</a>
-      </div>
+      <a href="Firstime%20user_Memo%20Review.html" class="memo-block memo-block-link" aria-label="Open Memo Review" onclick="try{sessionStorage.setItem('atz-memo-stock-source',window.location.href);}catch(e){}">
+        <div class="uw-rows">
+          <div class="uw-row">
+            <span class="uw-key">Decision</span>
+            <span class="uw-val">Active Allocation</span>
+          </div>
+          <div class="uw-row">
+            <span class="uw-key">Classification</span>
+            <span class="uw-val">Compounder</span>
+          </div>
+          <div class="uw-row">
+            <span class="uw-key">Sizing</span>
+            <span class="uw-val">Core</span>
+          </div>
+          <div class="uw-row">
+            <span class="uw-key">Probability</span>
+            <span class="uw-val">62% <span class="uw-meta">· 3y</span></span>
+          </div>
+        </div>
+        <div class="memo-block-divider"></div>
+        <p class="memo-block-prose" id="memoProse">Aritzia is a high-quality DTC women's fashion business with a durable in-house brand portfolio (Wilfred, TNA, Babaton, Super Puff), proven Canadian unit economics, and a long US runway. Returns expected through long-duration earnings growth, not transient mispricing. US store rollout is the primary growth driver for the next five years.</p>
+        <div class="memo-block-foot">
+          <span class="memo-block-version" id="memoVersion"><span class="live-dot" aria-hidden="true"></span>V1 · Live</span>
+          <span class="memo-block-cta" aria-hidden="true">Review Memo <span class="chev">›</span></span>
+        </div>
+      </a>
     </section>
 
     <!-- 2. POSITION — row pattern (v6c, matches Performance) -->
@@ -483,17 +639,26 @@
         <span class="section-title">Performance</span>
         <span class="section-meta">Cumulative · 3y 2m</span>
       </div>
-      <div class="perf-row"><span class="perf-key">ATZ</span><span class="perf-val">+42.6%</span></div>
-      <div class="perf-row"><span class="perf-key">S&amp;P 500</span><span class="perf-val">+14.2%</span></div>
-      <div class="perf-row diff"><span class="perf-key">Alpha</span><span class="perf-val">+28.4pp</span></div>
+      <div class="perf-row"><span class="perf-key">ATZ</span><span class="perf-val">+5,652 CAD <span class="perf-pct">+42.6%</span></span></div>
+      <div class="perf-row"><span class="perf-key">S&amp;P 500</span><span class="perf-val">+1,892 CAD <span class="perf-pct">+14.2%</span></span></div>
+      <div class="perf-row diff"><span class="perf-key">Alpha</span><span class="perf-val">+3,760 CAD <span class="perf-pct">+2,840 bps</span></span></div>
       <a href="#" onclick="event.preventDefault()" class="view-link">View Performance Detail <span class="chev" aria-hidden="true">›</span></a>
+    </section>
+
+    <!-- 3b. ABOUT THE COMPANY — baseline context regardless of memo state -->
+    <section class="section" aria-label="About Aritzia Inc.">
+      <div class="section-header">
+        <span class="section-title">About Aritzia Inc.</span>
+      </div>
+      <p style="font-size:14px;color:var(--c-400);letter-spacing:-.02em;line-height:1.55;">Aritzia Inc. designs and sells in-house women's fashion brands (Wilfred, TNA, Babaton, Super Puff) through 110+ boutiques in Canada and the US, plus a growing ecommerce business. Founded in Vancouver in 1984.</p>
+      <a href="#" onclick="event.preventDefault()" class="view-link">Read More on the Company <span class="chev" aria-hidden="true">›</span></a>
     </section>
 
     <!-- 4. PRIMARY SOURCE — Fiscal AI (under Performance, v6a placement) -->
     <section class="section" aria-label="Primary source" style="gap:20px;">
-      <a href="ATZ Fiscal.html" class="nav-row primary">
+      <a href="#" onclick="event.preventDefault()" class="nav-row primary">
         <span class="nav-row-text">
-          <span class="nav-row-title">Fiscal AI · ATZ</span>
+          <span class="nav-row-title">Fiscal AI</span>
           <span class="nav-row-meta">Dedicated workspace. Filings, financials, and live fundamentals.</span>
         </span>
         <span class="nav-row-arrow">›</span>
@@ -501,33 +666,11 @@
       <div class="primary-card">
         <button type="button" class="primary-card-action" id="copyPromptCard" onclick="copyResearchPrompt(this)">
           <span class="nav-row-text">
-            <span class="nav-row-title">Research Prompt · ATZ</span>
-            <span class="nav-row-meta" id="copyPromptMeta">Tailored to ATZ at 20% hurdle. Copy and paste into your AI tool.</span>
+            <span class="nav-row-title">Research Prompt<span class="copy-feedback" id="copyPromptMeta" aria-live="polite"></span></span>
           </span>
           <span class="nav-row-arrow" id="copyPromptSymbol" aria-label="Copy prompt"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3.5" y="3.5" width="7" height="9" stroke="currentColor" stroke-width="0.7"/><rect x="6" y="1" width="7" height="9" stroke="currentColor" stroke-width="0.7" fill="none"/></svg></span>
         </button>
-        <div class="primary-card-structure" id="promptStructure" aria-label="Output structure">
-          <button type="button" class="pc-structure-toggle" id="promptStructureToggle" onclick="togglePromptStructure()" aria-expanded="false" aria-controls="promptStructureBody">
-            <span class="pc-structure-label">Output · 9 sections · 2,500–3,500 words</span>
-            <span class="pc-structure-chev" aria-hidden="true">›</span>
-          </button>
-          <div class="pc-structure-body" id="promptStructureBody" hidden>
-            <ol class="pc-structure-list">
-              <li><span class="pc-num">01</span>Business Overview</li>
-              <li><span class="pc-num">02</span>Classification</li>
-              <li><span class="pc-num">03</span>Thesis + Decomposition</li>
-              <li><span class="pc-num">04</span>Why Now</li>
-              <li><span class="pc-num">05</span>Kill Criteria</li>
-              <li><span class="pc-num">06</span>Intrinsic Value</li>
-              <li><span class="pc-num">07</span>Probability</li>
-              <li><span class="pc-num">08</span>Deeper Work</li>
-              <li><span class="pc-num">09</span>Verify on Fiscal</li>
-            </ol>
-          </div>
-        </div>
-        <div class="primary-card-footer ai-tools-row" aria-label="Open in AI tool">
-          <span class="ai-tools-label">Open in</span>
-          <span class="ai-tools-sep">·</span>
+        <div class="primary-card-footer ai-tools-row" aria-label="AI tools">
           <a href="https://claude.ai/new" target="_blank" rel="noopener" class="ai-tool">Claude</a>
           <span class="ai-tools-sep">·</span>
           <a href="https://chatgpt.com/" target="_blank" rel="noopener" class="ai-tool">ChatGPT</a>
@@ -575,281 +718,148 @@ Horizon: 5 years
 DELIVERABLE
 Produce a research document of 2,500–3,500 words, structured as the nine numbered sections below. Each section is mandatory. Do not collapse, merge, reorder, or omit. Do not write a preamble, an executive summary, or a conclusion outside the section structure. The structure is the deliverable.
 
-01 BUSINESS OVERVIEW (200–300 words)
-Describe the business so a generalist can underwrite it without prior context. Cover: brand portfolio and positioning, geography mix (Canada vs US revenue split), channel mix (boutique vs ecommerce), customer demographics and price points, store productivity (revenue per square foot), founder/management background and ownership. Include the latest fiscal year's headline figures: revenue, gross margin, EBITDA margin, net income, FCF, store count (entered vs exited), ecommerce mix. Use Q4 FY2026 and FY2026 full-year data.
+Sections (each mandatory, in this order):
+01 Business Overview
+02 Classification (compounder / emerging compounder / situational mispricing / speculative)
+03 Thesis and Structural Decomposition (including the load-bearing assumption)
+04 Why Now
+05 Kill Criteria (4–6, each with metric, threshold, action)
+06 Intrinsic Value (method selection, three scenarios, conservative IV, margin of safety)
+07 Probability of Clearing the Hurdle (1, 3, 5 year)
+08 Where Deeper Work Would Move the Probability (if Promote)
+09 Verify on Fiscal (10–15 fact-checks)
 
-02 CLASSIFICATION (100–200 words)
-Pick exactly one classification and defend it in 2–3 sentences:
-- Compounder: high-quality business with durable economics, long runway, returns through long-duration earnings growth
-- Emerging Compounder: high-quality business early in proving the economics, return-of-capital flywheel not yet established
-- Situational Mispricing: stable business temporarily mispriced — returns through re-rating, not growth
-- Speculative: binary or wide-distribution outcome — returns require multiple things to go right
-Reject any classification you cannot defend with current evidence. Do not hedge.
+Be direct, declarative, decisive. State a specific number when a number is asked. Pick one classification. Do not soften the triage output. The conclusion in section 7 is binding — Promote if 3-year probability ≥ 50%, Pass otherwise.
 
-03 THESIS AND STRUCTURAL DECOMPOSITION (400–550 words)
-State the thesis in one sentence: what specific thing must happen for returns to exceed 20% annualized over five years? Then decompose the expected return mathematically: revenue CAGR × margin expansion × multiple change × FX × capital return. Show the arithmetic. Identify the LOAD-BEARING ASSUMPTION — the single assumption that, if wrong, breaks the entire thesis. Quantify it (CAGR percentage, margin basis points, store count, productivity per square foot, etc.). A vague thesis or unidentified load-bearing assumption is itself a Pass signal — state that explicitly if so.
-
-04 WHY NOW (200–300 words)
-Why is this the moment to underwrite this name, not six months ago and not 12 months from now? Cite specific evidence: recent stock performance (drawdown from 24-month high, percentage), recent operating prints (Q4 FY2026 specifics: US comps, store opens, gross margin movement), insider/founder activity, sentiment indicators, structural shifts in the category. If there is no "why now" — if this is simply a quality business at a fair price with no catalyst or mispricing — state that. "No why now" is a soft Pass signal.
-
-05 KILL CRITERIA (250–400 words)
-List 4–6 falsifiable kill criteria. Each must include three components on one line:
-- METRIC: what is measured (e.g., US same-store sales, gross margin, store count)
-- THRESHOLD: specific number that triggers the kill (e.g., < 0% for two consecutive quarters, > 200bps compression sustained for two quarters)
-- ACTION: Stop · Reduce · Exit (which response is triggered)
-Cover: unit economics breakdown, growth stall, margin compression, brand dilution, key person departure, competitive displacement, capital allocation deterioration. These are the conditions under which the thesis is mechanically falsified, not subjective judgment calls.
-
-06 INTRINSIC VALUE (400–550 words)
-Select the valuation method (DCF, SOTP, comparable multiples, replacement cost) and justify the selection in one sentence — why this method fits this business. Build three scenarios with explicit assumption deltas:
-- Conservative (downside): assume margin contraction risk, slower US rollout
-- Base (most likely): current trajectory continues
-- Aggressive (upside): US productivity matches Canadian peak
-For each, output: revenue CAGR, terminal EBITDA margin, WACC or exit multiple, per-share IV in CAD. Then state: Conservative IV (the number used for position sizing), Base IV, Aggressive IV. Calculate margin of safety from current price to Conservative IV. State the implied 5-year IRR at current price using Base IV.
-
-07 PROBABILITY OF CLEARING THE HURDLE (200–300 words)
-Estimate the probability of clearing the 20% annualized return hurdle over:
-- 1 year
-- 3 years
-- 5 years
-Use point estimates (e.g., 35%, 55%, 65%), not ranges. Show brief reasoning for each — what would push the probability up or down. The 3-year probability is the binding decision metric. State the conclusion at the end of this section in capital letters: PROMOTE if 3-year probability ≥ 50%, PASS otherwise. Do not soften, qualify, or add caveats to the conclusion.
-
-08 WHERE DEEPER WORK WOULD MOVE THE PROBABILITY (150–250 words)
-If Promote: list 3–5 specific work-streams that would tighten the probability estimate before allocating capital. For each, state: the question it answers, the method (channel checks, scuttlebutt interviews, expert network calls, store visits, cohort modeling, supply-chain mapping), and the expected shift in probability (e.g., "could move 3-year from 55% to 65–70%"). If Pass: write "Not applicable — name rejected." Do not justify further work on a Pass.
-
-09 VERIFY ON FISCAL (200–300 words)
-List 10–15 specific facts cited in sections 01–08 that must be verified against primary sources before deploying capital. Each entry: the fact, the section it appeared in, and the source to verify against (10-K section, MD&A page, earnings call transcript with date and quarter, SEDAR+ filing, etc.). This is the audit trail. The analyst doing deep work will check every item before the position is sized.
-
-TONE AND CONSTRAINTS
-- Direct, declarative, decisive. State specific numbers; avoid ranges unless explicitly requested.
-- Pick exactly one classification, one most-likely scenario, one Promote/Pass.
-- Do not soften the triage output. The conclusion in section 7 is binding.
-- Do not include disclaimers, hedges, or "this is not financial advice."
-- Title Case for section headers. Sentence case for body.
-- When a fact is unknown or not in publicly available data, write "Not in current data" — do not fabricate.
-- Cite specific source locations (10-K page numbers, transcript quarters, MD&A sections) for any material claim.
-
-Begin with 01 BUSINESS OVERVIEW. No preamble. No "Here is the research document." No acknowledgement of these instructions. Start writing the document.</script>
+Begin with 01 Business Overview. No preamble.</script>
 
   <script>
-    /* Toggle Output structure accordion */
-    function togglePromptStructure() {
-      var wrap = document.getElementById('promptStructure');
-      var body = document.getElementById('promptStructureBody');
-      var toggle = document.getElementById('promptStructureToggle');
-      if (!wrap || !body || !toggle) return;
-      var isHidden = body.hasAttribute('hidden');
-      if (isHidden) {
-        body.removeAttribute('hidden');
-        wrap.classList.add('open');
-        toggle.setAttribute('aria-expanded', 'true');
-      } else {
-        body.setAttribute('hidden', '');
-        wrap.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
-      }
-    }
+    /* ─────────── Demo seed — 50 versions over 4 years ─────────── */
+    (function seedDemoHistory(){
+      try {
+        var SCHEMA = 'return-v50';
+        var ref = document.referrer || '';
+        var fromIndex = ref.indexOf('index.html') !== -1 || ref.indexOf('User%20Flow') !== -1;
+        var existingVersion = localStorage.getItem('atz-memo-version');
+        var currentSchema = localStorage.getItem('atz-memo-demo-schema');
+        // Preserve user edits — skip when memo already exists with matching schema
+        if (existingVersion && currentSchema === SCHEMA) return;
+        if (!fromIndex && existingVersion) return;
 
-    /* Copy Research Prompt to clipboard + transient ✓ + "Copied" feedback */
-    function copyResearchPrompt(btn) {
-      var node = document.getElementById('researchPromptText');
-      var text = node ? node.textContent.trim() : '';
-      var symbol = document.getElementById('copyPromptSymbol');
-      var meta = document.getElementById('copyPromptMeta');
-      var originalSymbol = symbol ? symbol.innerHTML : '';
-      var originalMeta = meta ? meta.textContent : '';
-      function onCopied() {
-        if (btn) btn.classList.add('copied');
-        if (symbol) symbol.textContent = '✓';
-        if (meta) meta.textContent = 'Copied. Paste into your AI tool.';
-        setTimeout(function () {
-          if (btn) btn.classList.remove('copied');
-          if (symbol) symbol.innerHTML = originalSymbol;
-          if (meta) meta.textContent = originalMeta;
-        }, 1800);
-      }
-      if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(text).then(onCopied).catch(function () {
-          fallbackCopyToClipboard(text, onCopied);
+        var proseV1  = "Aritzia is a high-quality DTC women\'s fashion business with a durable in-house brand portfolio (Wilfred, TNA, Babaton, Super Puff), proven Canadian unit economics, and a long US runway.";
+        var proseV7  = proseV1  + "\n\nInitial position rationale: Q3 FY2025 confirmed Canadian unit productivity sustaining at scale.";
+        var proseV12 = proseV7  + "\n\nQ4 FY2026 showed 62 US stores (up 11 YTD) at ~CAD $1,800/sqft productivity, matching Canadian levels.";
+        var proseV16 = proseV12 + "\n\nCohort analysis: 2023 vintage stores tracking ahead of plan on year-2 sales density.";
+        var proseV20 = proseV16 + "\n\nUS revenue mix crossed 50% for the first time. Kill criteria: SSS declines two consecutive quarters · Gross margin compression > 200bps sustained · US opening pace below 8 per year · Founder/CEO departure.";
+        var proseV25 = proseV20 + "\n\nQ1 FY2027 saw modest deceleration in same-store comps. Kill criteria intact, watching closely.";
+        var proseV30 = proseV25 + "\n\nMacro: US consumer spending pulling back across premium retail. Cohort productivity stable.";
+        var proseV35 = proseV30 + "\n\nManagement reiterated US opening cadence — 12-15 new stores per year through FY2029.";
+        var proseV40 = proseV35 + "\n\nHorizon extended on conviction that store maturation curve compounds long.";
+        var proseV44 = proseV40 + "\n\nQ3 evidence: comps stabilizing, margin pressure persists but contained.";
+        var proseV49 = proseV44 + "\n\nFinal pre-commit refinement: SOTP estimate 105–120 CAD per share, five-year horizon. Conviction position, sized 3–7% of total portfolio.";
+
+        function proseFor(n){
+          if (n >= 49) return proseV49;
+          if (n >= 44) return proseV44;
+          if (n >= 40) return proseV40;
+          if (n >= 35) return proseV35;
+          if (n >= 30) return proseV30;
+          if (n >= 25) return proseV25;
+          if (n >= 20) return proseV20;
+          if (n >= 16) return proseV16;
+          if (n >= 12) return proseV12;
+          if (n >= 7)  return proseV7;
+          return proseV1;
+        }
+
+        var day = 24 * 60 * 60 * 1000;
+        var totalDays = 4 * 365;
+        var TOTAL = 50;
+        var probs = [50,52,55,55,58,60,62,63,62,60,60,62,63,65,65,65,62,60,62,65,60,55,52,50,52,55,58,60,62,63,65,63,62,60,55,50,48,50,50,52,52,50,48,50,52,55,55,60,62,63];
+        var horizons = ['1 Year','3 Years','5+ Years'];
+        var classifications = ['Compounder','Emerging Compounder','Situational Mispricing'];
+        var sizings = ['Starter','Conviction','Core'];
+
+        var hist = [];
+        var startTs = Date.now() - totalDays * day;
+        for (var i = 0; i < TOTAL; i++) {
+          var v = i + 1;
+          var ts = startTs + Math.floor((i / (TOTAL - 1)) * totalDays * day);
+          var snap = {
+            version: 'V' + v,
+            timestamp: ts,
+            position: 'held',
+            decision: 'Active Allocation',
+            classification: v < 5 ? 'Emerging Compounder' : 'Compounder',
+            sizing: v < 10 ? 'Starter' : (v < 25 ? 'Conviction' : 'Core'),
+            memo: proseFor(v),
+            horizon: v < 15 ? '1 Year' : (v < 35 ? '3 Years' : '5+ Years'),
+            probability: String(probs[i] || 60)
+          };
+          hist.push(snap);
+        }
+
+        var last = hist[hist.length - 1];
+        localStorage.setItem('atz-memo-decision', last.decision);
+        localStorage.setItem('atz-memo-classification', last.classification);
+        localStorage.setItem('atz-memo-sizing', last.sizing);
+        localStorage.setItem('atz-memo-memo', last.memo);
+        localStorage.setItem('atz-memo', last.memo);
+        localStorage.setItem('atz-memo-horizon', last.horizon);
+        localStorage.setItem('atz-memo-probability', last.probability);
+        localStorage.setItem('atz-memo-version', last.version);
+        localStorage.setItem('atz-memo-history', JSON.stringify(hist));
+        localStorage.setItem('atz-memo-demo-schema', SCHEMA);
+      } catch(e){}
+    })();
+
+    function horizonShort(h){
+      if (!h) return '';
+      if (h.indexOf('1') === 0) return '1y';
+      if (h.indexOf('3') === 0) return '3y';
+      if (h.indexOf('5') === 0) return '5y+';
+      return '';
+    }
+    function reflectStockMemo(){
+      try {
+        var version = localStorage.getItem('atz-memo-version');
+        if (!version) return;
+        var FIELDS = { decision:'atz-memo-decision', classification:'atz-memo-classification', sizing:'atz-memo-sizing', probability:'atz-memo-probability' };
+        document.querySelectorAll('.uw-row').forEach(function(row){
+          var keyEl = row.querySelector('.uw-key');
+          var valEl = row.querySelector('.uw-val');
+          if (!keyEl || !valEl) return;
+          var f = keyEl.textContent.trim().toLowerCase();
+          var k = FIELDS[f];
+          if (!k) return;
+          var v = localStorage.getItem(k);
+          if (!v) { valEl.innerHTML = '<span style="color:var(--c-800)">—</span>'; return; }
+          if (f === 'probability') {
+            var hs = horizonShort(localStorage.getItem('atz-memo-horizon'));
+            valEl.innerHTML = v + '% ' + (hs ? '<span class="uw-meta">· ' + hs + '</span>' : '');
+          } else valEl.textContent = v;
         });
-      } else {
-        fallbackCopyToClipboard(text, onCopied);
-      }
-    }
-
-    function fallbackCopyToClipboard(text, cb) {
-      try {
-        var ta = document.createElement('textarea');
-        ta.value = text;
-        ta.style.position = 'fixed';
-        ta.style.opacity = '0';
-        ta.style.left = '-9999px';
-        document.body.appendChild(ta);
-        ta.focus();
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-        if (cb) cb();
-      } catch (e) {}
-    }
-
-    /* Seed example memo on first load so v6d (recurring user) and ATZ Memo
-       stay in sync. Without this, View Full Memo lands on an empty page. */
-    function seedExampleMemoIfMissing() {
-      try {
-        // Use !== null to differentiate "never seeded" from "user erased to empty".
-        // Empty string is a valid sealed state — don't re-seed over it.
-        if (localStorage.getItem('atz-memo-live') !== null) return;
-        var seed = "Classification. Compounder. Aritzia is a high-quality DTC women's fashion business with a durable in-house brand portfolio (Wilfred, TNA, Babaton, Super Puff), proven Canadian unit economics, and a long US runway. Returns expected through long-duration earnings growth, not transient mispricing.\n\nThesis. US store rollout is the primary growth driver for the next five years. Canadian boutiques have demonstrated proven unit economics: high productivity per square foot, consistent same-store growth, durable margins. US openings are tracking to similar productivity at scale. The market underweights the long runway because US fashion DTC is unfamiliar territory and Aritzia does not fit clean category buckets.\n\nWhy Now. Q4 FY2026 showed 62 US stores (up 11 YTD) at ~CAD $1,800/sqft productivity, matching Canadian levels. US revenue mix crossed 50% for the first time. Stock has retraced about 25% from its 24-month high after slight Q3 margin compression. Long-term compounding case intact, entry point reasonable.\n\nKill Criteria.\n- US same-store sales declines two consecutive quarters\n- Gross margin compression greater than 200bps sustained for two quarters\n- US opening pace below 8 net new stores per year\n- Founder / CEO Jennifer Wong departure or material strategic pivot\n\nIntrinsic Value. SOTP estimate 105–120 CAD per share, five-year horizon.\n- DCF base: 12% revenue CAGR, 18% EBITDA margin, 10% WACC → 110 CAD\n- Conservative (assumes 15% margin contraction risk): 90 CAD\n- Aggressive (US productivity matches Canadian peak): 135 CAD\n\nSizing. Conviction position. Suggested 3–7% of total portfolio. Aritzia clears multiple compounder tests but US execution remains the primary uncertainty, capping the position below Core territory.\n\nSources. FY2026 Annual Report (April 22, 2026), Q4 earnings call transcript, comparable analysis vs Lululemon US trajectory FY2014–2018, store-level productivity data from SEDAR+ filings.";
-        localStorage.setItem('atz-memo-live', seed);
-        localStorage.setItem('atz-memo-draft', seed);
-        localStorage.setItem('atz-memo-state', 'live');
-        localStorage.setItem('atz-memo-version', '1');
-        var sealedAt = new Date(Date.now() - 26 * 24 * 60 * 60 * 1000).toISOString();
-        localStorage.setItem('atz-memo-sealed-at', sealedAt);
-      } catch (e) {}
-    }
-
-    /* Memo expand/collapse state */
-    var memoFullContent = '';
-    var memoSnippetContent = '';
-    var memoIsExpanded = false;
-    var memoNeedsToggle = false;
-
-    function renderMemoContent() {
-      var preview = document.getElementById('memoPreview');
-      var toggle = document.getElementById('memoToggle');
-      if (!preview || !toggle) return;
-      if (!memoNeedsToggle) {
-        preview.textContent = memoFullContent;
-        toggle.style.display = 'none';
-        return;
-      }
-      if (memoIsExpanded) {
-        preview.textContent = memoFullContent;
-        toggle.textContent = 'Read Less';
-        toggle.setAttribute('aria-expanded', 'true');
-      } else {
-        preview.textContent = memoSnippetContent;
-        toggle.textContent = 'Read More';
-        toggle.setAttribute('aria-expanded', 'false');
-      }
-      toggle.style.display = '';
-    }
-
-    function toggleMemoExpand() {
-      memoIsExpanded = !memoIsExpanded;
-      renderMemoContent();
-    }
-
-    function syncMemoFromStorage() {
-      try {
-        // Stock Page reads the SEALED version (atz-memo-live), not draft edits.
-        // Draft edits don't propagate until user clicks Re-seal Memo.
-        var liveRaw = localStorage.getItem('atz-memo-live');
-        var hasLive = liveRaw !== null;
-        var content = hasLive ? liveRaw.trim() : (localStorage.getItem('atz-memo-draft') || '').trim();
-        var state = localStorage.getItem('atz-memo-state') || 'draft';
-        var sealedAt = localStorage.getItem('atz-memo-sealed-at');
-
-        var preview = document.getElementById('memoPreview');
-        var stateLabelEl = document.getElementById('memoStateLabel');
-        var stateBadge = document.getElementById('memoStateBadge');
-        var versionLabel = document.getElementById('memoVersionLabel');
-        var reviewedLabel = document.getElementById('memoReviewedLabel');
-        var toggle = document.getElementById('memoToggle');
-
-        var isEmptySealed = hasLive && content === '';
-
-        // Hide state badge when sealed memo is empty (no "Live" for empty content).
-        if (stateBadge) {
-          stateBadge.style.display = isEmptySealed ? 'none' : '';
+        var memo = localStorage.getItem('atz-memo-memo') || localStorage.getItem('atz-memo');
+        var proseEl = document.getElementById('memoProse');
+        if (proseEl && memo) proseEl.textContent = memo.split(/\n\n+/)[0].trim();
+        var verEl = document.getElementById('memoVersion');
+        if (verEl) verEl.innerHTML = '<span class="live-dot" aria-hidden="true"></span>' + version + ' · Live';
+        var hist = [];
+        try { hist = JSON.parse(localStorage.getItem('atz-memo-history') || '[]'); } catch(e){}
+        var historyLink = document.getElementById('memoHistoryLink');
+        if (historyLink && hist.length >= 1) {
+          var lbl = hist.length === 1 ? '1 version' : hist.length + ' versions';
+          historyLink.innerHTML = lbl + ' <span class="chev" aria-hidden="true">›</span>';
+          historyLink.style.display = '';
         }
-
-        // Handle empty sealed memo — show placeholder, no expand toggle.
-        if (isEmptySealed && preview) {
-          memoFullContent = '';
-          memoSnippetContent = '';
-          memoNeedsToggle = false;
-          memoIsExpanded = false;
-          preview.textContent = 'Memo cleared. Re-underwrite, or run the Research Prompt below to start again.';
-          if (toggle) toggle.style.display = 'none';
-        } else if (content && preview) {
-          memoFullContent = content;
-          var snippet = content;
-          memoNeedsToggle = false;
-          var paraBreak = snippet.indexOf('\n\n');
-          if (paraBreak > 0 && paraBreak < snippet.length - 2) {
-            snippet = snippet.substring(0, paraBreak).trim();
-            memoNeedsToggle = true;
-          } else {
-            var maxChars = 360;
-            if (snippet.length > maxChars) {
-              var cut = snippet.lastIndexOf('. ', maxChars);
-              snippet = (cut > maxChars * 0.5 ? snippet.substring(0, cut + 1) : snippet.substring(0, maxChars).trim() + '…');
-              memoNeedsToggle = true;
-            }
-          }
-          memoSnippetContent = snippet;
-          renderMemoContent();
-        }
-
-        if (stateLabelEl && stateBadge) {
-          stateBadge.classList.remove('live', 'triggered', 'stale', 'closed');
-          if (state === 'live') {
-            stateBadge.classList.add('live');
-            stateLabelEl.textContent = 'Live';
-          } else {
-            stateLabelEl.textContent = 'Draft';
-          }
-        }
-
-        if (versionLabel) {
-          versionLabel.textContent = '';
-        }
-
-        if (reviewedLabel && sealedAt) {
-          try {
-            var d = new Date(sealedAt);
-            var days = Math.floor((Date.now() - d.getTime()) / (1000 * 60 * 60 * 24));
-            var ago = days <= 0 ? 'today' : days === 1 ? '1d ago' : days + 'd ago';
-            reviewedLabel.textContent = 'Reviewed ' + ago;
-          } catch (e) {}
-        } else if (reviewedLabel && !sealedAt) {
-          reviewedLabel.textContent = 'Draft only';
-        }
-      } catch (e) {}
+      } catch(e){}
     }
-
-    /* Dismiss alert mirror items on × click */
-    document.querySelectorAll('.oq-x').forEach(function (btn) {
-      btn.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var section = btn.closest('.oq-section');
-        if (!section) return;
-        section.style.transition = 'opacity 220ms ease-out, height 220ms ease-out, margin 220ms ease-out, padding 220ms ease-out';
-        section.style.opacity = '0';
-        setTimeout(function () {
-          var list = section.closest('.oq-list');
-          section.remove();
-          if (list && !list.querySelector('.oq-section')) {
-            list.style.display = 'none';
-          }
-        }, 220);
-      });
-    });
-
-    seedExampleMemoIfMissing();
-    syncMemoFromStorage();
-    window.addEventListener('pageshow', syncMemoFromStorage);
-    document.addEventListener('visibilitychange', function () {
-      if (document.visibilityState === 'visible') syncMemoFromStorage();
-    });
-    /* Multi-tab sync — if another tab seals the memo, this tab updates live */
-    window.addEventListener('storage', function (e) {
-      if (e.key && e.key.indexOf('atz-memo-') === 0) syncMemoFromStorage();
-    });
+    function openHistory(){
+      try { sessionStorage.setItem('atz-memo-stock-source', window.location.href); } catch(e){}
+      window.location.href = 'Memo%20History.html';
+    }
+    document.addEventListener('DOMContentLoaded', reflectStockMemo);
+    window.addEventListener('pageshow', reflectStockMemo);
   </script>
 </body>
 </html>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          

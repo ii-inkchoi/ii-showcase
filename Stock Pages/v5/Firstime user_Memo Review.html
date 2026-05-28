@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Investment Memo — ATZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+* { scrollbar-width: none; -ms-overflow-style: none; }
+*::-webkit-scrollbar { display: none; }
+button { background: transparent; border: none; color: inherit; font: inherit; cursor: pointer; }
+a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg:#000000; --p:#FFFFFF; --s:#C7C7C7; --t:#929292; --t-800:#565B5E; --elev:#0A0A0A;
+  --font:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--s); font-family: var(--font); font-weight: 400; letter-spacing: -0.02em; font-feature-settings: 'tnum' 1; width: 100%; max-width: 393px; margin: 0 auto; min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden; animation: scr-enter 380ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+@keyframes scr-enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes memo-body-reveal { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.memo-body--reveal { animation: memo-body-reveal 700ms 500ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+.screen { width: 100%; display: flex; flex-direction: column; }
+.topbar { display:flex; justify-content:space-between; align-items:center; padding:0 13.5px; height:71px; flex-shrink:0; border-bottom:1px solid #232627; font-size:0; }
+.topbar .back { width:13px; height:13px; display:inline-flex; align-items:center; justify-content:center; color:var(--s); font-size:0; }
+.topbar .back::before { content:''; width:8px; height:8px; border-left:1px solid currentColor; border-bottom:1px solid currentColor; transform:rotate(45deg); margin-left:2px; }
+.topbar .exit { font-size:14px; color:var(--s); letter-spacing:-0.02em; }
+.scroll { padding: 24px 20px 100px; display:flex; flex-direction:column; gap:16px; }
+.m6-ledger { display:flex; flex-direction:column; gap:36px; }
+.m6-ledger-header { padding-bottom:20px; border-bottom:1px solid #111; }
+.ticker { color:var(--s); }
+.m6-ticker-hero { font-size:34px; font-weight:400; letter-spacing:-0.02em; line-height:1.18; color:var(--p); margin-bottom:12px; }
+.m6-ledger-doc-label { font-size:11px; letter-spacing:-0.02em; color:var(--t); }
+.m6-ledger-date { font-size:13px; color:var(--p); letter-spacing:-0.02em; line-height:1.3; display:inline-flex; align-items:center; }
+.m6-ledger-date-row { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-top:6px; }
+.m6-page-example { font-size:11px; color:var(--t); letter-spacing:-0.02em; background:none; border:none; cursor:pointer; font-family:inherit; padding:0; }
+.m6-section-tap-hint { font-size:11px; color:var(--t-800); letter-spacing:-0.02em; }
+.m6-ledger-section-row { display:flex; align-items:center; justify-content:space-between; padding-bottom:10px; border-bottom:0.5px solid #3A3D40; }
+.m6-ledger-section-head { font-size:15px; letter-spacing:-0.02em; color:var(--p); }
+.memo-row { display:grid; grid-template-columns:80px 1fr; gap:14px; padding:14px 0; border-bottom:0.5px solid #1A1A1A; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+.memo-row:last-of-type { border-bottom:none; }
+.memo-row:active { opacity:0.5; transition:opacity 80ms ease; }
+.memo-row .k { font-size:13px; color:var(--t); padding-top:2px; }
+.memo-row .v { font-size:13px; color:var(--s); line-height:1.65; text-align:right; }
+.memo-row .v.empty { color:var(--t-800); }
+.memo-row.memo-row-prose .v { text-align:left; }
+.memo-row.memo-row-prose { display:flex; flex-direction:column; gap:8px; }
+.m6-footnotes { display:flex; flex-direction:column; gap:16px; }
+.t-bsm { font-size:12px; line-height:1.6; color:var(--t-800); }
+.m6-immutability { font-size:11px; color:var(--t); line-height:1.6; border-left:1px solid var(--t-800); padding-left:12px; }
+.save-cta { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 393px; padding: 40px 13.5px 24px; display: flex; justify-content: flex-end; background: linear-gradient(to top, var(--bg) 0%, var(--bg) 60%, rgba(0,0,0,0) 100%); pointer-events: none; z-index: 10; }
+.save-cta button { pointer-events: auto; display: inline-flex; align-items: baseline; gap: 8px; font-size: 15px; color: var(--p); padding: 8px 4px; background: none; border: none; cursor: pointer; font-family: inherit; }
+.save-cta button.locked { opacity: 0.4; pointer-events: none; }
+.save-cta button .arrow { font-weight: 500; }
+.sheet-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.6); opacity: 0; pointer-events: none; transition: opacity 200ms ease; z-index: 20; }
+.sheet-backdrop.open { opacity: 1; pointer-events: auto; }
+.sheet { position: fixed; bottom: 0; left: 50%; transform: translate(-50%, 100%); width: 100%; max-width: 393px; max-height: 85vh; background: var(--elev); border-top: 0.5px solid #232627; display: flex; flex-direction: column; transition: transform 240ms cubic-bezier(0.32, 0.72, 0.24, 1); z-index: 21; }
+.sheet.open { transform: translate(-50%, 0); }
+.sheet-grip { width: 36px; height: 4px; background: var(--t-800); border-radius: 2px; margin: 10px auto 0; flex-shrink: 0; }
+.sheet-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 24px 20px 16px; }
+.sheet-title { font-size: 15px; color: var(--p); line-height: 1.3; }
+.sheet-close { width: 20px; height: 20px; color: var(--t); padding: 4px; background: none; border: none; cursor: pointer; }
+.sheet-body { padding: 0 20px 28px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 24px; }
+.sheet-body .ex-sec { display: flex; flex-direction: column; gap: 8px; }
+.sheet-body .ex-sec-label { font-size: 11px; color: var(--t); }
+.sheet-body .ex-sec-body { font-size: 13px; color: var(--s); line-height: 1.65; }
+.sheet-body .ex-sec-body .kc-line { display: block; padding-top: 4px; }
+.sheet-body.save-body { padding: 0 20px 36px; font-size: 13px; color: var(--t); line-height: 1.65; }
+.sheet-body.save-body p { margin-bottom: 14px; }
+.sheet-footer { display: flex; justify-content: flex-end; padding: 0 20px 28px; }
+.sheet-primary { display: inline-flex; align-items: baseline; gap: 8px; font-size: 15px; color: var(--p); padding: 8px 4px; background: none; border: none; cursor: pointer; font-family: inherit; -webkit-tap-highlight-color: transparent; }
+.sheet-primary .arrow { font-weight: 500; font-size: 15px; }
+.m6-history-link { font-size:11px; color:var(--t); display:inline-flex; align-items:baseline; gap:4px; }
+.m6-history-link .chev { font-size:13px; font-weight:300; color:var(--t); }
+.live-dot { display:inline-block; width:5px; height:5px; border-radius:50%; background:#30D158; margin-right:6px; vertical-align:middle; animation:live-pulse 2.4s cubic-bezier(0.45,0,0.55,1) infinite; }
+@keyframes live-pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
+</style>
+</head>
+<body>
+  <div class="screen">
+    <div class="topbar">
+      <a href="#" onclick="event.preventDefault();goBack();" class="back" aria-label="Back">‹</a>
+      <a href="#" onclick="event.preventDefault();goBack();" class="exit" aria-label="Exit">Exit</a>
+    </div>
+    <div class="scroll memo-body--reveal">
+      <div class="m6-ledger">
+        <div class="m6-ledger-header">
+          <div class="m6-ticker-hero"><span class="ticker">ATZ</span></div>
+          <div class="m6-ledger-doc-label">Investment Memo</div>
+          <div class="m6-ledger-date-row">
+            <div class="m6-ledger-date" id="memoStatusBadge">Draft</div>
+            <button type="button" class="m6-page-example" onclick="openExample()">Example Memo ›</button>
+          </div>
+        </div>
+        <div>
+          <div class="m6-ledger-section-row">
+            <div class="m6-ledger-section-head">Memo</div>
+            <span class="m6-section-tap-hint" id="memoTapHint">Tap each row to fill</span>
+            <a href="Memo%20History.html" class="m6-history-link" id="memoHistoryLink" style="display:none">1 version <span class="chev" aria-hidden="true">›</span></a>
+          </div>
+          <div class="memo-row" data-edit="decision"><div class="k">Decision</div><div class="v empty" id="vDecision">—</div></div>
+          <div class="memo-row" data-edit="classification"><div class="k">Classification</div><div class="v empty" id="vClassification">—</div></div>
+          <div class="memo-row" data-edit="sizing"><div class="k">Sizing</div><div class="v empty" id="vSizing">—</div></div>
+          <div class="memo-row memo-row-prose" data-edit="memo"><div class="k">Memo</div><div class="v empty" id="vMemo">—</div></div>
+          <div class="memo-row" data-edit="probability"><div class="k">Probability</div><div class="v empty" id="vProbability">—</div></div>
+        </div>
+        <div class="m6-footnotes">
+          <div class="t-bsm">Future buys of ATZ reuse this memo unless you create a new version.</div>
+          <div class="m6-immutability">V1 is permanent once saved. Edits create V2, V3, and so on.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="save-cta">
+    <button type="button" class="locked" id="saveCtaBtn" onclick="openSaveSheet()"><span class="arrow">→</span> <span id="saveCtaLbl">Save Memo</span></button>
+  </div>
+  <div class="sheet-backdrop" id="sheetBackdrop" onclick="closeAllSheets()"></div>
+  <div class="sheet" id="saveSheet">
+    <div class="sheet-grip"></div>
+    <div class="sheet-head">
+      <div class="sheet-title" id="saveSheetTitle">V1 goes live</div>
+      <button type="button" class="sheet-close" onclick="closeSaveSheet()">✕</button>
+    </div>
+    <div class="sheet-body save-body">
+      <p id="saveSheetText">This saves your memo as V1. Future buys of ATZ will reflect V1 from this moment forward.</p>
+    </div>
+    <div class="sheet-footer">
+      <button type="button" class="sheet-primary" onclick="commitSave()"><span class="arrow">→</span> <span id="saveSheetCtaLbl">Save as V1</span></button>
+    </div>
+  </div>
+  <div class="sheet" id="exampleSheet">
+    <div class="sheet-grip"></div>
+    <div class="sheet-head">
+      <div class="sheet-title">Example Memo</div>
+      <button type="button" class="sheet-close" onclick="closeExample()">✕</button>
+    </div>
+    <div class="sheet-body">
+      <div class="ex-sec"><div class="ex-sec-label">Classification</div><div class="ex-sec-body">Compounder. Aritzia is a high-quality DTC women's fashion business with a durable in-house brand portfolio, proven Canadian unit economics, and a long US runway.</div></div>
+      <div class="ex-sec"><div class="ex-sec-label">Thesis</div><div class="ex-sec-body">US store rollout is the primary growth driver for the next five years.</div></div>
+      <div class="ex-sec"><div class="ex-sec-label">Why Now</div><div class="ex-sec-body">Q4 FY2026 showed 62 US stores at ~CAD $1,800/sqft productivity, matching Canadian levels. Stock has retraced about 25% from its 24-month high.</div></div>
+      <div class="ex-sec"><div class="ex-sec-label">Kill Criteria</div><div class="ex-sec-body"><span class="kc-line">· US same-store sales declines two consecutive quarters</span><span class="kc-line">· Gross margin compression greater than 200bps sustained</span><span class="kc-line">· US opening pace below 8 net new stores per year</span><span class="kc-line">· Founder departure or material strategic pivot</span></div></div>
+      <div class="ex-sec"><div class="ex-sec-label">Intrinsic Value</div><div class="ex-sec-body">SOTP estimate 105–120 CAD per share, five-year horizon.</div></div>
+      <div class="ex-sec"><div class="ex-sec-label">Probability</div><div class="ex-sec-body">3-year 62%.</div></div>
+      <div class="ex-sec"><div class="ex-sec-label">Sizing</div><div class="ex-sec-body">Conviction position. 3–7% of total portfolio.</div></div>
+    </div>
+  </div>
+  <script>
+    var FIELD_TO_PAGE = {
+      decision:'Edit Decision.html', classification:'Edit Classification.html',
+      sizing:'Edit Sizing.html', probability:'Edit Probability.html', memo:'Edit Memo.html'
+    };
+    var FIELD_KEYS = {
+      decision:'atz-memo-decision', classification:'atz-memo-classification',
+      sizing:'atz-memo-sizing', memo:'atz-memo-memo',
+      probability:'atz-memo-probability', horizon:'atz-memo-horizon'
+    };
+    function getLS(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
+    function setLS(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
+    function horizonShort(h){
+      if (!h) return '';
+      if (h.indexOf('1') === 0) return '1y';
+      if (h.indexOf('3') === 0) return '3y';
+      if (h.indexOf('5') === 0) return '5y+';
+      return '';
+    }
+    function nextVersionFor(curr){
+      if (!curr) return 'V1';
+      var m = /^V(\d+)$/.exec(curr);
+      if (!m) return 'V1';
+      return 'V' + (parseInt(m[1],10) + 1);
+    }
+    function hydrate(){
+      function setRow(id, val){
+        var el = document.getElementById(id);
+        if (!el) return;
+        if (val && val.length) { el.textContent = val; el.classList.remove('empty'); }
+        else { el.textContent = '—'; el.classList.add('empty'); }
+      }
+      setRow('vDecision', getLS(FIELD_KEYS.decision));
+      setRow('vClassification', getLS(FIELD_KEYS.classification));
+      setRow('vSizing', getLS(FIELD_KEYS.sizing));
+      var memo = getLS(FIELD_KEYS.memo);
+      var memoEl = document.getElementById('vMemo');
+      if (memo && memo.length) {
+        var preview = memo.length > 220 ? memo.slice(0,220).trim() + '…' : memo;
+        memoEl.textContent = preview; memoEl.classList.remove('empty');
+      } else { memoEl.textContent = '—'; memoEl.classList.add('empty'); }
+      var prob = getLS(FIELD_KEYS.probability);
+      var hor = getLS(FIELD_KEYS.horizon);
+      var probEl = document.getElementById('vProbability');
+      if (prob) {
+        var hs = horizonShort(hor);
+        probEl.textContent = prob + '%' + (hs ? ' · ' + hs : '');
+        probEl.classList.remove('empty');
+      } else { probEl.textContent = '—'; probEl.classList.add('empty'); }
+      var version = getLS('atz-memo-version');
+      var badge = document.getElementById('memoStatusBadge');
+      var historyLink = document.getElementById('memoHistoryLink');
+      var tapHint = document.getElementById('memoTapHint');
+      var saveLbl = document.getElementById('saveCtaLbl');
+      var saveSheetCtaLbl = document.getElementById('saveSheetCtaLbl');
+      var saveSheetTitle = document.getElementById('saveSheetTitle');
+      var saveSheetText = document.getElementById('saveSheetText');
+      var nextVersion = nextVersionFor(version);
+      if (version) {
+        badge.innerHTML = '<span class="live-dot" aria-hidden="true"></span>' + version + ' · Live';
+        if (saveLbl) saveLbl.textContent = 'Save Changes';
+        if (saveSheetCtaLbl) saveSheetCtaLbl.textContent = 'Save as ' + nextVersion;
+        if (saveSheetTitle) saveSheetTitle.textContent = nextVersion + ' goes live';
+        if (saveSheetText) saveSheetText.textContent = 'This saves your changes as ' + nextVersion + '. ' + version + ' remains in History.';
+      } else {
+        badge.textContent = 'Draft';
+        if (saveLbl) saveLbl.textContent = 'Save Memo';
+        if (saveSheetCtaLbl) saveSheetCtaLbl.textContent = 'Save as V1';
+        if (saveSheetTitle) saveSheetTitle.textContent = 'V1 goes live';
+        if (saveSheetText) saveSheetText.textContent = 'This saves your memo as V1. Future buys of ATZ will reflect V1 from this moment forward.';
+      }
+      var hist = [];
+      try { hist = JSON.parse(getLS('atz-memo-history') || '[]'); } catch(e){}
+      if (historyLink) {
+        if (hist.length >= 1) {
+          var lbl = hist.length === 1 ? '1 version' : hist.length + ' versions';
+          historyLink.innerHTML = lbl + ' <span class="chev" aria-hidden="true">›</span>';
+          historyLink.style.display = '';
+          if (tapHint) tapHint.style.display = 'none';
+        } else {
+          historyLink.style.display = 'none';
+          if (tapHint) tapHint.style.display = '';
+        }
+      }
+      var anyFilled = !!(getLS(FIELD_KEYS.decision) || getLS(FIELD_KEYS.classification) || getLS(FIELD_KEYS.sizing) || getLS(FIELD_KEYS.memo) || getLS(FIELD_KEYS.probability));
+      var btn = document.getElementById('saveCtaBtn');
+      if (btn) btn.classList.toggle('locked', !anyFilled);
+    }
+    document.querySelectorAll('.memo-row').forEach(function(row){
+      row.addEventListener('click', function(){
+        var field = row.getAttribute('data-edit');
+        var page = FIELD_TO_PAGE[field];
+        if (!page) return;
+        try { sessionStorage.setItem('atz-memo-source', window.location.href); } catch(e){}
+        window.location.href = page;
+      });
+    });
+    function openSaveSheet(){
+      var btn = document.getElementById('saveCtaBtn');
+      if (btn && btn.classList.contains('locked')) return;
+      document.getElementById('sheetBackdrop').classList.add('open');
+      document.getElementById('saveSheet').classList.add('open');
+    }
+    function closeSaveSheet(){
+      document.getElementById('sheetBackdrop').classList.remove('open');
+      document.getElementById('saveSheet').classList.remove('open');
+    }
+    function openExample(){
+      document.getElementById('sheetBackdrop').classList.add('open');
+      document.getElementById('exampleSheet').classList.add('open');
+    }
+    function closeExample(){
+      document.getElementById('sheetBackdrop').classList.remove('open');
+      document.getElementById('exampleSheet').classList.remove('open');
+    }
+    function closeAllSheets(){ closeSaveSheet(); closeExample(); }
+    function commitSave(){
+      var curr = getLS('atz-memo-version');
+      var next = nextVersionFor(curr);
+      var snap = {
+        version: next, timestamp: Date.now(),
+        decision: getLS(FIELD_KEYS.decision) || '',
+        classification: getLS(FIELD_KEYS.classification) || '',
+        sizing: getLS(FIELD_KEYS.sizing) || '',
+        memo: getLS(FIELD_KEYS.memo) || '',
+        horizon: getLS(FIELD_KEYS.horizon) || '',
+        probability: getLS(FIELD_KEYS.probability) || ''
+      };
+      var hist = [];
+      try { hist = JSON.parse(getLS('atz-memo-history') || '[]'); } catch(e){}
+      hist.push(snap);
+      setLS('atz-memo-history', JSON.stringify(hist));
+      setLS('atz-memo-version', next);
+      setLS('atz-memo', snap.memo);
+      var src = null;
+      try { src = sessionStorage.getItem('atz-memo-stock-source'); } catch(e){}
+      if (src) { window.location.href = src; return; }
+      if (document.referrer) { window.location.href = document.referrer; return; }
+      window.location.href = 'Stock%20Page%20Firsttime%20User.html';
+    }
+    function goBack(){
+      var src = null;
+      try { src = sessionStorage.getItem('atz-memo-stock-source'); } catch(e){}
+      if (src) { window.location.href = src; return; }
+      if (document.referrer) { window.location.href = document.referrer; return; }
+      if (window.history.length > 1) { window.history.back(); return; }
+      window.location.href = 'Stock%20Page%20Firsttime%20User.html';
+    }
+    document.addEventListener('DOMContentLoaded', hydrate);
+    window.addEventListener('pageshow', hydrate);
+  </script>
+</body>
+</html>

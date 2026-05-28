@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Memo History — ATZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+* { scrollbar-width: none; -ms-overflow-style: none; }
+*::-webkit-scrollbar { display: none; }
+button { background: transparent; border: none; color: inherit; font: inherit; cursor: pointer; }
+a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+
+:root {
+  --bg:#000000; --p:#FFFFFF; --s:#C7C7C7; --t:#929292; --t-800:#565B5E;
+  --font:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+html, body { height: 100%; }
+body {
+  background: var(--bg); color: var(--s); font-family: var(--font); font-weight: 400;
+  letter-spacing: -0.02em; font-feature-settings: 'tnum' 1;
+  width: 100%; max-width: 393px; margin: 0 auto; min-height: 100vh;
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: hidden;
+}
+
+.topbar { display:flex; justify-content:space-between; align-items:center; padding:0 13.5px; height:71px; flex-shrink:0; border-bottom:1px solid #232627; font-size:0; }
+.topbar .back { width:13px; height:13px; display:inline-flex; align-items:center; justify-content:center; color:var(--s); }
+.topbar .back::before { content:''; width:8px; height:8px; border-left:1px solid currentColor; border-bottom:1px solid currentColor; transform:rotate(45deg); margin-left:2px; }
+.topbar .back:active { opacity:.5; transition:opacity 80ms ease; }
+.topbar .exit { font-size:14px; color:var(--s); letter-spacing:-0.02em; }
+.topbar .exit:active { opacity:.5; transition:opacity 80ms ease; }
+
+.scroll { padding: 24px 20px 40px; }
+
+/* Live status dot */
+.live-dot { display:inline-block; width:5px; height:5px; border-radius:50%; background:#30D158; margin-right:6px; vertical-align:middle; animation:live-pulse 2.4s cubic-bezier(0.45,0,0.55,1) infinite; }
+@keyframes live-pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
+@media (prefers-reduced-motion: reduce) { .live-dot { animation:none !important; } }
+
+/* Header */
+.history-header { padding-bottom:20px; border-bottom:1px solid #111; margin-bottom:24px; }
+.ticker-hero { font-size:34px; font-weight:400; letter-spacing:-0.02em; line-height:1.18; color:var(--p); margin-bottom:12px; }
+.history-label { font-size:11px; letter-spacing:-0.02em; color:var(--t); }
+.history-count { font-size:13px; color:var(--p); letter-spacing:-0.02em; margin-top:6px; line-height:1.3; }
+
+/* Year group */
+.year-group { display:flex; flex-direction:column; margin-top:24px; }
+.year-group:first-of-type { margin-top:0; }
+.year-header { display:flex; align-items:baseline; justify-content:space-between; padding:0 0 12px; border-bottom:0.5px solid #3A3D40; margin-bottom:0; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+.year-header:active { opacity:.5; transition:opacity 80ms ease; }
+.year-label { font-size:13px; color:var(--p); letter-spacing:-0.02em; display:inline-flex; align-items:baseline; gap:8px; }
+.year-caret { display:inline-block; font-size:13px; color:var(--t); transition:transform 160ms ease; transform:rotate(90deg); line-height:1; }
+.year-group.collapsed .year-caret { transform:rotate(0deg); }
+.year-count { font-size:11px; color:var(--t); letter-spacing:-0.02em; }
+.year-group.collapsed .version-row { display:none; }
+
+/* Version list */
+.version-list { display:flex; flex-direction:column; }
+.version-row {
+  display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+  padding:14px 0;
+  border-bottom:0.5px solid #1A1A1A;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.version-row:active { opacity:0.5; transition:opacity 80ms ease; }
+.version-row .left { display:flex; flex-direction:column; gap:4px; flex:1; min-width:0; }
+.vno-row { display:flex; align-items:baseline; justify-content:space-between; gap:8px; }
+.vno-left { display:inline-flex; align-items:baseline; gap:8px; }
+.vno { font-size:13px; color:var(--p); letter-spacing:-0.02em; display:inline-flex; align-items:center; }
+.pos-tag { font-size:11px; letter-spacing:-0.02em; color:var(--t); }
+.vtime { font-size:11px; color:var(--t); letter-spacing:-0.02em; }
+.evt-tag { font-size:12px; letter-spacing:-0.02em; line-height:1.5; margin-bottom:2px; color:var(--t); }
+.vdiff { font-size:12px; color:var(--t); letter-spacing:-0.02em; line-height:1.5; }
+.vdiff .initial { color:var(--t); }
+.version-row .chev { font-size:13px; font-weight:300; color:var(--t-800); flex-shrink:0; padding-top:4px; }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <a href="#" onclick="event.preventDefault();goBack();" class="back" aria-label="Back"></a>
+    <a href="#" onclick="event.preventDefault();goBack();" class="exit" aria-label="Exit">Exit</a>
+  </div>
+
+  <div class="scroll">
+    <div class="history-header">
+      <div class="ticker-hero">ATZ</div>
+      <div class="history-label">Memo History</div>
+      <div class="history-count" id="historyCount">2 versions</div>
+    </div>
+
+    <div class="version-list" id="versionList">
+      <!-- Populated dynamically from localStorage atz-memo-history -->
+    </div>
+    <div id="emptyState" style="display:none; padding:32px 0; text-align:center; font-size:13px; color:var(--t);">No memo history yet. Save your first memo to begin tracking.</div>
+  </div>
+
+  <script>
+    function goBack(){
+      // 1. sessionStorage source (set by stock page that opened this history view)
+      var src;
+      try { src = sessionStorage.getItem('atz-memo-stock-source'); } catch(e){}
+      if (src) { window.location.href = src; return; }
+      // 2. Browser history (works in most envs)
+      if (window.history.length > 1) { window.history.back(); return; }
+      // 3. Referrer (last resort)
+      if (document.referrer) { window.location.href = document.referrer; return; }
+    }
+
+    function formatDate(ts) {
+      if (!ts) return '';
+      var d = new Date(ts);
+      var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      return months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+    }
+    function escapeHtml(s) {
+      return (s || '').replace(/[&<>"']/g, function(c){ return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]; });
+    }
+    function render() {
+      var history = [];
+      try { history = JSON.parse(localStorage.getItem('atz-memo-history') || '[]'); } catch(e){}
+      var emptyEl = document.getElementById('emptyState');
+      var listEl = document.getElementById('versionList');
+      if (!history.length) {
+        if (emptyEl) emptyEl.style.display = '';
+        if (listEl) listEl.innerHTML = '';
+        var countEl = document.getElementById('historyCount');
+        if (countEl) countEl.textContent = '0 versions';
+        return;
+      }
+      if (emptyEl) emptyEl.style.display = 'none';
+
+      var currentVersion;
+      try { currentVersion = localStorage.getItem('atz-memo-version'); } catch(e){}
+
+      // Count
+      var countEl = document.getElementById('historyCount');
+      if (countEl) countEl.textContent = history.length + (history.length === 1 ? ' version' : ' versions');
+
+      // Render rows, newest first
+      var listEl = document.getElementById('versionList');
+      if (!listEl) return;
+      // Helper: short horizon
+      function hShort(h){ if(!h) return ''; if (h.indexOf('1')===0) return '1y'; if (h.indexOf('3')===0) return '3y'; if (h.indexOf('5')===0) return '5y+'; return ''; }
+
+      // Build diff vs previous (chronological) entry.
+      // Live entry shows full current snapshot (so latest state is always glanceable).
+      // Initial entry (no prev) shows full snapshot with "Initial" prefix.
+      function buildDiff(curr, prev, isLive){
+        if (!prev || isLive) {
+          var parts = [];
+          if (curr.decision) parts.push(curr.decision);
+          if (curr.classification) parts.push(curr.classification);
+          if (curr.sizing) parts.push(curr.sizing);
+          if (curr.probability) parts.push(curr.probability + '%' + (curr.horizon ? ' / ' + hShort(curr.horizon) : ''));
+          var prefix = !prev ? 'Initial · ' : '';
+          return '<span class="initial">' + prefix + escapeHtml(parts.join(' · ')) + '</span>';
+        }
+        var changes = [];
+        if (curr.decision !== prev.decision) changes.push('Decision: ' + curr.decision);
+        if (curr.classification !== prev.classification) changes.push('Classification ' + prev.classification + ' → ' + curr.classification);
+        if (curr.sizing !== prev.sizing) changes.push('Sizing ' + prev.sizing + ' → ' + curr.sizing);
+        if (curr.probability !== prev.probability) changes.push('Probability ' + prev.probability + ' → ' + curr.probability);
+        if (curr.horizon !== prev.horizon) changes.push('Horizon ' + hShort(prev.horizon) + ' → ' + hShort(curr.horizon));
+        if (changes.length === 0) {
+          // Position-only change → trade event tag conveys it, no need for "No field changes"
+          if (curr.position !== prev.position) return '';
+          return '<span class="initial">No field changes</span>';
+        }
+        return escapeHtml(changes.join(' · '));
+      }
+
+      // Detect trade event type for this entry (vs previous chronological)
+      function tradeEvent(curr, prev){
+        if (!prev) return null;
+        if (curr.position === prev.position) return null;
+        var key = (prev.position || 'research') + '_' + (curr.position || 'research');
+        var map = {
+          'research_held': 'Bought',
+          'held_research': 'Sold'
+        };
+        return map[key] || null;
+      }
+
+      // Enrich entries with diff + trade event computed against chronological previous
+      var enriched = history.map(function(entry, i){
+        var prev = i > 0 ? history[i-1] : null;
+        var isLive = entry.version === currentVersion;
+        return {
+          entry: entry,
+          diff: buildDiff(entry, prev, isLive),
+          tradeEvent: tradeEvent(entry, prev)
+        };
+      });
+
+      // Reverse for display (newest first) and group by year
+      var displayList = enriched.slice().reverse();
+      var byYear = {};
+      var yearOrder = [];
+      displayList.forEach(function(item){
+        var year = new Date(item.entry.timestamp).getFullYear();
+        if (!byYear[year]) { byYear[year] = []; yearOrder.push(year); }
+        byYear[year].push(item);
+      });
+
+      function renderRow(item){
+        var entry = item.entry;
+        var isLive = entry.version === currentVersion;
+        var time = formatDate(entry.timestamp);
+        var href = isLive ? 'Firstime%20user_Memo%20Review.html' : 'Memo%20V1%20Historical.html';
+        var versionLabel = isLive ? '<span class="live-dot" aria-hidden="true"></span>' + entry.version + ' · Live' : entry.version;
+        var clickHandler = isLive ? '' : ' onclick="try{sessionStorage.setItem(\'atz-memo-viewing\',\'' + entry.version + '\');}catch(e){}"';
+
+        // Determine row tag: event + resulting state (always show state context)
+        var posLabel = (entry.position === 'held') ? 'Held' : 'Memo only';
+        var tag;
+        var tagClass = 'evt-tag-default';
+        if (item.tradeEvent) {
+          // Trade event row: "Bought · Held" or "Sold · Memo only"
+          tag = item.tradeEvent + ' · ' + posLabel;
+        } else if (entry.position === 'held') {
+          tag = 'Memo edit · Held';
+        } else {
+          tag = 'Memo only';
+        }
+
+        return '<a href="' + href + '" class="version-row"' + clickHandler + '>' +
+          '<div class="left">' +
+            '<div class="vno-row">' +
+              '<span class="vno">' + versionLabel + '</span>' +
+              '<span class="vtime">' + time + '</span>' +
+            '</div>' +
+            '<div class="evt-tag ' + tagClass + '">' + tag + '</div>' +
+            '<div class="vdiff">' + item.diff + '</div>' +
+          '</div>' +
+          '<span class="chev" aria-hidden="true">›</span>' +
+        '</a>';
+      }
+
+      var html = yearOrder.map(function(year, idx){
+        var items = byYear[year];
+        var count = items.length;
+        var countLabel = count === 1 ? '1 version' : count + ' versions';
+        // Most recent year (first in display order) expanded; older years collapsed by default
+        var collapsedCls = idx === 0 ? '' : ' collapsed';
+        return '<div class="year-group' + collapsedCls + '" data-year="' + year + '">' +
+          '<div class="year-header" onclick="toggleYear(this)">' +
+            '<span class="year-label"><span class="year-caret" aria-hidden="true">›</span>' + year + '</span>' +
+            '<span class="year-count">' + countLabel + '</span>' +
+          '</div>' +
+          items.map(renderRow).join('') +
+        '</div>';
+      }).join('');
+
+      listEl.innerHTML = html;
+    }
+
+    function toggleYear(header){
+      var group = header.parentNode;
+      group.classList.toggle('collapsed');
+    }
+    document.addEventListener('DOMContentLoaded', render);
+    window.addEventListener('pageshow', render);
+  </script>
+</body>
+</html>

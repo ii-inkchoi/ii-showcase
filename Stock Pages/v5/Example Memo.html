@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Example Memo · ATZ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-black:  #000000;
+      --c-1000:   #1C1C1C;
+      --c-900:    #232627;
+      --c-800:    #565B5E;
+      --c-700:    #929292;
+      --c-400:    #C7C7C7;
+      --c-white:  #FFFFFF;
+      --c-elev:   #0A0A0A;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--c-black);
+      color: var(--c-white);
+      font-family: 'Inter', sans-serif;
+      width: 100%;
+      max-width: 393px;
+      margin: 0 auto;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    body::-webkit-scrollbar { display: none; }
+    a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+
+    /* HEADER */
+    .header {
+      height: 71px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      border-bottom: 1px solid var(--c-900);
+    }
+    .header .back {
+      width: 24px;
+      height: 24px;
+      position: relative;
+    }
+    .header .back::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(135deg);
+      width: 8px;
+      height: 8px;
+      border-top: 1px solid var(--c-white);
+      border-right: 1px solid var(--c-white);
+    }
+    .header .exit {
+      font-size: 13px;
+      color: var(--c-white);
+      letter-spacing: -0.02em;
+    }
+
+    /* COMPLIANCE STRIP */
+    .compliance-strip {
+      display: flex;
+      padding: 8px 20px;
+      font-size: 9px;
+      letter-spacing: -0.02em;
+      color: var(--c-800);
+      border-bottom: 0.5px solid var(--c-1000);
+      line-height: 1.3;
+    }
+
+    /* TITLE */
+    .title-block {
+      padding: 40px 20px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .t-primary {
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: var(--c-700);
+      line-height: 1.15;
+    }
+    .t-secondary {
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: var(--c-white);
+      line-height: 1.15;
+    }
+
+    /* MEMO PROSE */
+    .col {
+      padding: 32px 20px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .memo-prose {
+      font-size: 14px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      line-height: 1.7;
+      white-space: pre-wrap;
+    }
+    .memo-prose strong {
+      color: var(--c-white);
+      font-weight: 500;
+    }
+
+    /* Section dividers between memo sections */
+    .memo-prose .sec {
+      display: block;
+      padding-top: 18px;
+    }
+    .memo-prose .sec:first-child { padding-top: 0; }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <a href="javascript:history.back()" class="back" aria-label="Back"></a>
+    <a href="javascript:history.back()" class="exit" aria-label="Exit">Exit</a>
+  </header>
+
+  <div class="compliance-strip" aria-label="Disclosure">
+    Self-Authored · No Suitability Review · Not Advice
+  </div>
+
+  <div class="title-block">
+    <span class="t-primary">Example Memo</span>
+    <span class="t-secondary">Aritzia Inc · ATZ</span>
+  </div>
+
+  <div class="col">
+    <div class="memo-prose">
+      <span class="sec"><strong>Classification.</strong> Compounder. Aritzia is a high-quality DTC women's fashion business with a durable in-house brand portfolio (Wilfred, TNA, Babaton, Super Puff), proven Canadian unit economics, and a long US runway. Returns expected through long-duration earnings growth, not transient mispricing.</span>
+
+      <span class="sec"><strong>Thesis.</strong> US store rollout is the primary growth driver for the next five years. Canadian boutiques have demonstrated proven unit economics: high productivity per square foot, consistent same-store growth, durable margins. US openings are tracking to similar productivity at scale. The market underweights the long runway because US fashion DTC is unfamiliar territory and Aritzia does not fit clean category buckets.</span>
+
+      <span class="sec"><strong>Why Now.</strong> Q4 FY2026 showed 62 US stores (up 11 YTD) at ~CAD $1,800/sqft productivity, matching Canadian levels. US revenue mix crossed 50% for the first time. Stock has retraced about 25% from its 24-month high after slight Q3 margin compression. Long-term compounding case intact, entry point reasonable.</span>
+
+      <span class="sec"><strong>Kill Criteria.</strong>
+· US same-store sales declines two consecutive quarters
+· Gross margin compression greater than 200bps sustained for two quarters
+· US opening pace below 8 net new stores per year
+· Founder / CEO Jennifer Wong departure or material strategic pivot</span>
+
+      <span class="sec"><strong>Intrinsic Value.</strong> SOTP estimate 105–120 CAD per share, five-year horizon.
+· DCF base: 12% revenue CAGR, 18% EBITDA margin, 10% WACC → 110 CAD
+· Conservative (assumes 15% margin contraction risk): 90 CAD
+· Aggressive (US productivity matches Canadian peak): 135 CAD</span>
+
+      <span class="sec"><strong>Probability.</strong> 1-year 38%. 3-year 62%. 5-year 70%. Anchor decision: Promote (3-year ≥ 50%).</span>
+
+      <span class="sec"><strong>Sizing.</strong> Conviction position. Suggested 3–7% of total portfolio. Aritzia clears multiple compounder tests but US execution remains the primary uncertainty, capping the position below Core territory.</span>
+
+      <span class="sec"><strong>Sources.</strong> FY2026 Annual Report (April 22, 2026), Q4 earnings call transcript, comparable analysis vs Lululemon US trajectory FY2014–2018, store-level productivity data from SEDAR+ filings.</span>
+    </div>
+  </div>
+
+</body>
+</html>
