@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ATZ Stock Page · V7 Prototype Index</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { background: #000; color: #C7C7C7; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 400; letter-spacing: -0.01em; line-height: 1.5; -webkit-font-smoothing: antialiased; overflow: hidden; }
+  a { color: inherit; text-decoration: none; }
+  .app { display: grid; grid-template-columns: 320px 1fr; height: 100vh; }
+  .sidebar { background: #0A0A0A; border-right: 0.5px solid #232627; overflow-y: auto; display: flex; flex-direction: column; }
+  .sidebar::-webkit-scrollbar { width: 6px; } .sidebar::-webkit-scrollbar-thumb { background: #232627; }
+  .sb-header { padding: 24px 20px 16px; border-bottom: 0.5px solid #1A1A1A; }
+  .sb-title { font-size: 16px; color: #FFFFFF; font-weight: 400; letter-spacing: -0.02em; margin-bottom: 4px; }
+  .sb-sub { font-size: 11px; color: #565B5E; line-height: 1.5; }
+  .sb-reset { margin: 12px 20px 16px; padding: 10px 12px; border: 0.5px solid #232627; background: #000; }
+  .sb-reset-status { font-size: 10px; color: #929292; line-height: 1.4; margin-bottom: 8px; }
+  .sb-reset-status .live { color: #7ec897; }
+  .sb-reset-status .empty { color: #565B5E; }
+  .sb-reset-btn { width: 100%; font-size: 11px; color: #D9A441; background: none; border: 0.5px solid #D9A441; padding: 6px 10px; cursor: pointer; font-family: inherit; transition: opacity 80ms ease; }
+  .sb-reset-btn:active { opacity: 0.6; }
+  .sb-reset-btn.is-done { color: #7ec897; border-color: #7ec897; }
+  .sb-section { padding: 12px 0; }
+  .sb-section-title { font-size: 10px; color: #565B5E; letter-spacing: 0.06em; text-transform: uppercase; padding: 6px 20px; }
+  .sb-link { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 20px; font-size: 12px; color: #C7C7C7; cursor: pointer; border-left: 2px solid transparent; transition: background 80ms ease, border-color 80ms ease; }
+  .sb-link:hover { background: #111; }
+  .sb-link.active { background: #1c1c1c; border-left-color: #7ec897; color: #FFFFFF; }
+  .sb-link .meta { font-size: 9px; color: #565B5E; flex-shrink: 0; }
+  .sb-link.active .meta { color: #929292; }
+  .sb-link .ext { width: 12px; height: 12px; opacity: 0; flex-shrink: 0; transition: opacity 80ms ease; color: #929292; }
+  .sb-link:hover .ext { opacity: 1; }
+  .sb-link .ext svg { display: block; }
+  .sb-footer { margin-top: auto; padding: 16px 20px; border-top: 0.5px solid #1A1A1A; font-size: 10px; color: #565B5E; line-height: 1.55; }
+  .sb-footer a { color: #929292; text-decoration: underline; }
+  .main { background: #000; overflow: hidden; display: flex; flex-direction: column; }
+  .main-toolbar { display: flex; align-items: center; gap: 12px; padding: 12px 20px; border-bottom: 0.5px solid #232627; font-size: 12px; color: #929292; flex-shrink: 0; }
+  .main-toolbar .label { color: #C7C7C7; }
+  .main-toolbar .url { font-family: 'SF Mono', Menlo, monospace; font-size: 10px; color: #565B5E; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .main-toolbar .open-ext { color: #929292; font-size: 11px; padding: 4px 8px; border: 0.5px solid #232627; cursor: pointer; background: none; font-family: inherit; }
+  .main-toolbar .open-ext:hover { color: #FFFFFF; border-color: #565B5E; }
+  .main-stage { flex: 1; display: flex; align-items: flex-start; justify-content: center; padding: 24px; overflow: auto; background: #050505; }
+  .phone-frame { width: 393px; height: 100%; min-height: 800px; background: #000; border: 0.5px solid #232627; overflow: hidden; flex-shrink: 0; }
+  .phone-frame iframe { width: 100%; height: 100%; border: none; background: #000; display: block; }
+  @media (max-width: 760px) { .app { grid-template-columns: 1fr; } .sidebar { display: none; } }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="sb-header">
+      <div class="sb-title">ATZ Stock Page · V7</div>
+      <div class="sb-sub">Prototype index — click to load on the right.</div>
+    </div>
+    <div class="sb-reset">
+      <div class="sb-reset-status" id="resetStatus">—</div>
+      <button class="sb-reset-btn" onclick="resetAllState()" type="button">Reset state</button>
+    </div>
+    <div class="sb-section">
+      <div class="sb-section-title">1 · First-time Memo Flow</div>
+      <div class="sb-link" data-page="Memo%20Intro.html?intent=memo"><span>Memo · Intro</span><span class="meta">Protocol + hurdle</span><span class="ext" onclick="openExt(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></span></div>
+      <div class="sb-link" data-page="First-time%20Memo%20Flow.html?intent=memo"><span>Intent = memo</span><span class="meta">Save Memo</span><span class="ext" onclick="openExt(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></span></div>
+      <div class="sb-link" data-page="First-time%20Memo%20Flow.html?intent=buy"><span>Intent = buy</span><span class="meta">Save &amp; Continue</span><span class="ext" onclick="openExt(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></span></div>
+    </div>
+    <div class="sb-section">
+      <div class="sb-section-title">2 · Stock Page states</div>
+      <div class="sb-link" data-page="Stock%20Page%20Firsttime%20User.html"><span>First-time</span><span class="meta">No memo</span><span class="ext" onclick="openExt(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></span></div>
+      <div class="sb-link" data-page="Stock%20Page%20Memo%20Only.html"><span>Memo Only</span><span class="meta">V1 · No pos</span><span class="ext" onclick="openExt(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></span></div>
+      <div class="sb-link" data-page="Stock%20Page%20Return%20User.html"><span>Return User</span><span class="meta">V1 · Held</span><span class="ext" onclick="openExt(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></span></div>
+      <div class="sb-link" data-page="Stock%20Page%20Return%20User%20-%20History.html"><span>Return User · V50</span><span class="meta">50 versions</span><span class="ext" onclick="openExt(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></span></div>
+    </div>
+    <div class="sb-section">
+      <div class="sb-section-title">3 · Memo Review</div>
+      <div class="sb-link" data-page="Firstime%20user_Memo%20Review.html"><span>Memo Review</span><span class="meta">Row-edit</span><span class="ext" onclick="openExt(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></span></div>
+    </div>
+    <div class="sb-section">
+      <div class="sb-section-title">4 · Edit Field pages</div>
+      <div class="sb-link" data-page="Edit%20Decision.html"><span>Edit Decision</span><span class="meta">Active/Core</span><span class="ext" onclick="openExt(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></span></div>
+      <div class="sb-link" data-page="Edit%20Classification.html"><span>Edit Classification</span><span class="meta">4 types</span><span class="ext" onclick="openExt(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></span></div>
+      <div class="sb-link" data-page="Edit%20Sizing.html"><span>Edit Sizing</span><span class="meta">4 sizes</span><span class="ext" onclick="openExt(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></span></div>
+      <div class="sb-link" data-page="Edit%20Memo.html"><span>Edit Memo</span><span class="meta">Free text</span><span class="ext" onclick="openExt(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></span></div>
+      <div class="sb-link" data-page="Edit%20Probability.html"><span>Edit Probability</span><span class="meta">Slider + horizon</span><span class="ext" onclick="openExt(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></span></div>
+    </div>
+    <div class="sb-section">
+      <div class="sb-section-title">5 · Capital Decision</div>
+      <div class="sb-link" data-page="Capital%20Decision%20Review.html"><span>CD Review</span><span class="meta">Full-width</span><span class="ext" onclick="openExt(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></span></div>
+      <div class="sb-link" data-page="Trade%20Execution.html"><span>Trade Execution</span><span class="meta">Placeholder</span><span class="ext" onclick="openExt(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></span></div>
+    </div>
+    <div class="sb-section">
+      <div class="sb-section-title">6 · History</div>
+      <div class="sb-link" data-page="Memo%20History.html"><span>Memo History</span><span class="meta">All versions</span><span class="ext" onclick="openExt(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></span></div>
+      <div class="sb-link" data-page="Memo%20V1%20Historical.html"><span>Memo Historical</span><span class="meta">Read-only</span><span class="ext" onclick="openExt(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></span></div>
+    </div>
+    <div class="sb-section">
+      <div class="sb-section-title">7 · Quarterly Alerts</div>
+      <div class="sb-link" data-page="Stock%20Page%20Multi-Quarter%20Alerts.html"><span>Multi-Quarter Alerts</span><span class="meta">Q1–Q4</span><span class="ext" onclick="openExt(event,this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg></span></div>
+    </div>
+    <div class="sb-footer">
+      <a href="User%20Flow.html" target="_blank">User Flow diagram ↗</a><br>
+      First-time forced flow · return-user row-edit · CD branches.
+    </div>
+  </aside>
+  <main class="main">
+    <div class="main-toolbar">
+      <span class="label" id="currentPageLabel">No prototype loaded</span>
+      <span class="url" id="currentPageUrl"></span>
+      <button class="open-ext" type="button" onclick="openCurrentExt()">Open in new tab ↗</button>
+    </div>
+    <div class="main-stage">
+      <div class="phone-frame" id="phoneFrame">
+        <iframe id="protoFrame" src="" title="Prototype preview"></iframe>
+      </div>
+    </div>
+  </main>
+</div>
+<script>
+  var LS_KEYS = ['atz-memo-version','atz-memo-history','atz-memo-decision','atz-memo-classification','atz-memo-sizing','atz-memo-memo','atz-memo','atz-memo-probability','atz-memo-horizon','atz-memo-user-created','atz-memo-demo-schema','atz-position-status','atz-alert-Q4-acknowledged','atz-memo-role','atz-memo-target-weight','atz-memo-notes','atz-memo-hurdle-rate','atz-memo-hurdle-confirmed','atz-memo-intro-viewed'];
+  var SS_KEYS = ['atz-cd-action','atz-cd-source','atz-memo-source','atz-memo-stock-source','atz-ft-intent','atz-memo-history-idx','atz-memo-viewing'];
+  function refreshResetStatus(){
+    var version=null; try{ version=localStorage.getItem('atz-memo-version'); }catch(e){}
+    var hist=[]; try{ hist=JSON.parse(localStorage.getItem('atz-memo-history')||'[]'); }catch(e){}
+    var pos=null; try{ pos=localStorage.getItem('atz-position-status'); }catch(e){}
+    var userCreated=null; try{ userCreated=localStorage.getItem('atz-memo-user-created'); }catch(e){}
+    var el=document.getElementById('resetStatus'); if(!el) return;
+    if (!version){ el.innerHTML='<span class="empty">No state — first-time view</span>'; }
+    else {
+      var parts=[];
+      parts.push('<span class="live">'+version+' · Live</span>');
+      parts.push(hist.length+' v');
+      if (pos==='held') parts.push('held'); else parts.push('no pos');
+      if (userCreated==='true') parts.push('user');
+      el.innerHTML=parts.join(' · ');
+    }
+  }
+  function resetAllState(){
+    try{ LS_KEYS.forEach(function(k){ localStorage.removeItem(k); }); SS_KEYS.forEach(function(k){ sessionStorage.removeItem(k); }); }catch(e){}
+    var btn=document.querySelector('.sb-reset-btn');
+    if (btn){ btn.classList.add('is-done'); btn.textContent='Reset — first-time ready'; setTimeout(function(){ btn.classList.remove('is-done'); btn.textContent='Reset state'; }, 2200); }
+    refreshResetStatus();
+    var iframe=document.getElementById('protoFrame');
+    if (iframe && iframe.src) iframe.src = iframe.src;
+  }
+  function loadPage(page, linkEl){
+    var iframe=document.getElementById('protoFrame');
+    iframe.src = page;
+    document.querySelectorAll('.sb-link').forEach(function(el){ el.classList.remove('active'); });
+    if (linkEl) linkEl.classList.add('active');
+    var label = decodeURIComponent(page).replace(/\.html.*/,'').replace(/%20/g,' ');
+    var titleEl = document.getElementById('currentPageLabel');
+    var urlEl = document.getElementById('currentPageUrl');
+    if (titleEl) titleEl.textContent = label;
+    if (urlEl) urlEl.textContent = page;
+    try{ sessionStorage.setItem('v6-last-page', page); }catch(e){}
+    history.replaceState(null, '', '#page='+encodeURIComponent(page));
+  }
+  function openCurrentExt(){
+    var iframe=document.getElementById('protoFrame');
+    if (iframe && iframe.src && iframe.src !== window.location.href) window.open(iframe.src, '_blank');
+  }
+  function openExt(e, el){
+    e.stopPropagation();
+    e.preventDefault();
+    var link = el.closest('.sb-link');
+    if (link) window.open(link.dataset.page, '_blank');
+  }
+  document.querySelectorAll('.sb-link').forEach(function(link){
+    link.addEventListener('click', function(e){
+      if (e.target.closest('.ext')) return;
+      loadPage(link.dataset.page, link);
+    });
+  });
+  document.addEventListener('DOMContentLoaded', function(){
+    refreshResetStatus();
+    var page = null;
+    if (window.location.hash){
+      var m = window.location.hash.match(/page=([^&]+)/);
+      if (m) page = decodeURIComponent(m[1]);
+    }
+    if (!page){ try{ page = sessionStorage.getItem('v6-last-page'); }catch(e){} }
+    if (!page) page = 'Stock%20Page%20Firsttime%20User.html';
+    var link = document.querySelector('.sb-link[data-page="'+page+'"]');
+    loadPage(page, link);
+  });
+  window.addEventListener('pageshow', refreshResetStatus);
+  document.getElementById('protoFrame').addEventListener('load', refreshResetStatus);
+</script>
+</body>
+</html>

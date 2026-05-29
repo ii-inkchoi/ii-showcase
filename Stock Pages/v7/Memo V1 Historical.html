@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Memo Historical — ATZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+* { scrollbar-width: none; -ms-overflow-style: none; }
+*::-webkit-scrollbar { display: none; }
+button { background: transparent; border: none; color: inherit; font: inherit; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+:root { --bg:#000000; --p:#FFFFFF; --s:#C7C7C7; --t:#929292; --t-800:#565B5E; --font:'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--s); font-family: var(--font); font-weight: 400; letter-spacing: -0.02em; font-feature-settings: 'tnum' 1; width: 100%; max-width: 393px; margin: 0 auto; min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+.topbar { display:flex; justify-content:space-between; align-items:center; padding:0 13.5px; height:71px; flex-shrink:0; border-bottom:1px solid #232627; font-size:0; }
+.topbar .back { width:13px; height:13px; display:inline-flex; align-items:center; justify-content:center; color:var(--s); }
+.topbar .back::before { content:''; width:8px; height:8px; border-left:1px solid currentColor; border-bottom:1px solid currentColor; transform:rotate(45deg); margin-left:2px; }
+.topbar .exit { font-size:14px; color:var(--s); letter-spacing:-0.02em; }
+.scroll { padding: 24px 20px 40px; display:flex; flex-direction:column; gap:16px; }
+.m6-ledger { display:flex; flex-direction:column; gap:36px; }
+.m6-ledger-header { padding-bottom:20px; border-bottom:1px solid #111; }
+.m6-ticker-hero { font-size:34px; font-weight:400; letter-spacing:-0.02em; line-height:1.18; color:var(--p); margin-bottom:12px; }
+.ticker { color:var(--s); }
+.m6-ledger-doc-label { font-size:11px; color:var(--t); }
+.m6-ledger-date-row { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-top:6px; }
+.m6-ledger-date { font-size:13px; color:var(--p); display:inline-flex; align-items:center; }
+.m6-historical-badge { font-size:11px; color:var(--t-800); letter-spacing:0.04em; text-transform:uppercase; }
+.live-dot { display:inline-block; width:5px; height:5px; border-radius:50%; background:#30D158; margin-right:6px; vertical-align:middle; }
+.m6-ledger-section-head { font-size:15px; color:var(--p); padding-bottom:10px; border-bottom:0.5px solid #3A3D40; }
+.memo-row { display:grid; grid-template-columns:80px 1fr; gap:14px; padding:14px 0; border-bottom:0.5px solid #1A1A1A; }
+.memo-row:last-of-type { border-bottom:none; }
+.memo-row .k { font-size:13px; color:var(--t); padding-top:2px; }
+.memo-row .v { font-size:13px; color:var(--s); line-height:1.65; text-align:right; }
+.memo-row .v.empty { color:var(--t-800); }
+.memo-row.memo-row-prose { display:flex; flex-direction:column; gap:8px; padding:14px 0; }
+.memo-row.memo-row-prose .v { text-align:left; }
+.memo-row.memo-row-prose .v p { margin-bottom:12px; }
+.memo-row.memo-row-prose .v p:last-child { margin-bottom:0; }
+.memo-row.memo-row-prose .k { padding-top:0; }
+.m6-immutability { font-size:11px; color:var(--t); line-height:1.6; border-left:1px solid var(--t-800); padding-left:12px; }
+.not-found { padding:48px 0; text-align:center; font-size:13px; color:var(--t); }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <a href="#" onclick="event.preventDefault();goBack();" class="back" aria-label="Back"></a>
+    <a href="#" onclick="event.preventDefault();goBack();" class="exit" aria-label="Exit">Exit</a>
+  </div>
+  <div class="scroll">
+    <div class="m6-ledger" id="ledgerWrap">
+      <div class="m6-ledger-header">
+        <div class="m6-ticker-hero"><span class="ticker">ATZ</span></div>
+        <div class="m6-ledger-doc-label">Investment Memo</div>
+        <div class="m6-ledger-date-row">
+          <span class="m6-ledger-date" id="versionLabel">—</span>
+          <span class="m6-historical-badge" id="historicalBadge">Historical</span>
+        </div>
+      </div>
+      <div>
+        <div class="m6-ledger-section-head">Memo</div>
+        <div class="memo-row"><div class="k">Decision</div><div class="v" id="vDecision">—</div></div>
+        <div class="memo-row"><div class="k">Classification</div><div class="v" id="vClassification">—</div></div>
+        <div class="memo-row"><div class="k">Sizing</div><div class="v" id="vSizing">—</div></div>
+        <div class="memo-row memo-row-prose"><div class="k">Memo</div><div class="v" id="vMemo">—</div></div>
+        <div class="memo-row"><div class="k">Probability</div><div class="v" id="vProbability">—</div></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function goBack(){
+      if (document.referrer && document.referrer.indexOf('Memo%20History')!==-1){ window.location.href=document.referrer; return; }
+      if (window.history.length>1){ window.history.back(); return; }
+      window.location.href='Memo%20History.html';
+    }
+    function fmtDate(ts){ if(!ts) return ''; var d=new Date(ts); var m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return m[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear(); }
+    function horizonShort(h){ if(!h) return ''; if(h.indexOf('1')===0) return '1y'; if(h.indexOf('3')===0) return '3y'; if(h.indexOf('5')===0) return '5y+'; return ''; }
+    function escapeHtml(s){ return (s||'').replace(/[&<>"\']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"\'":'&#39;'}[c]; }); }
+    function setRow(id,val){ var el=document.getElementById(id); if(!el) return; if(val && String(val).length){ el.textContent=val; el.classList.remove('empty'); } else { el.textContent='—'; el.classList.add('empty'); } }
+    function render(){
+      var idx=null; try{ idx=sessionStorage.getItem('atz-memo-history-idx'); }catch(e){}
+      var history=[]; try{ history=JSON.parse(localStorage.getItem('atz-memo-history')||'[]'); }catch(e){}
+      var snap=null;
+      if (idx!==null && idx!==''){ var i=parseInt(idx,10); if (!isNaN(i) && i>=0 && i<history.length) snap=history[i]; }
+      if (!snap && history.length) snap=history[history.length-1];
+      var ledger=document.getElementById('ledgerWrap');
+      if (!snap){ ledger.innerHTML='<div class="not-found">No version found.</div>'; return; }
+      var versionEl=document.getElementById('versionLabel');
+      var badgeEl=document.getElementById('historicalBadge');
+      var currentVersion=localStorage.getItem('atz-memo-version');
+      var isLive = snap.version===currentVersion;
+      var evtSuffix='';
+      if (snap.event==='buy') evtSuffix=' · Bought';
+      else if (snap.event==='reduce') evtSuffix=' · Sold partial';
+      else if (snap.event==='exit') evtSuffix=' · Exited';
+      if (versionEl){ versionEl.innerHTML=(isLive?'<span class="live-dot"></span>':'')+snap.version+(isLive?' · Live':' · '+fmtDate(snap.timestamp))+evtSuffix; }
+      if (badgeEl){ badgeEl.textContent=isLive?'':'Historical'; if (isLive) badgeEl.style.display='none'; }
+      setRow('vDecision', snap.decision);
+      setRow('vClassification', snap.classification);
+      setRow('vSizing', snap.sizing);
+      var memoEl=document.getElementById('vMemo');
+      if (memoEl){
+        if (snap.memo && snap.memo.length){
+          var paragraphs=snap.memo.split(/\n\n+/).map(function(p){ return '<p>'+escapeHtml(p.trim())+'</p>'; }).join('');
+          memoEl.innerHTML=paragraphs; memoEl.classList.remove('empty');
+        } else { memoEl.textContent='—'; memoEl.classList.add('empty'); }
+      }
+      var probEl=document.getElementById('vProbability');
+      if (probEl){
+        if (snap.probability){ var hs=horizonShort(snap.horizon); probEl.textContent=snap.probability+'%'+(hs?' · '+hs:''); probEl.classList.remove('empty'); }
+        else { probEl.textContent='—'; probEl.classList.add('empty'); }
+      }
+    }
+    document.addEventListener('DOMContentLoaded', render);
+    window.addEventListener('pageshow', render);
+  </script>
+</body>
+</html>
+                                                                                                                                                                                                                                                                                                                  

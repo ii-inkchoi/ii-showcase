@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Exceptional Compounding — ATZ Memo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+* { scrollbar-width: none; -ms-overflow-style: none; }
+*::-webkit-scrollbar { display: none; }
+button { background: transparent; border: none; color: inherit; font: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+a { color: inherit; text-decoration: none; }
+:root {
+  --bg:#000000; --c-1000:#1C1C1C; --elev:#0A0A0A; --divider:#1C1C1C;
+  --p:#FFFFFF; --s:#C7C7C7; --t:#929292; --t-800:#565B5E;
+  --font:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+}
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--s); font-family: var(--font); font-weight: 400; letter-spacing: -0.02em; -webkit-font-smoothing: antialiased; width: 100%; max-width: 393px; margin: 0 auto; min-height: 100vh; overflow-x: hidden; display: flex; flex-direction: column; animation: scr-enter 380ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+@keyframes scr-enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes memo-body-reveal { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.memo-body--reveal, .memo-foot--reveal { animation: memo-body-reveal 700ms 500ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+.topbar { display:flex; justify-content:space-between; align-items:center; padding:12px 16px; flex-shrink:0; }
+.back-btn { color: var(--p); font-size: 22px; line-height: 1; }
+.exit-btn { color: var(--p); font-size: 15px; }
+.div { border: none; border-top: 0.5px solid var(--c-1000); margin: 0; }
+.body-scroll { flex: 1; overflow-y: auto; }
+.memo-page { padding: 32px 20px 20px; display: flex; flex-direction: column; gap: 32px; min-height: 100%; }
+.memo-header { padding: 4px 0 22px; border-bottom: 0.5px solid rgba(255,255,255,0.06); display: grid; grid-template-columns: 1fr auto; gap: 12px 10px; }
+.memo-header-top { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: baseline; gap: 14px; }
+.memo-header-title { font-size: 28px; font-weight: 400; letter-spacing: -0.02em; color: var(--p); line-height: 1.18; }
+.memo-header-right { grid-column: 2; display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
+.memo-header-version { font-size: 11px; color: var(--t); white-space: nowrap; }
+.memo-header-version .memo-ctx-ticker { color: var(--s); }
+.alloc-type-lbl { font-size: 11px; color: var(--t); text-align: right; }
+.section-eyebrow { font-size: 15px; color: var(--s); margin-bottom: 10px; }
+.section-eyebrow.is-info { cursor: pointer; display: inline-block; }
+.section-eyebrow.is-info::after {
+  content: ''; display: inline-block; width: 9px; height: 9px; margin-left: 5px; vertical-align: middle;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23565B5E' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='7' y1='17' x2='17' y2='7'/%3E%3Cpolyline points='7 7 17 7 17 17'/%3E%3C/svg%3E");
+  background-size: contain; background-repeat: no-repeat;
+}
+.memo-subhead { font-size: 13px; color: var(--t); line-height: 1.5; }
+.uw-hurdle-inline { font-weight: 500; color: var(--p); }
+.uw-module { padding: 24px 0 4px; border-top: 1px solid var(--divider); }
+.uw-module--flat { padding-top: 0; border-top: none; }
+.uw-module--flat + .uw-module { margin-top: 18px; }
+.hurdle-display-static { font-size: 22px; color: var(--p); cursor: pointer; display: inline-block; }
+.field-list { display: flex; flex-direction: column; }
+.radio-row { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: start; cursor: pointer; padding: 14px 0; border-bottom: 1px solid var(--c-1000); width: 100%; text-align: left; }
+.radio-row:last-child { border-bottom: none; }
+.radio-row .lbl-block .head { color: var(--p); font-size: 14px; line-height: 1.32; }
+.radio-dot { flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--t-800); margin-top: 2px; display: grid; place-items: center; }
+.radio-row.is-on .radio-dot::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--p); }
+.uw-cal-row { display: flex; align-items: center; gap: 12px; margin-top: 12px; }
+.uw-cal-num { font-size: 28px; color: var(--p); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; min-width: 64px; }
+.horiz-range { -webkit-appearance: none; appearance: none; height: 1px; background: var(--divider); cursor: pointer; flex: 1; }
+.horiz-range::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--p); cursor: pointer; margin-top: -8px; }
+.horiz-range::-moz-range-thumb { width: 16px; height: 16px; border: none; border-radius: 50%; background: var(--p); cursor: pointer; }
+.horiz-ends { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
+.body-xs { font-size: 11px; color: var(--t); }
+.cal-history-row { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; padding: 8px 0; border-top: 1px solid var(--divider); }
+.cal-history-label { font-size: 11px; color: var(--t-800); letter-spacing: 0.04em; }
+.cal-history-val { font-size: 12px; color: var(--s); font-variant-numeric: tabular-nums; }
+.v5-foot { flex-shrink: 0; background: var(--bg); }
+.v5-primary { display: flex; width: 100%; height: 64px; align-items: baseline; justify-content: flex-end; padding: 0 22px; gap: 8px; color: var(--p); font-size: 15px; background: transparent; }
+.v5-primary .arrow { font-size: 18px; font-weight: 500; }
+.v5-primary.locked { opacity: 0.4; pointer-events: none; }
+.info-modal { position: fixed; inset: 0; z-index: 100; background: rgba(0,0,0,0.7); display: none; align-items: flex-end; justify-content: center; }
+.info-modal.is-active { display: flex; }
+.info-modal-sheet { width: 100%; max-width: 393px; background: var(--elev); border-top: 0.5px solid #232627; padding: 24px 20px 32px; max-height: 80vh; overflow-y: auto; transform: translateY(100%); transition: transform 280ms var(--ease); position: relative; }
+.info-modal.is-active .info-modal-sheet { transform: translateY(0); }
+.info-modal-close { position: absolute; top: 16px; right: 16px; width: 24px; height: 24px; color: var(--t); font-size: 18px; }
+.info-modal-eyebrow { font-size: 11px; color: var(--t); margin-bottom: 4px; }
+.info-modal-title { font-size: 20px; font-weight: 500; color: var(--p); line-height: 1.25; margin-bottom: 20px; padding-right: 30px; }
+.info-modal-body { font-size: 13px; line-height: 1.55; color: var(--t); white-space: pre-line; }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <button class="back-btn" onclick="goBack()">‹</button>
+    <button class="exit-btn" onclick="goBack()">Exit</button>
+  </div>
+  <hr class="div">
+  <div class="body-scroll">
+    <div class="memo-page">
+      <div class="memo-header">
+        <div class="memo-header-top">
+          <h1 class="memo-header-title">Exceptional Compounding</h1>
+        </div>
+        <div class="memo-header-right">
+          <span class="memo-header-version"><span class="memo-ctx-ticker">ATZ</span> · Memo <span id="versionLbl">Draft</span></span>
+          <span class="alloc-type-lbl" id="allocLbl" style="display:none"></span>
+        </div>
+      </div>
+      <div class="memo-body--reveal">
+        <div class="uw-module uw-module--flat">
+          <div class="section-eyebrow is-info" onclick="showInfoModal('uw_hurdle')" style="margin-bottom:10px">Exceptional Compounding Hurdle</div>
+          <div class="hurdle-display-static" onclick="showInfoModal('hurdle_standard')"><span id="ep-hurdle-num">20</span>% per year</div>
+        </div>
+        <div class="uw-module">
+          <div class="section-eyebrow is-info" onclick="showInfoModal('uw_horizon')" style="margin-bottom:10px">Exceptional Compounding Horizon</div>
+          <div class="memo-subhead" style="margin-bottom:18px">Over what time horizon does your underwriting support the possibility of intrinsic value compounding at approximately <span class="uw-hurdle-inline"><span id="ep-hurdle-inline">20</span>%</span> annually?</div>
+          <div class="field-list" id="horizonList">
+            <button class="radio-row" data-value="1 Year" type="button"><div class="lbl-block"><div class="head">1 Year</div></div><div class="radio-dot"></div></button>
+            <button class="radio-row" data-value="3 Years" type="button"><div class="lbl-block"><div class="head">3 Years</div></div><div class="radio-dot"></div></button>
+            <button class="radio-row" data-value="5+ Years" type="button"><div class="lbl-block"><div class="head">5+ Years</div></div><div class="radio-dot"></div></button>
+          </div>
+        </div>
+        <div class="uw-module">
+          <div class="section-eyebrow" style="margin-bottom:10px">Confidence Calibration</div>
+          <div class="memo-subhead" style="margin-bottom:14px">What probability would you assign to your underwriting assumptions broadly proving correct over that horizon?</div>
+          <div class="uw-cal-row">
+            <span class="uw-cal-num"><span id="probValue">—</span><span style="font-size:11px;color:var(--p);margin-left:1px;vertical-align:baseline">%</span></span>
+            <input class="horiz-range" id="probSlider" type="range" min="10" max="90" value="50" step="5">
+          </div>
+          <div class="horiz-ends">
+            <span class="body-xs">10%</span>
+            <span class="body-xs" id="probMsg" style="color:var(--t)">Pick a number</span>
+            <span class="body-xs">90%</span>
+          </div>
+          <div class="cal-history-row">
+            <span class="cal-history-label">Historical accuracy</span>
+            <span class="cal-history-val">No data yet</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="v5-foot memo-foot--reveal">
+    <button class="v5-primary locked" id="saveBtn" onclick="saveAndReturn()"><span class="arrow">→</span><span id="saveBtnLbl">Save</span></button>
+  </div>
+  <div class="info-modal" id="infoModal" onclick="if(event.target===this) hideInfoModal()">
+    <div class="info-modal-sheet">
+      <button class="info-modal-close" onclick="hideInfoModal()">✕</button>
+      <div class="info-modal-eyebrow" id="infoEyebrow">—</div>
+      <div class="info-modal-title" id="infoTitle">—</div>
+      <div class="info-modal-body" id="infoBody">—</div>
+    </div>
+  </div>
+  <script>
+    var PROB_KEY = 'atz-memo-probability';
+    var HORIZON_KEY = 'atz-memo-horizon';
+    (function hydrateContext(){
+      try {
+        var v = localStorage.getItem('atz-memo-version');
+        if (v) document.getElementById('versionLbl').textContent = v;
+        var dec = localStorage.getItem('atz-memo-decision');
+        if (dec) { var el = document.getElementById('allocLbl'); el.textContent = dec; el.style.display = ''; }
+        var lbl = document.getElementById('saveBtnLbl');
+        if (lbl) lbl.textContent = 'Save';
+      } catch(e){}
+    })();
+    var slider = document.getElementById('probSlider');
+    var display = document.getElementById('probValue');
+    var probMsg = document.getElementById('probMsg');
+    try {
+      var savedProb = localStorage.getItem(PROB_KEY);
+      if (savedProb) { slider.value = savedProb; display.textContent = savedProb; probMsg.textContent = ''; }
+    } catch(e){}
+    slider.addEventListener('input', function(){
+      display.textContent = this.value;
+      probMsg.textContent = this.value == 50 ? 'Coin flip' : '';
+      checkLock();
+    });
+    var horizonRows = document.querySelectorAll('#horizonList .radio-row');
+    try {
+      var savedH = localStorage.getItem(HORIZON_KEY);
+      if (savedH) horizonRows.forEach(function(r){ if (r.getAttribute('data-value') === savedH) r.classList.add('is-on'); });
+    } catch(e){}
+    horizonRows.forEach(function(row){
+      row.addEventListener('click', function(){
+        horizonRows.forEach(function(r){ r.classList.remove('is-on'); });
+        row.classList.add('is-on');
+        checkLock();
+      });
+    });
+    function checkLock(){
+      var probSet = display.textContent && display.textContent !== '—';
+      var horizonSet = !!document.querySelector('#horizonList .radio-row.is-on');
+      document.getElementById('saveBtn').classList.toggle('locked', !(probSet && horizonSet));
+    }
+    checkLock();
+    function goBack(){
+      if (window.history.length > 1) { window.history.back(); return; }
+      if (document.referrer) { window.location.href = document.referrer; return; }
+      window.location.href = 'Firstime%20user_Memo%20Review.html';
+    }
+    function saveAndReturn(){
+      try { localStorage.setItem(PROB_KEY, slider.value); } catch(e){}
+      var selH = document.querySelector('#horizonList .radio-row.is-on');
+      if (selH) { try { localStorage.setItem(HORIZON_KEY, selH.getAttribute('data-value')); } catch(e){} }
+      goBack();
+    }
+    var INFO_MODALS = {
+      uw_hurdle: {
+        eyebrow: 'Exceptional Compounding Hurdle',
+        title: 'The minimum compounding rate worth your active capital.',
+        body: 'The hurdle is the annual rate at which intrinsic value would have to grow for this position to justify active capital rather than an index allocation.\n\n20% is the default standard. It sits meaningfully above the long-run S&P 500 return (~11%).\n\nHurdle, horizon, and probability work together. Naming all three is what makes the prediction measurable later.'
+      },
+      uw_horizon: {
+        eyebrow: 'Exceptional Compounding Horizon',
+        title: 'The window over which the thesis must deliver.',
+        body: 'The horizon is the future date when the prediction gets judged against reality.\n\nFor compounding theses, 3+ years is the meaningful window. Shorter horizons are dominated by noise.'
+      },
+      hurdle_standard: {
+        eyebrow: 'Hurdle',
+        title: 'A bar that rewards you even when you miss.',
+        body: 'The S&P 500 averages about 11% a year. Picking individual stocks only makes sense when you are aiming meaningfully higher.\n\n20% is set deliberately above that bar.'
+      }
+    };
+    function showInfoModal(key){
+      var m = INFO_MODALS[key]; if (!m) return;
+      document.getElementById('infoEyebrow').textContent = m.eyebrow;
+      document.getElementById('infoTitle').textContent = m.title;
+      var body = document.getElementById('infoBody');
+      if (m.bodyHtml) body.innerHTML = m.bodyHtml; else body.textContent = m.body || '';
+      document.getElementById('infoModal').classList.add('is-active');
+    }
+    function hideInfoModal(){ document.getElementById('infoModal').classList.remove('is-active'); }
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape') hideInfoModal(); });
+  
+    // Hurdle rate — read from Memo Intro's atz-memo-hurdle-rate LS (#87)
+    (function(){
+      try {
+        var h = localStorage.getItem('atz-memo-hurdle-rate');
+        if (h !== null && h !== '') {
+          var n1 = document.getElementById('ep-hurdle-num');
+          var n2 = document.getElementById('ep-hurdle-inline');
+          if (n1) n1.textContent = h;
+          if (n2) n2.textContent = h;
+        }
+      } catch(e){}
+    })();
+
+  </script>
+</body>
+</html>

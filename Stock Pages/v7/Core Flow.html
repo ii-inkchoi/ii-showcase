@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Core / Treasury Allocation — ATZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+* { scrollbar-width: none; -ms-overflow-style: none; }
+*::-webkit-scrollbar { display: none; }
+button { background: transparent; border: none; color: inherit; font: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+a { color: inherit; text-decoration: none; }
+:root { --bg:#000; --p:#FFFFFF; --s:#C7C7C7; --t:#929292; --t-800:#565B5E; --divider:#1C1C1C; --c-1000:#1C1C1C; --font:'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--s); font-family: var(--font); font-weight: 400; letter-spacing: -0.02em; width: 100%; max-width: 393px; margin: 0 auto; min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden; display: flex; flex-direction: column; }
+.topbar { display:flex; justify-content:space-between; align-items:center; padding:12px 16px; flex-shrink:0; }
+.back-btn { color: var(--p); font-size: 22px; line-height: 1; }
+.exit-btn { color: var(--p); font-size: 15px; }
+.div-hr { border: none; border-top: 0.5px solid var(--divider); margin: 0; }
+.body-scroll { flex: 1; overflow-y: auto; }
+.memo-page { padding: 32px 20px 20px; min-height: 100%; }
+.memo-header { padding-bottom: 22px; border-bottom: 0.5px solid rgba(255,255,255,0.06); display: grid; grid-template-columns: 1fr auto; gap: 12px 10px; }
+.memo-header-top { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: baseline; gap: 14px; }
+.memo-header-title { font-size: 28px; font-weight: 400; color: var(--p); line-height: 1.18; letter-spacing: -0.02em; }
+.memo-header-meta { font-size: 11px; color: var(--t); }
+.memo-header-right { grid-column: 2; display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
+.memo-header-version { font-size: 11px; color: var(--t); }
+.alloc-type-lbl { font-size: 11px; color: var(--t); text-align: right; }
+.section-eyebrow { font-size: 15px; color: var(--s); margin: 24px 0 12px; }
+.memo-subhead { font-size: 13px; color: var(--t); line-height: 1.5; margin-bottom: 18px; }
+.field-list { display: flex; flex-direction: column; }
+.radio-row { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: start; cursor: pointer; padding: 14px 0; border-bottom: 1px solid var(--c-1000); width: 100%; text-align: left; }
+.radio-row:last-child { border-bottom: none; }
+.radio-row .lbl-block { display: flex; flex-direction: column; gap: 4px; }
+.radio-row .lbl-block .head { color: var(--p); font-size: 14px; line-height: 1.32; }
+.radio-row .lbl-block .sub { color: var(--t); font-size: 13px; line-height: 1.32; }
+.radio-dot { flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--t-800); margin-top: 2px; display: grid; place-items: center; }
+.radio-row.is-on .radio-dot { border-color: var(--p); }
+.radio-row.is-on .radio-dot::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--p); }
+.weight-card { background: #0E0E0E; border: 0.5px solid #1F2122; padding: 20px; margin-top: 14px; }
+.weight-display { text-align: center; font-size: 28px; color: var(--p); font-weight: 400; letter-spacing: -0.02em; margin: 16px 0 12px; font-variant-numeric: tabular-nums; }
+.weight-display.empty { color: var(--t-800); }
+.weight-display .pct { font-size: 13px; color: var(--p); margin-left: 2px; }
+.slider-row { padding: 0 4px; margin-bottom: 6px; }
+.slider-row input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 1px; background: var(--divider); cursor: pointer; }
+.slider-row input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--p); cursor: pointer; margin-top: -7px; }
+.slider-row input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border: none; border-radius: 50%; background: var(--p); cursor: pointer; }
+.slider-ends { display: flex; justify-content: space-between; font-size: 11px; color: var(--t-800); padding: 0 4px; }
+.notes-textarea { width: 100%; background: transparent; border: 0.5px solid var(--divider); color: var(--p); font-family: inherit; font-size: 14px; padding: 14px; line-height: 1.5; letter-spacing: -0.01em; resize: vertical; min-height: 140px; outline: none; }
+.notes-textarea:focus { border-color: var(--t-800); }
+.v5-foot { flex-shrink: 0; background: var(--bg); }
+.v5-primary { display: flex; width: 100%; height: 64px; align-items: baseline; justify-content: flex-end; padding: 0 22px; gap: 8px; color: var(--p); font-size: 15px; background: transparent; }
+.v5-primary .arrow { font-size: 18px; font-weight: 500; }
+.v5-primary.locked { opacity: 0.22; pointer-events: none; }
+.scr { display: none; flex-direction: column; min-height: calc(100vh - 71px); }
+.scr.is-active { display: flex; }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <button class="back-btn" onclick="goBack()" aria-label="Back">‹</button>
+    <button class="exit-btn" onclick="exitFlow()" aria-label="Exit">Exit</button>
+  </div>
+  <hr class="div-hr">
+
+  <!-- c1 — Role -->
+  <section class="scr is-active" data-id="c1">
+    <div class="body-scroll">
+      <div class="memo-page">
+        <div class="memo-header">
+          <div class="memo-header-top">
+            <h1 class="memo-header-title">Role</h1>
+          </div>
+          <div class="memo-header-meta">1 / 3</div>
+          <div class="memo-header-right">
+            <span class="memo-header-version">ATZ · Memo <span id="c1-vlbl">V2</span></span>
+            <span class="alloc-type-lbl">Core / Treasury Allocation</span>
+          </div>
+        </div>
+        <div class="section-eyebrow">What role does this allocation play?</div>
+        <div class="memo-subhead">Core / Treasury holdings exist for portfolio structure, not edge.</div>
+        <div class="field-list" id="c1-list">
+          <button class="radio-row" data-role="liquidity" type="button"><div class="lbl-block"><div class="head">Liquidity reserve</div><div class="sub">Cash-like holding for opportunities or operations.</div></div><div class="radio-dot"></div></button>
+          <button class="radio-row" data-role="index" type="button"><div class="lbl-block"><div class="head">Index core</div><div class="sub">Broad market exposure (S&amp;P 500, total market).</div></div><div class="radio-dot"></div></button>
+          <button class="radio-row" data-role="bond" type="button"><div class="lbl-block"><div class="head">Bond ladder</div><div class="sub">Fixed-income for stability and yield.</div></div><div class="radio-dot"></div></button>
+          <button class="radio-row" data-role="cash" type="button"><div class="lbl-block"><div class="head">Cash equivalent</div><div class="sub">Money market, T-bills, savings.</div></div><div class="radio-dot"></div></button>
+          <button class="radio-row" data-role="yield" type="button"><div class="lbl-block"><div class="head">Yield product</div><div class="sub">Dividend or income-focused holdings.</div></div><div class="radio-dot"></div></button>
+        </div>
+      </div>
+    </div>
+    <div class="v5-foot">
+      <button class="v5-primary locked" id="c1-next" onclick="goStep('c2')" type="button"><span class="arrow">→</span><span>Continue</span></button>
+    </div>
+  </section>
+
+  <!-- c2 — Target weight -->
+  <section class="scr" data-id="c2">
+    <div class="body-scroll">
+      <div class="memo-page">
+        <div class="memo-header">
+          <div class="memo-header-top">
+            <h1 class="memo-header-title">Target weight</h1>
+          </div>
+          <div class="memo-header-meta">2 / 3</div>
+          <div class="memo-header-right">
+            <span class="memo-header-version">ATZ · Memo <span id="c2-vlbl">V2</span></span>
+            <span class="alloc-type-lbl">Core / Treasury Allocation</span>
+          </div>
+        </div>
+        <div class="section-eyebrow">What % of your portfolio?</div>
+        <div class="memo-subhead">Where you'd ideally settle once fully deployed.</div>
+        <div class="weight-card">
+          <div class="weight-display empty" id="c2-display"><span id="c2-num">—</span><span class="pct">%</span></div>
+          <div class="slider-row">
+            <input id="c2-range" type="range" min="0" max="50" value="10" step="1" oninput="setWeight(this.value)">
+          </div>
+          <div class="slider-ends">
+            <span>0%</span><span>50%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="v5-foot">
+      <button class="v5-primary locked" id="c2-next" onclick="goStep('c3')" type="button"><span class="arrow">→</span><span>Continue</span></button>
+    </div>
+  </section>
+
+  <!-- c3 — Notes -->
+  <section class="scr" data-id="c3">
+    <div class="body-scroll">
+      <div class="memo-page">
+        <div class="memo-header">
+          <div class="memo-header-top">
+            <h1 class="memo-header-title">Notes</h1>
+          </div>
+          <div class="memo-header-meta">3 / 3</div>
+          <div class="memo-header-right">
+            <span class="memo-header-version">ATZ · Memo <span id="c3-vlbl">V2</span></span>
+            <span class="alloc-type-lbl">Core / Treasury Allocation</span>
+          </div>
+        </div>
+        <div class="section-eyebrow">Why this allocation exists.</div>
+        <div class="memo-subhead">A line or two for your future self.</div>
+        <textarea id="c3-notes" class="notes-textarea" placeholder="e.g. Held as inflation hedge, paired with bond ladder." rows="6" oninput="setNotes(this.value)"></textarea>
+      </div>
+    </div>
+    <div class="v5-foot">
+      <button class="v5-primary locked" id="c3-save" onclick="saveCoreVersion()" type="button"><span class="arrow">→</span><span>Save as new version</span></button>
+    </div>
+  </section>
+
+<script>
+  var state = { role: null, weight: null, notes: '' };
+
+  function getLS(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+  function setLS(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+  function nextV(curr){ if(!curr) return 'V1'; var m=/^V(\d+)$/.exec(curr); if(!m) return 'V1'; return 'V'+(parseInt(m[1],10)+1); }
+
+  function setVersionLabels(){
+    var curr=getLS('atz-memo-version')||'V1';
+    var nv=nextV(curr);
+    ['c1-vlbl','c2-vlbl','c3-vlbl'].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=nv; });
+  }
+
+  function goStep(id){
+    document.querySelectorAll('.scr').forEach(function(el){ el.classList.remove('is-active'); });
+    var el=document.querySelector('.scr[data-id="'+id+'"]');
+    if(el) el.classList.add('is-active');
+    var sc=el && el.querySelector('.body-scroll'); if(sc) sc.scrollTop=0;
+  }
+
+  function getCurrentStep(){
+    var ac=document.querySelector('.scr.is-active');
+    return ac ? ac.getAttribute('data-id') : 'c1';
+  }
+
+  function goBack(){
+    var cur=getCurrentStep();
+    if (cur==='c2') goStep('c1');
+    else if (cur==='c3') goStep('c2');
+    else window.location.href='Firstime%20user_Memo%20Review.html';
+  }
+
+  function exitFlow(){
+    window.location.href='Firstime%20user_Memo%20Review.html';
+  }
+
+  // c1 Role selection
+  document.querySelectorAll('#c1-list .radio-row').forEach(function(row){
+    row.addEventListener('click', function(){
+      document.querySelectorAll('#c1-list .radio-row').forEach(function(r){ r.classList.remove('is-on'); });
+      row.classList.add('is-on');
+      state.role = row.getAttribute('data-role');
+      document.getElementById('c1-next').classList.remove('locked');
+    });
+  });
+
+  function setWeight(val){
+    var v=parseInt(val,10);
+    state.weight=v;
+    var num=document.getElementById('c2-num'); if(num) num.textContent=v;
+    var disp=document.getElementById('c2-display');
+    if(disp){ if(v>0) disp.classList.remove('empty'); else disp.classList.add('empty'); }
+    var range=document.getElementById('c2-range');
+    if(range){ var min=parseInt(range.min,10)||0, max=parseInt(range.max,10)||100; var pct=((v-min)/(max-min)*100).toFixed(1); range.style.background='linear-gradient(to right, var(--p) '+pct+'%, var(--divider) '+pct+'%)'; }
+    var btn=document.getElementById('c2-next');
+    if(btn){ if(v>0) btn.classList.remove('locked'); else btn.classList.add('locked'); }
+  }
+
+  function setNotes(val){
+    state.notes = val;
+    var btn = document.getElementById('c3-save');
+    if (btn) {
+      if (val && val.trim().length > 0) btn.classList.remove('locked');
+      else btn.classList.add('locked');
+    }
+  }
+
+  function saveCoreVersion(){
+    var btn = document.getElementById('c3-save');
+    if (btn && btn.classList.contains('locked')) return;
+    var curr=getLS('atz-memo-version')||'V1';
+    var next=nextV(curr);
+    setLS('atz-memo-decision','Core / Treasury Allocation');
+    setLS('atz-memo-role', state.role||'');
+    setLS('atz-memo-target-weight', String(state.weight||0));
+    setLS('atz-memo-notes', state.notes||'');
+    // Clear Active-specific fields (they don't apply to Core stance)
+    setLS('atz-memo-classification','');
+    setLS('atz-memo-sizing','');
+    setLS('atz-memo-memo','');
+    setLS('atz-memo-probability','');
+    setLS('atz-memo-horizon','');
+    // Push history snapshot
+    var hist=[]; try{ hist=JSON.parse(getLS('atz-memo-history')||'[]'); }catch(e){}
+    hist.push({ version:next, timestamp:Date.now(), event:'memo', decision:'Core / Treasury Allocation', role:state.role, targetWeight:state.weight, notes:state.notes });
+    setLS('atz-memo-history', JSON.stringify(hist));
+    setLS('atz-memo-version', next);
+    window.location.href='Firstime%20user_Memo%20Review.html';
+  }
+
+  // Initialize state from existing LS values (so editing one field doesn't clear others)
+  function hydrateFromLS(){
+    var role = getLS('atz-memo-role');
+    if (role) {
+      state.role = role;
+      document.querySelectorAll('#c1-list .radio-row').forEach(function(r){ r.classList.remove('is-on'); });
+      var sel = document.querySelector('#c1-list .radio-row[data-role="'+role+'"]');
+      if (sel) sel.classList.add('is-on');
+      var c1btn = document.getElementById('c1-next');
+      if (c1btn) c1btn.classList.remove('locked');
+    }
+    var tw = getLS('atz-memo-target-weight');
+    if (tw && parseInt(tw,10) > 0) {
+      var range = document.getElementById('c2-range');
+      if (range) { range.value = parseInt(tw,10); setWeight(tw); }
+    }
+    var notes = getLS('atz-memo-notes');
+    if (notes && notes.length) {
+      state.notes = notes;
+      var ta = document.getElementById('c3-notes');
+      if (ta) ta.value = notes;
+      var c3btn = document.getElementById('c3-save');
+      if (c3btn) c3btn.classList.remove('locked');
+    }
+  }
+
+  // Initialize
+  document.addEventListener('DOMContentLoaded', function(){
+    setVersionLabels();
+    hydrateFromLS();
+    // If user arrived via "?step=c2" or similar, jump there
+    var p=new URLSearchParams(window.location.search);
+    var s=p.get('step');
+    if (s && ['c1','c2','c3'].indexOf(s)!==-1) goStep(s);
+  });
+</script>
+</body>
+</html>

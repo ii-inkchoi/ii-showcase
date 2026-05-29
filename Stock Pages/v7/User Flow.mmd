@@ -1,0 +1,91 @@
+%% v6 User Flow — Stock Page + Memo system
+%% Unified yes/no decision tree across all 3 user states
+%% (First-time / Memo Only / Return User)
+
+flowchart TD
+    %% ═══════════ ENTRY ═══════════
+    Start([Open Stock Page])
+    Start --> Q1{V1 memo<br/>exists?}
+
+    %% ═══════════ STATE ROUTING ═══════════
+    Q1 -- No --> S1[/"State: First-time User<br/>Stock Page Firsttime User"/]
+    Q1 -- Yes --> Q2{Position<br/>held?}
+    Q2 -- No --> S2[/"State: Memo Only<br/>Stock Page Memo Only"/]
+    Q2 -- Yes --> S3[/"State: Return User<br/>Stock Page Return User"/]
+
+    %% ═══════════ FIRST-TIME USER ═══════════
+    S1 --> S1Tap{User taps...}
+    S1Tap -- Memo block --> FT_M[First-time Memo Flow<br/>intent=memo]
+    S1Tap -- Capital Decision --> FT_B[First-time Memo Flow<br/>intent=buy]
+
+    FT_M --> Steps[m1 Type → m1b Size<br/>→ m5 Memo → s12 Prob/Horizon<br/>→ m6 Investor Memo Review]
+    FT_B --> Steps
+
+    Steps --> Q3{intent?}
+    Q3 -- memo --> SaveV1[("Save V1<br/>LS: atz-memo-version=V1")]
+    Q3 -- buy --> Buy[s8 Quantity<br/>→ s4 Review → s9 Confirm]
+    Buy --> SaveV1Pos[("Save V1 + Position=Held")]
+
+    SaveV1 --> S2
+    SaveV1Pos --> S3
+
+    %% ═══════════ MEMO ONLY + RETURN (shared) ═══════════
+    S2 --> Tap23{User taps...}
+    S3 --> Tap23
+
+    Tap23 -- Memo card --> MR[Memo Review<br/>V1 Live — row-edit pattern]
+    Tap23 -- History link --> HIS[Memo History<br/>year-grouped list]
+    Tap23 -- Capital Decision --> CDS[/"CD Sheet — bottom sheet<br/>Increase · Reduce · Exit"/]
+
+    %% ═══════════ CAPITAL DECISION FLOW ═══════════
+    CDS --> CDact[(sessionStorage:<br/>atz-cd-action set)]
+    CDact --> CDR[Capital Decision Review<br/>full-width memo view]
+
+    CDR --> Q4{Edit any<br/>memo row?}
+    Q4 -- No, Continue --> Trade
+    Q4 -- Yes, tap row --> Edit
+
+    %% ═══════════ MEMO REVIEW + EDIT ═══════════
+    MR --> Q5{Tap a<br/>row?}
+    Q5 -- Yes --> Edit[Edit Decision / Type / Size /<br/>Memo / Probability page]
+    Q5 -- No, just view --> Back1([Exit to Stock Page])
+    Edit -- Save --> MR
+
+    MR --> Q6{Has edits<br/>vs latest V?}
+    Q6 -- No --> Back1
+    Q6 -- Yes, Save Changes --> SS[/"Bottom sheet:<br/>New version popup<br/>'V N+1 goes live'"/]
+    SS -- Save as V N+1 --> NewVer[("Push snapshot to history<br/>event: memo / buy / reduce / exit<br/>Alert acknowledged")]
+
+    NewVer --> Q7{cd-mode?}
+    Q7 -- Yes --> Trade
+    Q7 -- No --> Back2([Return to Stock Page])
+
+    %% Edit during CD flow → same save sheet
+    Edit -. CD mode .-> CDR
+
+    %% ═══════════ MEMO HISTORY ═══════════
+    HIS --> Q8{Tap which<br/>version?}
+    Q8 -- Live --> MR
+    Q8 -- Past --> Hist[Memo V1 Historical<br/>read-only snapshot]
+    Hist --> HIS
+
+    %% ═══════════ TRADE ═══════════
+    Trade[Trade Execution<br/>Leo's page — buy/sell quantity<br/>→ review → confirm]
+    Trade --> Back3([Return to Stock Page])
+
+    %% ═══════════ QUARTERLY ALERT ═══════════
+    S3 -. earnings posted .-> Alert[/"Q4 earnings alert<br/>above memo card"/]
+    Alert -- X click --> AlertDismiss[("Hide for this view<br/>reappears on reload")]
+    Alert -- Review Memo --> MR
+    NewVer -. memo edit acknowledges .-> AlertGone[("Alert permanently<br/>hidden via LS flag")]
+
+    %% ═══════════ STYLING ═══════════
+    classDef state fill:#1c1c1c,stroke:#929292,color:#fff,stroke-width:1px
+    classDef decision fill:#0a0a0a,stroke:#565b5e,color:#fff
+    classDef storage fill:#2a2d2e,stroke:#3a3d3e,color:#c7c7c7,stroke-dasharray:3 3
+    classDef terminal fill:#1c1c1c,stroke:#30d158,color:#30d158
+
+    class S1,S2,S3 state
+    class Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,S1Tap,Tap23 decision
+    class SaveV1,SaveV1Pos,CDact,NewVer,AlertDismiss,AlertGone storage
+    class Start,Back1,Back2,Back3 terminal

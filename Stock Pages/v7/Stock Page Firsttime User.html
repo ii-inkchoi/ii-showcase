@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <title>ATZ — Stock Page (First-Time)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-black:#000000; --c-1000:#1C1C1C; --c-900:#232627; --c-800:#565B5E;
+      --c-700:#929292; --c-600:#A7A7A7; --c-400:#C7C7C7; --c-200:#E3E2E2; --c-white:#FFFFFF;
+      --c-elev:#0A0A0A; --c-live:#30D158;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--c-black); color: var(--c-white); font-family: 'Inter', sans-serif; width: 100%; max-width: 393px; margin: 0 auto; min-height: 100vh; overflow-x: hidden; -webkit-font-smoothing: antialiased; font-feature-settings: 'lnum' 1, 'tnum' 1; scrollbar-width: none; -ms-overflow-style: none; }
+    body::-webkit-scrollbar { display: none; }
+    a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+
+    .header { height: 71px; display: flex; align-items: center; justify-content: space-between; padding: 0 13.5px; border-bottom: 1px solid var(--c-900); }
+    .compliance-strip { display: flex; align-items: center; padding: 8px 20px; font-size: 9px; letter-spacing: -0.02em; color: var(--c-800); border-bottom: 0.5px solid var(--c-1000); line-height: 1.3; }
+    .back { width: 13px; height: 13px; display: inline-flex; align-items: center; justify-content: center; color: var(--c-400); }
+    .back::before { content: ''; width: 8px; height: 8px; border-left: 1px solid currentColor; border-bottom: 1px solid currentColor; transform: rotate(45deg); margin-left: 2px; }
+    .star { width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center; color: var(--c-400); }
+    .exit { font-size: 14px; letter-spacing: -0.02em; color: var(--c-400); }
+
+    .title-block { padding: 40px 20px 0; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+    .t-primary { font-size: 18px; letter-spacing: -0.02em; color: var(--c-white); line-height: 1.15; }
+    .t-secondary { font-size: 13px; letter-spacing: -0.02em; color: var(--c-700); line-height: 1.15; }
+    .t-secondary .price { color: var(--c-white); margin-left: 4px; }
+
+    .col { padding: 48px 20px 120px; display: flex; flex-direction: column; gap: 48px; }
+    .section { display: flex; flex-direction: column; gap: 14px; }
+    .section-header { display: flex; align-items: baseline; justify-content: space-between; padding: 0 0 14px; border-bottom: 0.5px solid var(--c-900); width: 100%; }
+    .section-title { font-size: 15px; color: var(--c-white); letter-spacing: -0.02em; }
+    .section-meta { font-size: 11px; color: var(--c-700); letter-spacing: -0.02em; margin-left: auto; margin-right: 4px; }
+    .section-chev { color: var(--c-700); font-size: 14px; font-weight: 300; line-height: 1; }
+
+    .view-link { display: inline-flex; align-items: baseline; gap: 4px; font-size: 11px; color: var(--c-700); letter-spacing: -0.02em; margin-top: 4px; align-self: flex-start; }
+    .view-link .chev { font-size: 13px; font-weight: 300; color: var(--c-700); }
+
+    /* Memo block — filled state */
+    .memo-block { border:0.5px solid var(--c-900); padding:16px; display:flex; flex-direction:column; gap:8px; }
+    .memo-block .uw-rows { display: flex; flex-direction: column; gap: 10px; }
+    .memo-block-divider { height: 0.5px; background: var(--c-900); margin: 4px 0; }
+    .memo-block-prose { font-size: 13px; color: var(--c-400); letter-spacing: -0.02em; line-height: 1.65; margin-top: 4px; white-space: pre-wrap; }
+    .memo-block-foot { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 8px; }
+    .memo-block-version { font-size: 11px; color: var(--c-700); letter-spacing: -0.02em; }
+    .memo-block-cta { display: inline-flex; align-items: baseline; gap: 4px; font-size: 11px; color: var(--c-white); letter-spacing: -0.02em; padding: 4px 0 0; }
+    .memo-block-cta .chev { font-size: 13px; font-weight: 300; color: var(--c-white); }
+    .live-dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--c-live); margin-right: 6px; vertical-align: middle; animation: live-pulse 2.4s cubic-bezier(0.45,0,0.55,1) infinite; }
+    @keyframes live-pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
+    @media (prefers-reduced-motion: reduce){ .live-dot { animation:none !important; } }
+    .uw-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+    .uw-key { font-size: 13px; color: var(--c-700); letter-spacing: -0.02em; }
+    .uw-val { font-size: 13px; color: var(--c-400); letter-spacing: -0.02em; text-align: right; font-feature-settings: 'tnum' 1; }
+    .uw-val .uw-meta { color: var(--c-700); margin-left: 6px; font-size: 12px; }
+
+    /* Empty state — drill-in to memo experience */
+    a.memo-block-empty { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; padding: 16px; border: 0.5px solid var(--c-900); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+    .memo-block-empty-text { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+    .memo-block-empty-title { font-size: 15px; color: var(--c-white); letter-spacing: -0.02em; line-height: 1.2; }
+    .memo-block-empty-placeholder { font-size: 11px; color: var(--c-700); letter-spacing: -0.02em; line-height: 1.35; }
+    .memo-block-empty-chev { color: var(--c-700); font-size: 14px; font-weight: 300; line-height: 1.2; flex-shrink: 0; }
+
+    /* Memo section header (shown only when memo exists) */
+    .memo-section-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
+    .memo-section-title { font-size: 15px; color: var(--c-white); letter-spacing: -0.02em; }
+    .memo-section-meta { font-size: 11px; color: var(--c-700); letter-spacing: -0.02em; }
+    .memo-history-link { font-size: 11px; color: var(--c-700); letter-spacing: -0.02em; display: inline-flex; align-items: baseline; gap: 4px; cursor: pointer; }
+    .memo-history-link .chev { font-size: 13px; font-weight: 300; color: var(--c-700); }
+
+    .nav-rows { display: flex; flex-direction: column; }
+    .nav-row { padding: 18px 0; border-bottom: 0.5px solid var(--c-900); display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+    .nav-rows .nav-row:first-child { border-top: 0.5px solid var(--c-900); }
+    .nav-row.primary { background: var(--c-elev); border: 0.5px solid var(--c-900); padding: 16px; }
+    .nav-row.primary .nav-row-arrow { color: var(--c-700); font-size: 14px; }
+    .nav-row.primary .nav-row-meta { font-size: 12px; line-height: 1.5; max-width: 280px; }
+    button.nav-row.primary { width: 100%; text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent; font-family: inherit; color: inherit; }
+    .nav-row-text { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+    .nav-row-title { font-size: 15px; color: var(--c-white); letter-spacing: -0.02em; line-height: 1.2; }
+    .nav-row-meta { font-size: 11px; color: var(--c-700); letter-spacing: -0.02em; line-height: 1.35; }
+    .nav-row-arrow { color: var(--c-400); font-size: 16px; font-weight: 300; line-height: 1.2; }
+
+    .primary-card { background: var(--c-elev); border: 0.5px solid var(--c-900); display: flex; flex-direction: column; }
+    .primary-card-action { width: 100%; display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; padding: 16px; background: none; border: none; font-family: inherit; text-align: left; cursor: pointer; color: inherit; }
+    .primary-card-action .nav-row-arrow { color: var(--c-700); font-size: 14px; }
+    .primary-card-footer { border-top: 0.5px solid var(--c-900); padding: 12px 16px; }
+    .copy-feedback { display: inline-block; margin-left: 10px; font-size: 13px; color: var(--c-700); letter-spacing: -0.02em; opacity: 0; transition: opacity 120ms ease; }
+    .primary-card-action.copied .copy-feedback { opacity: 1; }
+    .ai-tools-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; font-size: 12px; letter-spacing: -0.02em; }
+    .ai-tool { color: var(--c-600); padding: 2px 0; }
+    .ai-tools-sep { color: var(--c-1000); }
+
+    .capital-decision { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 393px; padding: 40px 13.5px 24px; display: flex; justify-content: flex-end; background: linear-gradient(to top, var(--c-black) 0%, var(--c-black) 60%, rgba(0,0,0,0) 100%); pointer-events: none; z-index: 10; }
+    .capital-decision a { pointer-events: auto; display: inline-flex; align-items: baseline; gap: 8px; font-size: 15px; color: var(--c-white); letter-spacing: -0.02em; padding: 8px 4px; }
+    .capital-decision a .arrow { font-weight: 500; }
+  
+    /* RESEARCH CARDS (#70 #71) */
+    .research-card{background:var(--c-elev);border:0.5px solid var(--c-900);padding:16px;display:flex;flex-direction:column;gap:8px;color:inherit;-webkit-tap-highlight-color:transparent;}
+    .research-card.research-card-link{cursor:pointer;flex-direction:row;align-items:center;justify-content:space-between;gap:14px;}
+    .research-card.research-card-link:active{opacity:.5;transition:opacity 80ms ease;}
+    .research-card.research-card-link .rc-head{display:flex;flex-direction:column;gap:3px;flex:1;}
+    .research-card.research-card-link .rc-title{font-size:15px;color:var(--c-white);letter-spacing:-.02em;}
+    .research-card.research-card-link .rc-sub{font-size:12px;color:var(--c-700);letter-spacing:-.01em;line-height:1.5;}
+    .research-card.research-card-link .rc-arrow{color:var(--c-700);font-size:14px;font-weight:300;flex-shrink:0;}
+    .research-card .rc-head-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+    .research-card .rc-title{font-size:15px;color:var(--c-white);letter-spacing:-.02em;line-height:1.2;}
+    .research-card .rc-sub{font-size:12px;color:var(--c-700);letter-spacing:-.01em;line-height:1.5;}
+    .research-card .rc-copy{width:32px;height:32px;margin:-4px -6px -4px 0;display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;color:var(--c-400);-webkit-tap-highlight-color:transparent;flex-shrink:0;border-radius:4px;}
+    .research-card .rc-copy:active{opacity:.5;}
+    .research-card .rc-copy.copied{color:var(--c-white);}
+    .research-card .rc-copy svg{width:14px;height:14px;}
+    .research-card .rc-output{border-top:0.5px solid var(--c-900);margin-top:4px;}
+    .research-card .rc-output-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 0 4px;background:none;border:none;font-family:inherit;color:var(--c-700);cursor:pointer;text-align:left;font-size:12px;letter-spacing:-.01em;}
+    .research-card .rc-output-toggle:active{opacity:.5;}
+    .research-card .rc-output-caret{font-size:13px;font-weight:300;color:var(--c-700);transition:transform 160ms ease;flex-shrink:0;line-height:1;display:inline-block;transform:rotate(0deg);}
+    .research-card .rc-output.open .rc-output-caret{transform:rotate(90deg);}
+    .research-card .rc-output-body{display:none;padding:8px 0 4px;}
+    .research-card .rc-output.open .rc-output-body{display:flex;flex-direction:column;}
+    .research-card .rc-sec-row{display:flex;align-items:baseline;gap:10px;padding:5px 0;font-size:12px;color:var(--c-400);letter-spacing:-.01em;}
+    .research-card .rc-sec-num{font-size:10px;color:var(--c-700);font-variant-numeric:tabular-nums;width:18px;flex-shrink:0;}
+    .research-card .rc-ai-tools{
+      border-top:0.5px solid var(--c-900);
+      padding-top:10px; margin-top:4px;
+      display:flex; align-items:baseline; gap:8px; flex-wrap:wrap;
+      font-size:11px; color:var(--c-700); letter-spacing:-0.01em;
+    }
+    .research-card .rc-ai-tools .rc-ai-lbl{color:var(--c-700);}
+    .research-card .rc-ai-tools a{color:var(--c-400);}
+    .research-card .rc-ai-tools a:active{opacity:.5;transition:opacity 80ms ease;}
+    .research-card .rc-ai-tools .rc-ai-sep{color:var(--c-800);}
+
+
+    /* ABOUT link */
+    .about-section .about-toggle{
+      display:inline-flex;align-items:baseline;gap:3px;
+      background:none;border:none;padding:0;
+      font-family:inherit;font-size:12px;color:var(--c-700);letter-spacing:-.01em;
+      cursor:pointer;-webkit-tap-highlight-color:transparent;
+      align-self:flex-start;
+    }
+    .about-section .about-toggle .toggle-label{
+      border-bottom:0.5px dotted var(--c-800);
+      padding-bottom:1px;
+      transition:color 120ms ease, border-color 120ms ease;
+    }
+    .about-section .about-toggle:active .toggle-label{opacity:0.5; transition:opacity 80ms ease;}
+    .about-section.expanded .about-toggle .toggle-label{color:var(--c-white); border-bottom-color:var(--c-700);}
+    .about-section .about-body{display:none;margin-top:14px;}
+    .about-section.expanded .about-body{display:block;}
+
+
+    /* Memo headline — empty state as centerpiece (회의 #5) */
+    a.memo-block-empty.memo-headline { padding: 24px 20px; }
+    a.memo-block-empty.memo-headline .memo-block-empty-title { font-size: 22px; letter-spacing: -0.02em; line-height: 1.18; }
+    a.memo-block-empty.memo-headline .memo-block-empty-chev { font-size: 16px; }
+  
+    /* Empty memo section subtext */
+    .memo-empty-sub { font-size: 12px; color: var(--c-700); letter-spacing: -0.02em; line-height: 1.5; margin-bottom: 14px; }
+
+  
+    .research-card .rc-head .rc-eyebrow { font-size: 11px; color: var(--c-700); letter-spacing: -0.01em; margin-bottom: 2px; }
+
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <a href="#" onclick="event.preventDefault()" class="back" aria-label="Back"></a>
+    <span style="display:flex;align-items:center;gap:14px;">
+      <a href="#" onclick="event.preventDefault()" class="star" aria-label="Star">☆</a>
+      <a href="#" onclick="event.preventDefault()" class="exit" aria-label="Exit">Exit</a>
+    </span>
+  </header>
+
+  <div class="compliance-strip" aria-label="Disclosure">
+    Self-Authored · No Suitability Review · Not Advice
+  </div>
+
+  <div class="title-block">
+    <span class="t-primary">Aritzia Inc · ATZ</span>
+    <span class="t-secondary">Last Price <span class="price">87.60 CAD</span></span>
+  </div>
+
+  <div class="col">
+
+    <!-- MEMO — Memo as title, build-case as sub -->
+    <a href="Memo%20Intro.html?intent=memo" class="research-card research-card-link" id="memoEmpty" aria-label="Memo — Build your case for Aritzia" onclick="try{sessionStorage.setItem('atz-memo-stock-source',window.location.href);}catch(e){}">
+      <div class="rc-head">
+        <div class="rc-title">Memo</div>
+        <div class="rc-sub">Build your case for Aritzia.</div>
+      </div>
+      <span class="rc-arrow" aria-hidden="true">›</span>
+    </a>
+
+    <section id="memoFilledSection" style="display:none;">
+      <div class="memo-section-header">
+        <span class="memo-section-title">Memo</span>
+        <a href="Memo%20History.html" class="memo-history-link" id="memoHistoryLink" style="display:none" onclick="try{sessionStorage.setItem('atz-memo-stock-source',window.location.href);}catch(e){}">1 version <span class="chev" aria-hidden="true">›</span></a>
+      </div>
+      <a href="Firstime%20user_Memo%20Review.html" class="memo-block" id="memoFilled" style="display:flex;" onclick="try{sessionStorage.setItem('atz-memo-stock-source',window.location.href);}catch(e){}">
+        <div class="uw-rows">
+          <div class="uw-row"><span class="uw-key">Decision</span><span class="uw-val" data-field="decision">—</span></div>
+          <div class="uw-row"><span class="uw-key">Classification</span><span class="uw-val" data-field="classification">—</span></div>
+          <div class="uw-row"><span class="uw-key">Sizing</span><span class="uw-val" data-field="sizing">—</span></div>
+          <div class="uw-row"><span class="uw-key">Probability</span><span class="uw-val" data-field="probability">—</span></div>
+        </div>
+        <div class="memo-block-divider"></div>
+        <p class="memo-block-prose" id="memoProse"></p>
+        <div class="memo-block-foot">
+          <span class="memo-block-version" id="memoVersion"><span class="live-dot" aria-hidden="true"></span>V1 · Live</span>
+          <span class="memo-block-cta" aria-label="Review Memo">Review Memo <span class="chev" aria-hidden="true">›</span></span>
+        </div>
+      </a>
+    </section>
+
+    <!-- NEWS + MARKET — live signals -->
+    <section class="nav-rows" aria-label="Live signals">
+      <a href="#" onclick="event.preventDefault()" class="nav-row">
+        <span class="nav-row-text"><span class="nav-row-title">News</span><span class="nav-row-meta">Headlines · Coverage</span></span>
+        <span class="nav-row-arrow">›</span>
+      </a>
+      <a href="#" onclick="event.preventDefault()" class="nav-row">
+        <span class="nav-row-text"><span class="nav-row-title">Market</span><span class="nav-row-meta">Price · Overview · Valuation</span></span>
+        <span class="nav-row-arrow">›</span>
+      </a>
+    </section>
+
+    <!-- RESEARCH CARDS — Fiscal AI + Research Prompt (#70 #71) -->
+    <section class="section" aria-label="Research" style="gap:12px;">
+      <a href="#" class="research-card research-card-link" onclick="event.preventDefault()" aria-label="Open Fiscal AI for ATZ">
+        <div class="rc-head">
+          <div class="rc-title">Fiscal AI · ATZ</div>
+          <div class="rc-sub">Research Aritzia's financials and filings.</div>
+        </div>
+        <span class="rc-arrow" aria-hidden="true">›</span>
+      </a>
+
+      <div class="research-card" id="rpCard">
+        <div class="rc-head-row">
+          <div class="rc-title">Research Prompt · ATZ</div>
+          <button type="button" class="rc-copy" id="copyPromptCard" onclick="copyResearchPrompt(this)" aria-label="Copy prompt">
+            <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3.5" y="3.5" width="7" height="9" stroke="currentColor" stroke-width="0.7"/><rect x="6" y="1" width="7" height="9" stroke="currentColor" stroke-width="0.7" fill="none"/></svg>
+          </button>
+        </div>
+        <div class="rc-sub">Tailored to ATZ at <span id="rcHurdleNum">20</span>% hurdle. Copy and paste into your AI tool.</div>
+        <div class="rc-output" id="rcOutput">
+          <button type="button" class="rc-output-toggle" id="rcOutputToggle" onclick="toggleRcOutput()" aria-expanded="false">
+            <span>Output · 9 sections · 2,500–3,500 words</span>
+            <span class="rc-output-caret" aria-hidden="true">›</span>
+          </button>
+          <div class="rc-output-body" id="rcOutputBody">
+            <div class="rc-sec-row"><span class="rc-sec-num">01</span><span>Business Overview</span></div>
+            <div class="rc-sec-row"><span class="rc-sec-num">02</span><span>Classification</span></div>
+            <div class="rc-sec-row"><span class="rc-sec-num">03</span><span>Thesis + Decomposition</span></div>
+            <div class="rc-sec-row"><span class="rc-sec-num">04</span><span>Why Now</span></div>
+            <div class="rc-sec-row"><span class="rc-sec-num">05</span><span>Kill Criteria</span></div>
+            <div class="rc-sec-row"><span class="rc-sec-num">06</span><span>Intrinsic Value</span></div>
+            <div class="rc-sec-row"><span class="rc-sec-num">07</span><span>Probability</span></div>
+            <div class="rc-sec-row"><span class="rc-sec-num">08</span><span>Deeper Work</span></div>
+            <div class="rc-sec-row"><span class="rc-sec-num">09</span><span>Verify on Fiscal</span></div>
+          </div>
+        </div>
+        <div class="rc-ai-tools" aria-label="Open prompt in AI tool">
+          <a href="https://claude.ai/new" target="_blank" rel="noopener">Claude</a>
+          <span class="rc-ai-sep">·</span>
+          <a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>
+          <span class="rc-ai-sep">·</span>
+          <a href="https://gemini.google.com/app" target="_blank" rel="noopener">Gemini</a>
+          <span class="rc-ai-sep">·</span>
+          <a href="https://www.perplexity.ai/" target="_blank" rel="noopener">Perplexity</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT — Read about Aritzia link -->
+    <section class="section about-section" aria-label="About Aritzia Inc.">
+      <button type="button" class="about-toggle" id="aboutToggle" aria-expanded="false">
+        <span class="toggle-label">Read about Aritzia</span>
+      </button>
+      <div class="about-body" id="aboutBody">
+        <p style="font-size:14px;color:var(--c-400);letter-spacing:-.02em;line-height:1.55;">Aritzia Inc. designs and sells in-house women's fashion brands (Wilfred, TNA, Babaton, Super Puff) through 110+ boutiques in Canada and the US, plus a growing ecommerce business. Founded in Vancouver in 1984.</p>
+        <a href="#" onclick="event.preventDefault()" class="view-link">Read More on the Company <span class="chev" aria-hidden="true">›</span></a>
+      </div>
+    </section>
+
+    <!-- HISTORY -->
+    <section class="nav-rows" aria-label="History">
+      <a href="#" onclick="event.preventDefault()" class="nav-row">
+        <span class="nav-row-text"><span class="nav-row-title">History</span><span class="nav-row-meta">Open Orders · Past Trades</span></span>
+        <span class="nav-row-arrow">›</span>
+      </a>
+    </section>
+
+  </div>
+
+  <div class="capital-decision">
+    <a href="First-time%20Memo%20Flow.html?intent=buy" aria-label="Capital Decision">
+      <span class="arrow">→</span> Capital Decision
+    </a>
+  </div>
+
+  <script id="researchPromptText" type="text/plain">You are conducting investment research on Aritzia Inc. (ATZ) on behalf of a serious investor.
+
+Context: Aritzia Inc., ticker ATZ (TSX), Consumer Discretionary, Premium Apparel Retail. In-house multi-brand women's fashion portfolio (Wilfred, TNA, Babaton, Super Puff). 110+ boutiques across Canada and the US. Founded Vancouver 1984. Founder Brian Hill, CEO Jennifer Wong (since 2022). Return hurdle: 20% annualized over five years.
+
+Produce a research document of 2,500–3,500 words with the nine numbered sections below. Each section is mandatory. Do not collapse, merge, or omit.
+
+01 Business Overview
+02 Classification (compounder / emerging compounder / situational mispricing / speculative)
+03 Thesis and Structural Decomposition (including the load-bearing assumption)
+04 Why Now
+05 Kill Criteria (4–6, each with metric, threshold, action)
+06 Intrinsic Value (method selection, three scenarios, conservative IV, margin of safety)
+07 Probability of Clearing the Hurdle (1, 3, 5 year)
+08 Where Deeper Work Would Move the Probability (if Promote)
+09 Verify on Fiscal (10–15 fact-checks)
+
+Be direct, declarative, decisive. State a specific number when a number is asked. Pick one classification. Do not soften the triage output. The conclusion in section 7 is binding — Promote if 3-year probability ≥ 50%, Pass otherwise.
+
+Begin with 01 Business Overview. No preamble.</script>
+
+  <script>
+    /* First-time persona: clean slate only on FRESH entry (from index or direct).
+       When returning from Memo Review with a newly saved memo, preserve state. */
+    var SCHEMA_TAG = 'firsttime-v0';
+    (function gateState(){
+      try {
+        var ref = document.referrer || '';
+        var fromIndex = ref === '' || ref.indexOf('index.html') !== -1 || ref.indexOf('User%20Flow') !== -1;
+        var currentSchema = localStorage.getItem('atz-memo-demo-schema');
+        // Clear only when entering fresh from index/direct AND schema mismatch.
+        // If returning from Memo Review (referrer = that page), preserve user state.
+        if (fromIndex && currentSchema !== SCHEMA_TAG) {
+          var memoKeys = [
+            'atz-memo', 'atz-memo-memo', 'atz-memo-version',
+            'atz-memo-decision', 'atz-memo-classification', 'atz-memo-sizing',
+            'atz-memo-horizon', 'atz-memo-probability', 'atz-memo-history'
+          ];
+          memoKeys.forEach(function(k){ localStorage.removeItem(k); });
+          localStorage.setItem('atz-memo-demo-schema', SCHEMA_TAG);
+        }
+      } catch (e) {}
+    })();
+
+    function horizonShort(h){
+      if (!h) return '';
+      if (h.indexOf('1') === 0) return '1y';
+      if (h.indexOf('3') === 0) return '3y';
+      if (h.indexOf('5') === 0) return '5y+';
+      return '';
+    }
+
+    function renderMemo(){
+      var version = null, memo = null, decision = null, classification = null, sizing = null, probability = null, horizon = null;
+      try {
+        version        = localStorage.getItem('atz-memo-version');
+        memo           = localStorage.getItem('atz-memo-memo') || localStorage.getItem('atz-memo');
+        decision       = localStorage.getItem('atz-memo-decision');
+        classification = localStorage.getItem('atz-memo-classification');
+        sizing         = localStorage.getItem('atz-memo-sizing');
+        probability    = localStorage.getItem('atz-memo-probability');
+        horizon        = localStorage.getItem('atz-memo-horizon');
+      } catch(e){}
+
+      var emptyEl = document.getElementById('memoEmpty');
+      var filledSection = document.getElementById('memoFilledSection');
+
+      if (!version) {
+        emptyEl.style.display = '';
+        filledSection.style.display = 'none';
+        return;
+      }
+
+      /* Filled state */
+      emptyEl.style.display = 'none';
+      filledSection.style.display = '';
+
+      /* Field rows */
+      var rows = document.querySelectorAll('#memoFilled .uw-val');
+      rows.forEach(function(el){
+        var f = el.getAttribute('data-field');
+        if (f === 'decision')       el.textContent = decision || '—';
+        if (f === 'classification') el.textContent = classification || '—';
+        if (f === 'sizing')         el.textContent = sizing || '—';
+        if (f === 'probability') {
+          if (probability) {
+            var hs = horizonShort(horizon);
+            el.innerHTML = probability + '% ' + (hs ? '<span class="uw-meta">· ' + hs + '</span>' : '');
+          } else el.textContent = '—';
+        }
+      });
+
+      /* Memo prose preview */
+      var proseEl = document.getElementById('memoProse');
+      if (proseEl) {
+        if (memo) {
+          var firstPara = memo.split(/\n\n+/)[0].trim();
+          proseEl.textContent = firstPara;
+        } else proseEl.textContent = '';
+      }
+
+      /* Version badge */
+      var verEl = document.getElementById('memoVersion');
+      if (verEl) verEl.innerHTML = '<span class="live-dot" aria-hidden="true"></span>' + version + ' · Live';
+
+      /* History affordance */
+      var hist = [];
+      try { hist = JSON.parse(localStorage.getItem('atz-memo-history') || '[]'); } catch(e){}
+      var historyLink = document.getElementById('memoHistoryLink');
+      if (historyLink) {
+        if (hist.length >= 1) {
+          var lbl = hist.length === 1 ? '1 version' : hist.length + ' versions';
+          historyLink.innerHTML = lbl + ' <span class="chev" aria-hidden="true">›</span>';
+          historyLink.style.display = '';
+        } else {
+          historyLink.style.display = 'none';
+        }
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', renderMemo);
+    window.addEventListener('pageshow', renderMemo);
+
+    function fallbackCopy(text) {
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; ta.style.left = '-9999px';
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+      document.body.removeChild(ta);
+      return ok;
+    }
+    async function copyResearchPrompt(btn) {
+      var text = document.getElementById('researchPromptText').textContent.trim();
+      var sym = document.getElementById('copyPromptSymbol');
+      var feedback = document.getElementById('copyPromptMeta');
+      var originalSymbol = sym ? sym.innerHTML : '';
+      var ok = false;
+      if (navigator.clipboard && window.isSecureContext) {
+        try { await navigator.clipboard.writeText(text); ok = true; } catch (e) { ok = fallbackCopy(text); }
+      } else { ok = fallbackCopy(text); }
+      if (btn) btn.classList.add('copied');
+      if (sym) sym.textContent = ok ? '✓' : '!';
+      if (feedback) feedback.textContent = ok ? 'Copied' : 'Copy failed';
+      setTimeout(function () {
+        if (btn) btn.classList.remove('copied');
+        if (sym) sym.innerHTML = originalSymbol;
+        if (feedback) feedback.textContent = '';
+      }, 1800);
+    }
+  </script>
+
+
+  <script id="researchPromptText" type="text/plain">You are conducting investment research on Aritzia Inc. (ATZ) on behalf of a serious investor running a concentrated long-only portfolio. The investor has a 20% annualized return hurdle over a five-year horizon. Your output is triage: Promote (deep diligence work begins) or Pass (name is rejected). Pick one.
+
+Produce a research document of 2,500–3,500 words, structured as the nine numbered sections.
+    // About toggle (#78)
+    (function(){
+      var t = document.getElementById('aboutToggle');
+      var sec = t ? t.closest('.about-section') : null;
+      if (!t || !sec) return;
+      t.addEventListener('click', function(){
+        var open = sec.classList.toggle('expanded');
+        t.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    })();
+    // Hurdle rate — read from LS (#71)
+    (function(){
+      try {
+        var h = localStorage.getItem('atz-memo-hurdle-rate');
+        if (h !== null && h !== '') {
+          var el = document.getElementById('rcHurdleNum');
+          if (el) el.textContent = h;
+        }
+      } catch(e){}
+    })();
+    function toggleRcOutput(){
+      var box = document.getElementById('rcOutput');
+      var btn = document.getElementById('rcOutputToggle');
+      if (!box || !btn) return;
+      var open = box.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+    function fallbackCopyToClipboard(text, cb){
+      try{
+        var ta=document.createElement('textarea'); ta.value=text; ta.style.position='fixed'; ta.style.opacity='0';
+        document.body.appendChild(ta); ta.focus(); ta.select();
+        document.execCommand('copy'); document.body.removeChild(ta);
+        if (cb) cb();
+      } catch(e){}
+    }
+    function copyResearchPrompt(btn) {
+      var node = document.getElementById('researchPromptText');
+      var text = node ? node.textContent.trim() : '';
+      var originalHTML = btn ? btn.innerHTML : '';
+      function onCopied() {
+        if (!btn) return;
+        btn.classList.add('copied');
+        btn.innerHTML = '<svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7L6 11L12 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        setTimeout(function () {
+          btn.classList.remove('copied');
+          btn.innerHTML = originalHTML;
+        }, 1800);
+      }
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(onCopied).catch(function () { fallbackCopyToClipboard(text, onCopied); });
+      } else { fallbackCopyToClipboard(text, onCopied); }
+    }
+
+  </script>
+</body>
+</html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                

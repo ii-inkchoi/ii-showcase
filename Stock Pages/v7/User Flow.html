@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v6 User Flow — Stock Page + Memo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #000; color: #c7c7c7; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 400; letter-spacing: -0.01em; min-height: 100vh; -webkit-font-smoothing: antialiased; padding: 32px; }
+.wrap { max-width: 1400px; margin: 0 auto; }
+.header { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid #2a2d2e; }
+h1 { font-size: 28px; font-weight: 400; color: #fff; letter-spacing: -0.03em; margin-bottom: 8px; }
+.sub { font-size: 13px; color: #929292; line-height: 1.55; max-width: 720px; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 20px; font-size: 12px; }
+.legend-item { display: flex; align-items: center; gap: 6px; color: #929292; }
+.legend-swatch { width: 14px; height: 14px; border: 1px solid #565b5e; }
+.legend-swatch.state { background: #1c1c1c; }
+.legend-swatch.decision { background: #0a0a0a; border-color: #565b5e; }
+.legend-swatch.storage { background: #2a2d2e; border-style: dashed; }
+.legend-swatch.terminal { background: #1c1c1c; border-color: #30d158; }
+.diagram-host { background: #0a0a0a; border: 1px solid #2a2d2e; padding: 24px; overflow: auto; }
+.diagram-host object, .diagram-host img { display: block; max-width: 100%; height: auto; background: transparent; }
+.toolbar { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; font-size: 12px; color: #929292; }
+.toolbar a { color: #c7c7c7; text-decoration: underline; }
+.notes { margin-top: 32px; padding-top: 24px; border-top: 1px solid #2a2d2e; font-size: 12px; color: #929292; line-height: 1.6; }
+.notes h2 { font-size: 14px; color: #fff; margin-bottom: 12px; font-weight: 500; letter-spacing: 0; }
+.notes ul { margin-left: 18px; }
+.notes li { margin-bottom: 6px; }
+.notes code { font-family: 'SF Mono', Menlo, Monaco, monospace; font-size: 11px; background: #1c1c1c; padding: 1px 5px; color: #c7c7c7; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <h1>v6 User Flow</h1>
+    <div class="sub">Stock Page + Memo system. Unified yes/no decision tree across all 3 user states (First-time, Memo Only, Return User). Shared sub-flows (Memo Review, Edit pages, CD sheet, History) only drawn once.</div>
+    <div class="legend">
+      <div class="legend-item"><span class="legend-swatch state"></span> User state / page</div>
+      <div class="legend-item"><span class="legend-swatch decision"></span> Decision point</div>
+      <div class="legend-item"><span class="legend-swatch storage"></span> Storage write</div>
+      <div class="legend-item"><span class="legend-swatch terminal"></span> Entry / exit</div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <span>Pre-rendered SVG (no CDN required).</span>
+    <a href="User%20Flow.svg" target="_blank">Open SVG in new tab</a>
+    <span>·</span>
+    <a href="User%20Flow.mmd" target="_blank">View Mermaid source</a>
+  </div>
+
+  <div class="diagram-host">
+    <object data="User%20Flow.svg" type="image/svg+xml" aria-label="v6 user flow diagram"></object>
+  </div>
+
+  <div class="notes">
+    <h2>Notes</h2>
+    <ul>
+      <li><strong>3 states</strong> determined by 2 booleans: <code>atz-memo-version</code> set? × <code>atz-position-status === 'held'</code>?</li>
+      <li><strong>Intent routing</strong>: tapping the memo card sets <code>intent=memo</code>, tapping Capital Decision sets <code>intent=buy</code>. First-time flow uses this to decide whether to land on memo or continue to trade.</li>
+      <li><strong>Row-edit pattern</strong>: from Memo Review (and CD Review), tapping any row goes to its Edit page. Save → back to Review. Consensus from the May 28 meeting: don't force users sequentially.</li>
+      <li><strong>Save guardrail</strong>: bottom sheet appears only when edits exist vs the latest version. No edits = direct Continue (no popup).</li>
+      <li><strong>Version permanence</strong>: writing V[N+1] never overwrites V[N]. All past versions live in <code>atz-memo-history</code> and are read-only via Historical page.</li>
+      <li><strong>Quarterly alert</strong>: X dismiss = this view only. Memo save = permanently acknowledged via <code>atz-alert-Q4-acknowledged</code> flag.</li>
+      <li><strong>Trade page</strong> is Leo's responsibility — placeholder in our build.</li>
+    </ul>
+    <p style="margin-top:16px;font-size:11px;color:#565b5e">SVG re-rendered from <code>User Flow.mmd</code> via <code>mmdc</code>. To update: edit the .mmd, run <code>mmdc -i "User Flow.mmd" -o "User Flow.svg" -b "#0a0a0a"</code>.</p>
+  </div>
+</div>
+</body>
+</html>
