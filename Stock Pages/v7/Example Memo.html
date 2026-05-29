@@ -114,9 +114,9 @@ body {
 }
 .memo h2:first-of-type { margin-top: 4px; }
 
-/* Body — memo prose per Doctrine §3: Small (13/18) / --c-600 (one tone darker) */
+/* Body — memo prose per Doctrine §3: Small (13/18) / --c-700 (two tones darker) */
 .memo p {
-  font-size: 13px; line-height: 1.55; color: var(--c-600);
+  font-size: 13px; line-height: 1.55; color: var(--c-700);
   font-weight: 400; margin-bottom: 14px; letter-spacing: -0.005em;
 }
 .memo p strong { color: var(--c-400); font-weight: 400; }
@@ -146,7 +146,7 @@ body {
 /* Lists */
 .memo ul, .memo ol { margin: 0 0 16px 0; padding: 0 0 0 18px; }
 .memo ul li, .memo ol li {
-  font-size: 13px; line-height: 1.55; color: var(--c-600); font-weight: 400;
+  font-size: 13px; line-height: 1.55; color: var(--c-700); font-weight: 400;
   margin-bottom: 6px; letter-spacing: -0.005em;
 }
 .memo ul { list-style: none; padding-left: 0; }
@@ -156,25 +156,35 @@ body {
 .memo ol li { padding-left: 4px; }
 .memo li strong { color: var(--c-400); font-weight: 400; }
 
-/* Tables */
-.memo table {
-  border-collapse: collapse; width: 100%;
-  font-size: 11px; color: var(--c-600); font-weight: 400;
-  font-family: var(--font-mono);
-  margin: 6px 0 16px;
-  display: block; overflow-x: auto;
+/* Card list — used for Kill Criteria, Intrinsic Value scenarios, Probability */
+.card-list {
+  display: flex; flex-direction: column;
+  margin: 6px 0 18px;
 }
-.memo thead, .memo tbody, .memo tr { display: table; width: 100%; table-layout: auto; }
-.memo th {
-  text-align: left; font-weight: 400; color: var(--c-700);
-  padding: 8px 10px 8px 0; border-bottom: 1px solid var(--c-900);
-  font-size: 10px; letter-spacing: 0.02em; white-space: nowrap;
+.card-row {
+  display: flex; gap: 12px;
+  padding: 12px 0;
+  border-bottom: 0.5px solid var(--c-1000);
 }
-.memo td {
-  padding: 8px 10px 8px 0; border-bottom: 0.5px solid var(--c-1000);
-  vertical-align: top; line-height: 1.45; min-width: 60px;
+.card-row:last-child { border-bottom: none; }
+.card-num {
+  font-size: 11px; color: var(--c-800);
+  font-variant-numeric: tabular-nums;
+  width: 18px; flex-shrink: 0; padding-top: 2px; letter-spacing: 0.02em;
 }
-.memo td strong { color: var(--c-400); font-weight: 400; }
+.card-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.card-title {
+  font-size: 13px; color: var(--c-400); font-weight: 400;
+  letter-spacing: -0.01em; line-height: 1.4; margin-bottom: 2px;
+}
+.card-field {
+  font-size: 13px; color: var(--c-700); font-weight: 400;
+  line-height: 1.5; letter-spacing: -0.005em;
+}
+.card-lbl {
+  color: var(--c-800); margin-right: 4px;
+}
+.card-field strong { color: var(--c-400); font-weight: 400; }
 
 /* Verdict blockquote — amber semantic (verdict highlight) */
 .memo blockquote {
@@ -206,20 +216,16 @@ body {
   border-top: 0.5px solid var(--c-1000);
 }
 
-/* Copy bar */
-.copy-bar {
-  display: flex; justify-content: center; padding: 24px 20px 0;
-  user-select: none; -webkit-user-select: none;
-}
+/* Copy button — inline in hero status row */
 .copy-btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 10px 16px;
-  background: var(--c-1000); border: 0.5px solid var(--c-900);
-  color: var(--c-400); font-size: 12px; letter-spacing: -0.01em;
-  cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 10px;
+  background: transparent; border: 0.5px solid var(--c-900);
+  color: var(--c-400); font-size: 11px; letter-spacing: -0.01em;
+  cursor: pointer; user-select: none; -webkit-user-select: none;
 }
 .copy-btn:active { opacity: 0.5; transition: opacity 80ms ease; }
-.copy-btn svg { width: 12px; height: 12px; color: var(--c-700); }
+.copy-btn svg { width: 10px; height: 10px; color: var(--c-700); }
 .copy-btn.copied { color: var(--c-amber); border-color: var(--c-amber); }
 .copy-btn.copied svg { color: var(--c-amber); }
 </style>
@@ -238,6 +244,10 @@ body {
   <div class="memo-doc-label">Investment Memo</div>
   <div class="memo-status-row">
     <span class="memo-status">Example · Read-only</span>
+    <button type="button" class="copy-btn" id="copyBtn" onclick="copyMemo(this)" aria-label="Copy memo">
+      <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3.5" y="3.5" width="7" height="9" stroke="currentColor" stroke-width="0.7"/><rect x="6" y="1" width="7" height="9" stroke="currentColor" stroke-width="0.7" fill="none"/></svg>
+      <span class="copy-lbl">Copy memo</span>
+    </button>
   </div>
 </div>
 
@@ -279,147 +289,136 @@ body {
 <p><strong>Valuation (the reason this memo is a buy).</strong> At the illustrative C$80 entry, the franchise trades around <strong>25x trailing / ~18x forward earnings</strong>, roughly a market multiple for a business compounding revenue ~20% with ~20% ROIC. The "why now" is the rare alignment of a proven, accelerating operating model with an entry price that does not require the premium rating to persist. The base case clears the hurdle on earnings growth alone; multiple stability is upside, not a requirement.</p>
 <hr />
 <h2>05 — Kill Criteria</h2>
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>Signal</th>
-<th>Metric</th>
-<th>Threshold</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td><strong>Demand saturation / brand fatigue</strong></td>
-<td>Comparable sales growth</td>
-<td>Two consecutive quarters below <strong>+3%</strong> absent a broad recession</td>
-<td>Exit / re-underwrite. Comps are the brand-health vital sign</td>
-</tr>
-<tr>
-<td>2</td>
-<td><strong>Unit-growth engine breaks</strong> (load-bearing)</td>
-<td>New US boutique payback / new-store productivity vs. fleet</td>
-<td>Payback beyond <strong>~24 months</strong>, or new-store sales/sq-ft <strong>&gt;20% below</strong> the fleet</td>
-<td>Trim hard / exit. This is the entire thesis</td>
-</tr>
-<tr>
-<td>3</td>
-<td><strong>Pricing-power / markdown erosion</strong></td>
-<td>Annual gross margin (ex one-time tariff step)</td>
-<td>Below <strong>~42%</strong> for a full year, not attributable to tariffs</td>
-<td>Re-underwrite. Signals discounting to move product</td>
-</tr>
-<tr>
-<td>4</td>
-<td><strong>Inventory ahead of sales</strong></td>
-<td>Inventory growth vs. revenue growth</td>
-<td>Inventory growth exceeds revenue growth by <strong>&gt;10pts for two consecutive quarters</strong></td>
-<td>Caution / trim. The exact tell before the FY2024 stumble</td>
-</tr>
-<tr>
-<td>5</td>
-<td><strong>Paying a growth multiple for non-growth</strong></td>
-<td>Forward P/E vs. revenue growth</td>
-<td>Forward P/E <strong>&gt;45x</strong> while revenue growth decelerates <strong>below 15%</strong></td>
-<td>Do not add / trim</td>
-</tr>
-<tr>
-<td>6</td>
-<td><strong>Governance / key-person</strong></td>
-<td>Founder share sales, senior merchandising turnover (under dual-class control)</td>
-<td>Material undisclosed insider selling <strong>or</strong> another abrupt senior merchant/creative departure</td>
-<td>Review control alignment</td>
-</tr>
-</tbody>
-</table>
+<div class="card-list">
+  <div class="card-row">
+    <div class="card-num">1</div>
+    <div class="card-body">
+      <div class="card-title">Demand saturation / brand fatigue</div>
+      <div class="card-field"><span class="card-lbl">Metric:</span> Comparable sales growth</div>
+      <div class="card-field"><span class="card-lbl">Threshold:</span> Two consecutive quarters below <strong>+3%</strong> absent a broad recession</div>
+      <div class="card-field"><span class="card-lbl">Action:</span> Exit / re-underwrite. Comps are the brand-health vital sign.</div>
+    </div>
+  </div>
+  <div class="card-row">
+    <div class="card-num">2</div>
+    <div class="card-body">
+      <div class="card-title">Unit-growth engine breaks (load-bearing)</div>
+      <div class="card-field"><span class="card-lbl">Metric:</span> New US boutique payback / new-store productivity vs. fleet</div>
+      <div class="card-field"><span class="card-lbl">Threshold:</span> Payback beyond <strong>~24 months</strong>, or new-store sales/sq-ft <strong>&gt;20% below</strong> the fleet</div>
+      <div class="card-field"><span class="card-lbl">Action:</span> Trim hard / exit. This is the entire thesis.</div>
+    </div>
+  </div>
+  <div class="card-row">
+    <div class="card-num">3</div>
+    <div class="card-body">
+      <div class="card-title">Pricing-power / markdown erosion</div>
+      <div class="card-field"><span class="card-lbl">Metric:</span> Annual gross margin (ex one-time tariff step)</div>
+      <div class="card-field"><span class="card-lbl">Threshold:</span> Below <strong>~42%</strong> for a full year, not attributable to tariffs</div>
+      <div class="card-field"><span class="card-lbl">Action:</span> Re-underwrite. Signals discounting to move product.</div>
+    </div>
+  </div>
+  <div class="card-row">
+    <div class="card-num">4</div>
+    <div class="card-body">
+      <div class="card-title">Inventory ahead of sales</div>
+      <div class="card-field"><span class="card-lbl">Metric:</span> Inventory growth vs. revenue growth</div>
+      <div class="card-field"><span class="card-lbl">Threshold:</span> Inventory growth exceeds revenue growth by <strong>&gt;10pts for two consecutive quarters</strong></div>
+      <div class="card-field"><span class="card-lbl">Action:</span> Caution / trim. The exact tell before the FY2024 stumble.</div>
+    </div>
+  </div>
+  <div class="card-row">
+    <div class="card-num">5</div>
+    <div class="card-body">
+      <div class="card-title">Paying a growth multiple for non-growth</div>
+      <div class="card-field"><span class="card-lbl">Metric:</span> Forward P/E vs. revenue growth</div>
+      <div class="card-field"><span class="card-lbl">Threshold:</span> Forward P/E <strong>&gt;45x</strong> while revenue growth decelerates <strong>below 15%</strong></div>
+      <div class="card-field"><span class="card-lbl">Action:</span> Do not add / trim.</div>
+    </div>
+  </div>
+  <div class="card-row">
+    <div class="card-num">6</div>
+    <div class="card-body">
+      <div class="card-title">Governance / key-person</div>
+      <div class="card-field"><span class="card-lbl">Metric:</span> Founder share sales, senior merchandising turnover (under dual-class control)</div>
+      <div class="card-field"><span class="card-lbl">Threshold:</span> Material undisclosed insider selling <strong>or</strong> another abrupt senior merchant/creative departure</div>
+      <div class="card-field"><span class="card-lbl">Action:</span> Review control alignment.</div>
+    </div>
+  </div>
+</div>
 <hr />
 <h2>06 — Intrinsic Value</h2>
 <p><strong>Method.</strong> A multi-stage DCF on a fashion retailer with double-digit comp volatility produces false precision; terminal value would dominate and rest on the same unprovable long-run assumptions. I use an <strong>EPS-and-exit-multiple framework</strong> over five years (FY2026 → FY2031), cross-checked against free cash flow, because the equity return here is mechanically <em>forward earnings × terminal multiple</em>, and because it forces the multiple, the dominant swing factor, into the open.</p>
 <p><strong>Base inputs:</strong> FY2026 diluted EPS C$3.20; ~115M diluted shares (held roughly flat as buybacks offset stock comp).</p>
 <p><strong>Three scenarios (FY2031):</strong></p>
-<table>
-<thead>
-<tr>
-<th>Scenario</th>
-<th>Rev. CAGR</th>
-<th>FY31 Revenue</th>
-<th>Net margin</th>
-<th>FY31 EPS</th>
-<th>Exit P/E</th>
-<th>FY31 price</th>
-<th>5-yr IRR from C$80</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Bull</strong></td>
-<td>20%</td>
-<td>~C$9.2B</td>
-<td>13.0%</td>
-<td>~C$10.7</td>
-<td>32x</td>
-<td><strong>~C$342</strong></td>
-<td><strong>~34%</strong></td>
-</tr>
-<tr>
-<td><strong>Base</strong></td>
-<td>15%</td>
-<td>~C$7.4B</td>
-<td>11.5%</td>
-<td>~C$7.4</td>
-<td>26x</td>
-<td><strong>~C$192</strong></td>
-<td><strong>~19%</strong></td>
-</tr>
-<tr>
-<td><strong>Bear</strong></td>
-<td>8%</td>
-<td>~C$5.4B</td>
-<td>9.5%</td>
-<td>~C$4.4</td>
-<td>16x</td>
-<td><strong>~C$70</strong></td>
-<td><strong>~ −3%</strong></td>
-</tr>
-</tbody>
-</table>
+<div class="card-list">
+  <div class="card-row">
+    <div class="card-body">
+      <div class="card-title">Bull</div>
+      <div class="card-field"><span class="card-lbl">Rev. CAGR:</span> 20%</div>
+      <div class="card-field"><span class="card-lbl">FY31 Revenue:</span> ~C$9.2B</div>
+      <div class="card-field"><span class="card-lbl">Net margin:</span> 13.0%</div>
+      <div class="card-field"><span class="card-lbl">FY31 EPS:</span> ~C$10.7</div>
+      <div class="card-field"><span class="card-lbl">Exit P/E:</span> 32x</div>
+      <div class="card-field"><span class="card-lbl">FY31 price:</span> <strong>~C$342</strong></div>
+      <div class="card-field"><span class="card-lbl">5-yr IRR from C$80:</span> <strong>~34%</strong></div>
+    </div>
+  </div>
+  <div class="card-row">
+    <div class="card-body">
+      <div class="card-title">Base</div>
+      <div class="card-field"><span class="card-lbl">Rev. CAGR:</span> 15%</div>
+      <div class="card-field"><span class="card-lbl">FY31 Revenue:</span> ~C$7.4B</div>
+      <div class="card-field"><span class="card-lbl">Net margin:</span> 11.5%</div>
+      <div class="card-field"><span class="card-lbl">FY31 EPS:</span> ~C$7.4</div>
+      <div class="card-field"><span class="card-lbl">Exit P/E:</span> 26x</div>
+      <div class="card-field"><span class="card-lbl">FY31 price:</span> <strong>~C$192</strong></div>
+      <div class="card-field"><span class="card-lbl">5-yr IRR from C$80:</span> <strong>~19%</strong></div>
+    </div>
+  </div>
+  <div class="card-row">
+    <div class="card-body">
+      <div class="card-title">Bear</div>
+      <div class="card-field"><span class="card-lbl">Rev. CAGR:</span> 8%</div>
+      <div class="card-field"><span class="card-lbl">FY31 Revenue:</span> ~C$5.4B</div>
+      <div class="card-field"><span class="card-lbl">Net margin:</span> 9.5%</div>
+      <div class="card-field"><span class="card-lbl">FY31 EPS:</span> ~C$4.4</div>
+      <div class="card-field"><span class="card-lbl">Exit P/E:</span> 16x</div>
+      <div class="card-field"><span class="card-lbl">FY31 price:</span> <strong>~C$70</strong></div>
+      <div class="card-field"><span class="card-lbl">5-yr IRR from C$80:</span> <strong>~ −3%</strong></div>
+    </div>
+  </div>
+</div>
 <p><strong>Conservative intrinsic value.</strong> The hurdle-clearing entry price for each scenario (FY31 price ÷ 2.49) is bull C$137, base C$77, bear C$28. Probability-weighting (30% / 45% / 25%) gives a <strong>hurdle-clearing entry of ~C$80</strong> and a conservative IV band of <strong>C$80–100</strong>.</p>
 <p><strong>Margin of safety.</strong> At the C$80 entry against the C$80–100 conservative IV, the margin of safety is adequate (roughly 0–20%): the base case clears the hurdle on earnings alone, the bull case clears it comfortably, and only the bear case (which embeds both a growth stall and a de-rating to 16x) loses money, and modestly. The asymmetry is favorable: <strong>~+34% / +19% / −3% across bull / base / bear</strong>.</p>
 <hr />
 <h2>07 — Probability of Clearing the Hurdle</h2>
 <p>To clear 20% annualized from C$80, the price must reach <strong>~C$96 in 1 year, ~C$138 in 3 years, and ~C$199 in 5 years.</strong></p>
-<table>
-<thead>
-<tr>
-<th>Horizon</th>
-<th>Target price</th>
-<th>Probability</th>
-<th>Reasoning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>1-year</strong></td>
-<td>~C$96</td>
-<td><strong>~55%</strong></td>
-<td>A +20% move is well within range given FY2027 guided +19–24% revenue and continued beat-and-raise momentum; the conservative entry multiple removes de-rating risk as the main obstacle.</td>
-</tr>
-<tr>
-<td><strong>3-year (binding)</strong></td>
-<td>~C$138</td>
-<td><strong>~55%</strong></td>
-<td>Bull and base scenarios both clear (base reaches ~C$135 on +19% IRR; bull ~C$209). Only the bear case fails. Weighted central tendency sits just above the hurdle.</td>
-</tr>
-<tr>
-<td><strong>5-year</strong></td>
-<td>~C$199</td>
-<td><strong>~58%</strong></td>
-<td>Longer compounding lets earnings growth carry the return even with moderate multiple compression; base case lands ~C$192, essentially at target, with the bull tail providing cushion.</td>
-</tr>
-</tbody>
-</table>
+<div class="card-list">
+  <div class="card-row">
+    <div class="card-body">
+      <div class="card-title">1-year</div>
+      <div class="card-field"><span class="card-lbl">Target price:</span> ~C$96</div>
+      <div class="card-field"><span class="card-lbl">Probability:</span> <strong>~55%</strong></div>
+      <div class="card-field"><span class="card-lbl">Reasoning:</span> A +20% move is well within range given FY2027 guided +19–24% revenue and continued beat-and-raise momentum; the conservative entry multiple removes de-rating risk as the main obstacle.</div>
+    </div>
+  </div>
+  <div class="card-row">
+    <div class="card-body">
+      <div class="card-title">3-year (binding)</div>
+      <div class="card-field"><span class="card-lbl">Target price:</span> ~C$138</div>
+      <div class="card-field"><span class="card-lbl">Probability:</span> <strong>~55%</strong></div>
+      <div class="card-field"><span class="card-lbl">Reasoning:</span> Bull and base scenarios both clear (base reaches ~C$135 on +19% IRR; bull ~C$209). Only the bear case fails. Weighted central tendency sits just above the hurdle.</div>
+    </div>
+  </div>
+  <div class="card-row">
+    <div class="card-body">
+      <div class="card-title">5-year</div>
+      <div class="card-field"><span class="card-lbl">Target price:</span> ~C$199</div>
+      <div class="card-field"><span class="card-lbl">Probability:</span> <strong>~58%</strong></div>
+      <div class="card-field"><span class="card-lbl">Reasoning:</span> Longer compounding lets earnings growth carry the return even with moderate multiple compression; base case lands ~C$192, essentially at target, with the bull tail providing cushion.</div>
+    </div>
+  </div>
+</div>
 <p><strong>Conclusion — binding rule applied:</strong> 3-year probability ~55%, which is <strong>≥ 50%.</strong></p>
 <blockquote>
 <h2><strong>TRIAGE: PROMOTE</strong></h2>
@@ -459,13 +458,6 @@ body {
 <hr />
 <p><em>This document is an illustrative investment memo, not investment advice. The author is not a registered financial advisor. The Promote verdict is conditioned on the hypothetical C$80 entry price used for demonstration; at the live price the same framework returns a Pass. Re-verify all figures before any capital decision.</em></p>
 </article>
-
-<div class="copy-bar">
-  <button type="button" class="copy-btn" id="copyBtn" onclick="copyMemo(this)" aria-label="Copy memo">
-    <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3.5" y="3.5" width="7" height="9" stroke="currentColor" stroke-width="0.7"/><rect x="6" y="1" width="7" height="9" stroke="currentColor" stroke-width="0.7" fill="none"/></svg>
-    <span class="copy-lbl">Copy memo</span>
-  </button>
-</div>
 
 <script>
 function fallbackCopy(text, cb) {
