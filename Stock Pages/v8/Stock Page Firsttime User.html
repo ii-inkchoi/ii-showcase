@@ -114,13 +114,11 @@
     .research-card .rc-copy:active{opacity:.5;}
     .research-card .rc-copy.copied{color:var(--c-white);}
     .research-card .rc-copy svg{width:14px;height:14px;}
-    .research-card .rc-output{border-top:0.5px solid var(--c-900);margin-top:4px;}
-    .research-card .rc-output-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 0 4px;background:none;border:none;font-family:inherit;color:var(--c-700);cursor:pointer;text-align:left;font-size:12px;letter-spacing:-.01em;}
-    .research-card .rc-output-toggle:active{opacity:.5;}
-    .research-card .rc-output-caret{font-size:13px;font-weight:300;color:var(--c-700);transition:transform 160ms ease;flex-shrink:0;line-height:1;display:inline-block;transform:rotate(0deg);}
-    .research-card .rc-output.open .rc-output-caret{transform:rotate(90deg);}
-    .research-card .rc-output-body{display:none;padding:8px 0 4px;}
-    .research-card .rc-output.open .rc-output-body{display:flex;flex-direction:column;}
+    .research-card .rc-output{border-top:0.5px solid var(--c-900);margin-top:4px;padding-top:12px;}
+    .research-card .rc-output-label{font-size:11px;color:var(--c-800);letter-spacing:-.01em;margin-bottom:8px;}
+    .research-card .rc-prompt-preview{font-size:12px;line-height:1.55;color:var(--c-700);letter-spacing:-0.01em;white-space:pre-wrap;max-height:160px;overflow-y:auto;font-family:inherit;}
+    .research-card .rc-prompt-preview::-webkit-scrollbar{display:none;}
+    .research-card .rc-output-meta{font-size:11px;color:var(--c-800);letter-spacing:-.01em;margin-top:10px;padding-top:8px;border-top:0.5px solid var(--c-1000);}
     .research-card .rc-sec-row{display:flex;align-items:baseline;gap:10px;padding:5px 0;font-size:12px;color:var(--c-400);letter-spacing:-.01em;}
     .research-card .rc-sec-num{font-size:10px;color:var(--c-700);font-variant-numeric:tabular-nums;width:18px;flex-shrink:0;}
     .research-card .rc-ai-tools{
@@ -230,25 +228,13 @@
             <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3.5" y="3.5" width="7" height="9" stroke="currentColor" stroke-width="0.7"/><rect x="6" y="1" width="7" height="9" stroke="currentColor" stroke-width="0.7" fill="none"/></svg>
           </button>
         </div>
-        <div class="rc-sub">Tailored to ATZ at <span id="rcHurdleNum">20</span>% hurdle. Copy and paste into your AI tool.</div>
-        <div class="rc-output" id="rcOutput">
-          <button type="button" class="rc-output-toggle" id="rcOutputToggle" onclick="toggleRcOutput()" aria-expanded="false">
-            <span>Output · 9 sections · 2,500–3,500 words</span>
-            <span class="rc-output-caret" aria-hidden="true">›</span>
-          </button>
-          <div class="rc-output-body" id="rcOutputBody">
-            <div class="rc-sec-row"><span class="rc-sec-num">01</span><span>Business Overview</span></div>
-            <div class="rc-sec-row"><span class="rc-sec-num">02</span><span>Classification</span></div>
-            <div class="rc-sec-row"><span class="rc-sec-num">03</span><span>Thesis</span></div>
-            <div class="rc-sec-row"><span class="rc-sec-num">04</span><span>Why Now</span></div>
-            <div class="rc-sec-row"><span class="rc-sec-num">05</span><span>Kill Criteria</span></div>
-            <div class="rc-sec-row"><span class="rc-sec-num">06</span><span>Intrinsic Value</span></div>
-            <div class="rc-sec-row"><span class="rc-sec-num">07</span><span>Probability</span></div>
-            <div class="rc-sec-row"><span class="rc-sec-num">08</span><span>Where to Dig Deeper</span></div>
-            <div class="rc-sec-row"><span class="rc-sec-num">09</span><span>Verify on Fiscal</span></div>
-          </div>
+        <div class="rc-sub">A starting point for ATZ research at <span id="rcHurdleNum">20</span>% hurdle.</div>
+        <div class="rc-output">
+          <div class="rc-output-label">Prompt</div>
+          <div class="rc-prompt-preview" id="rcPromptPreview"></div>
+          <div class="rc-output-meta">Expected output: 9 sections · 2,500–3,500 words</div>
         </div>
-        <div class="rc-ai-tools" aria-label="Open prompt in AI tool (opens in new tab)">
+                <div class="rc-ai-tools" aria-label="Open prompt in AI tool (opens in new tab)">
           <span class="rc-ai-lbl">Open in</span>
           <a href="https://claude.ai/new" target="_blank" rel="noopener">Claude</a>
           <span class="rc-ai-sep">·</span>
@@ -477,13 +463,14 @@ Begin with 01 Business Overview. No preamble.</script>
         }
       } catch(e){}
     })();
-    function toggleRcOutput(){
-      var box = document.getElementById('rcOutput');
-      var btn = document.getElementById('rcOutputToggle');
-      if (!box || !btn) return;
-      var open = box.classList.toggle('open');
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    }
+    (function populateRcPreview(){
+  function fill(){
+    var src = document.getElementById("researchPromptText");
+    var dst = document.getElementById("rcPromptPreview");
+    if (src && dst) { dst.textContent = src.textContent.trim(); }
+  }
+  if (document.readyState === "loading") { document.addEventListener("DOMContentLoaded", fill); } else { fill(); }
+})();
   </script>
 </body>
 </html>
