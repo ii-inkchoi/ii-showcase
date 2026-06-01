@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Memo · Intro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+* { scrollbar-width: none; -ms-overflow-style: none; }
+*::-webkit-scrollbar { display: none; }
+button { background: transparent; border: none; color: inherit; font: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+
+:root {
+  --bg: #000000;
+  --p:  #FFFFFF;
+  --s:  #C7C7C7;
+  --c-600: #A7A7A7;
+  --t:  #929292;
+  --t-800: #565B5E;
+  --elev: #0A0A0A;
+  --c-900: #232627;
+  --c-1000: #1C1C1C;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+html, body { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--s);
+  font-family: var(--font);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  font-feature-settings: 'tnum' 1;
+  width: 100%;
+  max-width: 393px;
+  margin: 0 auto;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* TOPBAR — II canonical */
+.topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 13.5px; height: 71px; flex-shrink: 0;
+  border-bottom: 1px solid var(--c-900); font-size: 0;
+}
+.topbar .back {
+  width: 13px; height: 13px; display: inline-flex;
+  align-items: center; justify-content: center; color: var(--s); font-size: 0;
+}
+.topbar .back::before {
+  content: ''; width: 8px; height: 8px;
+  border-left: 1px solid currentColor; border-bottom: 1px solid currentColor;
+  transform: rotate(45deg); margin-left: 2px;
+}
+.topbar .back:active { opacity: .5; transition: opacity 80ms ease; }
+.topbar .exit { font-size: 14px; color: var(--s); letter-spacing: -0.02em; }
+.topbar .exit:active { opacity: .5; transition: opacity 80ms ease; }
+
+/* COMPLIANCE STRIP (matches other II pages) */
+.compliance-strip {
+  display: flex; align-items: center; padding: 8px 20px;
+  font-size: 9px; letter-spacing: -0.02em; color: var(--t-800);
+  border-bottom: 0.5px solid var(--c-1000); line-height: 1.3;
+}
+
+/* SCROLL CONTAINER */
+.scroll { padding: 24px 20px 120px; }
+
+/* MEMO-HEADER — II canonical (matches Edit pages) */
+.memo-header {
+  padding: 8px 0 24px;
+  border-bottom: 0.5px solid rgba(255,255,255,0.06);
+  display: flex; flex-direction: column; gap: 12px;
+}
+.memo-header-meta {
+  font-size: 11px; color: var(--t); letter-spacing: -0.01em;
+}
+.memo-header-title {
+  font-size: 22px; font-weight: 400; letter-spacing: -0.02em;
+  color: var(--p); margin: 0; line-height: 1.27;
+}
+
+/* BODY TEXT — II canonical */
+.memo-subtitle {
+  font-size: 15px; color: var(--s);
+  letter-spacing: -0.01em; line-height: 1.45; font-weight: 400;
+  margin: 0;
+}
+.memo-subtitle strong { color: var(--p); font-weight: 400; }
+.memo-subhead {
+  font-size: 13px; color: var(--t-800);
+  letter-spacing: -0.01em; line-height: 1.5; margin: 0;
+}
+.memo-subhead.lift { color: var(--t); }
+.memo-subhead strong { color: var(--s); font-weight: 400; }
+
+/* SECTION — uses canonical .section-eyebrow */
+.sec { margin-top: 40px; }
+.sec.first { margin-top: 28px; }
+.sec.sec-divider { margin-top: 40px; padding-top: 40px; border-top: 0.5px solid var(--t-800); }
+
+/* COMPACT ANATOMY — 9 sections inline (ExtraSmall metadata) */
+.anatomy-compact {
+  margin-top: 18px;
+  font-size: 11px; color: var(--t-800);
+  letter-spacing: -0.01em; line-height: 1.7;
+}
+.section-eyebrow {
+  font-size: 15px; color: #E3E2E2;
+  letter-spacing: -0.01em; margin-bottom: 14px;
+}
+
+/* ANATOMY LIST — uses II spacing + typography */
+.anatomy { display: flex; flex-direction: column; }
+.an-row {
+  display: flex; gap: 14px; padding: 10px 0;
+  border-bottom: 0.5px solid var(--c-1000);
+}
+.an-row:last-child { border-bottom: none; }
+.an-num {
+  font-size: 11px; color: var(--t-800);
+  font-variant-numeric: tabular-nums;
+  width: 20px; flex-shrink: 0; padding-top: 3px; letter-spacing: 0.02em;
+}
+.an-tx { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.an-tx .an-t {
+  font-size: 14px; color: var(--p); font-weight: 400;
+  letter-spacing: -0.01em; line-height: 1.43;
+}
+.an-tx .an-d {
+  font-size: 13px; color: var(--t); font-weight: 400;
+  line-height: 1.5; letter-spacing: -0.01em;
+}
+
+/* VERDICT — uses II spacing */
+.verdict {
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 12px 0;
+  border-left: 1px solid var(--c-900);
+  padding-left: 14px;
+}
+.verdict-line { font-size: 13px; line-height: 1.5; color: var(--t); }
+.verdict-line strong { color: var(--p); font-weight: 400; }
+.verdict-coda { font-size: 12px; color: var(--t-800); line-height: 1.5; margin-top: 4px; }
+
+/* REFERENCE CARD — uses II elev + typography (NOT a new system, reused canonical) */
+.ref-card {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 14px; padding: 14px 16px;
+  background: var(--elev);
+  border: 0.5px solid var(--c-900);
+  cursor: pointer; width: 100%; text-align: left;
+}
+.ref-card:active { opacity: 0.5; transition: opacity 80ms ease; }
+.ref-card-tx { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.ref-card-t { font-size: 13px; color: var(--p); letter-spacing: -0.01em; font-weight: 400; line-height: 1.2; }
+.ref-card-d { font-size: 13px; color: var(--t); letter-spacing: -0.01em; line-height: 1.5; font-weight: 400; }
+.ref-card-chev {
+  width: 6px; height: 10px; flex-shrink: 0; color: var(--t);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+
+
+
+/* CTA — II save-cta pattern (matches Memo Review / Edit pages) */
+.save-cta {
+  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 393px;
+  padding: 40px 13.5px 24px;
+  display: flex; justify-content: flex-end;
+  background: linear-gradient(to top, var(--bg) 0%, var(--bg) 60%, rgba(0,0,0,0) 100%);
+  pointer-events: none; z-index: 10;
+}
+.save-cta a {
+  pointer-events: auto;
+  display: inline-flex; align-items: baseline; gap: 8px;
+  font-size: 15px; color: var(--p);
+  padding: 8px 4px;
+}
+.save-cta a:active { opacity: .5; transition: opacity 80ms ease; }
+.save-cta .arrow { font-weight: 400; }
+
+/* BOTTOM SHEET — II canonical from Memo Review */
+.sheet-backdrop {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.55);
+  opacity: 0; pointer-events: none;
+  transition: opacity 200ms ease; z-index: 20;
+}
+.sheet-backdrop.open { opacity: 1; pointer-events: auto; }
+.sheet {
+  position: fixed; bottom: 0; left: 50%; transform: translate(-50%, 100%);
+  width: 100%; max-width: 393px;
+  background: var(--c-1000);
+  padding: 24px; padding-bottom: calc(32px + env(safe-area-inset-bottom));
+  max-height: 75vh; overflow-y: auto;
+  transition: transform 240ms cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 21; will-change: transform;
+}
+.sheet.open { transform: translate(-50%, 0); }
+.sheet-x {
+  position: absolute; top: 12px; right: 12px;
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+}
+.sheet-x svg { width: 14px; height: 14px; display: block; }
+.sheet-x svg line { stroke: var(--t); stroke-width: 1; }
+.sheet-content { padding-top: 8px; padding-right: 36px; }
+.sheet-title {
+  color: var(--p); font-size: 18px; font-weight: 400;
+  line-height: 1.45; letter-spacing: -0.02em;
+}
+.sheet-body {
+  color: var(--t); font-size: 14px; font-weight: 400;
+  line-height: 1.55; margin-top: 12px; letter-spacing: 0;
+}
+.sheet-body p { margin-bottom: 12px; }
+.sheet-body p:last-child { margin-bottom: 0; }
+.sheet-cta {
+  margin-top: 24px;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 14px; color: var(--p); cursor: pointer;
+}
+.sheet-cta:active { opacity: .5; }
+
+/* TWO KINDS — block style (title + description, no em-dash) */
+.kind-block { margin-bottom: 16px; }
+.kind-block:last-child { margin-bottom: 0; }
+.kind-title { font-size: 13px; color: var(--c-600); letter-spacing: -0.01em; line-height: 1.4; margin-bottom: 2px; font-weight: 400; }
+.kind-desc { font-size: 12px; color: var(--t); letter-spacing: -0.01em; line-height: 1.5; }
+
+/* FLOW VIZ — inline step path with current marker (color difference, no dot) */
+.flow-viz {
+  margin-top: 12px;
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px;
+  font-size: 12px; color: var(--t-800); letter-spacing: -0.01em;
+}
+.flow-step { color: var(--t); }
+.flow-current { color: var(--t); }
+.flow-sep { color: var(--t-800); }
+
+/* STEP LIST — II canonical (matches Anatomy "01" pattern) */
+.step-list { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+.step-list-eyebrow { font-size: 11px; color: var(--t); letter-spacing: -0.01em; margin-bottom: 8px; }
+.step-row { display: flex; gap: 12px; font-size: 13px; color: var(--c-600); letter-spacing: -0.01em; line-height: 1.5; }
+.step-num { font-size: 11px; color: var(--t-800); flex-shrink: 0; min-width: 18px; padding-top: 3px; letter-spacing: 0.02em; font-variant-numeric: tabular-nums; }
+.step-text { flex: 1; }
+.step-text strong { color: #E3E2E2; font-weight: 400; }
+
+/* ZONE — workflow groups with hairline separator + brighter eyebrow */
+.zone {
+  margin-top: 28px;
+  padding-top: 28px;
+  border-top: 0.5px solid var(--c-900);
+}
+.zone-eyebrow {
+  font-size: 13px; color: var(--s); letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+.zone-action .copy-prompt-btn { margin-top: 0; }
+
+/* HOW TO PRODUCE — visually independent container */
+.zone.zone-howto {
+  background: var(--elev);
+  border: 0.5px solid var(--c-900);
+  border-top: 0.5px solid var(--c-900);
+  padding: 20px 16px;
+}
+.zone.zone-howto .step-list { margin-top: 8px; }
+
+/* COPY PROMPT BUTTON — matches ref-card visual treatment (elevated bg + border) */
+.copy-prompt-btn {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  margin-top: 0;
+  padding: 14px 16px;
+  background: var(--elev); border: 0.5px solid var(--c-900);
+  color: var(--s); font-size: 13px; letter-spacing: -0.01em;
+  cursor: pointer; width: 100%; text-align: left;
+}
+.copy-prompt-btn-left { display: inline-flex; align-items: center; gap: 8px; }
+.copy-prompt-btn:active { opacity: 0.5; transition: opacity 80ms ease; }
+.copy-prompt-btn svg.copy-icon { width: 12px; height: 12px; color: var(--t); flex-shrink: 0; }
+.copy-prompt-btn.copied { color: var(--s); border-color: var(--s); }
+.copy-prompt-btn.copied svg.copy-icon { color: var(--s); }
+
+/* AI TOOLS ROW — Small (interactive) */
+.ai-tools-row {
+  margin-top: 14px;
+  font-size: 13px; color: var(--t); letter-spacing: -0.01em;
+  display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline;
+}
+.ai-tools-label { color: var(--t-800); }
+.ai-tools-row a { color: var(--s); text-decoration: none; padding: 2px 0; }
+.ai-tools-row a:active { opacity: 0.5; }
+.ai-tools-sep { color: var(--t-800); }
+
+/* FISCAL WARN — quiet text (no icon, II austere) */
+.fiscal-warn {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 13px; color: var(--t); letter-spacing: -0.01em; line-height: 1.5;
+}
+
+/* RESEARCH CARDS — matches Stock Page Research and Analysis pattern */
+.research-card{background:var(--elev);border:0.5px solid var(--c-900);padding:16px;display:flex;flex-direction:column;gap:6px;color:inherit;-webkit-tap-highlight-color:transparent;position:relative;}
+.research-card .rc-output, .research-card .rc-ai-tools { margin-top:8px; }
+.research-card.research-card-link{cursor:pointer;flex-direction:row;align-items:center;justify-content:space-between;gap:14px;}
+.research-card.research-card-link:active{opacity:.5;transition:opacity 80ms ease;}
+.research-card.research-card-link .rc-head{display:flex;flex-direction:column;gap:6px;flex:1;}
+.research-card.research-card-link .rc-title{font-size:13px;color:var(--p);letter-spacing:-.02em;line-height:1.2;}
+.research-card.research-card-link .rc-sub{font-size:12px;color:var(--t);letter-spacing:-.01em;line-height:1.5;}
+.research-card.research-card-link .rc-arrow{color:var(--t);font-size:14px;font-weight:300;flex-shrink:0;}
+.research-card .rc-head-row{display:block;}
+.research-card .rc-title{font-size:13px;color:var(--p);letter-spacing:-.02em;line-height:1.2;}
+.research-card .rc-sub{font-size:12px;color:var(--t);letter-spacing:-.01em;line-height:1.5;}
+.research-card .rc-copy{position:absolute;top:10px;right:10px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;color:var(--s);-webkit-tap-highlight-color:transparent;border-radius:4px;}
+.research-card .rc-copy:active{opacity:.5;}
+.research-card .rc-copy.copied{color:var(--p);}
+.research-card .rc-copy svg{width:14px;height:14px;}
+.research-card .rc-output{border-top:0.5px solid var(--c-900);margin-top:4px;}
+.research-card .rc-output-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 0 4px;background:none;border:none;font-family:inherit;color:var(--t);cursor:pointer;text-align:left;font-size:12px;letter-spacing:-.01em;}
+.research-card .rc-output-toggle:active{opacity:.5;}
+.research-card .rc-output-caret{font-size:13px;font-weight:300;color:var(--t);transition:transform 160ms ease;flex-shrink:0;line-height:1;display:inline-block;transform:rotate(0deg);}
+.research-card .rc-output.open .rc-output-caret{transform:rotate(90deg);}
+.research-card .rc-output-body{display:none;padding:8px 0 4px;}
+.research-card .rc-output.open .rc-output-body{display:flex;flex-direction:column;}
+.research-card .rc-sec-row{display:flex;align-items:baseline;gap:10px;padding:5px 0;font-size:12px;color:var(--s);letter-spacing:-.01em;}
+.research-card .rc-sec-num{font-size:10px;color:var(--t);font-variant-numeric:tabular-nums;width:18px;flex-shrink:0;}
+.research-card .rc-ai-tools{
+  border-top:0.5px solid var(--c-900);
+  padding-top:10px; margin-top:4px;
+  display:flex; align-items:baseline; gap:8px; flex-wrap:wrap;
+  font-size:11px; color:var(--t); letter-spacing:-0.01em;
+}
+.research-card .rc-ai-tools a{color:var(--s); text-decoration:none;}
+.research-card .rc-ai-tools a:active{opacity:.5;transition:opacity 80ms ease;}
+.research-card .rc-ai-tools .rc-ai-sep{color:var(--t-800);}
+.research-card .rc-ai-tools .rc-ai-lbl{color:var(--t-800);}
+
+/* TAP-TO-LEARN — dotted underline + info-panel */
+.lbl-tap{
+  cursor:pointer; -webkit-tap-highlight-color:transparent;
+  border-bottom:0.5px dotted var(--t-800);
+  padding-bottom:1px;
+  color: var(--p);
+  transition:color 120ms ease, border-color 120ms ease;
+}
+.lbl-tap:active{opacity:0.5; transition:opacity 80ms ease;}
+.lbl-tap.open{color:var(--p); border-bottom-color:var(--t);}
+.info-panel{
+  padding:10px 14px 14px;
+  margin-top:6px;
+  border-left:1px solid var(--c-900);
+  font-size:12px; color:var(--s);
+  letter-spacing:-0.02em; line-height:1.55;
+}
+.info-panel[hidden]{display:none;}
+.info-panel p{margin:0;}
+.info-panel p + p{margin-top:8px;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="#" onclick="event.preventDefault();goBack();" aria-label="Back"></a>
+  <a class="exit" href="#" onclick="event.preventDefault();goBack();" aria-label="Exit">Exit</a>
+</div>
+
+<div class="compliance-strip">Self-Authored · No Suitability Review · Not Advice</div>
+
+<div class="scroll">
+
+  <!-- HEADER -->
+  <div class="memo-header">
+    <div class="memo-header-meta">Memo · Intro</div>
+    <h1 class="memo-header-title">Conviction, written down.</h1>
+  </div>
+
+  <!-- CONTRAST FRAME -->
+  <div class="sec first">
+    <p class="memo-subtitle">Most apps are built for the trade. <strong>II is built for the decision.</strong></p>
+  </div>
+
+  <!-- WHAT THIS IS -->
+  <div class="sec">
+    <p class="memo-subhead lift">The memo is your record — what you believe, why, what would prove you wrong. It ends in one word: <strong>Promote</strong>&nbsp;or&nbsp;<strong>Pass</strong>. After saving, it lives on the stock page.</p>
+  </div>
+
+  <!-- TWO KINDS — block style (title + description) with tap-to-learn (info-panel inline per block) -->
+  <div class="sec">
+    <p class="memo-subhead lift">Every capital decision has a memo. Two kinds, chosen on the next step:</p>
+    <div class="kind-block" style="margin-top:14px">
+      <div class="kind-title"><span class="lbl-tap" data-info="active">Active Allocation</span></div>
+      <div class="kind-desc">The workflow below.</div>
+      <div class="info-panel" data-info-for="active" hidden><p>You're claiming an edge. You believe this position will outperform. Requires a 9-section memo.</p></div>
+    </div>
+    <div class="kind-block">
+      <div class="kind-title"><span class="lbl-tap" data-info="core">Core / Treasury Allocation</span></div>
+      <div class="kind-desc">Simpler setup.</div>
+      <div class="info-panel" data-info-for="core" hidden><p>No specific bet. Broad market exposure or long-term compounding. Simpler setup: role, weight, notes.</p></div>
+    </div>
+  </div>
+
+  <!-- ACTIVE WORKFLOW -->
+  <div class="sec sec-divider">
+    <div class="section-eyebrow">For Active Allocation</div>
+
+    <p class="memo-subhead lift">The memo is step 3 of 5. You'll paste your AI output at the memo step.</p>
+
+    <div class="flow-viz">
+      <span class="flow-step">Classify</span>
+      <span class="flow-sep">·</span>
+      <span class="flow-step">Size</span>
+      <span class="flow-sep">·</span>
+      <span class="flow-current">Memo <span class="flow-here">(paste here)</span></span>
+      <span class="flow-sep">·</span>
+      <span class="flow-step">Probability</span>
+      <span class="flow-sep">·</span>
+      <span class="flow-step">Review</span>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="step-list-eyebrow" style="margin-top:32px">How it works</div>
+    <div class="step-list" style="margin-top:12px">
+      <div class="step-row"><span class="step-num">01</span><span class="step-text">Copy the prompt below. Paste into your AI tool.</span></div>
+      <div class="step-row"><span class="step-num">02</span><span class="step-text">Verify numbers on Fiscal. AI invents financials.</span></div>
+      <div class="step-row"><span class="step-num">03</span><span class="step-text">At the <strong>Memo</strong> step, paste your AI output. Refine.</span></div>
+      <div class="step-row"><span class="step-num">04</span><span class="step-text">Save your first memo.</span></div>
+    </div>
+
+    <!-- TOOLS — Research Prompt (primary) + Fiscal AI -->
+    <div class="research-card" id="rpCard" style="margin-top:24px">
+      <div class="rc-head-row">
+        <div class="rc-title">Research Prompt · ATZ</div>
+        <button type="button" class="rc-copy" id="copyPromptBtn" onclick="copyResearchPrompt(this)" aria-label="Copy prompt">
+          <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3.5" y="3.5" width="7" height="9" stroke="currentColor" stroke-width="0.7"/><rect x="6" y="1" width="7" height="9" stroke="currentColor" stroke-width="0.7" fill="none"/></svg>
+        </button>
+      </div>
+      <div class="rc-sub">Tailored to ATZ at <span id="rcHurdleNum">20</span>% hurdle. Copy and paste into your AI tool.</div>
+      <div class="rc-output" id="rcOutput">
+        <button type="button" class="rc-output-toggle" id="rcOutputToggle" onclick="toggleRcOutput()" aria-expanded="false">
+          <span>Output · 9 sections · 2,500–3,500 words</span>
+          <span class="rc-output-caret" aria-hidden="true">›</span>
+        </button>
+        <div class="rc-output-body" id="rcOutputBody">
+          <div class="rc-sec-row"><span class="rc-sec-num">01</span><span>Business Overview</span></div>
+          <div class="rc-sec-row"><span class="rc-sec-num">02</span><span>Classification</span></div>
+          <div class="rc-sec-row"><span class="rc-sec-num">03</span><span>Thesis</span></div>
+          <div class="rc-sec-row"><span class="rc-sec-num">04</span><span>Why Now</span></div>
+          <div class="rc-sec-row"><span class="rc-sec-num">05</span><span>Kill Criteria</span></div>
+          <div class="rc-sec-row"><span class="rc-sec-num">06</span><span>Intrinsic Value</span></div>
+          <div class="rc-sec-row"><span class="rc-sec-num">07</span><span>Probability</span></div>
+          <div class="rc-sec-row"><span class="rc-sec-num">08</span><span>Where to Dig Deeper</span></div>
+          <div class="rc-sec-row"><span class="rc-sec-num">09</span><span>Verify on Fiscal</span></div>
+        </div>
+      </div>
+      <div class="rc-ai-tools" aria-label="Open prompt in AI tool (opens in new tab)">
+        <span class="rc-ai-lbl">Open in</span>
+        <a href="https://claude.ai/new" target="_blank" rel="noopener">Claude</a>
+        <span class="rc-ai-sep">·</span>
+        <a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>
+        <span class="rc-ai-sep">·</span>
+        <a href="https://gemini.google.com/app" target="_blank" rel="noopener">Gemini</a>
+        <span class="rc-ai-sep">·</span>
+        <a href="https://www.perplexity.ai/" target="_blank" rel="noopener">Perplexity</a>
+      </div>
+    </div>
+
+    <a href="#" class="research-card research-card-link" onclick="event.preventDefault()" aria-label="Open Fiscal AI for ATZ" style="margin-top:12px">
+      <div class="rc-head">
+        <div class="rc-title">Fiscal AI · ATZ</div>
+        <div class="rc-sub">Verify financial figures from the AI output.</div>
+      </div>
+      <span class="rc-arrow" aria-hidden="true">›</span>
+    </a>
+
+    <!-- REFERENCE — Example Memo -->
+    <a class="ref-card" href="Example%20Memo.html" style="margin-top:12px">
+      <div class="ref-card-tx">
+        <div class="ref-card-t">Example Memo · ATZ</div>
+        <div class="ref-card-d">A finished memo to anchor your output. 9 sections.</div>
+      </div>
+      <span class="ref-card-chev" aria-hidden="true">
+        <svg width="6" height="10" viewBox="0 0 6 10" fill="none"><path d="M1 1L5 5L1 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </a>
+  </div>
+  </div>
+
+</div>
+
+<div class="save-cta">
+  <a id="ctaBtn" href="#"><span class="arrow">→</span> Open My First Memo</a>
+</div>
+
+<!-- HIDDEN: Research prompt text for copy -->
+<script id="researchPromptText" type="text/plain">You are conducting investment research on Aritzia Inc. (ATZ) on behalf of a serious investor.
+
+Context: Aritzia Inc., ticker ATZ (TSX), Consumer Discretionary, Premium Apparel Retail. In-house multi-brand women's fashion portfolio (Wilfred, TNA, Babaton, Super Puff). 110+ boutiques across Canada and the US. Founded Vancouver 1984. Founder Brian Hill, CEO Jennifer Wong (since 2022). Fiscal year ends early March (FY2026 = year ended March 2026). Return hurdle: 20% annualized over five years.
+
+Produce a research document of 2,500–3,500 words with the nine numbered sections below. Each section is mandatory. Do not collapse, merge, or omit.
+
+01 Business Overview
+02 Classification (compounder / emerging compounder / situational mispricing / speculative)
+03 Thesis and Structural Decomposition (including the load-bearing assumption)
+04 Why Now
+05 Kill Criteria (4–6, each with metric, threshold, action)
+06 Intrinsic Value (method selection, three scenarios, conservative IV, margin of safety)
+07 Probability of Clearing the Hurdle — estimate 1-year, 3-year, 5-year. The 3-year probability is binding for the verdict.
+08 Where Deeper Work Would Move the Probability (if Promote)
+09 Verify on Fiscal (10–15 fact-checks against Fiscal.AI, EDGAR/SEDAR filings, or 10-K/MD&A)
+
+Format: Markdown with H2 section headers (## 01 ... ## 09). Use tables for Kill Criteria (#/Signal/Metric/Threshold/Action) and Intrinsic Value scenarios.
+
+Voice: Direct, declarative, decisive. State a specific number when a number is asked. Pick one classification. Do not soften the triage output. The conclusion in section 7 is binding — Promote if 3-year probability >= 50%, Pass otherwise.
+
+Data freshness: Use latest available filings. If a figure is uncertain or post your training cutoff, state your assumption and flag with [verify on Fiscal].
+
+Begin with 01 Business Overview. No preamble.</script>
+
+<script>
+(function(){
+  function qs(s,c){return (c||document).querySelector(s);}
+  function getLS(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+  function setLS(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+  function getQuery(name){
+    var m = window.location.search.match(new RegExp('[?&]'+name+'=([^&]*)'));
+    return m ? decodeURIComponent(m[1]) : '';
+  }
+
+  // Hurdle rate from LS
+  try {
+    var h = getLS('atz-memo-hurdle-rate');
+    if (h !== null && h !== '') {
+      var el = qs('#rcHurdleNum');
+      if (el) el.textContent = h;
+    }
+  } catch(e){}
+
+  // Continue CTA
+  var intent = getQuery('intent') || 'memo';
+  var cta = qs('#ctaBtn');
+  if (cta) {
+    cta.setAttribute('href', 'First-time%20Memo%20Flow.html?intent=' + encodeURIComponent(intent));
+    cta.addEventListener('click', function(){
+      setLS('atz-memo-intro-viewed', '1');
+    });
+  }
+})();
+
+// Tap-to-learn — dotted underline + info-panel toggle
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('.lbl-tap').forEach(function(label){
+    label.addEventListener('click', function(e){
+      e.stopPropagation(); e.preventDefault();
+      var key = label.getAttribute('data-info');
+      var panel = document.querySelector('.info-panel[data-info-for="'+key+'"]');
+      if (!panel) return;
+      var isOpen = !panel.hidden;
+      panel.hidden = isOpen;
+      if (isOpen) label.classList.remove('open');
+      else label.classList.add('open');
+    });
+  });
+});
+
+function goBack(){
+  var src = null;
+  try { src = sessionStorage.getItem('atz-memo-stock-source'); } catch(e){}
+  if (src) { window.location.href = src; return; }
+  if (document.referrer) { window.location.href = document.referrer; return; }
+  window.location.href = 'Stock%20Page%20Firsttime%20User.html';
+}
+
+function toggleRcOutput(){
+  var box = document.getElementById('rcOutput');
+  var btn = document.getElementById('rcOutputToggle');
+  if (!box || !btn) return;
+  var open = box.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+
+function fallbackCopyToClipboard(text, cb){
+  try{
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    if (cb) cb();
+  } catch(e){}
+}
+
+function copyResearchPrompt(btn){
+  var node = document.getElementById('researchPromptText');
+  var text = node ? node.textContent.trim() : '';
+  function onCopied(){
+    if (!btn) return;
+    btn.classList.add('copied');
+    setTimeout(function(){ btn.classList.remove('copied'); }, 1800);
+  }
+  if (navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(onCopied).catch(function(){ fallbackCopyToClipboard(text, onCopied); });
+  } else {
+    fallbackCopyToClipboard(text, onCopied);
+  }
+}
+</script>
+</body>
+</html>

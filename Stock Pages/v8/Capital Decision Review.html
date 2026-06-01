@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Capital Decision Review — ATZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+* { scrollbar-width: none; -ms-overflow-style: none; }
+*::-webkit-scrollbar { display: none; }
+button { background: transparent; border: none; color: inherit; font: inherit; cursor: pointer; }
+a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+:root { --bg:#000000; --p:#FFFFFF; --s:#C7C7C7; --t:#929292; --t-800:#565B5E; --elev:#0A0A0A; --font:'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--s); font-family: var(--font); font-weight: 400; letter-spacing: -0.02em; font-feature-settings: 'tnum' 1; width: 100%; max-width: 393px; margin: 0 auto; min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+.topbar { display:flex; justify-content:space-between; align-items:center; padding:0 13.5px; height:71px; flex-shrink:0; border-bottom:1px solid #232627; font-size:0; }
+.topbar .back { width:13px; height:13px; display:inline-flex; align-items:center; justify-content:center; color:var(--s); font-size:0; }
+.topbar .back::before { content:''; width:8px; height:8px; border-left:1px solid currentColor; border-bottom:1px solid currentColor; transform:rotate(45deg); margin-left:2px; }
+.topbar .exit { font-size:14px; color:var(--s); letter-spacing:-0.02em; }
+.scroll { padding: 24px 20px 40px; display:flex; flex-direction:column; gap:16px; }
+.m6-ledger { display:flex; flex-direction:column; gap:36px; }
+.m6-ledger-header { padding-bottom:20px; border-bottom:1px solid #111; }
+.ticker { color:var(--s); }
+.m6-ticker-hero { font-size:34px; font-weight:400; letter-spacing:-0.02em; line-height:1.18; color:var(--p); margin-bottom:12px; }
+.m6-ledger-doc-label { font-size:11px; color:var(--t); }
+.m6-ledger-date-row { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-top:6px; }
+.m6-ledger-date { font-size:13px; color:var(--p); line-height:1.3; display:inline-flex; align-items:center; }
+.m6-page-example { font-size:11px; color:var(--t); background:none; border:none; cursor:pointer; font-family:inherit; padding:0; }
+.live-dot { display:inline-block; width:5px; height:5px; border-radius:50%; background:#30D158; margin-right:6px; vertical-align:middle; animation:live-pulse 2.4s ease infinite; }
+@keyframes live-pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
+.m6-drafted { font-size:11px; color:var(--t); margin-top:8px; }
+.cd-context { display:none; align-items:baseline; gap:6px; font-size:11px; color:var(--t); margin-top:10px; }
+.cd-context.is-active { display:flex; }
+.cd-context .cd-eyebrow { color:var(--t-800); }
+.cd-context .cd-action { color:var(--s); font-weight:500; }
+.m6-ledger-section-row { display:flex; align-items:center; justify-content:space-between; padding-bottom:10px; border-bottom:0.5px solid #3A3D40; }
+.m6-ledger-section-head { font-size:15px; color:var(--p); }
+.m6-section-tap-hint { font-size:11px; color:var(--t-800); }
+.memo-row { display:grid; grid-template-columns:90px 1fr; gap:14px; padding:14px 0; border-bottom:0.5px solid #1A1A1A; cursor:pointer; }
+.memo-row:last-of-type { border-bottom:none; }
+.memo-row:active { opacity:0.5; }
+.memo-row .k { font-size:13px; color:var(--t); padding-top:2px; }
+.memo-row .v { font-size:13px; color:var(--s); line-height:1.65; text-align:right; }
+.memo-row .v.empty { color:var(--t-800); }
+.memo-row .v-desc { font-size:12px; color:var(--t); line-height:1.5; text-align:right; margin-top:4px; }
+.memo-row.memo-row-prose { display:flex; flex-direction:column; gap:8px; }
+.memo-row.memo-row-prose .v { text-align:left; }
+.m6-footnotes { display:flex; flex-direction:column; gap:16px; }
+.t-bsm { font-size:12px; line-height:1.6; color:var(--t-800); }
+.m6-immutability { font-size:11px; color:var(--t); line-height:1.6; border-left:1px solid var(--t-800); padding-left:12px; }
+/* II Bottom sheet system — unified style (iibottomsheet.netlify.app) */
+.sheet-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.55); opacity: 0; pointer-events: none; transition: opacity 200ms ease; z-index: 20; }
+.sheet-backdrop.open { opacity: 1; pointer-events: auto; }
+.sheet { position: fixed; bottom: 0; left: 50%; transform: translate(-50%, 100%); width: 100%; max-width: 393px; background: #1C1C1C; padding: 24px; padding-bottom: calc(32px + env(safe-area-inset-bottom)); max-height: 75vh; overflow-y: auto; transition: transform 240ms cubic-bezier(0.4, 0, 0.2, 1); z-index: 21; will-change: transform; }
+.sheet.open { transform: translate(-50%, 0); }
+.sheet-x { position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; background: none; border: none; padding: 0; }
+.sheet-x svg { width: 14px; height: 14px; display: block; }
+.sheet-x svg line { stroke: #929292; stroke-width: 1; stroke-linecap: square; }
+.sheet-content { padding-top: 8px; padding-right: 36px; }
+.sheet-title { color: #FFFFFF; font-size: 18px; font-weight: 400; line-height: 1.45; letter-spacing: -0.02em; }
+.sheet-body { color: #929292; font-size: 14px; font-weight: 400; line-height: 1.55; margin-top: 12px; }
+.sheet-body .ex-sec { display: flex; flex-direction: column; gap: 8px; margin-top: 20px; }
+.sheet-body .ex-sec:first-child { margin-top: 0; }
+.sheet-body .ex-sec-label { font-size: 11px; color: #565B5E; letter-spacing: 0.3px; text-transform: uppercase; }
+.sheet-body .ex-sec-body { font-size: 14px; color: #C7C7C7; line-height: 1.55; }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <a href="#" onclick="event.preventDefault();goBack();" class="back" aria-label="Back"></a>
+    <a href="#" onclick="event.preventDefault();goBack();" class="exit" aria-label="Exit">Exit</a>
+  </div>
+  <div class="scroll">
+    <div class="m6-ledger">
+      <div class="m6-ledger-header">
+        <div class="m6-ticker-hero"><span class="ticker" id="tickerHero">ATZ</span></div>
+        <div class="m6-ledger-doc-label">Investment Memo</div>
+        <div class="m6-ledger-date-row">
+          <div class="m6-ledger-date" id="versionBadge">—</div>
+          <button type="button" class="m6-page-example" onclick="openExample()">Example Memo ›</button>
+        </div>
+        <div class="m6-drafted" id="draftedDate">—</div>
+        <div class="cd-context" id="cdContext">
+          <span class="cd-eyebrow">Capital decision ·</span>
+          <span class="cd-action" id="cdActionLabel">—</span>
+        </div>
+      </div>
+      <div>
+        <div class="m6-ledger-section-row">
+          <div class="m6-ledger-section-head">Memo</div>
+          <span class="m6-section-tap-hint">Tap each to update</span>
+        </div>
+        <div class="memo-row" data-edit="decision"><div class="k">Decision</div><div class="v empty" id="vDecision">—</div></div>
+        <div class="memo-row" data-edit="classification">
+          <div class="k">Type</div>
+          <div>
+            <div class="v empty" id="vType">—</div>
+            <div class="v-desc" id="vTypeDesc"></div>
+          </div>
+        </div>
+        <div class="memo-row" data-edit="sizing">
+          <div class="k">Size</div>
+          <div>
+            <div class="v empty" id="vSize">—</div>
+            <div class="v-desc" id="vSizeDesc"></div>
+          </div>
+        </div>
+        <div class="memo-row memo-row-prose" data-edit="memo"><div class="k">Memo</div><div class="v empty" id="vMemo">—</div></div>
+      </div>
+      <div>
+        <div class="m6-ledger-section-row">
+          <div class="m6-ledger-section-head">Calibration</div>
+          <span class="m6-section-tap-hint">Tap to update</span>
+        </div>
+        <div class="memo-row" data-edit="probability"><div class="k">Probability</div><div class="v empty" id="vProb">—</div></div>
+        <div class="memo-row" data-edit="probability"><div class="k">Horizon</div><div class="v empty" id="vHorizon">—</div></div>
+      </div>
+      <div class="m6-footnotes">
+        <div class="t-bsm" id="footnoteRecorded">The memo and calibration are recorded. Future buys of ATZ will skip the memo unless you choose to re-enter it.</div>
+      </div>
+    </div>
+  </div>
+  <div class="sheet-backdrop" id="sheetBackdrop" onclick="closeExample()"></div>
+  <div class="sheet" id="exampleSheet">
+    <button type="button" class="sheet-x" onclick="closeExample()" aria-label="Close">
+      <svg viewBox="0 0 14 14" aria-hidden="true"><line x1="0" y1="0" x2="14" y2="14"/><line x1="14" y1="0" x2="0" y2="14"/></svg>
+    </button>
+    <div class="sheet-content">
+      <div class="sheet-title">Example Memo</div>
+      <div class="sheet-body">
+        <div class="ex-sec"><div class="ex-sec-label">Classification</div><div class="ex-sec-body">Compounder. Aritzia is a high-quality DTC women's fashion business.</div></div>
+        <div class="ex-sec"><div class="ex-sec-label">Thesis</div><div class="ex-sec-body">US store rollout is the primary growth driver.</div></div>
+        <div class="ex-sec"><div class="ex-sec-label">Probability</div><div class="ex-sec-body">3-year 62%.</div></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    var TICKER = 'ATZ';
+    var CD_ACTION_LBL = { initiate:'Initiate position', increase:'Increase exposure', reduce:'Reduce exposure', exit:'Exit position' };
+    var CLASSIFY_DESC = {
+      'Compounder': 'Businesses compounding capital at above-market rates with durable competitive position.',
+      'Emerging Compounder': 'Businesses or themes early in their compounding lifecycle, with conviction they will graduate.',
+      'Situational Mispricing': 'Assets trading materially below reasonable estimates of value due to identifiable dislocation.',
+      'Speculative': 'Asymmetric upside with acknowledged binary or high-variance risk.'
+    };
+    var SIZE_DESC = { 'Core':'Approximately 10%+', 'Conviction':'Approximately 5–10%', 'Starter':'Approximately 1–3%', 'Speculative':'Approximately ≤2%' };
+    var HORIZON_LONG = { '1 Year':'1 year', '3 Years':'3 years', '5+ Years':'5+ years' };
+    var HORIZON_SHORT = { '1 Year':'1y', '3 Years':'3y', '5+ Years':'5y+' };
+    function getLS(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
+    function fmtDate(ts){ var d = new Date(ts); var m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return m[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear(); }
+    (function safety(){ if (!getLS('atz-memo-version')) window.location.replace('First-time%20Memo%20Flow.html'); })();
+    function setRow(id,val,emptyTxt){
+      var el=document.getElementById(id); if(!el) return;
+      if(val && String(val).length){ el.textContent=val; el.classList.remove('empty'); }
+      else { el.textContent=emptyTxt||'—'; el.classList.add('empty'); }
+    }
+    function hydrate(){
+      var decision = getLS('atz-memo-decision') || '';
+      var classification = getLS('atz-memo-classification') || '';
+      var sizing = getLS('atz-memo-sizing') || '';
+      var memoBody = getLS('atz-memo-memo') || getLS('atz-memo') || '';
+      var prob = getLS('atz-memo-probability') || '';
+      var horizon = getLS('atz-memo-horizon') || '';
+      var version = getLS('atz-memo-version') || 'V1';
+      var hist = []; try { hist = JSON.parse(getLS('atz-memo-history')||'[]'); } catch(e){}
+      var latestTs = hist.length ? hist[hist.length-1].timestamp : Date.now();
+      var action; try { action = sessionStorage.getItem('atz-cd-action'); } catch(e){}
+      var actionLbl = CD_ACTION_LBL[action] || '';
+      document.getElementById('tickerHero').textContent = TICKER;
+      var vBadge = document.getElementById('versionBadge');
+      if (vBadge) vBadge.innerHTML = '<span class="live-dot"></span>' + version + ' · Live';
+      document.getElementById('draftedDate').textContent = 'Drafted ' + fmtDate(latestTs);
+      var cdEl = document.getElementById('cdContext'); var cdLblEl = document.getElementById('cdActionLabel');
+      if (actionLbl && cdEl) { cdEl.classList.add('is-active'); if(cdLblEl) cdLblEl.textContent = actionLbl; }
+      else if (cdEl) cdEl.classList.remove('is-active');
+      setRow('vDecision', decision);
+      setRow('vType', classification);
+      document.getElementById('vTypeDesc').textContent = CLASSIFY_DESC[classification] || '';
+      setRow('vSize', sizing);
+      document.getElementById('vSizeDesc').textContent = SIZE_DESC[sizing] || '';
+      var memoEl = document.getElementById('vMemo');
+      if (memoBody && memoBody.length){
+        var preview = memoBody.length>220?memoBody.slice(0,220).trim()+'…':memoBody;
+        memoEl.textContent = preview; memoEl.classList.remove('empty');
+      } else { memoEl.textContent = '—'; memoEl.classList.add('empty'); }
+      setRow('vProb', prob ? prob+'%' : '');
+      setRow('vHorizon', HORIZON_LONG[horizon] || horizon || '');
+      document.getElementById('footnoteRecorded').textContent =
+        'The memo and calibration are recorded. Future buys of '+TICKER+' will skip the memo unless you choose to re-enter it.';
+    }
+    document.querySelectorAll('.memo-row[data-edit]').forEach(function(row){
+      row.addEventListener('click', function(){
+        var field = row.getAttribute('data-edit');
+        var pages = { decision:'Edit Decision.html', classification:'Edit Classification.html', sizing:'Edit Sizing.html', memo:'Edit Memo.html', probability:'Edit Probability.html' };
+        var p = pages[field]; if (!p) return;
+        try { sessionStorage.setItem('atz-memo-source', window.location.href); } catch(e){}
+        window.location.href = p;
+      });
+    });
+    function openExample(){ document.getElementById('sheetBackdrop').classList.add

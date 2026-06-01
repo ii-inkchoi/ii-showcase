@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Example Memo · ATZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+* { scrollbar-width: none; -ms-overflow-style: none; }
+*::-webkit-scrollbar { display: none; }
+button { background: transparent; border: none; color: inherit; font: inherit; cursor: pointer; }
+a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+
+/* CSS variables — canonical tokens from Style_Design.md */
+:root {
+  --bg: #000000;
+  --c-1000: #1C1C1C;    /* gray.darkest */
+  --c-900:  #232627;    /* gray.darker */
+  --c-800:  #565B5E;    /* gray.muted */
+  --c-700:  #929292;    /* gray.dark / gray.medium */
+  --c-600:  #A7A7A7;    /* gray.subdued */
+  --c-400:  #C7C7C7;    /* gray.default / gray.light */
+  --c-white: #FFFFFF;   /* gray.lighter */
+  --c-elev: #0A0A0A;
+  --c-amber: #D4A85A;
+  --c-live:  #30D158;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+html, body { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--c-400);
+  font-family: var(--font);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  font-feature-settings: 'tnum' 1;
+  width: 100%;
+  max-width: 393px;
+  margin: 0 auto;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  padding-bottom: 40px;
+}
+
+/* TOPBAR — II canon */
+.topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 13.5px; height: 71px; flex-shrink: 0;
+  border-bottom: 1px solid var(--c-900); font-size: 0;
+}
+.topbar .back {
+  width: 13px; height: 13px; display: inline-flex;
+  align-items: center; justify-content: center; color: var(--c-400); font-size: 0;
+}
+.topbar .back::before {
+  content: ''; width: 8px; height: 8px;
+  border-left: 1px solid currentColor; border-bottom: 1px solid currentColor;
+  transform: rotate(45deg); margin-left: 2px;
+}
+.topbar .back:active { opacity: .5; transition: opacity 80ms ease; }
+.topbar .exit { font-size: 14px; color: var(--c-400); letter-spacing: -0.02em; }
+.topbar .exit:active { opacity: .5; transition: opacity 80ms ease; }
+
+/* COMPLIANCE STRIP */
+.compliance-strip {
+  display: flex; align-items: center; padding: 8px 20px;
+  font-size: 9px; letter-spacing: -0.02em; color: var(--c-800);
+  border-bottom: 0.5px solid var(--c-1000); line-height: 1.3;
+}
+
+/* PAGE HERO — matches Memo Review m6-ledger-header pattern */
+.memo-page-header {
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid var(--c-1000);
+  display: flex; flex-direction: column;
+}
+.memo-ticker-hero {
+  font-size: 34px; font-weight: 400; letter-spacing: -0.02em;
+  color: var(--c-400); line-height: 1.18; margin: 0 0 12px;
+}
+.memo-doc-label {
+  font-size: 11px; color: var(--c-700); letter-spacing: -0.01em;
+}
+.memo-status-row {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 12px; margin-top: 6px;
+}
+.memo-status {
+  font-size: 13px; color: var(--c-400); letter-spacing: -0.01em;
+}
+
+/* MEMO BODY */
+.memo {
+  padding: 24px 20px 40px;
+  user-select: text;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+}
+
+/* Hide markdown H1 (rendered separately in hero) */
+.memo > h1:first-of-type { display: none; }
+
+/* H2 — section header per canon (15px / --c-400 / letter-spacing -0.02em) */
+.memo h2 {
+  font-size: 15px; color: var(--c-400); font-weight: 400;
+  letter-spacing: -0.02em;
+  margin: 30px 0 12px;
+}
+.memo h2:first-of-type { margin-top: 4px; }
+
+/* Body — memo prose per Doctrine §3: Small (13/18) / --c-700 (two tones darker) */
+.memo p {
+  font-size: 13px; line-height: 1.55; color: var(--c-700);
+  font-weight: 400; margin-bottom: 14px; letter-spacing: -0.005em;
+}
+.memo p strong { color: var(--c-400); font-weight: 400; }
+.memo p em {
+  font-style: italic; font-weight: 400;
+  color: var(--c-700);  /* Italic intro: subdued, not loud */
+}
+
+/* Intro paragraph (compliance disclaimer style) — extra subdued, no italic */
+.memo > p:first-of-type {
+  font-size: 13px; line-height: 1.55; color: var(--c-700);
+  font-style: normal;
+  padding: 12px 14px;
+  background: var(--c-elev);
+  border-left: 0.5px solid var(--c-900);
+}
+.memo > p:first-of-type em { font-style: normal; color: var(--c-700); }
+
+/* Mandate / summary block (2nd paragraph with strong tags) */
+.memo > p:nth-of-type(2) {
+  font-size: 13px; line-height: 1.7; color: var(--c-700);
+  margin-top: -2px;
+  letter-spacing: -0.01em;
+}
+.memo > p:nth-of-type(2) strong { color: var(--c-400); font-weight: 400; }
+
+/* Lists */
+.memo ul, .memo ol { margin: 0 0 16px 0; padding: 0 0 0 18px; }
+.memo ul li, .memo ol li {
+  font-size: 13px; line-height: 1.55; color: var(--c-700); font-weight: 400;
+  margin-bottom: 6px; letter-spacing: -0.005em;
+}
+.memo ul { list-style: none; padding-left: 0; }
+.memo ul li { padding-left: 18px; position: relative; }
+.memo ul li::before { content: '·'; color: var(--c-700); position: absolute; left: 4px; top: -1px; font-size: 18px; line-height: 1; }
+.memo ol { list-style: decimal; color: var(--c-700); }
+.memo ol li { padding-left: 4px; }
+.memo li strong { color: var(--c-400); font-weight: 400; }
+
+/* Card list — used for Kill Criteria, Intrinsic Value scenarios, Probability */
+.card-list {
+  display: flex; flex-direction: column;
+  margin: 6px 0 18px;
+}
+.card-row {
+  display: flex; gap: 12px;
+  padding: 12px 0;
+  border-bottom: 0.5px solid var(--c-1000);
+}
+.card-row:last-child { border-bottom: none; }
+.card-num {
+  font-size: 11px; color: var(--c-800);
+  font-variant-numeric: tabular-nums;
+  width: 18px; flex-shrink: 0; padding-top: 2px; letter-spacing: 0.02em;
+}
+.card-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.card-title {
+  font-size: 13px; color: var(--c-400); font-weight: 400;
+  letter-spacing: -0.01em; line-height: 1.4; margin-bottom: 2px;
+}
+.card-field {
+  font-size: 13px; color: var(--c-700); font-weight: 400;
+  line-height: 1.5; letter-spacing: -0.005em;
+}
+.card-lbl {
+  color: var(--c-800); margin-right: 4px;
+}
+.card-field strong { color: var(--c-400); font-weight: 400; }
+
+/* Verdict blockquote — amber semantic (verdict highlight) */
+.memo blockquote {
+  margin: 18px -4px; padding: 14px 18px;
+  background: var(--c-1000); border-left: 2px solid var(--c-amber);
+  border-radius: 0 4px 4px 0;
+}
+.memo blockquote h2 {
+  border: none; padding: 0; margin: 0;
+  font-size: 13px; letter-spacing: 0.04em; color: var(--c-amber); font-weight: 400;
+}
+.memo blockquote h2 strong { color: var(--c-amber); font-weight: 400; }
+.memo blockquote p { margin: 0; color: var(--c-400); font-size: 13px; }
+
+/* HR — light dividers between sections */
+.memo hr {
+  border: none; border-top: 0.5px solid var(--c-1000);
+  margin: 24px 0 0;
+}
+
+/* Code */
+.memo code { font-family: var(--font-mono); font-size: 11px; color: var(--c-400); background: var(--c-1000); padding: 1px 5px; border-radius: 2px; }
+
+/* Closing italic disclaimer (last p) */
+.memo > p:last-of-type {
+  font-size: 11px; color: var(--c-700); line-height: 1.5;
+  padding-top: 12px;
+  margin-top: 8px;
+  border-top: 0.5px solid var(--c-1000);
+}
+
+/* Copy button — inline in hero status row */
+.copy-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 10px;
+  background: transparent; border: 0.5px solid var(--c-900);
+  color: var(--c-400); font-size: 11px; letter-spacing: -0.01em;
+  cursor: pointer; user-select: none; -webkit-user-select: none;
+}
+.copy-btn:active { opacity: 0.5; transition: opacity 80ms ease; }
+.copy-btn svg { width: 10px; height: 10px; color: var(--c-700); }
+.copy-btn.copied { color: var(--c-amber); border-color: var(--c-amber); }
+.copy-btn.copied svg { color: var(--c-amber); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="javascript:history.back()" aria-label="Back"></a>
+  <a class="exit" href="javascript:history.back()" aria-label="Exit">Exit</a>
+</div>
+
+<div class="compliance-strip">Self-Authored · No Suitability Review · Not Advice</div>
+
+<div class="memo-page-header">
+  <h1 class="memo-ticker-hero">ATZ</h1>
+  <div class="memo-doc-label">Investment Memo</div>
+  <div class="memo-status-row">
+    <span class="memo-status">Example · Read-only</span>
+    <button type="button" class="copy-btn" id="copyBtn" onclick="copyMemo(this)" aria-label="Copy Memo">
+      <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3.5" y="3.5" width="7" height="9" stroke="currentColor" stroke-width="0.7"/><rect x="6" y="1" width="7" height="9" stroke="currentColor" stroke-width="0.7" fill="none"/></svg>
+      <span class="copy-lbl">Copy Memo</span>
+    </button>
+  </div>
+</div>
+
+<article class="memo" id="memoArticle">
+<h1>Aritzia Inc. (TSX: ATZ) — Investment Memo</h1>
+<p><em>Illustrative example memo. Built on the Promote branch at a hypothetical entry of C$80, the conservative intrinsic value at which the 20% hurdle is cleared. All business facts are real (FY2026 actuals, filed 7 May 2026); the entry price is set deliberately to demonstrate a Promote verdict and its full workflow. At the live price (~C$150) this same framework returns a Pass.</em></p>
+<p><strong>Mandate:</strong> 20% annualized return over five years<br>
+<strong>Verdict:</strong> PROMOTE<br>
+<strong>Classification:</strong> Emerging Compounder<br>
+<strong>Illustrative entry:</strong> C$80<br>
+<strong>Conservative IV:</strong> C$80–100<br>
+<strong>Currency:</strong> C$ unless noted<br>
+<strong>Fiscal year:</strong> ends early March (FY2026 ended 1 March 2026)</p>
+<hr />
+<h2>01 — Business Overview</h2>
+<p>Aritzia is a Vancouver-founded (1984) design house and vertically integrated retailer of women's premium apparel. It designs, merchandises, and sells an in-house portfolio of exclusive brands (Wilfred, TNA, Babaton, Sunday Best, the Super Puff outerwear franchise) through its own boutiques and a single direct e-commerce channel. There is no wholesale and there are no third-party brands. Aritzia controls design, pricing, allocation, and the customer relationship end to end, positioning itself as "Everyday Luxury": a tier above mall fast-fashion (H&amp;M, Zara) and below true luxury.</p>
+<p>FY2026 was a record year. Net revenue reached <strong>C$3,702M, up 35%</strong>, capping a four-year revenue CAGR of ~25% (from C$1,495M in FY2022). Gross profit was C$1,661M (<strong>44.9% margin</strong>), operating profit C$524M (<strong>14.2% margin</strong>), net income C$382M (<strong>10.3% margin</strong>), and diluted EPS <strong>C$3.20</strong> versus C$1.78 the prior year. Comparable sales grew ~27%, positive double-digit across every channel and geography.</p>
+<p>The structural story is geographic. The US is now the larger and faster market: <strong>US revenue C$2,275M (61% of total, +38%)</strong> versus Canada C$1,427M (39%, +24%). The fleet ended FY2026 at <strong>144 boutiques (76 US, 68 Canada)</strong> after opening 14 and repositioning four, including a Manhattan Flatiron flagship. Canada is effectively built out (count flat for five years); the entire unit-growth engine is the US, where new boutiques recoup build-out capital in under a year and run ahead of plan. E-commerce contributed <strong>C$1,295M (35% of revenue)</strong>, headed toward a ~45% target.</p>
+<p>The balance sheet is pristine: <strong>C$592M cash, no bank debt</strong> (only IFRS-16 lease liabilities ~C$996M), free cash flow <strong>~C$538M (14.5% FCF margin)</strong>, ROIC ~20% / ROE ~28%. CEO Jennifer Wong (since 2022) runs operations; founder Brian Hill is Executive Chair. A dual-class structure concentrates voting control with the founder group.</p>
+<hr />
+<h2>02 — Classification</h2>
+<p><strong>Emerging Compounder.</strong></p>
+<p>Aritzia has the architecture of a compounder: a differentiated in-house brand portfolio with pricing power; ~20% ROIC and ~28% ROE; net-cash funding; a repeatable unit-growth algorithm (open a US box, recoup capital in &lt;12 months, layer comps on top); and an owner-operator at the helm. It falls short of "established compounder" on track-record consistency: the model stumbled visibly in FY2024 (comps went negative −1%, operating margin halved to 6.8%, EPS fell to C$0.69) on excess inventory and markdowns. The recovery since (FY2025 EPS C$1.78, FY2026 C$3.20) has been emphatic, but two clean years do not yet prove through-cycle durability. The US runway is large and early (76 boutiques against frequently cited white-space of 150+); that is the "emerging" part. The prize is mostly ahead, not banked.</p>
+<p>Not a situational mispricing (nothing is broken or misunderstood). Not speculative (the economics are proven and cash-generative). A high-quality, early-innings franchise.</p>
+<hr />
+<h2>03 — Thesis and Structural Decomposition</h2>
+<p><strong>Thesis.</strong> Aritzia is a US growth story in its middle innings. The US flywheel (flagship-led brand-building, app-driven engagement, and disciplined new-box openings that pay back in under a year) can roughly double the US fleet while e-commerce climbs toward 45% of revenue. Revenue compounds mid-to-high teens, margins expand on occupancy leverage and improving initial mark-up (IMU), EPS outgrows revenue, and at a sensible entry price the return clears the hurdle with room to spare.</p>
+<p><strong>Structural decomposition of the five-year return:</strong></p>
+<ul>
+<li><strong>Revenue</strong> ≈ unit growth (~12–13 new US boutiques/year, low-teens square-footage growth) + comparable sales (decelerating from ~27% toward guided mid-teens) + e-commerce penetration. FY2027 guided to <strong>C$4.4–4.6B (+19–24%)</strong>.</li>
+<li><strong>Margin</strong> ≈ gross-margin expansion (IMU + occupancy leverage, guided <strong>+150–200bps</strong> in FY2027) net of ~50bps incremental tariff/de-minimis drag, plus SG&amp;A leverage from the "smart spending" initiative.</li>
+<li><strong>Capital returns</strong> ≈ buybacks (C$207M in FY2026; no dividend) modestly shrinking the count against stock-comp dilution.</li>
+<li><strong>Multiple</strong> ≈ the swing factor; at an C$80 entry (~25x trailing) the rating embeds far less optimism than the live ~47x.</li>
+</ul>
+<p><strong>The load-bearing assumption:</strong> <em>that Aritzia can roughly double its US boutique base (76 → 150+) without per-store productivity or brand desirability eroding</em> — i.e., US demand is supply-constrained, not the reverse. Every other input is downstream of this. The model works only if the marginal new US store, increasingly in smaller and less-proven markets, keeps approaching the productivity and sub-12-month payback of the existing fleet. If new-store productivity mean-reverts toward ordinary specialty-retail levels, the unit-growth algorithm degrades, comps normalize, and the multiple compresses at the same time. Buying at a conservative multiple is the defense against that convergence.</p>
+<hr />
+<h2>04 — Why Now</h2>
+<p><strong>Operational.</strong> FY2026 (reported 7 May 2026) was a clean beat-and-raise. Aritzia <strong>hit its FY2027 revenue target a full year early</strong>, posted +27% comps, grew US revenue 38%, and <em>expanded</em> adjusted EBITDA margin ~260bps <strong>despite</strong> ~260bps of tariff and de-minimis drag. Direct evidence of pricing power and cost discipline. It launched the Aritzia app (deeper engagement and first-party data), renewed its NCIB, and guided FY2027 to another ~20%+ revenue year with gross margin up 150–200bps. Execution and the US flywheel are firing.</p>
+<p><strong>Valuation (the reason this memo is a buy).</strong> At the illustrative C$80 entry, the franchise trades around <strong>25x trailing / ~18x forward earnings</strong>, roughly a market multiple for a business compounding revenue ~20% with ~20% ROIC. The "why now" is the rare alignment of a proven, accelerating operating model with an entry price that does not require the premium rating to persist. The base case clears the hurdle on earnings growth alone; multiple stability is upside, not a requirement.</p>
+<hr />
+<h2>05 — Kill Criteria</h2>
+<div class="card-list">
+  <div class="card-row">
+    <div class="card-num">1</div>
+    <div class="card-body">
+      <div class="card-title">Demand saturation / brand fatigue</div>
+      <div class="card-field"><span class="card-lbl">Metric:</span> Comparable sales growth</div>
+      <div class="card-field"><span class="card-lbl">Threshold:</span> Two consecutive quarters below <strong>+3%</strong> absent a broad recession</div>
+      <div class="card-field"><span class="card-lbl">Action:</span> Exit / re-underwrite. Comps are the brand-health vital sign.</div>
+    </div>
+  </div>
+  <div class="card-row">
+    <div class="card-num">2</div>
+    <div class="card-body">
+      <div class="card-title">Unit-growth engine breaks (load-bearing)</div>
+      <div class="card-field"><span class="card-lbl">Metric:</span> New US boutique payback / new-store productivity vs. fleet</div>
+      <div class="card-field"><span class="card-lbl">Threshold:</span> Payback beyond <strong>~24 months</strong>, or new-store sales/sq-ft <strong>&gt;20% below</strong> the fleet</div>
+      <div class="card-field"><span class="card-lbl">Action:</span> Trim hard / exit. This is the entire thesis.</div>
+    </div>
+  </div>
+  <div class="card-row">
+    <div class="card-num">3</div>
+    <div class="card-body">
+      <div class="card-title">Pricing-power / markdown erosion</div>
+      <div class="card-field"><span class="card-lbl">Metric:</span> Annual gross margin (ex one-time tariff step)</div>
+      <div class="card-field"><span class="card-lbl">Threshold:</span> Below <strong>~42%</strong> for a full year, not attributable to tariffs</div>
+      <div class="card-field"><span class="card-lbl">Action:</span> Re-underwrite. Signals discounting to move product.</div>
+    </div>
+  </div>
+  <div class="card-row">
+    <div class="card-num">4</div>
+    <div class="card-body">
+      <div class="card-title">Inventory ahead of sales</div>
+      <div class="card-field"><span class="card-lbl">Metric:</span> Inventory growth vs. revenue growth</div>
+      <div class="card-field"><span class="card-lbl">Threshold:</span> Inventory growth exceeds revenue growth by <strong>&gt;10pts for two consecutive quarters</strong></div>
+      <div class="card-field"><span class="card-lbl">Action:</span> Caution / trim. The exact tell before the FY2024 stumble.</div>
+    </div>
+  </div>
+  <div class="card-row">
+    <div class="card-num">5</div>
+    <div class="card-body">
+      <div class="card-title">Paying a growth multiple for non-growth</div>
+      <div class="card-field"><span class="card-lbl">Metric:</span> Forward P/E vs. revenue growth</div>
+      <div class="card-field"><span class="card-lbl">Threshold:</span> Forward P/E <strong>&gt;45x</strong> while revenue growth decelerates <strong>below 15%</strong></div>
+      <div class="card-field"><span class="card-lbl">Action:</span> Do not add / trim.</div>
+    </div>
+  </div>
+  <div class="card-row">
+    <div class="card-num">6</div>
+    <div class="card-body">
+      <div class="card-title">Governance / key-person</div>
+      <div class="card-field"><span class="card-lbl">Metric:</span> Founder share sales, senior merchandising turnover (under dual-class control)</div>
+      <div class="card-field"><span class="card-lbl">Threshold:</span> Material undisclosed insider selling <strong>or</strong> another abrupt senior merchant/creative departure</div>
+      <div class="card-field"><span class="card-lbl">Action:</span> Review control alignment.</div>
+    </div>
+  </div>
+</div>
+<hr />
+<h2>06 — Intrinsic Value</h2>
+<p><strong>Method.</strong> A multi-stage DCF on a fashion retailer with double-digit comp volatility produces false precision; terminal value would dominate and rest on the same unprovable long-run assumptions. I use an <strong>EPS-and-exit-multiple framework</strong> over five years (FY2026 → FY2031), cross-checked against free cash flow, because the equity return here is mechanically <em>forward earnings × terminal multiple</em>, and because it forces the multiple, the dominant swing factor, into the open.</p>
+<p><strong>Base inputs:</strong> FY2026 diluted EPS C$3.20; ~115M diluted shares (held roughly flat as buybacks offset stock comp).</p>
+<p><strong>Three scenarios (FY2031):</strong></p>
+<div class="card-list">
+  <div class="card-row">
+    <div class="card-body">
+      <div class="card-title">Bull</div>
+      <div class="card-field"><span class="card-lbl">Rev. CAGR:</span> 20%</div>
+      <div class="card-field"><span class="card-lbl">FY31 Revenue:</span> ~C$9.2B</div>
+      <div class="card-field"><span class="card-lbl">Net margin:</span> 13.0%</div>
+      <div class="card-field"><span class="card-lbl">FY31 EPS:</span> ~C$10.7</div>
+      <div class="card-field"><span class="card-lbl">Exit P/E:</span> 32x</div>
+      <div class="card-field"><span class="card-lbl">FY31 price:</span> <strong>~C$342</strong></div>
+      <div class="card-field"><span class="card-lbl">5-yr IRR from C$80:</span> <strong>~34%</strong></div>
+    </div>
+  </div>
+  <div class="card-row">
+    <div class="card-body">
+      <div class="card-title">Base</div>
+      <div class="card-field"><span class="card-lbl">Rev. CAGR:</span> 15%</div>
+      <div class="card-field"><span class="card-lbl">FY31 Revenue:</span> ~C$7.4B</div>
+      <div class="card-field"><span class="card-lbl">Net margin:</span> 11.5%</div>
+      <div class="card-field"><span class="card-lbl">FY31 EPS:</span> ~C$7.4</div>
+      <div class="card-field"><span class="card-lbl">Exit P/E:</span> 26x</div>
+      <div class="card-field"><span class="card-lbl">FY31 price:</span> <strong>~C$192</strong></div>
+      <div class="card-field"><span class="card-lbl">5-yr IRR from C$80:</span> <strong>~19%</strong></div>
+    </div>
+  </div>
+  <div class="card-row">
+    <div class="card-body">
+      <div class="card-title">Bear</div>
+      <div class="card-field"><span class="card-lbl">Rev. CAGR:</span> 8%</div>
+      <div class="card-field"><span class="card-lbl">FY31 Revenue:</span> ~C$5.4B</div>
+      <div class="card-field"><span class="card-lbl">Net margin:</span> 9.5%</div>
+      <div class="card-field"><span class="card-lbl">FY31 EPS:</span> ~C$4.4</div>
+      <div class="card-field"><span class="card-lbl">Exit P/E:</span> 16x</div>
+      <div class="card-field"><span class="card-lbl">FY31 price:</span> <strong>~C$70</strong></div>
+      <div class="card-field"><span class="card-lbl">5-yr IRR from C$80:</span> <strong>~ −3%</strong></div>
+    </div>
+  </div>
+</div>
+<p><strong>Conservative intrinsic value.</strong> The hurdle-clearing entry price for each scenario (FY31 price ÷ 2.49) is bull C$137, base C$77, bear C$28. Probability-weighting (30% / 45% / 25%) gives a <strong>hurdle-clearing entry of ~C$80</strong> and a conservative IV band of <strong>C$80–100</strong>.</p>
+<p><strong>Margin of safety.</strong> At the C$80 entry against the C$80–100 conservative IV, the margin of safety is adequate (roughly 0–20%): the base case clears the hurdle on earnings alone, the bull case clears it comfortably, and only the bear case (which embeds both a growth stall and a de-rating to 16x) loses money, and modestly. The asymmetry is favorable: <strong>~+34% / +19% / −3% across bull / base / bear</strong>.</p>
+<hr />
+<h2>07 — Probability of Clearing the Hurdle</h2>
+<p>To clear 20% annualized from C$80, the price must reach <strong>~C$96 in 1 year, ~C$138 in 3 years, and ~C$199 in 5 years.</strong></p>
+<div class="card-list">
+  <div class="card-row">
+    <div class="card-body">
+      <div class="card-title">1-year</div>
+      <div class="card-field"><span class="card-lbl">Target price:</span> ~C$96</div>
+      <div class="card-field"><span class="card-lbl">Probability:</span> <strong>~55%</strong></div>
+      <div class="card-field"><span class="card-lbl">Reasoning:</span> A +20% move is well within range given FY2027 guided +19–24% revenue and continued beat-and-raise momentum; the conservative entry multiple removes de-rating risk as the main obstacle.</div>
+    </div>
+  </div>
+  <div class="card-row">
+    <div class="card-body">
+      <div class="card-title">3-year (binding)</div>
+      <div class="card-field"><span class="card-lbl">Target price:</span> ~C$138</div>
+      <div class="card-field"><span class="card-lbl">Probability:</span> <strong>~55%</strong></div>
+      <div class="card-field"><span class="card-lbl">Reasoning:</span> Bull and base scenarios both clear (base reaches ~C$135 on +19% IRR; bull ~C$209). Only the bear case fails. Weighted central tendency sits just above the hurdle.</div>
+    </div>
+  </div>
+  <div class="card-row">
+    <div class="card-body">
+      <div class="card-title">5-year</div>
+      <div class="card-field"><span class="card-lbl">Target price:</span> ~C$199</div>
+      <div class="card-field"><span class="card-lbl">Probability:</span> <strong>~58%</strong></div>
+      <div class="card-field"><span class="card-lbl">Reasoning:</span> Longer compounding lets earnings growth carry the return even with moderate multiple compression; base case lands ~C$192, essentially at target, with the bull tail providing cushion.</div>
+    </div>
+  </div>
+</div>
+<p><strong>Conclusion — binding rule applied:</strong> 3-year probability ~55%, which is <strong>≥ 50%.</strong></p>
+<blockquote>
+<h2><strong>TRIAGE: PROMOTE</strong></h2>
+</blockquote>
+<p>At a conservative entry, Aritzia offers a proven, accelerating US growth model with ~20% ROIC at a multiple that does not require optimism to persist. The base case clears the 20% hurdle on earnings growth alone; multiple stability and the bull tail are upside. <strong>Promote.</strong></p>
+<hr />
+<h2>08 — Where Deeper Work Would Move the Probability</h2>
+<p>Because the verdict is Promote, the following work would sharpen conviction and position sizing before committing capital. Each item targets the load-bearing assumption or a kill criterion directly.</p>
+<ol>
+<li><strong>US store-cohort economics (highest priority).</strong> Obtain or triangulate sales-per-square-foot and payback by boutique vintage and market tier. Confirming that newer, smaller-market US stores hold fleet-level productivity would move the bull/base weighting up and raise the 3-year probability above 60%. This is the single most thesis-relevant diligence item (kill #2).</li>
+<li><strong>Comp decomposition.</strong> Split comps into traffic vs. ticket vs. new-client acquisition. Comps driven by durable, app-led new-client growth justify a higher sustainable multiple and de-risk kill #1.</li>
+<li><strong>Tariff pass-through elasticity.</strong> Model gross-margin sensitivity to the 10% US tariff regime and de-minimis suspension at varying pass-through rates. FY2026 absorbed ~260bps of EBITDA drag without margin loss; quantifying remaining pricing headroom bounds the bear case.</li>
+<li><strong>E-commerce contribution margin</strong> as the mix moves toward 45%; confirm it is accretive (not dilutive) to consolidated margin at scale, which underpins the margin-expansion leg of the thesis.</li>
+<li><strong>Capital-allocation cadence.</strong> Map the buyback pace against stock-comp dilution and the &gt;C$1B projected cash build; confirm management converts the cash pile into per-share value rather than letting it idle.</li>
+</ol>
+<p><strong>Position-sizing implication:</strong> start at a half-weight on the Promote, with the cohort-economics work (item 1) as the trigger to scale to full weight.</p>
+<hr />
+<h2>09 — Verify on Fiscal</h2>
+<p>Confirm these load-bearing figures against Fiscal (Aritzia files in CAD; FY ends early March). All from FY2026 results filed 7 May 2026 unless dated.</p>
+<ol>
+<li><strong>FY2026 net revenue = C$3,702M</strong> (vs. C$2,738M FY2025); ~35% growth.</li>
+<li><strong>FY2026 diluted EPS = C$3.20</strong> (vs. C$1.78 FY2025).</li>
+<li><strong>FY2026 gross margin = 44.9%</strong> (gross profit C$1,661M).</li>
+<li><strong>FY2026 operating margin = 14.2%</strong> (C$524M); net margin = 10.3% (C$382M).</li>
+<li><strong>FY2026 free cash flow ≈ C$538M</strong> (CFO C$823M − capex C$278M − intangibles C$8M).</li>
+<li><strong>Cash = C$592M, no bank debt</strong>; lease liabilities ~C$996M.</li>
+<li><strong>Boutique count = 144</strong> (76 US, 68 Canada); 14 opened in FY2026.</li>
+<li><strong>US revenue C$2,275M (61%, +38%)</strong>; Canada C$1,427M (39%, +24%).</li>
+<li><strong>E-commerce revenue C$1,295M ≈ 35% of total</strong>; retail C$2,408M.</li>
+<li><strong>Comparable sales growth ~26–27%</strong> (Q4 +27.7%).</li>
+<li><strong>Shares outstanding ~114.6M</strong> (18.3M multiple-voting + 96.2M subordinate-voting).</li>
+<li><strong>ROIC ~19.6% / ROE ~28.3%</strong> (FY2026).</li>
+<li><strong>Share repurchases C$207M</strong> in FY2026; NCIB renewed May 2026; no dividend.</li>
+<li><strong>FY2027 guidance:</strong> revenue <strong>C$4.4–4.6B (+19–24%)</strong>, gross margin <strong>+150–200bps</strong>, 12–13 new boutiques; <strong>Q1 FY2027 revenue C$900–925M (+36–39%)</strong>. (guidance — verify against MD&amp;A)</li>
+<li><strong>Illustrative entry C$80:</strong> ~25x trailing / ~18x forward P/E. (price-dependent — refresh at execution; live price ~C$150 implies ~47x trailing and a Pass under this framework.)</li>
+</ol>
+<hr />
+<p><em>This document is an illustrative investment memo, not investment advice. The author is not a registered financial advisor. The Promote verdict is conditioned on the hypothetical C$80 entry price used for demonstration; at the live price the same framework returns a Pass. Re-verify all figures before any capital decision.</em></p>
+</article>
+
+<script>
+function fallbackCopy(text, cb) {
+  try {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    if (cb) cb();
+  } catch(e) {}
+}
+function copyMemo(btn) {
+  var article = document.getElementById('memoArticle');
+  var text = article.innerText || article.textContent || '';
+  var lbl = btn.querySelector('.copy-lbl');
+  var orig = lbl ? lbl.textContent : '';
+  function onCopied() {
+    btn.classList.add('copied');
+    if (lbl) lbl.textContent = 'Copied';
+    setTimeout(function(){
+      btn.classList.remove('copied');
+      if (lbl) lbl.textContent = orig;
+    }, 1800);
+  }
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(onCopied).catch(function(){ fallbackCopy(text, onCopied); });
+  } else {
+    fallbackCopy(text, onCopied);
+  }
+}
+</script>
+</body>
+</html>
