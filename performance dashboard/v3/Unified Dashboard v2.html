@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <title>Unified Dashboard · v2</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500&family=Chakra+Petch&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-black: #000000;
+      --c-1000:  #1C1C1C;
+      --c-900:   #232627;
+      --c-800:   #565B5E;
+      --c-700:   #929292;
+      --c-600:   #A7A7A7;
+      --c-400:   #C7C7C7;
+      --c-200:   #E3E2E2;
+      --c-white: #FFFFFF;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      width: 100%;
+      max-width: 393px;
+      margin: 0 auto;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      text-align: right;
+    }
+
+    /* HEADER */
+    .header {
+      height: 71px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 13.5px;
+      border-bottom: 0.5px solid #1C1C1C;
+    }
+    .logo { height: 14.4px; width: auto; display: block; }
+    .header-icons { display: flex; align-items: center; gap: 20px; }
+    .header-icons img { width: 17px; height: 17px; opacity: 0.85; display: block; }
+    .header-icons img[alt="menu"] { opacity: 0.4; }
+
+    /* TOTAL VALUE */
+    .total-capital {
+      padding: 0 13.5px;
+      margin-top: 56px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+    .tc-label {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.22px;
+      line-height: 1.25;
+      text-transform: capitalize;
+    }
+    .tc-value {
+      font-size: 28px;
+      color: #fff;
+      font-feature-settings: 'lnum' 1, 'pnum' 1;
+      line-height: normal;
+      letter-spacing: -0.56px;
+    }
+    .tc-ccy { color: var(--c-800); }
+
+    /* SECTIONS */
+    .divider {
+      border: none;
+      border-top: 1px solid #1C1C1C;
+      margin: 0 13.5px;
+    }
+    .section { padding: 30px 13.5px 0; }
+    .s-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+    }
+    .s-title-wrap {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+    .s-title-col {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: left;
+    }
+    .t-primary   { font-size: 18px; color: var(--c-400); font-weight: 400; letter-spacing: -0.36px; line-height: 1.15; text-transform: capitalize; }
+    .t-secondary { font-size: 15px; color: #565b5e; font-weight: 400; letter-spacing: -0.3px; line-height: 1.2; text-transform: capitalize; }
+
+    /* Data column */
+    .data-col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 50px;
+      width: 100%;
+    }
+
+    /* Data block */
+    .db {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+      width: 100%;
+    }
+    .db-label {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.22px;
+      line-height: 1.25;
+      text-transform: capitalize;
+      width: 100%;
+    }
+    .n22 {
+      font-size: 22px;
+      color: #fff;
+      font-feature-settings: 'lnum' 1, 'pnum' 1;
+      line-height: normal;
+      width: 100%;
+      letter-spacing: -0.44px;
+    }
+    .n15 {
+      font-size: 15px;
+      color: var(--c-400);
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+      line-height: normal;
+      width: 100%;
+      letter-spacing: -0.3px;
+    }
+
+    /* Gain row */
+    .gain-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      width: 100%;
+      font-size: 13px;
+      white-space: nowrap;
+      color: inherit;
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    a.gain-row:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .gain-pair { display: flex; align-items: center; gap: 4px; }
+    .ga { color: var(--c-400); font-feature-settings: 'lnum' 1, 'tnum' 1; }
+    .gp { color: #c7c7c7; font-feature-settings: 'lnum' 1, 'tnum' 1; }
+    .gp-chev { color: var(--c-700); font-size: 13px; font-weight: 300; line-height: 1; margin-left: 4px; }
+    .gt { color: #929292; text-transform: capitalize; }
+
+    /* Quality-of-decisions cluster — perf-block + Calibration grouped */
+    .quality-cluster {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      width: 100%;
+    }
+
+    /* Slim block — title row + optional AI auxiliary line.
+       Lighter visual weight than perf-block, fits mid-tier importance. */
+    .slim-block {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+      color: inherit;
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .slim-block:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .slim-link {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      width: 100%;
+    }
+    .slim-label {
+      font-size: 15px;
+      color: var(--c-400);
+      letter-spacing: -0.3px;
+      line-height: 1.15;
+      text-transform: capitalize;
+    }
+    .slim-meta {
+      flex: 1;
+      text-align: right;
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.22px;
+      line-height: 1.25;
+    }
+    .slim-n {
+      color: var(--c-white);
+      margin-left: 4px;
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+    }
+    .slim-chev {
+      color: var(--c-700);
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    /* AI auxiliary line — // Mogo wedge + insight sentence */
+    .ai-aux {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--c-700);
+      line-height: 1.35;
+      letter-spacing: -0.22px;
+      text-align: left;
+    }
+    .ai-aux .ii-mark {
+      flex-shrink: 0;
+      display: inline-block;
+      transform: translateY(2px);
+    }
+    .ai-aux .ii-mark svg { display: block; }
+    .ai-aux .ai-text { flex: 1; }
+
+    /* Performance vs S&P block — matches perf-vs-sp pattern across pages */
+    .perf-block {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 100%;
+      padding: 16px 0;
+      border-top: 0.5px solid var(--c-900);
+      border-bottom: 0.5px solid var(--c-900);
+      color: inherit;
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .perf-block:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .perf-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+    }
+    .perf-label {
+      font-size: 15px;
+      color: var(--c-400);
+      letter-spacing: -0.3px;
+      line-height: 1.15;
+      text-align: left;
+    }
+    .perf-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      width: 100%;
+      white-space: nowrap;
+    }
+    .perf-key { font-size: 13px; color: var(--c-700); font-feature-settings: 'lnum' 1, 'tnum' 1; letter-spacing: -0.02em; }
+    .perf-val { font-size: 15px; color: var(--c-white); font-feature-settings: 'lnum' 1, 'tnum' 1; letter-spacing: -0.02em; }
+    .perf-row.diff {
+      position: relative;
+      margin-top: 16px;
+    }
+    .perf-row.diff::before {
+      content: '';
+      position: absolute;
+      top: -16px;
+      left: 0;
+      right: 0;
+      height: 0;
+      border-top: 0.5px solid var(--c-900);
+    }
+    .perf-row.diff .perf-key { color: var(--c-700); }
+    .perf-row.diff .perf-val { color: var(--c-white); }
+    .perf-pp { color: var(--c-700); margin-left: 6px; font-size: 13px; }
+    .perf-chev { color: var(--c-700); font-size: 14px; font-weight: 300; line-height: 1; margin-left: 4px; }
+
+    /* Inline table */
+    .tbl {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+      width: 100%;
+      font-size: 13px;
+      text-transform: capitalize;
+      white-space: nowrap;
+    }
+    .tbl-row { display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+    .tl      { color: #929292; }
+    .tl-mid  { color: var(--c-700); }
+    .tv      { color: var(--c-400); font-feature-settings: 'lnum' 1, 'tnum' 1; }
+
+    /* Cash block */
+    .cash-block {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .cash-lbl {
+      font-size: 13px;
+      color: #929292;
+      text-transform: capitalize;
+      line-height: normal;
+    }
+
+    /* Account switcher */
+    .acct-sw {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .acct-label {
+      font-size: 15px;
+      color: #c7c7c7;
+      letter-spacing: -0.3px;
+      line-height: 1.35;
+      text-transform: capitalize;
+    }
+    .acct-chev { width: 7px; height: 4px; display: block; }
+
+    /* Positions group */
+    .pos-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+      width: 100%;
+    }
+    .pos-head {
+      font-size: 15px;
+      color: var(--c-400);
+      letter-spacing: -0.3px;
+      line-height: 1.15;
+      text-transform: capitalize;
+      width: 100%;
+      white-space: pre-wrap;
+    }
+    .pos-chev {
+      color: var(--c-700);
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1;
+      margin-left: 4px;
+    }
+    .view-all {
+      font-size: 13px;
+      color: var(--c-400);
+      text-transform: capitalize;
+      line-height: normal;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    /* Open Orders */
+    .open-orders {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      width: 100%;
+      font-size: 15px;
+      letter-spacing: -0.3px;
+      line-height: 1.15;
+      text-transform: capitalize;
+      white-space: nowrap;
+    }
+    .oo-lbl { color: #c7c7c7; }
+    .oo-n   { color: #c7c7c7; font-feature-settings: 'lnum' 1, 'tnum' 1; }
+
+    /* Section spacing */
+    .mt-managed { margin-top: 70px; }
+    .mt-active  { margin-top: 70px; }
+
+    .bottom { height: 80px; }
+
+    /* ─────────────────────────
+       OPEN QUESTIONS — dashboard summary only
+       Per II doctrine §14 (Dashboard = orientation, not decision)
+       and §15 (Silence is a feature). The dashboard surfaces a
+       single line: count + urgency indicator + chevron. All
+       category groups, items, actions, and dismiss controls live
+       on the dedicated Open Questions screen (drill-in).
+       Friction = good, per §11.
+    ───────────────────────── */
+    /* PAGE HEAD — single line: "N Open Questions · Date" */
+    .oq-page-head {
+      padding: 16px 13.5px 8px;
+      font-size: 13px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      text-align: left;
+    }
+    .ph-value { color: var(--c-400); }
+    .ph-label { color: var(--c-700); }
+
+    /* OQ LIST + sections — every section has top + bottom hairlines */
+    .oq-list {
+      display: flex;
+      flex-direction: column;
+      padding: 0 13.5px;
+    }
+    .oq-section {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 4px;
+      width: 100%;
+      padding: 16px 0;
+      border-bottom: 0.5px solid var(--c-1000);
+      text-align: left;
+    }
+    .oq-head-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .oq-head-left {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    /* Severity dot — small colored circle before the title */
+    .oq-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .oq-dot.urgent  { background: #FF3533; }  /* red.light */
+    .oq-dot.warning { background: #FDAD00; }  /* orange.default */
+    .oq-dot.review  { background: #FBC308; }  /* yellow.default */
+    .oq-dot.neutral { background: var(--c-700); }
+    .oq-title {
+      font-size: 13px;
+      color: var(--c-400);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      text-transform: capitalize;
+    }
+    .oq-count {
+      font-size: 13px;
+      color: var(--c-400);
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+    .oq-x {
+      background: none;
+      border: none;
+      color: var(--c-700);
+      line-height: 0;
+      cursor: pointer;
+      padding: 4px 0 4px 8px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .oq-x svg { display: block; }
+    .oq-x:active { color: var(--c-400); transition: color 80ms ease; }
+
+    /* Items — indented to align with title text (not the dot) */
+    .oq-items {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 13px;
+      white-space: nowrap;
+      padding-left: 16px;  /* dot width 6 + gap 10 */
+    }
+    .oq-item {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      color: inherit;
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .oq-item:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .oq-t {
+      color: var(--c-400);
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+      flex-shrink: 0;
+    }
+    .oq-m {
+      color: var(--c-700);
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Primary action — arrow + label, aligned with title text */
+    .oq-action {
+      font-size: 13px;
+      color: var(--c-700);
+      text-transform: capitalize;
+      line-height: normal;
+      padding-top: 2px;
+      padding-left: 16px;
+      text-decoration: none;
+      align-self: flex-start;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .oq-action:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .oq-action .arrow { margin-right: 6px; }
+
+    /* ─────────────────────────
+       CALIBRATION BLOCK (Active section)
+       Per II Doctrine Part II §8 — calibration is a core
+       accountability metric. Same table vocabulary as the rest.
+    ───────────────────────── */
+    .calibration {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      width: 100%;
+      text-align: right;
+    }
+    .cal-head {
+      font-size: 15px;
+      color: var(--c-400);
+      letter-spacing: -0.3px;
+      line-height: 1.15;
+      text-transform: capitalize;
+      width: 100%;
+    }
+
+    /* ─────────────────────────
+       CONCENTRATION BLOCK (Active section)
+       Adds Effective N metric. Severe treatment, system grays only,
+       no rounded corners, Mogo wedge logo precedes the insight.
+    ───────────────────────── */
+    .concentration {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      text-align: left;
+    }
+    .conc-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .conc-label {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.22px;
+      line-height: 1.25;
+      text-transform: capitalize;
+    }
+    .conc-eff {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.22px;
+      line-height: 1;
+    }
+    .conc-eff .n {
+      color: var(--c-white);
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+      margin-left: 4px;
+    }
+    .conc-bar {
+      display: flex;
+      height: 2px;
+      width: 100%;
+      background: var(--c-1000);
+    }
+    .conc-bar span { display: block; height: 100%; }
+    /* Only system grays — five stops, no interpolation. */
+    .conc-bar .seg-1   { background: #C7C7C7; }
+    .conc-bar .seg-2   { background: #A7A7A7; }
+    .conc-bar .seg-3   { background: #929292; }
+    .conc-bar .seg-4   { background: #565B5E; }
+    .conc-bar .seg-5   { background: #232627; }
+    .conc-bar .seg-rest{ background: #1C1C1C; }
+    .conc-insight {
+      display: flex;
+      align-items: baseline;
+      justify-content: flex-start;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--c-700);
+      line-height: 1.35;
+      letter-spacing: -0.22px;
+      text-align: left;
+    }
+    .conc-insight .ii-mark {
+      flex-shrink: 0;
+      display: inline-block;
+      transform: translateY(2px);
+    }
+    .conc-insight .ii-mark svg { display: block; }
+    .conc-insight .conc-text { flex: 1; color: var(--c-400); }
+
+    /* ─────────────────────────
+       UNDER REVIEW — substages
+       Phase label (Chakra Petch monospace) + ticker.
+    ───────────────────────── */
+    .ur-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 13px;
+      line-height: 1.25;
+      letter-spacing: -0.22px;
+    }
+    .ur-phase {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.22px;
+      line-height: 1.25;
+      text-transform: capitalize;
+    }
+    .ur-ticker {
+      color: var(--c-400);
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+    }
+
+    /* ─────────────────────────
+       OPEN ORDERS — breakdown
+       Total CAD pending + per-ticker breakdown rows.
+    ───────────────────────── */
+    .oo-total {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.22px;
+      line-height: 1.25;
+      width: 100%;
+      text-align: right;
+    }
+    .oo-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 13px;
+      line-height: 1.25;
+      letter-spacing: -0.22px;
+    }
+    .oo-ticker {
+      font-size: 13px;
+      color: var(--c-400);
+      letter-spacing: -0.22px;
+      line-height: 1.25;
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+    }
+    .oo-detail {
+      color: var(--c-400);
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+      white-space: nowrap;
+    }
+    .oo-more {
+      font-size: 13px;
+      color: var(--c-400);
+      letter-spacing: -0.22px;
+      text-align: right;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    /* ─────────────────────────
+       PAPER TRADES
+       Logged event rows.
+    ───────────────────────── */
+    .pt-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 13px;
+      line-height: 1.25;
+      letter-spacing: -0.22px;
+      color: var(--c-400);
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+    }
+    .pt-tag {
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.22px;
+      line-height: 1.25;
+      text-transform: capitalize;
+    }
+
+    /* ─────────────────────────
+       PER-POSITION MOVE MARK
+       Filled grayscale dot — indicates a 5%+ price move
+       (per Leo, 12:15 sync). Slightly larger for legibility.
+    ───────────────────────── */
+    .pos-mark {
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      margin-right: 6px;
+      background: var(--c-400);
+      vertical-align: middle;
+      transform: translateY(-1px);
+    }
+
+    /* ─────────────────────────
+       MOTION — sections fade in top→bottom with stagger.
+    ───────────────────────── */
+    [data-final] { font-variant-numeric: tabular-nums; }
+    .header,
+    .oq-page-head,
+    .oq-list,
+    .total-capital,
+    .mt-managed,
+    .mt-active {
+      animation: fade-in 700ms ease-out both;
+    }
+    .header        { animation-delay:   0ms; }
+    .oq-page-head  { animation-delay:  80ms; }
+    .oq-list       { animation-delay: 160ms; }
+    .total-capital { animation-delay: 320ms; }
+    .mt-managed    { animation-delay: 480ms; }
+    .mt-active     { animation-delay: 640ms; }
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .header, .oq-page-head, .oq-list, .total-capital, .mt-managed, .mt-active {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <svg class="logo" width="15" height="18" viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Mogo">
+      <path d="M5.59903 0H7.79315L2.19412 17.6523H0L5.59903 0Z" fill="white"/>
+      <path d="M12.8061 0H15.0002L9.40115 17.6523H7.20703L12.8061 0Z" fill="white"/>
+    </svg>
+    <div class="header-icons">
+      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" alt="search"><circle cx="7.5" cy="7.5" r="5.5" stroke="#D9D9D9" stroke-width="1"/><path d="M11.5 11.5L15.5 15.5" stroke="#D9D9D9" stroke-width="1" stroke-linecap="round"/></svg>
+      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" alt="menu"><path d="M2 4H15M2 9H15M2 14H15" stroke="#666666" stroke-width="1" stroke-linecap="round"/></svg>
+    </div>
+  </header>
+
+  <!-- OPEN QUESTIONS — dashboard summary ────────────────────────
+       Single line: count + urgency indicator + chevron.
+       Tap → dedicated Open Questions screen (where category
+       groups, items, primary actions, and dismiss live).
+       Dashboard remains an orientation surface; the work of
+       processing decisions happens behind a deliberate tap.
+  ──────────────────────────────────────────────────────────── -->
+  <!-- OPEN QUESTIONS — integrated full detail at dashboard top.
+       No extra click — user sees these immediately upon landing.
+       Full Open Questions screen still exists separately as a focused view. -->
+  <div class="oq-page-head">
+    <span class="ph-value">4 Open Questions</span> · <span class="ph-label">May 19 · 13:18</span>
+  </div>
+
+  <section class="oq-list" aria-label="Open questions">
+
+    <!-- Big Move -->
+    <div class="oq-section">
+      <div class="oq-head-row">
+        <span class="oq-head-left">
+          <span class="oq-dot urgent" aria-hidden="true"></span>
+          <span class="oq-title">Big Move</span>
+          <span class="oq-count">1</span>
+        </span>
+        <button class="oq-x" aria-label="Dismiss section"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 3L11 11M11 3L3 11" stroke="currentColor" stroke-width="0.75" stroke-linecap="round"/></svg></button>
+      </div>
+      <div class="oq-items">
+        <div class="oq-item">
+          <span class="oq-t">NVDA</span>
+          <span class="oq-m">−6.8% · guidance miss · after-hours</span>
+        </div>
+      </div>
+      <a class="oq-action" href="#"><span class="arrow">→</span>Review Thesis</a>
+    </div>
+
+    <!-- Material Move -->
+    <div class="oq-section">
+      <div class="oq-head-row">
+        <span class="oq-head-left">
+          <span class="oq-dot warning" aria-hidden="true"></span>
+          <span class="oq-title">Material Move</span>
+          <span class="oq-count">2</span>
+        </span>
+        <button class="oq-x" aria-label="Dismiss section"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 3L11 11M11 3L3 11" stroke="currentColor" stroke-width="0.75" stroke-linecap="round"/></svg></button>
+      </div>
+      <div class="oq-items">
+        <div class="oq-item">
+          <span class="oq-t">AAPL</span>
+          <span class="oq-m">+4.2% · Q1 earnings · pre-mkt</span>
+        </div>
+        <div class="oq-item">
+          <span class="oq-t">EOSCR</span>
+          <span class="oq-m">−3.8% · no headline · vol +3σ</span>
+        </div>
+      </div>
+      <a class="oq-action" href="#"><span class="arrow">→</span>Investigate</a>
+    </div>
+
+    <!-- Kill Criteria — thesis under pressure, links to Stock Page v5 — Approaching -->
+    <div class="oq-section">
+      <div class="oq-head-row">
+        <span class="oq-head-left">
+          <span class="oq-dot warning" aria-hidden="true"></span>
+          <span class="oq-title">Kill Criteria</span>
+          <span class="oq-count">1</span>
+        </span>
+        <button class="oq-x" aria-label="Dismiss section"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 3L11 11M11 3L3 11" stroke="currentColor" stroke-width="0.75" stroke-linecap="round"/></svg></button>
+      </div>
+      <div class="oq-items">
+        <a class="oq-item" href="../../Stock%20Pages/Stock%20Page%20v5%20-%20Approaching.html" data-active="true" style="text-decoration:none;">
+          <span class="oq-t">ATZ</span>
+          <span class="oq-m">Approaching · US expansion below 8 stores/yr</span>
+        </a>
+        <div class="oq-item" style="color: var(--c-700); font-size: 12px;">
+          <span style="color: var(--c-700);">Committed:</span>
+          <span style="color: var(--c-400);">Exit position</span>
+        </div>
+      </div>
+      <a class="oq-action" href="../../Stock%20Pages/Stock%20Page%20v5%20-%20Approaching.html" data-active="true"><span class="arrow">→</span>Review Thesis</a>
+    </div>
+
+    <!-- Thesis Review -->
+    <div class="oq-section">
+      <div class="oq-head-row">
+        <span class="oq-head-left">
+          <span class="oq-dot review" aria-hidden="true"></span>
+          <span class="oq-title">Thesis Review</span>
+          <span class="oq-count">1</span>
+        </span>
+        <button class="oq-x" aria-label="Dismiss section"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 3L11 11M11 3L3 11" stroke="currentColor" stroke-width="0.75" stroke-linecap="round"/></svg></button>
+      </div>
+      <div class="oq-items">
+        <div class="oq-item">
+          <span class="oq-t">AAPL</span>
+          <span class="oq-m">Q1 2026 earnings released</span>
+        </div>
+      </div>
+      <a class="oq-action" href="#"><span class="arrow">→</span>Start Review</a>
+    </div>
+
+    <!-- Memo Pending -->
+    <div class="oq-section">
+      <div class="oq-head-row">
+        <span class="oq-head-left">
+          <span class="oq-dot neutral" aria-hidden="true"></span>
+          <span class="oq-title">Memo Pending</span>
+          <span class="oq-count">4</span>
+        </span>
+        <button class="oq-x" aria-label="Dismiss section"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 3L11 11M11 3L3 11" stroke="currentColor" stroke-width="0.75" stroke-linecap="round"/></svg></button>
+      </div>
+      <div class="oq-items">
+        <div class="oq-item"><span class="oq-t">ORIO.TO</span><span class="oq-m">25% of book</span></div>
+        <div class="oq-item"><span class="oq-t">BWEN</span>   <span class="oq-m">20% of book</span></div>
+        <div class="oq-item"><span class="oq-t">EOSCR</span>  <span class="oq-m">15% of book</span></div>
+        <div class="oq-item"><span class="oq-t">NVDA</span>   <span class="oq-m">12% of book</span></div>
+      </div>
+      <a class="oq-action" href="#"><span class="arrow">→</span>Write Memo</a>
+    </div>
+
+  </section>
+
+  <!-- TOTAL VALUE -->
+  <div class="total-capital">
+    <span class="tc-label">Total Value</span>
+    <span class="tc-value"><span data-final="173,249.00" data-r="0.30">173,249.00</span> <span class="tc-ccy">CAD</span></span>
+  </div>
+
+  <!-- MANAGED / CORE SECTION -->
+  <div class="mt-managed">
+    <hr class="divider">
+    <div class="section">
+      <div class="s-inner">
+        <div class="s-title-wrap">
+          <div class="s-title-col">
+            <span class="t-primary">Core</span>
+            <span class="t-secondary">Managed</span>
+          </div>
+        </div>
+
+        <div class="data-col">
+          <!-- Value -->
+          <div class="db">
+            <span class="db-label">Value</span>
+            <span class="n22"><span data-final="126,471.77" data-r="0.55">126,471.77</span></span>
+            <div class="gain-row">
+              <span class="gt">All time</span>
+              <div class="gain-pair">
+                <span class="ga" data-final="+6,365.65" data-r="0.60">+6,365.65</span>
+                <span class="gp" data-final="(+5.3%)" data-r="0.60">(+5.3%)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Projection -->
+          <div class="db">
+            <span class="db-label">Projection</span>
+            <span class="n15" data-final="1.68M" data-r="0.65">1.68M</span>
+          </div>
+
+          <!-- Allocation -->
+          <div class="tbl">
+            <div class="tbl-row"><span class="tl">Equity (S&amp;P 500)</span><span class="tv" data-final="50%" data-r="0.70">50%</span></div>
+            <div class="tbl-row"><span class="tl">Fixed Income</span>       <span class="tv" data-final="25%" data-r="0.72">25%</span></div>
+            <div class="tbl-row"><span class="tl">Money Market</span>       <span class="tv" data-final="25%" data-r="0.74">25%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTIVE / SELF-DIRECTED SECTION -->
+  <div class="mt-active active-section">
+    <hr class="divider">
+    <div class="section">
+      <div class="s-inner">
+        <div class="s-title-wrap">
+          <div class="s-title-col">
+            <span class="t-primary">Active</span>
+            <span class="t-secondary">Self-directed</span>
+          </div>
+          <div class="acct-sw">
+            <span class="acct-label">All Accounts</span>
+            <svg class="acct-chev" viewBox="0 0 7 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0.5 0.5L3.5 3.5L6.5 0.5" stroke="#c7c7c7" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="data-col" style="gap:48px;">
+          <!-- Value block — simple rate of return removed per MVP spec (benchmark card carries the outcome) -->
+          <div class="db">
+            <span class="db-label">Value</span>
+            <span class="n22"><span data-final="46,777.23" data-r="0.78">46,777.23</span></span>
+          </div>
+
+          <!-- Performance vs S&P 500 — v3 (benchmark wealth comparison · all accounts) -->
+          <a href="Performance%20Dashboard.html" class="perf-block" data-active="true" aria-label="View performance dashboard">
+            <div class="perf-header">
+              <span class="perf-label">S&amp;P 500 Benchmark · All Accounts</span>
+              <span class="perf-chev" aria-hidden="true">›</span>
+            </div>
+            <div class="perf-row">
+              <span class="perf-key">Portfolio Value</span>
+              <span class="perf-val">58,420.18</span>
+            </div>
+            <div class="perf-row">
+              <span class="perf-key">S&amp;P 500 Alternative</span>
+              <span class="perf-val">56,236.00</span>
+            </div>
+            <div class="perf-row diff">
+              <span class="perf-key">Difference</span>
+              <span class="perf-val">+2,184.18<span class="perf-pp">+3.88%</span></span>
+            </div>
+          </a>
+
+          <!-- Calibration — right-aligned pos-group pattern (no frame, no chevron) -->
+          <a href="Calibration.html" class="pos-group" style="text-decoration:none; color:inherit;" aria-label="View calibration">
+            <span class="pos-head">Calibration</span>
+            <div class="tbl">
+              <div class="tbl-row"><span class="tl">Accuracy</span>     <span class="tv">54%</span></div>
+              <div class="tbl-row"><span class="tl">Predictions</span>  <span class="tv">17</span></div>
+              <div class="tbl-row"><span class="tl">Next Judgment</span><span class="tv">Apr 1, 2027</span></div>
+            </div>
+          </a>
+
+          <!-- Concentration — mid-tier: slim header + segmented bar + AI auxiliary insight.
+               Full breakdown lives in Concentration.html drill-in. -->
+          <a class="slim-block" href="Concentration.html" aria-label="View concentration detail">
+            <div class="slim-link">
+              <span class="slim-label">Concentration</span>
+              <span class="slim-meta">Effective N <span class="slim-n">2.4</span></span>
+            </div>
+            <div class="conc-bar" aria-label="Position weight distribution">
+              <span class="seg-1" style="width:25%"></span>
+              <span class="seg-2" style="width:20%"></span>
+              <span class="seg-3" style="width:15%"></span>
+              <span class="seg-4" style="width:12%"></span>
+              <span class="seg-5" style="width:8%"></span>
+              <span class="seg-rest" style="width:20%"></span>
+            </div>
+            <div class="ai-aux">
+              <span class="ii-mark" aria-label="Intelligent Investing">
+                <svg width="8" height="10" viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M5.59903 0H7.79315L2.19412 17.6523H0L5.59903 0Z" fill="#929292"/>
+                  <path d="M12.8061 0H15.0002L9.40115 17.6523H7.20703L12.8061 0Z" fill="#929292"/>
+                </svg>
+              </span>
+              <span class="ai-text">Largest position drives most of the book. A 30% drawdown moves the book ~19%.</span>
+            </div>
+          </a>
+
+          <!-- Active Positions — section as a whole is clickable to detail page -->
+          <a class="pos-group" href="#" style="text-decoration:none; color:inherit;" aria-label="View active positions">
+            <span class="pos-head">Active Positions   <span data-final="9" data-r="0.88">9</span></span>
+            <div class="tbl">
+              <div class="tbl-row"><span class="tl-mid"><span class="pos-mark" aria-label="Moved 5%+"></span>ORIO.TO</span><span class="tv" data-final="25%" data-r="0.90">25%</span></div>
+              <div class="tbl-row"><span class="tl-mid">BWEN</span>                                                                       <span class="tv" data-final="20%" data-r="0.91">20%</span></div>
+              <div class="tbl-row"><span class="tl-mid"><span class="pos-mark" aria-label="Moved 5%+"></span>EOSCR</span> <span class="tv" data-final="15%" data-r="0.92">15%</span></div>
+              <div class="tbl-row"><span class="tl-mid">NVDA</span>                                                                       <span class="tv" data-final="12%" data-r="0.93">12%</span></div>
+              <div class="tbl-row"><span class="tl-mid"><span class="pos-mark" aria-label="Moved 5%+"></span>AAPL</span>  <span class="tv" data-final="4%"  data-r="0.94">4%</span></div>
+            </div>
+            <span class="view-all">View All</span>
+          </a>
+
+          <!-- Cash — below Active Positions (related to positions context) -->
+          <a href="#" class="cash-block" style="text-decoration:none; color:inherit;" aria-label="View cash">
+            <span class="cash-lbl">Cash (10%)</span>
+            <span class="n15" style="width:auto;" data-final="4,677.72" data-r="0.85">4,677.72</span>
+          </a>
+
+          <!-- Under Review -->
+          <a class="pos-group" href="#" style="text-decoration:none; color:inherit;" aria-label="View under review">
+            <span class="pos-head">Under Review   <span data-final="5" data-r="0.95">5</span></span>
+            <div class="tbl">
+              <div class="tbl-row"><span class="tl-mid">AAPL</span></div>
+              <div class="tbl-row"><span class="tl-mid">ORIO.TO</span></div>
+              <div class="tbl-row"><span class="tl-mid">BWEN</span></div>
+            </div>
+            <span class="view-all">View All</span>
+          </a>
+
+          <!-- Open Orders -->
+          <a class="pos-group" href="#" style="text-decoration:none; color:inherit;" aria-label="View activity">
+            <span class="pos-head">Open Orders   <span data-final="10" data-r="0.96">10</span></span>
+            <span class="oo-total"><span data-final="25,931.20" data-r="0.965">25,931.20</span> CAD pending</span>
+            <div class="tbl" style="gap:8px; margin-top:8px;">
+              <div class="oo-row"><span class="oo-ticker">NVDA</span>   <span class="oo-detail">5 &middot; 13,287.00</span></div>
+              <div class="oo-row"><span class="oo-ticker">AAPL</span>   <span class="oo-detail">2 &middot; 9,044.00</span></div>
+              <div class="oo-row"><span class="oo-ticker">ORIO.TO</span><span class="oo-detail">2 &middot; 2,580.00</span></div>
+            </div>
+            <span class="view-all">View All</span>
+          </a>
+
+          <!-- Paper Trades — logged decisions without capital deployed -->
+          <div class="pos-group">
+            <span class="pos-head">Paper Trades   <span data-final="1" data-r="0.97">1</span></span>
+            <div class="tbl" style="gap:8px;">
+              <div class="pt-row">
+                <span class="pt-tag">Logged</span>
+                <span>AAPL &middot; Buy 12 sh &middot; Apr 8, 2026</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom"></div>
+
+  <!-- Prototype: link markup in place. Links with data-active="true"
+       navigate; everything else is intentionally inert. -->
+  <script>
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest('a');
+      if (a && a.dataset.active !== 'true') e.preventDefault();
+    });
+
+    /* × dismiss interaction on Open Questions sections.
+       Count = number of sections (categories) remaining.
+       When all dismissed (total === 0), hide the page head entirely. */
+    function recalcOQCount() {
+      var total = document.querySelectorAll('.oq-section').length;
+      var ph = document.querySelector('.ph-value');
+      if (ph) ph.textContent = total + ' Open Questions';
+      var pageHead = document.querySelector('.oq-page-head');
+      if (pageHead) pageHead.style.display = total === 0 ? 'none' : '';
+    }
+    document.querySelectorAll('.oq-x').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var section = btn.closest('.oq-section');
+        if (!section) return;
+        section.style.transition = 'opacity 220ms ease-out';
+        section.style.opacity = '0';
+        setTimeout(function () {
+          section.remove();
+          recalcOQCount();
+        }, 220);
+      });
+    });
+    recalcOQCount();
+  </script>
+
+</body>
+</html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
