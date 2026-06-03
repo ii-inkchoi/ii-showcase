@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <title>Why the S&P 500</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-black: #000000;
+      --c-1000:  #1C1C1C;
+      --c-900:   #232627;
+      --c-800:   #565B5E;
+      --c-700:   #929292;
+      --c-400:   #C7C7C7;
+      --c-white: #FFFFFF;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scrollbar-gutter: stable; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      width: 100%;
+      max-width: 393px;
+      margin: 0 auto;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      font-feature-settings: 'lnum' 1, 'tnum' 1;
+    }
+    a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+
+    /* HEADER — back + Exit (returns to comparison page) */
+    .header {
+      height: 65px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 13.5px;
+      border-bottom: 1px solid var(--c-900);
+    }
+    .back { display: inline-flex; align-items: center; justify-content: center; }
+    .back svg { display: block; }
+    .back:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .exit { font-size: 14px; letter-spacing: -0.28px; color: var(--c-700); text-transform: capitalize; }
+    .exit:active { opacity: 0.5; transition: opacity 80ms ease; }
+
+    /* PAGE — content starts 55px below header (Figma top 120 − header 65); 100px between blocks */
+    .page {
+      padding: 55px 13.5px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 100px;
+    }
+    .page-title {
+      font-size: 22px;
+      color: var(--c-white);
+      letter-spacing: -1.32px;
+      line-height: 1.25;
+      font-weight: 400;
+    }
+
+    /* BLOCK */
+    .block { display: flex; flex-direction: column; gap: 40px; }
+    .block.gap50 { gap: 50px; }
+    .block-inner { display: flex; flex-direction: column; gap: 40px; }
+    .block-title {
+      font-size: 22px;
+      color: var(--c-white);
+      letter-spacing: -1.32px;
+      line-height: 1.25;
+      font-weight: 400;
+    }
+
+    .lede-white { font-size: 14px; color: var(--c-white); line-height: 1.4; letter-spacing: -0.28px; }
+    .lede-muted { font-size: 14px; color: var(--c-700); line-height: 1.5; letter-spacing: -0.28px; }
+
+    /* Item: white headline + muted body */
+    .items { display: flex; flex-direction: column; gap: 30px; }
+    .item { display: flex; flex-direction: column; gap: 15px; }
+    .item-h { font-size: 14px; color: var(--c-400); line-height: 1.15; letter-spacing: -0.28px; }
+    .item-b { font-size: 14px; color: var(--c-700); line-height: 1.4; letter-spacing: -0.28px; }
+    .items.roomy .item-b { line-height: 1.5; }
+
+    /* Stat rows — vertical line marker + Chakra Petch number + source tooltip */
+    .stats { display: flex; flex-direction: column; gap: 25px; }
+    .stat { display: flex; gap: 22px; align-items: center; }
+    .stat-line { width: 1px; height: 73px; background: var(--c-800); flex-shrink: 0; }
+    .stat-col { display: flex; flex-direction: column; gap: 10px; }
+    .stat-n { font-family: 'Inter', sans-serif; font-size: 22px; color: var(--c-white); line-height: 1; letter-spacing: -1.32px; }
+    .stat-l { font-size: 14px; color: var(--c-700); line-height: 1.4; letter-spacing: -0.28px; display: inline-flex; align-items: center; }
+
+    /* Source tooltip (Info Tooltip variant) */
+    .info-wrap { position: relative; display: inline-flex; margin-left: 7px; }
+    .info-i { background: none; border: none; padding: 0; cursor: pointer; line-height: 0; -webkit-tap-highlight-color: transparent; }
+    .info-i svg { display: block; }
+    .tip {
+      position: absolute;
+      bottom: calc(100% + 9px);
+      left: 50%;
+      transform: translateX(-42%);
+      background: #2C2C2C;
+      border-radius: 5px;
+      padding: 13px 18px;
+      white-space: nowrap;
+      font-size: 14px;
+      color: var(--c-700);
+      letter-spacing: -0.28px;
+      line-height: 1;
+      z-index: 5;
+    }
+    .tip[hidden] { display: none; }
+    .tip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 42%;
+      transform: translateX(-50%);
+      border: 7px solid transparent;
+      border-top-color: #2C2C2C;
+    }
+    .tip-link { color: var(--c-400); text-decoration: underline; text-underline-offset: 2px; }
+
+    /* Callout — left vertical line + emphasized line */
+    .callout { display: flex; gap: 22px; align-items: center; }
+    .callout-line { width: 1px; height: 73px; background: var(--c-800); flex-shrink: 0; }
+    .callout-text { font-size: 14px; color: var(--c-white); line-height: 1.4; letter-spacing: -0.28px; width: 240px; }
+    .callout-text.tight { letter-spacing: -0.84px; }
+    .callout-text.w282 { width: 282px; }
+
+    .block-body { display: flex; flex-direction: column; gap: 40px; }
+    .position-body { display: flex; flex-direction: column; gap: 15px; }
+    .para-white { font-size: 14px; color: var(--c-white); line-height: 1.5; letter-spacing: -0.28px; width: 323px; max-width: 100%; }
+    .para-muted { font-size: 14px; color: var(--c-700); line-height: 1.5; letter-spacing: -0.28px; }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <a href="Performance%20Dashboard.html" class="back" aria-label="Back"><svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 1L1.5 7L6.5 13" stroke="#C7C7C7" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <a href="Performance%20Dashboard.html" class="exit" aria-label="Exit">Exit</a>
+  </header>
+
+  <div class="page">
+
+    <h1 class="page-title">Why the S&amp;P 500</h1>
+
+    <!-- Most investors underperform -->
+    <section class="block" aria-label="Most investors underperform">
+      <div class="item">
+        <p class="lede-white">Most investors underperform</p>
+        <p class="lede-muted">Over long periods, the majority of investors—professional and retail—fail to outperform the S&amp;P 500.</p>
+      </div>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-line"></div>
+          <div class="stat-col">
+            <span class="stat-n">~90%</span>
+            <span class="stat-l">Underperform over 10 years
+              <span class="info-wrap">
+                <button class="info-i" aria-label="Source" data-tip="tip1">
+                  <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="7.5" cy="7.5" r="6.5" stroke="#929292" stroke-width="1"/><circle cx="7.5" cy="4.6" r="0.9" fill="#929292"/><rect x="6.9" y="6.4" width="1.2" height="4.8" rx="0.6" fill="#929292"/></svg>
+                </button>
+                <span class="tip" id="tip1" hidden>Source: <a href="#" class="tip-link">S&amp;P Global</a></span>
+              </span>
+            </span>
+          </div>
+        </div>
+        <div class="stat">
+          <div class="stat-line"></div>
+          <div class="stat-col">
+            <span class="stat-n">~98%</span>
+            <span class="stat-l">Underperform over 20 years
+              <span class="info-wrap">
+                <button class="info-i" aria-label="Source" data-tip="tip2">
+                  <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="7.5" cy="7.5" r="6.5" stroke="#929292" stroke-width="1"/><circle cx="7.5" cy="4.6" r="0.9" fill="#929292"/><rect x="6.9" y="6.4" width="1.2" height="4.8" rx="0.6" fill="#929292"/></svg>
+                </button>
+                <span class="tip" id="tip2" hidden>Source: <a href="#" class="tip-link">S&amp;P Global</a></span>
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <p class="lede-muted">The default assumption should be that you will not beat the market.</p>
+    </section>
+
+    <!-- Why this system works -->
+    <section class="block gap50" aria-label="Why this system works">
+      <div class="block-inner">
+        <h2 class="block-title">Why this system works</h2>
+        <div class="items">
+          <div class="item">
+            <p class="item-h">It captures winners automatically</p>
+            <p class="item-b">Capital flows to the best-performing companies over time. The index is self-cleansing.</p>
+          </div>
+          <div class="item">
+            <p class="item-h">It removes most decision errors</p>
+            <p class="item-b">Fewer decisions result in fewer catastrophic mistakes. Systematic discipline beats emotional agility.</p>
+          </div>
+          <div class="item">
+            <p class="item-h">It aligns with long-term compounding</p>
+            <p class="item-b">Low friction, high consistency. The cost of being wrong is minimized through broad participation.</p>
+          </div>
+          <div class="item">
+            <p class="item-h">It adapts to the future</p>
+            <p class="item-b">As new winners emerge, they become the index. You own tomorrow's giants by holding today's system.</p>
+          </div>
+        </div>
+      </div>
+      <div class="callout">
+        <div class="callout-line"></div>
+        <p class="callout-text tight">You do not need to predict the future to benefit from it.</p>
+      </div>
+    </section>
+
+    <!-- Why not other approaches -->
+    <section class="block gap50" aria-label="Why not other approaches">
+      <div class="block-inner">
+        <h2 class="block-title">Why not other approaches</h2>
+        <div class="items roomy">
+          <div class="item">
+            <p class="item-h">Global indexes</p>
+            <p class="item-b">Broader exposure includes weaker systems, lower productivity, and structural inefficiencies. Diversification often introduces drag.</p>
+          </div>
+          <div class="item">
+            <p class="item-h">NASDAQ-100</p>
+            <p class="item-b">Higher concentration in one sector. More dependent on a single cycle. Growth is non-linear and volatile.</p>
+          </div>
+          <div class="item">
+            <p class="item-h">Total market</p>
+            <p class="item-b">More exposure does not equal better exposure. Smaller companies are often less durable and less capital efficient.</p>
+          </div>
+          <div class="item">
+            <p class="item-h">Thematic strategies (AI, etc.)</p>
+            <p class="item-b">Requires precise prediction. Most investors get the timing or the vehicle wrong.</p>
+          </div>
+        </div>
+      </div>
+      <div class="callout">
+        <div class="callout-line"></div>
+        <p class="callout-text">Most alternatives introduce either lower quality, higher risk, or reliance on being right.</p>
+      </div>
+    </section>
+
+    <!-- The serious argument against this -->
+    <section class="block" aria-label="The serious argument against this">
+      <h2 class="block-title">The serious argument against this</h2>
+      <div class="block-body">
+        <p class="para-muted">AI and technological change may concentrate value into a small number of companies. In that world, diversification could dilute returns.</p>
+        <div class="callout">
+          <div class="callout-line"></div>
+          <p class="callout-text w282">This is a valid concern.</p>
+        </div>
+        <p class="para-muted">The question is whether you can consistently identify and hold those companies better than a system that adapts automatically.</p>
+      </div>
+    </section>
+
+    <!-- The position -->
+    <section class="block" aria-label="The position">
+      <h2 class="block-title">The position</h2>
+      <div class="position-body">
+        <p class="para-white">The S&amp;P 500 is not the goal. It is the baseline.</p>
+        <p class="para-muted">You deviate only if you have a system—and results—that justify it. Without that, you are making an unproven bet against the most successful economic engine in history.</p>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    document.querySelectorAll('.info-i').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        var tip = document.getElementById(btn.getAttribute('data-tip'));
+        var willOpen = tip.hidden;
+        document.querySelectorAll('.tip').forEach(function (t) { t.hidden = true; });
+        tip.hidden = !willOpen;
+      });
+    });
+    document.addEventListener('click', function () {
+      document.querySelectorAll('.tip').forEach(function (t) { t.hidden = true; });
+    });
+  </script>
+
+</body>
+</html>
