@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memo Intro — 5 Variations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: #1C1C1C;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: #C7C7C7;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+}
+body {
+  padding: 40px 16px;
+}
+:root {
+  --bg: #000000;
+  --p:  #FFFFFF;
+  --s:  #C7C7C7;
+  --c-600: #A7A7A7;
+  --t:  #929292;
+  --t-800: #565B5E;
+  --elev: #0A0A0A;
+  --c-900: #232627;
+  --c-1000: #1C1C1C;
+}
+.lab-header { text-align: center; margin-bottom: 40px; }
+.lab-title { font-size: 20px; color: #E3E2E2; letter-spacing: -0.02em; }
+.lab-sub { font-size: 13px; color: #929292; margin-top: 8px; }
+.lab-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  padding-bottom: 24px;
+}
+.lab-frame { width: 393px; flex: 0 0 393px; }
+.lab-frame-label { font-size: 13px; color: #E3E2E2; letter-spacing: -0.02em; margin-bottom: 4px; text-align: center; }
+.lab-frame-desc { font-size: 11px; color: #565B5E; letter-spacing: -0.01em; margin-bottom: 14px; text-align: center; min-height: 28px; }
+.phone {
+  width: 393px; height: 820px;
+  background: var(--bg);
+  border: 0.5px solid #2a2a2a;
+  border-radius: 28px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 0 0 1px #2a2a2a, 0 20px 60px rgba(0,0,0,0.6);
+}
+.phone-scroll { width: 100%; height: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; -ms-overflow-style: none; }
+.phone-scroll::-webkit-scrollbar { display: none; width: 0; height: 0; }
+body { scrollbar-width: none; -ms-overflow-style: none; }
+body::-webkit-scrollbar { display: none; width: 0; height: 0; }
+
+/* II SHARED */
+.topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 13.5px; height: 60px;
+  border-bottom: 1px solid var(--c-900);
+}
+.topbar .back { width: 13px; height: 13px; display: inline-flex; color: var(--s); }
+.topbar .back::before { content: ''; width: 8px; height: 8px; border-left: 1px solid currentColor; border-bottom: 1px solid currentColor; transform: rotate(45deg); margin-left: 2px; }
+.topbar .exit { font-size: 14px; color: var(--s); letter-spacing: -0.02em; }
+.compliance {
+  display: flex; align-items: center; padding: 8px 20px;
+  font-size: 9px; letter-spacing: -0.02em; color: var(--t-800);
+  border-bottom: 0.5px solid var(--c-1000); line-height: 1.3;
+}
+.col { padding: 24px 20px 80px; }
+.head-eyebrow { font-size: 11px; color: var(--t-800); letter-spacing: -0.01em; }
+.head-title { font-size: 22px; font-weight: 400; letter-spacing: -0.02em; color: var(--s); margin: 8px 0 0; line-height: 1.27; }
+.section-eyebrow { display: flex; align-items: baseline; gap: 14px; margin-bottom: 14px; }
+.section-eyebrow .se-num { font-size: 11px; color: var(--t-800); font-variant-numeric: tabular-nums; width: 20px; flex-shrink: 0; letter-spacing: 0.02em; }
+.section-eyebrow .se-text { font-size: 15px; color: #E3E2E2; letter-spacing: -0.01em; }
+.prose { font-size: 13px; color: var(--t); letter-spacing: -0.01em; line-height: 1.55; margin-top: 14px; }
+.sec { margin-top: 40px; padding-top: 40px; border-top: 0.5px solid var(--t-800); }
+.sec.first { margin-top: 28px; padding-top: 0; border-top: none; }
+.us-list { list-style: none; padding: 0; margin: 8px 0 0; display: flex; flex-direction: column; gap: 6px; }
+.us-list li { position: relative; padding-left: 12px; font-size: 13px; color: var(--t); line-height: 1.55; }
+.us-list li::before { content: '·'; position: absolute; left: 0; color: var(--t-800); }
+.anchor-list { display: flex; flex-direction: column; gap: 0; margin-top: 14px; }
+.anchor-row { display: flex; gap: 14px; padding: 10px 0; border-bottom: 0.5px solid var(--c-1000); }
+.anchor-row:last-child { border-bottom: none; }
+.anchor-num { font-size: 11px; color: var(--t-800); width: 20px; flex-shrink: 0; letter-spacing: 0.02em; }
+.anchor-text { font-size: 14px; color: var(--s); letter-spacing: -0.01em; line-height: 1.4; }
+.workflow-diagram { display: flex; flex-direction: column; align-items: center; margin-top: 18px; padding: 18px 0; gap: 8px; }
+.workflow-step { font-size: 14px; color: var(--s); letter-spacing: -0.01em; }
+.workflow-arrow { font-size: 12px; color: var(--t-800); line-height: 1; }
+.workflow-path { margin: 24px 0; display: flex; flex-direction: column; padding-left: 0; }
+.wf-step { position: relative; display: flex; align-items: center; gap: 14px; padding: 6px 0; }
+.wf-step:not(:last-child)::after { content: ''; position: absolute; left: 2.5px; transform: translateX(-50%); top: calc(50% + 5px); height: calc(100% - 4px); width: 0.5px; background: var(--t-800); }
+.wf-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; position: relative; z-index: 1; }
+.wf-dot.s1 { background: var(--t-800); }
+.wf-dot.s2 { background: var(--t); }
+.wf-dot.s3 { background: var(--s); }
+.wf-dot.s4 { background: var(--p); }
+.wf-name { font-size: 14px; color: var(--s); letter-spacing: -0.01em; line-height: 1.4; }
+
+/* REFERENCE CARDS — Next Steps */
+.ref-card { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 16px; background: var(--elev); border: 0.5px solid var(--c-900); cursor: pointer; width: 100%; text-align: left; text-decoration: none; }
+.ref-card + .ref-card { margin-top: 12px; }
+.ref-card-tx { flex: 1; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.ref-card-t { font-size: 15px; color: var(--p); letter-spacing: -0.02em; font-weight: 400; line-height: 1.2; }
+.ref-card-d { font-size: 12px; color: var(--t); letter-spacing: -0.01em; line-height: 1.5; }
+.ref-card-chev { font-size: 14px; color: var(--s); line-height: 1; flex-shrink: 0; font-weight: 300; }
+
+/* V2 PULL QUOTES */
+.v2 .pull-quote { font-size: 17px; color: #E3E2E2; letter-spacing: -0.02em; line-height: 1.4; margin: 28px 0; padding: 14px 0 14px 18px; border-left: 0.5px solid var(--c-900); }
+.v2 .lead-quote { font-size: 19px; color: #E3E2E2; letter-spacing: -0.02em; line-height: 1.4; margin-top: 28px; padding: 18px 0; border-top: 0.5px solid var(--t-800); border-bottom: 0.5px solid var(--t-800); }
+
+/* V3 LAYERED */
+.v3 .essentials { margin-top: 28px; padding: 18px 0; border-top: 0.5px solid var(--t-800); border-bottom: 0.5px solid var(--t-800); }
+.v3 .essentials-eyebrow { font-size: 11px; color: var(--t-800); letter-spacing: 0.04em; margin-bottom: 12px; text-transform: uppercase; }
+.v3 .essentials-row { display: flex; gap: 12px; padding: 6px 0; font-size: 13px; color: var(--s); line-height: 1.55; }
+.v3 .essentials-row .dot { color: var(--t-800); }
+.v3 .full-eyebrow { font-size: 11px; color: var(--t-800); letter-spacing: 0.04em; margin-top: 32px; text-transform: uppercase; }
+
+/* V4 DIAGRAM */
+.v4 .hero-diagram { margin-top: 28px; padding: 32px 0; border-top: 0.5px solid var(--t-800); border-bottom: 0.5px solid var(--t-800); display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.v4 .diag-step { font-size: 16px; color: var(--p); letter-spacing: -0.02em; }
+.v4 .diag-step.muted { color: var(--t); font-size: 14px; }
+.v4 .diag-arrow { font-size: 14px; color: var(--t-800); }
+.v4 .principles-eyebrow { font-size: 11px; color: var(--t-800); letter-spacing: 0.04em; margin-top: 32px; text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+<div class="lab-header">
+  <div class="lab-title">Memo Intro — 3 Variations</div>
+  <div class="lab-sub">V0 Anchor list · V2 Pull Quotes · V4 Diagram-First</div>
+</div>
+
+<div class="lab-grid">
+
+<!-- ═══════════════ V0 · ANCHOR LIST ═══════════════ -->
+<div class="lab-frame">
+  <div class="lab-frame-label">V0 · Current (Anchor list)</div>
+  <div class="lab-frame-desc">"In this guide" jump-to-section nav at top.</div>
+  <div class="phone v0">
+    <div class="phone-scroll">
+      <div class="topbar"><span class="back"></span><span class="exit">Exit</span></div>
+      <div class="compliance">Self-Authored · No Suitability Review · Not Advice</div>
+      <div class="col">
+        <div class="head-eyebrow">Instructions</div>
+        <h1 class="head-title">How Underwriting Works</h1>
+
+        <div class="sec first">
+          <div style="font-size:11px; color:var(--t-800); margin-bottom:8px;">Contents</div>
+          <div class="anchor-list">
+            <div class="anchor-row"><span class="anchor-num">01</span><span class="anchor-text">Why This Exists</span></div>
+            <div class="anchor-row"><span class="anchor-num">02</span><span class="anchor-text">The Workflow</span></div>
+            <div class="anchor-row"><span class="anchor-num">03</span><span class="anchor-text">Research First</span></div>
+            <div class="anchor-row"><span class="anchor-num">04</span><span class="anchor-text">Thesis</span></div>
+            <div class="anchor-row"><span class="anchor-num">05</span><span class="anchor-text">Kill Criteria</span></div>
+            <div class="anchor-row"><span class="anchor-num">06</span><span class="anchor-text">Intrinsic Value</span></div>
+            <div class="anchor-row"><span class="anchor-num">07</span><span class="anchor-text">Margin of Safety</span></div>
+            <div class="anchor-row"><span class="anchor-num">08</span><span class="anchor-text">Probability of 20% Return</span></div>
+            <div class="anchor-row"><span class="anchor-num">09</span><span class="anchor-text">Capital Decisions</span></div>
+            <div class="anchor-row"><span class="anchor-num">10</span><span class="anchor-text">Re-Underwriting</span></div>
+            <div class="anchor-row"><span class="anchor-num">11</span><span class="anchor-text">The Record</span></div>
+          </div>
+        </div>
+
+        <div class="sec">
+          <div class="section-eyebrow"><span class="se-num">01</span><span class="se-text">Why This Exists</span></div>
+          <p class="prose">Most investors spend their time deciding what to buy. Few spend time deciding why.</p>
+          <p class="prose">As a result, decisions are often driven by narratives, recent price movements, emotions, or hindsight.</p>
+          <p class="prose">The underwriting system exists to make your reasoning explicit before capital is committed.</p>
+          <p class="prose">The objective is not prediction. The objective is improving judgment.</p>
+          <p class="prose">Every underwriting record becomes part of your investing history. Over time, these records reveal the quality of your decision-making.</p>
+        </div>
+
+        <div class="sec">
+          <div class="section-eyebrow"><span class="se-num">02</span><span class="se-text">The Workflow</span></div>
+          <div class="workflow-path">
+            <div class="wf-step"><span class="wf-dot s1"></span><span class="wf-name">Research</span></div>
+            <div class="wf-step"><span class="wf-dot s2"></span><span class="wf-name">Underwriting</span></div>
+            <div class="wf-step"><span class="wf-dot s3"></span><span class="wf-name">Capital Decision</span></div>
+            <div class="wf-step"><span class="wf-dot s4"></span><span class="wf-name">Review &amp; Re-Underwriting</span></div>
+          </div>
+          <p class="prose">Research informs the underwriting. The underwriting informs the decision. The decision creates a permanent record.</p>
+        </div>
+
+        <div class="sec">
+          <div class="section-eyebrow"><span class="se-num">03</span><span class="se-text">Research First</span></div>
+          <p class="prose">The underwriting system assumes you understand the business. Use whatever process works best for you.</p>
+          <p class="prose">Available tools include:</p>
+          <ul class="us-list">
+            <li>Fiscal.ai Pro</li>
+            <li>AI Research Tools</li>
+            <li>Company Filings</li>
+            <li>Earnings Calls</li>
+            <li>Investor Presentations</li>
+            <li>Industry Research</li>
+          </ul>
+          <p class="prose">The quality of the underwriting record is determined by the quality of the research.</p>
+          <p class="prose">The system does not prescribe how you research. It requires that you can defend your conclusions.</p>
+        </div>
+
+        <div class="sec">
+          <div class="section-eyebrow"><span class="se-num">04</span><span class="se-text">Thesis</span></div>
+          <p class="prose">Every investment begins with a thesis. A thesis is the reason capital is being allocated.</p>
+          <p class="prose">It should explain:</p>
+          <ul class="us-list">
+            <li>What makes the business attractive</li>
+            <li>Why the opportunity exists</li>
+            <li>Why the market may be mispricing it</li>
+            <li>What must happen for the investment to succeed</li>
+          </ul>
+          <p class="prose">Without a thesis there is nothing to test. The thesis is the foundation of the underwriting record.</p>
+        </div>
+
+        <div class="sec">
+          <div class="section-eyebrow"><span class="se-num">05</span><span class="se-text">Kill Criteria</span></div>
+          <p class="prose">Most investors decide when to buy. Few decide when they are wrong.</p>
+          <p class="prose">Kill criteria identify the evidence that would invalidate the thesis.</p>
+          <p class="prose">Examples may include:</p>
+          <ul class="us-list">
+            <li>Deteriorating competitive advantages</li>
+            <li>Failed execution</li>
+            <li>Changes in industry structure</li>
+            <li>Broken capital allocation</li>
+            <li>Incorrect assumptions</li>
+          </ul>
+          <p class="prose">The objective is not conviction. The objective is disciplined conviction.</p>
+          <p class="prose">When the evidence changes, the underwriting should change.</p>
+        </div>
+
+        <div class="sec">
+          <div class="section-eyebrow"><span class="se-num">06</span><span class="se-text">Intrinsic Value</span></div>
+          <p class="prose">Price tells you what the market believes today. Intrinsic value represents what you believe the business is worth.</p>
+          <p class="prose">The underwriting process asks you to estimate value before making a capital decision.</p>
+          <p class="prose">The purpose is not precision. The purpose is independent thinking.</p>
+          <p class="prose">Investors who never estimate value become dependent on market prices to tell them what something is worth.</p>
+        </div>
+
+        <div class="sec">
+          <div class="section-eyebrow"><span class="se-num">07</span><span class="se-text">Margin of Safety</span></div>
+          <p class="prose">Valuation is uncertain. Every estimate contains error. The margin of safety acknowledges that uncertainty.</p>
+          <p class="prose">It measures the difference between your estimate of value and the current market price.</p>
+          <p class="prose">Generally:</p>
+          <ul class="us-list">
+            <li>Higher uncertainty requires a larger margin of safety.</li>
+            <li>Lower uncertainty may justify a smaller margin of safety.</li>
+          </ul>
+          <p class="prose">The goal is not certainty. The goal is protecting against mistakes.</p>
+        </div>
+
+        <div class="sec">
+          <div class="section-eyebrow"><span class="se-num">08</span><span class="se-text">Probability of a 20% Return</span></div>
+          <p class="prose">The system asks: What is the probability this investment can compound at 20% annually?</p>
+          <p class="prose">This is not a prediction. It is a calibration exercise.</p>
+          <p class="prose">A 20% annual return is an extraordinarily high hurdle. Very few businesses achieve it. Very few investors achieve it.</p>
+          <p class="prose">The purpose is to force honest assessment of upside potential and improve calibration over time.</p>
+          <p class="prose">As your investing history grows, you will be able to compare your expectations with actual outcomes.</p>
+        </div>
+
+        <div class="sec">
+          <div class="section-eyebrow"><span class="se-num">09</span><span class="se-text">Capital Decisions</span></div>
+          <p class="prose">Once underwriting is complete, you can make a capital decision.</p>
+          <p class="prose">This includes:</p>
+          <ul class="us-list">
+            <li>Position role</li>
+            <li>Position sizing</li>
+            <li>Time horizon</li>
+            <li>Probability assessment</li>
+            <li>Intrinsic value</li>
+            <li>Margin of safety</li>
+          </ul>
+          <p class="prose">The goal is not certainty. The goal is explicit reasoning. Every decision should be explainable.</p>
+        </div>
+
+        <div class="sec">
+          <div class="section-eyebrow"><span class="se-num">10</span><span class="se-text">Re-Underwriting</span></div>
+          <p class="prose">Markets change. Businesses change. Your understanding changes.</p>
+          <p class="prose">The underwriting process is not a one-time exercise.</p>
+          <p class="prose">Review and update your underwriting when:</p>
+          <ul class="us-list">
+            <li>New information emerges</li>
+            <li>The thesis changes</li>
+            <li>The business changes</li>
+            <li>The price materially changes</li>
+            <li>Your estimate of value changes</li>
+          </ul>
+          <p class="prose">The best investors continuously re-underwrite their positions.</p>
+        </div>
+
+        <div class="sec">
+          <div class="section-eyebrow"><span class="se-num">11</span><span class="se-text">The Record</span></div>
+          <p class="prose">Every underwriting record becomes part of your investing history.</p>
+          <p class="prose">Over time, these records reveal:</p>
+          <ul class="us-list">
+            <li>Calibration</li>
+            <li>Discipline</li>
+            <li>Thesis quality</li>
+            <li>Decision quality</li>
+            <li>Holding discipline</li>
+            <li>Position sizing discipline</li>
+          </ul>
+          <p class="prose">The objective is not to be right every time. The objective is to become a better capital allocator.</p>
+
+        <div class="sec">
+          <div class="section-eyebrow">Next Steps</div>
+          <a class="ref-card" href="Example%20Memo.html" style="margin-top:8px;">
+            <div class="ref-card-tx">
+              <div class="ref-card-t">View Example Memo</div>
+              <div class="ref-card-d">A completed underwriting record. See the level of rigor expected.</div>
+            </div>
+            <span class="ref-card-chev" aria-hidden="true">›</span>
+          </a>
+          <a class="ref-card" href="#">
+            <div class="ref-card-tx">
+              <div class="ref-card-t">Open Research Workspace</div>
+              <div class="ref-card-d">Fiscal.ai, AI tools, filings, earnings calls, and research prompts.</div>
+            </div>
+            <span class="ref-card-chev" aria-hidden="true">›</span>
+          </a>
+          <a class="ref-card" href="First-time%20Memo%20Flow.html?intent=memo">
+            <div class="ref-card-tx">
+              <div class="ref-card-t">Start Underwriting</div>
+              <div class="ref-card-d">Create an underwriting record for this company.</div>
+            </div>
+            <span class="ref-card-chev" aria-hidden="true">›</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ V2 · PULL QUOTES ═══════════════ -->
+<div class="lab-frame">
+  <div class="lab-frame-label">V2 · Pull Quotes</div>
+  <div class="lab-frame-desc">Lead quote + pull quotes between sections.<br>Magazine editorial.</div>
+  <div class="phone v2">
+    <div class="phone-scroll">
+      <div class="topbar"><span class="back"></span><span class="exit">Exit</span></div>
+      <div class="compliance">Self-Authored · No Suitability Review · Not Advice</div>
+      <div class="col">
+        <div class="head-eyebrow">Instructions</div>
+        <h1 class="head-title">How Underwriting Works</h1>
+
+        <div class="lead-quote">
+          Most investors decide what to buy.<br>
+          Few decide why.
+        </div>
+
+        <div class="sec first">
+          <div class="section-eyebrow">Why This Exists</div>
+          <p class="prose">Decisions are often driven by narratives, recent price movements, emotions, or hindsight.</p>
+          <p class="prose">The underwriting system makes your reasoning explicit before capital is committed.</p>
+          <p class="prose">Every underwriting record becomes part of your investing history. Over time, these records reveal the quality of your decision-making.</p>
+        </div>
+
+        <div class="pull-quote">The objective is not prediction. The objective is improving judgment.</div>
+
+        <div class="sec" style="border-top:none; padding-top:0; margin-top:8px;">
+          <div class="section-eyebrow">The Workflow</div>
+          <div class="workflow-path">
+            <div class="wf-step"><span class="wf-dot s1"></span><span class="wf-name">Research</span></div>
+            <div class="wf-step"><span class="wf-dot s2"></span><span class="wf-name">Underwriting</span></div>
+            <div class="wf-step"><span class="wf-dot s3"></span><span class="wf-name">Capital Decision</span></div>
+            <div class="wf-step"><span class="wf-dot s4"></span><span class="wf-name">Review &amp; Re-Underwriting</span></div>
+          </div>
+          <p class="prose">Research informs the underwriting. The underwriting informs the decision. The decision creates a permanent record.</p>
+        </div>
+
+        <div class="sec">
+          <div class="section-eyebrow">Research First</div>
+          <p class="prose">The system assumes you understand the business. Use whatever process works for you — Fiscal.ai, AI tools, filings, earnings calls, IR, industry research.</p>
+          <p class="prose">It does not prescribe how you research. It requires that you can defend your conclusions.</p>
+        </div>
+
+        <div class="pull-quote">The quality of the underwriting record is determined by the quality of the research.</div>
+
+        <div class="sec" style="border-top:none; padding-top:0; margin-top:8px;">
+          <div class="section-eyebrow">Thesis</div>
+          <p class="prose">Every investment begins with a thesis — the reason capital is being allocated. It should explain what makes the business attractive, why the opportunity exists, why the market may be mispricing it, and what must happen to succeed.</p>
+          <p class="prose">Without a thesis there is nothing to test.</p>
+        </div>
+
+        <div class="sec">
+          <div class="section-eyebrow">Kill Criteria</div>
+          <p class="prose">Most investors decide when to buy. Few decide when they are wrong.</p>
+          <p class="prose">Kill criteria identify the evidence that would invalidate the thesis.</p>
+        </div>
+
+        <div class="pull-quote">The objective is not conviction. The objective is disciplined conviction.</div>
+
+        <div class="sec" style="border-top:none; padding-top:0; margin-top:8px;">
+          <div class="section-eyebrow">Intrinsic Value &amp; Margin of Safety</div>
+          <p class="prose">Price is what the market believes today. Intrinsic value is what you believe the business is worth.</p>
+          <p class="prose">The margin of safety acknowledges uncertainty — and protects you against your own mistakes.</p>
+        </div>
+
+        <div class="sec">
+          <div class="section-eyebrow">Probability of 20% Return</div>
+          <p class="prose">A 20% annual return is an extraordinarily high hurdle. Few businesses achieve it. Few investors achieve it.</p>
+          <p class="prose">As your investing history grows, you will compare expectations with outcomes.</p>
+        </div>
+
+        <div class="pull-quote">This is not a prediction. It is a calibration exercise.</div>
+
+        <div class="sec" style="border-top:none; padding-top:0; margin-top:8px;">
+          <div class="section-eyebrow">Capital Decisions &amp; Re-Underwriting</div>
+          <p class="prose">After underwriting comes the capital decision — position role, sizing, time horizon, probability, intrinsic value, margin of safety.</p>
+          <p class="prose">Underwriting is not a one-time exercise. The best investors continuously re-underwrite.</p>
+        </div>
+
+        <div class="pull-quote">The objective is not to be right every time. The objective is to become a better capital allocator.</div>
+
+        <div class="sec" style="border-top:none; padding-top:0; margin-top:8px;">
+          <div class="section-eyebrow">The Record</div>
+          <p class="prose">Every record reveals calibration, discipline, thesis quality, decision quality, holding discipline, position sizing discipline.</p>
+
+        <div class="sec">
+          <div class="section-eyebrow">Next Steps</div>
+          <a class="ref-card" href="Example%20Memo.html" style="margin-top:8px;">
+            <div class="ref-card-tx">
+              <div class="ref-card-t">View Example Memo</div>
+              <div class="ref-card-d">A completed underwriting record. See the level of rigor expected.</div>
+            </div>
+            <span class="ref-card-chev" aria-hidden="true">›</span>
+          </a>
+          <a class="ref-card" href="#">
+            <div class="ref-card-tx">
+              <div class="ref-card-t">Open Research Workspace</div>
+              <div class="ref-card-d">Fiscal.ai, AI tools, filings, earnings calls, and research prompts.</div>
+            </div>
+            <span class="ref-card-chev" aria-hidden="true">›</span>
+          </a>
+          <a class="ref-card" href="First-time%20Memo%20Flow.html?intent=memo">
+            <div class="ref-card-tx">
+              <div class="ref-card-t">Start Underwriting</div>
+              <div class="ref-card-d">Create an underwriting record for this company.</div>
+            </div>
+            <span class="ref-card-chev" aria-hidden="true">›</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ V4 · DIAGRAM-FIRST ═══════════════ -->
+<div class="lab-frame">
+  <div class="lab-frame-label">V4 · Diagram-First</div>
+  <div class="lab-frame-desc">Workflow diagram center stage.<br>Visual anchor for the system.</div>
+  <div class="phone v4">
+    <div class="phone-scroll">
+      <div class="topbar"><span class="back"></span><span class="exit">Exit</span></div>
+      <div class="compliance">Self-Authored · No Suitability Review · Not Advice</div>
+      <div class="col">
+        <div class="head-eyebrow">Instructions</div>
+        <h1 class="head-title">How Underwriting Works</h1>
+
+        <div class="hero-diagram">
+          <div class="diag-step">Research</div>
+          <div class="diag-arrow">↓</div>
+          <div class="diag-step">Underwriting</div>
+          <div class="diag-arrow">↓</div>
+          <div class="diag-step">Capital Decision</div>
+          <div class="diag-arrow">↓</div>
+          <div class="diag-step muted">Review &amp; Re-Underwriting</div>
+        </div>
+
+        <p class="prose" style="margin-top:20px;">Research informs the underwriting. The underwriting informs the decision. The decision creates a permanent record.</p>
+
+        <div class="principles-eyebrow">The Principles</div>
+
+        <div class="sec first" style="margin-top:14px;">
+          <div class="section-eyebrow">Why This Exists</div>
+          <p class="prose">Most investors spend their time deciding what to buy. Few spend time deciding why.</p>
+          <p class="prose">The underwriting system makes your reasoning explicit before capital is committed.</p>
+          <p class="prose">The objective is not prediction. The objective is improving judgment.</p>
+          <p class="prose">Every record becomes part of your investing history.</p>
+        </div>
+
+        <div class="sec">
+          <div class="section-eyebrow">Research First</div>
+          <p class="prose">The system assumes you understand the business. Use whatever process works for you.</p>
+          <ul class="us-list">
+            <li>Fiscal.ai Pro</li>
+            <li>AI Research Tools</li>
+            <li>Company Filings</li>
+            <li>Earnings Calls</li>
+            <li>Investor Presentations</li>
+            <li>Industry Research</li>
+          </ul>
+          <p class="prose">The system does not prescribe how you research. It requires that you can defend your conclusions.</p>
+        </div>
+
+        <div class="sec">
+          <div class="section-eyebrow">Thesis</div>
+          <p class="prose">Every investment begins with a thesis. It should explain what makes the business attractive, why the opportunity exists, why the market may be mispricing it, and what must happen to succeed.</p>
+          <p class="prose">Without a thesis there is nothing to test.</p>
+        </div>
+
+        <div class="sec">
+          <div class="section-eyebrow">Kill Criteria</div>
+          <p class="prose">Most investors decide when to buy. Few decide when they are wrong.</p>
+          <p class="prose">Kill criteria identify the evidence that would invalidate the thesis. Disciplined conviction over conviction.</p>
+        </div>
+
+        <div class="sec">
+          <div class="section-eyebrow">Intrinsic Value &amp; Margin of Safety</div>
+          <p class="prose">Price is what the market believes today. Intrinsic value is what you believe the business is worth.</p>
+          <p class="prose">The margin of safety acknowledges uncertainty — and protects against your mistakes.</p>
+        </div>
+
+        <div class="sec">
+          <div class="section-eyebrow">Probability of 20% Return</div>
+          <p class="prose">The system asks: what is the probability this investment can compound at 20% annually?</p>
+          <p class="prose">Not a prediction. A calibration exercise. Over time, expectations meet outcomes.</p>
+        </div>
+
+        <div class="sec">
+          <div class="section-eyebrow">Capital Decisions</div>
+          <p class="prose">After underwriting comes the decision — position role, sizing, time horizon, probability, IV, MoS.</p>
+          <p class="prose">Every decision should be explainable.</p>
+        </div>
+
+        <div class="sec">
+          <div class="section-eyebrow">Re-Underwriting</div>
+          <p class="prose">Markets change. Businesses change. Your understanding changes. Underwriting is continuous.</p>
+        </div>
+
+        <div class="sec">
+          <div class="section-eyebrow">The Record</div>
+          <p class="prose">Every record reveals calibration, discipline, thesis quality, decision quality, holding, sizing.</p>
+          <p class="prose">The objective is to become a better capital allocator.</p>
+
+        <div class="sec">
+          <div class="section-eyebrow">Next Steps</div>
+          <a class="ref-card" href="Example%20Memo.html" style="margin-top:8px;">
+            <div class="ref-card-tx">
+              <div class="ref-card-t">View Example Memo</div>
+              <div class="ref-card-d">A completed underwriting record. See the level of rigor expected.</div>
+            </div>
+            <span class="ref-card-chev" aria-hidden="true">›</span>
+          </a>
+          <a class="ref-card" href="#">
+            <div class="ref-card-tx">
+              <div class="ref-card-t">Open Research Workspace</div>
+              <div class="ref-card-d">Fiscal.ai, AI tools, filings, earnings calls, and research prompts.</div>
+            </div>
+            <span class="ref-card-chev" aria-hidden="true">›</span>
+          </a>
+          <a class="ref-card" href="First-time%20Memo%20Flow.html?intent=memo">
+            <div class="ref-card-tx">
+              <div class="ref-card-t">Start Underwriting</div>
+              <div class="ref-card-d">Create an underwriting record for this company.</div>
+            </div>
+            <span class="ref-card-chev" aria-hidden="true">›</span>
+          </a>
+        </div>
+      </div>
+    </d                                                                                                                                   

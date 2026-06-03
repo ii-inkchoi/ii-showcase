@@ -1,0 +1,3693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Mogo — MVP V1 First-Time Memo Flow (ATZ)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+button { background: transparent; border: none; color: inherit; font: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+* { scrollbar-width: none; -ms-overflow-style: none; }
+*::-webkit-scrollbar { display: none; }
+
+/* TOKENS */
+:root {
+  --bg:      #000000;
+  --surface: #232627;
+  --c-1000:  #1C1C1C;
+  --divider: #1C1C1C;
+  --p:       #FFFFFF;
+  --s:       #C7C7C7;
+  --t:       #929292;
+  --t-700:   #929292;
+  --t-800:   #565B5E;
+  --d:       #565B5E;
+  --c-stage: #0A0A0A;
+  --accent-amber: #D9A441;
+  --font:    'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --ease:    cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+html, body { height: 100%; }
+body {
+  background: var(--c-stage);
+  background-image:
+    radial-gradient(60vmax 50vmax at -10% -20%, rgba(255,255,255,0.04), transparent 60%),
+    radial-gradient(50vmax 40vmax at 110% 110%, rgba(255,255,255,0.03), transparent 60%);
+  color: #E3E2E2;
+  font-family: var(--font);
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+}
+
+/* STAGE */
+.stage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 60px 20px 40px;
+}
+.device-label {
+  font-size: 10px;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--t-800);
+  font-weight: 500;
+}
+.page-label {
+  text-align: center;
+  max-width: 80vw;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  letter-spacing: -0.02em;
+}
+.page-label .name { color: #E3E2E2; font-weight: 500; font-size: 13px; }
+.page-label .sub  { color: var(--t-700); font-size: 12px; }
+
+/* PHONE FRAME */
+.frame-wrap {
+  --frame-h: min(calc(100vh - 160px), calc((100vw - 80px) * (852/393)));
+  height: var(--frame-h);
+  aspect-ratio: 393 / 852;
+  position: relative;
+  transition: height 280ms var(--ease);
+}
+.frame {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: var(--bg);
+  border-radius: 7.5%;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px #2a2a2a,
+    0 0 0 2px #111,
+    0 60px 120px rgba(0,0,0,0.95),
+    inset 0 0 0 1px rgba(255,255,255,0.07);
+}
+.island {
+  position: absolute;
+  top: 1.5%; left: 50%;
+  transform: translateX(-50%);
+  width: 32%; height: 4.2%;
+  background: #000;
+  border-radius: 9999px;
+  z-index: 200;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+}
+.home-bar {
+  position: absolute;
+  bottom: 1%; left: 50%;
+  transform: translateX(-50%);
+  width: 35%; height: 0.6%;
+  background: rgba(255,255,255,0.30);
+  border-radius: 9999px;
+  z-index: 200;
+}
+.sbar {
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 7%;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  padding: 0 7.5% 1%;
+  z-index: 150;
+  pointer-events: none;
+}
+.sbar-time { font-size: 1.9vh; font-weight: 600; color: var(--p); letter-spacing: -0.01em; }
+.sbar-icons { display: flex; align-items: center; gap: 0.5vh; color: var(--p); font-size: 1.6vh; }
+.sbar-icons svg { width: 1.7vh; height: 1.7vh; }
+
+/* SURFACE / SCALER */
+.surface {
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  overflow: hidden;
+  border-radius: 7.5%;
+}
+.scaler {
+  position: absolute;
+  top: 0; left: 0;
+  width: 393px;
+  height: 852px;
+  transform-origin: top left;
+}
+
+/* SCREENS */
+.scr {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  background: var(--bg);
+  padding-top: 59px;
+  overflow: hidden;
+}
+.scr.is-active { display: flex; }
+
+@keyframes scr-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.scr.is-active {
+  animation: scr-enter 380ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+.body-scroll {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.body-scroll::-webkit-scrollbar { display: none; }
+
+/* TYPE */
+.lbl { font-size: 11px; letter-spacing: -0.01em; color: var(--t); font-weight: 400; line-height: 1; }
+.h2  { font-size: 18px; font-weight: 400; letter-spacing: -0.02em; color: var(--p); line-height: 1.25; }
+.body-md { font-size: 14px; line-height: 1.45; color: var(--p); }
+.body-sm { font-size: 13px; line-height: 1.45; color: var(--s); }
+.body-xs { font-size: 11px; line-height: 1.45; color: var(--t); }
+.t-bsm  { font-size: 13px; font-weight: 400; line-height: 1.32; letter-spacing: -0.02em; color: var(--t-700); }
+.div { height: 1px; background: var(--divider); border: none; }
+hr.div { height: 1px; background: var(--divider); border: none; }
+
+/* TOPBAR */
+.back-btn { color: var(--p); font-size: 22px; padding: 0; line-height: 1; }
+.exit-btn { color: var(--p); font-size: 15px; padding: 0; }
+
+/* ACTION BUTTONS */
+.act-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 18px 0;
+}
+.act-btn {
+  background: none; color: var(--s);
+  font-family: var(--font); font-size: 15px;
+  padding: 4px 0;
+  display: flex; align-items: center; gap: 7px;
+  transition: color 150ms var(--ease);
+  letter-spacing: -0.01em;
+}
+.act-btn:active { color: var(--p); }
+.act-btn span:last-child { color: var(--p); }
+.act-btn.locked { opacity: 0.3; pointer-events: none; }
+.act-arrow { font-size: 20px; color: var(--s); line-height: 1; }
+
+/* LARGE PRIMARY BUTTON */
+.lpb {
+  display: flex; width: 100%; height: 72px;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  align-items: center; justify-content: center;
+  background: var(--c-1000); color: var(--p);
+  font-family: var(--font); font-size: 15px; letter-spacing: -0.02em;
+}
+.lpb:hover { background: #222; }
+.lpb.locked { opacity: 0.4; pointer-events: none; }
+
+/* MEMO HEADER */
+.memo-header {
+  padding: 4px 0 22px;
+  border-bottom: 0.5px solid rgba(255,255,255,0.06);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 12px;
+  row-gap: 10px;
+}
+.memo-header-top {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 14px;
+}
+.memo-header-title {
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--s);
+  margin: 0;
+  line-height: 1.27;
+}
+.memo-header-title.is-info {
+  cursor: pointer;
+  transition: color 180ms var(--ease);
+}
+.memo-header-title.is-info::after {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-left: 6px;
+  vertical-align: super;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23565B5E' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='7' y1='17' x2='17' y2='7'/%3E%3Cpolyline points='7 7 17 7 17 17'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: filter 180ms var(--ease);
+}
+.memo-header-title.is-info:hover { color: var(--s); }
+.memo-header-title.is-info:hover::after { filter: brightness(2.5); }
+.memo-header-version {
+  font-family: var(--font);
+  font-size: 11px;
+  letter-spacing: -0.01em;
+  color: var(--t);
+  font-weight: 400;
+  white-space: nowrap;
+}
+.memo-header-meta {
+  font-family: var(--font);
+  font-size: 11px;
+  letter-spacing: -0.01em;
+  color: var(--t);
+  margin-top: 10px;
+}
+.memo-header-version .memo-ctx-ticker { color: var(--s); }
+.memo-header-version .memo-ctx-change { color: var(--t); margin-left: 4px; }
+.alloc-type-lbl {
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--s);
+  text-align: right;
+}
+.memo-header .memo-header-meta  { margin-top: 0; align-self: start; grid-column: 1; grid-row: 2; }
+.memo-header > .memo-header-right { grid-column: 2; grid-row: 2; display: flex; flex-direction: column; align-items: flex-end; gap: 5px; align-self: start; }
+.memo-header > .memo-header-right .memo-context-chip { margin: 0; padding: 0; }
+
+.memo-subtitle {
+  font-size: 13px;
+  color: var(--t-700);
+  letter-spacing: -0.02em;
+  line-height: 1.5;
+  margin: 0 0 6px;
+  font-weight: 400;
+}
+.memo-subhead {
+  font-size: 12.5px;
+  color: var(--t-800);
+  letter-spacing: -0.005em;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* FIELD-EX (Example affordance) */
+.field-ex-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+.field-ex-row .section-eyebrow { margin-bottom: 0; }
+.field-ex-row .memo-subtitle   { margin-bottom: 0; }
+.field-ex-btn {
+  font-family: var(--font);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: var(--p);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 0 1px;
+  opacity: 0.55;
+  transition: opacity 120ms ease;
+  flex-shrink: 0;
+  line-height: 1;
+  white-space: nowrap;
+}
+.field-ex-btn:hover { opacity: 1; }
+.field-ex-block {
+  display: none;
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-left: 2px solid var(--divider);
+  background: rgba(255,255,255,0.018);
+}
+.field-ex-block.is-open { display: block; }
+.field-ex-lbl {
+  font-family: var(--font);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--t);
+  margin-bottom: 7px;
+}
+.field-ex-text {
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--s);
+  line-height: 1.6;
+  font-style: italic;
+  letter-spacing: -0.01em;
+}
+
+/* MEMO BODY REVEAL */
+.memo-body--reveal {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  min-height: 0;
+}
+@keyframes memo-body-reveal {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.scr.is-active .memo-body--reveal,
+.scr.is-active .v5-foot.memo-foot--reveal,
+.scr.is-active .lpb.memo-foot--reveal {
+  animation: memo-body-reveal 700ms 500ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+/* V5 FOOT + PRIMARY */
+.v5-foot {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+.v5-primary {
+  display: flex;
+  width: 100%;
+  height: 99px;
+  align-items: center;
+  justify-content: center;
+  background: var(--c-1000);
+  color: var(--p);
+  font-family: var(--font);
+  font-size: 15px;
+  letter-spacing: -0.02em;
+  border: none;
+  cursor: pointer;
+  transition: background 150ms var(--ease);
+}
+.v5-primary:hover  { background: #222; }
+.v5-primary:active { background: #2a2a2a; }
+.v5-primary.locked { opacity: 0.4; pointer-events: none; }
+.v5-primary.is-arrow {
+  height: 64px;
+  align-items: baseline;
+  justify-content: flex-end;
+  padding: 0 22px;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 400;
+  background: transparent;
+}
+.v5-primary.is-arrow .arrow {
+  font-size: 18px;
+  font-weight: 500;
+}
+.v5-primary.is-arrow:hover  { background: rgba(255,255,255,0.02); }
+.v5-primary.is-arrow:active { background: rgba(255,255,255,0.04); }
+
+.v5-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font);
+  font-size: 14px;
+  color: var(--t);
+  background: none;
+  border: none;
+  padding: 4px 0;
+  cursor: pointer;
+  transition: color 150ms var(--ease);
+  letter-spacing: -0.01em;
+}
+.v5-secondary:hover { color: var(--s); }
+.v5-secondary:active { color: var(--p); }
+.v5-secondary span:last-child { color: var(--p); transition: color 150ms var(--ease); }
+
+/* MFORK */
+.mfork-title-block {
+  padding: 28px 20px 24px;
+  flex-shrink: 0;
+}
+.mfork-title {
+  font-size: 17px; font-weight: 400; letter-spacing: -0.02em;
+  color: var(--p); line-height: 1.2; margin: 0;
+}
+.mfork-title.is-info {
+  cursor: pointer;
+  transition: color 180ms var(--ease);
+}
+.mfork-title.is-info::after {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-left: 6px;
+  vertical-align: super;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23565B5E' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='7' y1='17' x2='17' y2='7'/%3E%3Cpolyline points='7 7 17 7 17 17'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: filter 180ms var(--ease);
+}
+.mfork-title.is-info:hover         { color: var(--s); }
+.mfork-title.is-info:hover::after  { filter: brightness(2.5); }
+.mfork-options {
+  flex: 1 1 auto; display: flex; flex-direction: column; gap: 8px;
+  padding: 0 20px; min-height: 0;
+}
+.mfork-option {
+  display: grid; grid-template-columns: 1fr auto; align-items: start; gap: 16px;
+  padding: 20px 0; text-align: left; border: none;
+  background: transparent;
+  cursor: pointer; position: relative;
+  transition: background 150ms var(--ease);
+}
+.mfork-option:active { background: rgba(255,255,255,0.02); }
+.mfork-lbl { display: flex; flex-direction: column; }
+.mfork-option-tag {
+  font-size: 15px; font-weight: 400; letter-spacing: -0.02em;
+  color: var(--p); line-height: 1.3; margin-bottom: 5px;
+}
+.mfork-option-head {
+  font-size: 13px; font-weight: 300; letter-spacing: -0.01em;
+  color: var(--t); line-height: 1.4; margin-bottom: 8px;
+}
+.mfork-option-body {
+  font-size: 12px; font-weight: 300; color: var(--t-800); line-height: 1.55;
+  letter-spacing: -0.01em;
+}
+.mfork-option.is-on .radio-dot { border-color: var(--p); }
+.mfork-option.is-on .radio-dot::after {
+  content: ''; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--p); display: block; margin: auto;
+}
+
+/* MEMO PAGE */
+.memo-page {
+  padding: 32px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  min-height: 100%;
+}
+.section-eyebrow {
+  font-size: 15px; color: var(--s);
+  text-transform: none;
+  letter-spacing: -0.01em;
+  margin-bottom: 12px;
+}
+.section-eyebrow.is-info {
+  cursor: pointer;
+  display: inline-block;
+  font-size: 15px;
+  color: var(--s);
+  letter-spacing: -0.01em;
+  transition: color 180ms var(--ease);
+}
+.section-eyebrow.is-info::after {
+  content: '';
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-left: 5px;
+  vertical-align: middle;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23565B5E' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='7' y1='17' x2='17' y2='7'/%3E%3Cpolyline points='7 7 17 7 17 17'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: filter 180ms var(--ease);
+}
+.section-eyebrow.is-info:hover { color: var(--s); }
+.section-eyebrow.is-info:hover::after { filter: brightness(2.5); }
+
+/* RADIO ROW */
+.radio-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: start;
+  cursor: pointer;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--c-1000);
+  width: 100%;
+  text-align: left;
+}
+.radio-row:last-child { border-bottom: none; }
+.radio-row .lbl-block { display: flex; flex-direction: column; gap: 4px; }
+.radio-row .lbl-block .head { color: var(--p); font-size: 14px; line-height: 1.32; letter-spacing: -0.02em; }
+.radio-row .lbl-block .sub  { color: var(--t-700); font-size: 13px; line-height: 1.32; letter-spacing: -0.02em; }
+.radio-row .lbl-block .size-desc { color: var(--t-700); font-size: 13px; line-height: 1.32; letter-spacing: -0.02em; }
+.radio-dot {
+  flex-shrink: 0;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 1px solid var(--t-800);
+  display: grid; place-items: center;
+  background: transparent;
+  margin-top: 2px;
+}
+.radio-row.is-on .radio-dot::after {
+  content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--p);
+}
+.field-list { display: flex; flex-direction: column; }
+
+/* BRACKET */
+.bracket {
+  position: relative;
+  padding: 16px;
+  min-height: 84px;
+}
+.bracket .c { position: absolute; width: 12px; height: 12px; }
+.bracket .tl { top: 0; left: 0; border-top: 1px solid var(--t-800); border-left: 1px solid var(--t-800); }
+.bracket .tr { top: 0; right: 0; border-top: 1px solid var(--t-800); border-right: 1px solid var(--t-800); }
+.bracket .bl { bottom: 0; left: 0; border-bottom: 1px solid var(--t-800); border-left: 1px solid var(--t-800); }
+.bracket .br { bottom: 0; right: 0; border-bottom: 1px solid var(--t-800); border-right: 1px solid var(--t-800); }
+.bracket textarea, .bracket input {
+  width: 100%; background: transparent; border: none; outline: none;
+  color: #E3E2E2; font-family: var(--font); font-size: 13px; line-height: 1.32; letter-spacing: -0.02em;
+  resize: none;
+}
+.bracket textarea::placeholder, .bracket input::placeholder { color: var(--t-800); }
+
+.bracket--composer { display: flex; flex-direction: column; }
+.bracket--composer textarea { flex: none; width: 100%; min-height: 40px; overflow: hidden; }
+#m5-note { min-height: 120px; }
+
+/* M5 REFERENCE PILLS — compact chip row above textarea (chairman 2026-06-02) */
+.m5-ref-pills { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 16px; }
+.m5-ref-pill {
+  display: inline-flex; align-items: center; justify-content: space-between; gap: 4px;
+  padding: 8px 10px;
+  border: 0.5px solid var(--c-900, #232627);
+  background: transparent;
+  font-family: inherit;
+  font-size: 11px;
+  color: var(--s);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  cursor: pointer;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.m5-ref-pill:active { opacity: 0.5; transition: opacity 80ms ease; }
+.m5-ref-pill .pill-chev { color: var(--t-800); font-size: 11px; }
+
+/* MEMO CANVAS — Option A: Open Canvas for paste-from-AI vessel (chairman 2026-06-01) */
+.memo-canvas {
+  position: relative;
+  padding: 14px 0;
+  border-top: 0.5px solid var(--c-1000);
+  border-bottom: 0.5px solid var(--c-1000);
+  display: flex; flex-direction: column;
+}
+.memo-canvas .c { display: none; }  /* hide any leftover corner brackets */
+.memo-canvas textarea {
+  width: 100%; background: transparent; border: none; outline: none;
+  color: #E3E2E2; font-family: var(--font);
+  font-size: 13px; line-height: 1.5; letter-spacing: -0.02em;
+  resize: none; min-height: 220px; overflow: hidden;
+}
+.memo-canvas textarea::placeholder { color: var(--t-800); }
+.memo-canvas .composer-toolbar {
+  display: flex; align-items: center; justify-content: flex-end; gap: 4px;
+  margin-top: 8px; padding-top: 0;
+}
+.composer-toolbar {
+  display: flex; align-items: center; justify-content: flex-end; gap: 4px;
+  margin-top: 6px;
+  padding-top: 4px;
+}
+.composer-icon-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px;
+  border-radius: 4px;
+  color: var(--t-700);
+  cursor: pointer;
+  transition: color 150ms var(--ease), background 150ms var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.composer-icon-btn:hover  { color: var(--s); background: rgba(255,255,255,0.04); }
+.composer-icon-btn:active { color: var(--p); background: rgba(255,255,255,0.07); }
+.composer-attachment {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 12px;
+  padding: 8px 10px;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid var(--divider);
+  border-radius: 2px;
+}
+.composer-attachment-icon { color: var(--s); display: inline-flex; flex-shrink: 0; }
+.composer-attachment-name {
+  flex: 1;
+  font-size: 12px;
+  color: var(--s);
+  letter-spacing: -0.01em;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.composer-attachment-remove {
+  font-size: 13px;
+  color: var(--t);
+  padding: 2px 6px;
+  line-height: 1;
+  transition: color 150ms var(--ease);
+}
+.composer-attachment-remove:hover { color: var(--p); }
+
+/* CAL ADVISORY */
+.cal-advisory {
+  display: none;
+  margin-top: 18px;
+  padding: 14px 14px 12px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 3px;
+  background: rgba(255,255,255,0.02);
+}
+.cal-advisory-title {
+  font-size: 13px;
+  color: var(--p);
+  letter-spacing: -0.01em;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+.cal-advisory-body {
+  font-size: 12px;
+  color: var(--t);
+  letter-spacing: -0.005em;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+.cal-advisory-actions { display: flex; gap: 12px; }
+.cal-advisory-btn {
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 400;
+  background: none;
+  border: 1px solid rgba(255,255,255,0.18);
+  color: var(--s);
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: border-color 150ms, color 150ms;
+}
+.cal-advisory-btn:hover { border-color: var(--p); color: var(--p); }
+
+/* UNDERWRITING MODULES (s12) */
+.uw-module {
+  padding: 24px 0 4px;
+  border-top: 1px solid var(--divider);
+}
+.uw-module + .uw-module { margin-top: 0; }
+.uw-module--flat { padding-top: 0; border-top: none; }
+.uw-module--flat + .uw-module { margin-top: 18px; }
+.hurdle-display-static {
+  font-family: var(--font);
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  color: var(--p);
+  font-weight: 400;
+}
+.uw-provisional-nudge {
+  font-size: 11px;
+  color: var(--t-800);
+  margin-top: 8px;
+  letter-spacing: -0.005em;
+}
+.uw-hurdle-inline { font-weight: 500; color: var(--p); transition: opacity 150ms ease; }
+.uw-hurdle-inline.is-updating { opacity: 0.4; }
+
+.uw-cal-row {
+  display: flex; align-items: center; gap: 12px;
+  margin-top: 6px;
+}
+.uw-cal-num {
+  font-size: 28px;
+  color: var(--p);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  min-width: 64px;
+}
+.horiz-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 1px;
+  background: var(--divider);
+  cursor: pointer;
+  flex: 1;
+}
+.horiz-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--p);
+  cursor: pointer;
+  margin-top: -8px;
+}
+.horiz-range::-moz-range-thumb {
+  width: 16px; height: 16px;
+  border: none;
+  border-radius: 50%;
+  background: var(--p);
+  cursor: pointer;
+}
+.horiz-ends {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 6px;
+}
+
+.cal-history-row {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 16px;
+  padding: 8px 0;
+  border-top: 1px solid var(--divider);
+}
+.cal-history-label { font-size: 11px; color: var(--t-800); letter-spacing: -0.01em; }
+.cal-history-val { font-size: 12px; color: var(--s); font-variant-numeric: tabular-nums; }
+.cal-no-data-note { font-size: 11px; color: var(--t-800); line-height: 1.5; margin-top: 8px; display: none; }
+
+/* ─── s12 card layout (new design) ─── */
+.s12-classify-line { font-size: 12px; color: var(--s); letter-spacing: -0.005em; margin-top: 8px; line-height: 1.4; }
+.s12-classify-line .dot { color: var(--t-800); margin: 0 6px; }
+.s12-card { background: #0E0E0E; border: 0.5px solid #1F2122; padding: 20px; margin-top: 14px; }
+.s12-card:first-child { margin-top: 0; }
+.s12-card-title { font-size: 15px; color: var(--p); font-weight: 400; letter-spacing: -0.01em; display: inline-flex; align-items: baseline; gap: 5px; margin-bottom: 8px; }
+.s12-card-title.is-info { cursor: pointer; }
+.s12-card-title.is-info::after { content: ''; display: inline-block; width: 11px; height: 11px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23929292' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='7' y1='17' x2='17' y2='7'/%3E%3Cpolyline points='7 7 17 7 17 17'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+.s12-card-sub { font-size: 12px; color: var(--t); line-height: 1.5; margin-bottom: 18px; }
+.s12-prob-display { text-align: center; font-size: 28px; color: var(--p); font-weight: 400; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; margin: 16px 0 12px; }
+.s12-prob-display .pct { font-size: 13px; color: var(--p); margin-left: 2px; }
+.s12-prob-display.empty { color: var(--t-800); }
+.s12-slider-row { padding: 0 4px; margin-bottom: 6px; }
+.s12-slider-row input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 1px; background: var(--divider); cursor: pointer; }
+.s12-slider-row input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--p); cursor: pointer; margin-top: -7px; }
+.s12-slider-row input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border: none; border-radius: 50%; background: var(--p); cursor: pointer; }
+.s12-slider-ends { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--t-800); padding: 0 4px; }
+.s12-history-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0 4px; margin-top: 18px; border-top: 0.5px solid var(--divider); }
+.s12-history-label { font-size: 12px; color: var(--t); }
+.s12-history-val { font-size: 12px; color: var(--s); font-variant-numeric: tabular-nums; }
+.s12-disclaimer { font-size: 11px; color: var(--t-800); line-height: 1.55; margin-top: 14px; }
+.s12-horizon-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; margin-top: 14px; }
+.s12-horizon-opt { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 12px 4px; border: none; background: transparent; font-family: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: opacity 80ms ease; }
+.s12-horizon-opt:active { opacity: 0.5; }
+.s12-horizon-opt .yr { font-size: 16px; color: var(--t-800); font-weight: 400; letter-spacing: -0.01em; }
+.s12-horizon-opt .dt { font-size: 11px; color: var(--t-800); }
+.s12-horizon-opt.is-on .yr { color: var(--p); font-weight: 500; }
+.s12-horizon-opt.is-on .dt { color: var(--s); }
+
+/* M6 LEDGER */
+.m6-ledger { font-family: 'Inter', var(--font), sans-serif; }
+.m6-ledger-header {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #111;
+  margin-bottom: 0;
+  position: relative;
+}
+.m6-ledger-header::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 10px; height: 10px;
+  border-top: 1px solid #3A3A3A;
+  border-right: 1px solid #3A3A3A;
+}
+.m6-ledger-meta {
+  font-family: var(--font);
+  font-size: 11px;
+  letter-spacing: -0.01em;
+  color: var(--t);
+  margin-top: 0;
+  margin-bottom: 14px;
+}
+.m6-ledger-header.has-live::before { display: none; }
+.m6-ledger .m6-ticker-hero {
+  font-family: var(--font);
+  font-size: 54px;
+  font-weight: 200;
+  letter-spacing: -0.055em;
+  line-height: 0.9;
+  color: #EBEBEB;
+  margin-bottom: 14px;
+}
+.m6-ledger-classify {
+  font-size: 12px;
+  color: var(--s);
+  letter-spacing: -0.005em;
+  line-height: 1.4;
+  margin-top: 6px;
+  margin-bottom: 10px;
+}
+.m6-ledger-header .alloc-type-lbl {
+  text-align: left;
+  font-size: 9px;
+  color: var(--t);
+  margin-bottom: 4px;
+}
+.m6-ledger-doc-label {
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--t-800);
+}
+.m6-ledger-date {
+  font-size: 11px;
+  color: var(--t-800);
+  margin-top: 4px;
+}
+
+.m6-stats-strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-top: 1px solid #111;
+  border-bottom: 1px solid #111;
+}
+.m6-stat-cell {
+  padding: 14px 6px;
+  border-right: 1px solid #111;
+  text-align: center;
+}
+.m6-stat-cell:last-child { border-right: none; }
+.m6-stat-lbl {
+  font-size: 9px;
+  letter-spacing: -0.01em;
+  color: var(--t-800);
+  margin-bottom: 4px;
+}
+.m6-stat-val {
+  font-size: 16px;
+  color: var(--p);
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.m6-ledger-section-head {
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--t-800);
+  margin-top: 10px;
+  margin-bottom: 6px;
+}
+.m6-ledger-section-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0;
+}
+.m6-section-edit-hint {
+  font-family: var(--font);
+  font-size: 9px;
+  font-weight: 400;
+  color: var(--t-800);
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.memo-row {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  column-gap: 16px;
+  padding: 11px 0;
+  align-items: start;
+  border-bottom: 1px solid var(--c-1000);
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+.memo-row:hover  { background: rgba(255,255,255,0.02); }
+.memo-row:active { background: rgba(255,255,255,0.05); }
+.memo-row .k { color: var(--t-700); font-size: 14px; }
+.memo-row .v { color: #E3E2E2; font-size: 14px; line-height: 1.5; min-width: 0; }
+
+.m6-ledger .memo-row {
+  grid-template-columns: 64px 1fr;
+  column-gap: 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid #111;
+}
+.m6-ledger .memo-row:last-of-type { border-bottom: none; }
+.m6-ledger .memo-row .k {
+  font-size: 9px;
+  letter-spacing: -0.01em;
+  color: var(--t-800);
+  align-self: center;
+}
+.m6-ledger .memo-row .v {
+  font-size: 12.5px;
+  color: var(--s);
+  letter-spacing: -0.005em;
+  line-height: 1.5;
+}
+.m6-ledger .memo-row .v .memo-row-sub {
+  font-size: 10px;
+  color: var(--t-800);
+  letter-spacing: -0.005em;
+  line-height: 1.5;
+  margin-top: 2px;
+}
+.memo-row-now,
+.m6-ledger .memo-row .v .memo-row-now {
+  font-size: 10px;
+  color: var(--t);
+  letter-spacing: -0.005em;
+  margin-top: 2px;
+}
+
+.m6-immutability {
+  font-size: 10.5px;
+  color: var(--t-800);
+  letter-spacing: -0.005em;
+  line-height: 1.55;
+  font-style: italic;
+  margin-top: 6px;
+}
+.m6-ledger .m6-immutability { margin-top: 0; }
+.m6-ledger .t-bsm { color: var(--t-800); line-height: 1.6; }
+
+.m6-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px 3px 8px;
+  border: 0.5px solid rgba(255,255,255,0.18);
+  border-radius: 99px;
+  background: rgba(255,255,255,0.02);
+  font-size: 9px;
+  letter-spacing: -0.01em;
+  color: var(--p);
+  margin-bottom: 12px;
+}
+.m6-live-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--p);
+  animation: m6-live-pulse 1.6s ease-in-out infinite;
+}
+@keyframes m6-live-pulse {
+  0%, 100% { opacity: 0.65; }
+  50%      { opacity: 1; }
+}
+
+.m6-position-status {
+  padding: 12px 0 8px;
+  border-bottom: 1px solid #111;
+  margin-bottom: 6px;
+}
+.m6-posrow { display: flex; justify-content: space-between; align-items: baseline; padding: 7px 0; }
+.m6-posrow-k { font-size: 12px; color: var(--t); letter-spacing: -0.01em; }
+.m6-posrow-v { font-size: 12px; color: var(--s); letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+.m6-posrow-v--dim { color: var(--t-800); }
+
+/* PRESSURE TEST */
+.pt-step {
+  position: relative;
+  margin: 0 16px 10px;
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 14px 14px 16px;
+  transition: border-color 200ms;
+}
+.pt-step.is-resolved { border-color: rgba(255,255,255,0.07); }
+.pt-step-head { font-family: var(--font); font-size: 9px; font-weight: 500; letter-spacing: -0.01em; color: var(--t); margin-bottom: 4px; }
+.pt-step-sub { font-family: var(--font); font-size: 12px; color: var(--t-800); margin-top: 4px; margin-bottom: 0; line-height: 1.45; letter-spacing: -0.01em; }
+.pt-step-acts { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.pt-step-run { display: block; font-family: var(--font); font-size: 14px; font-weight: 500; letter-spacing: -0.01em; color: var(--p); background: none; border: none; padding: 0; cursor: pointer; text-align: left; transition: color 150ms; }
+.pt-step-run:hover { color: rgba(255,255,255,0.85); }
+.pt-step-skip { position: absolute; top: 12px; right: 14px; font-family: var(--font); font-size: 11px; color: var(--t-800); background: none; border: none; cursor: pointer; padding: 0; transition: color 120ms; }
+.pt-step-skip:hover { color: var(--t); }
+.pt-step-status { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.pt-step-status-lbl { font-family: var(--font); font-size: 11px; color: var(--t); letter-spacing: -0.01em; }
+.pt-step-redo { font-family: var(--font); font-size: 10px; color: rgba(255,255,255,0.6); background: none; border: none; cursor: pointer; padding: 0; transition: color 120ms; letter-spacing: -0.01em; }
+.pt-step-redo:hover { color: rgba(255,255,255,0.9); }
+.pt-done-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-top: 12px;
+}
+.pt-done-row .pt-confirm-row { margin-top: 0; }
+.pt-confirm-row {
+  display: flex; align-items: center; gap: 9px;
+  margin-top: 12px; cursor: pointer; user-select: none;
+}
+.pt-confirm-check {
+  width: 15px; height: 15px; flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.22);
+  appearance: none; -webkit-appearance: none;
+  background: transparent; cursor: pointer;
+  display: grid; place-items: center;
+  transition: background 120ms, border-color 120ms;
+}
+.pt-confirm-check:checked { background: var(--p); border-color: var(--p); }
+.pt-confirm-check:checked::after {
+  content: '';
+  width: 8px; height: 5px;
+  border-left: 1.5px solid #000;
+  border-bottom: 1.5px solid #000;
+  transform: rotate(-45deg) translateY(-1px);
+}
+.pt-confirm-lbl {
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--t);
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+}
+
+/* Seal hold-button reveal on m6 */
+.m6-hold-btn {
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  transform: translateY(72px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 380ms cubic-bezier(0.22, 0.61, 0.36, 1),
+              opacity   320ms ease;
+}
+.m6-hold-btn.is-pt-ready {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.m6-hold-btn.is-pt-locked { transform: translateY(72px); opacity: 0; pointer-events: none; }
+
+@keyframes pt-step-exit {
+  from { transform: translateX(0);     opacity: 1; }
+  to   { transform: translateX(-28px); opacity: 0; }
+}
+.pt-step.is-exiting {
+  animation: pt-step-exit 260ms cubic-bezier(0.32,0.72,0,1) forwards;
+  pointer-events: none;
+}
+
+/* PT DRAWER */
+.pt-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.6); z-index: 900; opacity: 0; pointer-events: none; transition: opacity 220ms ease; }
+.pt-overlay.is-open { opacity: 1; pointer-events: auto; }
+
+.pt-drawer { position: absolute; top: 58px; right: 0; bottom: 0; left: 0; background: #0c0c0c; border-top: 1px solid rgba(255,255,255,0.07); z-index: 901; transform: translateX(100%); transition: transform 320ms cubic-bezier(0.32,0.72,0,1); display: flex; flex-direction: column; overflow: hidden; }
+.pt-drawer.is-open { transform: translateX(0); }
+.pt-drawer-head { padding: 12px 14px 10px; border-bottom: 1px solid rgba(255,255,255,0.07); flex-shrink: 0; display: flex; align-items: center; justify-content: flex-start; gap: 10px; }
+.pt-drawer-back { background: transparent; border: none; color: var(--t); font-size: 22px; cursor: pointer; padding: 0 4px 2px 0; line-height: 1; flex-shrink: 0; transition: color 120ms; }
+.pt-drawer-back:hover { color: var(--p); }
+.pt-drawer-title { font-family: var(--font); font-size: 10px; font-weight: 500; letter-spacing: -0.01em; color: var(--t); }
+.pt-drawer-sub { font-family: var(--font); font-size: 10px; color: rgba(255,255,255,0.28); margin-top: 5px; letter-spacing: -0.01em; line-height: 1.45; }
+.pt-body { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 5px; }
+
+.pt-card { border: 1px solid rgba(255,255,255,0.08); background: #111; transition: border-color 150ms ease; }
+.pt-card:not(.is-open):hover { border-color: rgba(255,255,255,0.2); }
+.pt-card.is-open { border-color: rgba(255,255,255,0.22); }
+.pt-card-trigger { padding: 11px 13px; width: 100%; background: transparent; border: none; color: inherit; text-align: left; cursor: pointer; }
+.pt-card-name { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: -0.01em; color: var(--t); margin-bottom: 4px; }
+.pt-card-desc { font-family: var(--font); font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: -0.01em; margin-bottom: 2px; }
+.pt-card-when { font-family: var(--font); font-size: 10px; color: rgba(255,255,255,0.22); letter-spacing: -0.01em; }
+.pt-card.is-open .pt-card-when { color: var(--s); }
+.pt-card-body { padding: 0 13px 13px; border-top: 1px solid rgba(255,255,255,0.06); }
+.pt-toggles { padding: 10px 0 7px; display: flex; flex-direction: column; gap: 8px; }
+.pt-toggle-row { display: flex; align-items: center; justify-content: space-between; }
+.pt-toggle-lbl { font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: -0.01em; color: rgba(255,255,255,0.32); }
+.pt-toggle { position: relative; width: 28px; height: 16px; flex-shrink: 0; }
+.pt-toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+.pt-toggle-track { position: absolute; inset: 0; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 9px; transition: background 150ms,border-color 150ms; cursor: pointer; }
+.pt-toggle input:checked + .pt-toggle-track { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.28); }
+.pt-toggle-thumb { position: absolute; top: 3px; left: 3px; width: 8px; height: 8px; background: rgba(255,255,255,0.35); border-radius: 50%; transition: transform 150ms,background 150ms; pointer-events: none; }
+.pt-toggle input:checked ~ .pt-toggle-thumb { transform: translateX(12px); background: #e8e8e8; }
+.pt-preview { background: #090909; border: 1px solid rgba(255,255,255,0.05); padding: 10px; margin: 7px 0 9px; max-height: 100px; overflow-y: auto; font-family: 'IBM Plex Mono', monospace; font-size: 9px; line-height: 1.65; color: rgba(255,255,255,0.38); white-space: pre-wrap; word-break: break-word; }
+.pt-copy-btn { width: 100%; padding: 9px; background: transparent; border: 1px solid rgba(255,255,255,0.13); color: rgba(255,255,255,0.7); font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: -0.01em; cursor: pointer; transition: border-color 150ms,color 150ms; }
+.pt-copy-btn:hover { border-color: rgba(255,255,255,0.32); color: var(--t); }
+.pt-copy-btn.is-copied { color: #7ec897; border-color: #7ec897; }
+.pt-after-head { font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: -0.01em; color: rgba(255,255,255,0.22); padding: 13px 0 8px; border-top: 1px solid rgba(255,255,255,0.06); margin-top: 4px; }
+.pt-follow-item { display: flex; align-items: flex-start; gap: 8px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.pt-follow-text { flex: 1; font-family: var(--font); font-size: 10px; color: rgba(255,255,255,0.42); letter-spacing: -0.01em; line-height: 1.55; }
+.pt-follow-copy { flex-shrink: 0; font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: -0.01em; color: rgba(255,255,255,0.2); background: transparent; border: 1px solid rgba(255,255,255,0.08); padding: 3px 6px; cursor: pointer; transition: color 120ms,border-color 120ms; white-space: nowrap; margin-top: 1px; }
+.pt-follow-copy:hover { color: var(--t); border-color: rgba(255,255,255,0.22); }
+.pt-follow-copy.is-copied { color: #7ec897; border-color: #7ec897; }
+
+/* INFO MODAL */
+.info-modal {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 800;
+}
+.info-modal.is-active { display: flex; }
+.info-modal-sheet {
+  width: 100%;
+  max-height: 88%;
+  background: var(--surface);
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  padding: 30px 26px 30px;
+  position: relative;
+  overflow-y: auto;
+  transform: translateY(100%);
+  transition: transform 380ms cubic-bezier(0.32,0.72,0,1);
+}
+.info-modal.is-active .info-modal-sheet { transform: translateY(0); }
+.info-modal-close {
+  position: absolute;
+  top: 14px; right: 14px;
+  font-size: 18px; color: var(--t);
+  background: none; border: none;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+.info-modal-eyebrow {
+  font-size: 10px;
+  letter-spacing: -0.01em;
+  color: var(--t);
+  margin-bottom: 12px;
+}
+.info-modal-title {
+  font-size: 20px;
+  letter-spacing: -0.02em;
+  color: var(--p);
+  font-weight: 500;
+  line-height: 1.25;
+  margin-bottom: 18px;
+}
+.info-modal-body {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--s);
+  white-space: pre-line;
+  letter-spacing: -0.005em;
+}
+.info-modal-body.is-html { white-space: normal; }
+.info-modal-body.is-html p { margin: 0 0 12px; }
+.info-modal-body.is-html p:last-child { margin-bottom: 0; }
+.info-modal-body.is-html h4 {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--p);
+  letter-spacing: -0.01em;
+  margin: 18px 0 8px;
+}
+.info-modal-body.is-html h4:first-child { margin-top: 0; }
+.info-modal-body.is-html strong { color: var(--p); font-weight: 500; }
+.info-modal-body.is-html em { color: var(--p); font-style: italic; }
+.info-modal-body.is-html .info-disclaimer {
+  font-size: 11px;
+  color: var(--t-800);
+  font-style: italic;
+  margin-top: 14px;
+  line-height: 1.55;
+}
+.info-modal-body.is-html .info-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px;
+}
+.info-modal-body.is-html .info-list li {
+  position: relative;
+  padding-left: 14px;
+  margin-bottom: 6px;
+}
+.info-modal-body.is-html .info-list li::before {
+  content: '·';
+  position: absolute;
+  left: 4px; top: 2px;
+  color: var(--t);
+}
+.info-modal-body.is-html .info-example {
+  border-left: 2px solid var(--t-800);
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.018);
+  margin: 12px 0;
+}
+.info-modal-body.is-html .info-example p { margin-bottom: 8px; }
+.info-modal-body.is-html .info-example p:last-child { margin-bottom: 0; }
+.info-modal-body.is-html .info-example-title {
+  font-size: 10px;
+  letter-spacing: -0.01em;
+  color: var(--t);
+  margin-bottom: 6px;
+}
+.info-disclaimer {
+  font-size: 11px;
+  color: var(--t-800);
+  font-style: italic;
+  margin-top: 14px;
+  line-height: 1.55;
+}
+.info-modal-chart {
+  margin-bottom: 16px;
+}
+
+/* HURDLE WHEEL (inside info modal — uw_hurdle) */
+.hurdle-wheel-picker {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--divider);
+}
+.hurdle-wheel-eyebrow {
+  font-size: 10px;
+  letter-spacing: -0.01em;
+  color: var(--t);
+  margin-bottom: 12px;
+}
+.hurdle-wheel {
+  position: relative;
+  height: 132px;
+  overflow: hidden;
+}
+.hurdle-wheel-scroll {
+  height: 100%;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  padding: 50px 0;
+}
+.hurdle-wheel-item {
+  scroll-snap-align: center;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--t-800);
+  letter-spacing: -0.01em;
+  transition: color 150ms, font-size 150ms;
+}
+.hurdle-wheel-item.is-centered {
+  color: var(--p);
+  font-size: 18px;
+  font-weight: 500;
+}
+.hurdle-wheel-selection {
+  position: absolute;
+  top: 50%;
+  left: 0; right: 0;
+  height: 32px;
+  margin-top: -16px;
+  border-top: 1px solid rgba(255,255,255,0.18);
+  border-bottom: 1px solid rgba(255,255,255,0.18);
+  pointer-events: none;
+}
+.hurdle-wheel-fade {
+  position: absolute;
+  left: 0; right: 0;
+  height: 50px;
+  pointer-events: none;
+}
+.hurdle-wheel-fade--top { top: 0; background: linear-gradient(to bottom, var(--surface) 12%, transparent); }
+.hurdle-wheel-fade--bottom { bottom: 0; background: linear-gradient(to top, var(--surface) 12%, transparent); }
+
+/* V5 MODAL */
+.v5-modal {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 810;
+}
+.v5-modal.is-on { display: flex; }
+.v5-modal-sheet {
+  width: 100%;
+  background: var(--surface);
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  padding: 30px 26px 26px;
+  position: relative;
+}
+.v5-modal-close {
+  position: absolute;
+  top: 14px; right: 14px;
+  font-size: 18px;
+  color: var(--t);
+  background: none; border: none;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+.v5-modal-title {
+  font-size: 16px;
+  letter-spacing: -0.02em;
+  color: var(--p);
+  font-weight: 500;
+  line-height: 1.3;
+  margin-bottom: 14px;
+}
+.v5-modal-body {
+  font-size: 13px;
+  color: var(--s);
+  line-height: 1.55;
+  letter-spacing: -0.005em;
+}
+.v5-modal-body p { margin: 0 0 12px; }
+.v5-modal-body p:last-child { margin-bottom: 0; }
+.v5-modal-acts {
+  display: flex; flex-direction: column; gap: 4px;
+  margin-top: 18px;
+}
+.v5-modal-acts .v5-secondary { padding: 10px 0; gap: 8px; }
+
+/* S8 NUMPAD + ROWS */
+.form-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--divider);
+}
+.form-row:last-child { border-bottom: none; }
+.s8-tap {
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+.s8-tap:active { background: rgba(255,255,255,0.02); }
+.s8-tap.is-active .s8-value { color: var(--p); }
+.s8-value { font-variant-numeric: tabular-nums; }
+.s8-sub {
+  display: flex; align-items: center; gap: 6px;
+  margin-top: 6px;
+}
+.s8-sub-text { font-size: 11px; color: var(--t); }
+.s8-sub-info {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  border: 0.5px solid var(--t);
+  font-size: 8px;
+  color: var(--t);
+  font-style: italic;
+}
+.s8-scroll {
+  flex: 1 1 auto;
+  overflow-y: auto;
+}
+.s8-scroll::-webkit-scrollbar { display: none; }
+.s8-memo-section {
+  margin-top: 20px;
+  padding: 16px;
+  border-top: 1px solid var(--divider);
+}
+.s8-row-sub {
+  font-size: 11px;
+  color: var(--t-800);
+  letter-spacing: -0.005em;
+  line-height: 1.45;
+  margin-top: 4px;
+}
+.s8-memo-section .lbl {
+  margin-bottom: 12px;
+}
+.s8-info-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+.s8-info-icon {
+  font-size: 10px;
+  color: var(--t-800);
+  transition: color 150ms;
+}
+.s8-info-row:hover .s8-info-icon { color: var(--t); }
+.s8-memo-row {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--divider);
+}
+
+.ios-numpad {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  background: #1C1C1E;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  padding: 10px 6px 16px;
+  z-index: 50;
+  transform: translateY(100%);
+  transition: transform 280ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+.ios-numpad.is-open { transform: translateY(0); }
+.ios-key {
+  background-image: linear-gradient(180deg, #6A6B6F 0%, #545559 100%);
+  color: var(--p);
+  border-radius: 5px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  text-align: center;
+}
+.ios-key:active { background-image: linear-gradient(180deg, #5B5C60 0%, #4A4B4F 100%); }
+.ios-key .num { font-size: 24px; line-height: 1; letter-spacing: -0.01em; }
+.ios-key .sub {
+  font-size: 8px;
+  letter-spacing: -0.01em;
+  margin-top: 1px;
+  color: var(--p);
+}
+.ios-key.is-action { background-image: linear-gradient(180deg, #535458 0%, #3F4044 100%); }
+.ios-key.is-action .num { font-size: 22px; }
+.ios-key.is-decimal .num { font-size: 26px; line-height: 0.6; }
+
+/* S4 — REVIEW & EXECUTE */
+.s4r-header {
+  padding: 18px 16px 14px;
+  border-bottom: 1px solid var(--divider);
+  position: relative;
+}
+.s4r-header::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 10px; height: 10px;
+  border-top: 1px solid #3A3A3A;
+  border-right: 1px solid #3A3A3A;
+}
+.s4r-header-inner {
+  display: flex; align-items: baseline; gap: 12px;
+}
+.s4r-ticker {
+  font-size: 34px;
+  font-weight: 200;
+  letter-spacing: -0.04em;
+  color: var(--p);
+  line-height: 1;
+}
+.s4r-action {
+  font-size: 11px;
+  letter-spacing: -0.01em;
+  color: var(--s);
+}
+.s4r-header-meta {
+  display: flex; gap: 8px;
+  font-size: 11px;
+  color: var(--t);
+  margin-top: 6px;
+  letter-spacing: -0.005em;
+}
+.s4r-meta-sep { color: var(--t-800); }
+
+.s4r-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-bottom: 1px solid var(--divider);
+}
+.s4r-stat {
+  padding: 14px 8px;
+  border-right: 1px solid var(--divider);
+  text-align: center;
+}
+.s4r-stat:last-child { border-right: none; }
+.s4r-stat-lbl {
+  font-size: 9px;
+  letter-spacing: -0.01em;
+  color: var(--t-800);
+  margin-bottom: 4px;
+}
+.s4r-stat-val {
+  font-size: 16px;
+  color: var(--p);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+.s4r-section { padding: 20px 16px 0; }
+.s4r-section-head {
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--t-800);
+  margin-bottom: 6px;
+}
+.s4r-row {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  column-gap: 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--divider);
+  align-items: start;
+}
+.s4r-row:last-child { border-bottom: none; }
+.s4r-row--stack { grid-template-columns: 1fr; gap: 5px; }
+.s4r-key {
+  font-size: 9px;
+  letter-spacing: -0.01em;
+  color: var(--t-800);
+  align-self: center;
+}
+.s4r-val {
+  font-size: 13px;
+  color: var(--s);
+  letter-spacing: -0.005em;
+  line-height: 1.5;
+}
+.s4r-val-sub {
+  font-size: 10px;
+  color: var(--t-800);
+  letter-spacing: -0.005em;
+  margin-top: 3px;
+}
+
+.s4-exec-wrap {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  height: 76px;
+  background: var(--c-1000);
+  cursor: pointer;
+  overflow: hidden;
+  flex-shrink: 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.s4-exec-fill {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 0%;
+  background: rgba(255,255,255,0.10);
+  transition: width 0ms linear;
+  z-index: 0;
+}
+.s4-exec-label { position: relative; color: var(--p); font-size: 15px; letter-spacing: -0.02em; z-index: 1; }
+
+/* S9 LEDGER */
+.s9-ledger-page {
+  padding: 24px 20px 40px;
+}
+.s9-ledger-header {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #111;
+  margin-bottom: 0;
+  position: relative;
+}
+.s9-ledger-header::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 10px; height: 10px;
+  border-top: 1px solid #3A3A3A;
+  border-right: 1px solid #3A3A3A;
+}
+.s9-ticker-hero {
+  font-family: var(--font);
+  font-size: 54px;
+  font-weight: 200;
+  letter-spacing: -0.055em;
+  line-height: 0.9;
+  color: #EBEBEB;
+  margin: 14px 0 12px;
+}
+.s9-event-label {
+  font-size: 11px;
+  letter-spacing: -0.01em;
+  color: var(--s);
+}
+.s9-order-subtype {
+  font-size: 11px;
+  color: var(--t);
+  margin-top: 4px;
+  letter-spacing: -0.005em;
+}
+.s9-stats-strip {
+  margin-top: 16px;
+}
+.s9-ledger-page .m6-ledger-section-head {
+  margin-top: 22px;
+}
+.s9-last-row { border-bottom: 1px solid #111; }
+
+.s9-firstmemo-ribbon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  margin-top: 18px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: border-color 150ms, background 150ms;
+}
+.s9-firstmemo-ribbon:hover { border-color: rgba(255,255,255,0.24); background: rgba(255,255,255,0.02); }
+.s9-firstmemo-mark { font-size: 14px; color: var(--p); }
+.s9-firstmemo-text { flex: 1; min-width: 0; }
+.s9-firstmemo-title { font-size: 13px; color: var(--p); letter-spacing: -0.01em; }
+.s9-firstmemo-sub   { font-size: 11px; color: var(--t); letter-spacing: -0.005em; margin-top: 2px; }
+.s9-firstmemo-arrow { font-size: 16px; color: var(--s); line-height: 1; }
+.s9-firstmemo-ribbon:hover .s9-firstmemo-arrow { color: var(--p); }
+
+/* DEMO FILL BUTTON (✦) */
+.demo-fill-btn {
+  position: fixed;
+  top: 18px; right: 18px;
+  width: 40px; height: 40px;
+  background: rgba(28,28,28,0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.5);
+  font-size: 16px;
+  display: grid; place-items: center;
+  z-index: 1000;
+  cursor: pointer;
+  transition: background 120ms ease, color 120ms ease;
+}
+.demo-fill-btn:hover { background: rgba(40,40,40,0.95); color: #E3E2E2; }
+
+/* TOAST */
+.toast {
+  position: fixed;
+  bottom: 24px; left: 50%;
+  transform: translate(-50%, 30px);
+  padding: 10px 16px;
+  background: rgba(35,38,39,0.95);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 3px;
+  font-size: 12px;
+  color: var(--s);
+  letter-spacing: -0.005em;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2000;
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+.toast.is-on {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* v6 overrides */
+html, body { height: auto !important; min-height: 100vh !important; overflow: auto !important; }
+body { background: var(--bg) !important; width: 100% !important; max-width: 393px !important; margin: 0 auto !important; padding: 0 !important; }
+.stage { padding: 0 !important; gap: 0 !important; width: 100% !important; height: auto !important; min-height: 100vh !important; }
+.device-label, .page-label, .island, .sbar, .home-bar { display: none !important; }
+.frame-wrap { width: 100% !important; height: auto !important; min-height: 100vh !important; aspect-ratio: auto !important; transition: none !important; }
+.frame { position: relative !important; width: 100% !important; height: auto !important; min-height: 100vh !important; box-shadow: none !important; border-radius: 0 !important; background: var(--bg) !important; overflow: visible !important; }
+.surface { position: static !important; inset: auto !important; width: 100% !important; height: auto !important; min-height: 100vh !important; overflow: visible !important; border-radius: 0 !important; }
+.scaler { position: static !important; width: 100% !important; height: auto !important; min-height: 100vh !important; transform: none !important; }
+.scr { position: relative !important; inset: auto !important; width: 100% !important; padding-top: 0 !important; min-height: 100vh !important; }
+.scr:not(.is-active) { display: none !important; }
+.scr.is-active { display: flex !important; }
+.demo-fill-btn { display: none !important; }
+.m6-hold-btn { transform: none !important; opacity: 1 !important; pointer-events: auto !important; }
+/* Vertical slider layout */
+.uw-cal-row { display: block !important; text-align: center !important; margin-top: 6px !important; }
+.uw-cal-num { display: block !important; font-size: 28px !important; color: var(--p) !important; font-weight: 400 !important; letter-spacing: -0.03em !important; text-align: center !important; margin-bottom: 14px !important; min-width: 0 !important; }
+.horiz-range { width: 100% !important; display: block !important; }
+</style>
+</head>
+<body>
+
+<!-- Demo fill button -->
+<button class="demo-fill-btn" id="demoFillBtn" title="Fill with demo data" onclick="fillDemoData()">✦</button>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<main class="stage">
+  <div class="device-label">iPhone 16 · 393 × 852 · MVP V1 First-Time Memo</div>
+
+  <div class="frame-wrap" id="frameWrap">
+    <div class="frame">
+      <div class="island"></div>
+      <div class="sbar">
+        <div class="sbar-time">9:41</div>
+        <div class="sbar-icons">
+          <svg viewBox="0 0 24 24" fill="currentColor"><rect x="2"  y="14" width="3" height="6" rx="0.5"/><rect x="7"  y="11" width="3" height="9" rx="0.5"/><rect x="12" y="8"  width="3" height="12" rx="0.5"/><rect x="17" y="5"  width="3" height="15" rx="0.5"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 9c5-5 15-5 20 0M5 12.5c3.5-3 10.5-3 14 0M8 16c2-1.5 6-1.5 8 0"/><circle cx="12" cy="19" r="1.2" fill="currentColor"/></svg>
+          <svg viewBox="0 0 26 14" fill="none"><rect x="0.5" y="0.5" width="22" height="13" rx="3" stroke="currentColor"/><rect x="2"   y="2"   width="17" height="10" rx="1.5" fill="currentColor"/><rect x="23"  y="4.5" width="2"  height="5"  rx="0.5" fill="currentColor"/></svg>
+        </div>
+      </div>
+
+      <div class="surface">
+        <div class="scaler" id="scaler">
+
+          <!-- ════════ mfork — Active vs Core/Treasury ════════ -->
+          <section class="scr" data-id="mfork">
+            <div style="padding-top:0;flex-shrink:0">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px">
+                <button class="back-btn" onclick="exitMemo()">‹</button>
+                <button class="exit-btn" onclick="exitMemo()">Exit</button>
+              </div>
+              <hr class="div">
+            </div>
+            <div class="mfork-title-block">
+              <div class="mfork-title is-info" onclick="showInfoModal('mfork_decision')">What kind of decision is this?</div>
+            </div>
+            <div class="mfork-options">
+              <button class="mfork-option" id="mfork-opt-active" onclick="selectFork('active')" type="button">
+                <div class="mfork-lbl">
+                  <div class="mfork-option-tag">Active Allocation</div>
+                  <div class="mfork-option-head">I am claiming an edge.</div>
+                  <div class="mfork-option-body">This allocation can outperform the S&amp;P 500 through security selection, basket selection, or differentiated insight.</div>
+                </div>
+                <div class="radio-dot"></div>
+              </button>
+              <button class="mfork-option" id="mfork-opt-core" onclick="selectFork('core')" type="button">
+                <div class="mfork-lbl">
+                  <div class="mfork-option-tag">Core / Treasury Allocation</div>
+                  <div class="mfork-option-head">I am not claiming an edge.</div>
+                  <div class="mfork-option-body">This allocation exists for broad market exposure, liquidity preservation, or long-term compounding.</div>
+                </div>
+                <div class="radio-dot"></div>
+              </button>
+            </div>
+            <div class="v5-foot">
+              <button class="v5-primary is-arrow locked" id="mfork-continue" onclick="continueFromFork()" type="button"><span class="arrow">→</span><span>Continue</span></button>
+            </div>
+          </section>
+
+          <!-- ════════ m1 — Classify ════════ -->
+          <section class="scr" data-id="m1">
+            <div style="padding-top:0;flex-shrink:0">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px">
+                <button class="back-btn" onclick="go('mfork')">‹</button>
+                <button class="exit-btn" onclick="exitMemo()">Exit</button>
+              </div>
+              <hr class="div">
+            </div>
+            <div class="body-scroll">
+              <div class="memo-page">
+                <div class="memo-header">
+                  <div class="memo-header-top">
+                    <h1 class="memo-header-title is-info" onclick="showInfoModal('business_type')">Classify</h1>
+                  </div>
+                  <div class="memo-header-meta">1 / 5</div>
+                  <div class="memo-header-right">
+                    <span class="memo-header-version"><span class="memo-ctx-ticker">ATZ</span> $87.60 <span class="memo-ctx-change">−0.4%</span></span>
+                    <span class="alloc-type-lbl">Active Allocation</span>
+                  </div>
+                </div>
+                <div class="memo-body--reveal">
+                  <div>
+                    <div class="section-eyebrow">Classification</div>
+                    <div class="field-list" data-list="m1-type">
+                      <button class="radio-row" data-radio="comp" type="button"><div class="lbl-block"><div class="head">Compounder</div><div class="sub">Businesses compounding capital at above-market rates with durable competitive position.</div></div><div class="radio-dot"></div></button>
+                      <button class="radio-row" data-radio="emer" type="button"><div class="lbl-block"><div class="head">Emerging Compounder</div><div class="sub">Businesses or themes early in their compounding lifecycle, with conviction they will graduate.</div></div><div class="radio-dot"></div></button>
+                      <button class="radio-row" data-radio="situ" type="button"><div class="lbl-block"><div class="head">Situational Mispricing</div><div class="sub">Assets trading materially below reasonable estimates of value due to identifiable dislocation.</div></div><div class="radio-dot"></div></button>
+                      <button class="radio-row" data-radio="spec" type="button"><div class="lbl-block"><div class="head">Speculative</div><div class="sub">Asymmetric upside with acknowledged binary or high-variance risk.</div></div><div class="radio-dot"></div></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="v5-foot memo-foot--reveal">
+              <button class="v5-primary is-arrow locked" id="m1-next" onclick="advanceMemo('m1b')" type="button"><span class="arrow">→</span><span>Continue</span></button>
+            </div>
+          </section>
+
+          <!-- ════════ m1b — Size ════════ -->
+          <section class="scr" data-id="m1b">
+            <div style="padding-top:0;flex-shrink:0">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px">
+                <button class="back-btn" onclick="go('m1')">‹</button>
+                <button class="exit-btn" onclick="exitMemo()">Exit</button>
+              </div>
+              <hr class="div">
+            </div>
+            <div class="body-scroll">
+              <div class="memo-page">
+                <div class="memo-header">
+                  <div class="memo-header-top">
+                    <h1 class="memo-header-title is-info" onclick="showInfoModal('position_size')">Size</h1>
+                  </div>
+                  <div class="memo-header-meta">2 / 5</div>
+                  <div class="memo-header-right">
+                    <span class="memo-header-version"><span class="memo-ctx-ticker">ATZ</span> $87.60 <span class="memo-ctx-change">−0.4%</span></span>
+                    <span class="alloc-type-lbl">Active Allocation</span>
+                  </div>
+                </div>
+                <div class="memo-body--reveal">
+                  <div>
+                    <div class="section-eyebrow">Position size</div>
+                    <div class="memo-subhead" style="margin-top:6px;margin-bottom:14px">Ranges reflect common investing convention. Allocation is not prescribed.</div>
+                    <div class="field-list" data-list="m1-size">
+                      <button class="radio-row" data-radio="core"  type="button"><div class="lbl-block"><div class="head">Core</div><span class="size-desc">Approximately 10%+</span></div><div class="radio-dot"></div></button>
+                      <button class="radio-row" data-radio="conv"  type="button"><div class="lbl-block"><div class="head">Conviction</div><span class="size-desc">Approximately 5–10%</span></div><div class="radio-dot"></div></button>
+                      <button class="radio-row" data-radio="start" type="button"><div class="lbl-block"><div class="head">Starter</div><span class="size-desc">Approximately 1–3%</span></div><div class="radio-dot"></div></button>
+                      <button class="radio-row" data-radio="sspc"  type="button"><div class="lbl-block"><div class="head">Speculative</div><span class="size-desc">Approximately ≤2%</span></div><div class="radio-dot"></div></button>
+                    </div>
+                  </div>
+                  <div class="cal-advisory" id="m1b-cal-advisory">
+                    <div class="cal-advisory-title">Concentration requires calibration.</div>
+                    <div class="cal-advisory-body">Research shows investors often overstate their edge before establishing a track record. Calibration data is how that changes over time.</div>
+                    <div class="cal-advisory-actions">
+                      <button class="cal-advisory-btn" onclick="document.getElementById('m1b-cal-advisory').style.display='none'" type="button">Proceed</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="v5-foot memo-foot--reveal">
+              <button class="v5-primary is-arrow locked" id="m1b-next" onclick="advanceMemo('m5')" type="button"><span class="arrow">→</span><span>Continue</span></button>
+            </div>
+          </section>
+
+          <!-- ════════ m5 — Memo (free-form composer) ════════ -->
+          <section class="scr" data-id="m5">
+            <div style="padding-top:0;flex-shrink:0">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px">
+                <button class="back-btn" onclick="go('m1b')">‹</button>
+                <button class="exit-btn" onclick="exitMemo()">Exit</button>
+              </div>
+              <hr class="div">
+            </div>
+            <div class="body-scroll">
+              <div class="memo-page">
+                <div class="memo-header">
+                  <div class="memo-header-top">
+                    <h1 class="memo-header-title" id="m5-title">Investment Case</h1>
+                  </div>
+                  <div class="memo-header-meta">3 / 5</div>
+                  <div class="memo-header-right">
+                    <span class="memo-header-version"><span class="memo-ctx-ticker">ATZ</span> $87.60 <span class="memo-ctx-change">−0.4%</span></span>
+                    <span class="alloc-type-lbl">Active Allocation</span>
+                  </div>
+                </div>
+                <div class="memo-body--reveal">
+                  <div>
+                    <div class="field-ex-row">
+                      <div class="memo-subtitle" id="m5-subtitle">You've done the research with Fiscal and your AI tool. Paste your investment case here. A good investment case answers what you're betting on, what would prove you wrong, what it's worth, and the odds.</div>
+                    </div>
+                  </div>
+                  <div class="m5-ref-pills" aria-label="Reference">
+                    <a class="m5-ref-pill" href="Research%20Prompt.html" onclick="try{sessionStorage.setItem('atz-flow-step','m5');}catch(e){}">Research Prompt <span class="pill-chev" aria-hidden="true">›</span></a>
+                    <a class="m5-ref-pill" href="Example%20Memo.html" onclick="try{sessionStorage.setItem('atz-flow-step','m5');}catch(e){}">Example Memo <span class="pill-chev" aria-hidden="true">›</span></a>
+                    <button type="button" class="m5-ref-pill" onclick="showInfoModal('fiscal_ai')">Fiscal AI <span class="pill-chev" aria-hidden="true">›</span></button>
+                    <a class="m5-ref-pill" href="Memo%20Intro.html?intent=memo" onclick="try{sessionStorage.setItem('atz-flow-step','m5');}catch(e){}">How it works <span class="pill-chev" aria-hidden="true">›</span></a>
+                  </div>
+                  <div class="memo-canvas">
+                    <textarea id="m5-note" rows="2" placeholder="Paste your memo here. Most run 2,500–3,500 words from your AI tool." oninput="onM5NoteInput(); autoExpand(this)"></textarea>
+                    <div class="composer-toolbar">
+                      <button class="composer-icon-btn" onclick="pasteToTextarea('m5-note')" type="button" aria-label="Paste from clipboard" title="Paste from clipboard">
+                        <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+                          <rect x="3" y="2.5" width="10" height="12" rx="1.2" stroke="currentColor" stroke-width="1"/>
+                          <rect x="5.5" y="1" width="5" height="2.5" rx="0.6" fill="currentColor"/>
+                          <line x1="5.5" y1="7" x2="10.5" y2="7" stroke="currentColor" stroke-width="0.9" stroke-linecap="round"/>
+                          <line x1="5.5" y1="9.5" x2="10.5" y2="9.5" stroke="currentColor" stroke-width="0.9" stroke-linecap="round"/>
+                          <line x1="5.5" y1="12" x2="8.5" y2="12" stroke="currentColor" stroke-width="0.9" stroke-linecap="round"/>
+                        </svg>
+                      </button>
+                      <button class="composer-icon-btn" onclick="document.getElementById('m5-file-input').click()" type="button" aria-label="Attach file" title="Attach PDF / Word file">
+                        <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+                          <path d="M11.5 5.5L6.8 10.2c-0.6 0.6-0.6 1.6 0 2.2 0.6 0.6 1.6 0.6 2.2 0L13.7 7.7c1.2-1.2 1.2-3.2 0-4.4-1.2-1.2-3.2-1.2-4.4 0L4.6 8c-1.8 1.8-1.8 4.8 0 6.6 1.8 1.8 4.8 1.8 6.6 0L15 11" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </button>
+                      <input id="m5-file-input" type="file" accept=".pdf,.doc,.docx,.txt,.md" style="display:none" onchange="attachComposerFile(event, 'm5')">
+                    </div>
+                  </div>
+                  <div id="m5-attachment" class="composer-attachment" style="display:none">
+                    <span class="composer-attachment-icon">
+                      <svg width="11" height="13" viewBox="0 0 11 13" fill="none">
+                        <path d="M1 1.5h6L10 4.5v7a0.8 0.8 0 0 1-0.8 0.8H1A0.8 0.8 0 0 1 0.2 11.5v-9.2A0.8 0.8 0 0 1 1 1.5z" stroke="currentColor" stroke-width="0.9" fill="none"/>
+                        <path d="M7 1.5v3h3" stroke="currentColor" stroke-width="0.9" fill="none"/>
+                      </svg>
+                    </span>
+                    <span class="composer-attachment-name" id="m5-attachment-name">—</span>
+                    <button class="composer-attachment-remove" onclick="clearComposerFile('m5')" type="button" aria-label="Remove attachment">✕</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="v5-foot memo-foot--reveal">
+              <button class="v5-primary is-arrow" id="m5-next" onclick="advanceMemo('s12')" type="button"><span class="arrow">→</span><span>Continue</span></button>
+            </div>
+          </section>
+
+          <!-- ════════ s12 — Exceptional Compounding (calibration) ════════ -->
+          <section class="scr" data-id="s12">
+            <div style="padding-top:0;flex-shrink:0">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px">
+                <button class="back-btn" onclick="go('m5')">‹</button>
+                <button class="exit-btn" onclick="exitMemo()">Exit</button>
+              </div>
+              <hr class="div">
+            </div>
+            <div class="body-scroll">
+              <div class="memo-page">
+                <div class="memo-header">
+                  <div class="memo-header-top">
+                    <h1 class="memo-header-title">Exceptional Compounding</h1>
+                  </div>
+                  <div class="memo-header-meta">4 / 5</div>
+                  <div class="memo-header-right">
+                    <span class="memo-header-version"><span class="memo-ctx-ticker">ATZ</span> $87.60 <span class="memo-ctx-change">−0.4%</span></span>
+                    <span class="alloc-type-lbl">Active Allocation</span>
+                  </div>
+                  <div class="s12-classify-line" id="s12-classify-line"><span id="s12-type-lbl">—</span><span class="dot">·</span><span id="s12-size-lbl">—</span></div>
+                  <div class="uw-provisional-nudge" id="s12-provisional-nudge" style="display:none">This memo is provisional until underwriting is complete.</div>
+                </div>
+                <div class="memo-body--reveal">
+                  <div id="s12-comp-view">
+                    <!-- Card 1: Confidence Calibration -->
+                    <div class="s12-card" id="s12-cal-module">
+                      <div class="s12-card-title is-info" onclick="showInfoModal('uw_hurdle')">Probability of <span class="s12-hurdle-inline" id="s12-hurdle-num">20</span>% return</div>
+                      <div class="s12-card-sub">What probability would you assign to your thesis proving broadly correct over your time horizon?</div>
+                      <div class="s12-prob-display empty" id="s12-prob-display"><span id="s12-prob-num">—</span><span class="pct">%</span></div>
+                      <div class="s12-slider-row">
+                        <input id="s12-prob-range" type="range" min="10" max="90" value="50" step="10" oninput="setProb('s12', this.value)">
+                      </div>
+                      <div class="s12-slider-ends">
+                        <span>10%</span>
+                        <span id="s12-prob-msg">—</span>
+                        <span>90%</span>
+                      </div>
+                      <div class="s12-history-row">
+                        <span class="s12-history-label">Historical accuracy</span>
+                        <span class="s12-history-val">58% · 14 positions</span>
+                      </div>
+                      <div class="s12-disclaimer">These estimates are inherently uncertain and reflect your own underwriting assumptions — not platform forecasts or guarantees.</div>
+                    </div>
+
+                    <!-- Card 2: Time horizon -->
+                    <div class="s12-card" id="s12-horizon-module">
+                      <div class="s12-card-title">Time horizon</div>
+                      <div class="s12-horizon-grid" data-list="s12-horizon-list">
+                        <button class="s12-horizon-opt" data-horiz="y1"  onclick="setHorizonSel('y1')"  type="button"><span class="yr">1Y</span><span class="dt" id="s12-dt-y1">—</span></button>
+                        <button class="s12-horizon-opt" data-horiz="y3"  onclick="setHorizonSel('y3')"  type="button"><span class="yr">3Y</span><span class="dt" id="s12-dt-y3">—</span></button>
+                        <button class="s12-horizon-opt" data-horiz="y5p" onclick="setHorizonSel('y5p')" type="button"><span class="yr">5Y</span><span class="dt" id="s12-dt-y5p">—</span></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="v5-foot memo-foot--reveal">
+              <button class="v5-primary is-arrow locked" id="s12-cont" onclick="continueFromS12()" type="button"><span class="arrow">→</span><span>Continue</span></button>
+            </div>
+          </section>
+
+          <!-- ════════ m6 — Review ════════ -->
+          <section class="scr" data-id="m6">
+            <div style="padding-top:0;flex-shrink:0">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px">
+                <button class="back-btn" onclick="go('s12')">‹</button>
+                <button class="exit-btn" onclick="exitMemo()">Exit</button>
+              </div>
+              <hr class="div">
+            </div>
+            <div class="body-scroll">
+              <div class="memo-page m6-ledger" style="gap:16px">
+                <div class="m6-ledger-header" id="m6-ledger-header">
+                  <div class="m6-ledger-meta" id="m6-ticker-meta">5 / 5</div>
+                  <div class="m6-ticker-hero"><span class="memo-ctx-ticker">ATZ</span></div>
+                  <div class="alloc-type-lbl" style="text-align:left">Active Allocation</div>
+                  <div class="m6-ledger-classify" id="m6-classify">—</div>
+                  <div class="m6-ledger-doc-label" id="m6-doc-label">Memo</div>
+                  <div id="m6-date" class="m6-ledger-date">—</div>
+                </div>
+
+                <div>
+                  <div class="m6-ledger-section-row">
+                    <div class="m6-ledger-section-head">Investor Memo</div>
+                    <span class="m6-section-edit-hint">Tap each to update</span>
+                  </div>
+                  <div class="memo-row" onclick="editFromReview('m1')"><div class="k">Type</div><div class="v" id="m6-type">—</div></div>
+                  <div class="memo-row" onclick="editFromReview('m1b')"><div class="k">Size</div><div class="v" id="m6-size">—</div></div>
+                  <div class="memo-row" id="m6-note-row" onclick="editFromReview('m5')"><div class="k">Investment Case</div><div class="v" id="m6-note-display">—</div></div>
+                </div>
+
+                <div id="m6-calibration-section">
+                  <div class="m6-ledger-section-head">Calibration</div>
+                  <div class="memo-row" onclick="editFromReview('s12')"><div class="k">Prob</div><div class="v" id="m6-prob">—</div></div>
+                  <div class="memo-row" onclick="editFromReview('s12')"><div class="k">Horizon</div><div class="v" id="m6-horizon">—</div></div>
+                </div>
+
+                <div class="t-bsm" id="m6-buy-footer" style="line-height:1.6;color:var(--t-800)">
+                  The memo and calibration are recorded. Future buys of ATZ will skip the memo unless you choose to re-enter it.
+                </div>
+
+              </div>
+            </div>
+
+            <div class="pt-step" id="pt-step">
+              <button class="pt-step-skip" onclick="skipPressureTest()" type="button">Skip for now</button>
+              <button class="pt-step-run" onclick="runPressureTest()" type="button">Pressure Test →</button>
+              <div class="pt-step-sub">Challenge this memo before you commit.</div>
+            </div>
+
+            <div class="v5-foot">
+              <button class="v5-primary is-arrow m6-hold-btn" id="m6-seal-btn" onclick="onM6SealTap()" type="button"><span class="arrow">→</span><span id="m6SealLbl">Save Memo</span></button>
+            </div>
+
+            <div class="v5-modal" id="m6-update-modal">
+              <div class="v5-modal-sheet">
+                <button type="button" class="v5-modal-close" onclick="closeM6UpdateModal()" aria-label="Close">×</button>
+                <div class="v5-modal-title">A new version of your memo will be created.</div>
+                <div class="v5-modal-body">
+                  <p>Your edits will be saved as a new version of this investor memo. The previous version stays in your history — earlier records are never overwritten.</p>
+                </div>
+                <div class="v5-modal-acts">
+                  <button class="v5-secondary" onclick="closeM6UpdateModal()" type="button">
+                    <span class="act-arrow" style="color:var(--t)">←</span>
+                    <span style="color:var(--t)">Keep editing</span>
+                  </button>
+                  <button class="v5-secondary" onclick="confirmM6UpdateCommit()" type="button">
+                    <span class="act-arrow">→</span>
+                    <span>Save new version</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ════════ s8 — Order ticket ════════ -->
+          <section class="scr" data-id="s8" onclick="if(state.activeInput) closeNumpad()">
+            <div style="padding-top:0;flex-shrink:0">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;gap:12px">
+                <button class="back-btn" onclick="event.stopPropagation();go('m6')">‹</button>
+                <div style="display:flex;align-items:center;gap:18px">
+                  <button style="background:none;border:none;color:var(--s);font-family:var(--font);font-size:13px;display:flex;align-items:center;gap:4px;padding:0" type="button">
+                    Limit Order <span style="font-size:9px;color:var(--t)">⌄</span>
+                  </button>
+                  <button class="exit-btn" onclick="event.stopPropagation();exitMemo()">Exit</button>
+                </div>
+              </div>
+              <hr class="div">
+              <div style="text-align:right;margin:24px 16px 6px">
+                <span style="font-size:13px;color:var(--t)">ATZ</span>
+                <span class="h2" id="s8-action-label" style="margin-left:10px">Buy</span>
+              </div>
+              <div style="text-align:right;margin:0 16px 22px">
+                <span style="font-size:13px;color:var(--t)" id="s8-acct-label">Non-Registered</span>
+                <span style="font-size:13px;color:var(--t);margin-left:10px" id="s8-acct-meta">18,698.53 USD</span>
+              </div>
+            </div>
+
+            <div class="s8-scroll">
+              <div style="padding:0 16px">
+                <div id="s8-memo-toprows">
+                  <div class="form-row" style="align-items:flex-start">
+                    <span class="body-md" style="color:var(--s)">Type</span>
+                    <div style="text-align:right;max-width:64%">
+                      <span class="body-md s8-value" id="s8-memo-type" style="color:var(--t)">—</span>
+                      <div class="s8-row-sub" id="s8-memo-type-sub"></div>
+                    </div>
+                  </div>
+                  <div class="form-row" style="align-items:flex-start">
+                    <span class="body-md" style="color:var(--s)">Size</span>
+                    <div style="text-align:right;max-width:64%">
+                      <span class="body-md s8-value" id="s8-memo-size" style="color:var(--t)">—</span>
+                      <div class="s8-row-sub" id="s8-memo-size-sub"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <span class="body-md" style="color:var(--s)">Estimated Portfolio Weight</span>
+                  <span class="body-md s8-value" id="s8-weight" style="color:var(--t)">0.00%</span>
+                </div>
+
+                <div class="form-row s8-tap" id="s8-limit-row" onclick="event.stopPropagation();openNumpad('limit')" style="align-items:flex-start">
+                  <div>
+                    <span class="body-md" style="color:var(--s)">Limit Price</span>
+                    <div class="s8-sub">
+                      <span class="s8-sub-text">Market Price</span>
+                      <span class="s8-sub-text" style="color:var(--s)">192.35 USD</span>
+                    </div>
+                  </div>
+                  <span class="body-md s8-value" id="s8-limit-disp" style="color:var(--p)">0.00</span>
+                </div>
+
+                <div class="form-row s8-tap" id="s8-shares-row" onclick="event.stopPropagation();openNumpad('shares')" style="align-items:flex-start">
+                  <div><span class="body-md" style="color:var(--s)">Shares</span></div>
+                  <span class="body-md s8-value" id="s8-shares-disp" style="color:var(--p)">0</span>
+                </div>
+
+                <div class="form-row">
+                  <span class="body-md" style="color:var(--s)">Duration</span>
+                  <span class="body-md" style="color:var(--t);display:inline-flex;align-items:center;gap:6px">Good for Day <span style="font-size:9px;color:var(--t-800)">⌄</span></span>
+                </div>
+
+                <div class="form-row">
+                  <span class="body-md" style="color:var(--s)">Estimated Cost</span>
+                  <span class="body-md s8-value" id="s8-cost" style="color:var(--t)">0.00 USD</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="act-row" style="flex-shrink:0;padding:0 26px 18px;justify-content:space-between">
+              <button class="act-btn" onclick="event.stopPropagation();go('m6')" type="button">
+                <span>→ Cancel</span>
+              </button>
+              <button class="act-btn locked" id="s8-review-btn" onclick="event.stopPropagation();goToReview()" type="button">
+                <span>→ Review</span>
+              </button>
+            </div>
+
+            <div class="ios-numpad" id="s8-numpad" onclick="event.stopPropagation()">
+              <div class="ios-key" onclick="numpadTap('1')"><span class="num">1</span></div>
+              <div class="ios-key" onclick="numpadTap('2')"><span class="num">2</span><span class="sub">ABC</span></div>
+              <div class="ios-key" onclick="numpadTap('3')"><span class="num">3</span><span class="sub">DEF</span></div>
+              <div class="ios-key" onclick="numpadTap('4')"><span class="num">4</span><span class="sub">GHI</span></div>
+              <div class="ios-key" onclick="numpadTap('5')"><span class="num">5</span><span class="sub">JKL</span></div>
+              <div class="ios-key" onclick="numpadTap('6')"><span class="num">6</span><span class="sub">MNO</span></div>
+              <div class="ios-key" onclick="numpadTap('7')"><span class="num">7</span><span class="sub">PQRS</span></div>
+              <div class="ios-key" onclick="numpadTap('8')"><span class="num">8</span><span class="sub">TUV</span></div>
+              <div class="ios-key" onclick="numpadTap('9')"><span class="num">9</span><span class="sub">WXYZ</span></div>
+              <div class="ios-key is-decimal" onclick="numpadTap('.')"><span class="num">.</span></div>
+              <div class="ios-key" onclick="numpadTap('0')"><span class="num">0</span></div>
+              <div class="ios-key is-action" onclick="numpadTap('del')"><span class="num">⌫</span></div>
+            </div>
+          </section>
+
+          <!-- ════════ s4 — Review & execute ════════ -->
+          <section class="scr" data-id="s4">
+            <div style="padding-top:0;flex-shrink:0">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:0 14px 14px">
+                <button class="back-btn" style="font-size:20px;padding:0" onclick="go('s8')" type="button">←</button>
+                <button class="exit-btn" onclick="exitMemo()" type="button">Exit</button>
+              </div>
+              <hr class="div">
+            </div>
+            <div class="body-scroll">
+              <div class="s4r-header">
+                <div class="s4r-header-inner">
+                  <div class="s4r-ticker">ATZ</div>
+                  <div class="s4r-action" id="s4-action">Buy</div>
+                </div>
+                <div class="s4r-header-meta">
+                  <span>Non-Registered</span>
+                  <span class="s4r-meta-sep">·</span>
+                  <span>18,698.53 USD</span>
+                </div>
+              </div>
+
+              <div class="s4r-stats">
+                <div class="s4r-stat">
+                  <div class="s4r-stat-lbl">Wt</div>
+                  <div class="s4r-stat-val" id="s4-weight">—</div>
+                </div>
+                <div class="s4r-stat">
+                  <div class="s4r-stat-lbl">Shr</div>
+                  <div class="s4r-stat-val" id="s4-shares">—</div>
+                </div>
+                <div class="s4r-stat">
+                  <div class="s4r-stat-lbl">Cost</div>
+                  <div class="s4r-stat-val" id="s4-cost">—</div>
+                </div>
+              </div>
+
+              <div class="s4r-section">
+                <div class="s4r-section-head">Order</div>
+                <div class="s4r-row">
+                  <div class="s4r-key">Type</div>
+                  <div class="s4r-val" id="s4-type">Market Buy</div>
+                </div>
+                <div class="s4r-row">
+                  <div class="s4r-key">Price</div>
+                  <div class="s4r-val">192.35 USD</div>
+                </div>
+              </div>
+
+              <div id="s4-memo-section" class="s4r-section" style="display:none">
+                <div class="s4r-section-head">Investor Memo</div>
+                <div class="s4r-row">
+                  <div class="s4r-key">Type</div>
+                  <div class="s4r-val">
+                    <span id="s4-memo-type">—</span>
+                    <div class="s4r-val-sub" id="s4-memo-type-sub"></div>
+                  </div>
+                </div>
+                <div class="s4r-row">
+                  <div class="s4r-key">Size</div>
+                  <div class="s4r-val">
+                    <span id="s4-memo-size">—</span>
+                    <div class="s4r-val-sub" id="s4-memo-size-sub"></div>
+                  </div>
+                </div>
+                <div class="s4r-row s4r-row--stack" id="s4-memo-note-row">
+                  <div class="s4r-key">Investment Case</div>
+                  <div class="s4r-val" id="s4-memo-note">—</div>
+                </div>
+              </div>
+
+              <div class="s4r-section">
+                <div class="s4r-section-head">Calibration</div>
+                <div class="s4r-row">
+                  <div class="s4r-key">Prob</div>
+                  <div class="s4r-val" id="s4-conf">—</div>
+                </div>
+                <div class="s4r-row">
+                  <div class="s4r-key">Horizon</div>
+                  <div class="s4r-val" id="s4-horizon">—</div>
+                </div>
+              </div>
+
+              <div style="height:20px"></div>
+            </div>
+
+            <div class="s4-exec-wrap" id="s4-exec"
+                 onmousedown="holdExecStart(event)" onmouseup="holdExecCancel()" onmouseleave="holdExecCancel()"
+                 ontouchstart="holdExecStart(event)" ontouchend="holdExecCancel()" ontouchcancel="holdExecCancel()">
+              <div class="s4-exec-fill" id="s4-exec-fill"></div>
+              <div class="s4-exec-label">Hold to confirm</div>
+            </div>
+          </section>
+
+          <!-- ════════ s9 — Order Filled ════════ -->
+          <section class="scr" data-id="s9">
+            <div class="body-scroll">
+              <div class="memo-page m6-ledger s9-ledger-page" style="gap:0">
+                <div class="s9-ledger-header">
+                  <div class="m6-ledger-meta" id="s9-filled-at">—</div>
+                  <div class="s9-ticker-hero"><span class="memo-ctx-ticker">ATZ</span></div>
+                  <div class="s9-event-label" id="s9-event-label">Order Filled</div>
+                  <div class="s9-order-subtype" id="s9-type">Market Buy</div>
+                </div>
+
+                <div class="m6-stats-strip s9-stats-strip">
+                  <div class="m6-stat-cell">
+                    <div class="m6-stat-lbl">Shares</div>
+                    <div class="m6-stat-val" id="s9-shares">—</div>
+                  </div>
+                  <div class="m6-stat-cell">
+                    <div class="m6-stat-lbl">Cost</div>
+                    <div class="m6-stat-val" id="s9-cost">—</div>
+                  </div>
+                  <div class="m6-stat-cell">
+                    <div class="m6-stat-lbl">Weight</div>
+                    <div class="m6-stat-val" id="s9-weight">—</div>
+                  </div>
+                </div>
+
+                <div id="s9-firstmemo-ribbon" class="s9-firstmemo-ribbon" onclick="finishOrder()">
+                  <span class="s9-firstmemo-mark">✓</span>
+                  <div class="s9-firstmemo-text">
+                    <div class="s9-firstmemo-title">First memo on file.</div>
+                    <div class="s9-firstmemo-sub">Calibration tracking starts today.</div>
+                  </div>
+                  <span class="s9-firstmemo-arrow">→</span>
+                </div>
+
+                <div id="s9-memo-section" style="display:none">
+                  <div class="m6-ledger-section-head">Investor Memo</div>
+                  <div class="memo-row"><div class="k">Type</div><div class="v" id="s9-memo-type">—</div></div>
+                  <div class="memo-row"><div class="k">Size</div><div class="v" id="s9-memo-size">—</div></div>
+                  <div class="memo-row s9-last-row"><div class="k">Investment Case</div><div class="v" id="s9-memo-note-val">—</div></div>
+                </div>
+
+                <div>
+                  <div class="m6-ledger-section-head">Calibration</div>
+                  <div class="memo-row"><div class="k">Prob</div><div class="v" id="s9-conf">—</div></div>
+                  <div class="memo-row s9-last-row"><div class="k">Hrz</div><div class="v" id="s9-horizon">—</div></div>
+                </div>
+
+                <div id="s9-memo-note" style="display:none;margin-top:18px">
+                  <div class="t-bsm" style="line-height:1.55">
+                    This memo is on file for <span class="memo-ctx-ticker">ATZ</span>. Future capital decisions reuse it unless you re-enter the memo.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="lpb" onclick="finishOrder()">Done</button>
+          </section>
+
+          <!-- ════════ Info modal ════════ -->
+          <div class="info-modal" id="info-modal">
+            <div class="info-modal-sheet">
+              <button class="info-modal-close" onclick="hideInfoModal()">✕</button>
+              <div class="info-modal-eyebrow" id="info-modal-eyebrow">—</div>
+              <div class="info-modal-title" id="info-modal-title">—</div>
+              <div class="info-modal-chart" id="info-modal-chart" style="display:none"></div>
+              <div class="info-modal-body" id="info-modal-body">—</div>
+            </div>
+          </div>
+
+          <!-- ════════ Pressure Test drawer ════════ -->
+          <div class="pt-overlay" id="pt-overlay" onclick="closePressureTest()"></div>
+          <div class="pt-drawer" id="pt-drawer" role="dialog" aria-label="Pressure Test">
+            <div class="pt-drawer-head">
+              <button class="pt-drawer-back" onclick="closePressureTest()" type="button" aria-label="Close">‹</button>
+              <div>
+                <div class="pt-drawer-title">Pressure Test</div>
+                <div class="pt-drawer-sub">Copy prompt · paste into AI</div>
+              </div>
+            </div>
+            <div class="pt-body" id="pt-body"></div>
+          </div>
+
+        </div><!-- /.scaler -->
+      </div><!-- /.surface -->
+
+      <div class="home-bar"></div>
+    </div><!-- /.frame -->
+  </div><!-- /.frame-wrap -->
+
+  <div class="page-label">
+    <span class="name" id="pageName">—</span>
+    <span class="sub" id="pageSub">—</span>
+  </div>
+</main>
+
+
+<script>
+/* ═════════════════════════════════════════════════
+   MVP V1 — first-time investment memo flow (extracted).
+   Hardcoded state; no localStorage; no version picker.
+   ═════════════════════════════════════════════════ */
+
+/* ── State ── */
+const state = {
+  version: 'mvp1',
+  cd: 'initial',
+  prob: 0,
+  horizon: '3y',
+  shares: '',
+  limitPrice: '',
+  orderType: 'limit',
+  activeInput: null,
+  memo: {
+    type: null,
+    size: null,
+    thesis: '',
+    kill: '',
+    mos: null,
+    note: '',
+    source: null,
+    intrinsicValue: '',
+    ivMethod: '',
+    marginEnough: null,
+    cantValue: false,
+    hurdleRate: 20,
+    horizonSel: null,
+    ptStatus: null,
+    ptConfirmed: null,
+    allocationType: null,
+  },
+  hasMemo: false,
+  transactions: [],
+  _memoEditedThisFlow: false,
+  editingFromReview: false,
+};
+
+window._currentScreenId = null;
+window._demoFilled = {};
+
+/* ── Persistence stubs (no-op) ── */
+function persistMemoDraft() {}
+function clearMemoDraft() {}
+function persistTransactions() {}
+
+/* ── Constants ── */
+const TYPE_LBL = { comp:'Compounder', emer:'Emerging Compounder', situ:'Situational Mispricing', spec:'Speculative' };
+const TYPE_SUB = {
+  comp: 'Businesses compounding capital at above-market rates with durable competitive position.',
+  emer: 'Businesses or themes early in their compounding lifecycle, with conviction they will graduate.',
+  situ: 'Assets trading materially below reasonable estimates of value due to identifiable dislocation.',
+  spec: 'Asymmetric upside with acknowledged binary or high-variance risk.'
+};
+const SIZE_LBL = { core:'Core', conv:'Conviction', start:'Starter', sspc:'Speculative' };
+const SIZE_SUB = {
+  core:  'Approximately 10%+',
+  conv:  'Approximately 5–10%',
+  start: 'Approximately 1–3%',
+  sspc:  'Approximately ≤2%'
+};
+const HORIZON_LBL = { '1y':'1 year', '2y':'2 years', '3y':'3 years', '4y':'4 years', '5y':'5 years' };
+
+const MKTPRICE_USD = 192.35;
+const FX_USD_CAD   = 1.0;
+const PORTVAL_CAD  = 285000;
+
+const MVP_EXAMPLE_MEMO = `Apple is mispriced because the market still treats it as a hardware-cycle story. The real engine is the installed base — over two billion active devices throwing off recurring, high-margin services revenue at gross margins north of 70%.
+
+My thesis rests on two things holding: Services revenue keeps compounding above 10% as the App Store, advertising, and financial services scale, and hardware gross margins stay above 38% even as iPhone unit growth flattens — proof that pricing power is real and the AI-silicon capex is paying for itself. I value the business around $255 a share — roughly 18× FY26 product earnings plus 22× services free cash flow, blended and discounted 15% for execution risk — which leaves a margin of safety near 25% at today's price.
+
+The near-term catalysts I'm watching are WWDC in June 2026 (AI-feature pricing), the iPhone 18 cycle in September, and the Q4 print where the Services run-rate should clear $120B annualized.
+
+I'll close the position if any one of three things happens: Services revenue growth drops below 8% for two consecutive quarters, hardware gross margin falls below 36% on a trailing-quarter basis, or iPhone unit volumes contract in Greater China for three consecutive quarters. Any of those breaks the durable-pricing-power claim, and I exit within ten trading days.`;
+
+const MEMO_FLOW_MVP1 = ['m1','m1b','m5','s12','m6'];
+
+/* ── Date formatter ── */
+function fmtDate(d) {
+  return (d || new Date()).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+/* ── Toast helper ── */
+function showToast(msg, ms) {
+  const t = document.getElementById('toast');
+  if (!t) return;
+  t.textContent = msg;
+  t.classList.add('is-on');
+  clearTimeout(showToast._timer);
+  showToast._timer = setTimeout(() => t.classList.remove('is-on'), ms || 2400);
+}
+
+</script>
+
+<script>
+/* ═════════════════════════════════════════════════
+   INFO MODALS — entries used by this flow
+   ═════════════════════════════════════════════════ */
+const INFO_MODALS = {
+  research_prompt: {
+    eyebrow: 'Research Prompt',
+    title:   'Copy this into your AI tool to draft your memo.',
+    bodyHtml: `
+<p>Tailored to ATZ at the 20% hurdle. Paste into ChatGPT, Claude, or any AI tool. The output is the raw material for your memo.</p>
+<div class="info-example" style="font-size:12px;line-height:1.6;color:var(--c-400);font-family:inherit;">
+<p><strong>Subject.</strong> Aritzia Inc. (TSX:ATZ). Canadian premium women's apparel. In-house multi-brand portfolio: Wilfred, TNA, Babaton, Super Puff. 110+ boutiques across Canada and the US, plus ecommerce. Founded Vancouver, 1984. Founder Brian Hill; CEO Jennifer Wong since 2022. Fiscal year ends early March; FY2026 = year ended March 2026.</p>
+<p><strong>Bar.</strong> 20% annualized over five years. The 3-year probability of clearing this bar is the binding number for the verdict.</p>
+<p><strong>What we want.</strong> A research document of 2,500 to 3,500 words covering nine sections: Business Overview, Classification, Thesis, Why Now, Kill Criteria, Intrinsic Value, Probability, Where Deeper Work Would Move the Probability, Verify on Fiscal. Each section answered. The structure is the deliverable.</p>
+</div>
+<p class="info-disclaimer">The full prompt is available on the Stock Page Research Prompt card.</p>
+`
+  },
+  fiscal_ai: {
+    eyebrow: 'Fiscal AI',
+    title:   'Verify the numbers in your memo.',
+    bodyHtml: `
+<p>Fiscal AI is your second-source check on financial figures. Run any number from your AI output through Fiscal to confirm it matches the filings.</p>
+<p>Use it to verify: revenue and growth, gross margin, store count, US mix, productivity per square foot, founder/CEO tenure, and any number cited as fact in your thesis.</p>
+<p class="info-disclaimer">Fiscal is reference data. The thesis and the call stay yours.</p>
+`
+  },
+  mfork_decision: {
+    eyebrow: 'Capital decision',
+    title:   'Two kinds of capital decisions — different bars apply.',
+    bodyHtml: `
+<p>Every capital decision falls into one of two categories. Naming which one you're making before you make it changes what counts as good work.</p>
+
+<h4>Active allocation</h4>
+<p>You believe this specific position can outperform a broad-market benchmark — through security selection, basket selection, or differentiated insight. You are claiming an edge.</p>
+<p><strong>What this requires:</strong> a thesis. A specific reason the market is wrong, a mechanism that corrects it, and a kill line if it doesn't.</p>
+
+<h4>Core / Treasury allocation</h4>
+<p>You are not claiming an edge. The position exists for broad-market exposure, liquidity preservation, or long-term compounding without an active bet.</p>
+<p><strong>What this requires:</strong> intent. Why this capital is in this form, the role it plays, and the conditions that would change that.</p>
+
+<p><em>Most portfolios are a mix. Be honest about which decision you're making — the wrong bar applied to the wrong decision is how positions end up over- or under-scrutinized.</em></p>
+`
+  },
+  business_type: {
+    eyebrow: 'Classify',
+    title:   'What kind of business is this?',
+    bodyHtml: `
+<p>Before the thesis, the category. Different bets succeed and fail in different ways — what counts as working for a compounder is not what counts as working for a mispricing. Pick the one that describes the bet, not the company.</p>
+
+<h4>Compounder</h4>
+<p>A high-quality business that reinvests capital at a high rate of return for a long time. You are buying the right to own the next 10–20 years of earnings.</p>
+<p><strong>How you know you're wrong:</strong> ROIC compresses, reinvestment opportunities run out, the moat erodes.</p>
+
+<h4>Emerging compounder</h4>
+<p>A business that looks like it could become a compounder but hasn't earned the label yet.</p>
+<p><strong>How you know you're wrong:</strong> the inflection doesn't happen.</p>
+
+<h4>Situational mispricing</h4>
+<p>A business trading materially below what it's worth for a specific, identifiable reason. Spin-off, complexity discount, post-bankruptcy.</p>
+<p><strong>How you know you're wrong:</strong> the catalyst doesn't materialize, or the discount persists.</p>
+
+<h4>Speculative</h4>
+<p>A position where the range of outcomes is wide and conviction in any single outcome is low — but the asymmetry is real.</p>
+<p><strong>What makes this honest:</strong> calling it speculative protects the rest of the portfolio from contamination.</p>
+
+<p><em>The category sets the standard you'll be judged against. Pick honestly — the rest of the memo depends on it.</em></p>
+`
+  },
+  position_size: {
+    eyebrow: 'Size',
+    title:   'What role does this position play?',
+    bodyHtml: `
+<p>Sizing is a statement of conviction, not enthusiasm. A position sized at 10% means you believe the analysis is durable enough to survive a 30% drawdown without re-litigation.</p>
+
+<h4>Core (10%+)</h4>
+<p>A position you'd defend in front of a skeptical board. The thesis is durable, the kill line is clearly defined, and you've done enough work that incremental volatility doesn't change your view.</p>
+
+<h4>Conviction (5–10%)</h4>
+<p>A position you believe in but where either the business quality or the price doesn't quite earn full sizing.</p>
+
+<h4>Starter (1–3%)</h4>
+<p>A position you're building toward. The work is partially done, the thesis is forming, and you want skin in the game while you continue the analysis.</p>
+
+<h4>Speculative (≤2%)</h4>
+<p>A bet, sized to its bet-ness. You expect to be wrong frequently here and the sizing reflects that.</p>
+
+<p><em>The most common sizing mistake is not picking the wrong number — it's picking a sizing label that doesn't match the underlying conviction.</em></p>
+`
+  },
+  mvp_memo_example: {
+    eyebrow: 'Example Memo',
+    title:   'A complete memo for ATZ.',
+    bodyHtml: `
+<p>A finished memo answers nine questions in sequence: what the business is, what kind of bet, the thesis, why now, what would kill it, what it's worth, the odds, what would sharpen the call, and how the numbers were verified.</p>
+
+<div class="info-example">
+  <div class="info-example-title">ATZ · May 2026 · Preview</div>
+
+  <p><strong>01 Business Overview.</strong> Aritzia Inc. designs and sells in-house women's fashion brands (Wilfred, TNA, Babaton, Super Puff) through 110+ boutiques in Canada and the US, plus a growing ecommerce business. Founded in Vancouver in 1984.</p>
+
+  <p><strong>02 Classification.</strong> Compounder. A durable brand-led business reinvesting in a long US store rollout. The bet is on multi-year unit growth at preserved economics, not on a near-term re-rating.</p>
+
+  <p><strong>03 Thesis.</strong> Aritzia is mispriced because the market still treats it as a Canadian specialty retailer cycling through fashion risk. The US rollout has now demonstrated the same productivity as Canadian boutiques, and US revenue has crossed 50% of mix for the first time. Returns come from long-duration earnings growth, not from transient mispricing.</p>
+
+  <p><strong>05 Kill Criteria.</strong> US same-store sales declines two consecutive quarters. Gross margin compression above 200bps sustained. US opening pace below 8 per year. Founder/CEO Jennifer Wong departure.</p>
+
+  <p><strong>06 Intrinsic Value.</strong> SOTP estimate 105 to 120 CAD per share over a five-year horizon. Core position, sized at 10%+ of total portfolio.</p>
+
+  <p><strong>07 Probability.</strong> 62% chance of clearing the 20% annualized hurdle over three years, conditional on the US rollout maintaining current productivity and gross margin holding above 42%.</p>
+</div>
+
+<p class="info-disclaimer">Preview of six of nine sections. The full nine-section memo is the deliverable. This example is illustrative, not a recommendation.</p>
+`
+  },
+  hurdle_standard: {
+    eyebrow: 'Hurdle',
+    title:   'A bar that rewards you even when you miss.',
+    body:    `The S&P 500 averages about 11% a year. If you can match that with an index fund and zero work, picking individual stocks only makes sense when you're aiming meaningfully higher.
+
+20% is set deliberately above that bar. Even if your thesis falls short — say it compounds at 15% instead of 20% — you still beat the index handily. The asymmetry is the point: you're building a margin of safety into the goal itself, not just the entry price.
+
+Stating "≥20%/yr" also forces honesty. It's a high bar, so most names won't clear it. That's by design — most stocks at most prices will not clear this bar, and that is the intended effect of the filter.`
+  },
+  uw_hurdle: {
+    eyebrow: 'Exceptional Compounding Hurdle',
+    title:   'The minimum compounding rate worth your active capital.',
+    body:    `The hurdle is the annual rate at which intrinsic value would have to grow for this position to justify active capital rather than an index allocation.
+
+20% is the default standard. It sits meaningfully above the long-run S&P 500 return (~11%), so even a thesis that falls short — say 15% — still beats passive exposure.
+
+Hurdle, horizon, and probability work together. A 20% hurdle over 3 years at 60% probability is a different bet than 20% over 5 years at 80%. Naming all three is what makes the prediction measurable later.`
+  },
+  uw_horizon: {
+    eyebrow: 'Exceptional Compounding Horizon',
+    title:   'The window over which the thesis must deliver.',
+    body:    `The horizon is the future date when the prediction gets judged against reality. Without one, you can't know if you were right — only whether the stock moved at some arbitrary moment.
+
+For compounding theses, 3+ years is the meaningful window. Shorter horizons are dominated by noise. Longer ones give the business room to deliver.
+
+Once the horizon arrives, your stated probability is compared to the actual outcome. That comparison, repeated across positions, is how calibration gets measured.`
+  },
+};
+
+/* ── Info-modal show / hide ── */
+function showInfoModal(key) {
+  const m = INFO_MODALS[key];
+  if (!m) return;
+  document.getElementById('info-modal-eyebrow').textContent = m.eyebrow;
+  document.getElementById('info-modal-title').textContent   = m.title;
+  const bodyEl = document.getElementById('info-modal-body');
+  if (m.bodyHtml) {
+    bodyEl.classList.add('is-html');
+    bodyEl.innerHTML = m.bodyHtml;
+  } else {
+    bodyEl.classList.remove('is-html');
+    bodyEl.textContent = m.body || '';
+  }
+  const sheetEl = bodyEl.closest('.info-modal-sheet');
+  if (sheetEl) sheetEl.scrollTop = 0;
+  const chartEl = document.getElementById('info-modal-chart');
+  if (chartEl) { chartEl.style.display = 'none'; chartEl.innerHTML = ''; }
+  document.getElementById('info-modal').classList.add('is-active');
+}
+function hideInfoModal() {
+  document.getElementById('info-modal').classList.remove('is-active');
+}
+
+</script>
+
+<script>
+/* ═════════════════════════════════════════════════
+   SCREEN ROUTER (go) — slim, only the 9 screens
+   ═════════════════════════════════════════════════ */
+function go(id) {
+  window._currentScreenId = id;
+  // Persist current step so back-navigation from external pages (Example Memo, Memo Intro) returns to the same step
+  try { sessionStorage.setItem('atz-flow-step', id); } catch(e){}
+  try { syncAllocLabels(); } catch(e){}
+  document.querySelectorAll('.scr').forEach(el => el.classList.remove('is-active'));
+  const el = document.querySelector(`.scr[data-id="${id}"]`);
+  if (el) {
+    el.classList.add('is-active');
+    const scroller = el.querySelector('.body-scroll');
+    if (scroller) scroller.scrollTop = 0;
+  }
+  // Hydrate per-screen state
+  if (id === 'mfork') hydrateMfork();
+  if (['m1','m1b','m5','s12','m6'].indexOf(id) !== -1) hydrateMemoStepNav(id);
+  if (['m1','m1b','m5','s12'].indexOf(id) !== -1) hydrateMemoScreen(id);
+  if (id === 's12') { renderS12Modules(); refreshMemoLocks(); }
+  if (id === 'm6') { renderM6(); refreshMemoLocks(); try { renderPtStep(); } catch(_) {} state.editingFromReview = false; }
+  if (['m1','m1b','m5'].indexOf(id) !== -1) { refreshEditModeUI(id); refreshMemoLocks(); }
+  if (id === 's8')  renderS8();
+  if (id === 's4')  renderS4();
+  if (id === 's9')  renderS9();
+
+  // Page labels under the phone
+  const meta = {
+    mfork: { name: 'Allocation fork',      sub: 'Active vs Core / Treasury' },
+    m1:    { name: 'Memo — Classify',      sub: 'Step 1 / 5' },
+    m1b:   { name: 'Memo — Size',          sub: 'Step 2 / 5' },
+    m5:    { name: 'Memo — Free-form',     sub: 'Step 3 / 5' },
+    s12:   { name: 'Calibration',          sub: 'Step 4 / 5' },
+    m6:    { name: 'Memo review',          sub: 'Step 5 / 5 · pressure test + seal' },
+    s8:    { name: 'Order ticket',         sub: 'Limit price + shares' },
+    s4:    { name: 'Review & execute',     sub: 'Hold to confirm' },
+    s9:    { name: 'Order filled',         sub: 'Receipt' },
+  }[id] || { name: id, sub: '' };
+  const pn = document.getElementById('pageName');
+  const ps = document.getElementById('pageSub');
+  if (pn) pn.textContent = meta.name;
+  if (ps) ps.textContent = meta.sub;
+
+  refreshDemoBtnState();
+}
+
+/* ── Exit (returns to mfork in this slim demo) ── */
+function exitMemo() {
+  // Reset everything to the initial first-time state.
+  state.shares = '';
+  state.limitPrice = '';
+  state.activeInput = null;
+  state.prob = 0;
+  state.horizon = '3y';
+  state._memoEditedThisFlow = false;
+  state.editingFromReview = false;
+  state.memo = {
+    type: null, size: null, thesis: '', kill: '', mos: null, note: '',
+    source: null, intrinsicValue: '', ivMethod: '', marginEnough: null,
+    cantValue: false, hurdleRate: 20, horizonSel: null,
+    ptStatus: null, ptConfirmed: null, allocationType: null,
+  };
+  Object.keys(window._demoFilled).forEach(k => { window._demoFilled[k] = false; });
+  // Reset radio rows
+  document.querySelectorAll('.field-list .radio-row').forEach(r => r.classList.remove('is-on'));
+  document.querySelectorAll('.mfork-option').forEach(r => r.classList.remove('is-on'));
+  // Clear textareas
+  const ta = document.getElementById('m5-note');
+  if (ta) { ta.value = ''; ta.style.height = ''; }
+  // Reset slider
+  const rng = document.getElementById('s12-prob-range');
+  if (rng) rng.value = 50;
+  setProb('s12', 0);
+  // Hide attachment chip
+  clearComposerFile('m5');
+  try { sessionStorage.removeItem('atz-ft-intent'); } catch(e){}
+  try {
+    var __v = localStorage.getItem('atz-memo-version');
+    var __pos = localStorage.getItem('atz-position-status');
+    if (__v && __pos === 'held') { window.location.href = 'Stock%20Page%20Return%20User.html'; return; }
+    if (__v) { window.location.href = 'Stock%20Page%20Memo%20Only.html'; return; }
+  } catch(e){}
+  window.location.href = 'Stock%20Page%20Firsttime%20User.html';
+}
+
+/* ═════════════════════════════════════════════════
+   MFORK
+   ═════════════════════════════════════════════════ */
+function syncAllocLabels(){
+  var t = state.memo.allocationType;
+  var label = (t === 'core') ? 'Core / Treasury Allocation' : 'Active Allocation';
+  document.querySelectorAll('.alloc-type-lbl').forEach(function(el){ el.textContent = label; });
+}
+
+function selectFork(type) {
+  if (type !== 'active' && type !== 'core') return;
+  state.memo.allocationType = type;
+  document.querySelectorAll('.mfork-option').forEach(el => el.classList.remove('is-on'));
+  var targetId = (type === 'core') ? 'mfork-opt-core' : 'mfork-opt-active';
+  const sel = document.getElementById(targetId);
+  if (sel) sel.classList.add('is-on');
+  const cont = document.getElementById('mfork-continue');
+  if (cont) cont.classList.remove('locked');
+}
+
+function continueFromFork() {
+  if (state.memo.allocationType !== 'active' && state.memo.allocationType !== 'core') return;
+  syncAllocLabels();
+  if (state.memo.allocationType === 'core') {
+    // Save decision to LS so Core Flow / Memo Review can reflect it
+    try { localStorage.setItem('atz-memo-decision', 'Core / Treasury Allocation'); } catch(e){}
+    window.location.href = 'Core%20Flow.html';
+    return;
+  }
+  // Active path: continue through m1/m1b/m5/s12/m6
+  try { localStorage.setItem('atz-memo-decision', 'Active Allocation'); } catch(e){}
+  go('m1');
+}
+
+function hydrateMfork() {
+  const type = state.memo.allocationType;
+  document.querySelectorAll('.mfork-option').forEach(el => el.classList.remove('is-on'));
+  const cont = document.getElementById('mfork-continue');
+  if (!type) { if (cont) cont.classList.add('locked'); return; }
+  if (type === 'active') {
+    const sel = document.getElementById('mfork-opt-active');
+    if (sel) sel.classList.add('is-on');
+  }
+  if (cont) cont.classList.remove('locked');
+}
+
+/* ═════════════════════════════════════════════════
+   MEMO FLOW HELPERS
+   ═════════════════════════════════════════════════ */
+function getMemoFlow() { return MEMO_FLOW_MVP1; }
+function getNextMemoStep(currentId) {
+  const idx = MEMO_FLOW_MVP1.indexOf(currentId);
+  if (idx === -1 || idx >= MEMO_FLOW_MVP1.length - 1) return null;
+  return MEMO_FLOW_MVP1[idx + 1];
+}
+function getPrevMemoStep(currentId) {
+  const idx = MEMO_FLOW_MVP1.indexOf(currentId);
+  if (idx <= 0) return null;
+  return MEMO_FLOW_MVP1[idx - 1];
+}
+function getMemoStepCounter(stepId) {
+  const idx = MEMO_FLOW_MVP1.indexOf(stepId);
+  if (idx === -1) return null;
+  if (stepId === 'm6') return 'Review';
+  return `${idx + 1} / ${MEMO_FLOW_MVP1.length}`;
+}
+function hydrateMemoStepNav(stepId) {
+  if (MEMO_FLOW_MVP1.indexOf(stepId) === -1) return;
+  const scr = document.querySelector(`.scr[data-id="${stepId}"]`);
+  if (!scr) return;
+  if (stepId !== 'm6') {
+    const counter = getMemoStepCounter(stepId);
+    if (counter) {
+      const meta = scr.querySelector('.memo-header-meta');
+      if (meta) meta.textContent = counter;
+    }
+  }
+}
+
+function advanceMemo(target) {
+  if (state.editingFromReview) { exitReviewEdit(); return; }
+  const cur = window._currentScreenId;
+  const next = getNextMemoStep(cur);
+  go(next || target);
+}
+
+function editFromReview(stepId) {
+  state.editingFromReview = true;
+  state._memoEditedThisFlow = true;
+  go(stepId);
+}
+function exitReviewEdit() {
+  state.editingFromReview = false;
+  go('m6');
+}
+
+/* Per-step Continue button id — used to swap label between
+   "→" (normal flow) and "Save changes" (edit mode). */
+const _MEMO_STEP_CTA_IDS = {
+  m1:  'm1-next', m1b: 'm1b-next', m5:  'm5-next', s12: 's12-cont',
+};
+function refreshEditModeUI(id) {
+  if (!_MEMO_STEP_CTA_IDS.hasOwnProperty(id)) return;
+  const ctaBtn = document.getElementById(_MEMO_STEP_CTA_IDS[id]);
+  if (!ctaBtn) return;
+  // Find the inner label span (last span without the .arrow class).
+  const labelSpan = ctaBtn.querySelector('span:not(.arrow)');
+  if (!labelSpan) return;
+  if (state.editingFromReview) {
+    if (!labelSpan.dataset._origLabel) labelSpan.dataset._origLabel = labelSpan.textContent;
+    labelSpan.textContent = 'Save changes';
+  } else {
+    if (labelSpan.dataset._origLabel) {
+      labelSpan.textContent = labelSpan.dataset._origLabel;
+    }
+  }
+}
+
+/* ── Step validity / lock state ── */
+function memoStepValid(id) {
+  const m = state.memo;
+  if (id === 'm1')  return !!m.type;
+  if (id === 'm1b') return !!m.size;
+  if (id === 'm5')  return !!(m.note && m.note.trim().length > 0);
+  if (id === 's12') return !!(m.hurdleRate && m.horizonSel && state.prob >= 5);
+  return true;
+}
+function refreshMemoLocks() {
+  ['m1','m1b','m5'].forEach(id => {
+    const btn = document.getElementById(id + '-next');
+    if (btn) btn.classList.toggle('locked', !memoStepValid(id));
+  });
+  const s12cont = document.getElementById('s12-cont');
+  if (s12cont) s12cont.classList.toggle('locked', !memoStepValid('s12'));
+}
+
+/* ── Hydrate memo screens from state ── */
+function hydrateMemoScreen(screenId) {
+  const m = state.memo;
+  if (screenId === 'm1') {
+    const list = document.querySelector('[data-list="m1-type"]');
+    if (list) list.querySelectorAll('.radio-row').forEach(r => r.classList.toggle('is-on', r.dataset.radio === m.type));
+  }
+  if (screenId === 'm1b') {
+    const list = document.querySelector('[data-list="m1-size"]');
+    if (list) list.querySelectorAll('.radio-row').forEach(r => r.classList.toggle('is-on', r.dataset.radio === m.size));
+    const adv = document.getElementById('m1b-cal-advisory');
+    if (adv) adv.style.display = (m.size === 'core' || m.size === 'conv') ? '' : 'none';
+  }
+  if (screenId === 'm5') {
+    const ta = document.getElementById('m5-note');
+    if (ta && ta.value !== (m.note || '')) {
+      ta.value = m.note || '';
+      autoExpand(ta);
+    }
+  }
+}
+
+/* ── Radio click delegation (m1 / m1b) ── */
+document.addEventListener('click', e => {
+  const row = e.target.closest('.radio-row');
+  if (!row) return;
+  const list = row.parentElement;
+  if (!list || !list.classList.contains('field-list') || !list.dataset.list) return;
+  list.querySelectorAll('.radio-row').forEach(r => r.classList.remove('is-on'));
+  row.classList.add('is-on');
+  const key = list.dataset.list;
+  const value = row.dataset.radio;
+  if (key === 'm1-type') state.memo.type = value;
+  if (key === 'm1-size') {
+    state.memo.size = value;
+    const adv = document.getElementById('m1b-cal-advisory');
+    if (adv) adv.style.display = (value === 'core' || value === 'conv') ? '' : 'none';
+  }
+  refreshMemoLocks();
+});
+
+/* ═════════════════════════════════════════════════
+   M5 — free-form composer
+   ═════════════════════════════════════════════════ */
+function autoExpand(el) {
+  if (!el) return;
+  el.style.height = '1px';
+  el.style.height = el.scrollHeight + 'px';
+}
+function onM5NoteInput() {
+  const ta = document.getElementById('m5-note');
+  state.memo.note = (ta && ta.value) || '';
+  if (typeof refreshMemoLocks === 'function') refreshMemoLocks();
+}
+async function pasteToTextarea(id) {
+  const ta = document.getElementById(id);
+  if (!ta) return;
+  try {
+    const text = await navigator.clipboard.readText();
+    if (text) {
+      ta.value = (ta.value || '') + text;
+      onM5NoteInput();
+      autoExpand(ta);
+      showToast('Pasted from clipboard');
+    }
+  } catch (_) {
+    showToast('Clipboard not available — type or attach instead');
+  }
+}
+const _pendingAttachments = {};
+function attachComposerFile(event, cid) {
+  const f = event.target.files && event.target.files[0];
+  if (!f) return;
+  _pendingAttachments[cid] = f;
+  const chip = document.getElementById(`${cid}-attachment`);
+  const name = document.getElementById(`${cid}-attachment-name`);
+  if (name) name.textContent = f.name;
+  if (chip) chip.style.display = '';
+  event.target.value = '';
+  showToast('Attached ' + f.name);
+}
+function clearComposerFile(cid) {
+  delete _pendingAttachments[cid];
+  const chip = document.getElementById(`${cid}-attachment`);
+  if (chip) chip.style.display = 'none';
+}
+
+</script>
+
+<script>
+/* ═════════════════════════════════════════════════
+   S12 — Hurdle / Horizon / Calibration
+   ═════════════════════════════════════════════════ */
+function probLabel(v) {
+  if (v < 30) return 'Doubtful';
+  if (v < 50) return 'Plausible';
+  if (v === 50) return 'Coin flip';
+  if (v <= 70) return 'Likely';
+  if (v <= 85) return 'Confident';
+  return 'High conviction';
+}
+function setProb(scr, val) {
+  const v = parseInt(val, 10);
+  state.prob = v;
+  const num = document.getElementById(scr + '-prob-num');
+  if (num) num.textContent = (v === 0) ? '—' : v;
+  const msgEl = document.getElementById(scr + '-prob-msg');
+  if (msgEl) msgEl.textContent = (v === 0) ? '—' : probLabel(v);
+  const disp = document.getElementById(scr + '-prob-display');
+  if (disp) { if (v >= 5) disp.classList.remove('empty'); else disp.classList.add('empty'); }
+  const range = document.getElementById(scr + '-prob-range');
+  if (range) {
+    const min = parseInt(range.min, 10) || 0;
+    const max = parseInt(range.max, 10) || 100;
+    const pct = ((v - min) / (max - min) * 100).toFixed(1);
+    range.style.background = `linear-gradient(to right, var(--p) ${pct}%, var(--divider) ${pct}%)`;
+  }
+  if (scr === 's12') refreshMemoLocks();
+}
+
+function setHorizonSel(val) {
+  state.memo.horizonSel = val;
+  renderHorizonSel(val);
+  const horizMap = { y1: '1y', y3: '3y', y5p: '5y' };
+  if (horizMap[val]) state.horizon = horizMap[val];
+  setTimeout(() => {
+    const cm = document.getElementById('s12-cal-module');
+    if (cm) cm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 200);
+  refreshMemoLocks();
+}
+function renderHorizonSel(val) {
+  document.querySelectorAll('[data-list="s12-horizon-list"] .s12-horizon-opt, [data-list="s12-horizon-list"] .radio-row').forEach(btn => {
+    btn.classList.toggle('is-on', btn.dataset.horiz === val);
+  });
+}
+
+function renderS12Modules() {
+  // Always show the compounder view (we keep the underwriting trio as the standard).
+  const compView = document.getElementById('s12-comp-view');
+  if (compView) compView.style.display = '';
+  const rate = state.memo.hurdleRate || 20;
+  const hurdleDisplay = document.getElementById('s12-hurdle-display');
+  if (hurdleDisplay) hurdleDisplay.textContent = rate + '% per year';
+  const hurdleInline = document.getElementById('s12-horizon-hurdle-num');
+  if (hurdleInline) hurdleInline.textContent = rate;
+  // Classify line: pull from m1 type + m1b size selections
+  try {
+    const typeLbl = TYPE_LBL[state.memo.type] || '—';
+    const sizeLbl = SIZE_LBL[state.memo.size] || '—';
+    const tEl = document.getElementById('s12-type-lbl');
+    const sEl = document.getElementById('s12-size-lbl');
+    if (tEl) tEl.textContent = typeLbl;
+    if (sEl) sEl.textContent = sizeLbl;
+  } catch(_){}
+  // Horizon date labels (today + 1Y / 3Y / 5Y)
+  try {
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const now = new Date();
+    function addYears(d, y){ const x = new Date(d); x.setFullYear(x.getFullYear() + y); return x; }
+    function fmt(d){ return months[d.getMonth()] + ' ' + d.getFullYear(); }
+    const dt1 = document.getElementById('s12-dt-y1');
+    const dt3 = document.getElementById('s12-dt-y3');
+    const dt5 = document.getElementById('s12-dt-y5p');
+    if (dt1) dt1.textContent = fmt(addYears(now, 1));
+    if (dt3) dt3.textContent = fmt(addYears(now, 3));
+    if (dt5) dt5.textContent = fmt(addYears(now, 5));
+  } catch(_){}
+  // Update the prob display empty class
+  try {
+    const disp = document.getElementById('s12-prob-display');
+    if (disp) {
+      if (state.prob && state.prob >= 5) disp.classList.remove('empty');
+      else disp.classList.add('empty');
+    }
+  } catch(_){}
+  renderHorizonSel(state.memo.horizonSel);
+  setProb('s12', state.prob);
+  refreshMemoLocks();
+}
+
+function continueFromS12() {
+  if (!memoStepValid('s12')) return;
+  if (state.editingFromReview) { exitReviewEdit(); return; }
+  const nextStep = getNextMemoStep('s12') || 'm6';
+  go(nextStep);
+}
+
+/* ═════════════════════════════════════════════════
+   M6 — Review (institutional ledger)
+   ═════════════════════════════════════════════════ */
+function buildSizeValueHtml(sizeKey) {
+  const lbl = SIZE_LBL[sizeKey] || '—';
+  const sub = SIZE_SUB[sizeKey];
+  return sub ? `${lbl}<div class="memo-row-sub">${sub}</div>` : lbl;
+}
+function renderM6() {
+  const m = state.memo;
+  // Ticker meta
+  const tickerMeta = document.getElementById('m6-ticker-meta');
+  if (tickerMeta) tickerMeta.innerHTML = '<span class="memo-ctx-ticker">ATZ</span> · Review';
+
+  // Type / Size rows
+  const typeEl = document.getElementById('m6-type');
+  if (typeEl) {
+    const lbl = TYPE_LBL[m.type] || '—';
+    const sub = TYPE_SUB[m.type];
+    typeEl.innerHTML = sub ? `${lbl}<div class="memo-row-sub">${sub}</div>` : lbl;
+  }
+  const sizeEl = document.getElementById('m6-size');
+  if (sizeEl) sizeEl.innerHTML = buildSizeValueHtml(m.size);
+
+  // Free-form memo (the whole memo in MVP V1)
+  const noteDisp = document.getElementById('m6-note-display');
+  if (noteDisp) noteDisp.textContent = (m.note || '').trim() || '—';
+
+  // Calibration rows
+  const probEl = document.getElementById('m6-prob');
+  if (probEl) probEl.textContent = state.prob > 0 ? state.prob + '%' : '—';
+  const hrzEl = document.getElementById('m6-horizon');
+  if (hrzEl) hrzEl.textContent = HORIZON_LBL[state.horizon] || state.horizon;
+
+  // Classify line
+  const classifyEl = document.getElementById('m6-classify');
+  if (classifyEl) {
+    const parts = [TYPE_LBL[m.type], SIZE_LBL[m.size]].filter(Boolean);
+    classifyEl.textContent = parts.join(' · ') || '—';
+  }
+  // Date
+  document.getElementById('m6-date').textContent = 'Drafted ' + fmtDate();
+}
+
+/* ═════════════════════════════════════════════════
+   PRESSURE TEST (drawer + m6 step widget)
+   ═════════════════════════════════════════════════ */
+const PT_MODES = [
+  {
+    name: 'Adversarial review',
+    desc: 'Attack the load-bearing claims.',
+    when: 'Recommended first pass.',
+    defaults: { fundamentals: true, transcript: false, valuation: true },
+    role: `You are an adversarial investment reviewer. Your job is not to validate the thesis below. Assume it is wrong. Find why.`,
+    instructions: `1. Identify the 3 load-bearing claims in this memo. State them in one sentence each.
+2. For each claim, give the strongest specific counter. Cite the data in this document where possible. Generic objections (valuation, competition, macro) are not acceptable unless tied to a specific mechanism.
+3. State the falsification condition for each claim: what specific, observable event in the next 4 quarters would require the author to abandon it?
+4. End with one question the author has not asked themselves but should.
+
+Do not summarize the memo. Do not affirm the thesis. Do not hedge. If a claim is sound, say so in one line and move on.`,
+    followUps: [
+      `Of the objections you raised, which would a long-only PM weight most heavily, and why?`,
+      `Which of the falsification conditions you proposed is most likely to actually trigger in the next 90 days?`,
+      `Steelman the original thesis against your own critique. Where does the bear case actually weaken?`
+    ]
+  },
+  {
+    name: 'Bear case',
+    desc: 'Construct the strongest case against.',
+    when: 'Use when conviction feels high.',
+    defaults: { fundamentals: true, transcript: false, valuation: true },
+    role: `You are a short-seller building the strongest possible case against the position below.`,
+    instructions: `1. State the single most dangerous structural risk in this memo. One paragraph, no hedging.
+2. Identify the company-specific mechanism through which this risk becomes loss.
+3. Construct a 3-scenario bear case: base bear, stress bear, tail bear.
+4. For each scenario, estimate the likely price impact range and timeline.
+5. End with the one data point that, if published tomorrow, would be most damaging to the long thesis.`,
+    followUps: [
+      `If the base bear case plays out, at what price does the position become interesting again?`,
+      `Which of the three bear scenarios would be hardest to distinguish from temporary noise in the first 60 days?`,
+      `What is the one assumption in the bear case that is itself most vulnerable to being wrong?`
+    ]
+  },
+  {
+    name: 'PRE-MORTEM',
+    desc: 'This position is down 50% in 18 months. Why?',
+    when: 'Use after sizing decision.',
+    defaults: { fundamentals: false, transcript: false, valuation: true },
+    role: `You are conducting a post-mortem on a failed investment. The loss has already occurred.`,
+    instructions: `1. Identify the specific error in the original thesis — not what the market did, but what the analyst got wrong.
+2. State whether the error was analytical, informational, or psychological. Be precise.
+3. Describe the sequence of events over 18 months.
+4. Name the decision point at which a disciplined investor would have exited.
+5. End with one change to the original memo that would have prevented the loss.`,
+    followUps: [
+      `What would the investor likely have said to defend the position at the midpoint?`,
+      `If you had to construct an alternative post-mortem where the position succeeded, what single factor would have been different?`,
+      `What does this failure pattern resemble in investment history?`
+    ]
+  },
+  {
+    name: 'Falsification',
+    desc: 'What observable would force you to abandon the thesis?',
+    when: 'Use to define exit conditions.',
+    defaults: { fundamentals: true, transcript: false, valuation: false },
+    role: `You are a logician reviewing an investment thesis for falsifiability.`,
+    instructions: `1. Identify the 3 central claims. For each, state the falsification condition.
+2. Name the specific data source where this would first appear.
+3. Identify which of the 3 is most likely to trigger first, with a time horizon in quarters.
+4. Review the thesis for any claims that are not falsifiable. Name them.
+5. End with one metric the author should track weekly.`,
+    followUps: [
+      `Of the three falsification conditions, which is most susceptible to being rationalized away?`,
+      `Draft a standing instruction: "If [condition] occurs, I will [action] within [timeframe]."`,
+      `Which of your falsification conditions is least specific?`
+    ]
+  },
+  {
+    name: 'Red team data',
+    desc: 'Confront the memo with its own numbers.',
+    when: 'Use when thesis leans on fundamentals.',
+    defaults: { fundamentals: true, transcript: false, valuation: true },
+    role: `You are a forensic analyst reviewing the financial data appended to this investment memo.`,
+    instructions: `1. Identify 3 specific places where the data does not support a claim made in the memo.
+2. Identify the financial metric most critical to the thesis. Explain what trend over 2 quarters would invalidate the bull case.
+3. Flag any data that is conspicuously absent.
+4. Run one back-of-envelope test on the implied return.
+5. End with one number the author should be asked about directly.`,
+    followUps: [
+      `Of the discrepancies you identified, which would be hardest for management to explain away?`,
+      `What additional data would most change your assessment of the thesis?`,
+      `The metric you flagged as doing the most work — what is a reasonable base case over the next 4 quarters?`
+    ]
+  }
+];
+
+const PT_DATA_FUNDAMENTALS = `LTM revenue growth: +4.2%
+LTM gross margin: 46.9%
+LTM operating margin: 31.1%
+Free cash flow (LTM): $108.2B
+Net cash position: $52.1B
+Return on equity: 160.6%`;
+
+const PT_DATA_VALUATION = `Last close: $192.35
+Market cap: $2.91T
+Fwd P/E: 26.2x
+LTM EPS: $6.97
+Fwd EPS: $7.33
+52-week range: $169.21 – $237.49`;
+
+const _ptToggles = {};
+let _ptOpenCard = -1;
+function _getPtToggles(idx) {
+  if (!_ptToggles[idx]) _ptToggles[idx] = Object.assign({}, PT_MODES[idx].defaults);
+  return _ptToggles[idx];
+}
+function _buildPromptText(idx) {
+  const mode = PT_MODES[idx];
+  const t    = _getPtToggles(idx);
+  const m    = state.memo;
+  const ticker = 'ATZ';
+  const today  = new Date().toISOString().slice(0, 10);
+  const parts = [];
+  if (m.note) parts.push(m.note.trim());
+  const memoBlock = parts.length ? parts.join('\n\n') : '[No memo content entered yet.]';
+  const dataLines = [`Ticker: ${ticker}`, `As of: ${today}`];
+  if (t.valuation)    dataLines.push(PT_DATA_VALUATION);
+  if (t.fundamentals) dataLines.push(PT_DATA_FUNDAMENTALS);
+  const dataBlock = dataLines.join('\n');
+  return `# ROLE\n${mode.role}\n\n# INSTRUCTIONS\n${mode.instructions}\n\n# MEMO\n${memoBlock}\n\n# DATA\n${dataBlock}\n\n# END`;
+}
+function openPressureTest() {
+  _ptOpenCard = -1;
+  _renderPtCards();
+  document.getElementById('pt-overlay').classList.add('is-open');
+  document.getElementById('pt-drawer').classList.add('is-open');
+}
+function closePressureTest() {
+  document.getElementById('pt-overlay').classList.remove('is-open');
+  document.getElementById('pt-drawer').classList.remove('is-open');
+}
+function selectPtCard(idx) {
+  _ptOpenCard = (_ptOpenCard === idx) ? -1 : idx;
+  _renderPtCards();
+}
+function setPtToggle(idx, key, val) {
+  _getPtToggles(idx)[key] = val;
+  _renderPtCards();
+}
+function _renderPtCards() {
+  const body = document.getElementById('pt-body');
+  if (!body) return;
+  const cardsHtml = PT_MODES.map((mode, idx) => {
+    const isOpen = (_ptOpenCard === idx);
+    const t = _getPtToggles(idx);
+    const promptText = isOpen ? _buildPromptText(idx) : '';
+    const escaped = promptText.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    const toggleRows = [
+      ['Include fundamentals data',   'fundamentals', t.fundamentals],
+      ['Include transcript excerpts', 'transcript',   t.transcript],
+      ['INCLUDE PRICE / VALUATION',   'valuation',    t.valuation]
+    ].map(([lbl, key, val]) => `
+      <div class="pt-toggle-row">
+        <span class="pt-toggle-lbl">${lbl}</span>
+        <label class="pt-toggle">
+          <input type="checkbox" ${val ? 'checked' : ''} onchange="setPtToggle(${idx},'${key}',this.checked)">
+          <span class="pt-toggle-track"></span>
+          <span class="pt-toggle-thumb"></span>
+        </label>
+      </div>`).join('');
+    return `<div class="pt-card${isOpen ? ' is-open' : ''}" id="pt-card-${idx}">
+      <button class="pt-card-trigger" type="button" onclick="selectPtCard(${idx})">
+        <div class="pt-card-name">${mode.name}</div>
+        <div class="pt-card-desc">${mode.desc}</div>
+        <div class="pt-card-when">${mode.when}</div>
+      </button>
+      ${isOpen ? `<div class="pt-card-body">
+        <div class="pt-toggles">${toggleRows}</div>
+        <div class="pt-preview">${escaped}</div>
+        <button class="pt-copy-btn" id="pt-copy-${idx}" type="button" onclick="copyPtPrompt(${idx})">COPY PROMPT + MEMO</button>
+      </div>` : ''}
+    </div>`;
+  }).join('');
+  const followHtml = _ptOpenCard >= 0 ? `
+    <div class="pt-after-head">After you run it</div>
+    ${PT_MODES[_ptOpenCard].followUps.map(text => `
+    <div class="pt-follow-item">
+      <span class="pt-follow-text">${text}</span>
+      <button class="pt-follow-copy" type="button" onclick="copyPtFollowUp(this, ${JSON.stringify(text)})">COPY</button>
+    </div>`).join('')}` : '';
+  body.innerHTML = cardsHtml + `<div style="padding:0 2px">${followHtml}</div>`;
+}
+function copyPtPrompt(idx) {
+  const text = _buildPromptText(idx);
+  const btn  = document.getElementById('pt-copy-' + idx);
+  navigator.clipboard.writeText(text).catch(() => {});
+  if (!btn) return;
+  btn.textContent = 'COPIED ✓';
+  btn.classList.add('is-copied');
+  setTimeout(() => { btn.textContent = 'COPY PROMPT + MEMO'; btn.classList.remove('is-copied'); }, 1500);
+}
+function copyPtFollowUp(btn, text) {
+  navigator.clipboard.writeText(text).catch(() => {});
+  btn.textContent = 'Copied';
+  btn.classList.add('is-copied');
+  setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('is-copied'); }, 1500);
+}
+
+function _revealSeal() {
+  const sealBtn = document.getElementById('m6-seal-btn');
+  if (!sealBtn) return;
+  setTimeout(() => {
+    sealBtn.classList.remove('is-pt-locked');
+    sealBtn.classList.add('is-pt-ready');
+  }, 180);
+}
+function onPtConfirmCheck(checkbox) {
+  state.memo.ptConfirmed = checkbox.checked;
+  const lbl = document.querySelector('#pt-step .pt-confirm-lbl');
+  if (checkbox.checked) {
+    if (lbl) lbl.textContent = 'Pressure tested';
+    _revealSeal();
+  } else {
+    if (lbl) lbl.textContent = 'I have pressure tested';
+    const sealBtn = document.getElementById('m6-seal-btn');
+    if (sealBtn) {
+      sealBtn.classList.remove('is-pt-ready');
+      sealBtn.classList.add('is-pt-locked');
+    }
+  }
+}
+function renderPtStep() {
+  const el = document.getElementById('pt-step');
+  if (!el) return;
+  const status = state.memo.ptStatus || null;
+  if (!status) {
+    el.className = 'pt-step';
+    el.style.display = '';
+    el.innerHTML = `
+      <button class="pt-step-skip" onclick="skipPressureTest()" type="button">Skip for now</button>
+      <button class="pt-step-run" onclick="runPressureTest()" type="button">Pressure Test →</button>
+      <div class="pt-step-sub">Challenge this memo before you commit.</div>`;
+  } else if (status === 'done') {
+    el.className = 'pt-step is-resolved';
+    el.style.display = '';
+    const confirmed = !!state.memo.ptConfirmed;
+    el.innerHTML = `
+      <div class="pt-done-row">
+        <label class="pt-confirm-row">
+          <input class="pt-confirm-check" type="checkbox" id="pt-confirm-check"
+                 onchange="onPtConfirmCheck(this)" ${confirmed ? 'checked' : ''}>
+          <span class="pt-confirm-lbl">${confirmed ? 'Pressure tested' : 'I have pressure tested'}</span>
+        </label>
+        <button class="pt-step-redo" onclick="runPressureTest()" type="button">Start again</button>
+      </div>`;
+    if (confirmed) _revealSeal();
+  } else {
+    el.className = 'pt-step is-resolved';
+    el.style.display = '';
+    el.innerHTML = `
+      <div class="pt-step-status">
+        <span class="pt-step-status-lbl">— Skipped</span>
+        <button class="pt-step-redo" onclick="runPressureTest()" type="button">Start anyway</button>
+      </div>`;
+    _revealSeal();
+  }
+}
+function _animatePtExit(callback) {
+  const el = document.getElementById('pt-step');
+  if (!el) { callback(); return; }
+  el.classList.add('is-exiting');
+  setTimeout(callback, 270);
+}
+function runPressureTest() {
+  _animatePtExit(() => {
+    state.memo.ptStatus = 'done';
+    renderPtStep();
+    openPressureTest();
+  });
+}
+function skipPressureTest() {
+  _animatePtExit(() => {
+    state.memo.ptStatus = 'skip';
+    renderPtStep();
+  });
+}
+
+/* ── Seal handlers ── */
+function onM6SealTap() {
+  // First-time flow: no edit confirmation needed.
+  commitMemo();
+}
+function closeM6UpdateModal() {
+  const m = document.getElementById('m6-update-modal');
+  if (m) m.classList.remove('is-on');
+}
+function confirmM6UpdateCommit() {
+  closeM6UpdateModal();
+  commitMemo();
+}
+function persistV1ToLS() {
+  try {
+    var decisionMap   = { active: 'Active Allocation', core: 'Core / Treasury Allocation' };
+    var classifyMap   = { comp: 'Compounder', emer: 'Emerging Compounder', situ: 'Situational Mispricing', spec: 'Speculative' };
+    var sizeMap       = { core: 'Core', conv: 'Conviction', start: 'Starter', sspc: 'Speculative' };
+    var horizonMap    = { y1: '1 Year', y3: '3 Years', y5p: '5+ Years' };
+    var decision       = decisionMap[state.memo.allocationType] || '';
+    var classification = classifyMap[state.memo.type] || '';
+    var sizing         = sizeMap[state.memo.size] || '';
+    var memoText       = state.memo.note || '';
+    var probability    = state.prob ? String(state.prob) : '';
+    var horizon        = horizonMap[state.memo.horizonSel] || '';
+    localStorage.setItem('atz-memo-decision', decision);
+    localStorage.setItem('atz-memo-classification', classification);
+    localStorage.setItem('atz-memo-sizing', sizing);
+    localStorage.setItem('atz-memo-memo', memoText);
+    localStorage.setItem('atz-memo-probability', probability);
+    localStorage.setItem('atz-memo-horizon', horizon);
+    localStorage.setItem('atz-memo', memoText);
+    var curr = localStorage.getItem('atz-memo-version');
+    var nextV = 'V1';
+    if (curr) { var m = /^V(\d+)$/.exec(curr); if (m) nextV = 'V' + (parseInt(m[1], 10) + 1); }
+    var intent = getFlowIntent();
+    var event = (intent === 'buy') ? 'buy' : 'memo';
+    var snap = {
+      version: nextV, timestamp: Date.now(), event: event,
+      decision: decision, classification: classification, sizing: sizing,
+      memo: memoText, horizon: horizon, probability: probability
+    };
+    var hist = [];
+    try { hist = JSON.parse(localStorage.getItem('atz-memo-history') || '[]'); } catch(e){}
+    hist.push(snap);
+    localStorage.setItem('atz-memo-history', JSON.stringify(hist));
+    localStorage.setItem('atz-memo-version', nextV);
+    localStorage.setItem('atz-memo-user-created', 'true');
+  } catch(e){ console.warn('persistV1 failed', e); }
+}
+
+function getFlowIntent(){
+  try {
+    var fromUrl = (new URLSearchParams(window.location.search)).get('intent');
+    if (fromUrl === 'memo' || fromUrl === 'buy') {
+      sessionStorage.setItem('atz-ft-intent', fromUrl); return fromUrl;
+    }
+    var fromSession = sessionStorage.getItem('atz-ft-intent');
+    if (fromSession === 'memo' || fromSession === 'buy') return fromSession;
+  } catch(e){}
+  return 'buy';
+}
+
+function updateM6CTALabel(){
+  try {
+    var intent = getFlowIntent();
+    var lbl = document.getElementById('m6SealLbl');
+    if (lbl) lbl.textContent = (intent === 'memo') ? 'Save Memo' : 'Save & Continue';
+  } catch(e){}
+}
+(function captureIntent(){ try { getFlowIntent(); } catch(e){} })();
+document.addEventListener('DOMContentLoaded', updateM6CTALabel);
+document.addEventListener('DOMContentLoaded', function() {
+  // Hurdle rate — read user's setting from Memo Intro (#87)
+  try {
+    var h = localStorage.getItem('atz-memo-hurdle-rate');
+    if (h !== null && h !== '') {
+      var rate = parseInt(h, 10);
+      if (!isNaN(rate)) {
+        if (state && state.memo) { state.memo.hurdleRate = rate; }
+        // Update s12 calibration title (chairman 2026-06-01 PM: show actual hurdle in title)
+        var s12HurdleEl = document.getElementById('s12-hurdle-num');
+        if (s12HurdleEl) { s12HurdleEl.textContent = rate; }
+      }
+    }
+  } catch(e){}
+  // Restore previous step if user is returning from an external reference page (e.g., Example Memo, Memo Intro, Research Prompt)
+  var validSteps = ['mfork','m1','m1b','m5','s12','m6','s8','s4','s9'];
+  function _restoreFromSession(forceRestore){
+    var restoreStep = null;
+    try { restoreStep = sessionStorage.getItem('atz-flow-step'); } catch(e){}
+    if (restoreStep && validSteps.indexOf(restoreStep) !== -1) {
+      // If forceRestore (e.g., from pageshow), always re-apply even if current screen differs
+      if (forceRestore || window._currentScreenId !== restoreStep) {
+        try { go(restoreStep); } catch(e) { console.error('restore failed:', e); try { go('mfork'); } catch(_){} }
+      }
+      return true;
+    }
+    return false;
+  }
+  if (!_restoreFromSession(false)) {
+    try { go('mfork'); } catch(e) { console.error('init failed:', e); }
+  }
+});
+
+// Handle bfcache restoration (browser back/forward) — re-apply persisted step
+window.addEventListener('pageshow', function(ev){
+  if (ev.persisted) {
+    // Page restored from bfcache — JS state is intact, but ensure step matches persisted value
+    try {
+      var validSteps = ['mfork','m1','m1b','m5','s12','m6','s8','s4','s9'];
+      var restoreStep = sessionStorage.getItem('atz-flow-step');
+      if (restoreStep && validSteps.indexOf(restoreStep) !== -1 && window._currentScreenId !== restoreStep) {
+        go(restoreStep);
+      }
+    } catch(e){}
+  }
+});
+
+function commitMemo() {
+  state.hasMemo = true;
+  persistV1ToLS();
+  var intent = getFlowIntent();
+  if (intent === 'memo') {
+    try { sessionStorage.removeItem('atz-ft-intent'); } catch(e){}
+    window.location.href = 'Stock%20Page%20Memo%20Only.html';
+    return;
+  }
+  go('s8');
+}
+
+</script>
+
+<script>
+/* ═════════════════════════════════════════════════
+   S8 — Order ticket (limit price + shares numpad)
+   ═════════════════════════════════════════════════ */
+function renderS8() {
+  state.shares     = state.shares || '';
+  state.limitPrice = state.limitPrice || '';
+  updateInputsDisplay();
+  requestAnimationFrame(() => { openNumpad('limit'); });
+
+  // Buy header
+  const s8Act = document.getElementById('s8-action-label');
+  if (s8Act) s8Act.textContent = 'Buy';
+
+  // Memo top-rows
+  const memoTopRows = document.getElementById('s8-memo-toprows');
+  if (memoTopRows) memoTopRows.style.display = '';
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v || '—'; };
+  set('s8-memo-type', TYPE_LBL[state.memo.type]);
+  set('s8-memo-size', SIZE_LBL[state.memo.size]);
+  const typeSub = document.getElementById('s8-memo-type-sub');
+  if (typeSub) typeSub.textContent = TYPE_SUB[state.memo.type] || '';
+  const sizeSub = document.getElementById('s8-memo-size-sub');
+  if (sizeSub) sizeSub.textContent = SIZE_SUB[state.memo.size] || '';
+}
+
+function openNumpad(which) {
+  state.activeInput = which;
+  const pad = document.getElementById('s8-numpad');
+  if (pad) pad.classList.add('is-open');
+  const limitRow  = document.getElementById('s8-limit-row');
+  const sharesRow = document.getElementById('s8-shares-row');
+  if (limitRow)  limitRow.classList.toggle('is-active',  which === 'limit');
+  if (sharesRow) sharesRow.classList.toggle('is-active', which === 'shares');
+}
+function closeNumpad() {
+  state.activeInput = null;
+  const pad = document.getElementById('s8-numpad');
+  if (pad) pad.classList.remove('is-open');
+  const limitRow  = document.getElementById('s8-limit-row');
+  const sharesRow = document.getElementById('s8-shares-row');
+  if (limitRow)  limitRow.classList.remove('is-active');
+  if (sharesRow) sharesRow.classList.remove('is-active');
+}
+function numpadTap(val) {
+  const which = state.activeInput;
+  if (!which) return;
+  if (which === 'shares') {
+    if (val === '.') return;
+    if (val === 'del') state.shares = state.shares.slice(0, -1);
+    else if (state.shares.length < 6) {
+      state.shares = (state.shares + val).replace(/^0+(\d)/, '1');
+    }
+  } else if (which === 'limit') {
+    if (val === 'del') {
+      state.limitPrice = state.limitPrice.slice(0, -1);
+    } else if (val === '.') {
+      if (state.limitPrice.indexOf('.') === -1) {
+        state.limitPrice = (state.limitPrice || '0') + '.';
+      }
+    } else {
+      const dot = state.limitPrice.indexOf('.');
+      if (dot !== -1 && state.limitPrice.length - dot > 2) return;
+      if (state.limitPrice.length >= 8) return;
+      state.limitPrice = (state.limitPrice + val).replace(/^0+(\d)/, '1');
+    }
+  }
+  updateInputsDisplay();
+}
+function updateInputsDisplay() {
+  const n = parseInt(state.shares, 10) || 0;
+  const limit = parseFloat(state.limitPrice) || 0;
+  const sharesDisp = document.getElementById('s8-shares-disp');
+  if (sharesDisp) sharesDisp.textContent = state.shares.length > 0 ? state.shares : '0';
+  const limitDisp = document.getElementById('s8-limit-disp');
+  if (limitDisp) limitDisp.textContent = state.limitPrice.length > 0 ? state.limitPrice : '0.00';
+  const priceUSD = limit > 0 ? limit : MKTPRICE_USD;
+  const costCAD = n * priceUSD * FX_USD_CAD;
+  const w = document.getElementById('s8-weight');
+  const c = document.getElementById('s8-cost');
+  if (w) w.textContent = (costCAD / PORTVAL_CAD * 100).toFixed(2) + '%';
+  if (c) c.textContent = costCAD.toLocaleString('en-US', { minimumFractionDigits:2, maximumFractionDigits:2 }) + ' USD';
+  const reviewBtn = document.getElementById('s8-review-btn');
+  if (reviewBtn) {
+    if (n > 0 && limit > 0) reviewBtn.classList.remove('locked');
+    else                    reviewBtn.classList.add('locked');
+  }
+}
+function goToReview() {
+  closeNumpad();
+  go('s4');
+}
+
+/* ═════════════════════════════════════════════════
+   S4 — Review & execute (hold-to-confirm)
+   ═════════════════════════════════════════════════ */
+function renderS4() {
+  const n = parseInt(state.shares, 10) || 0;
+  const limit = parseFloat(state.limitPrice) || 0;
+  const isLimit = state.orderType === 'limit' && limit > 0;
+  const priceUSD = isLimit ? limit : MKTPRICE_USD;
+  const costCAD = n * priceUSD * FX_USD_CAD;
+  document.getElementById('s4-action').textContent = 'Buy';
+  document.getElementById('s4-type').textContent = (isLimit ? 'Limit ' : 'Market ') + 'Buy';
+  document.getElementById('s4-weight').textContent = n ? (costCAD / PORTVAL_CAD * 100).toFixed(2) + '%' : '—';
+  document.getElementById('s4-shares').textContent = n || '—';
+  document.getElementById('s4-cost').textContent = n
+    ? costCAD.toLocaleString('en-US', { minimumFractionDigits:2, maximumFractionDigits:2 }) + ' USD'
+    : '—';
+  document.getElementById('s4-conf').textContent = state.prob + '%';
+  document.getElementById('s4-horizon').textContent = HORIZON_LBL[state.horizon] || state.horizon;
+
+  const memoSec = document.getElementById('s4-memo-section');
+  if (memoSec) memoSec.style.display = 'block';
+  document.getElementById('s4-memo-type').textContent = TYPE_LBL[state.memo.type] || '—';
+  document.getElementById('s4-memo-size').textContent = SIZE_LBL[state.memo.size] || '—';
+  const typeSub = document.getElementById('s4-memo-type-sub');
+  if (typeSub) typeSub.textContent = TYPE_SUB[state.memo.type] || '';
+  const sizeSub = document.getElementById('s4-memo-size-sub');
+  if (sizeSub) sizeSub.textContent = SIZE_SUB[state.memo.size] || '';
+  document.getElementById('s4-memo-note').textContent = (state.memo.note || '').trim() || '—';
+}
+
+const HOLD_MS = 1800;
+let _holdTimer = null;
+function holdExecStart(e) {
+  if (e) e.preventDefault();
+  const fill = document.getElementById('s4-exec-fill');
+  if (fill) {
+    fill.style.transition = `width ${HOLD_MS}ms linear`;
+    fill.style.width = '100%';
+  }
+  _holdTimer = setTimeout(() => { holdExecCancel(); execOrder(); }, HOLD_MS);
+}
+function holdExecCancel() {
+  if (_holdTimer) { clearTimeout(_holdTimer); _holdTimer = null; }
+  const fill = document.getElementById('s4-exec-fill');
+  if (fill) {
+    fill.style.transition = 'width 280ms ease-out';
+    fill.style.width = '0%';
+  }
+}
+function execOrder() {
+  recordTransaction();
+  go('s9');
+}
+function recordTransaction() {
+  const n = parseInt(state.shares, 10) || 0;
+  const limit = parseFloat(state.limitPrice) || 0;
+  const priceUSD = limit > 0 ? limit : MKTPRICE_USD;
+  state.transactions.push({
+    id: 't-' + Date.now(),
+    date: fmtDate(),
+    action: 'Buy',
+    shares: n,
+    cost: n * priceUSD * FX_USD_CAD,
+    prob: state.prob,
+    horizon: state.horizon,
+    memo: Object.assign({}, state.memo),
+  });
+}
+
+/* ═════════════════════════════════════════════════
+   S9 — Order Filled receipt
+   ═════════════════════════════════════════════════ */
+function renderS9() {
+  const n = parseInt(state.shares, 10) || 0;
+  const limit = parseFloat(state.limitPrice) || 0;
+  const isLimit = state.orderType === 'limit' && limit > 0;
+  const priceUSD = isLimit ? limit : MKTPRICE_USD;
+  const costCAD = n * priceUSD * FX_USD_CAD;
+
+  document.getElementById('s9-shares').textContent = n;
+  document.getElementById('s9-weight').textContent = (costCAD / PORTVAL_CAD * 100).toFixed(2) + '%';
+  document.getElementById('s9-cost').textContent = costCAD.toLocaleString('en-US', { minimumFractionDigits:2, maximumFractionDigits:2 }) + ' USD';
+  const s9Type = document.getElementById('s9-type');
+  if (s9Type) s9Type.textContent = (isLimit ? 'Limit ' : 'Market ') + 'Buy';
+  const s9Event = document.getElementById('s9-event-label');
+  if (s9Event) s9Event.textContent = 'Order Filled';
+  document.getElementById('s9-conf').textContent = state.prob + '%';
+  document.getElementById('s9-horizon').textContent = HORIZON_LBL[state.horizon] || state.horizon;
+
+  const filledEl = document.getElementById('s9-filled-at');
+  if (filledEl) {
+    const now = new Date();
+    const time = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+    const date = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    filledEl.textContent = `Filled at ${time} · ${date}`;
+  }
+
+  // Memo section — show classification, sizing, investment case note
+  const memoSec  = document.getElementById('s9-memo-section');
+  const memoNote = document.getElementById('s9-memo-note');
+  if (memoSec) memoSec.style.display = 'block';
+  const memoType = document.getElementById('s9-memo-type');
+  if (memoType) memoType.textContent = state.memo && state.memo.classification ? state.memo.classification : '—';
+  const memoSize = document.getElementById('s9-memo-size');
+  if (memoSize) memoSize.textContent = state.memo && state.memo.sizing ? state.memo.sizing : '—';
+  const memoNoteVal = document.getElementById('s9-memo-note-val');
+  if (memoNoteVal) {
+    const noteText = (state.memo && state.memo.memo) ? state.memo.memo : '';
+    memoNoteVal.textContent = noteText.length > 220 ? noteText.slice(0,220).trim()+'…' : (noteText || '—');
+  }
+}
+
+// Init
+document.addEventListener('DOMContentLoaded', function(){
+  if (typeof boot === 'function') boot();
+});
+  </script>
+</body>
+</html>

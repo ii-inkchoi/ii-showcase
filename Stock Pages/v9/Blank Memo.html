@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Memo · ATZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+* { scrollbar-width: none; -ms-overflow-style: none; }
+*::-webkit-scrollbar { display: none; }
+button { background: transparent; border: none; color: inherit; font: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+
+:root {
+  --bg: #000000;
+  --c-1000: #1C1C1C;
+  --c-900:  #232627;
+  --c-800:  #565B5E;
+  --c-700:  #929292;
+  --c-400:  #C7C7C7;
+  --c-200:  #E3E2E2;
+  --c-white: #FFFFFF;
+  --c-elev: #0A0A0A;
+  --c-live: #30D158;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+html, body { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--c-400);
+  font-family: var(--font);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  font-feature-settings: 'tnum' 1;
+  width: 100%;
+  max-width: 393px;
+  margin: 0 auto;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  padding-bottom: 120px;
+}
+
+/* Topbar */
+.topbar { display: flex; justify-content: space-between; align-items: center; padding: 0 13.5px; height: 71px; flex-shrink: 0; border-bottom: 1px solid var(--c-900); font-size: 0; }
+.topbar .back { width: 13px; height: 13px; display: inline-flex; align-items: center; justify-content: center; color: var(--c-400); }
+.topbar .back::before { content: ''; width: 8px; height: 8px; border-left: 1px solid currentColor; border-bottom: 1px solid currentColor; transform: rotate(45deg); margin-left: 2px; }
+.topbar .back:active { opacity: .5; transition: opacity 80ms ease; }
+.topbar .exit { font-size: 14px; color: var(--c-400); letter-spacing: -0.02em; }
+.topbar .exit:active { opacity: .5; transition: opacity 80ms ease; }
+
+.compliance-strip { display: flex; align-items: center; padding: 8px 20px; font-size: 9px; letter-spacing: -0.02em; color: var(--c-800); border-bottom: 0.5px solid var(--c-1000); line-height: 1.3; }
+
+/* Hero header */
+.bm-header { padding: 24px 20px 20px; }
+.bm-ticker-hero { font-size: 34px; font-weight: 400; letter-spacing: -0.02em; color: var(--c-400); line-height: 1.18; margin-bottom: 12px; }
+.bm-doc-label { font-size: 15px; color: var(--c-200); letter-spacing: -0.02em; display: inline-flex; align-items: center; gap: 8px; }
+.bm-doc-label .live-dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--c-live); animation: live-pulse 2.4s cubic-bezier(0.45,0,0.55,1) infinite; }
+.bm-doc-label .live-dot.is-empty { background: var(--c-800); animation: none; }
+@keyframes live-pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
+@media (prefers-reduced-motion: reduce){ .live-dot { animation:none !important; } }
+
+/* Notes — primary input, the ONLY editable area in MVP */
+.notes-section { padding: 24px 20px 8px; border-top: 0.5px solid var(--c-1000); }
+.notes-eyebrow { font-size: 11px; color: var(--c-700); letter-spacing: -0.01em; margin-bottom: 10px; display: flex; align-items: baseline; justify-content: space-between; }
+.notes-eyebrow .notes-count { color: var(--c-800); }
+.notes-input-wrap { display: flex; flex-direction: column; gap: 8px; }
+.notes-input {
+  width: 100%; min-height: 96px; resize: none; overflow: hidden;
+  background: transparent; border: 0.5px solid var(--c-900);
+  color: var(--c-200); font-family: inherit; font-size: 13px; line-height: 1.55; letter-spacing: -0.02em;
+  padding: 14px 14px;
+  -webkit-tap-highlight-color: transparent;
+}
+.notes-input:focus { outline: none; border-color: var(--c-700); }
+.notes-input::placeholder { color: var(--c-800); }
+.notes-toolbar { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+.notes-save { font-size: 11px; color: var(--c-800); padding: 6px 0; border: none; background: transparent; letter-spacing: -0.02em; transition: color 120ms ease; }
+.notes-save:focus, .notes-save:focus-visible { outline: none; }
+.notes-save:active { opacity: .5; transition: opacity 80ms ease; }
+.notes-save.is-ready { color: var(--c-200); cursor: pointer; }
+.notes-save.is-saved { color: var(--c-white, #FFFFFF); cursor: default; pointer-events: none; }
+.notes-save:not(.is-ready):not(.is-saved) { pointer-events: none; }
+
+/* Saved notes list */
+.notes-list { display: flex; flex-direction: column; margin-top: 20px; }
+.notes-item { padding: 14px 0; border-bottom: 0.5px solid var(--c-1000); display: flex; flex-direction: column; gap: 4px; }
+.notes-item:last-child { border-bottom: none; }
+.notes-item-date { font-size: 11px; color: var(--c-700); }
+.notes-item-text { font-size: 13px; color: var(--c-400); line-height: 1.55; white-space: pre-wrap; }
+.notes-show-more { font-size: 11px; color: var(--c-400); padding: 14px 0; align-self: flex-start; background: none; border: none; cursor: pointer; -webkit-tap-highlight-color: transparent; font-family: inherit; letter-spacing: -0.01em; }
+.notes-show-more:active { opacity: 0.5; transition: opacity 80ms ease; }
+
+/* Reference — Instructions + Example Memo (read-only links) */
+.bm-refs { padding: 28px 20px 8px; border-top: 0.5px solid var(--c-1000); margin-top: 28px; }
+.bm-refs-eyebrow { font-size: 11px; color: var(--c-700); letter-spacing: -0.01em; margin-bottom: 14px; }
+.bm-ref-card { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0; border-bottom: 0.5px solid var(--c-1000); }
+.bm-ref-card:last-child { border-bottom: none; }
+.bm-ref-card:active { opacity: .5; transition: opacity 80ms ease; }
+.bm-ref-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+.bm-ref-t { font-size: 13px; color: var(--c-200); letter-spacing: -0.02em; line-height: 1.2; }
+.bm-ref-d { font-size: 11px; color: var(--c-700); letter-spacing: -0.01em; line-height: 1.35; }
+.bm-ref-chev { color: var(--c-700); font-size: 14px; font-weight: 300; line-height: 1; flex-shrink: 0; }
+
+/* Sticky CTA — Start Underwriting (optional manual entry) */
+.save-cta { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 393px; padding: 40px 13.5px 24px; display: flex; justify-content: flex-end; background: linear-gradient(to top, var(--bg) 0%, var(--bg) 60%, rgba(0,0,0,0) 100%); pointer-events: none; z-index: 10; }
+.save-cta a { pointer-events: auto; display: inline-flex; align-items: baseline; gap: 8px; font-size: 15px; color: var(--c-white); letter-spacing: -0.02em; padding: 8px 4px; }
+.save-cta a:active { opacity: .5; transition: opacity 80ms ease; }
+.save-cta .arrow { font-weight: 500; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="#" onclick="event.preventDefault(); goBack();" aria-label="Back"></a>
+  <a class="exit" href="#" onclick="event.preventDefault(); goBack();" aria-label="Exit">Exit</a>
+</div>
+
+<div class="compliance-strip">Self-Authored · No Suitability Review · Not Advice</div>
+
+<!-- Hero -->
+<div class="bm-header">
+  <h1 class="bm-ticker-hero">ATZ</h1>
+  <div class="bm-doc-label">
+    <span class="live-dot is-empty" id="liveDot" aria-hidden="true"></span>
+    <span>Memo</span>
+  </div>
+</div>
+
+<!-- Notes — primary (and only) input in MVP. V1: single text block, no list. -->
+<div class="notes-section">
+  <div class="notes-eyebrow">
+    <span>Notes</span>
+  </div>
+  <div class="notes-input-wrap">
+    <textarea class="notes-input" id="notesInput" rows="3" placeholder="Add a note. Capture a thought, a thesis, a question." oninput="onNotesInput(this)"></textarea>
+    <div class="notes-toolbar">
+      <button type="button" class="notes-save" id="notesSaveBtn" onclick="saveNote()">Save Note</button>
+    </div>
+  </div>
+</div>
+
+<!-- Reference -->
+<div class="bm-refs">
+  <div class="bm-refs-eyebrow">Reference</div>
+  <a class="bm-ref-card" href="Example%20Memo.html">
+    <div class="bm-ref-body">
+      <div class="bm-ref-t">View Example Memo</div>
+      <div class="bm-ref-d">A finished memo. See what a completed record looks like.</div>
+    </div>
+    <span class="bm-ref-chev" aria-hidden="true">›</span>
+  </a>
+  <a class="bm-ref-card" href="Memo%20Intro.html?intent=memo">
+    <div class="bm-ref-body">
+      <div class="bm-ref-t">Instructions</div>
+      <div class="bm-ref-d">How underwriting works. Principles and the full workflow.</div>
+    </div>
+    <span class="bm-ref-chev" aria-hidden="true">›</span>
+  </a>
+</div>
+
+<!-- Sticky CTA — Start Underwriting (optional, user can go to full flow when ready) -->
+<div class="save-cta">
+  <a href="First-time%20Memo%20Flow.html?intent=memo"><span class="arrow">→</span> Start Underwriting</a>
+</div>
+
+<script>
+function goBack(){
+  if (window.history.length > 1) { window.history.back(); return; }
+  var src = null;
+  try { src = sessionStorage.getItem('atz-memo-stock-source'); } catch(e){}
+  if (src) { window.location.href = src; return; }
+  if (document.referrer) { window.location.href = document.referrer; return; }
+  window.location.href = 'Stock%20Page%20Firsttime%20User.html';
+}
+
+// ── Notes V1 — single text block. Add, edit, delete. localStorage = plain string.
+// Chairman directive 2026-06-02: "It's just one note. You can add, edit, delete. Keep it really simple."
+var NOTES_KEY = 'atz-memo-notes';
+
+function getNote(){
+  try { return localStorage.getItem(NOTES_KEY) || ''; } catch(e){ return ''; }
+}
+function setNote(text){
+  try { localStorage.setItem(NOTES_KEY, text); } catch(e){}
+}
+function autoExpand(el){
+  if (!el) return;
+  el.style.height = 'auto';
+  el.style.height = el.scrollHeight + 'px';
+}
+function updateLiveDot(){
+  var dot = document.getElementById('liveDot');
+  if (!dot) return;
+  var text = (getNote() || '').trim();
+  if (text.length > 0) dot.classList.remove('is-empty');
+  else dot.classList.add('is-empty');
+}
+function onNotesInput(el){
+  autoExpand(el);
+  var btn = document.getElementById('notesSaveBtn');
+  if (!btn) return;
+  // Ready when text differs from saved value (allows save of empty to clear)
+  var savedText = getNote();
+  if (el.value !== savedText) btn.classList.add('is-ready');
+  else btn.classList.remove('is-ready');
+}
+function saveNote(){
+  var el = document.getElementById('notesInput');
+  if (!el) return;
+  var text = el.value || '';
+  setNote(text);
+  var btn = document.getElementById('notesSaveBtn');
+  if (btn) {
+    btn.classList.remove('is-ready');
+    btn.classList.add('is-saved');
+    btn.textContent = 'Saved';
+    el.blur(); // remove focus from textarea after save
+    setTimeout(function(){
+      btn.classList.remove('is-saved');
+      btn.textContent = 'Save Note';
+    }, 1200);
+  }
+  updateLiveDot();
+}
+function renderNotes(){
+  var el = document.getElementById('notesInput');
+  if (!el) return;
+  el.value = getNote();
+  autoExpand(el);
+  updateLiveDot();
+  var btn = document.getElementById('notesSaveBtn');
+  if (btn) btn.classList.remove('is-ready');
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', renderNotes);
+} else { renderNotes(); }
+window.addEventListener('pageshow', function(ev){ if (ev.persisted) renderNotes(); });
+</script>
+</body>
+</html>

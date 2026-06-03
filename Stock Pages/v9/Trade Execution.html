@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Trade Execution — ATZ (Leo's page)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+button { background: transparent; border: none; color: inherit; font: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg:#000000; --c-1000:#1C1C1C; --elev:#0A0A0A;
+  --p:#FFFFFF; --s:#C7C7C7; --t:#929292; --t-800:#565B5E;
+  --font:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+html, body { height: 100%; }
+body {
+  background: var(--bg); color: var(--s); font-family: var(--font); font-weight: 400;
+  letter-spacing: -0.02em;
+  width: 100%; max-width: 393px; margin: 0 auto; min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  display: flex; flex-direction: column;
+}
+.topbar { display:flex; justify-content:space-between; align-items:center; padding:12px 16px; flex-shrink:0; }
+.back-btn { color: var(--p); font-size: 22px; font-weight: 200; line-height: 1; padding: 0; }
+.exit-btn { color: var(--p); font-size: 15px; padding: 0; }
+.div-hr { border: none; border-top: 0.5px solid var(--c-1000); margin: 0; }
+.body-scroll { flex: 1; padding: 48px 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; text-align: center; }
+.placeholder-box {
+  border: 1px dashed #232627;
+  padding: 40px 24px;
+  width: 100%;
+}
+.placeholder-eyebrow { font-size: 10px; color: var(--t-800); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
+.placeholder-title { font-size: 18px; color: var(--p); letter-spacing: -0.02em; line-height: 1.3; font-weight: 500; margin-bottom: 14px; }
+.placeholder-body { font-size: 13px; color: var(--t); letter-spacing: -0.01em; line-height: 1.55; }
+.placeholder-body strong { color: var(--s); font-weight: 500; }
+.context-meta { font-size: 11px; color: var(--t); letter-spacing: -0.01em; margin-top: 12px; }
+.context-meta .action { color: var(--p); }
+</style>
