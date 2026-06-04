@@ -156,7 +156,7 @@
     a.gain-row:active { opacity: 0.5; transition: opacity 80ms ease; }
     .gain-pair { display: flex; align-items: center; gap: 4px; }
     .ga { color: var(--c-400); font-feature-settings: 'lnum' 1, 'tnum' 1; }
-    .gp { color: #c7c7c7; font-feature-settings: 'lnum' 1, 'tnum' 1; }
+    .gp { color: var(--c-700); font-feature-settings: 'lnum' 1, 'tnum' 1; }
     .gp-chev { color: var(--c-700); font-size: 13px; font-weight: 300; line-height: 1; margin-left: 4px; }
     .gt { color: #929292; text-transform: capitalize; }
 
@@ -238,11 +238,9 @@
     .perf-block {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 6px;
       width: 100%;
-      padding: 16px 0;
-      border-top: 0.5px solid var(--c-900);
-      border-bottom: 0.5px solid var(--c-900);
+      padding: 0;
       color: inherit;
       text-decoration: none;
       -webkit-tap-highlight-color: transparent;
@@ -251,9 +249,9 @@
     .perf-header {
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: baseline;
-      gap: 12px;
+      margin-bottom: 4px;
     }
     .perf-label {
       font-size: 15px;
@@ -264,29 +262,21 @@
     }
     .perf-row {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: baseline;
+      gap: 10px;
       width: 100%;
       white-space: nowrap;
     }
     .perf-key { font-size: 13px; color: var(--c-700); font-feature-settings: 'lnum' 1, 'tnum' 1; letter-spacing: -0.02em; }
-    .perf-val { font-size: 15px; color: var(--c-400); font-feature-settings: 'lnum' 1, 'tnum' 1; letter-spacing: -0.02em; }
+    .perf-val { font-size: 13px; color: var(--c-400); font-feature-settings: 'lnum' 1, 'tnum' 1; letter-spacing: -0.02em; }
     .perf-row.diff {
       position: relative;
-      margin-top: 16px;
-    }
-    .perf-row.diff::before {
-      content: '';
-      position: absolute;
-      top: -16px;
-      left: 0;
-      right: 0;
-      height: 0;
-      border-top: 0.5px solid var(--c-900);
     }
     .perf-row.diff .perf-key { color: var(--c-700); }
     .perf-row.diff .perf-val { color: var(--c-white); }
-    .perf-pp { color: var(--c-700); margin-left: 6px; font-size: 13px; }
+    .perf-pp { color: var(--c-700); margin-left: 6px; font-size: 12px; }
+    .perf-ccy { color: var(--c-800); margin-left: 5px; font-size: 12px; }
     .perf-chev { color: var(--c-700); font-size: 14px; font-weight: 300; line-height: 1; margin-left: 4px; }
 
     /* Inline table */
@@ -304,6 +294,8 @@
     .tl      { color: #929292; }
     .tl-mid  { color: var(--c-700); }
     .tv      { color: var(--c-400); font-feature-settings: 'lnum' 1, 'tnum' 1; }
+    .tbl .w  { min-width: 34px; text-align: right; }
+    .tbl .mv { min-width: 52px; text-align: right; }
 
     /* Cash block */
     .cash-block {
@@ -336,6 +328,77 @@
       text-transform: capitalize;
     }
     .acct-chev { width: 7px; height: 4px; display: block; }
+    /* Account filter — II Design System bottom sheet: Selection variant (open dismiss) */
+    .sheet-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 50;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .sheet-overlay.open { opacity: 1; pointer-events: auto; transition-delay: 150ms; }
+    .acct-sheet {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      width: 100%;
+      max-width: 393px;
+      background: var(--c-1000);
+      padding: 24px 24px 32px;
+      z-index: 51;
+      text-align: left;
+      transform: translate(-50%, 100%);
+      transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .sheet-overlay.open .acct-sheet { transform: translate(-50%, 0); transition: transform 240ms cubic-bezier(0.4, 0, 0.2, 1) 150ms; }
+    .sheet-x {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .sheet-x svg { width: 14px; height: 14px; display: block; }
+    .sheet-x line { stroke: var(--c-700); stroke-width: 1; stroke-linecap: square; }
+    .sheet-title {
+      font-size: 18px;
+      line-height: 1.45;
+      letter-spacing: -0.02em;
+      color: var(--c-white);
+      margin: 12px 36px 0 0;
+    }
+    .sheet-opts { margin-top: 28px; }
+    .sheet-opt {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 12px 0;
+      background: transparent;
+      border: none;
+      border-top: 1px solid #3A3D3E;
+      font-family: inherit;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--c-white);
+      text-align: left;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .sheet-opt:first-child { border-top: none; }
+    .sheet-opt:active { opacity: 0.6; transition: opacity 100ms ease; }
+    .opt-check { width: 14px; height: 11px; flex-shrink: 0; opacity: 0; transition: opacity 120ms ease; }
+    .opt-check path { stroke: #FFFFFF; stroke-width: 1; fill: none; stroke-linecap: square; stroke-linejoin: miter; }
+    .sheet-opt.selected .opt-check { opacity: 1; }
 
     /* Positions group */
     .pos-group {
@@ -772,7 +835,7 @@
        No extra click — user sees these immediately upon landing.
        Full Open Questions screen still exists separately as a focused view. -->
   <div class="oq-page-head">
-    <span class="ph-value">4 Open Questions</span> · <span class="ph-label">May 19 · 13:18</span>
+    <span class="ph-value">4 Open Questions</span> · <span class="ph-label">Jun 4 · 13:18</span>
   </div>
 
   <section class="oq-list" aria-label="Open questions">
@@ -909,7 +972,7 @@
               <span class="gt">All time</span>
               <div class="gain-pair">
                 <span class="ga" data-final="+6,365.65" data-r="0.60">+6,365.65</span>
-                <span class="gp" data-final="(+5.3%)" data-r="0.60">(+5.3%)</span>
+                <span class="gp" data-final="+5.3%" data-r="0.60">+5.3%</span>
               </div>
             </div>
           </div>
@@ -941,8 +1004,8 @@
             <span class="t-primary">Active</span>
             <span class="t-secondary">Self-directed</span>
           </div>
-          <div class="acct-sw">
-            <span class="acct-label">All Accounts</span>
+          <div class="acct-sw" id="acctSw" role="button" aria-haspopup="listbox">
+            <span class="acct-label" id="acctLabel">All Accounts</span>
             <svg class="acct-chev" viewBox="0 0 7 4" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M0.5 0.5L3.5 3.5L6.5 0.5" stroke="#c7c7c7" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -953,27 +1016,27 @@
           <!-- Value block — simple rate of return removed per MVP spec (benchmark card carries the outcome) -->
           <div class="db">
             <span class="db-label">Value</span>
-            <span class="n22"><span data-final="46,777.23" data-r="0.78">46,777.23</span></span>
+            <span class="n22"><span data-final="46,777.23" data-r="0.78" id="acctValue">46,777.23</span></span>
           </div>
 
           <!-- Performance vs S&P 500 — v3 (benchmark wealth comparison · all accounts) -->
-          <a href="Performance%20Dashboard.html" class="perf-block" data-active="true" aria-label="View performance dashboard">
+          <a href="Performance%20Dashboard.html" class="perf-block" data-active="true" id="cardLink" aria-label="View performance dashboard">
             <div class="perf-header">
-              <span class="perf-label">S&amp;P 500 Benchmark · All Accounts</span>
-              <span class="perf-chev" aria-hidden="true">›</span>
+              <span class="perf-label">S&amp;P 500 Benchmark</span>
             </div>
             <div class="perf-row">
               <span class="perf-key">Portfolio Value</span>
-              <span class="perf-val">58,420.18</span>
+              <span class="perf-val" id="cardPv">46,777.23</span>
             </div>
             <div class="perf-row">
-              <span class="perf-key">S&amp;P 500 Alternative</span>
-              <span class="perf-val">56,236.00</span>
+              <span class="perf-key">S&amp;P 500 Value</span>
+              <span class="perf-val"><span id="cardSpv">44,593.05</span><span class="perf-ccy">CAD</span></span>
             </div>
             <div class="perf-row diff">
               <span class="perf-key">Difference</span>
-              <span class="perf-val">+2,184.18<span class="perf-pp">+3.88%</span></span>
+              <span class="perf-val" id="cardDiff">+2,184.18<span class="perf-pp" id="cardPct">+4.90%</span></span>
             </div>
+            <span class="view-all" style="margin-top: 4px;">View Details</span>
           </a>
 
           <!-- Calibration — right-aligned pos-group pattern (no frame, no chevron) -->
@@ -991,15 +1054,15 @@
           <a class="slim-block" href="Concentration.html" aria-label="View concentration detail">
             <div class="slim-link">
               <span class="slim-label">Concentration</span>
-              <span class="slim-meta">Effective N <span class="slim-n">2.4</span></span>
+              <span class="slim-meta">Effective N <span class="slim-n">5.5</span></span>
             </div>
             <div class="conc-bar" aria-label="Position weight distribution">
               <span class="seg-1" style="width:25%"></span>
               <span class="seg-2" style="width:20%"></span>
               <span class="seg-3" style="width:15%"></span>
               <span class="seg-4" style="width:12%"></span>
-              <span class="seg-5" style="width:8%"></span>
-              <span class="seg-rest" style="width:20%"></span>
+              <span class="seg-5" style="width:5%"></span>
+              <span class="seg-rest" style="width:23%"></span>
             </div>
             <div class="ai-aux">
               <span class="ii-mark" aria-label="Intelligent Investing">
@@ -1008,50 +1071,49 @@
                   <path d="M12.8061 0H15.0002L9.40115 17.6523H7.20703L12.8061 0Z" fill="#929292"/>
                 </svg>
               </span>
-              <span class="ai-text">Largest position drives most of the book. A 30% drawdown moves the book ~19%.</span>
+              <span class="ai-text">Top position is 25% of the book. A 30% drawdown in ORIO.TO moves the book ~7.5%.</span>
             </div>
           </a>
 
           <!-- Active Positions — section as a whole is clickable to detail page -->
           <a class="pos-group" href="#" style="text-decoration:none; color:inherit;" aria-label="View active positions">
-            <span class="pos-head">Active Positions   <span data-final="9" data-r="0.88">9</span></span>
-            <div class="tbl">
-              <div class="tbl-row"><span class="tl-mid"><span class="pos-mark" aria-label="Moved 5%+"></span>ORIO.TO</span><span class="tv" data-final="25%" data-r="0.90">25%</span></div>
-              <div class="tbl-row"><span class="tl-mid">BWEN</span>                                                                       <span class="tv" data-final="20%" data-r="0.91">20%</span></div>
-              <div class="tbl-row"><span class="tl-mid"><span class="pos-mark" aria-label="Moved 5%+"></span>EOSCR</span> <span class="tv" data-final="15%" data-r="0.92">15%</span></div>
-              <div class="tbl-row"><span class="tl-mid">NVDA</span>                                                                       <span class="tv" data-final="12%" data-r="0.93">12%</span></div>
-              <div class="tbl-row"><span class="tl-mid"><span class="pos-mark" aria-label="Moved 5%+"></span>AAPL</span>  <span class="tv" data-final="4%"  data-r="0.94">4%</span></div>
+            <span class="pos-head">Active Positions   <span id="posCount">9</span></span>
+            <div class="tbl" id="posList">
+              <div class="tbl-row"><span class="tl-mid"><span class="pos-mark" aria-label="Moved 5%+"></span>ORIO.TO</span><span class="tv w">25%</span><span class="tv mv">−6.2%</span></div>
+              <div class="tbl-row"><span class="tl-mid">BWEN</span><span class="tv w">20%</span><span class="tv mv">+1.4%</span></div>
+              <div class="tbl-row"><span class="tl-mid">EOSCR</span><span class="tv w">15%</span><span class="tv mv">−3.8%</span></div>
+              <div class="tbl-row"><span class="tl-mid"><span class="pos-mark" aria-label="Moved 5%+"></span>NVDA</span><span class="tv w">12%</span><span class="tv mv">−6.8%</span></div>
+              <div class="tbl-row"><span class="tl-mid">SHOP</span><span class="tv w">5%</span><span class="tv mv">−0.8%</span></div>
             </div>
-            <span class="view-all">View All</span>
+            <span class="view-all" id="posMore">View All</span>
           </a>
 
           <!-- Cash — below Active Positions (related to positions context) -->
           <a href="#" class="cash-block" style="text-decoration:none; color:inherit;" aria-label="View cash">
-            <span class="cash-lbl">Cash (10%)</span>
-            <span class="n15" style="width:auto;" data-final="4,677.72" data-r="0.85">4,677.72</span>
+            <span class="cash-lbl" id="cashLbl">Cash (10%)</span>
+            <span class="n15" style="width:auto;" id="cashVal">4,677.72</span>
           </a>
 
           <!-- Under Review -->
           <a class="pos-group" href="#" style="text-decoration:none; color:inherit;" aria-label="View under review">
-            <span class="pos-head">Under Review   <span data-final="5" data-r="0.95">5</span></span>
-            <div class="tbl">
-              <div class="tbl-row"><span class="tl-mid">AAPL</span></div>
-              <div class="tbl-row"><span class="tl-mid">ORIO.TO</span></div>
-              <div class="tbl-row"><span class="tl-mid">BWEN</span></div>
+            <span class="pos-head">Under Review   <span id="urCount">5</span></span>
+            <div class="tbl" id="urList">
+              <div class="tbl-row"><span class="tl-mid">AAPL</span><span class="tv mv">+4.2%</span></div>
+              <div class="tbl-row"><span class="tl-mid">ORIO.TO</span><span class="tv mv">−6.2%</span></div>
+              <div class="tbl-row"><span class="tl-mid">BWEN</span><span class="tv mv">+1.4%</span></div>
             </div>
-            <span class="view-all">View All</span>
+            <span class="view-all" id="urMore">View All</span>
           </a>
 
           <!-- Open Orders -->
           <a class="pos-group" href="#" style="text-decoration:none; color:inherit;" aria-label="View activity">
-            <span class="pos-head">Open Orders   <span data-final="10" data-r="0.96">10</span></span>
-            <span class="oo-total"><span data-final="25,931.20" data-r="0.965">25,931.20</span> CAD pending</span>
+            <span class="pos-head">Open Orders   <span>3</span></span>
+            <span class="oo-total"><span>4,575.00</span> CAD pending</span>
             <div class="tbl" style="gap:8px; margin-top:8px;">
-              <div class="oo-row"><span class="oo-ticker">NVDA</span>   <span class="oo-detail">5 &middot; 13,287.00</span></div>
-              <div class="oo-row"><span class="oo-ticker">AAPL</span>   <span class="oo-detail">2 &middot; 9,044.00</span></div>
-              <div class="oo-row"><span class="oo-ticker">ORIO.TO</span><span class="oo-detail">2 &middot; 2,580.00</span></div>
+              <div class="oo-row"><span class="oo-ticker">AAPL</span>   <span class="oo-detail">10 &middot; 2,510.00</span></div>
+              <div class="oo-row"><span class="oo-ticker">ORIO.TO</span><span class="oo-detail">30 &middot; 855.00</span></div>
+              <div class="oo-row"><span class="oo-ticker">EOSCR</span>  <span class="oo-detail">200 &middot; 1,210.00</span></div>
             </div>
-            <span class="view-all">View All</span>
           </a>
 
           <!-- Paper Trades — logged decisions without capital deployed -->
@@ -1071,6 +1133,19 @@
   </div>
 
   <div class="bottom"></div>
+
+    <div class="sheet-overlay" id="acctOverlay">
+    <div class="acct-sheet" role="listbox" aria-label="Self-directed accounts">
+      <button class="sheet-x" id="sheetX" aria-label="Close"><svg viewBox="0 0 14 14"><line x1="0" y1="0" x2="14" y2="14"/><line x1="14" y1="0" x2="0" y2="14"/></svg></button>
+      <div class="sheet-title">Self-directed accounts</div>
+      <div class="sheet-opts">
+        <button class="sheet-opt selected" data-acct="all">All Accounts<svg class="opt-check" viewBox="0 0 14 11" aria-hidden="true"><path d="M1 5.5 L5 9.5 L13 1.5"/></svg></button>
+        <button class="sheet-opt" data-acct="nonreg">Non-Registered<svg class="opt-check" viewBox="0 0 14 11" aria-hidden="true"><path d="M1 5.5 L5 9.5 L13 1.5"/></svg></button>
+        <button class="sheet-opt" data-acct="tfsa">TFSA<svg class="opt-check" viewBox="0 0 14 11" aria-hidden="true"><path d="M1 5.5 L5 9.5 L13 1.5"/></svg></button>
+        <button class="sheet-opt" data-acct="rrsp">RRSP<svg class="opt-check" viewBox="0 0 14 11" aria-hidden="true"><path d="M1 5.5 L5 9.5 L13 1.5"/></svg></button>
+      </div>
+    </div>
+  </div>
 
   <!-- Prototype: link markup in place. Links with data-active="true"
        navigate; everything else is intentionally inert. -->
@@ -1105,8 +1180,71 @@
       });
     });
     recalcOQCount();
+
+    /* Account filter — v6: bottom-sheet switcher (live-app pattern); the whole Active section follows the filter */
+    const ACCOUNTS = {
+      all: { name: 'All Accounts', value: '46,777.23', spv: '44,593.05', diff: '+2,184.18', pct: '+4.90%',
+        cashPct: '10%', cash: '4,677.72', posCount: 9, posMore: true, urCount: 5, urMore: true,
+        pos: [['ORIO.TO','25%','−6.2%',1],['BWEN','20%','+1.4%',0],['EOSCR','15%','−3.8%',0],['NVDA','12%','−6.8%',1],['SHOP','5%','−0.8%',0]],
+        ur: [['AAPL','+4.2%'],['ORIO.TO','−6.2%'],['BWEN','+1.4%']] },
+      nonreg: { name: 'Non-Registered', value: '9,000.00', spv: '8,400.00', diff: '+600.00', pct: '+7.14%',
+        cashPct: '22%', cash: '1,983.42', posCount: 4, posMore: false, urCount: 1, urMore: false,
+        pos: [['SHOP','26%','−0.8%',0],['AAPL','21%','+4.2%',0],['MELI','21%','+0.6%',0],['PYPL','10%','+0.3%',0]],
+        ur: [['AAPL','+4.2%']] },
+      tfsa: { name: 'TFSA', value: '15,636.73', spv: '14,890.95', diff: '+745.78', pct: '+5.01%',
+        cashPct: '4%', cash: '668.01', posCount: 2, posMore: false, urCount: 2, urMore: false,
+        pos: [['BWEN','60%','+1.4%',0],['NVDA','36%','−6.8%',1]],
+        ur: [['BWEN','+1.4%'],['NVDA','−6.8%']] },
+      rrsp: { name: 'RRSP', value: '22,140.50', spv: '21,302.10', diff: '+838.40', pct: '+3.94%',
+        cashPct: '9%', cash: '2,026.29', posCount: 3, posMore: false, urCount: 2, urMore: false,
+        pos: [['ORIO.TO','53%','−6.2%',1],['EOSCR','32%','−3.8%',0],['CRWD','6%','−1.9%',0]],
+        ur: [['ORIO.TO','−6.2%'],['EOSCR','−3.8%']] }
+    };
+    var acctOverlay = document.getElementById('acctOverlay');
+    function posRow(p) {
+      var dot = p[3] ? '<span class="pos-mark" aria-label="Moved 5%+"></span>' : '';
+      return '<div class="tbl-row"><span class="tl-mid">' + dot + p[0] + '</span><span class="tv w">' + p[1] + '</span><span class="tv mv">' + p[2] + '</span></div>';
+    }
+    function urRow(p) {
+      return '<div class="tbl-row"><span class="tl-mid">' + p[0] + '</span><span class="tv mv">' + p[1] + '</span></div>';
+    }
+    function applyAccount(key) {
+      var a = ACCOUNTS[key] || ACCOUNTS.all;
+      document.getElementById('acctLabel').textContent = a.name;
+      document.getElementById('acctValue').textContent = a.value;
+      document.getElementById('cardPv').textContent = a.value;
+      document.getElementById('cardSpv').textContent = a.spv;
+      document.getElementById('cardDiff').firstChild.textContent = a.diff;
+      document.getElementById('cardPct').textContent = a.pct;
+      document.getElementById('cardLink').setAttribute('href', 'Performance%20Dashboard.html?account=' + key);
+      document.getElementById('cashLbl').textContent = 'Cash (' + a.cashPct + ')';
+      document.getElementById('cashVal').textContent = a.cash;
+      document.getElementById('posCount').textContent = a.posCount;
+      document.getElementById('posList').innerHTML = a.pos.map(posRow).join('');
+      document.getElementById('posMore').style.display = a.posMore ? '' : 'none';
+      document.getElementById('urCount').textContent = a.urCount;
+      document.getElementById('urList').innerHTML = a.ur.map(urRow).join('');
+      document.getElementById('urMore').style.display = a.urMore ? '' : 'none';
+      document.querySelectorAll('.sheet-opt').forEach(function (b) {
+        b.classList.toggle('selected', b.dataset.acct === key);
+      });
+    }
+    function openSheet() { acctOverlay.classList.add('open'); }
+    function closeSheet() { acctOverlay.classList.remove('open'); }
+    document.getElementById('acctSw').addEventListener('click', function (e) { e.stopPropagation(); openSheet(); });
+    document.getElementById('sheetX').addEventListener('click', closeSheet);
+    acctOverlay.addEventListener('click', function (e) { if (e.target === acctOverlay) closeSheet(); });
+    document.querySelectorAll('.sheet-opt').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        applyAccount(btn.dataset.acct);
+        closeSheet();
+      });
+    });
+    var urlAcct = new URLSearchParams(location.search).get('account');
+    if (urlAcct) applyAccount(urlAcct);
   </script>
 
 </body>
 </html>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         

@@ -65,13 +65,13 @@
     .t-primary {
       font-size: 18px;
       letter-spacing: -0.02em;
-      color: var(--c-700);
+      color: var(--c-white);
       line-height: 1.15;
     }
     .t-secondary {
       font-size: 18px;
       letter-spacing: -0.02em;
-      color: var(--c-white);
+      color: var(--c-700);
       line-height: 1.15;
     }
 
@@ -127,8 +127,8 @@
     .row .lbl { font-size: 14px; color: var(--c-700); letter-spacing: -0.02em; text-align: left; }
     .row .val { font-size: 15px; color: var(--c-white); letter-spacing: -0.02em; text-align: right; }
     .row .val .muted { color: var(--c-700); margin-left: 6px; font-size: 14px; }
-    .row.support { border-bottom: none; padding-bottom: 0; }
     .row.support .val { color: var(--c-400); }
+    .cg .val { color: var(--c-400); }
 
     .row.sub {
       padding-left: 14px;
@@ -140,76 +140,8 @@
     .row.sub .lbl { font-size: 13px; color: var(--c-700); }
     .row.sub .val { font-size: 14px; color: var(--c-400); }
 
-    .row.diff {
-      padding-top: 16px;
-      padding-bottom: 16px;
-      border-top: 0.5px solid var(--c-900);
-      border-bottom: 0.5px solid var(--c-900);
-    }
     .row.diff .lbl { color: var(--c-700); }
     .row.diff .val { color: var(--c-white); }
-
-    /* PERFORMANCE BLOCK — matches main dashboard widget design */
-    .perf-block-section {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      width: 100%;
-      padding: 16px 0;
-      border-top: 0.5px solid var(--c-900);
-      border-bottom: 0.5px solid var(--c-900);
-    }
-    .perf-block-section .perf-header {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 12px;
-    }
-    .perf-block-section .perf-label {
-      font-size: 15px;
-      color: var(--c-400);
-      letter-spacing: -0.02em;
-      line-height: 1.15;
-      text-align: left;
-    }
-    .perf-block-section .perf-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      width: 100%;
-      white-space: nowrap;
-    }
-    .perf-block-section .perf-key {
-      font-size: 13px;
-      color: var(--c-700);
-      letter-spacing: -0.02em;
-      font-feature-settings: 'lnum' 1, 'tnum' 1;
-    }
-    .perf-block-section .perf-val {
-      font-size: 15px;
-      color: var(--c-white);
-      letter-spacing: -0.02em;
-      font-feature-settings: 'lnum' 1, 'tnum' 1;
-    }
-    .perf-block-section .perf-pp {
-      color: var(--c-700);
-      margin-left: 6px;
-      font-size: 13px;
-    }
-    .perf-block-section .perf-row.diff {
-      position: relative;
-      margin-top: 16px;
-    }
-    .perf-block-section .perf-row.diff::before {
-      content: '';
-      position: absolute;
-      top: -16px;
-      left: 0;
-      right: 0;
-      height: 0;
-      border-top: 0.5px solid var(--c-900);
-    }
 
     /* TAPPABLE LABEL — text is the affordance (II doctrine) */
     .lbl-tap {
@@ -240,58 +172,26 @@
       font-feature-settings: 'lnum' 1, 'tnum' 1;
     }
 
-    /* EQUITY CURVE — same pattern as v1 */
-    .curve-wrap { display: flex; flex-direction: column; gap: 12px; }
-    .curve-svg { width: 100%; height: 180px; display: block; overflow: visible; }
-    .curve-svg text { font-family: 'Inter', sans-serif; }
-    .curve-axis {
-      display: flex;
-      justify-content: space-between;
-      font-size: 11px;
-      color: var(--c-700);
-      letter-spacing: -0.02em;
-      padding: 0 0 0 10.1%;
-    }
-
-    /* EXTERNAL CASH FLOWS — yt-table pattern from v1 */
-    .cf-table {
-      display: grid;
-      grid-template-columns: 92px 90px 1fr 72px;
-      column-gap: 14px;
-    }
-    .cf-head, .cf-row { display: contents; }
-    .cf-head > span {
-      font-size: 13px;
-      color: var(--c-700);
-      letter-spacing: -0.02em;
-      padding-bottom: 8px;
-      border-bottom: 0.5px solid var(--c-900);
-      text-align: right;
-    }
-    .cf-head > span:first-child,
-    .cf-head > span:nth-child(2) { text-align: left; }
-    .cf-row > span {
-      padding: 10px 0;
-      border-bottom: 0.5px solid var(--c-900);
-      font-size: 14px;
-      letter-spacing: -0.02em;
-      font-feature-settings: 'lnum' 1, 'tnum' 1;
-    }
-    .cf-date { color: var(--c-700); text-align: left; }
-    .cf-type { color: var(--c-400); text-align: left; }
-    .cf-amt  { color: var(--c-white); text-align: right; }
-    .cf-px   { color: var(--c-700); text-align: right; }
-
-    /* METHODOLOGY — prose pattern from v1 disclosure */
-    .methodology {
-      font-size: 13px;
-      color: var(--c-400);
-      letter-spacing: -0.02em;
-      line-height: 1.55;
-    }
     /* How it works — calculation footnote tied to Summary (inline disclosure, sits below the table as a footnote, not a row) */
     .how-row { display: block; margin-top: 12px; }
     .how-tap { font-size: 13px; color: var(--c-700); }
+    /* Why the S&P 500 — quiet text link, same tier as How it works; chevron sits beside the label */
+    .why-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      align-self: flex-start;
+      font-size: 13px;
+      color: var(--c-700);
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .why-link:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .why-chev { font-size: 13px; line-height: 1; }
+    /* Summary currency marker — S&P is a US benchmark, so values are explicitly CAD */
+    .sum-head { display: flex; justify-content: space-between; align-items: baseline; }
+    .ccy { font-size: 12px; color: var(--c-800); letter-spacing: -0.02em; margin-left: 5px; }
     /* Why the S&P 500 — standalone navigation row */
     .learn-group { width: 100%; }
     .learn-row {
@@ -302,8 +202,6 @@
       width: 100%;
       padding: 16px 0;
       border: none;
-      border-top: 0.5px solid var(--c-900);
-      border-bottom: 0.5px solid var(--c-900);
       background: none;
       color: var(--c-400);
       font-family: inherit;
@@ -321,18 +219,18 @@
 <body>
 
   <header class="header">
-    <a href="Unified%20Dashboard%20v2.html" class="back" aria-label="Back"><svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 1L1.5 7L6.5 13" stroke="#C7C7C7" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-    <a href="Unified%20Dashboard%20v2.html" class="exit" aria-label="Exit">Exit</a>
+    <a href="Unified%20Dashboard%20v2.html" class="back" id="backLink" aria-label="Back"><svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 1L1.5 7L6.5 13" stroke="#C7C7C7" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <a href="Unified%20Dashboard%20v2.html" class="exit" id="exitLink" aria-label="Exit">Exit</a>
   </header>
 
   <div class="title-block">
     <span class="t-primary">S&amp;P 500 Benchmark</span>
-    <span class="t-secondary">All Accounts</span>
+    <span class="t-secondary" id="acctName">All Accounts</span>
   </div>
 
   <!-- HERO: demoted to a single small meta line — month count no longer the largest element on the page (team review #1) -->
   <section class="hero" aria-label="Tracked duration">
-    <span class="hero-meta">Tracked since Nov 12, 2024 · 18 months</span>
+    <span class="hero-meta" id="trackedMeta">Tracked for 18 months · since Nov 12, 2024</span>
   </section>
 
   <div class="col">
@@ -342,15 +240,15 @@
       <span class="section-label">Summary</span>
       <div class="row support">
         <span class="lbl">Portfolio Value</span>
-        <span class="val">58,420.18</span>
+        <span class="val" id="sumPv">46,777.23</span>
       </div>
       <div class="row support">
-        <span class="lbl">S&amp;P 500 Alternative</span>
-        <span class="val">56,236.00</span>
+        <span class="lbl">S&amp;P 500 Value</span>
+        <span class="val"><span id="sumSpv">44,593.05</span><span class="ccy">CAD</span></span>
       </div>
       <div class="row diff">
         <span class="lbl">Difference</span>
-        <span class="val">+2,184.18<span class="muted">+3.88%</span></span>
+        <span class="val" id="sumDiff">+2,184.18<span class="muted" id="sumPct">+4.90%</span></span>
       </div>
       <!-- How it works — calculation footnote bound to Summary (inline disclosure, no chevron — explains the numbers above) -->
       <span class="how-row"><span class="lbl-tap how-tap" data-info="methodology">How it works</span></span>
@@ -360,15 +258,25 @@
       </div>
     </section>
 
-    <!-- Contributions & Growth removed (team review #4): the gap it decomposed is already the Difference in Summary; Net Contributions added no decision value -->
+    <!-- CONTRIBUTIONS & GROWTH — restored per review: how much was invested vs how much each side grew -->
+    <section class="section cg" aria-label="Contributions and growth">
+      <span class="section-label">Contributions &amp; Growth</span>
+      <div class="row">
+        <span class="lbl">Net Contributions</span>
+        <span class="val" id="cgNet">40,000.00</span>
+      </div>
+      <div class="row">
+        <span class="lbl">Portfolio Growth</span>
+        <span class="val" id="cgPg">+6,777.23</span>
+      </div>
+      <div class="row">
+        <span class="lbl">S&amp;P 500 Growth</span>
+        <span class="val" id="cgSg">+4,593.05</span>
+      </div>
+    </section>
 
     <!-- WHY THE S&P 500 — standalone navigation row (separate educational topic; full page) -->
-    <div class="learn-group" aria-label="Why the S&P 500">
-      <a href="Why%20the%20S%26P%20500.html" class="learn-row" aria-label="Why the S&P 500">
-        <span class="learn-label">Why the S&amp;P 500</span>
-        <span class="learn-chev" aria-hidden="true">›</span>
-      </a>
-    </div>
+    <a href="Why%20the%20S%26P%20500.html" class="why-link" id="whyLink" aria-label="Why the S&P 500">Why the S&amp;P 500<span class="why-chev" aria-hidden="true">›</span></a>
 
   </div>
 
@@ -388,6 +296,29 @@
         el.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
       });
     });
+
+    /* Account context — v5. Selection happens on the main dashboard; this page reflects it via ?account= */
+    const ACCOUNTS = {
+      all:    { name:'All Accounts',   tracked:'Tracked for 18 months · since Nov 12, 2024', pv:'46,777.23', spv:'44,593.05', diff:'+2,184.18', pct:'+4.90%', net:'40,000.00', pg:'+6,777.23', sg:'+4,593.05' },
+      rrsp:   { name:'RRSP',           tracked:'Tracked for 16 months · since Jan 8, 2025',  pv:'22,140.50', spv:'21,302.10', diff:'+838.40',   pct:'+3.94%', net:'19,000.00', pg:'+3,140.50', sg:'+2,302.10' },
+      tfsa:   { name:'TFSA',           tracked:'Tracked for 18 months · since Nov 12, 2024', pv:'15,636.73', spv:'14,890.95', diff:'+745.78',   pct:'+5.01%', net:'13,500.00', pg:'+2,136.73', sg:'+1,390.95' },
+      nonreg: { name:'Non-Registered', tracked:'Tracked for 15 months · since Mar 3, 2025',  pv:'9,000.00',  spv:'8,400.00',  diff:'+600.00',   pct:'+7.14%', net:'7,500.00',  pg:'+1,500.00', sg:'+900.00' }
+    };
+    var key = new URLSearchParams(location.search).get('account') || 'all';
+    var A = ACCOUNTS[key] || ACCOUNTS.all;
+    document.getElementById('acctName').textContent = A.name;
+    document.getElementById('trackedMeta').textContent = A.tracked;
+    document.getElementById('sumPv').textContent = A.pv;
+    document.getElementById('sumSpv').textContent = A.spv;
+    document.getElementById('sumDiff').firstChild.textContent = A.diff;
+    document.getElementById('sumPct').textContent = A.pct;
+    document.getElementById('cgNet').textContent = A.net;
+    document.getElementById('cgPg').textContent = A.pg;
+    document.getElementById('cgSg').textContent = A.sg;
+    var q = '?account=' + key;
+    document.getElementById('backLink').href = 'Unified%20Dashboard%20v2.html' + q;
+    document.getElementById('exitLink').href = 'Unified%20Dashboard%20v2.html' + q;
+    document.getElementById('whyLink').href = 'Why%20the%20S%26P%20500.html' + q;
   </script>
 
 </body>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <title>Performance Dashboard · v6 — Index</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root { --c-1000:#1C1C1C; --c-900:#232627; --c-800:#565B5E; --c-700:#929292; --c-400:#C7C7C7; --c-white:#FFFFFF; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #000; color: #fff; font-family: 'Inter', sans-serif;
+      width: 100%; max-width: 393px; margin: 0 auto; min-height: 100vh;
+      padding: 56px 13.5px; -webkit-font-smoothing: antialiased;
+    }
+    .idx-title { font-size: 18px; color: var(--c-700); letter-spacing: -0.36px; margin-bottom: 8px; }
+    .idx-sub { font-size: 13px; color: var(--c-800); letter-spacing: -0.26px; margin-bottom: 48px; }
+    .idx-list { display: flex; flex-direction: column; }
+    .idx-row {
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      padding: 16px 0; border-bottom: 0.5px solid var(--c-900);
+      color: var(--c-400); font-size: 14px; letter-spacing: -0.28px;
+      text-decoration: none; -webkit-tap-highlight-color: transparent;
+    }
+    .idx-row:first-of-type { border-top: 0.5px solid var(--c-900); }
+    .idx-row:active { opacity: 0.5; }
+    .idx-chev { color: var(--c-700); font-size: 14px; line-height: 1; }
+    .idx-meta { font-size: 11px; color: var(--c-800); letter-spacing: -0.22px; line-height: 1.5; margin-top: 32px; }
+  </style>
+</head>
+<body>
+  <div class="idx-title">Performance Dashboard · v6</div>
+  <div class="idx-sub">S&amp;P 500 Benchmark MVP + account filter — demo index</div>
+  <div class="idx-list">
+    <a class="idx-row" href="Unified%20Dashboard%20v2.html"><span>Main Dashboard</span><span class="idx-chev">›</span></a>
+    <a class="idx-row" href="Performance%20Dashboard.html"><span>S&amp;P 500 Benchmark</span><span class="idx-chev">›</span></a>
+    <a class="idx-row" href="Why%20the%20S%26P%20500.html"><span>Why the S&amp;P 500</span><span class="idx-chev">›</span></a>
+  </div>
+  <div class="idx-meta">Flow: Main Dashboard → benchmark card → S&amp;P 500 Benchmark → Why the S&amp;P 500. Back / Exit returns up the chain.</div>
+</body>
+</html>

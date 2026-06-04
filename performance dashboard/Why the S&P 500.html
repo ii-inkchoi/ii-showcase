@@ -81,7 +81,7 @@
     /* Item: white headline + muted body */
     .items { display: flex; flex-direction: column; gap: 30px; }
     .item { display: flex; flex-direction: column; gap: 15px; }
-    .item-h { font-size: 14px; color: var(--c-white); line-height: 1.15; letter-spacing: -0.28px; }
+    .item-h { font-size: 14px; color: var(--c-400); line-height: 1.15; letter-spacing: -0.28px; }
     .item-b { font-size: 14px; color: var(--c-700); line-height: 1.4; letter-spacing: -0.28px; }
     .items.roomy .item-b { line-height: 1.5; }
 
@@ -283,6 +283,13 @@
     document.addEventListener('click', function () {
       document.querySelectorAll('.tip').forEach(function (t) { t.hidden = true; });
     });
+
+    /* Carry the account context back to the comparison page — v5 */
+    if (location.search) {
+      document.querySelectorAll('a.back, a.exit').forEach(function (a) {
+        a.href = 'Performance%20Dashboard.html' + location.search;
+      });
+    }
   </script>
 
 </body>
