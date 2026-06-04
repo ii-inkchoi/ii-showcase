@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Notes Feature · Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/*
+  Notes Feature · Standalone Demo
+  Phase 1 spec: single note per stock, persisted at stock level (BE in prod, localStorage here).
+  See NOTES Feature - Dev Handoff.md for full spec.
+*/
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+* { scrollbar-width: none; -ms-overflow-style: none; }
+*::-webkit-scrollbar { display: none; }
+button { background: transparent; border: none; color: inherit; font: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+
+:root {
+  --bg: #000000;
+  --c-1000: #1C1C1C;
+  --c-900:  #232627;
+  --c-800:  #565B5E;
+  --c-700:  #929292;
+  --c-600:  #A7A7A7;
+  --c-400:  #C7C7C7;
+  --c-200:  #E3E2E2;
+  --c-white: #FFFFFF;
+  --c-elev: #0A0A0A;
+  --c-live: #30D158;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+html, body { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--c-400);
+  font-family: var(--font);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  font-feature-settings: 'tnum' 1;
+  width: 100%;
+  max-width: 393px;
+  margin: 0 auto;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  padding-bottom: 60px;
+}
+
+/* Topbar — II canon */
+.topbar { display: flex; justify-content: space-between; align-items: center; padding: 0 13.5px; height: 71px; flex-shrink: 0; border-bottom: 1px solid var(--c-900); font-size: 0; }
+.topbar .back { width: 13px; height: 13px; display: inline-flex; align-items: center; justify-content: center; color: var(--c-400); }
+.topbar .back::before { content: ''; width: 8px; height: 8px; border-left: 1px solid currentColor; border-bottom: 1px solid currentColor; transform: rotate(45deg); margin-left: 2px; }
+.topbar .exit { font-size: 14px; color: var(--c-400); letter-spacing: -0.02em; }
+
+/* Demo intro */
+.demo-intro { padding: 24px 20px 8px; }
+.demo-intro h1 { font-size: 22px; color: var(--c-white); font-weight: 500; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 6px; }
+.demo-intro p { font-size: 13px; color: var(--c-700); line-height: 1.5; letter-spacing: -0.01em; }
+
+/* State demo selector */
+.state-tabs { display: flex; gap: 0; padding: 0 20px; margin-top: 18px; border-bottom: 0.5px solid var(--c-900); }
+.state-tab { font-size: 12px; color: var(--c-700); letter-spacing: -0.02em; padding: 10px 14px 8px; border-bottom: 1.5px solid transparent; cursor: pointer; }
+.state-tab.is-active { color: var(--c-white); border-bottom-color: var(--c-white); }
+
+/* Container for the notes block — matches Stock Page memo-block context */
+.notes-card { margin: 24px 20px; padding: 16px; border: 0.5px solid var(--c-900); display: flex; flex-direction: column; gap: 8px; }
+
+/* Notes section — canonical pattern from Stock Page */
+.memo-block-notes-section { display: flex; flex-direction: column; gap: 6px; }
+.memo-notes-eyebrow { font-size: 11px; color: var(--c-700); letter-spacing: -0.01em; margin-bottom: 4px; }
+.memo-block-notes-input {
+  width: 100%; min-height: 44px; resize: none; overflow: hidden;
+  background: transparent; border: none; padding: 0; outline: none;
+  color: var(--c-200);
+  font-family: inherit; font-size: 13px; line-height: 1.55; letter-spacing: -0.02em;
+  -webkit-tap-highlight-color: transparent;
+}
+.memo-block-notes-input::placeholder { color: var(--c-800); }
+.memo-block-notes-input.is-saved { color: var(--c-700); }
+.memo-block-notes-input.is-collapsed {
+  max-height: 100px; overflow: hidden;
+  mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+}
+
+.notes-read-more {
+  font-size: 11px; color: var(--c-700); padding: 4px 0;
+  border: none; background: transparent; letter-spacing: -0.02em;
+  font-family: inherit; cursor: pointer; align-self: flex-start;
+}
+.notes-read-more[hidden] { display: none; }
+
+.memo-block-notes-toolbar { display: flex; justify-content: flex-end; }
+.notes-save-btn {
+  font-size: 11px; color: var(--c-800);
+  padding: 4px 0; border: none; background: transparent;
+  letter-spacing: -0.02em; font-family: inherit;
+  transition: color 120ms ease;
+  cursor: default; pointer-events: none;
+}
+.notes-save-btn:active { opacity: .5; transition: opacity 80ms ease; }
+.notes-save-btn.is-ready { color: var(--c-200); cursor: pointer; pointer-events: auto; }
+.notes-save-btn.is-saved { color: var(--c-white); cursor: default; pointer-events: none; }
+
+/* State legend */
+.state-legend { padding: 24px 20px; border-top: 0.5px solid var(--c-1000); margin-top: 28px; }
+.state-legend-title { font-size: 11px; color: var(--c-700); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 10px; }
+.state-row { display: flex; gap: 12px; padding: 8px 0; font-size: 12px; color: var(--c-400); line-height: 1.5; border-bottom: 0.5px solid var(--c-1000); }
+.state-row:last-child { border-bottom: none; }
+.state-row .state-name { color: var(--c-white); min-width: 90px; font-weight: 500; }
+.state-row .state-desc { flex: 1; color: var(--c-700); }
+
+/* Action bar — clear + reset */
+.action-bar { padding: 16px 20px; display: flex; gap: 12px; }
+.action-btn { font-size: 12px; color: var(--c-700); padding: 8px 14px; border: 0.5px solid var(--c-900); background: transparent; cursor: pointer; font-family: inherit; letter-spacing: -0.02em; }
+.action-btn:hover { color: var(--c-200); border-color: var(--c-800); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="#" class="back" onclick="event.preventDefault();history.back();" aria-label="Back"></a>
+  <a href="#" class="exit" onclick="event.preventDefault();history.back();" aria-label="Exit">Exit</a>
+</div>
+
+<div class="demo-intro">
+  <h1>Notes · Demo</h1>
+  <p>Standalone preview of the Notes section on Stock Page. Phase 1: single note per stock, persisted at stock level (BE in production). Try typing, save, blur. Refresh persists.</p>
+</div>
+
+<!-- Demo container — matches Stock Page memo-block context -->
+<div class="notes-card">
+  <div class="memo-block-notes-section">
+    <div class="memo-notes-eyebrow">Notes</div>
+    <textarea
+      class="memo-block-notes-input"
+      id="notesInput"
+      rows="2"
+      placeholder="Add a note. Capture a thought, a thesis, a question."
+      oninput="onNotesInput(this)"
+      onfocus="onNotesFocus(this)"
+      onblur="onNotesBlur(this)"></textarea>
+    <button type="button" class="notes-read-more" id="notesReadMore" onclick="expandNotes()" hidden>Read more</button>
+    <div class="memo-block-notes-toolbar">
+      <button type="button" class="notes-save-btn" id="notesSaveBtn" onclick="saveNote()">Save Note</button>
+    </div>
+  </div>
+</div>
+
+<div class="action-bar">
+  <button class="action-btn" onclick="clearNote()">Clear saved note</button>
+  <button class="action-btn" onclick="loadSampleLong()">Load long sample</button>
+</div>
+
+<!-- State legend -->
+<div class="state-legend">
+  <div class="state-legend-title">States</div>
+  <div class="state-row">
+    <span class="state-name">Empty</span>
+    <span class="state-desc">Placeholder visible. Save button faint (var(--c-800)), not clickable.</span>
+  </div>
+  <div class="state-row">
+    <span class="state-name">Typing</span>
+    <span class="state-desc">Text differs from saved value → Save button activates (var(--c-200), clickable).</span>
+  </div>
+  <div class="state-row">
+    <span class="state-name">Saved</span>
+    <span class="state-desc">Button briefly shows "Saved" (var(--c-white), 1.2s) → returns to "Save Note".</span>
+  </div>
+  <div class="state-row">
+    <span class="state-name">Loaded</span>
+    <span class="state-desc">Saved text shown in textarea (var(--c-700), darker than typing color).</span>
+  </div>
+  <div class="state-row">
+    <span class="state-name">Long blurred</span>
+    <span class="state-desc">scrollHeight > 100px → collapses with "Read more" button.</span>
+  </div>
+</div>
+
+<script>
+// Phase 1 spec — single note per stock. localStorage in prototype; BE PUT/GET in production.
+var NOTES_KEY = 'atz-memo-notes-demo';
+
+function getNote(){ try { return localStorage.getItem(NOTES_KEY) || ''; } catch(e){ return ''; } }
+function setNote(text){ try { localStorage.setItem(NOTES_KEY, text); } catch(e){} }
+
+function autoExpand(el){
+  if (!el) return;
+  el.style.height = 'auto';
+  el.style.height = el.scrollHeight + 'px';
+}
+
+function onNotesInput(el){
+  autoExpand(el);
+  var btn = document.getElementById('notesSaveBtn');
+  if (!btn) return;
+  var saved = getNote();
+  btn.classList.remove('is-saved');
+  btn.textContent = 'Save Note';
+  if (el.value !== saved) btn.classList.add('is-ready');
+  else btn.classList.remove('is-ready');
+}
+
+function saveNote(){
+  var el = document.getElementById('notesInput');
+  if (!el) return;
+  var text = el.value || '';
+  setNote(text);                          // ← Replace with BE PUT
+  el.classList.add('is-saved');
+  var btn = document.getElementById('notesSaveBtn');
+  if (btn){
+    btn.classList.remove('is-ready');
+    btn.classList.add('is-saved');
+    btn.textContent = 'Saved';
+    el.blur();
+    setTimeout(function(){
+      btn.classList.remove('is-saved');
+      btn.textContent = 'Save Note';
+    }, 1200);
+  }
+}
+
+function onNotesFocus(el){
+  el.classList.remove('is-saved');
+  el.classList.remove('is-collapsed');
+  var btn = document.getElementById('notesReadMore');
+  if (btn) btn.hidden = true;
+  autoExpand(el);
+}
+
+function onNotesBlur(el){
+  autoExpand(el);
+  var btn = document.getElementById('notesReadMore');
+  if (el.scrollHeight > 100) {
+    el.classList.add('is-collapsed');
+    if (btn) btn.hidden = false;
+  } else {
+    el.classList.remove('is-collapsed');
+    if (btn) btn.hidden = true;
+  }
+}
+
+function expandNotes(){
+  var el = document.getElementById('notesInput');
+  var btn = document.getElementById('notesReadMore');
+  if (el) el.classList.remove('is-collapsed');
+  if (btn) btn.hidden = true;
+}
+
+function renderNotes(){
+  var el = document.getElementById('notesInput');
+  if (!el) return;
+  el.value = getNote();                   // ← Replace with BE GET on page load
+  autoExpand(el);
+  var btn = document.getElementById('notesSaveBtn');
+  if (btn){
+    btn.classList.remove('is-ready');
+    btn.classList.remove('is-saved');
+    btn.textContent = 'Save Note';
+  }
+  if (el.value) el.classList.add('is-saved');
+  else el.classList.remove('is-saved');
+}
+
+// Demo helpers
+function clearNote(){
+  try { localStorage.removeItem(NOTES_KEY); } catch(e){}
+  var el = document.getElementById('notesInput');
+  if (el){ el.value = ''; el.classList.remove('is-saved'); el.classList.remove('is-collapsed'); autoExpand(el); }
+  var btn = document.getElementById('notesSaveBtn');
+  if (btn){ btn.classList.remove('is-ready','is-saved'); btn.textContent = 'Save Note'; }
+  var rb = document.getElementById('notesReadMore'); if (rb) rb.hidden = true;
+}
+function loadSampleLong(){
+  var el = document.getElementById('notesInput');
+  if (!el) return;
+  el.value = "Watching ATZ on the US store opening cadence. Q4 looked strong but mall-anchored stores in tier-2 markets are the test. If new-store sales/sq-ft drops 20% vs fleet, that's the kill criteria. Also monitoring Super Puff franchise — was 12% of revenue last year, any softening matters.\n\nReminder: re-read kill criteria before any add.";
+  el.classList.remove('is-saved');
+  onNotesInput(el);
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', renderNotes);
+else renderNotes();
+window.addEventListener('pageshow', function(ev){ if (ev.persisted) renderNotes(); });
+</script>
+
+</body>
+</html>
