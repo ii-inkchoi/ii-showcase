@@ -234,13 +234,15 @@
     .ai-aux .ii-mark svg { display: block; }
     .ai-aux .ai-text { flex: 1; }
 
-    /* Performance vs S&P block — matches perf-vs-sp pattern across pages */
+    /* Performance vs S&P block — v5 full-width layout (team pick, Jun 5) */
     .perf-block {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 16px;
       width: 100%;
-      padding: 0;
+      padding: 16px 0;
+      border-top: 0.5px solid var(--c-900);
+      border-bottom: 0.5px solid var(--c-900);
       color: inherit;
       text-decoration: none;
       -webkit-tap-highlight-color: transparent;
@@ -249,9 +251,9 @@
     .perf-header {
       display: flex;
       flex-direction: row;
-      justify-content: flex-end;
+      justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 4px;
+      gap: 12px;
     }
     .perf-label {
       font-size: 15px;
@@ -262,21 +264,29 @@
     }
     .perf-row {
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
       align-items: baseline;
-      gap: 10px;
       width: 100%;
       white-space: nowrap;
     }
     .perf-key { font-size: 13px; color: var(--c-700); font-feature-settings: 'lnum' 1, 'tnum' 1; letter-spacing: -0.02em; }
-    .perf-val { font-size: 13px; color: var(--c-400); font-feature-settings: 'lnum' 1, 'tnum' 1; letter-spacing: -0.02em; }
+    .perf-val { font-size: 15px; color: var(--c-400); font-feature-settings: 'lnum' 1, 'tnum' 1; letter-spacing: -0.02em; }
     .perf-row.diff {
       position: relative;
+      margin-top: 16px;
+    }
+    .perf-row.diff::before {
+      content: '';
+      position: absolute;
+      top: -16px;
+      left: 0;
+      right: 0;
+      height: 0;
+      border-top: 0.5px solid var(--c-900);
     }
     .perf-row.diff .perf-key { color: var(--c-700); }
     .perf-row.diff .perf-val { color: var(--c-white); }
-    .perf-pp { color: var(--c-700); margin-left: 6px; font-size: 12px; }
-    .perf-ccy { color: var(--c-800); margin-left: 5px; font-size: 12px; }
+    .perf-pp { color: var(--c-700); margin-left: 6px; font-size: 13px; }
     .perf-chev { color: var(--c-700); font-size: 14px; font-weight: 300; line-height: 1; margin-left: 4px; }
 
     /* Inline table */
@@ -296,6 +306,8 @@
     .tv      { color: var(--c-400); font-feature-settings: 'lnum' 1, 'tnum' 1; }
     .tbl .w  { min-width: 34px; text-align: right; }
     .tbl .mv { min-width: 52px; text-align: right; }
+    /* Weight vs price move separation — move column one shade down (Dave, Jun 5: "make one a slightly different shade") */
+    #posList .mv { color: var(--c-700); }
 
     /* Cash block */
     .cash-block {
@@ -1012,17 +1024,18 @@
           </div>
         </div>
 
-        <div class="data-col" style="gap:48px;">
+        <div class="data-col">
           <!-- Value block — simple rate of return removed per MVP spec (benchmark card carries the outcome) -->
           <div class="db">
             <span class="db-label">Value</span>
             <span class="n22"><span data-final="46,777.23" data-r="0.78" id="acctValue">46,777.23</span></span>
           </div>
 
-          <!-- Performance vs S&P 500 — v3 (benchmark wealth comparison · all accounts) -->
+          <!-- Performance vs S&P 500 — v5 full-width layout (team pick, Jun 5) -->
           <a href="Performance%20Dashboard.html" class="perf-block" data-active="true" id="cardLink" aria-label="View performance dashboard">
             <div class="perf-header">
               <span class="perf-label">S&amp;P 500 Benchmark</span>
+              <span class="perf-chev" aria-hidden="true">›</span>
             </div>
             <div class="perf-row">
               <span class="perf-key">Portfolio Value</span>
@@ -1030,13 +1043,12 @@
             </div>
             <div class="perf-row">
               <span class="perf-key">S&amp;P 500 Value</span>
-              <span class="perf-val"><span id="cardSpv">44,593.05</span><span class="perf-ccy">CAD</span></span>
+              <span class="perf-val" id="cardSpv">44,593.05</span>
             </div>
             <div class="perf-row diff">
               <span class="perf-key">Difference</span>
               <span class="perf-val" id="cardDiff">+2,184.18<span class="perf-pp" id="cardPct">+4.90%</span></span>
             </div>
-            <span class="view-all" style="margin-top: 4px;">View Details</span>
           </a>
 
           <!-- Calibration — right-aligned pos-group pattern (no frame, no chevron) -->
@@ -1049,43 +1061,33 @@
             </div>
           </a>
 
-          <!-- Concentration — mid-tier: slim header + segmented bar + AI auxiliary insight.
-               Full breakdown lives in Concentration.html drill-in. -->
-          <a class="slim-block" href="Concentration.html" aria-label="View concentration detail">
-            <div class="slim-link">
-              <span class="slim-label">Concentration</span>
-              <span class="slim-meta">Effective N <span class="slim-n">5.5</span></span>
-            </div>
-            <div class="conc-bar" aria-label="Position weight distribution">
-              <span class="seg-1" style="width:25%"></span>
-              <span class="seg-2" style="width:20%"></span>
-              <span class="seg-3" style="width:15%"></span>
-              <span class="seg-4" style="width:12%"></span>
-              <span class="seg-5" style="width:5%"></span>
-              <span class="seg-rest" style="width:23%"></span>
-            </div>
-            <div class="ai-aux">
-              <span class="ii-mark" aria-label="Intelligent Investing">
-                <svg width="8" height="10" viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <path d="M5.59903 0H7.79315L2.19412 17.6523H0L5.59903 0Z" fill="#929292"/>
-                  <path d="M12.8061 0H15.0002L9.40115 17.6523H7.20703L12.8061 0Z" fill="#929292"/>
-                </svg>
-              </span>
-              <span class="ai-text">Top position is 25% of the book. A 30% drawdown in ORIO.TO moves the book ~7.5%.</span>
-            </div>
-          </a>
 
           <!-- Active Positions — section as a whole is clickable to detail page -->
           <a class="pos-group" href="#" style="text-decoration:none; color:inherit;" aria-label="View active positions">
-            <span class="pos-head">Active Positions   <span id="posCount">9</span></span>
+            <span class="pos-head">Active Positions   <span id="posCount">21</span></span>
             <div class="tbl" id="posList">
-              <div class="tbl-row"><span class="tl-mid"><span class="pos-mark" aria-label="Moved 5%+"></span>ORIO.TO</span><span class="tv w">25%</span><span class="tv mv">−6.2%</span></div>
-              <div class="tbl-row"><span class="tl-mid">BWEN</span><span class="tv w">20%</span><span class="tv mv">+1.4%</span></div>
-              <div class="tbl-row"><span class="tl-mid">EOSCR</span><span class="tv w">15%</span><span class="tv mv">−3.8%</span></div>
-              <div class="tbl-row"><span class="tl-mid"><span class="pos-mark" aria-label="Moved 5%+"></span>NVDA</span><span class="tv w">12%</span><span class="tv mv">−6.8%</span></div>
-              <div class="tbl-row"><span class="tl-mid">SHOP</span><span class="tv w">5%</span><span class="tv mv">−0.8%</span></div>
+              <div class="tbl-row"><span class="tl-mid"><span class="pos-mark" aria-label="Moved 5%+"></span>ORIO.TO</span><span class="tv w">18%</span><span class="tv mv">−6.2%</span></div>
+              <div class="tbl-row"><span class="tl-mid">BWEN</span><span class="tv w">13%</span><span class="tv mv">+1.4%</span></div>
+              <div class="tbl-row"><span class="tl-mid">EOSCR</span><span class="tv w">12%</span><span class="tv mv">−3.8%</span></div>
+              <div class="tbl-row"><span class="tl-mid"><span class="pos-mark" aria-label="Moved 5%+"></span>NVDA</span><span class="tv w">9%</span><span class="tv mv">−6.8%</span></div>
+              <div class="tbl-row"><span class="tl-mid">CRWD</span><span class="tv w">6%</span><span class="tv mv">−1.9%</span></div>
+              <div class="tbl-row"><span class="tl-mid">ASML</span><span class="tv w">5%</span><span class="tv mv">+1.1%</span></div>
+              <div class="tbl-row"><span class="tl-mid">SHOP</span><span class="tv w">4%</span><span class="tv mv">−0.8%</span></div>
+              <div class="tbl-row"><span class="tl-mid">AAPL</span><span class="tv w">3%</span><span class="tv mv">+4.2%</span></div>
+              <div class="tbl-row"><span class="tl-mid">TSM</span><span class="tv w">3%</span><span class="tv mv">+2.3%</span></div>
+              <div class="tbl-row"><span class="tl-mid">DDOG</span><span class="tv w">2%</span><span class="tv mv">+3.1%</span></div>
+              <div class="tbl-row"><span class="tl-mid">SNOW</span><span class="tv w">2%</span><span class="tv mv">+0.8%</span></div>
+              <div class="tbl-row"><span class="tl-mid">MELI</span><span class="tv w">2%</span><span class="tv mv">+0.6%</span></div>
+              <div class="tbl-row"><span class="tl-mid">AXON</span><span class="tv w">2%</span><span class="tv mv">−0.6%</span></div>
+              <div class="tbl-row"><span class="tl-mid">ABNB</span><span class="tv w">2%</span><span class="tv mv">+1.8%</span></div>
+              <div class="tbl-row"><span class="tl-mid">PYPL</span><span class="tv w">1%</span><span class="tv mv">+0.3%</span></div>
+              <div class="tbl-row"><span class="tl-mid">GOOG</span><span class="tv w">1%</span><span class="tv mv">−0.4%</span></div>
+              <div class="tbl-row"><span class="tl-mid">AMZN</span><span class="tv w">1%</span><span class="tv mv">+0.9%</span></div>
+              <div class="tbl-row"><span class="tl-mid">MSFT</span><span class="tv w">1%</span><span class="tv mv">+0.5%</span></div>
+              <div class="tbl-row"><span class="tl-mid">UBER</span><span class="tv w">1%</span><span class="tv mv">−2.7%</span></div>
+              <div class="tbl-row"><span class="tl-mid"><span class="pos-mark" aria-label="Moved 5%+"></span>SQ</span><span class="tv w">1%</span><span class="tv mv">−5.4%</span></div>
+              <div class="tbl-row"><span class="tl-mid">NET</span><span class="tv w">1%</span><span class="tv mv">−1.2%</span></div>
             </div>
-            <span class="view-all" id="posMore">View All</span>
           </a>
 
           <!-- Cash — below Active Positions (related to positions context) -->
@@ -1184,20 +1186,20 @@
     /* Account filter — v6: bottom-sheet switcher (live-app pattern); the whole Active section follows the filter */
     const ACCOUNTS = {
       all: { name: 'All Accounts', value: '46,777.23', spv: '44,593.05', diff: '+2,184.18', pct: '+4.90%',
-        cashPct: '10%', cash: '4,677.72', posCount: 9, posMore: true, urCount: 5, urMore: true,
-        pos: [['ORIO.TO','25%','−6.2%',1],['BWEN','20%','+1.4%',0],['EOSCR','15%','−3.8%',0],['NVDA','12%','−6.8%',1],['SHOP','5%','−0.8%',0]],
+        cashPct: '10%', cash: '4,677.72', posCount: 21, posMore: true, urCount: 5, urMore: true,
+        pos: [['ORIO.TO','18%','−6.2%',1],['BWEN','13%','+1.4%',0],['EOSCR','12%','−3.8%',0],['NVDA','9%','−6.8%',1],['CRWD','6%','−1.9%',0],['ASML','5%','+1.1%',0],['SHOP','4%','−0.8%',0],['AAPL','3%','+4.2%',0],['TSM','3%','+2.3%',0],['DDOG','2%','+3.1%',0],['SNOW','2%','+0.8%',0],['MELI','2%','+0.6%',0],['AXON','2%','−0.6%',0],['ABNB','2%','+1.8%',0],['PYPL','1%','+0.3%',0],['GOOG','1%','−0.4%',0],['AMZN','1%','+0.9%',0],['MSFT','1%','+0.5%',0],['UBER','1%','−2.7%',0],['SQ','1%','−5.4%',1],['NET','1%','−1.2%',0]],
         ur: [['AAPL','+4.2%'],['ORIO.TO','−6.2%'],['BWEN','+1.4%']] },
       nonreg: { name: 'Non-Registered', value: '9,000.00', spv: '8,400.00', diff: '+600.00', pct: '+7.14%',
-        cashPct: '22%', cash: '1,983.42', posCount: 4, posMore: false, urCount: 1, urMore: false,
-        pos: [['SHOP','26%','−0.8%',0],['AAPL','21%','+4.2%',0],['MELI','21%','+0.6%',0],['PYPL','10%','+0.3%',0]],
+        cashPct: '22%', cash: '1,983.42', posCount: 10, posMore: false, urCount: 1, urMore: false,
+        pos: [['SHOP','20%','−0.8%',0],['AAPL','16%','+4.2%',0],['MELI','12%','+0.6%',0],['PYPL','7%','+0.3%',0],['GOOG','5%','−0.4%',0],['AMZN','5%','+0.9%',0],['MSFT','4%','+0.5%',0],['UBER','3%','−2.7%',0],['SQ','3%','−5.4%',1],['NET','3%','−1.2%',0]],
         ur: [['AAPL','+4.2%']] },
       tfsa: { name: 'TFSA', value: '15,636.73', spv: '14,890.95', diff: '+745.78', pct: '+5.01%',
-        cashPct: '4%', cash: '668.01', posCount: 2, posMore: false, urCount: 2, urMore: false,
-        pos: [['BWEN','60%','+1.4%',0],['NVDA','36%','−6.8%',1]],
+        cashPct: '4%', cash: '668.01', posCount: 5, posMore: false, urCount: 2, urMore: false,
+        pos: [['BWEN','40%','+1.4%',0],['NVDA','28%','−6.8%',1],['ASML','14%','+1.1%',0],['TSM','9%','+2.3%',0],['ABNB','5%','+1.8%',0]],
         ur: [['BWEN','+1.4%'],['NVDA','−6.8%']] },
       rrsp: { name: 'RRSP', value: '22,140.50', spv: '21,302.10', diff: '+838.40', pct: '+3.94%',
-        cashPct: '9%', cash: '2,026.29', posCount: 3, posMore: false, urCount: 2, urMore: false,
-        pos: [['ORIO.TO','53%','−6.2%',1],['EOSCR','32%','−3.8%',0],['CRWD','6%','−1.9%',0]],
+        cashPct: '9%', cash: '2,026.29', posCount: 6, posMore: false, urCount: 2, urMore: false,
+        pos: [['ORIO.TO','38%','−6.2%',1],['EOSCR','25%','−3.8%',0],['CRWD','12%','−1.9%',0],['DDOG','6%','+3.1%',0],['SNOW','6%','+0.8%',0],['AXON','4%','−0.6%',0]],
         ur: [['ORIO.TO','−6.2%'],['EOSCR','−3.8%']] }
     };
     var acctOverlay = document.getElementById('acctOverlay');
@@ -1221,7 +1223,6 @@
       document.getElementById('cashVal').textContent = a.cash;
       document.getElementById('posCount').textContent = a.posCount;
       document.getElementById('posList').innerHTML = a.pos.map(posRow).join('');
-      document.getElementById('posMore').style.display = a.posMore ? '' : 'none';
       document.getElementById('urCount').textContent = a.urCount;
       document.getElementById('urList').innerHTML = a.ur.map(urRow).join('');
       document.getElementById('urMore').style.display = a.urMore ? '' : 'none';
@@ -1247,4 +1248,3 @@
 
 </body>
 </html>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
