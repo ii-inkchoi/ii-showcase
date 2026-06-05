@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S&P 500 Card — Design Variants</title>
+<style>
+  :root {
+    --c-black:#000000; --c-1000:#1C1C1C; --c-900:#232627; --c-800:#565B5E;
+    --c-700:#929292; --c-600:#A7A7A7; --c-400:#C7C7C7; --c-200:#E3E2E2; --c-white:#FFFFFF;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background:#0A0A0A; color:var(--c-400);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; font-weight:400;
+    padding:48px 40px 64px;
+  }
+  .page-title { font-size:15px; color:var(--c-400); letter-spacing:-0.3px; margin-bottom:6px; }
+  .page-sub   { font-size:13px; color:var(--c-800); letter-spacing:-0.22px; margin-bottom:40px; }
+  .strip { display:flex; gap:40px; align-items:flex-start; flex-wrap:nowrap; width:max-content; }
+  .variant { display:flex; flex-direction:column; gap:12px; }
+  .v-label { font-size:13px; color:var(--c-700); letter-spacing:-0.22px; }
+  .v-note  { font-size:12px; color:var(--c-800); letter-spacing:-0.2px; max-width:393px; line-height:1.5; }
+  .frame {
+    width:393px; background:var(--c-black);
+    border:1px solid var(--c-1000);
+    padding:24px 0 40px;
+  }
+
+  /* ── dashboard styles (verbatim from Unified Dashboard v2) ── */
+  .divider { border:none; border-top:1px solid #1C1C1C; margin:0 13.5px; }
+  .section { padding:30px 13.5px 0; }
+  .s-inner { display:flex; flex-direction:column; gap:50px; }
+  .s-title-wrap { display:flex; align-items:flex-start; justify-content:space-between; }
+  .s-title-col  { display:flex; flex-direction:column; gap:10px; text-align:left; }
+  .t-primary   { font-size:18px; color:var(--c-400); letter-spacing:-0.36px; line-height:1.15; text-transform:capitalize; }
+  .t-secondary { font-size:15px; color:#565b5e; letter-spacing:-0.3px; line-height:1.2; text-transform:capitalize; }
+  .acct-sw { display:flex; align-items:center; gap:5px; }
+  .acct-label { font-size:15px; color:#c7c7c7; letter-spacing:-0.3px; line-height:1.35; text-transform:capitalize; }
+  .acct-chev { width:7px; height:4px; display:block; }
+  .data-col { display:flex; flex-direction:column; align-items:flex-end; gap:48px; width:100%; }
+  .db { display:flex; flex-direction:column; align-items:flex-end; gap:6px; width:100%; }
+  .db-label { font-size:13px; color:var(--c-700); letter-spacing:-0.22px; line-height:1.25; text-transform:capitalize; width:100%; }
+  .n22 { font-size:22px; color:#fff; font-feature-settings:'lnum' 1,'pnum' 1; line-height:normal; width:100%; letter-spacing:-0.44px; }
+  .db, .data-col, .n22, .db-label, .tbl { text-align:right; }
+
+  .perf-block { display:flex; flex-direction:column; gap:6px; width:100%; }
+  .perf-header { display:flex; justify-content:flex-end; align-items:baseline; margin-bottom:4px; }
+  .perf-label { font-size:15px; color:var(--c-400); letter-spacing:-0.3px; line-height:1.15; }
+  .perf-row { display:flex; justify-content:flex-end; align-items:baseline; gap:10px; width:100%; white-space:nowrap; }
+  .perf-key { font-size:13px; color:var(--c-700); font-feature-settings:'lnum' 1,'tnum' 1; letter-spacing:-0.02em; }
+  .perf-val { font-size:13px; color:var(--c-400); font-feature-settings:'lnum' 1,'tnum' 1; letter-spacing:-0.02em; }
+  .perf-row.diff .perf-val { color:var(--c-white); }
+  .perf-pp  { color:var(--c-700); margin-left:6px; font-size:12px; }
+  .perf-ccy { color:var(--c-800); margin-left:5px; font-size:12px; }
+  .view-all { font-size:13px; color:var(--c-400); text-transform:capitalize; line-height:normal; width:100%; text-align:right; }
+
+  .pos-group { display:flex; flex-direction:column; align-items:flex-end; gap:10px; width:100%; }
+  .pos-head { font-size:15px; color:var(--c-400); letter-spacing:-0.3px; line-height:1.15; text-transform:capitalize; width:100%; white-space:pre-wrap; text-align:right; }
+  .tbl { display:flex; flex-direction:column; align-items:flex-end; gap:6px; width:100%; font-size:13px; text-transform:capitalize; white-space:nowrap; }
+  .tbl-row { display:flex; align-items:center; justify-content:flex-end; gap:10px; }
+  .tl-mid { color:var(--c-700); }
+  .tv { color:var(--c-400); font-feature-settings:'lnum' 1,'tnum' 1; }
+  .tbl .w { min-width:34px; text-align:right; }
+  .tbl .mv { min-width:52px; text-align:right; }
+  .pos-mark { display:inline-block; width:5px; height:5px; border-radius:50%; margin-right:6px; background:var(--c-400); vertical-align:middle; transform:translateY(-1px); }
+
+
+
+  /* ── Variant F — anchor (Value-block grammar) ── */
+  .van .perf-block { gap:6px; }
+  .van .perf-header { margin-bottom:10px; }
+  .van .anchor { display:flex; flex-direction:column; align-items:flex-end; gap:4px; width:100%; text-align:right; margin-bottom:12px; }
+  .van .anchor .perf-key { width:100%; }
+  .van .anchor .anchor-val { font-size:15px; color:var(--c-white); letter-spacing:-0.3px; line-height:1.15; font-feature-settings:'lnum' 1,'tnum' 1; width:100%; white-space:nowrap; }
+  .van .anchor .perf-pp { font-size:12px; margin-left:6px; }
+  .van .view-all { margin-top:8px !important; }
+
+  /* ── Variant G — delta bar (segmented) ── */
+  .vdb .perf-block { gap:6px; }
+  .vdb .perf-header { margin-bottom:4px; }
+  .vdb .dbar-wrap { display:flex; justify-content:flex-end; width:100%; margin:8px 0; }
+  .vdb .dbar { display:flex; width:240px; height:4px; }
+  .vdb .dbar .seg-sp { flex:1; background:var(--c-900) repeating-linear-gradient(45deg, #565B5E 0 1px, transparent 1px 4px); }
+  .vdb .dbar .seg-lead { width:11px; background:var(--c-white); }
+  .vdb .perf-row.diff { margin-top:0; }
+  .vdb .view-all { margin-top:6px !important; }
+
+  /* ── Variant H — tick scale ── */
+  .vts .perf-block { gap:6px; }
+  .vts .perf-header { margin-bottom:4px; }
+  .vts .scale-wrap { display:flex; flex-direction:column; align-items:flex-end; gap:5px; width:100%; margin:8px 0; }
+  .vts .scale-lbls { display:flex; justify-content:space-between; width:240px; font-size:11px; color:var(--c-800); font-feature-settings:'lnum' 1,'tnum' 1; }
+  .vts .view-all { margin-top:6px !important; }
+
+
+
+
+
+
+  /* ── Variant C — ledger ── */
+  .vcb .perf-block { gap:8px; }
+  .vcb .perf-header { margin-bottom:4px; }
+  .vcb .sum-rule { display:flex; justify-content:flex-end; width:100%; margin:2px 0; }
+  .vcb .sum-rule span { width:148px; border-top:1px solid #3A3D3E; }
+  .vcb .view-all { margin-top:6px !important; }
+
+  /* ── Variant B — quiet emphasis (uniform rows, one scale up) ── */
+  .vsb .perf-block { gap:8px; }
+  .vsb .perf-header { margin-bottom:4px; }
+  .vsb .perf-row { gap:10px; }
+  .vsb .perf-row:not(.diff) .perf-val { font-size:13px; letter-spacing:-0.02em; }
+  .vsb .perf-row.diff .perf-val { font-size:15px; letter-spacing:-0.3px; }
+  .vsb .perf-row .perf-ccy { font-size:12px; }
+  .vsb .perf-row .perf-pp { font-size:13px; }
+  .vsb .view-all { margin-top:6px !important; }
+
+
+</style>
+</head>
+<body>
+
+<div class="page-title">S&amp;P 500 Benchmark card — design variants</div>
+<div class="page-sub">Main dashboard · Active section · same data — only the card design changes</div>
+
+<div class="strip">
+
+  <!-- ════ CURRENT ════ -->
+  <div class="variant">
+    <span class="v-label">Option A — Current</span>
+    <div class="frame">
+      <hr class="divider">
+      <div class="section"><div class="s-inner">
+        <div class="s-title-wrap">
+          <div class="s-title-col">
+            <span class="t-primary">Active</span>
+            <span class="t-secondary">Self-directed</span>
+          </div>
+          <div class="acct-sw">
+            <span class="acct-label">All Accounts</span>
+            <svg class="acct-chev" viewBox="0 0 7 4" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.5 0.5L3.5 3.5L6.5 0.5" stroke="#c7c7c7" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <div class="data-col">
+          <div class="db">
+            <span class="db-label">Value</span>
+            <span class="n22">46,777.23</span>
+          </div>
+          <div class="perf-block">
+            <div class="perf-header"><span class="perf-label">S&amp;P 500 Benchmark</span></div>
+            <div class="perf-row"><span class="perf-key">Portfolio Value</span><span class="perf-val">46,777.23<span class="perf-ccy">CAD</span></span></div>
+            <div class="perf-row"><span class="perf-key">S&amp;P 500 Value</span><span class="perf-val">44,593.05<span class="perf-ccy">CAD</span></span></div>
+            <div class="perf-row diff"><span class="perf-key">Difference</span><span class="perf-val">+2,184.18<span class="perf-pp">+4.90%</span></span></div>
+            <span class="view-all" style="margin-top:4px;">View Details</span>
+          </div>
+          <div class="pos-group">
+            <span class="pos-head">Calibration</span>
+            <div class="tbl">
+              <div class="tbl-row"><span class="tl-mid">Accuracy</span><span class="tv">54%</span></div>
+              <div class="tbl-row"><span class="tl-mid">Predictions</span><span class="tv">17</span></div>
+              <div class="tbl-row"><span class="tl-mid">Next Judgment</span><span class="tv">Apr 1, 2027</span></div>
+            </div>
+          </div>
+          <div class="pos-group">
+            <span class="pos-head">Active Positions   9</span>
+            <div class="tbl">
+              <div class="tbl-row"><span class="tl-mid"><span class="pos-mark"></span>ORIO.TO</span><span class="tv w">25%</span><span class="tv mv">−6.2%</span></div>
+              <div class="tbl-row"><span class="tl-mid">BWEN</span><span class="tv w">20%</span><span class="tv mv">+1.4%</span></div>
+              <div class="tbl-row"><span class="tl-mid">EOSCR</span><span class="tv w">15%</span><span class="tv mv">−3.8%</span></div>
+              <div class="tbl-row"><span class="tl-mid"><span class="pos-mark"></span>NVDA</span><span class="tv w">12%</span><span class="tv mv">−6.8%</span></div>
+              <div class="tbl-row"><span class="tl-mid">SHOP</span><span class="tv w">5%</span><span class="tv mv">−0.8%</span></div>
+              <div class="tbl-row"><span class="tl-mid">AAPL</span><span class="tv w">4%</span><span class="tv mv">+4.2%</span></div>
+              <div class="tbl-row"><span class="tl-mid">MELI</span><span class="tv w">4%</span><span class="tv mv">+0.6%</span></div>
+              <div class="tbl-row"><span class="tl-mid">CRWD</span><span class="tv w">3%</span><span class="tv mv">−1.9%</span></div>
+              <div class="tbl-row"><span class="tl-mid">PYPL</span><span class="tv w">2%</span><span class="tv mv">+0.3%</span></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    <span class="v-note">As shipped in v6 — 6px row spacing, Difference in white as the single accent.</span>
+  </div>
+
+  <!-- ════ OPTION B — SIDE BY SIDE ════ -->
+  <div class="variant vsb">
+    <span class="v-label">Option B — Quiet emphasis</span>
+    <div class="frame">
+      <hr class="divider">
+      <div class="section"><div class="s-inner">
+        <div class="s-title-wrap">
+          <div class="s-title-col">
+            <span class="t-primary">Active</span>
+            <span class="t-secondary">Self-directed</span>
+          </div>
+          <div class="acct-sw">
+            <span class="acct-label">All Accounts</span>
+            <svg class="acct-chev" viewBox="0 0 7 4" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.5 0.5L3.5 3.5L6.5 0.5" stroke="#c7c7c7" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <div class="data-col">
+          <div class="db">
+            <span class="db-label">Value</span>
+            <span class="n22">46,777.23</span>
+          </div>
+          <div class="perf-block">
+            <div class="perf-header"><span class="perf-label">S&amp;P 500 Benchmark</span></div>
+            <div class="perf-row"><span class="perf-key">Portfolio Value</span><span class="perf-val">46,777.23<span class="perf-ccy">CAD</span></span></div>
+            <div class="perf-row"><span class="perf-key">S&amp;P 500 Value</span><span class="perf-val">44,593.05<span class="perf-ccy">CAD</span></span></div>
+            <div class="perf-row diff"><span class="perf-key">Difference</span><span class="perf-val">+2,184.18<span class="perf-pp">+4.90%</span></span></div>
+            <span class="view-all">View Details</span>
+          </div>
+          <div class="pos-group">
+            <span class="pos-head">Calibration</span>
+            <div class="tbl">
+              <div class="tbl-row"><span class="tl-mid">Accuracy</span><span class="tv">54%</span></div>
+              <div class="tbl-row"><span class="tl-mid">Predictions</span><span class="tv">17</span></div>
+              <div class="tbl-row"><span class="tl-mid">Next Judgment</span><span class="tv">Apr 1, 2027</span></div>
+            </div>
+          </div>
+          <div class="pos-group">
+            <span class="pos-head">Active Positions   9</span>
+            <div class="tbl">
+              <div class="tbl-row"><span class="tl-mid"><span class="pos-mark"></span>ORIO.TO</span><span class="tv w">25%</span><span class="tv mv">−6.2%</span></div>
+              <div class="tbl-row"><span class="tl-mid">BWEN</span><span class="tv w">20%</span><span class="tv mv">+1.4%</span></div>
+              <div class="tbl-row"><span class="tl-mid">EOSCR</span><span class="tv w">15%</span><span class="tv mv">−3.8%</span></div>
+              <div class="tbl-row"><span class="tl-mid"><span class="pos-mark"></span>NVDA</span><span class="tv w">12%</span><span class="tv mv">−6.8%</span></div>
+              <div class="tbl-row"><span class="tl-mid">SHOP</span><span class="tv w">5%</span><span class="tv mv">−0.8%</span></div>
+              <div class="tbl-row"><span class="tl-mid">AAPL</span><span class="tv w">4%</span><span class="tv mv">+4.2%</span></div>
+              <div class="tbl-row"><span class="tl-mid">MELI</span><span class="tv w">4%</span><span class="tv mv">+0.6%</span></div>
+              <div class="tbl-row"><span class="tl-mid">CRWD</span><span class="tv w">3%</span><span class="tv mv">−1.9%</span></div>
+              <div class="tbl-row"><span class="tl-mid">PYPL</span><span class="tv w">2%</span><span class="tv mv">+0.3%</span></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    <span class="v-note">Uniform rows kept for scanability — supporting values stay 13px; only the Difference value moves to 15px white, giving the result a one-step lift over everything else.</span>
+  </div>
+
+  <!-- ════ OPTION C — COMPARISON BARS ════ -->
+  <div class="variant vcb">
+    <span class="v-label">Option C — Ledger</span>
+    <div class="frame">
+      <hr class="divider">
+      <div class="section"><div class="s-inner">
+        <div class="s-title-wrap">
+          <div class="s-title-col">
+            <span class="t-primary">Active</span>
+            <span class="t-secondary">Self-directed</span>
+          </div>
+          <div class="acct-sw">
+            <span class="acct-label">All Accounts</span>
+            <svg class="acct-chev" viewBox="0 0 7 4" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.5 0.5L3.5 3.5L6.5 0.5" stroke="#c7c7c7" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <div class="data-col">
+          <div class="db">
+            <span class="db-label">Value</span>
+            <span class="n22">46,777.23</span>
+          </div>
+          <div class="perf-block">
+            <div class="perf-header"><span class="perf-label">S&amp;P 500 Benchmark</span></div>
+            <div class="perf-row"><span class="perf-key">Portfolio Value</span><span class="perf-val">46,777.23<span class="perf-ccy">CAD</span></span></div>
+            <div class="perf-row"><span class="perf-key">S&amp;P 500 Value</span><span class="perf-val">44,593.05<span class="perf-ccy">CAD</span></span></div>
+            <div class="sum-rule"><span></span></div>
+            <div class="perf-row diff"><span class="perf-key">Difference</span><span class="perf-val">+2,184.18<span class="perf-pp">+4.90%</span></span></div>
+            <span class="view-all">View Details</span>
+          </div>
+          <div class="pos-group">
+            <span class="pos-head">Calibration</span>
+            <div class="tbl">
+              <div class="tbl-row"><span class="tl-mid">Accuracy</span><span class="tv">54%</span></div>
+              <div class="tbl-row"><span class="tl-mid">Predictions</span><span class="tv">17</span></div>
+              <div class="tbl-row"><span class="tl-mid">Next Judgment</span><span class="tv">Apr 1, 2027</span></div>
+            </div>
+          </div>
+          <div class="pos-group">
+            <span class="pos-head">Active Positions   9</span>
+            <div class="tbl">
+              <div class="tbl-row"><span class="tl-mid"><span class="pos-mark"></span>ORIO.TO</span><span class="tv w">25%</span><span class="tv mv">−6.2%</span></div>
+              <div class="tbl-row"><span class="tl-mid">BWEN</span><span class="tv w">20%</span><span class="tv mv">+1.4%</span></div>
+              <div class="tbl-row"><span class="tl-mid">EOSCR</span><span class="tv w">15%</span><span class="tv mv">−3.8%</span></div>
+              <div class="tbl-row"><span class="tl-mid"><span class="pos-mark"></span>NVDA</span><span class="tv w">12%</span><span class="tv mv">−6.8%</span></div>
+              <div class="tbl-row"><span class="tl-mid">SHOP</span><span class="tv w">5%</span><span class="tv mv">−0.8%</span></div>
+              <div class="tbl-row"><span class="tl-mid">AAPL</span><span class="tv w">4%</span><span class="tv mv">+4.2%</span></div>
+              <div class="tbl-row"><span class="tl-mid">MELI</span><span class="tv w">4%</span><span class="tv mv">+0.6%</span></div>
+              <div class="tbl-row"><span class="tl-mid">CRWD</span><span class="tv w">3%</span><span class="tv mv">−1.9%</span></div>
+              <div class="tbl-row"><span class="tl-mid">PYPL</span><span class="tv w">2%</span><span class="tv mv">+0.3%</span></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    <span class="v-note">Ledger structure — a single short 1px sum rule above Difference. The arithmetic (Portfolio − S&amp;P = Difference) reads directly from the layout, setting Difference apart like a total. No wording or size changes.</span>
+  </div>
+
+  <!-- ════ Option D — Anchor ════ -->
+  <div class="variant van">
+    <span class="v-label">Option D — Anchor</span>
+    <div class="frame">
+      <hr class="divider">
+      <div class="section"><div class="s-inner">
+        <div class="s-title-wrap">
+          <div class="s-title-col">
+            <span class="t-primary">Active</span>
+            <span class="t-secondary">Self-directed</span>
+          </div>
+          <div class="acct-sw">
+            <span class="acct-label">All Accounts</span>
+            <svg class="acct-chev" viewBox="0 0 7 4" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.5 0.5L3.5 3.5L6.5 0.5" stroke="#c7c7c7" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <div class="data-col">
+          <div class="db">
+            <span class="db-label">Value</span>
+            <span class="n22">46,777.23</span>
+          </div>
+          <div class="perf-block">
+            <div class="perf-header"><span class="perf-label">S&amp;P 500 Benchmark</span></div>
+            <div class="anchor">
+              <span class="perf-key">Difference</span>
+              <span class="anchor-val">+2,184.18<span class="perf-pp">+4.90%</span></span>
+            </div>
+            <div class="perf-row"><span class="perf-key">Portfolio Value</span><span class="perf-val">46,777.23<span class="perf-ccy">CAD</span></span></div>
+            <div class="perf-row"><span class="perf-key">S&amp;P 500 Value</span><span class="perf-val">44,593.05<span class="perf-ccy">CAD</span></span></div>
+            <span class="view-all">View Details</span>
+          </div>
+          <div class="pos-group">
+            <span class="pos-head">Calibration</span>
+            <div class="tbl">
+              <div class="tbl-row"><span class="tl-mid">Accuracy</span><span class="tv">54%</span></div>
+              <div class="tbl-row"><span class="tl-mid">Predictions</span><span class="tv">17</span></div>
+              <div class="tbl-row"><span class="tl-mid">Next Judgment</span><span class="tv">Apr 1, 2027</span></div>
+            </div>
+          </div>
+          <div class="pos-group">
+            <span class="pos-head">Active Positions   9</span>
+            <div class="tbl">
+              <div class="tbl-row"><span class="tl-mid"><span class="pos-mark"></span>ORIO.TO</span><span class="tv w">25%</span><span class="tv mv">−6.2%</span></div>
+              <div class="tbl-row"><span class="tl-mid">BWEN</span><span class="tv w">20%</span><span class="tv mv">+1.4%</span></div>
+              <div class="tbl-row"><span class="tl-mid">EOSCR</span><span class="tv w">15%</span><span class="tv mv">−3.8%</span></div>
+              <div class="tbl-row"><span class="tl-mid"><span class="pos-mark"></span>NVDA</span><span class="tv w">12%</span><span class="tv mv">−6.8%</span></div>
+              <div class="tbl-row"><span class="tl-mid">SHOP</span><span class="tv w">5%</span><span class="tv mv">−0.8%</span></div>
+              <div class="tbl-row"><span class="tl-mid">AAPL</span><span class="tv w">4%</span><span class="tv mv">+4.2%</span></div>
+              <div class="tbl-row"><span class="tl-mid">MELI</span><span class="tv w">4%</span><span class="tv mv">+0.6%</span></div>
+              <div class="tbl-row"><span class="tl-mid">CRWD</span><span class="tv w">3%</span><span class="tv mv">−1.9%</span></div>
+              <div class="tbl-row"><span class="tl-mid">PYPL</span><span class="tv w">2%</span><span class="tv mv">+0.3%</span></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    <span class="v-note">Borrows the dashboard’s one proven eye-anchor — the Value block’s grammar (quiet 13px label, bright number below). Difference leads as a 15px white anchor; the two supporting rows follow as standard 13px rows. Builds a brightness/scale ladder across the page: Value 22px → Difference 15px → everything else. Conclusion-first row order.</span>
+  </div>
+
+  <!-- ════ Option E — Delta bar ════ -->
+  <div class="variant vdb">
+    <span class="v-label">Option E — Delta bar</span>
+    <div class="frame">
+      <hr class="divider">
+      <div class="section"><div class="s-inner">
+        <div class="s-title-wrap">
+          <div class="s-title-col">
+            <span class="t-primary">Active</span>
+            <span class="t-secondary">Self-directed</span>
+          </div>
+          <div class="acct-sw">
+            <span class="acct-label">All Accounts</span>
+            <svg class="acct-chev" viewBox="0 0 7 4" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.5 0.5L3.5 3.5L6.5 0.5" stroke="#c7c7c7" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <div class="data-col">
+          <div class="db">
+            <span class="db-label">Value</span>
+            <span class="n22">46,777.23</span>
+          </div>
+          <div class="perf-block">
+            <div class="perf-header"><span class="perf-label">S&amp;P 500 Benchmark</span></div>
+            <div class="perf-row"><span class="perf-key">Portfolio Value</span><span class="perf-val">46,777.23<span class="perf-ccy">CAD</span></span></div>
+            <div class="perf-row"><span class="perf-key">S&amp;P 500 Value</span><span class="perf-val">44,593.05<span class="perf-ccy">CAD</span></span></div>
+            <div class="dbar-wrap">
+              <div class="dbar"><span class="seg-sp"></span><span class="seg-lead"></span></div>
+            </div>
+            <div class="perf-row diff"><span class="perf-key">Difference</span><span class="perf-val">+2,184.18<span class="perf-pp">+4.90%</span></span></div>
+            <span class="view-all">View Details</span>
+          </div>
+          <div class="pos-group">
+            <span class="pos-head">Calibration</span>
+            <div class="tbl">
+              <div class="tbl-row"><span class="tl-mid">Accuracy</span><span class="tv">54%</span></div>
+              <div class="tbl-row"><span class="tl-mid">Predictions</span><span class="tv">17</span></div>
+              <div class="tbl-row"><span class="tl-mid">Next Judgment</span><span class="tv">Apr 1, 2027</span></div>
+            </div>
+          </div>
+          <div class="pos-group">
+            <span class="pos-head">Active Positions   9</span>
+            <div class="tbl">
+              <div class="tbl-row"><span class="tl-mid"><span class="pos-mark"></span>ORIO.TO</span><span class="tv w">25%</span><span class="tv mv">−6.2%</span></div>
+              <div class="tbl-row"><span class="tl-mid">BWEN</span><span class="tv w">20%</span><span class="tv mv">+1.4%</span></div>
+              <div class="tbl-row"><span class="tl-mid">EOSCR</span><span class="tv w">15%</span><span class="tv mv">−3.8%</span></div>
+              <div class="tbl-row"><span class="tl-mid"><span class="pos-mark"></span>NVDA</span><span class="tv w">12%</span><span class="tv mv">−6.8%</span></div>
+              <div class="tbl-row"><span class="tl-mid">SHOP</span><span class="tv w">5%</span><span class="tv mv">−0.8%</span></div>
+              <div class="tbl-row"><span class="tl-mid">AAPL</span><span class="tv w">4%</span><span class="tv mv">+4.2%</span></div>
+              <div class="tbl-row"><span class="tl-mid">MELI</span><span class="tv w">4%</span><span class="tv mv">+0.6%</span></div>
+              <div class="tbl-row"><span class="tl-mid">CRWD</span><span class="tv w">3%</span><span class="tv mv">−1.9%</span></div>
+              <div class="tbl-row"><span class="tl-mid">PYPL</span><span class="tv w">2%</span><span class="tv mv">+0.3%</span></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    <span class="v-note">One segmented bar = your portfolio. The hatched span is what the S&amp;P accounts for; the white tip is what you earned beyond it (+4.90%, true to scale). When behind, the tip inverts to an empty notch. Borrowed from the reference’s segmented holders bar.</span>
+  </div>
+
+  <!-- ════ Option F — Tick scale ════ -->
+  <div class="variant vts">
+    <span class="v-label">Option F — Tick scale</span>
+    <div class="frame">
+      <hr class="divider">
+      <div class="section"><div class="s-inner">
+        <div class="s-title-wrap">
+          <div class="s-title-col">
+            <span class="t-primary">Active</span>
+            <span class="t-secondary">Self-directed</span>
+          </div>
+          <div class="acct-sw">
+            <span class="acct-label">All Accounts</span>
+            <svg class="acct-chev" viewBox="0 0 7 4" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.5 0.5L3.5 3.5L6.5 0.5" stroke="#c7c7c7" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <div class="data-col">
+          <div class="db">
+            <span class="db-label">Value</span>
+            <span class="n22">46,777.23</span>
+          </div>
+          <div class="perf-block">
+            <div class="perf-header"><span class="perf-label">S&amp;P 500 Benchmark</span></div>
+            <div class="perf-row"><span class="perf-key">Portfolio Value</span><span class="perf-val">46,777.23<span class="perf-ccy">CAD</span></span></div>
+            <div class="perf-row"><span class="perf-key">S&amp;P 500 Value</span><span class="perf-val">44,593.05<span class="perf-ccy">CAD</span></span></div>
+            <div class="scale-wrap">
+              <svg width="240" height="14" viewBox="0 0 240 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="0" y1="7" x2="240" y2="7" stroke="#3A3D3E" stroke-width="1"/>
+                <line x1="0" y1="3" x2="0" y2="11" stroke="#3A3D3E" stroke-width="1"/>
+                <line x1="60" y1="5" x2="60" y2="9" stroke="#3A3D3E" stroke-width="1"/>
+                <line x1="120" y1="2" x2="120" y2="12" stroke="#929292" stroke-width="1"/>
+                <line x1="180" y1="5" x2="180" y2="9" stroke="#3A3D3E" stroke-width="1"/>
+                <line x1="240" y1="3" x2="240" y2="11" stroke="#3A3D3E" stroke-width="1"/>
+                <circle cx="178.8" cy="7" r="2.5" fill="#FFFFFF"/>
+              </svg>
+              <div class="scale-lbls"><span>−10%</span><span>0</span><span>+10%</span></div>
+            </div>
+            <div class="perf-row diff"><span class="perf-key">Difference</span><span class="perf-val">+2,184.18<span class="perf-pp">+4.90%</span></span></div>
+            <span class="view-all">View Details</span>
+          </div>
+          <div class="pos-group">
+            <span class="pos-head">Calibration</span>
+            <div class="tbl">
+              <div class="tbl-row"><span class="tl-mid">Accuracy</span><span class="tv">54%</span></div>
+              <div class="tbl-row"><span class="tl-mid">Predictions</span><span class="tv">17</span></div>
+              <div class="tbl-row"><span class="tl-mid">Next Judgment</span><span class="tv">Apr 1, 2027</span></div>
+            </div>
+          </div>
+          <div class="pos-group">
+            <span class="pos-head">Active Positions   9</span>
+            <div class="tbl">
+              <div class="tbl-row"><span class="tl-mid"><span class="pos-mark"></span>ORIO.TO</span><span class="tv w">25%</span><span class="tv mv">−6.2%</span></div>
+              <div class="tbl-row"><span class="tl-mid">BWEN</span><span class="tv w">20%</span><span class="tv mv">+1.4%</span></div>
+              <div class="tbl-row"><span class="tl-mid">EOSCR</span><span class="tv w">15%</span><span class="tv mv">−3.8%</span></div>
+              <div class="tbl-row"><span class="tl-mid"><span class="pos-mark"></span>NVDA</span><span class="tv w">12%</span><span class="tv mv">−6.8%</span></div>
+              <div class="tbl-row"><span class="tl-mid">SHOP</span><span class="tv w">5%</span><span class="tv mv">−0.8%</span></div>
+              <div class="tbl-row"><span class="tl-mid">AAPL</span><span class="tv w">4%</span><span class="tv mv">+4.2%</span></div>
+              <div class="tbl-row"><span class="tl-mid">MELI</span><span class="tv w">4%</span><span class="tv mv">+0.6%</span></div>
+              <div class="tbl-row"><span class="tl-mid">CRWD</span><span class="tv w">3%</span><span class="tv mv">−1.9%</span></div>
+              <div class="tbl-row"><span class="tl-mid">PYPL</span><span class="tv w">2%</span><span class="tv mv">+0.3%</span></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    <span class="v-note">An instrument scale — centre tick is the S&amp;P (0), the white marker is your position (+4.90%) on a fixed −10%…+10% range. Fixed scale means no exaggeration; behind the market simply reads left of centre. Terminal gauge mood.</span>
+  </div>
+
+</div>
+</body>
+</html>
