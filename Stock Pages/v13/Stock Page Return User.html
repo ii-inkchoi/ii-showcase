@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <title>ATZ — Stock Page (Return User · Active · Held)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-800:#565B5E;--c-700:#929292;--c-600:#A7A7A7;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFFFFF;
+      --c-urgent:#FF3533;--c-warning:#FF7A00;--c-review:#FBC308;--c-live:#30D158;--c-elev:#0A0A0A;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    body{background:var(--c-black);color:var(--c-white);font-family:'Inter',sans-serif;width:100%;max-width:393px;margin:0 auto;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-feature-settings:'lnum' 1,'tnum' 1;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch}
+    body::-webkit-scrollbar{display:none}
+    html{scrollbar-width:none;-ms-overflow-style:none}
+    html::-webkit-scrollbar{display:none}
+    a{color:inherit;text-decoration:none;-webkit-tap-highlight-color:transparent}
+
+    /* HEADER */
+    .header{height:71px;display:flex;align-items:center;justify-content:space-between;padding:0 13.5px;border-bottom:1px solid var(--c-900)}
+
+    /* COMPLIANCE STRIP — institutional disclosure as system metadata */
+    .compliance-strip{
+      display:flex;
+      align-items:center;
+      justify-content:flex-start;
+      padding:8px 20px;
+      font-size:9px;
+      letter-spacing:-0.02em;
+      color:var(--c-800);
+      border-bottom:0.5px solid var(--c-1000);
+      line-height:1.3;
+    }
+    .back{width:13px;height:13px;display:inline-flex;align-items:center;justify-content:center;color:var(--c-400)}
+    .back::before{content:'';width:8px;height:8px;border-left:1px solid currentColor;border-bottom:1px solid currentColor;transform:rotate(45deg);margin-left:2px}
+    .back:active{opacity:.5;transition:opacity 80ms ease}
+    .star{width:16px;height:16px;display:inline-flex;align-items:center;justify-content:center;color:var(--c-400)}
+    .exit{font-size:14px;letter-spacing:-.02em;color:var(--c-400)}
+    .exit:active{opacity:.5;transition:opacity 80ms ease}
+
+    /* TITLE */
+    .title-block{padding:40px 20px 0;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+    .t-primary{font-size:18px;letter-spacing:-.02em;color:var(--c-white);line-height:1.15}
+    .t-secondary{font-size:13px;letter-spacing:-.02em;color:var(--c-700);line-height:1.15}
+    .t-secondary .price{color:var(--c-white);margin-left:4px}
+    .t-secondary .t-entry{color:var(--c-700);margin-left:6px}
+    .t-state{font-size:11px;letter-spacing:-.02em;color:var(--c-700);line-height:1.4;margin-top:2px}
+    .memo-history-link{font-size:11px;color:var(--c-700);letter-spacing:-.02em;-webkit-tap-highlight-color:transparent;cursor:pointer;display:inline-flex;align-items:baseline;gap:4px}
+    .memo-history-link:active{opacity:.5;transition:opacity 80ms ease}
+    .memo-history-link .chev{font-size:13px;font-weight:300;color:var(--c-700)}
+    /* L13: Memo History bar — right-aligned at top of memo-block */
+    .memo-block-history-bar{display:flex;justify-content:flex-end;padding:0 0 12px}
+    .memo-block-history-bar:empty{display:none}
+
+
+    /* ALERT MIRROR — v6a pattern (dashboard mirror, pulsating dot, ABOVE memo) */
+    .oq-list{display:flex;flex-direction:column;padding:0 20px;margin-top:48px}
+    .oq-section{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:16px 0;border-bottom:0.5px solid var(--c-1000);text-align:left}
+    .oq-body{display:flex;flex-direction:column;align-items:stretch;gap:4px;flex:1;min-width:0}
+    .oq-head-row{display:flex;align-items:center;justify-content:flex-start;gap:12px}
+    .oq-head-left{display:inline-flex;align-items:center;gap:10px}
+    .oq-dot{display:inline-block;width:5px;height:5px;border-radius:50%;flex-shrink:0}
+    .oq-dot.urgent{background:#FF3533}
+    .oq-dot.warning{background:var(--c-warning)}
+    .oq-dot.review{background:#FBC308}
+    .oq-dot.neutral{background:var(--c-700)}
+    @keyframes oq-dot-pulse{0%,100%{opacity:1}50%{opacity:.32}}
+    .oq-dot.urgent,.oq-dot.warning,.oq-dot.review{animation:oq-dot-pulse 2.4s cubic-bezier(0.45,0,0.55,1) infinite}
+    @media (prefers-reduced-motion:reduce){.oq-dot{animation:none!important}}
+    .oq-title{font-size:13px;color:var(--c-400);line-height:1.25;letter-spacing:-.02em;white-space:nowrap}
+    .oq-x{background:none;border:none;color:var(--c-700);line-height:0;cursor:pointer;padding:4px 0 4px 8px;-webkit-tap-highlight-color:transparent}
+    .oq-x svg{display:block}
+    .oq-x:active{color:var(--c-400);transition:color 80ms ease}
+    .oq-action{font-size:11px;color:var(--c-700);line-height:normal;padding-left:16px;text-decoration:none;align-self:flex-start;display:inline-flex;align-items:baseline;gap:4px}
+    .oq-action:active{opacity:.5;transition:opacity 80ms ease}
+    .oq-action .chev{font-size:13px;font-weight:300;color:var(--c-700)}
+
+    /* COLUMN */
+    .col{padding:48px 20px 120px;display:flex;flex-direction:column;gap:48px}
+
+    /* ─────────────────────────────────────────
+       MEMO BLOCK — v6c box, with 3-cell data grid restored
+       Status bar → Content (Thesis + Kill Criteria) → 3-cell grid → Footer (re-underwrite persistent)
+       ───────────────────────────────────────── */
+    .memo-block{
+      border:0.5px solid var(--c-900);
+      padding:16px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .memo-block.memo-block-notes { border: none; border-top: 0.5px solid var(--c-900, #232627); padding: 14px 0 0; border-radius: 0; }
+    .memo-block .uw-rows{display:flex;flex-direction:column;gap:10px}
+    /* Active/Core stance toggle — period-opt pattern */
+    .stance-toggle { display: inline-flex; align-items: center; gap: 8px; }
+    .stance-toggle-opt { font-size: 11px; color: var(--c-700, #929292); letter-spacing: -0.02em; cursor: pointer; padding: 2px 0; -webkit-tap-highlight-color: transparent; background: none; border: none; font-family: inherit; transition: color 120ms ease; }
+    .stance-toggle-opt.is-active { color: var(--c-white, #FFFFFF); }
+    .stance-toggle-opt:active { opacity: .5; transition: opacity 80ms ease; }
+    .stance-toggle-opt:focus, .stance-toggle-opt:focus-visible { outline: none; }
+    .stance-toggle-sep { font-size: 11px; color: var(--c-800, #565B5E); }
+    .memo-block-divider{
+      height:0.5px;
+      background:var(--c-900);
+      margin:4px 0;
+    }
+    /* L27: full-width divider — negates memo-block 16px padding, used above Notes for clean section break */
+    .memo-block-divider-full{height:0.5px;background:var(--c-900);margin:4px -16px}
+
+    .memo-block-toggle{
+      align-self:flex-start;
+      cursor:pointer;
+      -webkit-tap-highlight-color:transparent;
+      border:none;
+      background:none;
+      border-bottom:0.5px dotted var(--c-800);
+      padding:0 0 1px;
+      margin-top:4px;
+      font-family:inherit;
+      font-size:11px;
+      color:var(--c-700);
+      letter-spacing:-.02em;
+    }
+    .memo-block-toggle:active{opacity:.5;transition:opacity 80ms ease}
+    .memo-block-prose{max-height: 100px;overflow:hidden;mask-image:linear-gradient(to bottom,#000 60%,transparent 100%);-webkit-mask-image:linear-gradient(to bottom,#000 60%,transparent 100%);}
+    .memo-block-prose.expanded{max-height:none;mask-image:none;-webkit-mask-image:none;}
+    .memo-block-prose.expanded{max-height:none;mask-image:none;-webkit-mask-image:none;white-space:pre-wrap}
+
+    .memo-block-foot{
+      display:flex;
+      align-items:baseline;
+      justify-content:flex-end;
+      gap:12px;
+      margin-top:8px;
+    }
+    .memo-block-version{
+      font-size:11px;
+      color:var(--c-700);
+      letter-spacing:-.02em;
+    }
+    .memo-block-cta{
+      display:inline-flex;
+      align-items:center;
+      gap:4px;
+      font-size:11px;
+      color:var(--c-white);
+      letter-spacing:-.02em;
+      padding:10px 8px;
+      margin:-10px -8px;
+      -webkit-tap-highlight-color:transparent;
+      cursor:pointer;
+      text-decoration:none;
+    }
+    .memo-block-cta:active{opacity:.5;transition:opacity 80ms ease}
+    .memo-block-cta .chev{font-size:13px;font-weight:300;color:var(--c-white)}
+    /* TAP-TO-LEARN — dotted underline + info-panel (#74) */
+        .lbl-tap{
+      cursor:pointer; -webkit-tap-highlight-color:transparent;
+      display:inline-block;
+      border-bottom:0.5px dotted var(--c-800);
+      padding-bottom:1px;
+      line-height:1.2;
+      transition:color 120ms ease, border-color 120ms ease;
+    }
+    .lbl-tap:active{opacity:0.5; transition:opacity 80ms ease;}
+    .lbl-tap.open{color:var(--c-white); border-bottom-color:var(--c-700);}
+    .info-panel{
+      padding:10px 14px 14px;
+      margin-top:6px;
+      border-left:1px solid var(--c-900);
+      font-size:12px; color:var(--c-400);
+      letter-spacing:-0.02em; line-height:1.55;
+    }
+    .info-panel[hidden]{display:none;}
+    .info-panel p{margin:0;}
+    .info-panel p + p{margin-top:8px;}
+
+
+
+
+    /* Live status dot — pulsing green */
+    .live-dot{
+      display:inline-block;
+      width:5px;
+      height:5px;
+      border-radius:50%;
+      background:var(--c-live);
+      margin-right:6px;
+      vertical-align:middle;
+      animation:live-pulse 2.4s cubic-bezier(0.45,0,0.55,1) infinite;
+    }
+    @keyframes live-pulse{0%,100%{opacity:1}50%{opacity:.6}}
+    @media (prefers-reduced-motion: reduce){.live-dot{animation:none !important}}
+    .memo-block-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .memo-block-title{
+      font-size:15px;
+      color:var(--c-white);
+      letter-spacing:-.02em;
+    }
+    .memo-block-chev{
+      font-size:13px;
+      font-weight:300;
+      color:var(--c-700);
+      flex-shrink:0;
+    }
+    .memo-block-meta{
+      font-size:12px;
+      color:var(--c-700);
+      letter-spacing:-.02em;
+      line-height:1.45;
+    }
+    .memo-block-prose{
+      font-size:13px;
+      color:var(--c-400);
+      letter-spacing:-.02em;
+      line-height: 1.65;
+      }
+
+    /* UNDERWRITING / Probability — row pattern (matches Position) */
+    .uw-section{gap:14px}
+    .prob-section{gap:14px}
+    .uw-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+    .uw-key{font-size:13px;color:var(--c-700);letter-spacing:-.02em}
+    .uw-val{font-size:13px;color:var(--c-400);letter-spacing:-.02em;text-align:right;font-feature-settings:'tnum' 1}
+    .uw-val .uw-meta{color:var(--c-700);margin-left:6px;font-size:12px}
+
+    /* Memo status bar (top of box) */
+    .memo-status-bar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:16px;
+      border-bottom:0.5px solid var(--c-1000);
+      gap:12px;
+    }
+    .memo-status-left{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      font-size:12px;
+      color:var(--c-400);
+      letter-spacing:-.02em;
+    }
+    .memo-state{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      font-size:11px;
+      color:var(--c-400);
+      letter-spacing:-.02em;
+      padding-left:4px;
+    }
+    .memo-state .state-dot{
+      width:5px;
+      height:5px;
+      border-radius:50%;
+      background:var(--c-400);
+      flex-shrink:0;
+    }
+    .memo-state.live{color:var(--c-400)}
+    .memo-state.live .state-dot{background:var(--c-live);animation:live-pulse 2.4s cubic-bezier(0.45,0,0.55,1) infinite}
+    .memo-state.triggered .state-dot{background:var(--c-warning);animation:state-pulse 2.4s cubic-bezier(0.45,0,0.55,1) infinite}
+    .memo-state.stale .state-dot{background:var(--c-800)}
+    .memo-state.closed .state-dot{background:var(--c-800)}
+    @keyframes live-pulse{0%,100%{opacity:1}50%{opacity:.6}}
+    @keyframes state-pulse{0%,100%{opacity:1}50%{opacity:.32}}
+    @media (prefers-reduced-motion:reduce){.memo-state .state-dot{animation:none!important}}
+    .memo-status-right{
+      font-size:11px;
+      color:var(--c-700);
+      letter-spacing:-.02em;
+    }
+
+    /* Memo content */
+    .memo-content{
+      padding:16px;
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+    .mc-row{display:flex;flex-direction:column;gap:4px}
+    .mc-row + .mc-row{border-top:0.5px solid var(--c-1000);padding-top:16px;margin-top:0}
+    .mc-lbl{font-size:13px;color:var(--c-700);letter-spacing:-.02em}
+    .mc-lbl .mc-num{color:var(--c-800);margin-right:10px;font-feature-settings:'tnum' 1}
+    .mc-preview{font-size:14px;color:var(--c-400);letter-spacing:-.02em;line-height:1.65;white-space:pre-wrap}
+    /* Read More / Read Less — .lbl-tap doctrine pattern (dotted underline) */
+    .mc-toggle{
+      cursor:pointer;
+      -webkit-tap-highlight-color:transparent;
+      border-bottom:0.5px dotted var(--c-800);
+      padding-bottom:1px;
+      display:inline-block;
+      align-self:flex-start;
+      font-size:12px;
+      color:var(--c-700);
+      letter-spacing:-.02em;
+      margin-top:8px;
+      background:none;
+      border-left:none;
+      border-right:none;
+      border-top:none;
+      font-family:inherit;
+    }
+    .mc-toggle:active{opacity:.5;transition:opacity 80ms ease}
+
+    /* Kill criteria list — numbered points (K.01, K.02, K.03) */
+    .kill-list{
+      list-style:none;
+      display:flex;
+      flex-direction:column;
+      margin-top:6px;
+    }
+    .kill-list li{
+      display:flex;
+      gap:10px;
+      font-size:14px;
+      color:var(--c-400);
+      letter-spacing:-.02em;
+      line-height:1.5;
+      padding:4px 0;
+    }
+    .kill-list .k-num{
+      color:var(--c-800);
+      font-size:14px;
+      width:14px;
+      flex-shrink:0;
+      display:inline-block;
+      line-height:1.5;
+    }
+    .mc-body{font-size:14px;color:var(--c-400);letter-spacing:-.02em;line-height:1.55}
+    .mc-sub{font-size:12px;color:var(--c-700);letter-spacing:-.02em;line-height:1.5;margin-top:6px}
+    .mc-sub .kc-label{color:var(--c-700)}
+    .mc-sub .kc-value{color:var(--c-400)}
+
+    /* Memo 3-cell data grid (IV / MoS / Thesis Probability) — RESTORED from v6a */
+    .memo-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+      padding:16px;
+      position:relative;
+    }
+    .memo-grid::before,
+    .memo-grid::after{
+      content:'';
+      position:absolute;
+      left:16px;
+      right:16px;
+      height:0.5px;
+      background:var(--c-1000);
+    }
+    .memo-grid::before{top:0}
+    .memo-grid::after{bottom:0}
+    .memo-metric{display:flex;flex-direction:column;gap:4px}
+    .metric-label{font-size:10px;color:var(--c-700);letter-spacing:-.02em}
+    .metric-value{font-size:15px;color:var(--c-white);letter-spacing:-.02em;line-height:1.1}
+    .metric-unit{font-size:10px;color:var(--c-700);margin-left:2px}
+    .metric-trail{
+      font-size:9px;
+      color:var(--c-800);
+      letter-spacing:-0.02em;
+      line-height:1.45;
+      margin-top:6px;
+      white-space:normal;
+      font-feature-settings:'tnum' 1;
+    }
+    /* Doctrine: assumption trails max 2 lines per cell, semantic break via <br>, tnum for number alignment */
+
+    /* Memo footer — re-underwrite always visible */
+    .memo-footer{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:16px;
+      gap:12px;
+    }
+    .memo-footer .mf-reviewed{
+      font-size:11px;
+      color:var(--c-700);
+      letter-spacing:-.02em;
+    }
+    .memo-footer .mf-action{
+      font-size:15px;
+      color:var(--c-white);
+      letter-spacing:-.02em;
+    }
+    /* arrow removed — matches Re-seal Memo pattern (no-arrow CTA) */
+
+    /* POSITION — row pattern (v6c, matches Performance) */
+    .pos-section{gap:16px}
+    .pos-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+    .pos-key{font-size:14px;color:var(--c-700);letter-spacing:-.02em}
+    .pos-val{font-size:14px;color:var(--c-400);letter-spacing:-.02em;text-align:right}
+    .pos-val .ccy{color:var(--c-700);margin-left:4px}
+    .pos-val .pl-pct{color:var(--c-700);margin-left:6px}
+    .pos-val .pos-prev{color:var(--c-800)}
+    .pos-val .pos-arrow{color:var(--c-800);margin:0 2px}
+
+    /* PERFORMANCE (same row pattern) */
+    .section{display:flex;flex-direction:column;gap:14px}
+    .section-header{display:flex;align-items:baseline;justify-content:space-between;padding:0 0 14px;border-bottom:0.5px solid var(--c-900)}
+    .memo-section .section-header{border-bottom:none;padding-bottom:10px}
+    /* J16/J17 — Category label on the right of "Memo" (system-determined: Active / Core·Treasury) */
+    .memo-category-label { font-size: 11px; color: var(--c-700); letter-spacing: -0.02em; }
+    .section-title{font-size:15px;color:var(--c-white);letter-spacing:-.02em;display:inline-flex;align-items:center;gap:8px}
+    .section-title .live-dot{margin:0}
+    /* Notes inline inside memo block (v10) + Investment Case prose label */
+    /* Inline Notes input (v10 — editable inside memo block, same as blank state) */
+    .memo-block-notes-section { display: flex; flex-direction: column; gap: 6px; }
+    .memo-block-notes-input { width: 100%; min-height: 44px; resize: none; overflow: hidden; background: transparent; border: none; padding: 0; outline: none; color: var(--c-200, #E3E2E2); font-family: inherit; font-size: 13px; line-height: 1.55; letter-spacing: -0.02em; -webkit-tap-highlight-color: transparent; }
+    .memo-block-notes-input::placeholder { color: var(--c-800, #565B5E); }
+    .memo-block-notes-input.is-saved { color: var(--c-700, #929292); }
+    .memo-block-notes-toolbar { display: flex; justify-content: flex-end; }
+    .notes-save-btn { font-size: 11px; color: var(--c-800, #565B5E); padding: 4px 0; border: none; background: transparent; letter-spacing: -0.02em; font-family: inherit; transition: color 120ms ease; cursor: default; pointer-events: none; }
+    .notes-save-btn:focus, .notes-save-btn:focus-visible { outline: none; }
+    .notes-save-btn:active { opacity: .5; transition: opacity 80ms ease; }
+    .notes-save-btn.is-ready { color: var(--c-200, #E3E2E2); cursor: pointer; pointer-events: auto; }
+    .notes-save-btn.is-saved { color: var(--c-white, #FFFFFF); cursor: default; pointer-events: none; }
+    /* Notes textarea — focused = full expand, blurred + long content = collapse */
+    .memo-block-notes-input.is-collapsed { max-height: 100px; overflow: hidden; mask-image: linear-gradient(to bottom, #000 60%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%); }
+    .notes-read-more { font-size: 11px; color: var(--c-700, #929292); padding: 4px 0; border: none; background: transparent; letter-spacing: -0.02em; font-family: inherit; cursor: pointer; align-self: flex-start; }
+    .notes-read-more[hidden] { display: none; }
+    .notes-read-more:active { opacity: .5; transition: opacity 80ms ease; }
+    .notes-read-more:focus, .notes-read-more:focus-visible { outline: none; }
+    
+    .memo-block-notes-display { display: flex; flex-direction: column; gap: 4px; }
+    /* J31: Investment Case label REVERTED to match other row labels (13px, c-700) */
+    .memo-prose-label { font-size: 13px; color: var(--c-700); letter-spacing: -0.02em; margin-bottom: 4px; margin-top: 2px; }
+    /* Notes — secondary artifact below memo block (legacy, no longer used in v10) */
+    .memo-notes-card{display:block;border:none;border-top:0.5px solid var(--c-900, #232627);padding:14px 0 0;margin-top:14px;-webkit-tap-highlight-color:transparent;cursor:pointer}
+    .memo-notes-card:active{opacity:.5;transition:opacity 80ms ease}
+    .memo-notes-eyebrow{font-size:11px;color:var(--c-700);letter-spacing:-.01em;margin-bottom:6px}
+    .memo-notes-preview{font-size:13px;color:var(--c-400);letter-spacing:-.02em;line-height:1.55;margin-bottom:8px;white-space:pre-wrap;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .memo-notes-foot{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+    .memo-notes-meta{font-size:11px;color:var(--c-700);letter-spacing:-.02em}
+    .memo-notes-cta{font-size:11px;color:var(--c-white);letter-spacing:-.02em;display:inline-flex;align-items:baseline;gap:4px}
+    .memo-notes-cta .chev{font-size:13px;font-weight:300}
+    /* About Aritzia — collapsible (#63) */
+    .about-section .about-toggle{
+      display:inline-flex;align-items:baseline;gap:3px;
+      background:none;border:none;padding:0;
+      font-family:inherit;font-size:12px;color:var(--c-700);letter-spacing:-.01em;
+      cursor:pointer;-webkit-tap-highlight-color:transparent;
+      align-self:flex-start;
+    }
+    .about-section .about-toggle .toggle-label{
+      border-bottom:0.5px dotted var(--c-800);
+      padding-bottom:1px;
+      transition:color 120ms ease, border-color 120ms ease;
+    }
+    .about-section .about-toggle:active .toggle-label{opacity:0.5; transition:opacity 80ms ease;}
+    .about-section.expanded .about-toggle .toggle-label{color:var(--c-white); border-bottom-color:var(--c-700);}
+    .about-section .about-body{display:none;margin-top:14px;}
+    .about-section.expanded .about-body{display:block;}
+    /* RESEARCH CARDS — Fiscal AI + Research Prompt (#70 #71) */
+        .section-title-plain{font-size:15px;color:var(--c-white);letter-spacing:-.02em;font-weight:400;padding:0 0 10px 0;margin:0;}
+    .research-card{background:var(--c-elev);border:0.5px solid var(--c-900);padding:16px;display:flex;flex-direction:column;gap:6px;color:inherit;-webkit-tap-highlight-color:transparent;position:relative;}
+    .research-card.research-card-link{cursor:pointer;flex-direction:row;align-items:center;justify-content:space-between;gap:14px;}
+    .research-card.research-card-link:active{opacity:.5;transition:opacity 80ms ease;}
+    .research-card.research-card-link .rc-head{display:flex;flex-direction:column;gap:6px;flex:1;}
+    .research-card.research-card-link .rc-title{font-size:13px;color:var(--c-white);letter-spacing:-.02em;}
+    .research-card.research-card-link .rc-sub{font-size:12px;color:var(--c-700);letter-spacing:-.01em;line-height:1.5;margin-top:6px;}
+    .research-card.research-card-link .rc-arrow{color:var(--c-700);font-size:14px;font-weight:300;flex-shrink:0;}
+    /* Research Prompt card head */
+    .research-card .rc-head-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+/* Doctrine §30 — Copy button: top hero, ghost button (icon + label), amber on copied */
+    .research-card .rc-copy{display:inline-flex;align-items:center;gap:6px;padding:6px 4px;margin:-6px -4px;background:transparent;border:none;cursor:pointer;color:var(--c-400);font-family:inherit;font-size:11px;letter-spacing:-.01em;-webkit-tap-highlight-color:transparent;flex-shrink:0;transition:color 180ms ease;}
+    .research-card .rc-copy:active{opacity:.5;transition:opacity 80ms ease;}
+    .research-card .rc-copy svg{width:11px;height:11px;}
+    .research-card .rc-copy .rc-copy-lbl{line-height:1;}
+    .research-card .rc-copy.copied{color:var(--c-white);}
+    .research-card .rc-title{font-size:13px;color:var(--c-white);letter-spacing:-.02em;line-height:1.2;}
+    .research-card .rc-sub{font-size:12px;color:var(--c-700);letter-spacing:-.01em;line-height:1.5;margin-top:6px;}
+    
+    /* Output preview expand */
+    .research-card .rc-output{border-top:0.5px solid var(--c-900);margin-top:4px;padding-top:12px;}
+    .research-card .rc-output-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;}
+    .research-card .rc-stance-bar{display:flex;align-items:baseline;gap:8px;}
+
+    .research-card .rc-output-label{font-size:11px;color:var(--c-800);letter-spacing:-.01em;margin-bottom:8px;}
+    .research-card .rc-prompt-preview{font-size:13px;line-height:1.6;color:var(--c-700);letter-spacing:-0.01em;white-space:pre-wrap;font-family:inherit;max-height:120px;overflow:hidden;mask-image:linear-gradient(to bottom,#000 60%,transparent 100%);-webkit-mask-image:linear-gradient(to bottom,#000 60%,transparent 100%);;margin-top:16px;}
+    .research-card .rc-prompt-preview.expanded{max-height:none;mask-image:none;-webkit-mask-image:none;}
+    .research-card .rc-prompt-num{display:inline-block;width:24px;flex-shrink:0;}
+    .research-card .rc-prompt-row{display:flex;align-items:baseline;}
+    .research-card .rc-prompt-row .rc-prompt-text{flex:1;min-width:0;}
+    .research-card .rc-prompt-para{margin:0;}
+    .research-card .rc-prompt-blank{height:0.8em;}
+    .research-card .rc-output-meta{font-size:11px;color:var(--c-800);letter-spacing:-.01em;margin-top:10px;padding-top:8px;border-top:0.5px solid var(--c-1000);}
+    .research-card .rc-cta-row{margin-top:10px;padding-bottom:14px;display:flex;justify-content:flex-start;align-items:baseline;}
+    .research-card .rc-toggle{background:none;border:none;padding:6px 4px;margin:-6px -4px;cursor:pointer;font-family:inherit;font-size:11px;color:var(--c-700);letter-spacing:-.01em;display:inline-flex;align-items:baseline;gap:4px;-webkit-tap-highlight-color:transparent;transition:color 180ms ease;}
+    
+    .research-card .rc-toggle .rc-toggle-lbl{border-bottom:0.5px dotted var(--c-800);padding-bottom:1px;}
+    .research-card .rc-toggle:active{opacity:.5;}
+    .research-card .rc-toggle .chev{font-size:13px;color:var(--c-700);line-height:1;}
+    .research-card .rc-cta{background:none;border:none;padding:6px 4px;margin:-6px -4px;cursor:pointer;font-family:inherit;font-size:11px;color:var(--c-700);letter-spacing:-.01em;display:inline-flex;align-items:baseline;gap:0;-webkit-tap-highlight-color:transparent;transition:color 180ms ease;}
+    
+    .research-card .rc-cta:active{opacity:.5;transition:opacity 80ms ease;}
+    .research-card .rc-cta .rc-cta-arrow{display:none;}
+    .research-card .rc-cta.copied{color:var(--c-live);}
+    
+    .research-card .rc-sec-row{display:flex;align-items:baseline;gap:10px;padding:5px 0;font-size:12px;color:var(--c-400);letter-spacing:-.01em;}
+    .research-card .rc-sec-num{font-size:10px;color:var(--c-700);font-variant-numeric:tabular-nums;width:18px;flex-shrink:0;}
+    .research-card .rc-ai-tools{
+  border-top:0.5px solid var(--c-900);
+  padding-top:14px;padding-bottom:2px;line-height:1.5; margin-top:4px;
+      display:flex; align-items:baseline; gap:8px; flex-wrap:wrap;
+      font-size:11px; color:var(--c-700); letter-spacing:-0.01em;
+}
+    .research-card .rc-ai-tools .rc-ai-lbl{color:var(--c-700);}
+    .research-card .rc-ai-tools a{color:var(--c-400);}
+    .research-card .rc-ai-tools a:active{opacity:.5;transition:opacity 80ms ease;}
+    .research-card .rc-ai-tools .rc-ai-sep{color:var(--c-800);}
+
+
+
+    .section-meta{font-size:11px;color:var(--c-700);letter-spacing:-.02em}
+    .perf-vs-sp.section{gap:16px}
+    .perf-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+    .perf-pct{color:var(--c-700);margin-left:8px;font-size:13px;letter-spacing:-.02em}
+    .perf-row.diff .perf-pct{color:var(--c-700)}
+    .perf-method{
+      font-size:11px;
+      color:var(--c-700);
+      letter-spacing:-.02em;
+      line-height:1.5;
+      padding-top:8px;
+      border-top:0.5px solid var(--c-1000);
+      max-width:100%;
+    }
+    .perf-key{font-size:14px;color:var(--c-700);letter-spacing:-.02em}
+    .perf-val{font-size:14px;color:var(--c-400);letter-spacing:-.02em}
+    .perf-row.diff .perf-val{color:var(--c-white)}
+    .view-link{display:inline-flex;align-items:baseline;gap:4px;font-size:11px;color:var(--c-700);letter-spacing:-.02em;margin-top:4px;align-self:flex-start}
+    .view-link .chev{font-size:13px;font-weight:300;color:var(--c-700)}
+    .view-link:active{opacity:.5;transition:opacity 80ms ease}
+
+    /* Nav rows */
+    .nav-rows{display:flex;flex-direction:column}
+    .nav-row{padding:18px 0;border-bottom:0.5px solid var(--c-900);display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+    .nav-rows .nav-row:first-child{border-top:none}
+    .nav-row:active{opacity:.5;transition:opacity 80ms ease}
+    .nav-row.primary{background:var(--c-elev);border:0.5px solid var(--c-900);padding:16px}
+    .nav-row.primary .nav-row-arrow{color:var(--c-700);font-size:14px}
+    .nav-row.primary .nav-row-meta{font-size:12px;line-height:1.5;max-width:280px}
+    button.nav-row.primary{width:100%;text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent;font-family:inherit;color:inherit}
+    button.nav-row.primary:active{opacity:.5;transition:opacity 80ms ease}
+    button.nav-row.primary.copied .nav-row-arrow{color:var(--c-white)}
+
+    /* Compound primary card — stacked action + footer with hairline */
+    .primary-card{background:var(--c-elev);border:0.5px solid var(--c-900);display:flex;flex-direction:column}
+    .primary-card-action{
+      width:100%;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+      padding:16px;
+      background:none;
+      border:none;
+      font-family:inherit;
+      text-align:left;
+      cursor:pointer;
+      color:inherit;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .primary-card-action:active{opacity:.5;transition:opacity 80ms ease}
+    .primary-card-action .nav-row-arrow{color:var(--c-700);font-size:14px}
+    .primary-card-action .nav-row-meta{font-size:12px;line-height:1.5;max-width:280px}
+    .primary-card-action.copied .nav-row-arrow{color:var(--c-white)}
+    .copy-feedback{
+      display:inline-block;
+      margin-left:10px;
+      font-size:13px;
+      color:var(--c-700);
+      letter-spacing:-.02em;
+      opacity:0;
+      transition:opacity 120ms ease;
+    }
+    .primary-card-action.copied .copy-feedback{opacity:1}
+    .primary-card-footer{
+      border-top:0.5px solid var(--c-900);
+      padding:12px 16px;
+    }
+    /* Output structure block — informational, not copyable content */
+    .primary-card-structure{
+      user-select:none;
+    }
+    .pc-structure-toggle{
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:flex-start;
+      gap:6px;
+      padding:12px 16px;
+      background:none;
+      border:none;
+      font-family:inherit;
+      cursor:pointer;
+      text-align:left;
+      -webkit-tap-highlight-color:transparent;
+      color:inherit;
+    }
+    .pc-structure-toggle:active{opacity:.5;transition:opacity 80ms ease}
+    .pc-structure-label{
+      font-size:11px;
+      color:var(--c-700);
+      letter-spacing:-.02em;
+    }
+    .pc-structure-chev{
+      font-size:14px;
+      font-weight:300;
+      color:var(--c-700);
+      transition:transform 160ms ease;
+      flex-shrink:0;
+      line-height:1;
+      display:inline-block;
+      transform:rotate(0deg);
+    }
+    .primary-card-structure.open .pc-structure-chev{
+      transform:rotate(90deg);
+    }
+    .pc-structure-body{
+      padding:0 16px 14px;
+    }
+    .pc-structure-body[hidden]{display:none}
+    .pc-structure-list{
+      list-style:none;
+      margin:0;
+      padding:0;
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+    .pc-structure-list li{
+      font-size:12px;
+      color:var(--c-400);
+      letter-spacing:-.02em;
+      line-height:1.45;
+      display:flex;
+      align-items:baseline;
+      gap:8px;
+    }
+    .pc-num{
+      color:var(--c-800);
+      font-feature-settings:'tnum' 1;
+      flex-shrink:0;
+    }
+
+    /* AI TOOLS inline row */
+    .ai-tools-row{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:baseline;
+      gap:6px;
+      font-size:12px;
+      letter-spacing:-.02em;
+    }
+    .ai-tools-label{color:var(--c-700)}
+    .ai-tool{
+      color:var(--c-600);
+      padding:2px 0;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .ai-tool:active{opacity:.5;transition:opacity 80ms ease}
+    .ai-tools-sep{color:var(--c-1000)}
+    .nav-row-text{flex:1;display:flex;flex-direction:column;gap:4px}
+    .nav-row-title{font-size:15px;color:var(--c-white);letter-spacing:-.02em;line-height:1.2}
+    .nav-row-meta{font-size:11px;color:var(--c-700);letter-spacing:-.02em;line-height:1.35}
+    .nav-row-arrow{color:var(--c-400);font-size:16px;font-weight:300;line-height:1.2}
+
+    /* Capital Decision CTA */
+    .capital-decision{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:393px;padding:40px 13.5px 24px;display:flex;justify-content:flex-end;align-items:baseline;background:linear-gradient(to top,var(--c-black) 0%,var(--c-black) 60%,rgba(0,0,0,0) 100%);pointer-events:none;z-index:10;gap:12px}
+    .capital-decision a{pointer-events:auto;display:inline-flex;align-items:baseline;gap:8px;font-size:15px;color:var(--c-white);letter-spacing:-.02em;padding:8px 4px}
+    .capital-decision a:active{opacity:.5;transition:opacity 80ms ease}
+    .capital-decision a .arrow{font-weight:500}
+    .capital-decision a.reunder{color:var(--c-700);font-size:15px}
+    .capital-decision a.reunder .arrow{color:var(--c-700)}
+  
+    /* Capital Decision bottom sheet — II unified style (commitment, strict dismiss) */
+    .cd-sheet-backdrop { position:fixed; inset:0; background:rgba(0,0,0,0.55); opacity:0; pointer-events:none; transition:opacity 200ms ease; z-index:100; }
+    .cd-sheet-backdrop.open { opacity:1; pointer-events:auto; }
+    .cd-sheet { position:fixed; bottom:0; left:50%; transform:translate(-50%, 100%); width:100%; max-width:393px; background:#1C1C1C; padding:24px; padding-bottom:calc(32px + env(safe-area-inset-bottom)); max-height:75vh; overflow-y:auto; transition:transform 240ms cubic-bezier(0.4, 0, 0.2, 1); z-index:101; will-change:transform; }
+    .cd-sheet.open { transform:translate(-50%, 0); }
+    .cd-sheet-x { position:absolute; top:12px; right:12px; width:44px; height:44px; display:flex; align-items:center; justify-content:center; cursor:pointer; background:none; border:none; padding:0; }
+    .cd-sheet-x svg { width:14px; height:14px; display:block; }
+    .cd-sheet-x svg line { stroke:#929292; stroke-width:1; stroke-linecap:square; }
+    .cd-sheet-content { padding-top:8px; padding-right:36px; }
+    .cd-sheet-title { color:#FFFFFF; font-size:18px; font-weight:400; line-height:1.45; letter-spacing:-0.02em; margin-bottom:4px; }
+    .cd-sheet-eyebrow { font-size:11px; color:#565B5E; letter-spacing:0.3px; text-transform:uppercase; }
+    .cd-sheet-actions { margin-top:24px; margin-right:-36px; display:flex; flex-direction:column; gap:16px; }
+    .cd-sheet-option { display:flex; align-items:flex-start; width:100%; padding:8px 0; border:none; background:transparent; font-family:inherit; font-size:15px; color:#FFFFFF; line-height:1.5; letter-spacing:0; text-align:left; cursor:pointer; -webkit-tap-highlight-color:transparent; transition:opacity 100ms ease; }
+    .cd-sheet-option:active { opacity:0.6; }
+    .cd-sheet-option.is-disabled { color:#565B5E; pointer-events:none; }
+    .cd-sheet-option svg { width:9px; height:8px; margin-right:10px; margin-top:8px; flex-shrink:0; }
+    .cd-sheet-option svg path { stroke:currentColor; stroke-width:0.75; fill:none; stroke-linecap:square; }
+    .cd-sheet-option .lbl { display:flex; flex-direction:column; }
+    .cd-sheet-option .sub { font-size:12px; color:#929292; margin-top:2px; font-weight:400; line-height:1.4; }
+    .cd-sheet-option.is-disabled .sub { color:#565B5E; }
+
+  
+    .underwriting-instructions-link { font-size: 11px; color: var(--c-700); letter-spacing: -0.01em; display: inline-flex; align-items: baseline; gap: 4px; margin-top: 12px; align-self: flex-start; -webkit-tap-highlight-color: transparent; }
+    .underwriting-instructions-link:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .underwriting-instructions-link .chev { font-size: 13px; font-weight: 300; color: var(--c-700); }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <a href="#" onclick="event.preventDefault()" class="back" aria-label="Back"></a>
+    <span style="display:flex;align-items:center;gap:14px;">
+      <a href="#" onclick="event.preventDefault()" class="star" aria-label="Star">☆</a>
+      <a href="#" onclick="event.preventDefault()" class="exit" aria-label="Exit">Exit</a>
+    </span>
+  </header>
+
+  <!-- COMPLIANCE STRIP — persistent disclosure as system metadata -->
+  <div class="compliance-strip" aria-label="Disclosure">
+    Self-Authored · No Suitability Review · Not Advice
+  </div>
+
+  <div class="title-block">
+    <span class="t-primary">Aritzia Inc · ATZ</span>
+    <span class="t-secondary">Last Price <span class="price">87.60 CAD</span> <span class="t-entry">· +42.6% vs entry</span></span>
+  </div>
+
+  <!-- ALERT MIRROR — v6a pattern, ABOVE memo (max visibility, pulsating dot) -->
+  <section class="oq-list" id="quarterlyAlert" aria-label="Review Memo alert">
+    <div class="oq-section">
+      <div class="oq-body">
+        <div class="oq-head-row">
+          <span class="oq-head-left">
+            <span class="oq-dot warning" aria-hidden="true"></span>
+            <span class="oq-title">Q4 earnings posted 14d ago</span>
+          </span>
+        </div>
+        <!-- M1 fix (J27): Q4 alert routes to Return memo review (V1+ state). -->
+        <a class="oq-action" href="Return%20user_Memo%20Review.html" onclick="try{sessionStorage.removeItem('atz-cd-action');sessionStorage.setItem('atz-memo-stock-source',window.location.href);}catch(e){}">Re-underwrite <span class="chev" aria-hidden="true">›</span></a>
+      </div>
+      <button class="oq-x" aria-label="Dismiss" onclick="dismissQuarterlyAlert()"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 3L11 11M11 3L3 11" stroke="currentColor" stroke-width="0.75" stroke-linecap="round"/></svg></button>
+    </div>
+  </section>
+  <script>
+    // Quarterly alert: X click dismisses for this view only (re-appears on next page load).
+    // Memo save sets atz-alert-Q4-acknowledged in localStorage → permanently hides.
+    function dismissQuarterlyAlert(){
+      var el = document.getElementById('quarterlyAlert');
+      if (el) el.style.display = 'none';
+    }
+    function checkQuarterlyAlert(){
+      var el = document.getElementById('quarterlyAlert');
+      if (!el) return;
+      try {
+        if (localStorage.getItem('atz-alert-Q4-acknowledged') === '1') el.style.display = 'none';
+        else el.style.display = '';
+      } catch(e){}
+    }
+    document.addEventListener('DOMContentLoaded', checkQuarterlyAlert);
+    window.addEventListener('pageshow', checkQuarterlyAlert);
+  </script>
+
+  <div class="col">
+
+    <!-- 1. MEMO — section with title (matches Position/Performance pattern) -->
+    <section class="section memo-section" aria-label="Memo">
+      <div class="section-header">
+        <span class="section-title"><span class="live-dot" aria-hidden="true"></span>Memo</span>
+        <span class="memo-category-label">Active Allocation</span>
+      </div>
+      <div class="memo-block">
+                <!-- L13: Memo History entry point — shows N versions count + chev. Hidden when no V_N exists. -->
+        <div class="memo-block-history-bar">
+          <a href="#" id="memoHistoryLink" class="memo-history-link" onclick="event.preventDefault();openHistory();" style="display:none">
+            <span class="memo-history-count">Underwriting record</span><span class="chev" aria-hidden="true">›</span>
+          </a>
+        </div>
+        <div class="uw-rows">
+          <div class="uw-row">
+            <span class="uw-key"><span class="lbl-tap" data-info="classification">Classification</span></span>
+            <span class="uw-val">Compounder</span>
+          </div>
+          <div class="info-panel" data-info-for="classification" hidden><p>Different bets succeed and fail in different ways. Pick the category that describes the bet, not just the company.</p></div>
+          <div class="uw-row">
+            <span class="uw-key"><span class="lbl-tap" data-info="sizing">Sizing</span></span>
+            <span class="uw-val">Core <span class="uw-meta">· 12.2%</span></span>
+          </div>
+          <div class="info-panel" data-info-for="sizing" hidden><p>A statement of conviction, not enthusiasm. A position at 10% means you'd defend it in front of a skeptical board.</p></div>
+          <div class="uw-row">
+            <span class="uw-key"><span class="lbl-tap" data-info="probability">Confidence</span></span>
+            <span class="uw-val">62% <span class="uw-meta">· 3y</span></span>
+          </div>
+          <div class="info-panel" data-info-for="probability" hidden><p>Honest odds the thesis clears your hurdle over your stated horizon. ≥50% = Promote.</p></div>
+          <div class="uw-row">
+            <span class="uw-key"><span class="lbl-tap" data-info="idea-origin">Idea Origin</span></span>
+            <span class="uw-val">13F</span>
+          </div>
+          <div class="info-panel" data-info-for="idea-origin" hidden><p>Where the idea came from — a screen, a competitor's memo, a customer call, an analyst report. Track provenance so you can audit your sources of edge.</p></div>
+        </div>
+        <div class="memo-prose-label"><span class="lbl-tap" data-info="investment-case">Investment Case</span></div>
+        <p class="memo-block-prose" id="memoProse">Aritzia is a high-quality DTC women's fashion business with a durable in-house brand portfolio (Wilfred, TNA, Babaton, Super Puff), proven Canadian unit economics, and a long US runway. Returns expected through long-duration earnings growth, not transient mispricing. US store rollout is the primary growth driver for the next five years.</p>
+        <button type="button" class="memo-block-toggle" id="memoProseToggle" onclick="toggleMemoProse()" aria-expanded="false">Read Full Memo</button>
+        <div class="memo-block-divider"></div>
+        <!-- J30: Re-underwrite CTA moved ABOVE Notes. -->
+        <div class="memo-block-foot">
+          <a href="Return%20user_Memo%20Review.html" class="memo-block-cta" onclick="try{sessionStorage.removeItem('atz-cd-action');sessionStorage.setItem('atz-memo-stock-source',window.location.href);}catch(e){}">Re-underwrite <span class="chev">›</span></a>
+        </div>
+        <div class="memo-block-divider-full"></div>
+        <!-- Notes — secondary artifact (below Re-underwrite). -->
+        <div class="memo-block-notes-section">
+          <div class="memo-notes-eyebrow">Notes</div>
+          <textarea class="memo-block-notes-input" id="memoNotesInput" rows="2" placeholder="Add a note. Capture a thought, a thesis, a question." oninput="onMemoNotesInput(this)" onfocus="onMemoNotesFocus(this)" onblur="onMemoNotesBlur(this)"></textarea>
+          <button type="button" class="notes-read-more" id="memoNotesReadMore" onclick="expandMemoNotes()" hidden>Read more</button>
+          <div class="memo-block-notes-toolbar">
+            <button type="button" class="notes-save-btn" id="memoNotesSaveBtn" onclick="saveMemoNote()">Save Note</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. POSITION — row pattern (v6c, matches Performance) -->
+    <section class="section pos-section" aria-label="Position">
+      <div class="section-header">
+        <span class="section-title">Position</span>
+      </div>
+      <div class="pos-row"><span class="pos-key">Market Value</span><span class="pos-val">18,921.60 <span class="ccy">CAD</span></span></div>
+      <div class="pos-row"><span class="pos-key">Unrealized P/L</span><span class="pos-val">+5,652.72 <span class="ccy">CAD</span></span></div>
+      <div class="pos-row"><span class="pos-key">Portfolio Weight</span><span class="pos-val"><span class="pos-prev">6.1%</span> <span class="pos-arrow">→</span> 12.2%</span></div>
+      <div class="pos-row"><span class="pos-key">Held</span><span class="pos-val">3y 2m</span></div>
+      <a href="#" onclick="event.preventDefault()" class="view-link">View Position Detail <span class="chev" aria-hidden="true">›</span></a>
+    </section>
+
+    <!-- 3. PERFORMANCE -->
+    <section class="section perf-vs-sp" aria-label="Performance vs S&P 500">
+      <div class="section-header">
+        <span class="section-title">Performance</span>
+        <span class="section-meta">Tracked since Nov 12, 2024 · 3y 2m</span>
+      </div>
+      <div class="perf-row"><span class="perf-key">ATZ</span><span class="perf-val">+5,652 CAD <span class="perf-pct">+42.6%</span></span></div>
+      <div class="perf-row"><span class="perf-key">S&amp;P 500</span><span class="perf-val">+1,892 CAD <span class="perf-pct">+14.2%</span></span></div>
+      <div class="perf-row diff"><span class="perf-key"><span class="lbl-tap" data-info="difference">Difference</span></span><span class="perf-val">+3,760 CAD <span class="perf-pct">+28.40%</span></span></div>
+      <div class="info-panel" data-info-for="difference" hidden><p>What your ATZ position earned beyond what the same capital invested in S&amp;P 500 would have produced over the same window.</p></div>
+      <a href="#" onclick="event.preventDefault()" class="view-link">How it works <span class="chev" aria-hidden="true">›</span></a>
+    </section>
+
+    <!-- 5. RESEARCH AND ANALYSIS — section header + Fiscal AI + Research Prompt -->
+    <section class="section" id="research-and-analysis" aria-label="Research and Analysis" style="gap:12px; scroll-margin-top:16px;">
+      <div class="section-title-plain">Research and Analysis</div>
+      
+      <a href="https://fiscal.ai" target="_blank" rel="noopener" class="research-card research-card-link" aria-label="Open Fiscal AI for ATZ">
+        <div class="rc-head">
+          <div class="rc-title">Fiscal AI · ATZ</div>
+          <div class="rc-sub">Research Aritzia's financials and filings.</div>
+        </div>
+        <span class="rc-arrow" aria-hidden="true">›</span>
+      </a>
+      <div class="research-card" id="rpCard">
+        <div class="rc-head-row">
+          <div class="rc-title">Research Prompt · ATZ</div>
+          <button type="button" class="rc-copy" id="copyPromptBtn" onclick="copyResearchPrompt(this)" aria-label="Copy prompt">
+            <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3.5" y="3.5" width="7" height="9" stroke="currentColor" stroke-width="0.8"/><rect x="6" y="1" width="7" height="9" stroke="currentColor" stroke-width="0.8" fill="none"/></svg>
+            <span class="rc-copy-lbl">Copy</span>
+          </button>
+        </div>
+        <div class="rc-output">
+          <div class="rc-output-row">
+            <div class="rc-output-label" id="rcOutputLabel">Prompt · 9 sections · 2,500–3,500 words</div>
+          </div>
+          <div class="rc-prompt-preview" id="rcPromptPreview"></div>
+          <div class="rc-cta-row">
+            <button type="button" class="rc-toggle" id="promptToggleBtn" onclick="togglePromptExpand(this)" aria-expanded="false"><span class="rc-toggle-lbl">Read Full Prompt</span></button>
+          </div>
+        <div class="rc-ai-tools" aria-label="Open prompt in AI tool (opens in new tab)">
+          <span class="rc-ai-lbl">Open in</span>
+          <a href="https://claude.ai/new" target="_blank" rel="noopener">Claude</a>
+          <span class="rc-ai-sep">·</span>
+          <a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>
+          <span class="rc-ai-sep">·</span>
+          <a href="https://gemini.google.com/app" target="_blank" rel="noopener">Gemini</a>
+          <span class="rc-ai-sep">·</span>
+          <a href="https://www.perplexity.ai/" target="_blank" rel="noopener">Perplexity</a>
+        </div>
+      </div>
+    </section>
+    <!-- NEWS + MARKET + HISTORY — combined nav-rows (one continuous group) -->
+    <section class="nav-rows" aria-label="News, Market, and History">
+      <a href="#" onclick="event.preventDefault()" class="nav-row">
+        <span class="nav-row-text"><span class="nav-row-title">News</span><span class="nav-row-meta">Headlines · Coverage</span></span>
+        <span class="nav-row-arrow">›</span>
+      </a>
+      <a href="#" onclick="event.preventDefault()" class="nav-row">
+        <span class="nav-row-text"><span class="nav-row-title">Market</span><span class="nav-row-meta">Price · Overview · Valuation</span></span>
+        <span class="nav-row-arrow">›</span>
+      </a>
+    
+      <a href="#" onclick="event.preventDefault()" class="nav-row">
+        <span class="nav-row-text"><span class="nav-row-title">History</span><span class="nav-row-meta">Open Orders · Past Trades</span></span>
+        <span class="nav-row-arrow">›</span>
+      </a>
+    
+    </section>
+
+    <!-- 6. ABOUT THE COMPANY — Read about Aritzia link -->
+    <section class="section about-section" aria-label="About Aritzia Inc.">
+      <button type="button" class="about-toggle" id="aboutToggle" aria-expanded="false">
+        <span class="toggle-label">Read about Aritzia</span>
+      </button>
+      <div class="about-body" id="aboutBody">
+        <p style="font-size:14px;color:var(--c-400);letter-spacing:-.02em;line-height:1.55;">Aritzia Inc. designs and sells in-house women's fashion brands (Wilfred, TNA, Babaton, Super Puff) through 110+ boutiques in Canada and the US, plus a growing ecommerce business. Founded in Vancouver in 1984.</p>
+        <a href="#" onclick="event.preventDefault()" class="view-link">Read More on the Company <span class="chev" aria-hidden="true">›</span></a>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="capital-decision">
+    <a href="#" onclick="event.preventDefault();openCdSheet();" aria-label="Capital Decision"><span class="arrow">→</span> Capital Decision</a>
+  </div>
+
+  <script id="researchPromptTextCore" type="text/plain">Subject. Aritzia Inc. (TSX:ATZ). Held without an alpha claim — for portfolio role, liquidity, or non-outperformance reasons.
+
+Bar. Maintain target role and weight without erosion of capital.
+
+What we want. A short research document of 1,000–1,500 words covering the six sections below. Each section answered — none collapsed, none omitted.
+
+01  Asset role — what role this holding serves (liquidity reserve, index core, bond ladder, cash equivalent, yield product)
+02  Target weight — how much, and why this size given the role
+03  Cost &amp; efficiency — frictions (expense ratio if fund, spread, holding cost, tax efficiency)
+04  Risk &amp; liquidity — drawdown history, daily volume, redemption mechanics
+05  Alternatives — other holdings that could fill the same role and how this one was selected
+06  Re-evaluation triggers — what would change the role or weight (specific, measurable)
+
+Voice. Direct. Declarative. A specific number where a number is asked. One role — no hedging.
+
+If a figure is uncertain or post your training cutoff, state the assumption and mark it [verify on Fiscal].
+
+Begin with 01. No preamble.</script>
+
+  <script id="researchPromptText" type="text/plain">Subject. Aritzia Inc. (TSX:ATZ). Canadian premium women's apparel. In-house multi-brand portfolio: Wilfred, TNA, Babaton, Super Puff. 110+ boutiques across Canada and the US, plus ecommerce. Founded Vancouver, 1984. Founder Brian Hill; CEO Jennifer Wong since 2022. Fiscal year ends early March; FY2026 = year ended March 2026.
+
+Bar. 20% annualized over five years. The 3-year confidence of clearing this bar is the binding number for the verdict.
+
+What we want. A research document of 2,500–3,500 words covering the nine sections below. Each section answered — none collapsed, none omitted. The structure is the deliverable. No preamble, no summary outside the sections.
+
+01  Business overview
+02  Classification — compounder, emerging compounder, situational mispricing, or speculative
+03  Thesis and its structural decomposition, including the load-bearing assumption
+04  Why now
+05  Kill criteria — 4 to 6, each with metric, threshold, action
+06  Intrinsic value — method, three scenarios, conservative IV, margin of safety
+07  Confidence of clearing the hurdle, estimated for 1, 3, and 5 years
+08  Where deeper work would move the confidence (if Promote)
+09  Verify on Fiscal — 10 to 15 fact checks against Fiscal.AI, EDGAR/SEDAR, or 10-K/MD&A
+
+Voice. Direct. Declarative. A specific number where a number is asked. One classification — no hedging. The conclusion in 07 is binding: Promote if the 3-year confidence ≥ 50%, otherwise Pass.
+
+If a figure is uncertain or post your training cutoff, state the assumption and mark it [verify on Fiscal].
+
+Begin with 01. No preamble.</script>
+
+  <script>
+    /* ─────────── Demo seed — only on fresh entry + schema mismatch ─────────── */
+    (function seedV1Demo(){
+      try {
+        var SCHEMA = 'return-v1';
+        var ref = document.referrer || '';
+        var fromIndex = ref.indexOf('index.html') !== -1 || ref.indexOf('User%20Flow') !== -1;
+        var existingVersion = localStorage.getItem('atz-memo-version');
+        // Corruption guard — clear LS if version is not V<N> format (#89)
+        if (existingVersion && !/^V\d+$/.test(existingVersion)) {
+          ['atz-memo-version','atz-memo-history','atz-memo-decision','atz-memo-classification','atz-memo-sizing','atz-memo-memo','atz-memo','atz-memo-horizon','atz-memo-probability','atz-memo-idea-origin','atz-memo-role','atz-memo-target-weight','atz-memo-draft-progress','atz-memo-demo-schema','atz-memo-user-created'].forEach(function(k){ try{ localStorage.removeItem(k); }catch(e){} });
+          existingVersion = null;
+        }
+        var currentSchema = localStorage.getItem('atz-memo-demo-schema');
+        // Skip seed if a memo already exists with matching schema (preserves user V2/V3 edits).
+        if (existingVersion && currentSchema === SCHEMA) return;
+        if (localStorage.getItem('atz-memo-user-created') === 'true') return;
+        // Schema changed (came from another demo page) — wipe leftover keys so seed is clean
+        if (currentSchema && currentSchema !== SCHEMA) {
+          ['atz-memo-stance','atz-memo-decision','atz-memo-classification','atz-memo-sizing','atz-memo-probability','atz-memo-idea-origin','atz-memo-role','atz-memo-target-weight','atz-memo-memo','atz-memo','atz-memo-version','atz-memo-history','atz-memo-horizon','atz-memo-notes','atz-memo-draft-progress','atz-memo-demo-schema'].forEach(function(k){ try{ localStorage.removeItem(k); }catch(e){} });
+          existingVersion = null;
+        }
+        if (!fromIndex && existingVersion) return;
+        var prose = "Thesis. Aritzia is a US growth story in its middle innings. The US flywheel (flagship-led brand-building, app-driven engagement, and disciplined new-box openings that pay back in under a year) can roughly double the US fleet while e-commerce climbs toward 45% of revenue. Revenue compounds mid-to-high teens, margins expand on occupancy leverage and improving initial mark-up (IMU), EPS outgrows revenue, and at a sensible entry price the return clears the hurdle with room to spare.\n\nStructural decomposition of the five-year return:\n\u2022 Revenue \u2248 unit growth (~12\u201313 new US boutiques/year, low-teens square-footage growth) + comparable sales (decelerating from ~27% toward guided mid-teens) + e-commerce penetration. FY2027 guided to C$4.4\u20134.6B (+19\u201324%).\n\u2022 Margin \u2248 gross-margin expansion (IMU + occupancy leverage, guided +150\u2013200bps in FY2027) net of ~50bps incremental tariff/de-minimis drag, plus SG&A leverage from the smart spending initiative.\n\u2022 Capital returns \u2248 buybacks (C$207M in FY2026; no dividend) modestly shrinking the count against stock-comp dilution.\n\u2022 Multiple \u2248 the swing factor; at an C$80 entry (~25x trailing) the rating embeds far less optimism than the live ~47x.\n\nThe load-bearing assumption: that Aritzia can roughly double its US boutique base (76 \u2192 150+) without per-store productivity or brand desirability eroding \u2014 i.e., US demand is supply-constrained, not the reverse. Every other input is downstream of this. Buying at a conservative multiple is the defense against convergence.";
+        var snap = {
+          version: 'V1', timestamp: Date.now() - (26 * 24 * 60 * 60 * 1000), position: 'held',
+          decision: 'Active Allocation', classification: 'Compounder', sizing: 'Core',
+          memo: prose, horizon: '3 Years', probability: '62', ideaOrigin: '13F'
+        };
+        localStorage.setItem('atz-memo-stance', 'active');
+        localStorage.setItem('atz-memo-decision', snap.decision);
+        localStorage.setItem('atz-memo-classification', snap.classification);
+        localStorage.setItem('atz-memo-sizing', snap.sizing);
+        localStorage.setItem('atz-memo-memo', snap.memo);
+        localStorage.setItem('atz-memo', snap.memo);
+        localStorage.setItem('atz-memo-horizon', snap.horizon);
+        localStorage.setItem('atz-memo-probability', snap.probability);
+        localStorage.setItem('atz-memo-idea-origin', snap.ideaOrigin);
+        localStorage.setItem('atz-memo-version', 'V1');
+        localStorage.setItem('atz-memo-history', JSON.stringify([snap]));
+        localStorage.setItem('atz-memo-demo-schema', SCHEMA);
+      } catch(e){}
+    })();
+
+    function horizonShort(h){
+      if (!h) return '';
+      if (h.indexOf('1') === 0) return '1y';
+      if (h.indexOf('3') === 0) return '3y';
+      if (h.indexOf('5') === 0) return '5y+';
+      return '';
+    }
+        function openHistory(){
+      // L16: clear stale atz-history-from from prior Memo Review entry; this is a Stock Page entry.
+      try { sessionStorage.removeItem('atz-history-from'); } catch(e){}
+      try { sessionStorage.setItem('atz-memo-stock-source', window.location.href); } catch(e){}
+      window.location.href = 'Memo%20History.html';
+    }
+
+    function reflectStockMemo(){
+      try {
+        var version = localStorage.getItem('atz-memo-version');
+        if (!version) return;
+        var FIELDS = { classification:'atz-memo-classification', sizing:'atz-memo-sizing', probability:'atz-memo-probability', 'idea origin':'atz-memo-idea-origin' };
+        document.querySelectorAll('.uw-row').forEach(function(row){
+          var keyEl = row.querySelector('.uw-key');
+          var valEl = row.querySelector('.uw-val');
+          if (!keyEl || !valEl) return;
+          var f = keyEl.textContent.trim().toLowerCase();
+          var k = FIELDS[f];
+          if (!k) return;
+          var v = localStorage.getItem(k);
+          if (!v) { valEl.innerHTML = '<span style="color:var(--c-800)">—</span>'; return; }
+          if (f === 'probability') {
+            var hs = horizonShort(localStorage.getItem('atz-memo-horizon'));
+            valEl.innerHTML = v + '% ' + (hs ? '<span class="uw-meta">· ' + hs + '</span>' : '');
+          } else if (f === 'sizing') {
+            // Show portfolio weight meta alongside sizing category (#64)
+            valEl.innerHTML = v + ' <span class="uw-meta">· 12.2%</span>';
+          } else if (f === 'idea origin') {
+            // Strip "Other: " prefix when displaying custom user text
+            valEl.textContent = v.indexOf('Other: ') === 0 ? v.slice(7) : v;
+          } else valEl.textContent = v;
+        });
+        var memo = localStorage.getItem('atz-memo-memo') || localStorage.getItem('atz-memo');
+        var proseEl = document.getElementById('memoProse');
+        if (proseEl && memo) {
+          var first = memo.split(/\n\n+/)[0].trim();
+          proseEl.textContent = first;
+          proseEl.setAttribute('data-full', memo);
+          var hasMore = memo.indexOf('\n\n') !== -1;
+          var toggle = document.getElementById('memoProseToggle');
+          if (toggle) toggle.style.display = hasMore ? '' : 'none';
+        }
+        // L18: memoVersion HTML element 없음 — dead code 제거됨
+        var hist = [];
+        try { hist = JSON.parse(localStorage.getItem('atz-memo-history') || '[]'); } catch(e){}
+        var historyLink = document.getElementById('memoHistoryLink');
+        // L13: dynamic version count (unified with Core variant).
+        if (historyLink && hist.length >= 1) {
+          var __vCount = 0; for (var __k=0; __k<hist.length; __k++) { if (!hist[__k].reaffirmation) __vCount++; }
+          var lbl = 'Underwriting record';
+          var countEl = historyLink.querySelector('.memo-history-count');
+          if (countEl) countEl.textContent = lbl;
+          historyLink.style.display = '';
+        }
+      } catch(e){}
+    }
+    document.addEventListener('DOMContentLoaded', reflectStockMemo);
+    window.addEventListener('pageshow', reflectStockMemo);
+
+    function fallbackCopyToClipboard(text, cb) {
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = text; ta.style.position='fixed'; ta.style.opacity='0'; ta.style.left='-9999px';
+        document.body.appendChild(ta); ta.focus(); ta.select();
+        document.execCommand('copy'); document.body.removeChild(ta);
+        if (cb) cb();
+      } catch(e){}
+    }
+    function togglePromptExpand(btn){
+      var preview = document.getElementById('rcPromptPreview');
+      if (!preview || !btn) return;
+      var lbl = btn.querySelector('.rc-toggle-lbl');
+            var isOpen = preview.classList.toggle('expanded');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      if (lbl) lbl.textContent = isOpen ? 'Show Less' : 'Read Full Prompt';
+    }
+    function copyResearchPrompt(btn) {
+      var node = document.getElementById('researchPromptText');
+      var text = node ? node.textContent.trim() : '';
+      var lblEl = btn ? btn.querySelector('.rc-copy-lbl') : null;
+      var iconEl = btn ? btn.querySelector('svg') : null;
+      var originalIcon = iconEl ? iconEl.outerHTML : '';
+      function onCopied() {
+        if (!btn) return;
+        btn.classList.add('copied');
+        if (lblEl) lblEl.textContent = 'Copied';
+        if (iconEl) iconEl.outerHTML = '<svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7L6 11L12 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        setTimeout(function () {
+          btn.classList.remove('copied');
+          if (lblEl) lblEl.textContent = 'Copy';
+          var newIcon = btn.querySelector('svg');
+          if (newIcon) newIcon.outerHTML = originalIcon;
+        }, 1800);
+      }
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(onCopied).catch(function () { fallbackCopyToClipboard(text, onCopied); });
+      } else { fallbackCopyToClipboard(text, onCopied); }
+    }
+    document.querySelectorAll('.oq-x').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault(); e.stopPropagation();
+        var section = btn.closest('.oq-section');
+        if (!section) return;
+        section.style.transition = 'opacity 220ms ease-out';
+        section.style.opacity = '0';
+        setTimeout(function () {
+;
+          section.remove();
+          if (list && !list.querySelector('.oq-section')) { list.style.display = 'none'; }
+        }, 220);
+      });
+    });
+
+    function openCdSheet() {
+      document.getElementById('cdSheetBackdrop').classList.add('open');
+      document.getElementById('cdSheet').classList.add('open');
+    }
+    function closeCdSheet() {
+      document.getElementById('cdSheetBackdrop').classList.remove('open');
+      document.getElementById('cdSheet').classList.remove('open');
+    }
+    // J41: Bottom Sheet 선택 → Memo Review 페이지로 routing (회장 doctrine: no action without memo review)
+    // action: 'increase' / 'reduce' / 'exit' → Memo Review에서 Save 시 intent로 사용
+    function selectCdAction(action) {
+      try {
+        sessionStorage.setItem('atz-cd-action', action);
+        sessionStorage.setItem('atz-cd-source', window.location.href);
+        sessionStorage.setItem('atz-memo-stock-source', window.location.href);
+      } catch(e){}
+      window.location.href = 'Return%20user_Memo%20Review.html';
+    }
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeCdSheet(); });
+  
+    // About Aritzia — in-place collapse toggle (#63)
+    (function(){
+      var t = document.getElementById('aboutToggle');
+      var sec = t ? t.closest('.about-section') : null;
+      if (!t || !sec) return;
+      function toggle(){
+        var open = sec.classList.toggle('expanded');
+        t.setAttribute('aria-expanded', open ? 'true' : 'false');
+      }
+      t.addEventListener('click', toggle);
+      t.addEventListener('keydown', function(e){
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+      });
+    })();
+
+  
+    // Research Prompt card — read hurdle rate from LS (#71) + expand toggle (#70)
+    (function(){
+      try {
+        var h = localStorage.getItem('atz-memo-hurdle-rate');
+        if (h !== null && h !== '') {
+          var el = document.getElementById('rcHurdleNum');
+          if (el) el.textContent = h;
+        }
+      } catch(e){}
+    })();
+    (function populateRcPreview(){
+  function fill(){
+    var src = document.getElementById("researchPromptText");
+    var dst = document.getElementById("rcPromptPreview");
+    if (!src || !dst) return;
+    var raw = src.textContent.trim();
+    dst.innerHTML = "";
+    raw.split("\n").forEach(function(line){
+      if (line.trim() === "") { var b = document.createElement("div"); b.className = "rc-prompt-blank"; dst.appendChild(b); return; }
+      var m = line.match(/^(\d{2})\s+(.*)$/);
+      if (m) {
+        var row = document.createElement("div");
+        row.className = "rc-prompt-row";
+        var num = document.createElement("span");
+        num.className = "rc-prompt-num";
+        num.textContent = m[1];
+        var txt = document.createElement("span");
+        txt.className = "rc-prompt-text";
+        txt.textContent = m[2];
+        row.appendChild(num);
+        row.appendChild(txt);
+        dst.appendChild(row);
+      } else {
+        var p = document.createElement("div");
+        p.className = "rc-prompt-para";
+        p.textContent = line;
+        dst.appendChild(p);
+      }
+    });
+  }
+  if (document.readyState === "loading") { document.addEventListener("DOMContentLoaded", fill); } else { fill(); }
+})();
+
+  
+    // Tap-to-learn — dotted underline toggle (#74)
+    document.addEventListener('click', function(e){
+      var label = e.target.closest && e.target.closest('.lbl-tap');
+      if (!label) return;
+      e.stopPropagation(); e.preventDefault();
+      var key = label.getAttribute('data-info');
+      var scope = label.closest('.uw-rows') || label.closest('.memo-block') || document;
+      var panel = scope.querySelector('.info-panel[data-info-for="'+key+'"]');
+      if (!panel) panel = document.querySelector('.info-panel[data-info-for="'+key+'"]');
+      if (!panel) return;
+      var isOpen = !panel.hidden;
+      panel.hidden = isOpen;
+      if (isOpen) label.classList.remove('open');
+      else label.classList.add('open');
+    });
+    // Prevent info-panel taps from triggering the memo-card <a> navigation
+    document.querySelectorAll('.info-panel').forEach(function(panel){
+      panel.addEventListener('click', function(e){ e.stopPropagation(); });
+    });
+
+  
+    function toggleMemoProse(){
+      var prose = document.getElementById('memoProse');
+      var btn = document.getElementById('memoProseToggle');
+      if (!prose || !btn) return;
+      var expanded = btn.getAttribute('aria-expanded') === 'true';
+      if (expanded) {
+        prose.classList.remove('expanded');
+        btn.textContent = 'Read Full Memo';
+        btn.setAttribute('aria-expanded', 'false');
+      } else {
+        prose.classList.add('expanded');
+        btn.textContent = 'Show less';
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    }
+
+      // V1: single text string, no timestamps, no count. Now displays inline inside memo block.
+      // Notes inline editable (v10 — same pattern as blank state)
+    function autoExpandNotesMemo(el){
+      if (!el) return;
+      el.style.height = 'auto';
+      el.style.height = el.scrollHeight + 'px';
+    }
+    function onMemoNotesInput(el){
+      autoExpandNotesMemo(el);
+      var btn = document.getElementById('memoNotesSaveBtn');
+      if (!btn) return;
+      var saved = '';
+      try { saved = localStorage.getItem('atz-memo-notes') || ''; } catch(e){}
+      btn.classList.remove('is-saved');
+      btn.textContent = 'Save Note';
+      if (el.value !== saved) btn.classList.add('is-ready');
+      else btn.classList.remove('is-ready');
+    }
+    function saveMemoNote(){
+      var el = document.getElementById('memoNotesInput');
+      if (!el) return;
+      var text = el.value || '';
+      try { localStorage.setItem('atz-memo-notes', text); } catch(e){}
+      el.classList.add('is-saved');
+      var btn = document.getElementById('memoNotesSaveBtn');
+      if (btn){
+        btn.classList.remove('is-ready');
+        btn.classList.add('is-saved');
+        btn.textContent = 'Saved';
+        el.blur();
+        setTimeout(function(){
+          btn.classList.remove('is-saved');
+          btn.textContent = 'Save Note';
+        }, 1200);
+      }
+    }
+    function onMemoNotesFocus(el){
+      el.classList.remove('is-saved');
+      el.classList.remove('is-collapsed');
+      var btn = document.getElementById('memoNotesReadMore');
+      if (btn) btn.hidden = true;
+      autoExpandNotesMemo(el);
+    }
+    function onMemoNotesBlur(el){
+      autoExpandNotesMemo(el);
+      var btn = document.getElementById('memoNotesReadMore');
+      if (el.scrollHeight > 100) {
+        el.classList.add('is-collapsed');
+        if (btn) btn.hidden = false;
+      } else {
+        el.classList.remove('is-collapsed');
+        if (btn) btn.hidden = true;
+      }
+    }
+    function expandMemoNotes(){
+      var el = document.getElementById('memoNotesInput');
+      var btn = document.getElementById('memoNotesReadMore');
+      if (el) el.classList.remove('is-collapsed');
+      if (btn) btn.hidden = true;
+    }
+
+    function renderNotes(){
+      var notes = '';
+      try { notes = localStorage.getItem('atz-memo-notes') || ''; } catch(e){ notes = ''; }
+      var preview = document.getElementById('memoNotesPreview');
+      if (preview) preview.textContent = notes.trim().length ? notes : '—';
+    }
+    document.addEventListener('DOMContentLoaded', renderNotes);
+    window.addEventListener('pageshow', renderNotes);
+  
+    // ── Active/Core stance toggle (SYNCED — chairman 2026-06-03)
+    function renderPromptPreview(){
+      var stance = null;
+      try { stance = sessionStorage.getItem('atz-blank-stance'); } catch(e){}
+      var srcId = (stance === 'core') ? 'researchPromptTextCore' : 'researchPromptText';
+      var src = document.getElementById(srcId);
+      var dst = document.getElementById('rcPromptPreview');
+      if (!src || !dst) return;
+      var raw = src.textContent.trim();
+      dst.innerHTML = '';
+      raw.split('\n').forEach(function(line){
+        if (line.trim() === '') { var b = document.createElement('div'); b.className = 'rc-prompt-blank'; dst.appendChild(b); return; }
+        var m = line.match(/^(\d{2})\s+(.*)$/);
+        if (m) {
+          var row = document.createElement('div'); row.className = 'rc-prompt-row';
+          var num = document.createElement('span'); num.className = 'rc-prompt-num'; num.textContent = m[1];
+          var txt = document.createElement('span'); txt.className = 'rc-prompt-text'; txt.textContent = m[2];
+          row.appendChild(num); row.appendChild(txt); dst.appendChild(row);
+        } else {
+          var p = document.createElement('div'); p.className = 'rc-prompt-para'; p.textContent = line;
+          dst.appendChild(p);
+        }
+      });
+    }
+    function setStance(stance){
+      var isCore = (stance === 'core');
+      var mActive = document.getElementById('stanceActive');
+      var mCore = document.getElementById('stanceCore');
+      if (mActive && mCore) {
+        if (isCore) { mActive.classList.remove('is-active'); mActive.setAttribute('aria-selected','false'); mCore.classList.add('is-active'); mCore.setAttribute('aria-selected','true'); }
+        else { mCore.classList.remove('is-active'); mCore.setAttribute('aria-selected','false'); mActive.classList.add('is-active'); mActive.setAttribute('aria-selected','true'); }
+      }
+      var pActive = document.getElementById('stanceActivePrompt');
+      var pCore = document.getElementById('stanceCorePrompt');
+      if (pActive && pCore) {
+        if (isCore) { pActive.classList.remove('is-active'); pActive.setAttribute('aria-selected','false'); pCore.classList.add('is-active'); pCore.setAttribute('aria-selected','true'); }
+        else { pCore.classList.remove('is-active'); pCore.setAttribute('aria-selected','false'); pActive.classList.add('is-active'); pActive.setAttribute('aria-selected','true'); }
+      }
+      document.querySelectorAll('.mr-active').forEach(function(el){ el.style.display = isCore ? 'none' : ''; });
+      document.querySelectorAll('.mr-core').forEach(function(el){ el.style.display = isCore ? '' : 'none';
+      // Decision row text swap — show "Core / Treasury Allocation" when Core toggled (consistent preview)
+      var decisionCells = document.querySelectorAll('.memo-block .uw-row .uw-val[data-field="decision"], .memo-block .uw-row:first-child .uw-val');
+      decisionCells.forEach(function(el){
+        if (isCore) {
+          if (!el.dataset.activeText) el.dataset.activeText = el.textContent;
+          // G28: Empty if Core has no saved data
+          var _coreHas = false;
+          try { _coreHas = (localStorage.getItem('atz-memo-stance') === 'core') || !!localStorage.getItem('atz-memo-role'); } catch(e){}
+          el.textContent = _coreHas ? 'Core / Treasury Allocation' : '—';
+          if (_coreHas) el.classList.remove('empty');
+          else el.classList.add('empty');
+        } else {
+          if (el.dataset.activeText) {
+            el.textContent = el.dataset.activeText;
+          } else {
+            var savedDecision = '';
+            try { savedDecision = localStorage.getItem('atz-memo-decision') || ''; } catch(e){}
+            if (savedDecision && savedDecision.indexOf('Core') === -1) el.textContent = savedDecision;
+          }
+        }
+      });
+      // 3-state stance model (G28) — Empty + CTA when other stance not yet underwritten
+      var savedStance = '';
+      try { savedStance = localStorage.getItem('atz-memo-stance') || 'active'; } catch(e){}
+      var hasCoreData = false;
+      try { hasCoreData = (savedStance === 'core') || !!localStorage.getItem('atz-memo-role'); } catch(e){}
+      var hasActiveData = (savedStance === 'active') || (savedStance === '' );
+      
+      // Function prose visibility
+      document.querySelectorAll('[data-stance-data="core"]').forEach(function(el){
+        el.style.display = (isCore && hasCoreData) ? '' : 'none';
+      });
+      
+      // Core fields — empty if no Core data
+      document.querySelectorAll('.memo-block .uw-row.mr-core').forEach(function(row){
+        var lbl = row.querySelector('.lbl-tap');
+        var val = row.querySelector('.uw-val');
+        if (!lbl || !val) return;
+        var info = lbl.getAttribute('data-info');
+        if (isCore) {
+          if (!hasCoreData) {
+            val.textContent = '—';
+            val.classList.add('empty');
+          } else {
+            // Has Core data — restore or load from localStorage
+            if (info === 'role') {
+              var r = '';
+              try { r = localStorage.getItem('atz-memo-role') || ''; } catch(e){}
+              val.textContent = r || '—';
+              if (r) val.classList.remove('empty');
+            }
+            if (info === 'target-weight') {
+              var t = '';
+              try { t = localStorage.getItem('atz-memo-target-weight') || ''; } catch(e){}
+              val.textContent = t ? t + '%' : '—';
+              if (t) val.classList.remove('empty');
+            }
+          }
+        }
+      });
+      
+      // CTA swap: empty → "Underwrite as [stance]", filled → "Re-underwrite"
+      var coreUnderCta = document.getElementById('underwriteCoreCta');
+      if (coreUnderCta) {
+        coreUnderCta.style.display = (isCore && !hasCoreData) ? '' : 'none';
+      }
+      var reUnderActive = document.querySelector('.memo-block-foot .mr-active');
+      if (reUnderActive) {
+        reUnderActive.style.display = (isCore && !hasCoreData) ? 'none' : '';
+      }
+
+
+ });
+      // Output label + prompt content swap
+      var outputLabel = document.getElementById('rcOutputLabel');
+      if (outputLabel) outputLabel.textContent = isCore ? 'Prompt · 6 sections · 1,000–1,500 words' : 'Prompt · 9 sections · 2,500–3,500 words';
+      try { sessionStorage.setItem('atz-blank-stance', stance); } catch(e){}
+      if (typeof renderPromptPreview === 'function') renderPromptPreview();
+    }
+    (function restoreStance(){
+      var run = function(){
+        var saved = null;
+        try { saved = sessionStorage.getItem('atz-blank-stance'); } catch(e){}
+        if (saved === 'core') setStance('core');
+      };
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
+      else run();
+    })();
+
+  </script>
+
+
+  <div class="cd-sheet-backdrop" id="cdSheetBackdrop" onclick="closeCdSheet()"></div>
+  <div class="cd-sheet" id="cdSheet" role="dialog" aria-label="Capital Decision">
+    <button type="button" class="cd-sheet-x" onclick="closeCdSheet()" aria-label="Close">
+      <svg viewBox="0 0 14 14" aria-hidden="true"><line x1="0" y1="0" x2="14" y2="14"/><line x1="14" y1="0" x2="0" y2="14"/></svg>
+    </button>
+    <div class="cd-sheet-content">
+      <div class="cd-sheet-eyebrow">ATZ · NASDAQ</div>
+      <div class="cd-sheet-title">Capital decision</div>
+      <div class="cd-sheet-actions">
+        <button class="cd-sheet-option" type="button" onclick="selectCdAction('increase')">
+          <svg viewBox="0 0 9 8" aria-hidden="true"><path d="M0.5 4 H7.5 M5 1 L8 4 L5 7"/></svg>
+          <span class="lbl">Increase exposure<span class="sub">Buy more shares of ATZ.</span></span>
+        </button>
+        <button class="cd-sheet-option" type="button" onclick="selectCdAction('reduce')">
+          <svg viewBox="0 0 9 8" aria-hidden="true"><path d="M0.5 4 H7.5 M5 1 L8 4 L5 7"/></svg>
+          <span class="lbl">Reduce exposure<span class="sub">Sell some of your ATZ position.</span></span>
+        </button>
+        <button class="cd-sheet-option" type="button" onclick="selectCdAction('exit')">
+          <svg viewBox="0 0 9 8" aria-hidden="true"><path d="M0.5 4 H7.5 M5 1 L8 4 L5 7"/></svg>
+          <span class="lbl">Exit position<span class="sub">Close out your ATZ holding entirely.</span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // is-saved restore (G21) — if note already saved, apply darker color on load
+    (function(){
+      var ids = ['memoNotesInput'];
+      function run(){
+        try {
+          var saved = localStorage.getItem('atz-memo-notes') || '';
+          if (!saved) return;
+          ids.forEach(function(id){
+            var el = document.getElementById(id);
+            if (el && el.value) el.classList.add('is-saved');
+          });
+        } catch(e){}
+      }
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
+      else run();
+    })();
+  </script>
+</body>
+</html>

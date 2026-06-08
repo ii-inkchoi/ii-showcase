@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Capital Decision · ATZ (J34)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/*
+  Capital Decision Review · ATZ — v11 (J34)
+  Mirrors Blank Memo design (same hero, section header, memo-row pattern, IC block).
+  Differs only by:
+   - Bottom CTA is "Commit V[N+1]" (vs Blank Memo's "Save & Return")
+   - Empty draft → auto-redirect to Edit Classification (J32)
+   - "Continue" CTA when partial; "Commit" when 5/5
+*/
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+* { scrollbar-width: none; -ms-overflow-style: none; }
+*::-webkit-scrollbar { display: none; }
+button { background: transparent; border: none; color: inherit; font: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+
+:root {
+  --bg: #000;
+  --c-1000: #1C1C1C; --c-900: #232627; --c-800: #565B5E;
+  --c-700: #929292; --c-600: #A7A7A7; --c-400: #C7C7C7; --c-200: #E3E2E2; --c-white: #FFFFFF;
+  --c-elev: #0A0A0A; --c-live: #30D158;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--c-400); font-family: var(--font); font-weight: 400; letter-spacing: -0.02em; font-feature-settings: 'tnum' 1; width: 100%; max-width: 393px; margin: 0 auto; min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden; padding-bottom: 120px; }
+
+/* Topbar — same as Blank Memo */
+.topbar { display: flex; justify-content: space-between; align-items: center; padding: 0 13.5px; height: 71px; flex-shrink: 0; border-bottom: 1px solid var(--c-900); font-size: 0; }
+.topbar .back { width: 13px; height: 13px; display: inline-flex; align-items: center; justify-content: center; color: var(--c-400); }
+.topbar .back::before { content: ''; width: 8px; height: 8px; border-left: 1px solid currentColor; border-bottom: 1px solid currentColor; transform: rotate(45deg); margin-left: 2px; }
+.topbar .back:active { opacity: .5; transition: opacity 80ms ease; }
+.topbar .exit { font-size: 14px; color: var(--c-400); letter-spacing: -0.02em; }
+.topbar .exit:active { opacity: .5; transition: opacity 80ms ease; }
+
+.compliance-strip { display: flex; align-items: center; padding: 8px 20px; font-size: 9px; letter-spacing: -0.02em; color: var(--c-800); border-bottom: 0.5px solid var(--c-1000); line-height: 1.3; }
+
+/* Hero — ATZ ticker + Memo subtitle + Category + Status (matches Blank Memo) */
+.scroll { padding: 24px 20px 40px; display: flex; flex-direction: column; gap: 32px; }
+.m6-ledger { display: flex; flex-direction: column; gap: 32px; }
+.m6-ledger-header { padding-bottom: 20px; border-bottom: 1px solid #111; }
+.m6-ticker-hero { font-size: 24px; font-weight: 400; letter-spacing: -0.02em; line-height: 1.18; color: var(--c-white); margin-bottom: 12px; }
+.m6-ledger-doc-label { font-size: 12px; color: var(--c-600); letter-spacing: -0.02em; line-height: 1.3; }
+.m6-ledger-category { font-size: 14px; color: var(--c-400); letter-spacing: -0.02em; line-height: 1.3; margin-top: 4px; }
+.m6-ledger-status { font-size: 12px; color: var(--c-600); letter-spacing: -0.02em; line-height: 1.3; margin-top: 6px; display: inline-flex; align-items: center; gap: 6px; }
+.m6-ledger-status .status-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--c-800); display: inline-block; }
+
+/* Section header */
+.m6-ledger-section-row { display: flex; align-items: center; justify-content: space-between; padding-bottom: 10px; border-bottom: 0.5px solid #3A3D40; }
+.m6-ledger-section-head { font-size: 15px; color: var(--c-white); display: inline-flex; align-items: center; gap: 8px; }
+.m6-ledger-section-head .live-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--c-800); display: inline-block; }
+.m6-section-tap-hint { font-size: 11px; color: var(--c-800); letter-spacing: -0.02em; }
+
+/* J39: Memo rows — READ-ONLY on Capital Decision page (no tap, no chevron).
+   Editing happens via Continue (walkthrough) or Edit Draft (free edit on Blank Memo). */
+.memo-row { display: grid; grid-template-columns: 100px 1fr; gap: 14px; padding: 14px 0; border-bottom: 0.5px solid #1A1A1A; cursor: default; align-items: center; }
+.memo-row .k { font-size: 13px; color: var(--c-700); letter-spacing: -0.02em; }
+.memo-row .v { font-size: 13px; color: var(--c-400); line-height: 1.65; text-align: right; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.memo-row .v.empty { color: var(--c-800); }
+.memo-row .v .uw-meta { color: var(--c-700); margin-left: 4px; }
+.memo-row .chev { display: none; }
+
+/* Investment Case block — label + prose below (also read-only here) */
+.memo-ic-block { padding: 14px 0 4px; border-bottom: 0.5px solid #1A1A1A; cursor: default; -webkit-tap-highlight-color: transparent; }
+.memo-ic-row { display: flex; align-items: center; justify-content: space-between; }
+.memo-ic-row .memo-ic-label { font-size: 13px; color: var(--c-700); letter-spacing: -0.02em; }
+.memo-ic-row .chev { display: none; }
+
+/* J39: Explainer — sits below section header, above rows. II tone: terse, declarative. */
+.cd-explainer { font-size: 12px; color: var(--c-700); letter-spacing: -0.02em; line-height: 1.55; padding: 14px 0 2px; }
+.cd-explainer .cd-explainer-lead { display: block; color: var(--c-400); }
+.memo-ic-prose { font-size: 13px; color: var(--c-400); letter-spacing: -0.02em; line-height: 1.65; margin-top: 8px; max-height: 80px; overflow: hidden; mask-image: linear-gradient(to bottom, #000 60%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%); white-space: pre-wrap; word-break: break-word; }
+.memo-ic-prose.empty { color: var(--c-800); max-height: none; mask-image: none; -webkit-mask-image: none; }
+
+/* J39: Sticky bottom CTA — secondary (Edit Draft) left, primary (Continue / Commit V1) right */
+.commit-cta { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 393px; padding: 40px 13.5px 24px; display: flex; align-items: baseline; justify-content: space-between; background: linear-gradient(to top, var(--bg) 0%, var(--bg) 60%, rgba(0,0,0,0) 100%); pointer-events: none; z-index: 10; }
+.commit-cta .cd-secondary { pointer-events: auto; display: inline-flex; align-items: baseline; font-size: 13px; color: var(--c-700); letter-spacing: -0.02em; padding: 8px 4px; }
+.commit-cta .cd-secondary:active { opacity: .5; transition: opacity 80ms ease; }
+.commit-cta .cd-cta { pointer-events: auto; display: inline-flex; align-items: baseline; gap: 8px; font-size: 15px; color: var(--c-white); letter-spacing: -0.02em; padding: 8px 4px; }
+.commit-cta .cd-cta:active { opacity: .5; transition: opacity 80ms ease; }
+.commit-cta .cd-cta .arrow { font-weight: 500; }
+
+/* Commit modal — v5 sheet pattern */
+.sheet-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.6); opacity: 0; pointer-events: none; transition: opacity 200ms ease; z-index: 20; }
+.sheet-backdrop.open { opacity: 1; pointer-events: auto; }
+.sheet { position: fixed; bottom: 0; left: 50%; transform: translate(-50%, 100%); width: 100%; max-width: 393px; max-height: 85vh; background: var(--c-elev); border-top: 0.5px solid var(--c-900); display: flex; flex-direction: column; transition: transform 240ms cubic-bezier(0.32, 0.72, 0.24, 1); z-index: 21; }
+.sheet.open { transform: translate(-50%, 0); }
+.sheet-grip { width: 36px; height: 4px; background: var(--c-800); border-radius: 2px; margin: 10px auto 0; flex-shrink: 0; }
+.sheet-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 24px 20px 16px; }
+.sheet-title { font-size: 16px; color: var(--c-white); line-height: 1.3; letter-spacing: -0.02em; }
+.sheet-close { width: 24px; height: 24px; color: var(--c-700); background: none; border: none; font-size: 16px; cursor: pointer; padding: 0; }
+.sheet-body { padding: 0 20px 24px; font-size: 13px; color: var(--c-700); line-height: 1.65; letter-spacing: -0.02em; }
+.sheet-body p { margin: 0 0 12px; }
+.sheet-body p:last-child { margin-bottom: 0; }
+.sheet-footer { display: flex; justify-content: flex-end; padding: 0 20px 28px; }
+.sheet-primary { display: inline-flex; align-items: baseline; gap: 8px; font-size: 15px; color: var(--c-white); background: none; border: none; padding: 8px 4px; font-family: inherit; cursor: pointer; letter-spacing: -0.02em; }
+.sheet-primary .arrow { font-weight: 500; }
+.sheet-primary:active { opacity: 0.5; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="#" onclick="event.preventDefault();goBack();" aria-label="Back"></a>
+  <a class="exit" href="#" onclick="event.preventDefault();goBack();" aria-label="Exit">Exit</a>
+</div>
+
+<div class="compliance-strip">Self-Authored · No Suitability Review · Not Advice</div>
+
+<div class="scroll">
+  <div class="m6-ledger">
+
+    <!-- HERO — identical to Blank Memo: ATZ ticker + Memo + Active Allocation + status -->
+    <div class="m6-ledger-header">
+      <h1 class="m6-ticker-hero">ATZ</h1>
+      <div class="m6-ledger-doc-label" id="docLabel">Memo</div>
+      <div class="m6-ledger-category">Active Allocation</div>
+      <div class="m6-ledger-status">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span id="statusText">Draft · Not started</span>
+      </div>
+    </div>
+
+    <!-- MEMO — section header + explainer + 4 rows + Investment Case block.
+         J39: Rows are read-only here. Continue walks the missing fields. Edit Draft routes to Blank Memo. -->
+    <div>
+      <div class="m6-ledger-section-row">
+        <div class="m6-ledger-section-head"><span class="live-dot" aria-hidden="true"></span>Memo</div>
+      </div>
+
+      <div class="cd-explainer">
+        <span class="cd-explainer-lead">Where you left off.</span>
+        Continue walks the remaining fields in order. Edit Draft to revise freely.
+      </div>
+
+      <div class="memo-row" data-field="classification">
+        <div class="k">Classification</div>
+        <div class="v empty" id="vClassification">—</div>
+      </div>
+      <div class="memo-row" data-field="sizing">
+        <div class="k">Sizing</div>
+        <div class="v empty" id="vSizing">—</div>
+      </div>
+      <div class="memo-row" data-field="probability">
+        <div class="k">Confidence</div>
+        <div class="v empty" id="vProbability">—</div>
+      </div>
+      <div class="memo-row" data-field="idea-origin">
+        <div class="k">Idea Origin</div>
+        <div class="v empty" id="vIdeaOrigin">—</div>
+      </div>
+      <div class="memo-ic-block" data-field="memo">
+        <div class="memo-ic-row">
+          <div class="memo-ic-label">Investment Case</div>
+        </div>
+        <p class="memo-ic-prose empty" id="vMemo">—</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Sticky CTA — J39: Edit Draft (secondary, left) + Continue/Commit V1 (primary, right) -->
+<div class="commit-cta">
+  <a href="#" class="cd-secondary" onclick="event.preventDefault();exitToDraft();">Edit Draft</a>
+  <a href="#" id="cdCta" class="cd-cta" onclick="event.preventDefault();onContinue();"><span class="arrow">→</span> <span id="cdLbl">Continue</span></a>
+</div>
+
+<!-- Save as V[N+1] modal (J47 — unified with Memo Review wording) -->
+<div class="sheet-backdrop" id="commitBackdrop" onclick="closeCommitSheet()"></div>
+<div class="sheet" id="commitSheet" role="dialog" aria-modal="true" aria-labelledby="commitSheetTitle">
+  <div class="sheet-grip"></div>
+  <div class="sheet-head">
+    <div class="sheet-title" id="commitSheetTitle">Save as V1?</div>
+    <button type="button" class="sheet-close" onclick="closeCommitSheet()" aria-label="Close">✕</button>
+  </div>
+  <div class="sheet-body" id="commitBody">
+    <p id="commitBodyText">This saves your memo as V1. Future revisions will create V2, V3 — V1 stays on record.</p>
+  </div>
+  <div class="sheet-footer">
+    <button type="button" class="sheet-primary" onclick="commitMemo()"><span class="arrow">→</span> <span id="commitBtnLbl">Save as V1</span></button>
+  </div>
+</div>
+
+<script>
+var FIELDS = [
+  { key:'classification', ls:'atz-memo-classification', editPage:'Edit Classification.html', el:'vClassification' },
+  { key:'sizing',         ls:'atz-memo-sizing',         editPage:'Edit Sizing.html',         el:'vSizing' },
+  { key:'probability',    ls:'atz-memo-probability',    editPage:'Edit Probability.html',    el:'vProbability' },
+  { key:'idea-origin',    ls:'atz-memo-idea-origin',    editPage:'Edit Idea Origin.html',    el:'vIdeaOrigin' },
+  { key:'memo',           ls:'atz-memo-memo',           editPage:'Edit Memo.html',           el:'vMemo' }
+];
+
+function getLS(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
+function setLS(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
+
+function horizonShort(h){ if(!h) return ''; if(h.indexOf('1')===0) return '1y'; if(h.indexOf('3')===0) return '3y'; if(h.indexOf('5')===0) return '5y+'; return ''; }
+
+function getNextVersion(){
+  var current = getLS('atz-memo-version');
+  if (!current || !/^V(\d+)$/.test(current)) return 'V1';
+  var n = parseInt(current.match(/^V(\d+)$/)[1], 10) || 1;
+  return 'V' + (n + 1);
+}
+
+function setRow(elId, value, isHtml){
+  var el = document.getElementById(elId);
+  if (!el) return;
+  if (value === null || value === undefined || value === '') {
+    el.textContent = '—'; el.classList.add('empty');
+  } else {
+    if (isHtml) el.innerHTML = value; else el.textContent = value;
+    el.classList.remove('empty');
+  }
+}
+
+function hydrateRows(){
+  var filled = 0;
+
+  // Classification
+  var cls = getLS('atz-memo-classification');
+  if (cls) filled++;
+  setRow('vClassification', cls);
+
+  // Sizing — add meta range to match Blank Memo
+  var sizing = getLS('atz-memo-sizing');
+  if (sizing) {
+    filled++;
+    var SIZE_RANGES = { 'Core': '10%+', 'Conviction': '5–10%', 'Starter': '1–3%', 'Speculative': '≤2%' };
+    var range = SIZE_RANGES[sizing] || '';
+    setRow('vSizing', sizing + (range ? ' <span class="uw-meta">· ' + range + '</span>' : ''), true);
+  } else setRow('vSizing', null);
+
+  // Probability — add horizon meta
+  var prob = getLS('atz-memo-probability');
+  var horizon = getLS('atz-memo-horizon');
+  if (prob) {
+    filled++;
+    var hs = horizonShort(horizon);
+    setRow('vProbability', prob + '% ' + (hs ? '<span class="uw-meta">· ' + hs + '</span>' : ''), true);
+  } else setRow('vProbability', null);
+
+  // Idea Origin — strip "Other: " prefix
+  var io = getLS('atz-memo-idea-origin');
+  if (io) {
+    filled++;
+    setRow('vIdeaOrigin', io.indexOf('Other: ') === 0 ? io.slice(7) : io);
+  } else setRow('vIdeaOrigin', null);
+
+  // Investment Case — block layout, prose paragraph
+  var memo = getLS('atz-memo-memo');
+  var memoEl = document.getElementById('vMemo');
+  if (memo) {
+    filled++;
+    var first = memo.split(/\n\n+/)[0].trim();
+    memoEl.textContent = first;
+    memoEl.classList.remove('empty');
+  } else {
+    memoEl.textContent = '—';
+    memoEl.classList.add('empty');
+  }
+
+  // Status text (matches Blank Memo)
+  var statusEl = document.getElementById('statusText');
+  if (filled === 0) statusEl.textContent = 'Draft · Not started';
+  else if (filled === 5) statusEl.textContent = 'Draft · 5 of 5 fields';
+  else statusEl.textContent = 'Draft · ' + filled + ' of 5 fields';
+
+  // J47: CTA label — Memo Review와 통일.
+  //   0    → "Start"     (필드 채우기 시작)
+  //   1-4  → "Continue"  (walkthrough)
+  //   5    → "Save"      (Memo Review와 동일, 실제 동작은 onContinue가 결정)
+  var nextV = getNextVersion();
+  var cdLbl = document.getElementById('cdLbl');
+  if (filled === 5) {
+    cdLbl.textContent = 'Save';
+  } else if (filled === 0) {
+    cdLbl.textContent = 'Start';
+  } else {
+    cdLbl.textContent = 'Continue';
+  }
+
+  // Commit modal labels
+  var titleEl = document.getElementById('commitSheetTitle');
+  // J47: Modal labels — "Save as V_N" 통일 (Memo Review와 동일)
+  var btnLblEl = document.getElementById('commitBtnLbl');
+  if (titleEl) titleEl.textContent = 'Save as ' + nextV + '?';
+  if (btnLblEl) btnLblEl.textContent = 'Save as ' + nextV;
+  var bodyEl = document.getElementById('commitBody');
+  if (bodyEl) {
+    if (nextV === 'V1') {
+      bodyEl.innerHTML = '<p>This saves your memo as V1. Future revisions will create V2, V3 — V1 stays on record.</p>';
+    } else {
+      var currentV = getLS('atz-memo-version') || 'V1';
+      bodyEl.innerHTML = '<p>This saves your revisions as ' + nextV + '. ' + currentV + ' and earlier versions stay on record.</p>';
+    }
+  }
+
+  // Doc-label for re-underwrite context
+  var docLabelEl = document.getElementById('docLabel');
+  if (docLabelEl) docLabelEl.textContent = (nextV === 'V1') ? 'Memo' : 'Memo · Re-underwrite';
+
+  return filled;
+}
+
+function firstMissingField(){
+  for (var i = 0; i < FIELDS.length; i++) {
+    if (!getLS(FIELDS[i].ls)) return FIELDS[i];
+  }
+  return null;
+}
+
+// J39: Capital Decision page = read-only checkpoint. Rows are NOT tappable.
+// Editing happens via Continue (walks missing fields in order) or Edit Draft (free edit on Blank Memo).
+// No row click handlers — rows are visual state only.
+
+// J39: Edit Draft — leave Capital Decision, route to Blank Memo for free editing.
+function exitToDraft(){
+  try { sessionStorage.removeItem('atz-cd-mode'); } catch(e){}
+  window.location.href = 'Blank%20Memo.html';
+}
+
+function onContinue(){
+  var filled = 0;
+  FIELDS.forEach(function(f){ if (getLS(f.ls)) filled++; });
+  if (filled === 5) {
+    // J46: V 이미 존재 + 변경 없음 → 모달 skip하고 Buy flow 직행 (V 그대로)
+    var prior = getLS('atz-memo-version');
+    if (prior && !hasChangesFromLastCommit()) {
+      // 기존 V_N 그대로, 거래만 진행
+      try {
+        sessionStorage.setItem('atz-cd-action', 'buy');
+        sessionStorage.removeItem('atz-cd-mode');
+        sessionStorage.removeItem('atz-memo-source');
+        sessionStorage.removeItem('atz-cd-auto-redirected');
+      } catch(e){}
+      window.location.href = 'Select%20Account.html';
+      return;
+    }
+    // 첫 V1 commit이거나 변경 있음 → 모달
+    openCommitSheet();
+    return;
+  }
+  var missing = firstMissingField();
+  if (!missing) { openCommitSheet(); return; }
+  try {
+    sessionStorage.setItem('atz-cd-mode', '1');
+    sessionStorage.setItem('atz-memo-source', window.location.href);
+  } catch(e){}
+  window.location.href = missing.editPage + '?cd=1';
+}
+
+function openCommitSheet(){
+  document.getElementById('commitSheet').classList.add('open');
+  document.getElementById('commitBackdrop').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCommitSheet(){
+  document.getElementById('commitSheet').classList.remove('open');
+  document.getElementById('commitBackdrop').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// J46: 변경 detect — V_N 이미 있으면 history 마지막 snapshot과 비교
+function hasChangesFromLastCommit(){
+  var hist = [];
+  try { hist = JSON.parse(localStorage.getItem('atz-memo-history') || '[]'); } catch(e){}
+  if (!hist.length) return true; // 아직 commit 안 됨 → 무조건 첫 commit (V1)
+  var last = hist[hist.length - 1];
+  function cmp(cur, snap) { return (cur || '') !== (snap || ''); }
+  if (cmp(getLS('atz-memo-classification'), last.classification)) return true;
+  if (cmp(getLS('atz-memo-sizing'), last.sizing)) return true;
+  if (cmp(getLS('atz-memo-probability'), last.probability)) return true;
+  if (cmp(getLS('atz-memo-horizon'), last.horizon)) return true;
+  if (cmp(getLS('atz-memo-idea-origin'), last.ideaOrigin)) return true;
+  if (cmp(getLS('atz-memo-memo'), last.memo)) return true;
+  return false;
+}
+
+function commitMemo(){
+  var changed = hasChangesFromLastCommit();
+  try {
+    if (changed) {
+      // J46: 변경 있을 때만 V bump + history entry
+      var nextV = getNextVersion();
+      setLS('atz-memo-version', nextV);
+      setLS('atz-memo-decision', 'Active Allocation');
+      setLS('atz-memo-stance', 'active');
+      var memo = getLS('atz-memo-memo') || '';
+      setLS('atz-memo', memo);
+
+      // History entry — V1 첫 commit이든 V_N+1이든 trigger는 동일하게 Underwrite (Capital Decision flow)
+      try {
+        var hist = JSON.parse(localStorage.getItem('atz-memo-history') || '[]');
+        var snap = {
+          version: nextV,
+          timestamp: Date.now(),
+          trigger: hist.length === 0 ? 'Underwrite' : 'Re-underwrite + Buy',
+          position: 'none',
+          classification: getLS('atz-memo-classification') || '',
+          sizing: getLS('atz-memo-sizing') || '',
+          probability: getLS('atz-memo-probability') || '',
+          horizon: getLS('atz-memo-horizon') || '',
+          ideaOrigin: getLS('atz-memo-idea-origin') || '',
+          memo: memo
+        };
+        hist.push(snap);
+        localStorage.setItem('atz-memo-history', JSON.stringify(hist));
+      } catch(e){}
+    }
+    // 변경 없으면 V 그대로 — LS는 그대로 두고 Buy flow로 진행
+
+    try { localStorage.removeItem('atz-memo-draft-progress'); } catch(e){}
+    try {
+      sessionStorage.removeItem('atz-cd-mode');
+      sessionStorage.removeItem('atz-memo-source');
+      sessionStorage.removeItem('atz-cd-auto-redirected');
+      sessionStorage.removeItem('atz-fresh-walkthrough');  // K3: clear on V_N commit
+    } catch(e){}
+  } catch(e) {}
+
+  // J43: First-time Memo Flow는 Capital Decision CTA로 진입 (intent=buy).
+  // 회장 doctrine: Capital Decision = 매수 flow. V1 commit 후 → Select Account (Buy flow 진입).
+  // 매수를 안 하려면 Select Account 또는 Order entry에서 cancel하면 됨.
+  try { sessionStorage.setItem('atz-cd-action', 'buy'); } catch(e){}
+  window.location.href = 'Select%20Account.html';
+}
+
+function goBack(){
+  try { sessionStorage.removeItem('atz-cd-mode'); sessionStorage.removeItem('atz-cd-auto-redirected'); sessionStorage.removeItem('atz-fresh-walkthrough'); } catch(e){}
+  var src = '';
+  try { src = sessionStorage.getItem('atz-memo-stock-source'); } catch(e){}
+  if (src) { window.location.href = src; return; }
+  window.location.href = 'Stock%20Page%20Firsttime%20User.html';
+}
+
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Escape') closeCommitSheet();
+});
+
+// J32: Empty-draft optimization — auto-redirect to Edit Classification on initial empty entry.
+function autoRedirectIfEmpty(){
+  var filled = 0;
+  FIELDS.forEach(function(f){ if (getLS(f.ls)) filled++; });
+  var alreadyRedirected = false;
+  try { alreadyRedirected = sessionStorage.getItem('atz-cd-auto-redirected') === '1'; } catch(e){}
+  if (filled === 0 && !alreadyRedirected) {
+    try {
+      sessionStorage.setItem('atz-cd-mode', '1');
+      sessionStorage.setItem('atz-memo-source', window.location.href);
+      sessionStorage.setItem('atz-cd-auto-redirected', '1');
+      sessionStorage.setItem('atz-fresh-walkthrough', '1');  // K3: Type 1a (Fresh) → walkthrough started from 0 fields
+    } catch(e){}
+    window.location.replace(FIELDS[0].editPage + '?cd=1');
+    return true;
+  }
+  if (filled > 0) {
+    // K4 #2 fix: 기존 mid-walkthrough back 시 fresh flag 잃는 inconsistency 제거.
+    // Type 1b 새 진입은 flag 애초에 없음 (Type 1a autoRedirectIfEmpty만 SET) — clear는 no-op.
+    // → mid-walkthrough back to FT Memo Flow에서도 flag stay → 다시 forward 시 indicator 정상.
+    try { sessionStorage.removeItem('atz-cd-auto-redirected'); } catch(e){}
+  }
+  return false;
+}
+
+(function init(){
+  if (autoRedirectIfEmpty()) return;
+  hydrateRows();
+})();
+window.addEventListener('pageshow', function(){
+  if (autoRedirectIfEmpty()) return;
+  hydrateRows();
+});
+</script>
+</body>
+</html>

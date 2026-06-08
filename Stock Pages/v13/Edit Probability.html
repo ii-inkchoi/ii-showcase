@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>Confidence · ATZ — Edit (J22)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --c-black:#000; --c-1000:#1C1C1C; --c-900:#232627; --c-800:#565B5E;
+  --c-700:#929292; --c-600:#A7A7A7; --c-400:#C7C7C7; --c-200:#E3E2E2; --c-white:#FFFFFF;
+}
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html,body { scrollbar-width:none; }
+html::-webkit-scrollbar, body::-webkit-scrollbar { display:none; }
+body { background:var(--c-black); color:var(--c-white); font-family:'Inter',sans-serif; width:100%; max-width:393px; margin:0 auto; min-height:100vh; padding-bottom:88px; letter-spacing:-0.02em; -webkit-font-smoothing:antialiased; font-feature-settings:'lnum' 1,'tnum' 1; }
+a { color:inherit; text-decoration:none; -webkit-tap-highlight-color:transparent; }
+.topbar { height:71px; display:flex; align-items:center; justify-content:space-between; padding:0 13.5px; border-bottom:1px solid var(--c-900); }
+.back { width:13px; height:13px; display:inline-flex; align-items:center; justify-content:center; color:var(--c-400); cursor:pointer; }
+.back::before { content:''; width:8px; height:8px; border-left:1px solid currentColor; border-bottom:1px solid currentColor; transform:rotate(45deg); margin-left:2px; }
+.exit { font-size:14px; color:var(--c-400); cursor:pointer; background:none; border:none; font-family:inherit; padding:0; letter-spacing:-0.02em; }
+.hero { padding:32px 20px 20px; display:flex; flex-direction:column; gap:8px; border-bottom:0.5px solid var(--c-900); }
+.hero-row { display:flex; justify-content:space-between; align-items:flex-start; }
+.hero-title { font-size:22px; color:var(--c-white); line-height:1.15; }
+.hero-meta { text-align:right; font-size:11px; color:var(--c-700); line-height:1.4; }
+.hero-meta .stock { color:var(--c-400); margin-right:4px; }
+.hero-meta .allocation { color:var(--c-white); display:block; margin-top:2px; }
+.hero-meta .breadcrumb { display:block; color:var(--c-700); margin-top:2px; }
+
+/* Hurdle row */
+.hurdle-row { padding:24px 20px 8px; }
+.hurdle-eyebrow { font-size:11px; color:var(--c-700); letter-spacing:-0.02em; margin-bottom:4px; display:inline-flex; align-items:baseline; gap:4px; }
+.hurdle-eyebrow .anchor { font-size:10px; }
+.hurdle-value { font-size:18px; color:var(--c-white); display:inline-flex; align-items:baseline; gap:4px; }
+.hurdle-value .anchor { font-size:11px; color:var(--c-700); }
+
+/* Prediction section */
+.section-block { padding:20px 20px; border-top:0.5px solid var(--c-1000); }
+.section-eyebrow { font-size:11px; color:var(--c-700); letter-spacing:-0.02em; display:inline-flex; align-items:baseline; gap:4px; margin-bottom:8px; }
+.prediction-prose { font-size:14px; color:var(--c-white); line-height:1.5; margin-bottom:14px; }
+.prediction-prose strong { color:var(--c-white); font-weight:500; }
+
+/* Horizon pill toggle */
+.horizon-row { display:flex; gap:8px; }
+.horizon-pill { flex:1; padding:10px 12px; font-size:13px; color:var(--c-700); background:var(--c-1000); border:0.5px solid var(--c-900); border-radius:6px; cursor:pointer; -webkit-tap-highlight-color:transparent; text-align:center; transition:all 120ms ease; font-family:inherit; letter-spacing:-0.02em; }
+.horizon-pill.is-active { background:#E3E2E2; color:var(--c-black); border-color:#E3E2E2; }
+.horizon-pill:active { opacity:0.7; }
+
+/* Confidence slider */
+.confidence-eyebrow { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:14px; }
+.confidence-value-wrap { text-align:center; padding:12px 0 4px; }
+.confidence-value { font-size:30px; color:var(--c-white); font-weight:300; }
+.confidence-value .pct { font-size:14px; color:var(--c-700); margin-left:2px; }
+.slider { width:100%; -webkit-appearance:none; appearance:none; height:1px; background:var(--c-800); margin:12px 0 6px; outline:none; }
+.slider::-webkit-slider-thumb { -webkit-appearance:none; appearance:none; width:14px; height:14px; border-radius:50%; background:var(--c-white); cursor:pointer; }
+.slider::-moz-range-thumb { width:14px; height:14px; border-radius:50%; background:var(--c-white); cursor:pointer; border:none; }
+.slider-axis { display:flex; justify-content:space-between; font-size:11px; color:var(--c-800); }
+.slider-axis .mid { color:var(--c-700); }
+
+/* History row */
+.history-row { display:flex; justify-content:space-between; align-items:baseline; padding:16px 20px; border-top:0.5px solid var(--c-1000); }
+.history-key { font-size:13px; color:var(--c-700); display:inline-flex; align-items:baseline; gap:4px; }
+.history-key .anchor { font-size:10px; }
+.history-val { font-size:13px; color:var(--c-400); }
+.history-val .meta { color:var(--c-700); margin-left:4px; }
+
+/* Save band */
+.save-band { position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:393px; padding:16px 20px calc(env(safe-area-inset-bottom) + 16px); display:flex; justify-content:flex-end; background:linear-gradient(to top,var(--c-black) 60%,transparent); z-index:10; pointer-events:none; }
+.save-btn { pointer-events:auto; display:inline-flex; align-items:baseline; gap:8px; font-size:15px; color:var(--c-white); background:none; border:none; padding:8px 4px; font-family:inherit; cursor:pointer; }
+.save-btn.locked { opacity:0.4; pointer-events:none; }
+.save-btn:active { opacity:0.5; }
+.save-btn .arrow { font-weight:500; }
+
+/* K1: Step indicator — visible only in CD walkthrough mode (hidden by default in Re-underwrite) */
+.hero-step { font-size:11px; color:var(--c-700); letter-spacing:0.04em; margin-top:8px; font-variant-numeric:tabular-nums lining-nums; }
+.hero-step[hidden] { display:none; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" onclick="goBack()" aria-label="Back"></a>
+  <button class="exit" onclick="goBack()" aria-label="Exit">Exit</button>
+</div>
+
+<div class="hero">
+  <div class="hero-row">
+    <div class="hero-title">Exceptional Compounding</div>
+    <div class="hero-meta">
+      <span class="stock">ATZ</span><span>56.91</span><span> -0.15%</span>
+      <span class="allocation">Active Allocation</span>
+      <span class="breadcrumb" id="breadcrumb"></span>
+    </div>
+  </div>
+  <div class="hero-step" id="stepIndicator" hidden>3 / 5</div>
+</div>
+
+<div class="hurdle-row">
+  <div class="hurdle-eyebrow">Exceptional Compounding Hurdle <span class="anchor">↗</span></div>
+  <div class="hurdle-value">20% per year <span class="anchor">↗</span></div>
+</div>
+
+<div class="section-block">
+  <div class="section-eyebrow">The prediction <span class="anchor">↗</span></div>
+  <div class="prediction-prose">How confident are you that <strong>ATZ</strong> will compound at <strong>20%</strong> per year over the next</div>
+  <div class="horizon-row" id="horizonRow">
+    <button type="button" class="horizon-pill" data-value="1 yr">1 yr</button>
+    <button type="button" class="horizon-pill is-active" data-value="3 yrs">3 yrs</button>
+    <button type="button" class="horizon-pill" data-value="5 yrs+">5 yrs+</button>
+  </div>
+</div>
+
+<div class="section-block">
+  <div class="confidence-eyebrow">
+    <span class="section-eyebrow" style="margin-bottom:0">Confidence <span class="anchor">↗</span></span>
+  </div>
+  <div class="confidence-value-wrap">
+    <span class="confidence-value" id="confidenceValue">70<span class="pct">%</span></span>
+  </div>
+  <input type="range" class="slider" id="confidenceSlider" min="10" max="100" value="70" />
+  <div class="slider-axis">
+    <span>10</span>
+    <span class="mid" id="confidenceLabel">Strong belief</span>
+    <span>100</span>
+  </div>
+</div>
+
+<div class="history-row">
+  <span class="history-key">Historical accuracy <span class="anchor">↗</span></span>
+  <span class="history-val">— <span class="meta">· 2 positions</span></span>
+</div>
+
+<div class="save-band">
+  <!-- M3 fix (J27): Save lock requires explicit user interaction (slider drag or horizon tap), matching other Edit pages. -->
+  <button type="button" class="save-btn locked" id="saveBtn" onclick="onSave()"><span class="arrow">→</span> Save</button>
+</div>
+
+<script>
+var LS_PROB = 'atz-memo-probability';
+var LS_HORIZON = 'atz-memo-horizon';
+var horizon = '3 yrs';
+var confidence = 70;
+
+function setLS(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+function getLS(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+
+function renderBreadcrumb(){
+  var parts = [];
+  var cls = getLS('atz-memo-classification');
+  var siz = getLS('atz-memo-sizing');
+  if (cls) parts.push(cls);
+  if (siz) parts.push(siz);
+  var bc = document.getElementById('breadcrumb');
+  if (bc) bc.textContent = parts.length ? parts.join(' · ') : '';
+}
+
+function unlockSave(){
+  var btn = document.getElementById('saveBtn');
+  if (btn) btn.classList.remove('locked');
+}
+
+function setHorizon(v){
+  horizon = v;
+  document.querySelectorAll('.horizon-pill').forEach(function(p){
+    p.classList.toggle('is-active', p.getAttribute('data-value') === v);
+  });
+}
+document.querySelectorAll('.horizon-pill').forEach(function(p){
+  p.addEventListener('click', function(){ setHorizon(p.getAttribute('data-value')); unlockSave(); });
+});
+
+function confidenceLabel(v){
+  if (v >= 80) return 'Very strong belief';
+  if (v >= 65) return 'Strong belief';
+  if (v >= 50) return 'Moderate belief';
+  if (v >= 30) return 'Tentative';
+  return 'Low conviction';
+}
+
+var slider = document.getElementById('confidenceSlider');
+slider.addEventListener('input', function(){
+  confidence = parseInt(slider.value, 10);
+  document.getElementById('confidenceValue').innerHTML = confidence + '<span class="pct">%</span>';
+  document.getElementById('confidenceLabel').textContent = confidenceLabel(confidence);
+  unlockSave();
+});
+
+// J37 (BUG E): WAS_FILLED for revise→Review semantics.
+var WAS_FILLED = false;
+(function init(){
+  var priorProb = getLS(LS_PROB);
+  var priorH = getLS(LS_HORIZON);
+  if (priorProb) {
+    confidence = parseInt(priorProb, 10) || 70;
+    slider.value = confidence;
+    document.getElementById('confidenceValue').innerHTML = confidence + '<span class="pct">%</span>';
+    document.getElementById('confidenceLabel').textContent = confidenceLabel(confidence);
+  }
+  if (priorH) setHorizon(priorH);
+  // If user has prior saved values, unlock Save + mark WAS_FILLED.
+  if (priorProb || priorH) { unlockSave(); WAS_FILLED = true; }
+  renderBreadcrumb();
+})();
+
+// J29 — CD walkthrough mode. MY_INDEX = 2 (Probability).
+var CD_FIELDS = ['atz-memo-classification','atz-memo-sizing','atz-memo-probability','atz-memo-idea-origin','atz-memo-memo'];
+var CD_EDIT_PAGES = ['Edit Classification.html','Edit Sizing.html','Edit Probability.html','Edit Idea Origin.html','Edit Memo.html'];
+var CD_MY_INDEX = 2;
+function isCdMode(){ try { if (sessionStorage.getItem('atz-cd-mode') === '1') return true; if (window.location.search.indexOf('cd=1') !== -1) return true; } catch(e){} return false; }
+function nextMissingAfter(idx){
+  for (var i = idx + 1; i < CD_FIELDS.length; i++) { try { if (!localStorage.getItem(CD_FIELDS[i])) return CD_EDIT_PAGES[i]; } catch(e){} }
+  for (var j = 0; j <= idx; j++) { try { if (!localStorage.getItem(CD_FIELDS[j])) return CD_EDIT_PAGES[j]; } catch(e){} }
+  return null;
+}
+function applyCdLabel(){
+  if (!isCdMode()) return;
+  // K3: Step indicator only for Type 1a fresh walkthrough — 3 conditions all required
+  //   1) URL has ?cd=1 (must be reached via walkthrough chain)
+  //   2) No V_N in localStorage (first-time, V1 not committed yet)
+  //   3) atz-fresh-walkthrough flag set (FT Memo Flow saw filled===0 at start)
+  // → Any field touched before walkthrough start = not fresh, hide indicator.
+  var ind = document.getElementById('stepIndicator');
+  if (ind) {
+    var urlHasCd = window.location.search.indexOf('cd=1') !== -1;
+    var hasV = false, isFresh = false;
+    try {
+      hasV = !!localStorage.getItem('atz-memo-version');
+      isFresh = sessionStorage.getItem('atz-fresh-walkthrough') === '1';
+    } catch(e){}
+    ind.hidden = !(urlHasCd && !hasV && isFresh);
+  }
+  var btn = document.getElementById('saveBtn'); if (!btn) return;
+  var next = nextMissingAfter(CD_MY_INDEX);
+  btn.innerHTML = '<span class="arrow">→</span> ' + (next ? 'Continue' : 'Review');
+  // In CD mode, slider/horizon already have defaults — unlock Save so user can proceed without explicit interaction.
+  btn.classList.remove('locked');
+}
+
+function onSave(){
+  setLS(LS_PROB, String(confidence));
+  setLS(LS_HORIZON, horizon);
+  if (isCdMode()) {
+    if (WAS_FILLED) {
+      var src1 = ''; try { src1 = sessionStorage.getItem('atz-memo-source'); } catch(e){}
+      window.location.href = src1 || 'First-time%20Memo%20Flow.html';
+      return;
+    }
+    var next = nextMissingAfter(CD_MY_INDEX);
+    if (next) { window.location.href = next + '?cd=1'; return; }
+    var src2 = ''; try { src2 = sessionStorage.getItem('atz-memo-source'); } catch(e){}
+    window.location.href = src2 || 'First-time%20Memo%20Flow.html';
+    return;
+  }
+  var src = ''; try { src = sessionStorage.getItem('atz-memo-source'); } catch(e){}
+  window.location.href = src || 'Blank%20Memo.html';
+}
+function goBack(){
+  // J39: Exit = abandon walkthrough. Clear CD flag so next entry isn't stuck in CD mode.
+  try { sessionStorage.removeItem('atz-cd-mode'); sessionStorage.removeItem('atz-fresh-walkthrough'); sessionStorage.removeItem('atz-cd-auto-redirected'); } catch(e){}
+  var src = ''; try { src = sessionStorage.getItem('atz-memo-source'); } catch(e){}
+  window.location.href = src || 'Blank%20Memo.html';
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', applyCdLabel);
+else applyCdLabel();
+</script>
+</body>
+</html>

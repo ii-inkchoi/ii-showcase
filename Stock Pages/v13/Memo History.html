@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Underwriting record · ATZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/*
+  Memo History · v13 (J42 + L17 + L19)
+  Dedicated list view of all memo versions (V1, V2, V3...).
+  Reads atz-memo-history LS, renders rows with version, timestamp, trigger, position.
+  Tap row → snapshot panel showing that version's full memo. ←→ nav between V entries (L19).
+*/
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+* { scrollbar-width: none; -ms-overflow-style: none; }
+*::-webkit-scrollbar { display: none; }
+button { background: transparent; border: none; color: inherit; font: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+
+:root {
+  --bg: #000;
+  --c-1000: #1C1C1C; --c-900: #232627; --c-800: #565B5E;
+  --c-700: #929292; --c-600: #A7A7A7; --c-400: #C7C7C7; --c-200: #E3E2E2; --c-white: #FFFFFF;
+  --c-elev: #0A0A0A;
+  --c-warning: #FF7A00;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--c-400); font-family: var(--font); font-weight: 400; letter-spacing: -0.02em; font-feature-settings: 'tnum' 1; width: 100%; max-width: 393px; margin: 0 auto; min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden; padding-bottom: 40px; }
+
+/* Topbar */
+.topbar { display: flex; justify-content: space-between; align-items: center; padding: 0 13.5px; height: 71px; flex-shrink: 0; border-bottom: 1px solid var(--c-900); font-size: 0; }
+.topbar .back { width: 13px; height: 13px; display: inline-flex; align-items: center; justify-content: center; color: var(--c-400); }
+.topbar .back::before { content: ''; width: 8px; height: 8px; border-left: 1px solid currentColor; border-bottom: 1px solid currentColor; transform: rotate(45deg); margin-left: 2px; }
+.topbar .back:active { opacity: .5; transition: opacity 80ms ease; }
+.topbar .exit { font-size: 14px; color: var(--c-400); letter-spacing: -0.02em; }
+.topbar .exit:active { opacity: .5; transition: opacity 80ms ease; }
+
+.compliance-strip { display: flex; align-items: center; padding: 8px 20px; font-size: 9px; letter-spacing: -0.02em; color: var(--c-800); border-bottom: 0.5px solid var(--c-1000); line-height: 1.3; }
+
+/* Hero */
+.hero { padding: 32px 20px 24px; border-bottom: 1px solid #111; }
+.hero-ticker { font-size: 24px; font-weight: 400; letter-spacing: -0.02em; line-height: 1.18; color: var(--c-white); margin-bottom: 8px; }
+.hero-label { font-size: 12px; color: var(--c-600); letter-spacing: -0.02em; line-height: 1.3; }
+.hero-count { font-size: 12px; color: var(--c-700); letter-spacing: -0.02em; margin-top: 4px; }
+
+/* History list */
+.history-list { padding: 8px 0; }
+.history-row { display: flex; flex-direction: column; gap: 4px; padding: 16px 20px; border-bottom: 0.5px solid #1A1A1A; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.history-row:active { background: var(--c-elev); }
+.history-row-top { display: flex; align-items: baseline; justify-content: space-between; }
+.history-row-version { font-size: 15px; color: var(--c-white); letter-spacing: -0.02em; }
+.history-row-time { font-size: 11px; color: var(--c-700); letter-spacing: -0.02em; }
+.history-row-meta { display: flex; align-items: baseline; gap: 8px; font-size: 11px; color: var(--c-700); letter-spacing: -0.02em; }
+.history-row-trigger { color: var(--c-400); }
+.history-row-position { display: inline-flex; align-items: baseline; gap: 4px; }
+.history-row-position::before { content: '·'; color: var(--c-800); }
+.history-row-position.held { color: var(--c-400); }
+.history-row-position.exiting { color: var(--c-warning); }
+.history-row-position.none { color: var(--c-700); }
+.history-row-chev { font-size: 14px; font-weight: 300; color: var(--c-700); line-height: 1; margin-left: 8px; }
+
+/* Empty state */
+.empty-state { padding: 80px 20px; text-align: center; color: var(--c-700); font-size: 13px; letter-spacing: -0.02em; line-height: 1.55; }
+
+/* Snapshot modal */
+.sheet-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.6); opacity: 0; pointer-events: none; transition: opacity 200ms ease; z-index: 20; }
+.sheet-backdrop.open { opacity: 1; pointer-events: auto; }
+.sheet { position: fixed; bottom: 0; left: 50%; transform: translate(-50%, 100%); width: 100%; max-width: 393px; max-height: 85vh; background: var(--c-elev); border-top: 0.5px solid var(--c-900); display: flex; flex-direction: column; transition: transform 240ms cubic-bezier(0.32, 0.72, 0.24, 1); z-index: 21; overflow: hidden; }
+.sheet.open { transform: translate(-50%, 0); }
+.sheet-grip { width: 36px; height: 4px; background: var(--c-800); border-radius: 2px; margin: 10px auto 0; flex-shrink: 0; }
+.sheet-head { display: flex; align-items: center; gap: 8px; padding: 20px 20px 12px; border-bottom: 0.5px solid var(--c-1000); flex-shrink: 0; }
+.sheet-head-body { flex: 1; min-width: 0; }
+.sheet-title { font-size: 16px; color: var(--c-white); line-height: 1.3; letter-spacing: -0.02em; }
+.sheet-subtitle { font-size: 11px; color: var(--c-700); letter-spacing: -0.02em; margin-top: 2px; }
+.sheet-nav { width: 28px; height: 28px; color: var(--c-400); background: none; border: 0; font-size: 22px; font-weight: 300; cursor: pointer; padding: 0; flex-shrink: 0; line-height: 1; -webkit-tap-highlight-color: transparent; }
+.sheet-nav:disabled { color: var(--c-800); cursor: default; }
+.sheet-nav:active:not(:disabled) { opacity: 0.5; transition: opacity 80ms ease; }
+.sheet-close { width: 24px; height: 24px; color: var(--c-700); background: none; border: none; font-size: 16px; cursor: pointer; padding: 0; flex-shrink: 0; margin-left: 4px; }
+.sheet-body { padding: 16px 20px 24px; overflow-y: auto; flex: 1; }
+.snap-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 0.5px solid var(--c-1000); font-size: 13px; }
+.snap-row-key { color: var(--c-700); letter-spacing: -0.02em; }
+.snap-row-val { color: var(--c-400); letter-spacing: -0.02em; text-align: right; }
+.snap-prose-label { font-size: 11px; color: var(--c-700); letter-spacing: -0.02em; margin-top: 16px; margin-bottom: 8px; }
+.snap-prose { font-size: 13px; color: var(--c-400); letter-spacing: -0.02em; line-height: 1.65; white-space: pre-wrap; word-break: break-word; }
+
+/* L5: Reaffirmation row — subtle distinction (same V, different trigger) */
+.history-row.reaffirm .history-row-version { color: var(--c-700); }
+.history-row.reaffirm { background: transparent; }
+.history-row.reaffirm .history-row-trigger::before { content: "\21B3 "; color: var(--c-800); }
+
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="#" onclick="event.preventDefault();goBack();" aria-label="Back"></a>
+  <a class="exit" href="#" onclick="event.preventDefault();goBack();" aria-label="Exit">Exit</a>
+</div>
+
+<div class="compliance-strip">Self-Authored &middot; No Suitability Review &middot; Not Advice</div>
+
+<div class="hero">
+  <div class="hero-ticker" id="heroTicker">ATZ</div>
+  <div class="hero-label">Underwriting record</div>
+  <div class="hero-count" id="heroCount">&mdash;</div>
+</div>
+
+<div class="history-list" id="historyList"></div>
+
+<!-- Snapshot modal (L19: ←→ navigation) -->
+<div class="sheet-backdrop" id="snapBackdrop" onclick="closeSnap()"></div>
+<div class="sheet" id="snapSheet" role="dialog" aria-modal="true">
+  <div class="sheet-grip"></div>
+  <div class="sheet-head">
+    <button type="button" class="sheet-nav" id="snapPrev" onclick="navSnap(-1)" aria-label="Previous version">&lsaquo;</button>
+    <div class="sheet-head-body">
+      <div class="sheet-title" id="snapTitle">V1</div>
+      <div class="sheet-subtitle" id="snapSubtitle">&mdash;</div>
+    </div>
+    <button type="button" class="sheet-nav" id="snapNext" onclick="navSnap(1)" aria-label="Next version">&rsaquo;</button>
+    <button type="button" class="sheet-close" onclick="closeSnap()" aria-label="Close">&#x2715;</button>
+  </div>
+  <div class="sheet-body" id="snapBody"></div>
+</div>
+
+<script>
+function getLS(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
+
+function formatTimestamp(ts){
+  if (!ts) return '—';
+  try {
+    var d = new Date(ts);
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var month = months[d.getMonth()];
+    var day = d.getDate();
+    var year = d.getFullYear();
+    return month + ' ' + day + ', ' + year;
+  } catch(e){ return '—'; }
+}
+
+function escapeHtml(s){
+  return String(s || '').replace(/[&<>"']/g, function(c){
+    return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+  });
+}
+
+function renderHistory(){
+  var hist = [];
+  try { hist = JSON.parse(getLS('atz-memo-history') || '[]'); } catch(e){}
+
+  var listEl = document.getElementById('historyList');
+  var countEl = document.getElementById('heroCount');
+
+  if (!hist.length) {
+    listEl.innerHTML = '<div class="empty-state">No underwriting record yet.<br>Save V1 to start the audit log.</div>';
+    if (countEl) countEl.textContent = 'No versions';
+    return;
+  }
+
+  // L5: count V bumps (not reaffirmations) for hero label
+  var vCount = 0;
+  for (var k = 0; k < hist.length; k++) { if (!hist[k].reaffirmation) vCount++; }
+  if (countEl) {
+    var label = vCount === 1 ? '1 version' : vCount + ' versions';
+    if (hist.length > vCount) label += ' · ' + (hist.length - vCount) + ' reaffirm' + (hist.length - vCount === 1 ? '' : 's');
+    countEl.textContent = label;
+  }
+
+  // Render newest first (reverse chronological)
+  var rows = [];
+  for (var i = hist.length - 1; i >= 0; i--) {
+    var entry = hist[i];
+    var v = entry.version || ('V' + (i + 1));
+    var ts = formatTimestamp(entry.timestamp);
+    var trigger = entry.trigger || '—';
+    var position = entry.position || 'none';
+    var posLabel = position === 'held' ? 'Held' : position === 'exiting' ? 'Exiting' : 'No position';
+    rows.push(
+      '<button class="history-row' + (entry.reaffirmation ? ' reaffirm' : '') + '" type="button" data-idx="' + i + '" onclick="openSnap(' + i + ')">' +
+        '<div class="history-row-top">' +
+          '<span class="history-row-version">' + escapeHtml(v) + '</span>' +
+          '<span class="history-row-time">' + escapeHtml(ts) + '</span>' +
+        '</div>' +
+        '<div class="history-row-meta">' +
+          '<span class="history-row-trigger">' + escapeHtml(trigger) + '</span>' +
+          '<span class="history-row-position ' + escapeHtml(position) + '">' + posLabel + '</span>' +
+        '</div>' +
+      '</button>'
+    );
+  }
+  listEl.innerHTML = rows.join('');
+}
+
+// L19: Track currently-open entry index for ←→ navigation
+var _snapIdx = -1;
+
+function openSnap(idx){
+  var hist = [];
+  try { hist = JSON.parse(getLS('atz-memo-history') || '[]'); } catch(e){}
+  var entry = hist[idx];
+  if (!entry) return;
+
+  _snapIdx = idx;
+
+  document.getElementById('snapTitle').textContent = entry.version || 'V?';
+  document.getElementById('snapSubtitle').textContent =
+    formatTimestamp(entry.timestamp) + ' · ' + (entry.trigger || '—') + ' · ' + (entry.position || 'none');
+
+  // Active fields vs Core fields
+  var rows = [];
+  if (entry.classification !== undefined) {
+    rows.push(snapRow('Classification', entry.classification));
+    rows.push(snapRow('Sizing', entry.sizing));
+    var confLabel = entry.probability ? entry.probability + '%' + (entry.horizon ? ' · ' + entry.horizon : '') : '—';
+    rows.push(snapRow('Confidence', confLabel));
+    rows.push(snapRow('Idea Origin', entry.ideaOrigin));
+  } else if (entry.role !== undefined) {
+    rows.push(snapRow('Role', entry.role));
+    rows.push(snapRow('Target Weight', entry.targetWeight));
+  }
+
+  var body = rows.join('');
+  if (entry.memo) {
+    body += '<div class="snap-prose-label">Investment Case</div>';
+    body += '<div class="snap-prose">' + escapeHtml(entry.memo) + '</div>';
+  }
+  document.getElementById('snapBody').innerHTML = body;
+
+  // L19: nav state — disable at boundaries.
+  // hist[] is chronological (oldest → newest). UI shows newest-first.
+  // "Prev" in UI = older V (idx+1 in hist), "Next" in UI = newer V (idx-1 in hist).
+  var prevBtn = document.getElementById('snapPrev');
+  var nextBtn = document.getElementById('snapNext');
+  if (prevBtn) prevBtn.disabled = (idx <= 0);
+  if (nextBtn) nextBtn.disabled = (idx >= hist.length - 1);
+
+  document.getElementById('snapSheet').classList.add('open');
+  document.getElementById('snapBackdrop').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+// L19: Navigate between V entries while sheet open. dir: -1 = older (idx-1), +1 = newer (idx+1).
+function navSnap(dir){
+  var hist = [];
+  try { hist = JSON.parse(getLS('atz-memo-history') || '[]'); } catch(e){}
+  if (_snapIdx < 0 || !hist.length) return;
+  var nextIdx = _snapIdx + dir;
+  if (nextIdx < 0 || nextIdx >= hist.length) return;
+  openSnap(nextIdx);
+}
+
+function snapRow(k, v){
+  return '<div class="snap-row"><span class="snap-row-key">' + escapeHtml(k) + '</span><span class="snap-row-val">' + escapeHtml(v || '—') + '</span></div>';
+}
+
+function closeSnap(){
+  document.getElementById('snapSheet').classList.remove('open');
+  document.getElementById('snapBackdrop').classList.remove('open');
+  document.body.style.overflow = '';
+  _snapIdx = -1;
+}
+
+function goBack(){
+  // J45: atz-history-from 우선 (Memo Review에서 왔으면 Memo Review로),
+  //      없으면 atz-memo-stock-source (Stock Page).
+  var from = '';
+  try { from = sessionStorage.getItem('atz-history-from'); } catch(e){}
+  if (from) {
+    try { sessionStorage.removeItem('atz-history-from'); } catch(e){}
+    window.location.href = from;
+    return;
+  }
+  var src = '';
+  try { src = sessionStorage.getItem('atz-memo-stock-source'); } catch(e){}
+  if (src) { window.location.href = src; return; }
+  window.location.href = 'Stock%20Page%20Return%20User.html';
+}
+
+// L19: ESC closes; ←→ navigate when sheet open
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Escape') { closeSnap(); return; }
+  var sheet = document.getElementById('snapSheet');
+  if (!sheet || !sheet.classList.contains('open')) return;
+  if (e.key === 'ArrowLeft')  navSnap(-1);
+  if (e.key === 'ArrowRight') navSnap(1);
+});
+
+// Hero ticker — Active=ATZ, Core=VFV (from stance)
+(function setHero(){
+  try {
+    var stance = getLS('atz-memo-stance');
+    if (stance === 'core') document.getElementById('heroTicker').textContent = 'VFV';
+  } catch(e){}
+})();
+
+renderHistory();
+window.addEventListener('pageshow', renderHistory);
+</script>
+</body>
+</html>

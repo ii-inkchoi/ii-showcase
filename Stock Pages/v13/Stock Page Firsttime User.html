@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <title>ATZ — Stock Page (First-Time)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-black:#000000; --c-1000:#1C1C1C; --c-900:#232627; --c-800:#565B5E;
+      --c-700:#929292; --c-600:#A7A7A7; --c-400:#C7C7C7; --c-200:#E3E2E2; --c-white:#FFFFFF;
+      --c-elev:#0A0A0A; --c-live:#30D158;
+      --green-default:#02CB45; --red-default:#FD0200;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { scrollbar-width: none; -ms-overflow-style: none; }
+    html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; width: 0; height: 0; }
+    body { background: var(--c-black); color: var(--c-white); font-family: 'Inter', sans-serif; width: 100%; max-width: 393px; margin: 0 auto; min-height: 100vh; overflow-x: hidden; -webkit-font-smoothing: antialiased; font-feature-settings: 'lnum' 1, 'tnum' 1; }
+    a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+
+    .header { height: 71px; display: flex; align-items: center; justify-content: space-between; padding: 0 13.5px; border-bottom: 1px solid var(--c-900); }
+    .compliance-strip { display: flex; align-items: center; padding: 8px 20px; font-size: 9px; letter-spacing: -0.02em; color: var(--c-800); border-bottom: 0.5px solid var(--c-1000); line-height: 1.3; }
+    .back { width: 13px; height: 13px; display: inline-flex; align-items: center; justify-content: center; color: var(--c-400); }
+    .back::before { content: ''; width: 8px; height: 8px; border-left: 1px solid currentColor; border-bottom: 1px solid currentColor; transform: rotate(45deg); margin-left: 2px; }
+    .star { width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center; color: var(--c-400); }
+    .exit { font-size: 14px; letter-spacing: -0.02em; color: var(--c-400); }
+
+    .title-block { padding: 40px 20px 0; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+    .t-primary { font-size: 18px; letter-spacing: -0.02em; color: var(--c-white); line-height: 1.15; }
+    .t-secondary { font-size: 13px; letter-spacing: -0.02em; color: var(--c-700); line-height: 1.15; }
+    .t-secondary .price { color: var(--c-white); margin-left: 4px; }
+    /* H2 / A4 — Today's price change. II minimal tone — direction via +/- sign only. (H15 refinement) */
+    .t-secondary .change { color: var(--c-400); margin-left: 8px; }
+    .t-secondary .change-pct { color: var(--c-700); margin-left: 4px; }
+
+    .col { padding: 48px 20px 120px; display: flex; flex-direction: column; gap: 48px; }
+    .section { display: flex; flex-direction: column; gap: 14px; }
+    .section-header { display: flex; align-items: baseline; justify-content: space-between; padding: 0 0 14px; border-bottom: 0.5px solid var(--c-900); width: 100%; margin-bottom: -34px; }
+    .section-title { font-size: 15px; color: var(--c-white); letter-spacing: -0.02em; }
+    .section-meta { font-size: 11px; color: var(--c-700); letter-spacing: -0.02em; margin-left: auto; margin-right: 4px; }
+    .section-chev { color: var(--c-700); font-size: 14px; font-weight: 300; line-height: 1; }
+
+    .view-link { display: inline-flex; align-items: baseline; gap: 4px; font-size: 11px; color: var(--c-700); letter-spacing: -0.02em; margin-top: 4px; align-self: flex-start; }
+    .view-link .chev { font-size: 13px; font-weight: 300; color: var(--c-700); }
+
+    /* Memo block — filled state */
+
+    /* TAP-TO-LEARN — dotted underline + info-panel (#74) */
+        .lbl-tap{
+      cursor:pointer; -webkit-tap-highlight-color:transparent;
+      display:inline-block;
+      border-bottom:0.5px dotted var(--c-800);
+      padding-bottom:1px;
+      line-height:1.2;
+      transition:color 120ms ease, border-color 120ms ease;
+    }
+    .lbl-tap:active{opacity:0.5; transition:opacity 80ms ease;}
+    .lbl-tap.open{color:var(--c-white); border-bottom-color:var(--c-700);}
+    .info-panel{
+      padding:10px 14px 14px;
+      margin-top:6px;
+      border-left:1px solid var(--c-900);
+      font-size:12px; color:var(--c-400);
+      letter-spacing:-0.02em; line-height:1.55;
+    }
+    .info-panel[hidden]{display:none;}
+    .info-panel p{margin:0;}
+    .info-panel p + p{margin-top:8px;}
+
+    .memo-block { border:0.5px solid var(--c-900); padding:16px; display:flex; flex-direction:column; gap:8px; }
+    .memo-block.memo-block-notes { border: none; border-top: 0.5px solid var(--c-900, #232627); padding: 14px 0 0; border-radius: 0; }
+    .memo-block .uw-rows { display: flex; flex-direction: column; gap: 10px; }
+
+    /* v10 Blank Memo Block — S0 / S1 unified layout (Notes + empty field rows + Underwrite) */
+    .memo-block.memo-block-blank { display: flex; flex-direction: column; gap: 12px; }
+    .memo-block-notes-section { display: flex; flex-direction: column; gap: 6px; }
+    .memo-block-notes-input {
+      width: 100%; min-height: 44px; resize: none; overflow: hidden;
+      background: transparent; border: none; padding: 0; outline: none;
+      color: var(--c-200, #E3E2E2); font-family: inherit; font-size: 13px;
+      line-height: 1.55; letter-spacing: -0.02em;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .memo-block-notes-input::placeholder { color: var(--c-800, #565B5E); }
+    .memo-block-notes-input.is-saved { color: var(--c-700, #929292); }
+    .memo-block-notes-toolbar { display: flex; justify-content: flex-end; }
+    .notes-save-btn {
+      font-size: 11px; color: var(--c-800, #565B5E); padding: 4px 0; border: none;
+      background: transparent; letter-spacing: -0.02em; font-family: inherit;
+      transition: color 120ms ease; cursor: default; pointer-events: none;
+    }
+    .notes-save-btn:focus, .notes-save-btn:focus-visible { outline: none; }
+    .notes-save-btn:active { opacity: .5; transition: opacity 80ms ease; }
+    .notes-save-btn.is-ready { color: var(--c-200, #E3E2E2); cursor: pointer; pointer-events: auto; }
+    .notes-save-btn.is-saved { color: var(--c-white, #FFFFFF); cursor: default; pointer-events: none; }
+    /* Notes textarea — focused = full expand, blurred + long content = collapse w/ gradient mask + Read more */
+    .memo-block-notes-input.is-collapsed { max-height: 100px; overflow: hidden; mask-image: linear-gradient(to bottom, #000 60%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%); }
+    .notes-read-more { font-size: 11px; color: var(--c-700, #929292); padding: 4px 0; border: none; background: transparent; letter-spacing: -0.02em; font-family: inherit; cursor: pointer; align-self: flex-start; }
+    .notes-read-more[hidden] { display: none; }
+    .notes-read-more:active { opacity: .5; transition: opacity 80ms ease; }
+    .notes-read-more:focus, .notes-read-more:focus-visible { outline: none; }
+    .uw-val.empty { color: var(--c-800, #565B5E); }
+    .live-dot.is-empty { background: var(--c-800, #565B5E); animation: none; }
+    /* Active/Core stance toggle — period-opt pattern (Doctrine §Clickability) */
+    .stance-toggle { display: inline-flex; align-items: center; gap: 8px; }
+    .stance-toggle-opt { font-size: 11px; color: var(--c-700, #929292); letter-spacing: -0.02em; cursor: pointer; padding: 2px 0; -webkit-tap-highlight-color: transparent; background: none; border: none; font-family: inherit; transition: color 120ms ease; }
+    .stance-toggle-opt.is-active { color: var(--c-white, #FFFFFF); }
+    .stance-toggle-opt:active { opacity: .5; transition: opacity 80ms ease; }
+    .stance-toggle-opt:focus, .stance-toggle-opt:focus-visible { outline: none; }
+    .stance-toggle-sep { font-size: 11px; color: var(--c-800, #565B5E); }
+    /* Research Prompt actions group — stance toggle + copy button on right side of title row */
+    .research-card .rc-actions { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+    .memo-block-divider { height: 0.5px; background: var(--c-900); margin: 4px 0; }
+    /* L27: full-width divider — negates memo-block 16px padding, used above Notes for clean section break */
+    .memo-block-divider-full{height:0.5px;background:var(--c-900);margin:4px -16px}
+
+    /* J31: Investment Case label REVERTED to match other row labels (13px, c-700) */
+    .memo-prose-label { font-size: 13px; color: var(--c-700); letter-spacing: -0.02em; margin-bottom: 4px; margin-top: 2px; }
+    .memo-block-notes-display { display: flex; flex-direction: column; gap: 4px; }
+    .memo-block-prose { font-size: 13px; color: var(--c-400); letter-spacing: -0.02em; line-height: 1.65; max-height: 100px; overflow: hidden; mask-image: linear-gradient(to bottom, #000 60%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%); }
+    .memo-block-prose.expanded { max-height: none; mask-image: none; -webkit-mask-image: none; white-space: pre-wrap; }
+    .memo-block-foot { display: flex; align-items: baseline; justify-content: flex-end; gap: 12px; margin-top: 8px; }
+    .memo-block-version { font-size: 11px; color: var(--c-700); letter-spacing: -0.02em; }
+    .memo-block-cta { display: inline-flex; align-items: baseline; gap: 4px; font-size: 11px; color: var(--c-white); letter-spacing: -0.02em; padding: 4px 0 0; }
+    .memo-block-cta .chev { font-size: 13px; font-weight: 300; color: var(--c-white); }
+    .live-dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--c-live); margin-right: 6px; vertical-align: middle; animation: live-pulse 2.4s cubic-bezier(0.45,0,0.55,1) infinite; }
+    @keyframes live-pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
+    @media (prefers-reduced-motion: reduce){ .live-dot { animation:none !important; } }
+    .uw-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+    /* H3 / A3 — Blank state row tap → Blank Memo (label tap = info-panel, handled separately) */
+    /* J21 — row body inactive on blank state (only label = info-panel, Underwrite CTA = sole entry) */
+    .memo-block-blank .uw-row { cursor: default; }
+    .uw-key { font-size: 13px; color: var(--c-700); letter-spacing: -0.02em; }
+    .uw-val { font-size: 13px; color: var(--c-400); letter-spacing: -0.02em; text-align: right; font-feature-settings: 'tnum' 1; }
+    .uw-val .uw-meta { color: var(--c-700); margin-left: 6px; font-size: 12px; }
+
+    /* Empty state — drill-in to memo experience */
+    a.memo-block-empty { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; padding: 16px; border: 0.5px solid var(--c-900); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+    .memo-block-empty-text { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+    .memo-block-empty-title { font-size: 15px; color: var(--c-white); letter-spacing: -0.02em; line-height: 1.2; }
+    .memo-block-empty-placeholder { font-size: 11px; color: var(--c-700); letter-spacing: -0.02em; line-height: 1.35; }
+    .memo-block-empty-chev { color: var(--c-700); font-size: 14px; font-weight: 300; line-height: 1.2; flex-shrink: 0; }
+
+    /* Memo section header (shown only when memo exists) */
+    .memo-section-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 10px; }
+    /* J16 — Category label on the right of "Memo" (system-determined: Active / Core·Treasury) */
+    .memo-category-label { font-size: 11px; color: var(--c-700); letter-spacing: -0.02em; }
+    /* Stance definition — single line per stance, toggle swap (H28/H31) + subtle fade-in (H36) */
+    .memo-stance-definition { font-size: 11px; color: var(--c-700, #929292); letter-spacing: -0.02em; line-height: 1.5; margin-top: 4px; margin-bottom: 8px; }
+    .memo-stance-definition .msd-line strong { font-weight: 400; color: var(--c-400, #C7C7C7); }
+    @keyframes msd-fade-in { from { opacity: 0; transform: translateY(-2px); } to { opacity: 1; transform: translateY(0); } }
+    .memo-stance-definition .msd-line { animation: msd-fade-in 600ms 400ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+    @media (prefers-reduced-motion: reduce) { .memo-stance-definition .msd-line { animation: none; } }
+    .memo-section-title { font-size: 15px; color: var(--c-white); letter-spacing: -0.02em; display: inline-flex; align-items: center; gap: 8px; }
+    .memo-section-title .live-dot { margin: 0; }
+    .memo-notes-meta { font-size: 11px; color: var(--c-700); letter-spacing: -0.02em; }
+    .memo-notes-eyebrow { font-size: 11px; color: var(--c-700); letter-spacing: -0.01em; margin-bottom: 6px; }
+    /* S4 — secondary Notes card below filled memo */
+    .memo-notes-card { display: block; border: none; border-top: 0.5px solid var(--c-900, #232627); padding: 14px 0 0; margin-top: 14px; -webkit-tap-highlight-color: transparent; cursor: pointer; }
+    .memo-notes-card:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .memo-notes-preview { font-size: 13px; color: var(--c-400); letter-spacing: -0.02em; line-height: 1.55; margin-bottom: 8px; white-space: pre-wrap; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .memo-notes-foot { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+    .memo-notes-cta { font-size: 11px; color: var(--c-white); letter-spacing: -0.02em; display: inline-flex; align-items: baseline; gap: 4px; }
+    .memo-notes-cta .chev { font-size: 13px; font-weight: 300; }
+    .memo-section-meta { font-size: 11px; color: var(--c-700); letter-spacing: -0.02em; }
+    .memo-history-link { font-size: 11px; color: var(--c-700); letter-spacing: -0.02em; display: inline-flex; align-items: baseline; gap: 4px; cursor: pointer; }
+    .memo-history-link .chev { font-size: 13px; font-weight: 300; color: var(--c-700); }
+    /* L26: Memo History bar — right-aligned at top of memo-block */
+    .memo-block-history-bar{display:flex;justify-content:flex-end;padding:0 0 12px}
+    .memo-block-history-bar:empty{display:none}
+
+
+    .nav-rows { display: flex; flex-direction: column; }
+    .nav-row { padding: 18px 0; border-bottom: 0.5px solid var(--c-900); display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+    .nav-rows .nav-row:first-child { border-top: none; }
+    .nav-row.primary { background: var(--c-elev); border: 0.5px solid var(--c-900); padding: 16px; }
+    .nav-row.primary .nav-row-arrow { color: var(--c-700); font-size: 14px; }
+    .nav-row.primary .nav-row-meta { font-size: 12px; line-height: 1.5; max-width: 280px; }
+    button.nav-row.primary { width: 100%; text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent; font-family: inherit; color: inherit; }
+    .nav-row-text { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+    .nav-row-title { font-size: 15px; color: var(--c-white); letter-spacing: -0.02em; line-height: 1.2; }
+    .nav-row-meta { font-size: 11px; color: var(--c-700); letter-spacing: -0.02em; line-height: 1.35; }
+    .nav-row-arrow { color: var(--c-400); font-size: 16px; font-weight: 300; line-height: 1.2; }
+
+    .primary-card { background: var(--c-elev); border: 0.5px solid var(--c-900); display: flex; flex-direction: column; }
+    .primary-card-action { width: 100%; display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; padding: 16px; background: none; border: none; font-family: inherit; text-align: left; cursor: pointer; color: inherit; }
+    .primary-card-action .nav-row-arrow { color: var(--c-700); font-size: 14px; }
+    .primary-card-footer { border-top: 0.5px solid var(--c-900); padding: 12px 16px; }
+    .copy-feedback { display: inline-block; margin-left: 10px; font-size: 13px; color: var(--c-700); letter-spacing: -0.02em; opacity: 0; transition: opacity 120ms ease; }
+    .primary-card-action.copied .copy-feedback { opacity: 1; }
+    .ai-tools-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; font-size: 12px; letter-spacing: -0.02em; }
+    .ai-tool { color: var(--c-600); padding: 2px 0; }
+    .ai-tools-sep { color: var(--c-1000); }
+
+    .capital-decision { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 393px; padding: 40px 13.5px 24px; display: flex; justify-content: flex-end; background: linear-gradient(to top, var(--c-black) 0%, var(--c-black) 60%, rgba(0,0,0,0) 100%); pointer-events: none; z-index: 10; }
+    .capital-decision a { pointer-events: auto; display: inline-flex; align-items: baseline; gap: 8px; font-size: 15px; color: var(--c-white); letter-spacing: -0.02em; padding: 8px 4px; }
+    .capital-decision a .arrow { font-weight: 500; }
+
+  
+    /* RESEARCH CARDS (#70 #71) */
+        .section-title-plain{font-size:15px;color:var(--c-white);letter-spacing:-.02em;font-weight:400;padding:0 0 10px 0;margin:0;}
+    .research-card{background:var(--c-elev);border:0.5px solid var(--c-900);padding:16px;display:flex;flex-direction:column;gap:6px;color:inherit;-webkit-tap-highlight-color:transparent;position:relative;}
+    .research-card.research-card-link{cursor:pointer;flex-direction:row;align-items:center;justify-content:space-between;gap:14px;}
+    .research-card.research-card-link:active{opacity:.5;transition:opacity 80ms ease;}
+    .research-card.research-card-link .rc-head{display:flex;flex-direction:column;gap:6px;flex:1;}
+    .research-card.research-card-link .rc-title{font-size:13px;color:var(--c-white);letter-spacing:-.02em;}
+    .research-card.research-card-link .rc-sub{font-size:12px;color:var(--c-700);letter-spacing:-.01em;line-height:1.5;margin-top:6px;}
+    .research-card.research-card-link .rc-arrow{color:var(--c-700);font-size:14px;font-weight:300;flex-shrink:0;}
+    .research-card .rc-head-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+/* Doctrine §30 — Copy button: top hero, ghost button (icon + label), amber on copied */
+    .research-card .rc-copy{display:inline-flex;align-items:center;gap:6px;padding:6px 4px;margin:-6px -4px;background:transparent;border:none;cursor:pointer;color:var(--c-400);font-family:inherit;font-size:11px;letter-spacing:-.01em;-webkit-tap-highlight-color:transparent;flex-shrink:0;transition:color 180ms ease;}
+    .research-card .rc-copy:active{opacity:.5;transition:opacity 80ms ease;}
+    .research-card .rc-copy svg{width:11px;height:11px;}
+    .research-card .rc-copy .rc-copy-lbl{line-height:1;}
+    .research-card .rc-copy.copied{color:var(--c-white);}
+    .research-card .rc-title{font-size:13px;color:var(--c-white);letter-spacing:-.02em;line-height:1.2;}
+    .research-card .rc-sub{font-size:12px;color:var(--c-700);letter-spacing:-.01em;line-height:1.5;margin-top:6px;}
+    
+    .research-card .rc-output{border-top:0.5px solid var(--c-900);margin-top:4px;padding-top:12px;}
+    .research-card .rc-output-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;}
+    .research-card .rc-stance-bar{display:flex;align-items:baseline;gap:8px;}
+
+    .research-card .rc-output-label{font-size:11px;color:var(--c-800);letter-spacing:-.01em;margin-bottom:8px;}
+    .research-card .rc-prompt-preview{font-size:13px;line-height:1.6;color:var(--c-700);letter-spacing:-0.01em;white-space:pre-wrap;font-family:inherit;max-height:120px;overflow:hidden;mask-image:linear-gradient(to bottom,#000 60%,transparent 100%);-webkit-mask-image:linear-gradient(to bottom,#000 60%,transparent 100%);;margin-top:16px;}
+    .research-card .rc-prompt-preview.expanded{max-height:none;mask-image:none;-webkit-mask-image:none;}
+    .research-card .rc-prompt-num{display:inline-block;width:24px;flex-shrink:0;}
+    .research-card .rc-prompt-row{display:flex;align-items:baseline;}
+    .research-card .rc-prompt-row .rc-prompt-text{flex:1;min-width:0;}
+    .research-card .rc-prompt-para{margin:0;}
+    .research-card .rc-prompt-blank{height:0.8em;}
+    .research-card .rc-output-meta{font-size:11px;color:var(--c-800);letter-spacing:-.01em;margin-top:10px;padding-top:8px;border-top:0.5px solid var(--c-1000);}
+    .research-card .rc-cta-row{margin-top:10px;padding-bottom:14px;display:flex;justify-content:flex-start;align-items:baseline;}
+    .research-card .rc-toggle{background:none;border:none;padding:6px 4px;margin:-6px -4px;cursor:pointer;font-family:inherit;font-size:11px;color:var(--c-700);letter-spacing:-.01em;display:inline-flex;align-items:baseline;gap:4px;-webkit-tap-highlight-color:transparent;transition:color 180ms ease;}
+    
+    .research-card .rc-toggle .rc-toggle-lbl{border-bottom:0.5px dotted var(--c-800);padding-bottom:1px;}
+    .research-card .rc-toggle:active{opacity:.5;}
+    .research-card .rc-toggle .chev{font-size:13px;color:var(--c-700);line-height:1;}
+    .research-card .rc-cta{background:none;border:none;padding:6px 4px;margin:-6px -4px;cursor:pointer;font-family:inherit;font-size:11px;color:var(--c-700);letter-spacing:-.01em;display:inline-flex;align-items:baseline;gap:0;-webkit-tap-highlight-color:transparent;transition:color 180ms ease;}
+    
+    .research-card .rc-cta:active{opacity:.5;transition:opacity 80ms ease;}
+    .research-card .rc-cta .rc-cta-arrow{display:none;}
+    .research-card .rc-cta.copied{color:var(--c-live);}
+    
+    .research-card .rc-sec-row{display:flex;align-items:baseline;gap:10px;padding:5px 0;font-size:12px;color:var(--c-400);letter-spacing:-.01em;}
+    .research-card .rc-sec-num{font-size:10px;color:var(--c-700);font-variant-numeric:tabular-nums;width:18px;flex-shrink:0;}
+    .research-card .rc-ai-tools{
+  border-top:0.5px solid var(--c-900);
+  padding-top:14px;padding-bottom:2px;line-height:1.5; margin-top:4px;
+      display:flex; align-items:baseline; gap:8px; flex-wrap:wrap;
+      font-size:11px; color:var(--c-700); letter-spacing:-0.01em;
+}
+    .research-card .rc-ai-tools .rc-ai-lbl{color:var(--c-700);}
+    .research-card .rc-ai-tools a{color:var(--c-400);}
+    .research-card .rc-ai-tools a:active{opacity:.5;transition:opacity 80ms ease;}
+    .research-card .rc-ai-tools .rc-ai-sep{color:var(--c-800);}
+
+
+    /* ABOUT link */
+    .about-section .about-toggle{
+      display:inline-flex;align-items:baseline;gap:3px;
+      background:none;border:none;padding:0;
+      font-family:inherit;font-size:12px;color:var(--c-700);letter-spacing:-.01em;
+      cursor:pointer;-webkit-tap-highlight-color:transparent;
+      align-self:flex-start;
+    }
+    .about-section .about-toggle .toggle-label{
+      border-bottom:0.5px dotted var(--c-800);
+      padding-bottom:1px;
+      transition:color 120ms ease, border-color 120ms ease;
+    }
+    .about-section .about-toggle:active .toggle-label{opacity:0.5; transition:opacity 80ms ease;}
+    .about-section.expanded .about-toggle .toggle-label{color:var(--c-white); border-bottom-color:var(--c-700);}
+    .about-section .about-body{display:none;margin-top:14px;}
+    .about-section.expanded .about-body{display:block;}
+
+
+    /* Memo headline — empty state as centerpiece (회의 #5) */
+    a.memo-block-empty.memo-headline { padding: 24px 20px; }
+    a.memo-block-empty.memo-headline .memo-block-empty-title { font-size: 22px; letter-spacing: -0.02em; line-height: 1.18; }
+    a.memo-block-empty.memo-headline .memo-block-empty-chev { font-size: 16px; }
+  
+    /* Empty memo section subtext */
+    .memo-empty-sub { font-size: 12px; color: var(--c-700); letter-spacing: -0.02em; line-height: 1.5; margin-bottom: 14px; }
+
+  
+    .research-card .rc-head .rc-eyebrow { font-size: 11px; color: var(--c-700); letter-spacing: -0.01em; margin-bottom: 2px; }
+
+  
+    .underwriting-instructions-link { font-size: 11px; color: var(--c-700); letter-spacing: -0.01em; display: inline-flex; align-items: baseline; gap: 4px; margin-top: 12px; align-self: flex-start; -webkit-tap-highlight-color: transparent; }
+    .underwriting-instructions-link:active { opacity: 0.5; transition: opacity 80ms ease; }
+    .underwriting-instructions-link .chev { font-size: 13px; font-weight: 300; color: var(--c-700); }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <a href="#" onclick="event.preventDefault()" class="back" aria-label="Back"></a>
+    <span style="display:flex;align-items:center;gap:14px;">
+      <a href="#" onclick="event.preventDefault()" class="star" aria-label="Star">☆</a>
+      <a href="#" onclick="event.preventDefault()" class="exit" aria-label="Exit">Exit</a>
+    </span>
+  </header>
+
+  <div class="compliance-strip" aria-label="Disclosure">
+    Self-Authored · No Suitability Review · Not Advice
+  </div>
+
+  <div class="title-block">
+    <span class="t-primary">Aritzia Inc · ATZ</span>
+    <span class="t-secondary">Last Price <span class="price">87.60 CAD</span><span class="change">+1.25</span><span class="change-pct">+1.45%</span></span>
+  </div>
+
+  <div class="col">
+
+    <!-- MEMO — blank state (S0 no notes / S1 notes only). Unified layout per chairman 2026-06-03.
+         Active/Core toggle: glimpse of memo + 'they choose' directive (Dave 2026-06-03). -->
+    <section id="memoBlankSection" style="display:none;">
+      <div class="memo-section-header">
+        <span class="memo-section-title"><span class="live-dot is-empty" id="blankLiveDot" aria-hidden="true"></span>Memo</span>
+        <span class="memo-category-label">Active Allocation</span>
+      </div>
+      <div class="memo-block memo-block-blank">
+        <!-- Notes — inline input, primary entry for light research workflow (applies to both stances) -->
+        <div class="memo-block-notes-section">
+          <div class="memo-notes-eyebrow">Notes</div>
+          <textarea class="memo-block-notes-input" id="blankNotesInput" rows="2" placeholder="Add a note. Capture a thought, a thesis, a question." oninput="onBlankNotesInput(this)" onfocus="onBlankNotesFocus(this)" onblur="onBlankNotesBlur(this)"></textarea>
+          <button type="button" class="notes-read-more" id="blankNotesReadMore" onclick="expandBlankNotes()" hidden>Read more</button>
+          <div class="memo-block-notes-toolbar">
+            <button type="button" class="notes-save-btn" id="blankNotesSaveBtn" onclick="saveBlankNote()">Save Note</button>
+          </div>
+        </div>
+
+        <div class="memo-block-divider-full"></div>
+
+        <!-- Active fields — 4 inline rows (Decision shown in category label above). IC moved to its own block below. -->
+        <div class="uw-rows" id="uwRowsActive">
+          <div class="uw-row"><span class="uw-key"><span class="lbl-tap" data-info="classification">Classification</span></span><span class="uw-val empty">—</span></div>
+          <div class="info-panel" data-info-for="classification" hidden><p>Different bets succeed and fail in different ways. Pick the category that describes the bet, not just the company.</p></div>
+          <div class="uw-row"><span class="uw-key"><span class="lbl-tap" data-info="sizing">Sizing</span></span><span class="uw-val empty">—</span></div>
+          <div class="info-panel" data-info-for="sizing" hidden><p>A statement of conviction, not enthusiasm. A position at 10% means you'd defend it in front of a skeptical board.</p></div>
+          <div class="uw-row"><span class="uw-key"><span class="lbl-tap" data-info="probability">Confidence</span></span><span class="uw-val empty">—</span></div>
+          <div class="info-panel" data-info-for="probability" hidden><p>Honest odds the thesis clears your hurdle over your stated horizon. ≥50% = Promote.</p></div>
+          <div class="uw-row"><span class="uw-key"><span class="lbl-tap" data-info="idea-origin">Idea Origin</span></span><span class="uw-val empty">—</span></div>
+          <div class="info-panel" data-info-for="idea-origin" hidden><p>Where the idea came from — a screen, a competitor's memo, a customer call, an analyst report. Track provenance so you can audit your sources of edge.</p></div>
+        </div>
+
+        <!-- J31: Investment Case as its own block (label + prose below), matching Memo Only/Return User pattern. -->
+        <div id="memoInvestmentCaseSectionBlank">
+          <div class="memo-prose-label"><span class="lbl-tap" data-info="investment-case">Investment Case</span></div>
+          <p class="memo-block-prose" id="blankMemoProse" style="color:var(--c-800)">—</p>
+          <div class="info-panel" data-info-for="investment-case" hidden><p>The reasoning behind the position — thesis, kill criteria, why now, intrinsic value, confidence. The case you'd make to a skeptical partner.</p></div>
+        </div>
+
+
+        <!-- Underwrite CTA — first-time user goes through Memo Intro first (Dave directive: instructions/example/memo). Stance hint passed via sessionStorage.
+             J24: Draft indicator (left) shown when LS has partial draft. CTA label flips to "Resume Draft". -->
+        <div class="memo-block-foot">
+          <span class="draft-indicator" id="draftIndicator" style="display:none; font-size:11px; color:var(--c-700); letter-spacing:-0.02em; margin-right:auto;"></span>
+          <a href="Blank%20Memo.html?intent=memo" class="memo-block-cta" id="blankUnderwriteCta" onclick="try{sessionStorage.setItem('atz-memo-stock-source',window.location.href);}catch(e){}">Underwrite <span class="chev" aria-hidden="true">›</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section id="memoFilledSection" style="display:none;">
+      <div class="memo-section-header">
+        <span class="memo-section-title"><span class="live-dot" aria-hidden="true"></span>Memo</span>
+        <span class="memo-category-label">Active Allocation</span>
+      </div>
+      <div class="memo-block" id="memoFilled" style="display:flex;">
+        <!-- L13/L26: Underwriting record entry — shown when V_N exists. -->
+        <div class="memo-block-history-bar">
+          <a href="#" id="memoHistoryLink" class="memo-history-link" onclick="event.preventDefault();openHistory();" style="display:none">
+            <span class="memo-history-count">Underwriting record</span><span class="chev" aria-hidden="true">›</span>
+          </a>
+        </div>
+
+        <!-- Memo hero — fields TOP. Active variant only (system-routed). 4 fields + Investment Case prose at BOTTOM (J18). -->
+        <div class="uw-rows">
+          <div class="uw-row"><span class="uw-key"><span class="lbl-tap" data-info="classification">Classification</span></span><span class="uw-val" data-field="classification">—</span></div>
+          <div class="uw-row"><span class="uw-key"><span class="lbl-tap" data-info="sizing">Sizing</span></span><span class="uw-val" data-field="sizing">—</span></div>
+          <div class="uw-row"><span class="uw-key"><span class="lbl-tap" data-info="probability">Confidence</span></span><span class="uw-val" data-field="probability">—</span></div>
+          <div class="uw-row"><span class="uw-key"><span class="lbl-tap" data-info="idea-origin">Idea Origin</span></span><span class="uw-val" data-field="idea-origin">—</span></div>
+          <div class="info-panel" data-info-for="idea-origin" hidden><p>Where the idea came from — a screen, a competitor's memo, a customer call, an analyst report. Track provenance so you can audit your sources of edge.</p></div>
+        </div>
+        <!-- Investment Case — always BOTTOM per chairman direction (J18). -->
+        <div id="memoInvestmentCaseSection">
+          <div class="memo-prose-label"><span class="lbl-tap" data-info="investment-case">Investment Case</span></div>
+          <p class="memo-block-prose" id="memoProse"></p>
+          <div class="info-panel" data-info-for="investment-case" hidden><p>The reasoning behind the position — thesis, kill criteria, why now, intrinsic value, confidence. The case you'd make to a skeptical partner.</p></div>
+        </div>
+        <div class="memo-block-divider-full"></div>
+        <!-- Notes — secondary artifact (BOTTOM in filled state per chairman 'memo as hero, notes as secondary') -->
+        <div class="memo-block-notes-section">
+          <div class="memo-notes-eyebrow">Notes</div>
+          <textarea class="memo-block-notes-input" id="filledNotesInput" rows="2" placeholder="Add a note. Capture a thought, a thesis, a question." oninput="onFilledNotesInput(this)" onfocus="onFilledNotesFocus(this)" onblur="onFilledNotesBlur(this)"></textarea>
+          <button type="button" class="notes-read-more" id="filledNotesReadMore" onclick="expandFilledNotes()" hidden>Read more</button>
+          <div class="memo-block-notes-toolbar">
+            <button type="button" class="notes-save-btn" id="filledNotesSaveBtn" onclick="saveFilledNote()">Save Note</button>
+          </div>
+        </div>
+        <div class="memo-block-foot">
+          <a href="Return%20user_Memo%20Review.html" class="memo-block-cta" aria-label="Review Memo" onclick="try{sessionStorage.removeItem('atz-cd-action');sessionStorage.setItem('atz-memo-stock-source',window.location.href);}catch(e){}">Re-underwrite <span class="chev" aria-hidden="true">›</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESEARCH AND ANALYSIS — section header with stance toggle (independent from Memo block toggle). -->
+    <section class="section" id="research-and-analysis" aria-label="Research and Analysis" style="gap:12px; scroll-margin-top:16px;">
+      <div class="section-title-plain">Research and Analysis</div>
+      
+      <a href="https://fiscal.ai" target="_blank" rel="noopener" class="research-card research-card-link" aria-label="Open Fiscal AI for ATZ">
+        <div class="rc-head">
+          <div class="rc-title">Fiscal AI · ATZ</div>
+          <div class="rc-sub">Research Aritzia's financials and filings.</div>
+        </div>
+        <span class="rc-arrow" aria-hidden="true">›</span>
+      </a>
+      <div class="research-card" id="rpCard">
+        <div class="rc-head-row">
+          <div class="rc-title">Research Prompt · ATZ</div>
+          <button type="button" class="rc-copy" id="copyPromptBtn" onclick="copyResearchPrompt(this)" aria-label="Copy prompt">
+            <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3.5" y="3.5" width="7" height="9" stroke="currentColor" stroke-width="0.8"/><rect x="6" y="1" width="7" height="9" stroke="currentColor" stroke-width="0.8" fill="none"/></svg>
+            <span class="rc-copy-lbl">Copy</span>
+          </button>
+        </div>
+        <div class="rc-output">
+          <div class="rc-output-row">
+            <div class="rc-output-label" id="rcOutputLabel">Prompt · 9 sections · 2,500–3,500 words</div>
+          </div>
+          <div class="rc-prompt-preview" id="rcPromptPreview"></div>
+          <div class="rc-cta-row">
+            <button type="button" class="rc-toggle" id="promptToggleBtn" onclick="togglePromptExpand(this)" aria-expanded="false"><span class="rc-toggle-lbl">Read Full Prompt</span></button>
+          </div>
+        <div class="rc-ai-tools" aria-label="Open prompt in AI tool (opens in new tab)">
+          <span class="rc-ai-lbl">Open in</span>
+          <a href="https://claude.ai/new" target="_blank" rel="noopener">Claude</a>
+          <span class="rc-ai-sep">·</span>
+          <a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>
+          <span class="rc-ai-sep">·</span>
+          <a href="https://gemini.google.com/app" target="_blank" rel="noopener">Gemini</a>
+          <span class="rc-ai-sep">·</span>
+          <a href="https://www.perplexity.ai/" target="_blank" rel="noopener">Perplexity</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWS + MARKET — combined nav-rows (no History for first-time user) -->
+    <section class="nav-rows" aria-label="News and Market">
+      <a href="#" onclick="event.preventDefault()" class="nav-row">
+        <span class="nav-row-text"><span class="nav-row-title">News</span><span class="nav-row-meta">Headlines · Coverage</span></span>
+        <span class="nav-row-arrow">›</span>
+      </a>
+      <a href="#" onclick="event.preventDefault()" class="nav-row">
+        <span class="nav-row-text"><span class="nav-row-title">Market</span><span class="nav-row-meta">Price · Overview · Valuation</span></span>
+        <span class="nav-row-arrow">›</span>
+      </a>
+    </section>
+
+    <!-- ABOUT — Read about Aritzia link (moved to bottom) -->
+    <section class="section about-section" aria-label="About Aritzia Inc.">
+      <button type="button" class="about-toggle" id="aboutToggle" aria-expanded="false">
+        <span class="toggle-label">Read about Aritzia</span>
+      </button>
+      <div class="about-body" id="aboutBody">
+        <p style="font-size:14px;color:var(--c-400);letter-spacing:-.02em;line-height:1.55;">Aritzia Inc. designs and sells in-house women's fashion brands (Wilfred, TNA, Babaton, Super Puff) through 110+ boutiques in Canada and the US, plus a growing ecommerce business. Founded in Vancouver in 1984.</p>
+        <a href="#" onclick="event.preventDefault()" class="view-link">Read More on the Company <span class="chev" aria-hidden="true">›</span></a>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="capital-decision">
+    <!-- J37 fix (BUG A): set atz-memo-stock-source so CD Review's Exit/back returns here. -->
+    <a href="First-time%20Memo%20Flow.html?intent=buy" aria-label="Capital Decision" onclick="try{sessionStorage.setItem('atz-memo-stock-source',window.location.href);}catch(e){}">
+      <span class="arrow">→</span> Capital Decision
+    </a>
+  </div>
+
+  <!-- Core / Treasury allocation prompt skeleton — for non-alpha-seeking holdings (Dave 2026-06-03 'core allocation prompt or treasury allocation') -->
+  <script id="researchPromptTextCore" type="text/plain">Subject. Aritzia Inc. (TSX:ATZ). Canadian premium women's apparel. Held without an alpha claim — for portfolio role, liquidity, or non-outperformance reasons.
+
+Bar. Maintain target role and weight without erosion of capital.
+
+What we want. A short research document of 1,000–1,500 words covering the six sections below. Each section answered — none collapsed, none omitted.
+
+01  Asset role — what role this holding serves (liquidity reserve, index core, bond ladder, cash equivalent, yield product)
+02  Target weight — how much, and why this size given the role
+03  Cost &amp; efficiency — frictions (expense ratio if fund, spread, holding cost, tax efficiency)
+04  Risk &amp; liquidity — drawdown history, daily volume, redemption mechanics
+05  Alternatives — other holdings that could fill the same role and how this one was selected
+06  Re-evaluation triggers — what would change the role or weight (specific, measurable)
+
+Voice. Direct. Declarative. A specific number where a number is asked. One role — no hedging.
+
+If a figure is uncertain or post your training cutoff, state the assumption and mark it [verify on Fiscal].
+
+Begin with 01. No preamble.    function openHistory(){
+      try { sessionStorage.removeItem('atz-history-from'); } catch(e){}
+      try { sessionStorage.setItem('atz-memo-stock-source', window.location.href); } catch(e){}
+      window.location.href = 'Memo%20History.html';
+    }
+
+</script>
+
+  <script id="researchPromptText" type="text/plain">Subject. Aritzia Inc. (TSX:ATZ). Canadian premium women's apparel. In-house multi-brand portfolio: Wilfred, TNA, Babaton, Super Puff. 110+ boutiques across Canada and the US, plus ecommerce. Founded Vancouver, 1984. Founder Brian Hill; CEO Jennifer Wong since 2022. Fiscal year ends early March; FY2026 = year ended March 2026.
+
+Bar. 20% annualized over five years. The 3-year confidence of clearing this bar is the binding number for the verdict.
+
+What we want. A research document of 2,500–3,500 words covering the nine sections below. Each section answered — none collapsed, none omitted. The structure is the deliverable. No preamble, no summary outside the sections.
+
+01  Business overview
+02  Classification — compounder, emerging compounder, situational mispricing, or speculative
+03  Thesis and its structural decomposition, including the load-bearing assumption
+04  Why now
+05  Kill criteria — 4 to 6, each with metric, threshold, action
+06  Intrinsic value — method, three scenarios, conservative IV, margin of safety
+07  Confidence of clearing the hurdle, estimated for 1, 3, and 5 years
+08  Where deeper work would move the confidence (if Promote)
+09  Verify on Fiscal — 10 to 15 fact checks against Fiscal.AI, EDGAR/SEDAR, or 10-K/MD&A
+
+Voice. Direct. Declarative. A specific number where a number is asked. One classification — no hedging. The conclusion in 07 is binding: Promote if the 3-year confidence ≥ 50%, otherwise Pass.
+
+If a figure is uncertain or post your training cutoff, state the assumption and mark it [verify on Fiscal].
+
+Begin with 01. No preamble.</script>
+
+  <script>
+    /* First-time persona: clean slate only on FRESH entry (from index or direct).
+       When returning from Memo Review with a newly saved memo, preserve state. */
+    var SCHEMA_TAG = 'firsttime-v0';
+    (function gateState(){
+      try {
+        var ref = document.referrer || '';
+        var fromIndex = ref === '' || ref.indexOf('index.html') !== -1 || ref.indexOf('User%20Flow') !== -1;
+        var currentSchema = localStorage.getItem('atz-memo-demo-schema');
+        // Clear only when entering fresh from index/direct AND schema mismatch.
+        // If returning from Memo Review (referrer = that page), preserve user state.
+        if (fromIndex && currentSchema !== SCHEMA_TAG) {
+          var memoKeys = [
+            'atz-memo', 'atz-memo-memo', 'atz-memo-version',
+            'atz-memo-decision', 'atz-memo-classification', 'atz-memo-sizing',
+            'atz-memo-horizon', 'atz-memo-probability', 'atz-memo-history',
+            'atz-memo-idea-origin', 'atz-memo-draft-progress'
+          ];
+          memoKeys.forEach(function(k){ localStorage.removeItem(k); });
+          localStorage.setItem('atz-memo-demo-schema', SCHEMA_TAG);
+        }
+      } catch (e) {}
+    })();
+
+    function horizonShort(h){
+      if (!h) return '';
+      if (h.indexOf('1') === 0) return '1y';
+      if (h.indexOf('3') === 0) return '3y';
+      if (h.indexOf('5') === 0) return '5y+';
+      return '';
+    }
+
+    function renderMemo(){
+      var version = null, memo = null, decision = null, classification = null, sizing = null, probability = null, horizon = null, ideaOrigin = null;
+      try {
+        version        = localStorage.getItem('atz-memo-version');
+        memo           = localStorage.getItem('atz-memo-memo') || localStorage.getItem('atz-memo');
+        decision       = localStorage.getItem('atz-memo-decision');
+        classification = localStorage.getItem('atz-memo-classification');
+        sizing         = localStorage.getItem('atz-memo-sizing');
+        probability    = localStorage.getItem('atz-memo-probability');
+        horizon        = localStorage.getItem('atz-memo-horizon');
+        ideaOrigin     = localStorage.getItem('atz-memo-idea-origin');
+      } catch(e){}
+
+      var blankSection = document.getElementById('memoBlankSection');
+      var filledSection = document.getElementById('memoFilledSection');
+
+      // Check for notes. V1: single text string.
+      var notes = '';
+      try { notes = localStorage.getItem('atz-memo-notes') || ''; } catch(e){}
+      var hasNotes = notes.trim().length > 0;
+
+      if (!version) {
+        // S0 (no notes) / S1 (notes only) — unified blank layout
+        blankSection.style.display = '';
+        filledSection.style.display = 'none';
+        // Pre-fill Notes textarea with current value (so user can edit on revisit)
+        var blankInput = document.getElementById('blankNotesInput');
+        if (blankInput) {
+          blankInput.value = notes;
+          autoExpandBlank(blankInput);
+        }
+        // Update live dot based on notes presence (S1 = active, S0 = dimmed)
+        var blankDot = document.getElementById('blankLiveDot');
+        if (blankDot) {
+          if (hasNotes) blankDot.classList.remove('is-empty');
+          else blankDot.classList.add('is-empty');
+        }
+        // Reset Save button state
+        var blankBtn = document.getElementById('blankNotesSaveBtn');
+        if (blankBtn) {
+          blankBtn.classList.remove('is-ready');
+          blankBtn.classList.remove('is-saved');
+          blankBtn.textContent = 'Save Note';
+        }
+        // J24 + A3 fix: Draft indicator — distinguish 1b (1-4/5 partial) from 1c (5/5 ready).
+        // 0    → hidden indicator, CTA "Underwrite"           (1a Fresh)
+        // 1-4  → "Draft · N of 5 fields", CTA "Resume Draft"  (1b Draft in progress)
+        // 5    → "Ready · 5 of 5 fields", CTA "Edit Draft"    (1c Draft complete, ready to commit via Capital Decision)
+        var draftProgress = 0;
+        try { draftProgress = parseInt(localStorage.getItem('atz-memo-draft-progress') || '0', 10) || 0; } catch(e){}
+        var draftIndicator = document.getElementById('draftIndicator');
+        var underwriteCta = document.getElementById('blankUnderwriteCta');
+        if (draftIndicator && underwriteCta) {
+          if (draftProgress === 0) {
+            draftIndicator.style.display = 'none';
+            underwriteCta.innerHTML = 'Underwrite <span class="chev" aria-hidden="true">›</span>';
+          } else if (draftProgress >= 5) {
+            // 1c — all fields filled, ready for Capital Decision (commit V1)
+            draftIndicator.textContent = 'Ready · 5 of 5 fields';
+            draftIndicator.style.display = '';
+            underwriteCta.innerHTML = 'Edit Draft <span class="chev" aria-hidden="true">›</span>';
+          } else {
+            // 1b — partial draft
+            draftIndicator.textContent = 'Draft · ' + draftProgress + ' of 5 fields';
+            draftIndicator.style.display = '';
+            underwriteCta.innerHTML = 'Resume Draft <span class="chev" aria-hidden="true">›</span>';
+          }
+        }
+        // J24-fix: Hydrate blank state rows with saved partial values (so user sees what they have).
+        // Empty fields stay "—". Filled fields show the saved value.
+        var blankClassification = localStorage.getItem('atz-memo-classification');
+        var blankSizing         = localStorage.getItem('atz-memo-sizing');
+        var blankProbability    = localStorage.getItem('atz-memo-probability');
+        var blankHorizonRaw     = localStorage.getItem('atz-memo-horizon');
+        var blankIdeaOrigin     = localStorage.getItem('atz-memo-idea-origin');
+        var blankMemo           = localStorage.getItem('atz-memo-memo');
+        function hsShort(h){ if(!h) return ''; if(h.indexOf('1')===0) return '1y'; if(h.indexOf('3')===0) return '3y'; if(h.indexOf('5')===0) return '5y+'; return ''; }
+        function setBlankRow(infoKey, value, isHtml){
+          var lbl = document.querySelector('#uwRowsActive .lbl-tap[data-info="' + infoKey + '"]');
+          if (!lbl) return;
+          var row = lbl.closest('.uw-row');
+          if (!row) return;
+          var val = row.querySelector('.uw-val');
+          if (!val) return;
+          if (value === null || value === undefined || value === '') {
+            val.textContent = '—';
+            val.classList.add('empty');
+          } else {
+            if (isHtml) val.innerHTML = value; else val.textContent = value;
+            val.classList.remove('empty');
+          }
+        }
+        setBlankRow('classification', blankClassification);
+        setBlankRow('sizing', blankSizing);
+        if (blankProbability) {
+          var hs = hsShort(blankHorizonRaw);
+          setBlankRow('probability', blankProbability + '% ' + (hs ? '<span class="uw-meta">· ' + hs + '</span>' : ''), true);
+        } else setBlankRow('probability', null);
+        if (blankIdeaOrigin) {
+          setBlankRow('idea-origin', blankIdeaOrigin.indexOf('Other: ') === 0 ? blankIdeaOrigin.slice(7) : blankIdeaOrigin);
+        } else setBlankRow('idea-origin', null);
+        // J31: IC now lives in #memoInvestmentCaseSectionBlank (block, not inline). Hydrate the prose paragraph.
+        var blankProseEl = document.getElementById('blankMemoProse');
+        if (blankProseEl) {
+          if (blankMemo) {
+            var firstPara = blankMemo.split(/\n\n+/)[0].trim();
+            blankProseEl.textContent = firstPara;
+            blankProseEl.style.color = 'var(--c-400)';
+          } else {
+            blankProseEl.textContent = '—';
+            blankProseEl.style.color = 'var(--c-800)';
+          }
+        }
+        return;
+      }
+
+      /* Filled state */
+      blankSection.style.display = 'none';
+      filledSection.style.display = '';
+
+      // L26: Underwriting record link — show when V_N exists
+      try {
+        var hist = JSON.parse(localStorage.getItem('atz-memo-history') || '[]');
+        var historyLink = document.getElementById('memoHistoryLink');
+        if (historyLink && hist.length >= 1) {
+          historyLink.style.display = '';
+        }
+      } catch(e){}
+
+      /* Core vs Active detection (with sessionStorage fallback for stance hint from blank toggle) */
+      var isCore = (decision || '').indexOf('Core') !== -1;
+      if (!decision) {
+        var stanceHint = null;
+        try { stanceHint = sessionStorage.getItem('atz-blank-stance'); } catch(e){}
+        if (stanceHint === 'core') isCore = true;
+      }
+      document.querySelectorAll('#memoFilled .mr-active').forEach(function(el){ el.style.display = isCore ? 'none' : ''; });
+      document.querySelectorAll('#memoFilled .mr-core').forEach(function(el){ el.style.display = isCore ? '' : 'none';
+      // Decision row text swap — show "Core / Treasury Allocation" when Core toggled (consistent preview)
+      var decisionCells = document.querySelectorAll('.memo-block .uw-row .uw-val[data-field="decision"], .memo-block .uw-row:first-child .uw-val');
+      decisionCells.forEach(function(el){
+        if (isCore) {
+          if (!el.dataset.activeText) el.dataset.activeText = el.textContent;
+          el.textContent = 'Core / Treasury Allocation';
+          el.classList.remove('empty');
+        } else {
+          if (el.dataset.activeText) {
+            el.textContent = el.dataset.activeText;
+          } else {
+            var savedDecision = '';
+            try { savedDecision = localStorage.getItem('atz-memo-decision') || ''; } catch(e){}
+            if (savedDecision && savedDecision.indexOf('Core') === -1) el.textContent = savedDecision;
+          }
+        }
+      });
+      // Role/Target preview text — guarantee no empty state in Core mode (G6)
+      document.querySelectorAll('.memo-block .uw-row.mr-core').forEach(function(row){
+        var lbl = row.querySelector('.lbl-tap');
+        var val = row.querySelector('.uw-val');
+        if (!lbl || !val) return;
+        var info = lbl.getAttribute('data-info');
+        if (isCore) {
+          if (!val.dataset.activeText) val.dataset.activeText = val.textContent;
+          var t = val.textContent.trim();
+          if (info === 'role' && (t === '—' || t === '')) val.textContent = 'Long-term compound';
+          if (info === 'target-weight' && (t === '—' || t === '')) val.textContent = '5%';
+          val.classList.remove('empty');
+        }
+      });
+
+ });
+
+      /* Field rows */
+      var ROLE_LBL = { liquidity:'Liquidity reserve', index:'Index core', bond:'Bond ladder', cash:'Cash equivalent', yield:'Yield product' };
+      var rows = document.querySelectorAll('#memoFilled .uw-val');
+      rows.forEach(function(el){
+        var f = el.getAttribute('data-field');
+        if (f === 'decision')       el.textContent = decision || '—';
+        if (f === 'classification') el.textContent = classification || '—';
+        if (f === 'sizing')         el.textContent = sizing || '—';
+        if (f === 'probability') {
+          if (probability) {
+            var hs = horizonShort(horizon);
+            el.innerHTML = probability + '% ' + (hs ? '<span class="uw-meta">· ' + hs + '</span>' : '');
+          } else el.textContent = '—';
+        }
+        if (f === 'idea-origin') {
+          var IO_LBL = { social:'Social media', screener:'Screener', podcast:'Podcast', newsletter:'Newsletter', friend:'Friend', '13f':'13F', other:'Other' };
+          el.textContent = IO_LBL[(ideaOrigin || '').toLowerCase()] || ideaOrigin || '—';
+          if (ideaOrigin) el.classList.remove('empty'); else el.classList.add('empty');
+        }
+        // Core fields — Core mode preview fallback ('Long-term compound' / '5%' instead of '—')
+        if (f === 'role') {
+          var role = '';
+          try { role = localStorage.getItem('atz-memo-role') || ''; } catch(e){}
+          el.textContent = ROLE_LBL[role] || role || (isCore ? 'Long-term compound' : '—');
+        }
+        if (f === 'targetweight') {
+          var tw = '';
+          try { tw = localStorage.getItem('atz-memo-target-weight') || ''; } catch(e){}
+          el.textContent = (tw && parseInt(tw,10) > 0) ? tw + '%' : (isCore ? '5%' : '—');
+        }
+      });
+
+      /* Memo prose preview */
+      var proseEl = document.getElementById('memoProse');
+      if (proseEl) {
+        if (memo) {
+          var firstPara = memo.split(/\n\n+/)[0].trim();
+          proseEl.textContent = firstPara;
+        } else proseEl.textContent = '';
+      }
+
+      /* Notes inline input (always shown inside memo block — v10 consistent with blank state) */
+      try {
+        var s4Notes = localStorage.getItem('atz-memo-notes') || '';
+        var filledInput = document.getElementById('filledNotesInput');
+        if (filledInput) {
+          filledInput.value = s4Notes;
+          autoExpandFilled(filledInput);
+        }
+        var filledBtn = document.getElementById('filledNotesSaveBtn');
+        if (filledBtn) {
+          filledBtn.classList.remove('is-ready');
+          filledBtn.classList.remove('is-saved');
+          filledBtn.textContent = 'Save Note';
+        }
+      } catch(e){}
+    }
+
+    // Filled state Notes handlers — inline editable, same pattern as blank state
+    function autoExpandFilled(el){
+      if (!el) return;
+      el.style.height = 'auto';
+      el.style.height = el.scrollHeight + 'px';
+    }
+    function onFilledNotesInput(el){
+      autoExpandFilled(el);
+      var btn = document.getElementById('filledNotesSaveBtn');
+      if (!btn) return;
+      var saved = '';
+      try { saved = localStorage.getItem('atz-memo-notes') || ''; } catch(e){}
+      btn.classList.remove('is-saved');
+      btn.textContent = 'Save Note';
+      if (el.value !== saved) btn.classList.add('is-ready');
+      else btn.classList.remove('is-ready');
+    }
+    function saveFilledNote(){
+      var el = document.getElementById('filledNotesInput');
+      if (!el) return;
+      var text = el.value || '';
+      try { localStorage.setItem('atz-memo-notes', text); } catch(e){}
+      el.classList.add('is-saved');
+      var btn = document.getElementById('filledNotesSaveBtn');
+      if (btn){
+        btn.classList.remove('is-ready');
+        btn.classList.add('is-saved');
+        btn.textContent = 'Saved';
+        el.blur();
+        setTimeout(function(){
+          btn.classList.remove('is-saved');
+          btn.textContent = 'Save Note';
+        }, 1200);
+      }
+    }
+    function onFilledNotesFocus(el){
+      el.classList.remove('is-saved');
+      el.classList.remove('is-collapsed');
+      var btn = document.getElementById('filledNotesReadMore');
+      if (btn) btn.hidden = true;
+      autoExpandFilled(el);
+    }
+    function onFilledNotesBlur(el){
+      autoExpandFilled(el);
+      var btn = document.getElementById('filledNotesReadMore');
+      if (el.scrollHeight > 100) {
+        el.classList.add('is-collapsed');
+        if (btn) btn.hidden = false;
+      } else {
+        el.classList.remove('is-collapsed');
+        if (btn) btn.hidden = true;
+      }
+    }
+    function expandFilledNotes(){
+      var el = document.getElementById('filledNotesInput');
+      var btn = document.getElementById('filledNotesReadMore');
+      if (el) el.classList.remove('is-collapsed');
+      if (btn) btn.hidden = true;
+    }
+
+    document.addEventListener('DOMContentLoaded', renderMemo);
+
+    window.addEventListener('pageshow', renderMemo);
+
+    // ── Blank-state Notes handlers — inline editor on Stock Page (S0/S1)
+    function autoExpandBlank(el){
+      if (!el) return;
+      el.style.height = 'auto';
+      el.style.height = el.scrollHeight + 'px';
+    }
+    function onBlankNotesInput(el){
+      autoExpandBlank(el);
+      var btn = document.getElementById('blankNotesSaveBtn');
+      if (!btn) return;
+      var saved = '';
+      try { saved = localStorage.getItem('atz-memo-notes') || ''; } catch(e){}
+      btn.classList.remove('is-saved');
+      btn.textContent = 'Save Note';
+      if (el.value !== saved) btn.classList.add('is-ready');
+      else btn.classList.remove('is-ready');
+    }
+    function saveBlankNote(){
+      var el = document.getElementById('blankNotesInput');
+      if (!el) return;
+      var text = el.value || '';
+      try { localStorage.setItem('atz-memo-notes', text); } catch(e){}
+      el.classList.add('is-saved');
+      var btn = document.getElementById('blankNotesSaveBtn');
+      if (btn){
+        btn.classList.remove('is-ready');
+        btn.classList.add('is-saved');
+        btn.textContent = 'Saved';
+        el.blur();
+        setTimeout(function(){
+          btn.classList.remove('is-saved');
+          btn.textContent = 'Save Note';
+        }, 1200);
+      }
+      // Update live dot
+      var dot = document.getElementById('blankLiveDot');
+      if (dot){
+        if (text.trim().length > 0) dot.classList.remove('is-empty');
+        else dot.classList.add('is-empty');
+      }
+    }
+    // Focus/blur — expand while editing, collapse when blurred if content is long
+    var NOTES_COLLAPSE_THRESHOLD = 100; // px — match CSS max-height
+    function onBlankNotesFocus(el){
+      el.classList.remove('is-saved');
+      el.classList.remove('is-collapsed');
+      var btn = document.getElementById('blankNotesReadMore');
+      if (btn) btn.hidden = true;
+      autoExpandBlank(el);
+    }
+    function onBlankNotesBlur(el){
+      autoExpandBlank(el);
+      var btn = document.getElementById('blankNotesReadMore');
+      if (el.scrollHeight > NOTES_COLLAPSE_THRESHOLD) {
+        el.classList.add('is-collapsed');
+        if (btn) btn.hidden = false;
+      } else {
+        el.classList.remove('is-collapsed');
+        if (btn) btn.hidden = true;
+      }
+    }
+    function expandBlankNotes(){
+      var el = document.getElementById('blankNotesInput');
+      var btn = document.getElementById('blankNotesReadMore');
+      if (el) el.classList.remove('is-collapsed');
+      if (btn) btn.hidden = true;
+    }
+
+    // ── Active/Core stance toggle (SYNCED — user 2026-06-03 revert).
+    // Single sessionStorage key 'atz-blank-stance'. Both toggle locations (Memo block + Research section header) move together.
+    function setStance(stance){
+      var isCore = (stance === 'core');
+      // H1/A1 + H16 + H18 + H31 — Stance definition line swap (one line per stance)
+      document.querySelectorAll('.memo-stance-definition .msd-line').forEach(function(l){
+        l.style.display = (l.getAttribute('data-stance') === stance) ? '' : 'none';
+      });
+      // Memo block toggle
+      var mActive = document.getElementById('stanceActive');
+      var mCore = document.getElementById('stanceCore');
+      var rowsActive = document.getElementById('uwRowsActive');
+      var rowsCore = document.getElementById('uwRowsCore');
+      if (mActive && mCore && rowsActive && rowsCore) {
+        if (isCore) {
+          mActive.classList.remove('is-active'); mActive.setAttribute('aria-selected', 'false');
+          mCore.classList.add('is-active'); mCore.setAttribute('aria-selected', 'true');
+          rowsActive.style.display = 'none'; rowsCore.style.display = '';
+        } else {
+          mCore.classList.remove('is-active'); mCore.setAttribute('aria-selected', 'false');
+          mActive.classList.add('is-active'); mActive.setAttribute('aria-selected', 'true');
+          rowsCore.style.display = 'none'; rowsActive.style.display = '';
+        }
+      }
+      // Research section header toggle
+      var pActive = document.getElementById('stanceActivePrompt');
+      var pCore = document.getElementById('stanceCorePrompt');
+      var outputLabel = document.getElementById('rcOutputLabel');
+      if (pActive && pCore) {
+        if (isCore) {
+          pActive.classList.remove('is-active'); pActive.setAttribute('aria-selected', 'false');
+          pCore.classList.add('is-active'); pCore.setAttribute('aria-selected', 'true');
+        } else {
+          pCore.classList.remove('is-active'); pCore.setAttribute('aria-selected', 'false');
+          pActive.classList.add('is-active'); pActive.setAttribute('aria-selected', 'true');
+        }
+      }
+      if (outputLabel) {
+        outputLabel.textContent = isCore ? 'Prompt · 6 sections · 1,000–1,500 words' : 'Prompt · 9 sections · 2,500–3,500 words';
+      }
+      try { sessionStorage.setItem('atz-blank-stance', stance); } catch(e){}
+      if (typeof renderPromptPreview === 'function') renderPromptPreview();
+    }
+
+    // Restore previously selected stance on page load (sessionStorage)
+    (function restoreStance(){
+      var run = function(){
+        var saved = null;
+        try { saved = sessionStorage.getItem('atz-blank-stance'); } catch(e){}
+        if (saved === 'core') setStance('core');
+      };
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
+      else run();
+    })();
+
+    function fallbackCopy(text) {
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; ta.style.left = '-9999px';
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+      document.body.removeChild(ta);
+      return ok;
+    }
+    function togglePromptExpand(btn){
+      var preview = document.getElementById('rcPromptPreview');
+      if (!preview || !btn) return;
+      var lbl = btn.querySelector('.rc-toggle-lbl');
+      var isOpen = preview.classList.toggle('expanded');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      if (lbl) lbl.textContent = isOpen ? 'Show Less' : 'Read Full Prompt';
+    }
+    async function copyResearchPrompt(btn) {
+      // Stance-aware copy — use Core prompt when Core stance is selected
+      var stance = null;
+      try { stance = sessionStorage.getItem('atz-blank-stance'); } catch(e){}
+      var srcId = (stance === 'core') ? 'researchPromptTextCore' : 'researchPromptText';
+      var text = document.getElementById(srcId).textContent.trim();
+      var lblEl = btn ? btn.querySelector('.rc-copy-lbl') : null;
+      var iconEl = btn ? btn.querySelector('svg') : null;
+      var originalIcon = iconEl ? iconEl.outerHTML : '';
+      var ok = false;
+      if (navigator.clipboard && window.isSecureContext) {
+        try { await navigator.clipboard.writeText(text); ok = true; } catch (e) { ok = fallbackCopy(text); }
+      } else { ok = fallbackCopy(text); }
+      if (!btn) return;
+      btn.classList.add('copied');
+      if (lblEl) lblEl.textContent = ok ? 'Copied' : 'Copy failed';
+      if (iconEl) iconEl.outerHTML = '<svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7L6 11L12 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      setTimeout(function () {
+        btn.classList.remove('copied');
+        if (lblEl) lblEl.textContent = 'Copy';
+        var newIcon = btn.querySelector('svg');
+        if (newIcon) newIcon.outerHTML = originalIcon;
+      }, 1800);
+    }
+  </script>
+
+
+  <script>
+    (function(){
+      var t = document.getElementById('aboutToggle');
+      var sec = t ? t.closest('.about-section') : null;
+      if (!t || !sec) return;
+      t.addEventListener('click', function(){
+        var open = sec.classList.toggle('expanded');
+        t.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    })();
+    (function(){
+      try {
+        var h = localStorage.getItem('atz-memo-hurdle-rate');
+        if (h !== null && h !== '') {
+          var el = document.getElementById('rcHurdleNum');
+          if (el) el.textContent = h;
+        }
+      } catch(e){}
+    })();
+    function renderPromptPreview(){
+      var stance = null;
+      try { stance = sessionStorage.getItem('atz-blank-stance'); } catch(e){}
+      var srcId = (stance === 'core') ? 'researchPromptTextCore' : 'researchPromptText';
+      var src = document.getElementById(srcId);
+      var dst = document.getElementById('rcPromptPreview');
+      if (!src || !dst) return;
+      var raw = src.textContent.trim();
+      dst.innerHTML = '';
+      raw.split('\n').forEach(function(line){
+        if (line.trim() === '') { var b = document.createElement('div'); b.className = 'rc-prompt-blank'; dst.appendChild(b); return; }
+        var m = line.match(/^(\d{2})\s+(.*)$/);
+        if (m) {
+          var row = document.createElement('div'); row.className = 'rc-prompt-row';
+          var num = document.createElement('span'); num.className = 'rc-prompt-num'; num.textContent = m[1];
+          var txt = document.createElement('span'); txt.className = 'rc-prompt-text'; txt.textContent = m[2];
+          row.appendChild(num); row.appendChild(txt); dst.appendChild(row);
+        } else {
+          var p = document.createElement('div'); p.className = 'rc-prompt-para'; p.textContent = line;
+          dst.appendChild(p);
+        }
+      });
+    }
+    if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', renderPromptPreview); } else { renderPromptPreview(); }
+
+    function toggleMemoProse(){
+      var prose = document.getElementById('memoProse');
+      var btn = document.getElementById('memoProseToggle');
+      if (!prose || !btn) return;
+      var expanded = btn.getAttribute('aria-expanded') === 'true';
+      if (expanded) { prose.classList.remove('expanded'); btn.textContent='Read Full Memo'; btn.setAttribute('aria-expanded','false'); }
+      else { prose.classList.add('expanded'); btn.textContent='Show less'; btn.setAttribute('aria-expanded','true'); }
+    }
+  </script>
+
+  <script>
+    // Tap-to-learn — dotted underline toggle (#74) — wired for Firsttime User (G8)
+    (function(){
+      function wire(){
+        document.querySelectorAll('.lbl-tap').forEach(function(label){
+          if (label.dataset.tapWired) return;
+          label.dataset.tapWired = '1';
+          label.addEventListener('click', function(e){
+            e.stopPropagation(); e.preventDefault();
+            var key = label.getAttribute('data-info');
+            // G30: prefer panel within same uw-rows / memo-block scope (avoids targeting panel in hidden sibling section)
+            var scope = label.closest('.uw-rows') || label.closest('.memo-block') || document;
+            var panel = scope.querySelector('.info-panel[data-info-for="'+key+'"]');
+            if (!panel) panel = document.querySelector('.info-panel[data-info-for="'+key+'"]');
+            if (!panel) return;
+            var isOpen = !panel.hidden;
+            panel.hidden = isOpen;
+            if (isOpen) label.classList.remove('open');
+            else label.classList.add('open');
+          });
+        });
+      }
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', wire);
+      else wire();
+    })();
+  </script>
+
+  <!-- H3/A3 row-tap navigation removed (J21).
+       Reason: created two click targets per row (label = info-panel + row = navigate).
+       Now: label tap = info-panel only. Row body inactive. Underwrite CTA = sole entry to Blank Memo. -->
+
+
+  <script>
+    // is-saved restore (G21) — if note already saved, apply darker color on load
+    (function(){
+      var ids = ['blankNotesInput', 'filledNotesInput'];
+      function run(){
+        try {
+          var saved = localStorage.getItem('atz-memo-notes') || '';
+          if (!saved) return;
+          ids.forEach(function(id){
+            var el = document.getElementById(id);
+            if (el && el.value) el.classList.add('is-saved');
+          });
+        } catch(e){}
+      }
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
+      else run();
+    })();
+  </script>
+</body>
+</html>

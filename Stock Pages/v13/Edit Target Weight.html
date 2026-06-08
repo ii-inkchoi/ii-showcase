@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>Target Weight · VFV — Edit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --c-black:#000; --c-1000:#1C1C1C; --c-900:#232627; --c-800:#565B5E;
+  --c-700:#929292; --c-600:#A7A7A7; --c-400:#C7C7C7; --c-200:#E3E2E2; --c-white:#FFFFFF;
+  --c-elev:#0A0A0A;
+}
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html,body { scrollbar-width:none; -ms-overflow-style:none; }
+html::-webkit-scrollbar, body::-webkit-scrollbar { display:none; width:0; height:0; }
+body { background:var(--c-black); color:var(--c-white); font-family:'Inter',sans-serif; width:100%; max-width:393px; margin:0 auto; min-height:100vh; padding-bottom:88px; -webkit-font-smoothing:antialiased; font-feature-settings:'lnum' 1,'tnum' 1; letter-spacing:-0.02em; }
+a { color:inherit; text-decoration:none; -webkit-tap-highlight-color:transparent; }
+
+.topbar { height:71px; display:flex; align-items:center; justify-content:space-between; padding:0 13.5px; border-bottom:1px solid var(--c-900); }
+.back { width:13px; height:13px; display:inline-flex; align-items:center; justify-content:center; color:var(--c-400); cursor:pointer; }
+.back::before { content:''; width:8px; height:8px; border-left:1px solid currentColor; border-bottom:1px solid currentColor; transform:rotate(45deg); margin-left:2px; }
+.exit { font-size:14px; color:var(--c-400); cursor:pointer; background:none; border:none; font-family:inherit; padding:0; letter-spacing:-0.02em; }
+
+.hero { padding:32px 20px 20px; display:flex; flex-direction:column; gap:8px; border-bottom:0.5px solid var(--c-900); }
+.hero-row { display:flex; justify-content:space-between; align-items:flex-start; }
+.hero-title { font-size:22px; color:var(--c-white); line-height:1.15; letter-spacing:-0.02em; display:inline-flex; align-items:baseline; gap:6px; }
+.hero-title .anchor { font-size:13px; color:var(--c-700); font-weight:400; }
+.hero-meta { text-align:right; font-size:11px; color:var(--c-700); line-height:1.4; }
+.hero-meta .stock { color:var(--c-400); margin-right:4px; }
+.hero-meta .change { color:var(--c-700); }
+.hero-meta .allocation { color:var(--c-white); display:block; margin-top:2px; }
+
+.section-label { padding:24px 20px 8px; font-size:15px; color:var(--c-white); letter-spacing:-0.02em; }
+
+/* Weight input — large numeric display + slider */
+.weight-card { padding:32px 20px; display:flex; flex-direction:column; align-items:center; gap:24px; }
+.weight-value { font-size:64px; font-weight:300; color:var(--c-white); letter-spacing:-0.04em; line-height:1; display:flex; align-items:baseline; gap:4px; font-variant-numeric:tabular-nums lining-nums; }
+.weight-unit { font-size:24px; color:var(--c-700); font-weight:400; }
+.weight-slider-wrap { width:100%; padding:0 8px; }
+.weight-slider { -webkit-appearance:none; appearance:none; width:100%; height:2px; background:var(--c-900); outline:none; border-radius:1px; }
+.weight-slider::-webkit-slider-thumb { -webkit-appearance:none; appearance:none; width:20px; height:20px; background:var(--c-white); border-radius:50%; cursor:pointer; }
+.weight-slider::-moz-range-thumb { width:20px; height:20px; background:var(--c-white); border-radius:50%; cursor:pointer; border:0; }
+.weight-meta { display:flex; justify-content:space-between; width:100%; font-size:11px; color:var(--c-700); margin-top:6px; }
+.weight-anchor { font-size:13px; color:var(--c-700); letter-spacing:-0.02em; }
+
+.save-band { position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:393px; padding:16px 20px calc(env(safe-area-inset-bottom) + 16px); display:flex; justify-content:flex-end; background:linear-gradient(to top,var(--c-black) 60%,transparent); z-index:10; pointer-events:none; }
+.save-btn { pointer-events:auto; display:inline-flex; align-items:baseline; gap:8px; font-size:15px; color:var(--c-white); background:none; border:none; padding:8px 4px; font-family:inherit; cursor:pointer; -webkit-tap-highlight-color:transparent; letter-spacing:-0.02em; }
+.save-btn.locked { opacity:0.4; pointer-events:none; }
+.save-btn:active { opacity:0.5; transition:opacity 80ms ease; }
+.save-btn .arrow { font-weight:500; font-size:15px; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" onclick="goBack()" aria-label="Back"></a>
+  <button class="exit" onclick="goBack()" aria-label="Exit">Exit</button>
+</div>
+
+<div class="hero">
+  <div class="hero-row">
+    <div class="hero-title">Target Weight <span class="anchor">↗</span></div>
+    <div class="hero-meta">
+      <span class="stock">VFV</span><span>106.92</span><span class="change"> +0.08%</span>
+      <span class="allocation">Core / Treasury Allocation</span>
+    </div>
+  </div>
+</div>
+
+<div class="section-label">Target portfolio weight</div>
+
+<div class="weight-card">
+  <div class="weight-value"><span id="weightNum">5</span><span class="weight-unit">%</span></div>
+  <div class="weight-slider-wrap">
+    <input type="range" min="1" max="50" step="1" value="5" class="weight-slider" id="weightSlider">
+    <div class="weight-meta"><span>1%</span><span class="weight-anchor" id="weightAnchor">Moderate position</span><span>50%</span></div>
+  </div>
+</div>
+
+<div class="save-band">
+  <button type="button" class="save-btn" id="saveBtn" onclick="onSave()"><span class="arrow">→</span> Save</button>
+</div>
+
+<script>
+var LS_KEY = 'atz-memo-target-weight';
+
+function setLS(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+function getLS(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+
+var slider = document.getElementById('weightSlider');
+var num = document.getElementById('weightNum');
+var anchor = document.getElementById('weightAnchor');
+
+function updateAnchor(v){
+  if (v <= 3) anchor.textContent = 'Starter position';
+  else if (v <= 10) anchor.textContent = 'Moderate position';
+  else if (v <= 25) anchor.textContent = 'Conviction position';
+  else anchor.textContent = 'Concentrated';
+}
+
+slider.addEventListener('input', function(){
+  num.textContent = slider.value;
+  updateAnchor(parseInt(slider.value, 10));
+});
+
+(function init(){
+  var prior = getLS(LS_KEY);
+  if (prior) {
+    var n = parseInt(String(prior).replace('%',''), 10);
+    if (!isNaN(n) && n >= 1 && n <= 50) {
+      slider.value = String(n);
+      num.textContent = String(n);
+      updateAnchor(n);
+    }
+  } else {
+    updateAnchor(5);
+  }
+})();
+
+function onSave(){
+  setLS(LS_KEY, slider.value + '%');
+  var src = '';
+  try { src = sessionStorage.getItem('atz-memo-source'); } catch(e){}
+  window.location.href = src || 'Return%20user_Memo%20Review%20(Core).html';
+}
+
+function goBack(){
+  try { sessionStorage.removeItem('atz-cd-mode'); sessionStorage.removeItem('atz-fresh-walkthrough'); sessionStorage.removeItem('atz-cd-auto-redirected'); } catch(e){}
+  var src = '';
+  try { src = sessionStorage.getItem('atz-memo-source'); } catch(e){}
+  window.location.href = src || 'Return%20user_Memo%20Review%20(Core).html';
+}
+</script>
+</body>
+</html>

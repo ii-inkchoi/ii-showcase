@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Example Memo · ATZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+* { scrollbar-width: none; -ms-overflow-style: none; }
+*::-webkit-scrollbar { display: none; }
+button { background: transparent; border: none; color: inherit; font: inherit; cursor: pointer; }
+a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+
+/* CSS variables — canonical tokens from Style_Design.md */
+:root {
+  --bg: #000000;
+  --c-1000: #1C1C1C;    /* gray.darkest */
+  --c-900:  #232627;    /* gray.darker */
+  --c-800:  #565B5E;    /* gray.muted */
+  --c-700:  #929292;    /* gray.dark / gray.medium */
+  --c-600:  #A7A7A7;    /* gray.subdued */
+  --c-400:  #C7C7C7;    /* gray.default / gray.light */
+  --c-white: #FFFFFF;   /* gray.lighter */
+  --c-elev: #0A0A0A;
+  --c-amber: #D4A85A;
+  --c-live:  #30D158;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+html, body { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--c-400);
+  font-family: var(--font);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  font-feature-settings: 'tnum' 1;
+  width: 100%;
+  max-width: 393px;
+  margin: 0 auto;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  padding-bottom: 40px;
+}
+
+/* TOPBAR — II canon */
+.topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 13.5px; height: 71px; flex-shrink: 0;
+  border-bottom: 1px solid var(--c-900); font-size: 0;
+}
+.topbar .back {
+  width: 13px; height: 13px; display: inline-flex;
+  align-items: center; justify-content: center; color: var(--c-400); font-size: 0;
+}
+.topbar .back::before {
+  content: ''; width: 8px; height: 8px;
+  border-left: 1px solid currentColor; border-bottom: 1px solid currentColor;
+  transform: rotate(45deg); margin-left: 2px;
+}
+.topbar .back:active { opacity: .5; transition: opacity 80ms ease; }
+.topbar .exit { font-size: 14px; color: var(--c-400); letter-spacing: -0.02em; }
+.topbar .exit:active { opacity: .5; transition: opacity 80ms ease; }
+
+/* COMPLIANCE STRIP */
+.compliance-strip {
+  display: flex; align-items: center; padding: 8px 20px;
+  font-size: 9px; letter-spacing: -0.02em; color: var(--c-800);
+  border-bottom: 0.5px solid var(--c-1000); line-height: 1.3;
+}
+
+/* PAGE HERO — matches Memo Review m6-ledger-header pattern */
+.memo-page-header {
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid var(--c-1000);
+  display: flex; flex-direction: column;
+}
+.memo-ticker-hero {
+  font-size: 34px; font-weight: 400; letter-spacing: -0.02em;
+  color: var(--c-400); line-height: 1.18; margin: 0 0 12px;
+}
+.memo-doc-label {
+  font-size: 12px; color: var(--c-600); letter-spacing: -0.02em; line-height: 1.3;
+}
+.memo-status-row {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 12px; margin-top: 6px;
+  position: relative;
+}
+/* H33 — Copy button absolute so status-row matches Blank Memo line-height (button doesn't add row height) */
+.memo-status-row .copy-btn { position: absolute; top: -4px; right: 0; padding: 4px 10px; }
+.memo-status {
+  font-size: 12px; color: var(--c-600); letter-spacing: -0.02em; line-height: 1.3;
+}
+
+/* MEMO BODY */
+.memo {
+  padding: 24px 20px 40px;
+  user-select: text;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+}
+
+/* Hide markdown H1 (rendered separately in hero) */
+.memo > h1:first-of-type { display: none; }
+
+/* H2 — section header (column-separated num + text, matches Memo Intro) */
+.memo h2 {
+  display: flex; align-items: baseline; gap: 14px;
+  margin: 30px 0 12px;
+  font-weight: 400;
+}
+.memo h2:first-of-type { margin-top: 4px; }
+.memo h2 .se-num {
+  font-size: 11px; color: var(--c-800);
+  font-variant-numeric: tabular-nums;
+  width: 20px; flex-shrink: 0; letter-spacing: 0.02em;
+}
+.memo h2 .se-text {
+  font-size: 15px; color: var(--c-200, #E3E2E2);
+  letter-spacing: -0.02em;
+}
+
+/* Body — memo prose per Doctrine §3: Small (13/18) / --c-700 (two tones darker) */
+.memo p {
+  font-size: 13px; line-height: 1.55; color: var(--c-700);
+  font-weight: 400; margin-bottom: 14px; letter-spacing: -0.005em;
+}
+.memo p strong { color: var(--c-400); font-weight: 400; }
+.memo p em {
+  font-style: italic; font-weight: 400;
+  color: var(--c-700);  /* Italic intro: subdued, not loud */
+}
+
+/* Intro paragraph (compliance disclaimer style) — extra subdued, no italic */
+.memo > p:first-of-type {
+  font-size: 13px; line-height: 1.55; color: var(--c-700);
+  font-style: normal;
+  padding: 12px 14px;
+  background: var(--c-elev);
+  border-left: 0.5px solid var(--c-900);
+}
+.memo > p:first-of-type em { font-style: normal; color: var(--c-700); }
+
+/* Mandate / summary block (2nd paragraph with strong tags) */
+.memo > p:nth-of-type(2) {
+  font-size: 13px; line-height: 1.7; color: var(--c-700);
+  margin-top: -2px;
+  letter-spacing: -0.01em;
+}
+.memo > p:nth-of-type(2) strong { color: var(--c-400); font-weight: 400; }
+
+/* Lists */
+.memo ul, .memo ol { margin: 0 0 16px 0; padding: 0 0 0 18px; }
+.memo ul li, .memo ol li {
+  font-size: 13px; line-height: 1.55; color: var(--c-700); font-weight: 400;
+  margin-bottom: 6px; letter-spacing: -0.005em;
+}
+.memo ul { list-style: none; padding-left: 0; }
+.memo ul li { padding-left: 18px; position: relative; }
+.memo ul li::before { content: '·'; color: var(--c-700); position: absolute; left: 4px; top: -1px; font-size: 18px; line-height: 1; }
+.memo ol { list-style: decimal; color: var(--c-700); }
+.memo ol li { padding-left: 4px; }
+.memo li strong { color: var(--c-400); font-weight: 400; }
+
+/* Card list — used for Kill Criteria, Intrinsic Value scenarios, Probability */
+.card-list {
+  display: flex; flex-direction: column;
+  margin: 6px 0 18px;
+}
+.card-row {
+  display: flex; gap: 12px;
+  padding: 12px 0;
+  border-bottom: 0.5px solid var(--c-1000);
+}
+.card-row:last-child { border-bottom: none; }
+.card-num {
+  font-size: 11px; color: var(--c-800);
+  font-variant-numeric: tabular-nums;
+  width: 18px; flex-shrink: 0; padding-top: 2px; letter-spacing: 0.02em;
+}
+.card-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.card-title {
+  font-size: 13px; color: var(--c-400); font-weight: 400;
+  letter-spacing: -0.01em; line-height: 1.4; margin-bottom: 2px;
+}
+.card-field {
+  font-size: 13px; color: var(--c-700); font-weight: 400;
+  line-height: 1.5; letter-spacing: -0.005em;
+}
+.card-lbl {
+  color: var(--c-800); margin-right: 4px;
+}
+.card-field strong { color: var(--c-400); font-weight: 400; }
+
+/* Verdict blockquote — amber semantic (verdict highlight) */
+.memo blockquote {
+  margin: 18px -4px; padding: 14px 18px;
+  background: var(--c-1000); border-left: 2px solid var(--c-amber);
+  border-radius: 0 4px 4px 0;
+}
+.memo blockquote h2 {
+  border: none; padding: 0; margin: 0;
+  font-size: 13px; letter-spacing: 0.04em; color: var(--c-amber); font-weight: 400;
+}
+.memo blockquote h2 strong { color: var(--c-amber); font-weight: 400; }
+.memo blockquote p { margin: 0; color: var(--c-400); font-size: 13px; }
+
+/* HR — light dividers between sections */
+.memo hr {
+  border: none; border-top: 0.5px solid var(--c-1000);
+  margin: 24px 0 0;
+}
+
+/* Code */
+.memo code { font-family: var(--font-mono); font-size: 11px; color: var(--c-400); background: var(--c-1000); padding: 1px 5px; border-radius: 2px; }
+
+/* Closing italic disclaimer (last p) */
+.memo > p:last-of-type {
+  font-size: 11px; color: var(--c-700); line-height: 1.5;
+  padding-top: 12px;
+  margin-top: 8px;
+  border-top: 0.5px solid var(--c-1000);
+}
+
+/* Copy button — inline in hero status row */
+.copy-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 10px;
+  background: transparent; border: 0.5px solid var(--c-900);
+  color: var(--c-400); font-size: 11px; letter-spacing: -0.01em;
+  cursor: pointer; user-select: none; -webkit-user-select: none;
+}
+.copy-btn:active { opacity: 0.5; transition: opacity 80ms ease; }
+.copy-btn svg { width: 10px; height: 10px; color: var(--c-700); }
+.copy-btn.copied { color: var(--c-amber); border-color: var(--c-amber); }
+.copy-btn.copied svg { color: var(--c-amber); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="#" onclick="event.preventDefault(); goBack();" aria-label="Back"></a>
+  <a class="exit" href="#" onclick="event.preventDefault(); goBack();" aria-label="Exit">Exit</a>
+</div>
+
+<div class="compliance-strip">Self-Authored · No Suitability Review · Not Advice</div>
+
+<div class="memo-page-header">
+  <h1 class="memo-ticker-hero">ATZ</h1>
+  <div class="memo-doc-label">Memo</div>
+  <div class="memo-status-row">
+    <span class="memo-status">Example · Read-only</span>
+    <button type="button" class="copy-btn" id="copyBtn" onclick="copyMemo(this)" aria-label="Copy Memo">
+      <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3.5" y="3.5" width="7" height="9" stroke="currentColor" stroke-width="0.7"/><rect x="6" y="1" width="7" height="9" stroke="currentColor" stroke-width="0.7" fill="none"/></svg>
+      <span class="copy-lbl">Copy Memo</span>
+    </button>
+  </div>
+</div>
+
+<article class="memo" id="memoArticle">
+<h1>Aritzia Inc. (TSX: ATZ) — Investment Case</h1>
+<hr />
+<h2><span class="se-num">01</span><span class="se-text">Thesis</span></h2>
+<p><strong>Thesis.</strong> Aritzia is a US growth story in its middle innings. The US flywheel (flagship-led brand-building, app-driven engagement, and disciplined new-box openings that pay back in under a year) can roughly double the US fleet while e-commerce climbs toward 45% of revenue. Revenue compounds mid-to-high teens, margins expand on occupancy leverage and improving initial mark-up (IMU), EPS outgrows revenue, and at a sensible entry price the return clears the hurdle with room to spare.</p>
+<p><strong>Structural decomposition of the five-year return:</strong></p>
+<ul>
+<li><strong>Revenue</strong> ≈ unit growth (~12–13 new US boutiques/year, low-teens square-footage growth) + comparable sales (decelerating from ~27% toward guided mid-teens) + e-commerce penetration. FY2027 guided to <strong>C$4.4–4.6B (+19–24%)</strong>.</li>
+<li><strong>Margin</strong> ≈ gross-margin expansion (IMU + occupancy leverage, guided <strong>+150–200bps</strong> in FY2027) net of ~50bps incremental tariff/de-minimis drag, plus SG&amp;A leverage from the "smart spending" initiative.</li>
+<li><strong>Capital returns</strong> ≈ buybacks (C$207M in FY2026; no dividend) modestly shrinking the count against stock-comp dilution.</li>
+<li><strong>Multiple</strong> ≈ the swing factor; at an C$80 entry (~25x trailing) the rating embeds far less optimism than the live ~47x.</li>
+</ul>
+<p><strong>The load-bearing assumption:</strong> <em>that Aritzia can roughly double its US boutique base (76 → 150+) without per-store productivity or brand desirability eroding</em> — i.e., US demand is supply-constrained, not the reverse. Every other input is downstream of this. The model works only if the marginal new US store, increasingly in smaller and less-proven markets, keeps approaching the productivity and sub-12-month payback of the existing fleet. If new-store productivity mean-reverts toward ordinary specialty-retail levels, the unit-growth algorithm degrades, comps normalize, and the multiple compresses at the same time. Buying at a conservative multiple is the defense against that convergence.</p>
+<hr />
+<h2><span class="se-num">02</span><span class="se-text">Kill Criteria</span></h2>
+<div class="card-list">
+  <div class="card-row">
+    <div class="card-num">1</div>
+    <div class="card-body">
+      <div class="card-title">Demand saturation / brand fatigue</div>
+      <div class="card-field"><span class="card-lbl">Metric:</span> Comparable sales growth</div>
+      <div class="card-field"><span class="card-lbl">Threshold:</span> Two consecutive quarters below <strong>+3%</strong> absent a broad recession</div>
+      <div class="card-field"><span class="card-lbl">Action:</span> Exit / re-underwrite. Comps are the brand-health vital sign.</div>
+    </div>
+  </div>
+  <div class="card-row">
+    <div class="card-num">2</div>
+    <div class="card-body">
+      <div class="card-title">Unit-growth engine breaks (load-bearing)</div>
+      <div class="card-field"><span class="card-lbl">Metric:</span> New US boutique payback / new-store productivity vs. fleet</div>
+      <div class="card-field"><span class="card-lbl">Threshold:</span> Payback beyond <strong>~24 months</strong>, or new-store sales/sq-ft <strong>&gt;20% below</strong> the fleet</div>
+      <div class="card-field"><span class="card-lbl">Action:</span> Trim hard / exit. This is the entire thesis.</div>
+    </div>
+  </div>
+  <div class="card-row">
+    <div class="card-num">3</div>
+    <div class="card-body">
+      <div class="card-title">Pricing-power / markdown erosion</div>
+      <div class="card-field"><span class="card-lbl">Metric:</span> Annual gross margin (ex one-time tariff step)</div>
+      <div class="card-field"><span class="card-lbl">Threshold:</span> Below <strong>~42%</strong> for a full year, not attributable to tariffs</div>
+      <div class="card-field"><span class="card-lbl">Action:</span> Re-underwrite. Signals discounting to move product.</div>
+    </div>
+  </div>
+  <div class="card-row">
+    <div class="card-num">4</div>
+    <div class="card-body">
+      <div class="card-title">Inventory ahead of sales</div>
+      <div class="card-field"><span class="card-lbl">Metric:</span> Inventory growth vs. revenue growth</div>
+      <div class="card-field"><span class="card-lbl">Threshold:</span> Inventory growth exceeds revenue growth by <strong>&gt;10pts for two consecutive quarters</strong></div>
+      <div class="card-field"><span class="card-lbl">Action:</span> Caution / trim. The exact tell before the FY2024 stumble.</div>
+    </div>
+  </div>
+  <div class="card-row">
+    <div class="card-num">5</div>
+    <div class="card-body">
+      <div class="card-title">Paying a growth multiple for non-growth</div>
+      <div class="card-field"><span class="card-lbl">Metric:</span> Forward P/E vs. revenue growth</div>
+      <div class="card-field"><span class="card-lbl">Threshold:</span> Forward P/E <strong>&gt;45x</strong> while revenue growth decelerates <strong>below 15%</strong></div>
+      <div class="card-field"><span class="card-lbl">Action:</span> Do not add / trim.</div>
+    </div>
+  </div>
+  <div class="card-row">
+    <div class="card-num">6</div>
+    <div class="card-body">
+      <div class="card-title">Governance / key-person</div>
+      <div class="card-field"><span class="card-lbl">Metric:</span> Founder share sales, senior merchandising turnover (under dual-class control)</div>
+      <div class="card-field"><span class="card-lbl">Threshold:</span> Material undisclosed insider selling <strong>or</strong> another abrupt senior merchant/creative departure</div>
+      <div class="card-field"><span class="card-lbl">Action:</span> Review control alignment.</div>
+    </div>
+  </div>
+</div>
+<hr />
+<h2><span class="se-num">03</span><span class="se-text">Why Now</span></h2>
+<p><strong>Operational.</strong> FY2026 (reported 7 May 2026) was a clean beat-and-raise. Aritzia <strong>hit its FY2027 revenue target a full year early</strong>, posted +27% comps, grew US revenue 38%, and <em>expanded</em> adjusted EBITDA margin ~260bps <strong>despite</strong> ~260bps of tariff and de-minimis drag. Direct evidence of pricing power and cost discipline. It launched the Aritzia app (deeper engagement and first-party data), renewed its NCIB, and guided FY2027 to another ~20%+ revenue year with gross margin up 150–200bps. Execution and the US flywheel are firing.</p>
+<p><strong>Valuation (the reason this is a buy).</strong> At the illustrative C$80 entry, the franchise trades around <strong>25x trailing / ~18x forward earnings</strong>, roughly a market multiple for a business compounding revenue ~20% with ~20% ROIC. The "why now" is the rare alignment of a proven, accelerating operating model with an entry price that does not require the premium rating to persist. The base case clears the hurdle on earnings growth alone; multiple stability is upside, not a requirement.</p>
+<hr />
+<h2><span class="se-num">04</span><span class="se-text">Intrinsic Value</span></h2>
+<p><strong>Method.</strong> A multi-stage DCF on a fashion retailer with double-digit comp volatility produces false precision; terminal value would dominate and rest on the same unprovable long-run assumptions. I use an <strong>EPS-and-exit-multiple framework</strong> over five years (FY2026 → FY2031), cross-checked against free cash flow, because the equity return here is mechanically <em>forward earnings × terminal multiple</em>, and because it forces the multiple, the dominant swing factor, into the open.</p>
+<p><strong>Base inputs:</strong> FY2026 diluted EPS C$3.20; ~115M diluted shares (held roughly flat as buybacks offset stock comp).</p>
+<p><strong>Three scenarios (FY2031):</strong></p>
+<div class="card-list">
+  <div class="card-row">
+    <div class="card-body">
+      <div class="card-title">Bull</div>
+      <div class="card-field"><span class="card-lbl">Rev. CAGR:</span> 20%</div>
+      <div class="card-field"><span class="card-lbl">FY31 Revenue:</span> ~C$9.2B</div>
+      <div class="card-field"><span class="card-lbl">Net margin:</span> 13.0%</div>
+      <div class="card-field"><span class="card-lbl">FY31 EPS:</span> ~C$10.7</div>
+      <div class="card-field"><span class="card-lbl">Exit P/E:</span> 32x</div>
+      <div class="card-field"><span class="card-lbl">FY31 price:</span> <strong>~C$342</strong></div>
+      <div class="card-field"><span class="card-lbl">5-yr IRR from C$80:</span> <strong>~34%</strong></div>
+    </div>
+  </div>
+  <div class="card-row">
+    <div class="card-body">
+      <div class="card-title">Base</div>
+      <div class="card-field"><span class="card-lbl">Rev. CAGR:</span> 15%</div>
+      <div class="card-field"><span class="card-lbl">FY31 Revenue:</span> ~C$7.4B</div>
+      <div class="card-field"><span class="card-lbl">Net margin:</span> 11.5%</div>
+      <div class="card-field"><span class="card-lbl">FY31 EPS:</span> ~C$7.4</div>
+      <div class="card-field"><span class="card-lbl">Exit P/E:</span> 26x</div>
+      <div class="card-field"><span class="card-lbl">FY31 price:</span> <strong>~C$192</strong></div>
+      <div class="card-field"><span class="card-lbl">5-yr IRR from C$80:</span> <strong>~19%</strong></div>
+    </div>
+  </div>
+  <div class="card-row">
+    <div class="card-body">
+      <div class="card-title">Bear</div>
+      <div class="card-field"><span class="card-lbl">Rev. CAGR:</span> 8%</div>
+      <div class="card-field"><span class="card-lbl">FY31 Revenue:</span> ~C$5.4B</div>
+      <div class="card-field"><span class="card-lbl">Net margin:</span> 9.5%</div>
+      <div class="card-field"><span class="card-lbl">FY31 EPS:</span> ~C$4.4</div>
+      <div class="card-field"><span class="card-lbl">Exit P/E:</span> 16x</div>
+      <div class="card-field"><span class="card-lbl">FY31 price:</span> <strong>~C$70</strong></div>
+      <div class="card-field"><span class="card-lbl">5-yr IRR from C$80:</span> <strong>~ −3%</strong></div>
+    </div>
+  </div>
+</div>
+<p><strong>Conservative intrinsic value.</strong> The hurdle-clearing entry price for each scenario (FY31 price ÷ 2.49) is bull C$137, base C$77, bear C$28. Probability-weighting (30% / 45% / 25%) gives a <strong>hurdle-clearing entry of ~C$80</strong> and a conservative IV band of <strong>C$80–100</strong>.</p>
+<p><strong>Margin of safety.</strong> At the C$80 entry against the C$80–100 conservative IV, the margin of safety is adequate (roughly 0–20%): the base case clears the hurdle on earnings alone, the bull case clears it comfortably, and only the bear case (which embeds both a growth stall and a de-rating to 16x) loses money, and modestly. The asymmetry is favorable: <strong>~+34% / +19% / −3% across bull / base / bear</strong>.</p>
+<hr />
+<h2><span class="se-num">05</span><span class="se-text">Probability</span></h2>
+<p>To clear 20% annualized from C$80, the price must reach <strong>~C$96 in 1 year, ~C$138 in 3 years, and ~C$199 in 5 years.</strong></p>
+<div class="card-list">
+  <div class="card-row">
+    <div class="card-body">
+      <div class="card-title">1-year</div>
+      <div class="card-field"><span class="card-lbl">Target price:</span> ~C$96</div>
+      <div class="card-field"><span class="card-lbl">Probability:</span> <strong>~55%</strong></div>
+      <div class="card-field"><span class="card-lbl">Reasoning:</span> A +20% move is well within range given FY2027 guided +19–24% revenue and continued beat-and-raise momentum; the conservative entry multiple removes de-rating risk as the main obstacle.</div>
+    </div>
+  </div>
+  <div class="card-row">
+    <div class="card-body">
+      <div class="card-title">3-year (binding)</div>
+      <div class="card-field"><span class="card-lbl">Target price:</span> ~C$138</div>
+      <div class="card-field"><span class="card-lbl">Probability:</span> <strong>~55%</strong></div>
+      <div class="card-field"><span class="card-lbl">Reasoning:</span> Bull and base scenarios both clear (base reaches ~C$135 on +19% IRR; bull ~C$209). Only the bear case fails. Weighted central tendency sits just above the hurdle.</div>
+    </div>
+  </div>
+  <div class="card-row">
+    <div class="card-body">
+      <div class="card-title">5-year</div>
+      <div class="card-field"><span class="card-lbl">Target price:</span> ~C$199</div>
+      <div class="card-field"><span class="card-lbl">Probability:</span> <strong>~58%</strong></div>
+      <div class="card-field"><span class="card-lbl">Reasoning:</span> Longer compounding lets earnings growth carry the return even with moderate multiple compression; base case lands ~C$192, essentially at target, with the bull tail providing cushion.</div>
+    </div>
+  </div>
+</div>
+<p><strong>Conclusion.</strong> 1-year probability ~55%, 3-year probability ~55%, 5-year probability ~58%. Conviction is grounded in earnings growth alone clearing the hurdle in the base case, with multiple stability and the bull tail as upside.</p>
+</article>
+
+<script>
+function goBack(){
+  // Prefer browser history so back returns to wherever user came from (m5, Memo Intro, Stock Page, m6, etc.)
+  if (window.history.length > 1) { window.history.back(); return; }
+  var src = null;
+  try { src = sessionStorage.getItem('atz-memo-stock-source'); } catch(e){}
+  if (src) { window.location.href = src; return; }
+  if (document.referrer) { window.location.href = document.referrer; return; }
+  window.location.href = 'Memo%20Intro.html';
+}
+
+function fallbackCopy(text, cb) {
+  try {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    if (cb) cb();
+  } catch(e) {}
+}
+function copyMemo(btn) {
+  var article = document.getElementById('memoArticle');
+  var text = article ? (article.innerText || article.textContent || '') : '';
+  var lbl = btn.querySelector('.copy-lbl');
+  function setCopied(){
+    btn.classList.add('copied');
+    if (lbl) lbl.textContent = 'Copied';
+    setTimeout(function(){
+      btn.classList.remove('copied');
+      if (lbl) lbl.textContent = 'Copy Memo';
+    }, 1500);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(setCopied).catch(function(){ fallbackCopy(text, function(ok){ if (ok) setCopied(); }); });
+  } else {
+    fallbackCopy(text, function(ok){ if (ok) setCopied(); });
+  }
+}
+function fallbackCopy(text, cb){
+  try {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    var ok = document.execCommand('copy');
+    document.body.removeChild(ta);
+    cb(ok);
+  } catch(e) { cb(false); }
+}
+</script>
+</body>
+</html>

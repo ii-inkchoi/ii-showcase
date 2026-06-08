@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Memo · Draft · ATZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/*
+  Blank Memo (Draft) · ATZ — v11
+  Chairman vision (2026-06-04 transcripts):
+  - First-time user clicks Underwrite on Stock Page → lands here
+  - Empty by default. User taps each row → Edit field page → saves → returns here
+  - Decision auto-determined (system-routed by symbol). Read-only display.
+  - Notes scratchpad available (light capture)
+  - Delete possible until tied to Capital Decision
+  - Capital Decision → shows current draft + walks through missing items only
+  - Reference: Example Investment Case + How Underwriting Works (subtle, bottom)
+*/
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+* { scrollbar-width: none; -ms-overflow-style: none; }
+*::-webkit-scrollbar { display: none; }
+button { background: transparent; border: none; color: inherit; font: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+
+:root {
+  --bg: #000000;
+  --c-1000: #1C1C1C;
+  --c-900:  #232627;
+  --c-800:  #565B5E;
+  --c-700:  #929292;
+  --c-600:  #A7A7A7;
+  --c-400:  #C7C7C7;
+  --c-200:  #E3E2E2;
+  --c-white: #FFFFFF;
+  --c-elev: #0A0A0A;
+  --c-live: #30D158;
+  --c-amber: #D4A85A;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+html, body { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--c-400);
+  font-family: var(--font);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  font-feature-settings: 'tnum' 1;
+  width: 100%;
+  max-width: 393px;
+  margin: 0 auto;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  padding-bottom: 120px;
+}
+
+/* Topbar */
+.topbar { display: flex; justify-content: space-between; align-items: center; padding: 0 13.5px; height: 71px; flex-shrink: 0; border-bottom: 1px solid var(--c-900); font-size: 0; }
+.topbar .back { width: 13px; height: 13px; display: inline-flex; align-items: center; justify-content: center; color: var(--c-400); }
+.topbar .back::before { content: ''; width: 8px; height: 8px; border-left: 1px solid currentColor; border-bottom: 1px solid currentColor; transform: rotate(45deg); margin-left: 2px; }
+.topbar .back:active { opacity: .5; transition: opacity 80ms ease; }
+.topbar .exit { font-size: 14px; color: var(--c-400); letter-spacing: -0.02em; }
+.topbar .exit:active { opacity: .5; transition: opacity 80ms ease; }
+
+.compliance-strip { display: flex; align-items: center; padding: 8px 20px; font-size: 9px; letter-spacing: -0.02em; color: var(--c-800); border-bottom: 0.5px solid var(--c-1000); line-height: 1.3; }
+
+/* Hero — ATZ ticker + Memo subtitle + Draft status */
+.scroll { padding: 24px 20px 40px; display: flex; flex-direction: column; gap: 32px; }
+.m6-ledger { display: flex; flex-direction: column; gap: 32px; }
+.m6-ledger-header { padding-bottom: 20px; border-bottom: 1px solid #111; }
+/* L31: 34→28px, 행간 8/8 통일 */
+    .m6-ticker-hero { font-size: 24px; font-weight: 400; letter-spacing: -0.02em; line-height: 1.18; color: var(--c-white); margin-bottom: 8px; }
+.m6-ledger-doc-label { font-size: 12px; color: var(--c-600); letter-spacing: -0.02em; line-height: 1.3; }
+.m6-ledger-category { font-size: 14px; color: var(--c-400); letter-spacing: -0.02em; line-height: 1.3; margin-top: 8px; }
+.m6-ledger-status { font-size: 12px; color: var(--c-600); letter-spacing: -0.02em; line-height: 1.3; margin-top: 8px; display: inline-flex; align-items: center; gap: 6px; }
+.m6-ledger-status .status-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--c-800); display: inline-block; }
+
+/* Section header */
+.m6-ledger-section-row { display: flex; align-items: center; justify-content: space-between; padding-bottom: 10px; border-bottom: 0.5px solid #3A3D40; }
+.m6-ledger-section-head { font-size: 15px; color: var(--c-white); display: inline-flex; align-items: center; gap: 8px; }
+.m6-ledger-section-head .live-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--c-800); display: inline-block; }
+.m6-section-tap-hint { font-size: 11px; color: var(--c-800); letter-spacing: -0.02em; }
+
+/* Notes scratchpad — light capture */
+.notes-section { display: flex; flex-direction: column; gap: 6px; padding-top: 14px; padding-bottom: 6px; border-bottom: 0.5px solid #1A1A1A; }
+.notes-eyebrow { font-size: 11px; color: var(--c-700); letter-spacing: -0.01em; }
+.notes-input { width: 100%; min-height: 44px; resize: none; overflow: hidden; background: transparent; border: none; padding: 0; outline: none; color: var(--c-200); font-family: inherit; font-size: 13px; line-height: 1.55; letter-spacing: -0.02em; -webkit-tap-highlight-color: transparent; }
+.notes-input::placeholder { color: var(--c-800); }
+.notes-input.is-saved { color: var(--c-700); }
+.notes-toolbar { display: flex; justify-content: flex-end; }
+.notes-save-btn { font-size: 11px; color: var(--c-800); padding: 4px 0; border: none; background: transparent; letter-spacing: -0.02em; font-family: inherit; transition: color 120ms ease; cursor: default; pointer-events: none; }
+.notes-save-btn:active { opacity: .5; transition: opacity 80ms ease; }
+.notes-save-btn.is-ready { color: var(--c-200); cursor: pointer; pointer-events: auto; }
+.notes-save-btn.is-saved { color: var(--c-white); cursor: default; pointer-events: none; }
+
+/* Memo rows — tap to edit */
+.memo-row { display: grid; grid-template-columns: 100px 1fr auto; gap: 14px; padding: 14px 0; border-bottom: 0.5px solid #1A1A1A; cursor: pointer; align-items: center; }
+.memo-row:last-of-type { border-bottom: none; }
+.memo-row:active { opacity: 0.5; transition: opacity 80ms ease; }
+.memo-row.is-readonly { cursor: default; }
+.memo-row.is-readonly:active { opacity: 1; }
+.memo-row .k { font-size: 13px; color: var(--c-700); letter-spacing: -0.02em; }
+.memo-row .v { font-size: 13px; color: var(--c-400); line-height: 1.65; text-align: right; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.memo-row .v.empty { color: var(--c-800); }
+.memo-row .chev { font-size: 14px; font-weight: 300; color: var(--c-700); line-height: 1; }
+.memo-row.is-readonly .chev { display: none; }
+.memo-row.memo-row-prose { position: relative; }
+.memo-row.memo-row-prose .v { text-align: left; max-height: 80px; overflow: hidden; mask-image: linear-gradient(to bottom, #000 60%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%); }
+.memo-row.memo-row-prose .v.empty { max-height: none; mask-image: none; -webkit-mask-image: none; text-align: right; }
+
+/* J32: Investment Case as label-only row + prose paragraph below (not inline). */
+.memo-ic-block { padding: 14px 0 4px; border-bottom: 0.5px solid #1A1A1A; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.memo-ic-block:last-of-type { border-bottom: none; }
+.memo-ic-block:active { opacity: 0.5; transition: opacity 80ms ease; }
+.memo-ic-row { display: flex; align-items: center; justify-content: space-between; }
+.memo-ic-row .memo-ic-label { font-size: 13px; color: var(--c-700); letter-spacing: -0.02em; }
+.memo-ic-row .chev { font-size: 14px; font-weight: 300; color: var(--c-700); line-height: 1; }
+.memo-ic-prose { font-size: 13px; color: var(--c-400); letter-spacing: -0.02em; line-height: 1.65; margin-top: 8px; max-height: 80px; overflow: hidden; mask-image: linear-gradient(to bottom, #000 60%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%); }
+.memo-ic-prose.empty { color: var(--c-800); max-height: none; mask-image: none; -webkit-mask-image: none; }
+
+/* Reference cards — bottom subtle */
+.m6-footnotes { display: flex; flex-direction: column; gap: 6px; }
+.m6-footnotes-eyebrow { font-size: 11px; color: var(--c-700); letter-spacing: -0.01em; padding-bottom: 8px; border-bottom: 0.5px solid #3A3D40; }
+.m6-ref-card { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0; border-bottom: 0.5px solid var(--c-1000); -webkit-tap-highlight-color: transparent; }
+.m6-ref-card:last-child { border-bottom: none; }
+.m6-ref-card:active { opacity: .5; transition: opacity 80ms ease; }
+.m6-ref-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+.m6-ref-t { font-size: 13px; color: var(--c-200); letter-spacing: -0.02em; line-height: 1.2; }
+.m6-ref-d { font-size: 11px; color: var(--c-700); letter-spacing: -0.01em; line-height: 1.35; }
+.m6-ref-chev { color: var(--c-700); font-size: 14px; font-weight: 300; line-height: 1; flex-shrink: 0; }
+
+/* Sticky bottom CTA — Delete + Capital Decision */
+.save-cta { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 393px; padding: 40px 13.5px 24px; display: flex; align-items: baseline; justify-content: space-between; gap: 12px; background: linear-gradient(to top, var(--bg) 0%, var(--bg) 60%, rgba(0,0,0,0) 100%); pointer-events: none; z-index: 10; }
+.save-cta .delete-link { pointer-events: auto; font-size: 11px; color: var(--c-700); letter-spacing: -0.02em; padding: 8px 4px; background: none; border: none; cursor: pointer; font-family: inherit; }
+.save-cta .delete-link:active { opacity: .5; transition: opacity 80ms ease; }
+.save-cta .delete-link[hidden] { display: none; }
+.save-cta .cd-cta { pointer-events: auto; display: inline-flex; align-items: baseline; gap: 8px; font-size: 15px; color: var(--c-white); letter-spacing: -0.02em; padding: 8px 4px; margin-left: auto; }
+.save-cta .cd-cta.locked { opacity: 0.4; pointer-events: none; }
+.save-cta .cd-cta:active { opacity: .5; transition: opacity 80ms ease; }
+.save-cta .cd-cta .arrow { font-weight: 500; }
+
+/* Capital Decision — bottom sheet modal (v5 pattern) */
+.sheet-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.6); opacity: 0; pointer-events: none; transition: opacity 200ms ease; z-index: 20; }
+.sheet-backdrop.open { opacity: 1; pointer-events: auto; }
+.sheet { position: fixed; bottom: 0; left: 50%; transform: translate(-50%, 100%); width: 100%; max-width: 393px; max-height: 85vh; background: var(--c-elev, #0A0A0A); border-top: 0.5px solid var(--c-900); display: flex; flex-direction: column; transition: transform 240ms cubic-bezier(0.32, 0.72, 0.24, 1); z-index: 21; }
+.sheet.open { transform: translate(-50%, 0); }
+.sheet-grip { width: 36px; height: 4px; background: var(--c-800); border-radius: 2px; margin: 10px auto 0; flex-shrink: 0; }
+.sheet-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 24px 20px 16px; }
+.sheet-title { font-size: 16px; color: var(--c-white); line-height: 1.3; letter-spacing: -0.02em; }
+.sheet-close { width: 24px; height: 24px; color: var(--c-700); background: none; border: none; font-size: 16px; cursor: pointer; -webkit-tap-highlight-color: transparent; padding: 0; }
+.sheet-body { padding: 0 20px 28px; font-size: 13px; color: var(--c-700); line-height: 1.65; letter-spacing: -0.02em; }
+.sheet-body p { margin: 0 0 12px; }
+.sheet-body p:last-child { margin-bottom: 0; }
+.sheet-footer { display: flex; justify-content: flex-end; padding: 0 20px 28px; }
+.sheet-primary { display: inline-flex; align-items: baseline; gap: 8px; font-size: 15px; color: var(--c-white); background: none; border: none; padding: 8px 4px; font-family: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; letter-spacing: -0.02em; }
+.sheet-primary .arrow { font-weight: 500; font-size: 15px; }
+.sheet-primary:active { opacity: 0.5; transition: opacity 80ms ease; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="#" onclick="event.preventDefault();goBack();" aria-label="Back"></a>
+  <a class="exit" href="#" onclick="event.preventDefault();goBack();" aria-label="Exit">Exit</a>
+</div>
+
+<div class="compliance-strip">Self-Authored · No Suitability Review · Not Advice</div>
+
+<div class="scroll">
+  <div class="m6-ledger">
+
+    <!-- HERO — ATZ ticker + Memo subtitle + Category (system-determined) + Draft status -->
+    <div class="m6-ledger-header">
+      <h1 class="m6-ticker-hero">ATZ</h1>
+      <div class="m6-ledger-doc-label">Memo</div>
+      <div class="m6-ledger-category">Active Allocation</div>
+      <div class="m6-ledger-status" id="statusBadge">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span id="statusText">Draft · Not started</span>
+      </div>
+    </div>
+
+    <!-- MEMO — section header + Notes + Editable fields -->
+    <div>
+      <div class="m6-ledger-section-row">
+        <div class="m6-ledger-section-head"><span class="live-dot" aria-hidden="true"></span>Memo</div>
+        <span class="m6-section-tap-hint" id="tapHint">Tap each row to fill</span>
+      </div>
+
+      <!-- Notes section removed per chairman direction — pure draft editing view (J17). -->
+
+      <!-- Decision row removed — category shown in hero ("Active Allocation"). System-determined. -->
+      <div class="memo-row" data-field="classification" data-edit-page="Edit Classification.html">
+        <div class="k">Classification</div>
+        <div class="v empty" id="vClassification">—</div>
+        <span class="chev" aria-hidden="true">›</span>
+      </div>
+      <div class="memo-row" data-field="sizing" data-edit-page="Edit Sizing.html">
+        <div class="k">Sizing</div>
+        <div class="v empty" id="vSizing">—</div>
+        <span class="chev" aria-hidden="true">›</span>
+      </div>
+      <div class="memo-row" data-field="probability" data-edit-page="Edit Probability.html">
+        <div class="k">Confidence</div>
+        <div class="v empty" id="vProbability">—</div>
+        <span class="chev" aria-hidden="true">›</span>
+      </div>
+      <div class="memo-row" data-field="idea-origin" data-edit-page="Edit Idea Origin.html">
+        <div class="k">Idea Origin</div>
+        <div class="v empty" id="vIdeaOrigin">—</div>
+        <span class="chev" aria-hidden="true">›</span>
+      </div>
+      <!-- J32: Investment Case as block (label row + prose below), not inline. Matches Memo Only / Return User pattern. -->
+      <div class="memo-ic-block" data-field="memo" data-edit-page="Edit Memo.html">
+        <div class="memo-ic-row">
+          <div class="memo-ic-label">Investment Case</div>
+          <span class="chev" aria-hidden="true">›</span>
+        </div>
+        <p class="memo-ic-prose empty" id="vMemo">—</p>
+      </div>
+    </div>
+
+    <!-- FOOTNOTES — Reference cards (subtle bottom) -->
+    <div class="m6-footnotes">
+      <div class="m6-footnotes-eyebrow">Reference</div>
+      <a class="m6-ref-card" href="Example%20Memo.html">
+        <div class="m6-ref-body">
+          <div class="m6-ref-t">Example Investment Case</div>
+          <div class="m6-ref-d">A completed investment case. See the full structure and tone.</div>
+        </div>
+        <span class="m6-ref-chev" aria-hidden="true">›</span>
+      </a>
+      <a class="m6-ref-card" href="Memo%20Intro.html">
+        <div class="m6-ref-body">
+          <div class="m6-ref-t">How Underwriting Works</div>
+          <div class="m6-ref-d">Principles, workflow, and what each field means.</div>
+        </div>
+        <span class="m6-ref-chev" aria-hidden="true">›</span>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<!-- STICKY CTA — Delete draft (left, subtle) + Save (right, primary). -->
+<div class="save-cta">
+  <button type="button" class="delete-link" id="deleteBtn" onclick="openDeleteSheet()" hidden>Delete draft</button>
+  <a href="#" id="saveCta" class="cd-cta locked" onclick="event.preventDefault();saveAndReturn();"><span class="arrow">→</span> Save &amp; Return</a>
+</div>
+
+<!-- J35: Delete confirm modal (bottom sheet — replaces native confirm() per user feedback) -->
+<div class="sheet-backdrop" id="deleteBackdrop" onclick="closeDeleteSheet()"></div>
+<div class="sheet" id="deleteSheet" role="dialog" aria-modal="true" aria-labelledby="deleteSheetTitle">
+  <div class="sheet-grip"></div>
+  <div class="sheet-head">
+    <div class="sheet-title" id="deleteSheetTitle">Delete draft?</div>
+    <button type="button" class="sheet-close" onclick="closeDeleteSheet()" aria-label="Close">✕</button>
+  </div>
+  <div class="sheet-body save-body">
+    <p>This clears all fields in your draft memo. You can start a new one anytime — your committed versions stay on record.</p>
+  </div>
+  <!-- J35 fix: revert to v5 canonical sheet pattern — single primary CTA in white, ✕ to cancel.
+       Per II doctrine: "No warning tone, no color, no judgment" — destructive action carried by the word, not color. -->
+  <div class="sheet-footer">
+    <button type="button" class="sheet-primary" onclick="doDelete()"><span class="arrow">→</span> Delete draft</button>
+  </div>
+</div>
+
+<script>
+/*
+  Blank Memo (Draft) — state management
+  - LS keys: atz-memo-* fields
+  - Decision is system-determined (Active Allocation default for individual stocks)
+  - Other fields editable via Edit pages
+  - Delete clears all draft state
+*/
+
+var FIELD_KEYS = {
+  decision: 'atz-memo-decision',
+  classification: 'atz-memo-classification',
+  sizing: 'atz-memo-sizing',
+  probability: 'atz-memo-probability',
+  horizon: 'atz-memo-horizon',
+  memo: 'atz-memo-memo',
+  'idea-origin': 'atz-memo-idea-origin',
+  notes: 'atz-memo-notes'
+};
+
+function getLS(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
+function setLS(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
+function delLS(k){ try { localStorage.removeItem(k); } catch(e){} }
+
+function goBack(){
+  // J24-fix: Always route to Stock Page via sessionStorage. history.back() is unreliable —
+  // navigations from Edit pages push entries onto stack, so history.back() lands on Edit page.
+  var src = null;
+  try { src = sessionStorage.getItem('atz-memo-stock-source'); } catch(e){}
+  if (src) { window.location.href = src; return; }
+  window.location.href = 'Stock%20Page%20Firsttime%20User.html';
+}
+
+function horizonShort(h){
+  if (!h) return '';
+  if (h.indexOf('1') === 0) return '1y';
+  if (h.indexOf('3') === 0) return '3y';
+  if (h.indexOf('5') === 0) return '5y+';
+  return '';
+}
+
+function hasAnyEdits(){
+  return !!(getLS(FIELD_KEYS.classification) || getLS(FIELD_KEYS.sizing) || getLS(FIELD_KEYS.probability) || getLS(FIELD_KEYS.memo) || getLS(FIELD_KEYS['idea-origin']));
+}
+
+function hydrate(){
+  // Decision (Active Allocation / Core·Treasury) shown in hero — system-determined, no row.
+
+  // Fields from LS
+  function setRow(id, value){
+    var el = document.getElementById(id);
+    if (!el) return;
+    if (value && value.length) {
+      el.textContent = value;
+      el.classList.remove('empty');
+    } else {
+      el.textContent = '—';
+      el.classList.add('empty');
+    }
+  }
+
+  setRow('vClassification', getLS(FIELD_KEYS.classification));
+
+  var sizing = getLS(FIELD_KEYS.sizing);
+  var sizingEl = document.getElementById('vSizing');
+  if (sizing) {
+    var SIZE_RANGES = { 'Core': '10%+', 'Conviction': '5–10%', 'Starter': '1–3%', 'Speculative': '≤2%' };
+    var range = SIZE_RANGES[sizing] || '';
+    sizingEl.innerHTML = sizing + (range ? ' <span style="color:var(--c-700);font-size:12px;margin-left:6px;">· ' + range + '</span>' : '');
+    sizingEl.classList.remove('empty');
+  } else { sizingEl.textContent = '—'; sizingEl.classList.add('empty'); }
+
+  var prob = getLS(FIELD_KEYS.probability);
+  var hor = getLS(FIELD_KEYS.horizon);
+  var probEl = document.getElementById('vProbability');
+  if (prob) {
+    var hs = horizonShort(hor);
+    probEl.innerHTML = prob + '%' + (hs ? ' <span style="color:var(--c-700);font-size:12px;margin-left:6px;">· ' + hs + '</span>' : '');
+    probEl.classList.remove('empty');
+  } else { probEl.textContent = '—'; probEl.classList.add('empty'); }
+
+  var memo = getLS(FIELD_KEYS.memo);
+  var memoEl = document.getElementById('vMemo');
+  if (memo) {
+    memoEl.textContent = memo;
+    memoEl.classList.remove('empty');
+  } else { memoEl.textContent = '—'; memoEl.classList.add('empty'); }
+
+  setRow('vIdeaOrigin', getLS(FIELD_KEYS['idea-origin']));
+
+  // Notes section removed (J17). Status now reflects 5 memo fields only.
+
+  // Status: Draft · Not started → Draft · X of 5 fields
+  var statusText = document.getElementById('statusText');
+  var filledCount = 0;
+  ['classification','sizing','probability','memo','idea-origin'].forEach(function(k){ if (getLS(FIELD_KEYS[k])) filledCount++; });
+  if (statusText) {
+    if (filledCount === 0) statusText.textContent = 'Draft · Not started';
+    else statusText.textContent = 'Draft · ' + filledCount + ' of 5 fields';
+  }
+
+  // J23/J24: Save & Return CTA — enabled only when ≥1 field filled (nothing to "save" in true blank state).
+  var saveCta = document.getElementById('saveCta');
+  if (saveCta) {
+    if (filledCount > 0) saveCta.classList.remove('locked');
+    else saveCta.classList.add('locked');
+  }
+
+  // Delete button visibility — when any edits exist
+  var deleteBtn = document.getElementById('deleteBtn');
+  if (deleteBtn) deleteBtn.hidden = !hasAnyEdits();
+
+  // Tap hint — hide once user starts filling
+  var tapHint = document.getElementById('tapHint');
+  if (tapHint) tapHint.style.display = (filledCount > 0) ? 'none' : '';
+}
+
+// Row tap → navigate to Edit field page. J32: also covers .memo-ic-block (IC label+prose pattern).
+// J39: Defensive — clear stale CD flag (e.g., from abandoned Capital Decision walkthrough)
+// so Edit page shows "Save" (single edit), not "Continue" (CD chain).
+document.querySelectorAll('.memo-row, .memo-ic-block').forEach(function(row){
+  if (row.classList.contains('is-readonly')) return;
+  row.addEventListener('click', function(){
+    var page = row.getAttribute('data-edit-page');
+    if (!page) return;
+    try {
+      sessionStorage.removeItem('atz-cd-mode');
+      sessionStorage.setItem('atz-memo-source', window.location.href);
+    } catch(e){}
+    window.location.href = page;
+  });
+});
+
+// M4 fix (J27): Notes handlers removed — Notes UI was deleted in J17, these were dead code.
+
+// J35: native confirm() replaced with bottom sheet modal (consistent with app design).
+function openDeleteSheet(){
+  document.getElementById('deleteSheet').classList.add('open');
+  document.getElementById('deleteBackdrop').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeDeleteSheet(){
+  document.getElementById('deleteSheet').classList.remove('open');
+  document.getElementById('deleteBackdrop').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function doDelete(){
+  // J34/J35/J37: wipe all draft-related LS + sessionStorage flags. (J37 adds atz-memo-stock-source cleanup.)
+  Object.values(FIELD_KEYS).forEach(function(k){ delLS(k); });
+  ['atz-memo-draft-progress', 'atz-memo', 'atz-memo-version', 'atz-memo-history', 'atz-memo-stance'].forEach(function(k){ delLS(k); });
+  try {
+    sessionStorage.removeItem('atz-cd-mode');
+    sessionStorage.removeItem('atz-cd-auto-redirected');
+    sessionStorage.removeItem('atz-memo-source');
+    // Note: keep atz-memo-stock-source so goBack returns to the originating Stock Page (not undefined fallback).
+  } catch(e){}
+  closeDeleteSheet();
+  hydrate();
+  goBack();
+}
+// ESC to close
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Escape') closeDeleteSheet();
+});
+
+// J23: Save & Return — Draft saved (every Edit page already persists per-field). This CTA just confirms
+//      and returns to Stock Page. No commit, no immutability — that's Capital Decision flow (Stock Page).
+function saveAndReturn(){
+  // All fields auto-saved by Edit pages; nothing extra to do here.
+  // Set a marker so Stock Page can show "Draft saved · N of 5" indicator.
+  try {
+    var filled = 0;
+    ['classification','sizing','probability','memo','idea-origin'].forEach(function(k){
+      if (getLS(FIELD_KEYS[k])) filled++;
+    });
+    if (filled > 0) setLS('atz-memo-draft-progress', String(filled));
+    else { try { localStorage.removeItem('atz-memo-draft-progress'); } catch(e){} }
+  } catch(e){}
+  goBack();
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', hydrate);
+else hydrate();
+window.addEventListener('pageshow', hydrate);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Capital Decision · Select Account · ATZ (placeholder)</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #000;
+  color: #C7C7C7;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+  width: 100%;
+  max-width: 393px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 13.5px; height: 71px;
+  border-bottom: 1px solid #232627;
+}
+.topbar .back, .topbar .exit {
+  font-size: 14px; color: #C7C7C7;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+  background: none; border: none; padding: 0;
+  font-family: inherit; letter-spacing: -0.02em;
+}
+.topbar .back { width: 13px; height: 13px; display: inline-flex; align-items: center; justify-content: center; }
+.topbar .back::before {
+  content: ''; width: 8px; height: 8px;
+  border-left: 1px solid currentColor; border-bottom: 1px solid currentColor;
+  transform: rotate(45deg); margin-left: 2px;
+}
+.body {
+  flex: 1; display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  padding: 32px 24px; text-align: center;
+}
+.icon { font-size: 36px; margin-bottom: 18px; color: #565B5E; }
+h1 { font-size: 18px; color: #FFFFFF; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 10px; }
+.subtitle { font-size: 13px; color: #929292; line-height: 1.5; letter-spacing: -0.01em; margin-bottom: 6px; }
+.action-context { font-size: 11px; color: #565B5E; font-family: 'SF Mono', Menlo, monospace; margin-top: 22px; padding: 6px 12px; border: 0.5px solid #232627; border-radius: 4px; }
+.flow-list { margin-top: 32px; font-size: 11px; color: #565B5E; line-height: 2; text-align: left; }
+.flow-list .step { color: #929292; }
+.note { font-size: 11px; color: #565B5E; margin-top: 24px; line-height: 1.5; max-width: 280px; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <button class="back" onclick="goBack()" aria-label="Back"></button>
+  <button class="exit" onclick="goBack()" aria-label="Exit">Exit</button>
+</div>
+
+<div class="body">
+  <div class="icon">⋯</div>
+  <h1 id="flowTitle">Capital Decision</h1>
+  <div class="subtitle" id="flowSubtitle">Select Account → Order → Review → Filled</div>
+  <div class="subtitle">Built by another designer.</div>
+
+  <div class="action-context" id="actionContext">action: —</div>
+
+  <div class="flow-list" id="flowList">
+    <div class="step">1. Select account (Non-Registered / TFSA / RRSP)</div>
+    <div class="step">2. Order entry (price, shares)</div>
+    <div class="step">3. Review &amp; execute (Hold to confirm)</div>
+    <div class="step">4. Order filled</div>
+  </div>
+
+  <div class="note" id="flowNote">
+    This is a placeholder for demo continuity. The actual capital-action flow lives in the other designer's track. Memo Review routes here after V bump (or no-op).
+  </div>
+</div>
+
+<script>
+  // L10: Intent-aware hero — reduce/exit/increase intents now show action-specific title instead of "Buy Flow"
+  try {
+    var action = sessionStorage.getItem('atz-cd-action') || '—';
+    document.getElementById('actionContext').textContent = 'action: ' + action;
+
+    var copy = {
+      'buy':      { title: 'Buy Flow',       sub: 'Select Account → Order → Review → Filled', step1: '1. Select account (Non-Registered / TFSA / RRSP)', step2: '2. Order entry (price, shares)',          step3: '3. Review &amp; execute (Hold to confirm)', step4: '4. Order filled' },
+      'increase': { title: 'Add to Position',sub: 'Select Account → Order → Review → Filled', step1: '1. Select account holding position',              step2: '2. Order entry (price, add shares)',      step3: '3. Review &amp; execute (Hold to confirm)', step4: '4. Order filled' },
+      'reduce':   { title: 'Reduce Position',sub: 'Select Account → Order → Review → Filled', step1: '1. Select account holding position',              step2: '2. Order entry (price, trim shares)',     step3: '3. Review &amp; execute (Hold to confirm)', step4: '4. Order filled' },
+      'exit':     { title: 'Exit Position',  sub: 'Select Account → Order → Review → Filled', step1: '1. Select account holding position',              step2: '2. Order entry (price, close all shares)',step3: '3. Review &amp; execute (Hold to confirm)', step4: '4. Order filled' }
+    };
+    var c = copy[action] || { title: 'Capital Decision', sub: 'Select Account → Order → Review → Filled', step1: '1. Select account', step2: '2. Order entry', step3: '3. Review &amp; execute (Hold to confirm)', step4: '4. Order filled' };
+
+    var t = document.getElementById('flowTitle');
+    var s = document.getElementById('flowSubtitle');
+    var l = document.getElementById('flowList');
+    if (t) t.textContent = c.title;
+    if (s) s.textContent = c.sub;
+    if (l) l.innerHTML = '<div class="step">' + c.step1 + '</div>' +
+                         '<div class="step">' + c.step2 + '</div>' +
+                         '<div class="step">' + c.step3 + '</div>' +
+                         '<div class="step">' + c.step4 + '</div>';
+  } catch(e){}
+
+  function goBack(){
+    try {
+      var src = sessionStorage.getItem('atz-memo-stock-source');
+      if (src) { window.location.href = src; return; }
+    } catch(e){}
+    window.location.href = 'Stock%20Page%20Return%20User.html';
+  }
+</script>
+
+</body>
+</html>
