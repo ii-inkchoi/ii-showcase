@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Research · Intelligent Investing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-800:#565B5E;--c-700:#929292;--c-600:#A7A7A7;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFF;--c-urgent:#FF3533;--c-warning:#FDAD00;--c-review:#FBC308;--c-live:#30D158;--c-neutral:#565B5E; --frame: clamp(24px, 4vw, 48px); --maxw: 1680px; --gutter: clamp(16px, 1.5vw, 24px); --c-elev: #0A0A0A;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{background:var(--c-black);color:var(--c-600);font-family:'Inter',sans-serif;font-feature-settings:'tnum' 1,'lnum' 1,'ss01' 1;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased;font-weight:400;}
+body{min-height:100vh;font-size:16px;line-height:1.55;}
+body.menu-open{overflow:hidden;}
+.navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(0,0,0,0.7);backdrop-filter:blur(10px);}
+.navbar-inner{display:flex;align-items:center;justify-content:space-between;padding:22px 40px;gap:32px;}
+@media (max-width: 900px) { .navbar-inner { padding: 22px 24px !important; } }
+.navbar-brand{display:inline-flex;align-items:center;text-decoration:none;flex-shrink:0;}
+.navbar-brand img{height:13px;}
+.nav-links-desktop{display:none !important;}
+
+.nav-item{position:relative;}
+.nav-link{color:var(--c-400);text-decoration:none;font-size:13px;letter-spacing:0.02em;padding:8px 0;display:inline-flex;align-items:center;gap:6px;cursor:pointer;transition:color 0.15s ease;}
+.nav-link:hover,.nav-link.active{color:var(--c-white);}
+.nav-caret{display:inline-block;width:0;height:0;border-left:3px solid transparent;border-right:3px solid transparent;border-top:4px solid var(--c-700);margin-left:6px;transition:transform 0.2s ease,border-top-color 0.15s ease;vertical-align:middle;}
+.nav-item:hover .nav-caret{transform:rotate(180deg);color:var(--c-400);}
+.nav-dropdown{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-6px);background:var(--c-1000);border:0.5px solid var(--c-900);padding:18px 24px;min-width:220px;opacity:0;pointer-events:none;transition:all 0.2s ease;}
+.nav-item:hover .nav-dropdown{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);}
+.nav-dropdown a{display:block;color:var(--c-600);text-decoration:none;font-size:13px;padding:8px 0;transition:color 0.15s ease;white-space:nowrap;}
+.nav-dropdown a:hover,.nav-dropdown a.active{color:var(--c-white);}
+.navbar-right{display:flex;align-items:center;gap:24px;flex-shrink:0;}
+.navbar-cta{display:none;color:var(--c-200);text-decoration:none;font-size:13px;border:0.5px solid var(--c-800);padding:8px 16px;transition:all 0.15s ease;}
+.navbar-cta:hover{color:var(--c-white);border-color:var(--c-400);}
+@media(min-width:1024px){.navbar-cta{display:inline-block;}}
+.lang-toggle { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; letter-spacing: 0.02em; font-feature-settings: 'tnum' 1; }
+.lang-toggle .lt { color: var(--c-700); text-decoration: none; cursor: pointer; transition: color 0.15s ease; }
+.lang-toggle .lt.active { color: var(--c-200); }
+.lang-toggle .lt:hover { color: var(--c-white); }
+.lang-toggle .sep { color: var(--c-800); }
+.page-masthead { font-size: 13px; color: var(--c-700); letter-spacing: 0.04em; font-feature-settings: 'tnum' 1; margin-bottom: 20px; }
+@media (prefers-reduced-motion: no-preference) {
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.9s cubic-bezier(0.4,0,0.2,1), transform 0.9s cubic-bezier(0.4,0,0.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+  .type-caret::after { content: '_'; color: var(--c-700); margin-left: 1px; animation: type-caret 0.9s step-end infinite; }
+}
+@keyframes type-caret { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+.hamburger{position:relative;width:40px;height:18px;background:none;border:none;cursor:pointer;}
+.hamburger span{position:absolute;left:0;width:40px;height:1px;background:var(--c-200);transition:all 0.35s cubic-bezier(0.4,0,0.2,1);}
+.hamburger span:nth-child(1){top:4px;}.hamburger span:nth-child(2){top:13px;}
+.hamburger.open span{width:44px;left:-2px;top:8.5px;}
+.hamburger.open span:nth-child(1){transform:rotate(24deg);}
+.hamburger.open span:nth-child(2){transform:rotate(-24deg);}
+.menu-overlay{position:fixed;inset:0;background:var(--c-black);z-index:200;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity 0.4s cubic-bezier(0.4,0,0.2,1);}
+.menu-overlay.open{opacity:1;pointer-events:auto;}
+.menu-top{display:flex;align-items:center;justify-content:space-between;padding:var(--frame);}
+.menu-top .ml-logo img{height:13px;}
+.menu-top .ml-close{background:none;border:none;color:var(--c-400);font-size:13px;letter-spacing:0.04em;cursor:pointer;padding:8px;transition:color 0.15s ease;}
+.menu-top .ml-close:hover{color:var(--c-white);}
+.menu-center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(20px,2vw,32px);}
+.menu-center a{color:var(--c-400);text-decoration:none;font-size:clamp(32px,5vw,56px);letter-spacing:-0.03em;line-height:1;opacity:0;transform:translateY(20px);transition:opacity 0.4s ease,transform 0.4s ease,color 0.15s ease;}
+.menu-overlay.open .menu-center a{opacity:1;transform:translateY(0);}
+.menu-overlay.open .menu-center a:nth-child(1){transition-delay:0.15s;}.menu-overlay.open .menu-center a:nth-child(2){transition-delay:0.20s;}.menu-overlay.open .menu-center a:nth-child(3){transition-delay:0.25s;}.menu-overlay.open .menu-center a:nth-child(4){transition-delay:0.30s;}.menu-overlay.open .menu-center a:nth-child(5){transition-delay:0.35s;}.menu-overlay.open .menu-center a:nth-child(6){transition-delay:0.40s;}
+.menu-center a:hover{color:var(--c-white);}
+.menu-bottom{display:grid;grid-template-columns:1fr 1fr;align-items:end;padding:var(--frame);gap:24px;font-size:11px;color:var(--c-700);}
+.menu-bottom .mb-left{display:flex;flex-direction:column;gap:4px;}.menu-bottom .mb-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
+.container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--frame); box-sizing: border-box; }
+section{padding:120px 0;position:relative;}
+@media(max-width:900px){.container{padding:0 24px;}section{padding:80px 0;}}
+.page-header{padding:180px 0 80px;border-bottom:0.5px solid var(--c-900);}
+.page-breadcrumb{font-size:12px;color:var(--c-700);letter-spacing:0.06em;margin-bottom:36px;display:flex;align-items:center;gap:10px;}
+.page-breadcrumb a{color:var(--c-700);text-decoration:none;}
+.page-breadcrumb a:hover{color:var(--c-200);}
+.page-breadcrumb .sep{color:var(--c-800);}.page-breadcrumb .current{color:var(--c-200);}
+.page-title{font-size:clamp(48px,8vw,120px);line-height:0.95;letter-spacing:-0.045em;color:var(--c-200);font-weight:400;margin-bottom:48px;}
+.page-deck{font-size:clamp(20px,1.8vw,24px);line-height:1.4;letter-spacing:-0.015em;color:var(--c-400);max-width:760px;text-wrap:balance;}
+.page-meta{display:flex;gap:56px;margin-top:64px;font-size:13px;color:var(--c-700);}
+.page-meta .meta-col{display:flex;flex-direction:column;gap:4px;}
+.page-meta .meta-lbl{color:var(--c-800);font-size:11px;letter-spacing:0.06em;}
+.page-meta .meta-val{color:var(--c-400);font-size:14px;}
+.sec-head{display:grid;grid-template-columns:80px 1fr;gap:32px;align-items:baseline;margin-bottom:64px;padding-bottom:18px;border-bottom:0.5px solid var(--c-900);}
+.sec-num{font-size:13px;color:var(--c-700);letter-spacing:0.04em;}
+.sec-name{font-size:22px;color:var(--c-200);letter-spacing:-0.02em;}
+.declarative{font-size:clamp(28px,3.5vw,44px);line-height:1.18;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;max-width:880px;text-wrap:balance;}
+.declarative p+p{margin-top:28px;}.declarative .dim{color:var(--c-700);}
+.prose{font-size:16px;line-height:1.7;color:var(--c-600);letter-spacing:-0.01em;max-width:720px;}
+.prose p{text-wrap:balance;}.prose p+p{margin-top:14px;}.prose em{font-style:normal;color:var(--c-200);}
+.ai-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:48px;background:var(--c-900);border:0.5px solid var(--c-900);}
+.ai-cell{background:var(--c-black);padding:32px 24px;display:flex;flex-direction:column;gap:12px;}
+.ai-name{font-size:22px;color:var(--c-200);letter-spacing:-0.02em;}
+.ai-desc{font-size:13px;color:var(--c-600);line-height:1.5;}
+@media(max-width:900px){.ai-grid{grid-template-columns:1fr;}}
+.steps-list{margin-top:48px;border-top:0.5px solid var(--c-900);}
+.step-row{display:grid;grid-template-columns:60px 240px 1fr;gap:32px;align-items:baseline;padding:24px 0;border-bottom:0.5px solid var(--c-900);}
+.step-num{font-size:13px;color:var(--c-700);letter-spacing:0.04em;}
+.step-name{font-size:16px;color:var(--c-200);}
+.step-desc{font-size:15px;color:var(--c-600);line-height:1.55;max-width:540px;}
+@media(max-width:900px){.step-row{grid-template-columns:60px 1fr;}.step-desc{grid-column:1/-1;padding-left:60px;}}
+.plate{display:grid;grid-template-columns:1fr 500px;gap:80px;align-items:start;margin-top:56px;}
+.plate.reverse{grid-template-columns:500px 1fr;}
+@media(max-width:1100px){.plate,.plate.reverse{grid-template-columns:1fr;gap:32px;}}
+.plate-caption{font-size:16px;line-height:1.7;color:var(--c-600);max-width:540px;}
+.plate-caption .fig-num{display:block;font-size:12px;color:var(--c-700);letter-spacing:0.04em;margin-bottom:14px;}
+.plate-caption .fig-title{display:block;font-size:22px;color:var(--c-200);letter-spacing:-0.02em;margin-bottom:24px;}
+.plate-caption p+p{margin-top:14px;}.plate-caption .footnote{display:block;margin-top:28px;font-size:14px;color:var(--c-700);line-height:1.6;}
+.plate-screen{aspect-ratio:9/18;border:0.5px solid var(--c-800);background:var(--c-1000);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 28px;}
+.plate-screen .ph-title{font-size:14px;color:var(--c-700);margin-bottom:12px;}
+.plate-screen .ph-detail{font-size:13px;color:var(--c-800);line-height:1.55;max-width:240px;}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:56px;border-top:0.5px solid var(--c-900);}
+.related-card{padding:40px 0;padding-right:32px;border-bottom:0.5px solid var(--c-900);text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:16px;}
+.related-card+.related-card{padding-left:32px;border-left:0.5px solid var(--c-900);}
+.related-card .rc-num{font-size:12px;color:var(--c-700);letter-spacing:0.04em;}
+.related-card .rc-name{font-size:28px;color:var(--c-200);letter-spacing:-0.025em;transition:color 0.15s ease;}
+.related-card .rc-desc{font-size:14px;color:var(--c-600);line-height:1.55;margin-top:4px;}
+.related-card .rc-arrow{margin-top:auto;padding-top:24px;font-size:14px;color:var(--c-700);}
+.related-card:hover .rc-name{color:var(--c-200);}.related-card:hover .rc-arrow{color:var(--c-400);}
+@media(max-width:900px){.related-grid{grid-template-columns:1fr;}.related-card+.related-card{padding-left:0;border-left:none;}}
+.cta-section{text-align:center;padding:160px 0 100px;border-top:0.5px solid var(--c-900);margin-top:80px;}
+.cta-canon{font-size:clamp(28px,3.5vw,44px);line-height:1.2;letter-spacing:-0.025em;color:var(--c-200);margin-bottom:48px;text-wrap:balance;}
+.cta-button{display:inline-block;font-size:14px;color:var(--c-200);text-decoration:none;border:0.5px solid var(--c-700);padding:14px 28px;transition:all 0.15s ease;}
+.cta-button:hover{color:var(--c-200);border-color:var(--c-200);}
+footer{border-top:0.5px solid var(--c-900);padding:96px 0 36px;font-size:14px;line-height:1.7;color:var(--c-800);}
+.footer-mast{margin-bottom:64px;}
+.colophon-mast{font-size:13px;color:var(--c-600);margin-bottom:6px;}.colophon-pub{font-size:13px;color:var(--c-700);}
+.footer-cols{display:grid;grid-template-columns:repeat(6,1fr);gap:32px;padding-bottom:56px;border-bottom:0.5px solid var(--c-900);}
+.footer-col h4{font-size:11px;color:var(--c-700);letter-spacing:0.08em;margin-bottom:18px;font-weight:400;}
+.footer-col a{display:block;color:var(--c-400);text-decoration:none;font-size:14px;padding:6px 0;transition:color 0.15s ease;}
+.footer-col a:hover{color:var(--c-200);}
+@media(max-width:1024px){.footer-cols{grid-template-columns:repeat(3,1fr);gap:40px 32px;}}
+@media(max-width:600px){.footer-cols{grid-template-columns:repeat(2,1fr);}}
+.footer-legal{font-size:13px;color:var(--c-800);line-height:1.65;max-width:820px;padding-top:56px;}
+.footer-legal p+p{margin-top:12px;}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:56px;padding-top:28px;border-top:0.5px solid var(--c-900);font-size:12px;color:var(--c-800);}
+.footer-bottom .footer-legal-links{display:flex;gap:24px;}
+.footer-bottom .footer-legal-links a{color:var(--c-700);text-decoration:none;}
+.footer-bottom .footer-legal-links a:hover{color:var(--c-200);}
+@media(max-width:600px){.footer-bottom{flex-direction:column;gap:16px;align-items:flex-start;}}
+</style>
+</head>
+<body>
+<nav class="navbar"><div class="navbar-inner">
+  <a href="II Site V2 - Edition.html" class="navbar-brand"><img src="Logo.svg" alt="II"></a>
+  <div class="navbar-right">
+      <div class="lang-toggle"><span class="lt active">EN</span><span class="sep">·</span><span class="lt">FR</span></div><a href="II Site V2 - GetTheApp.html" class="navbar-cta">Get the App</a><button class="hamburger" type="button"><span></span><span></span></button></div>
+</div></nav>
+
+<div class="menu-overlay">
+  <div class="menu-top"><a href="II Site V2 - Edition.html" class="ml-logo"><img src="Logo.svg" alt="II"></a><button class="ml-close" type="button">Close ×</button></div>
+  <div class="menu-center"><a href="II Site V2 - Product.html">Product</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - Documents-Managed.html">Documents</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - GetTheApp.html">Get the App</a></div>
+  <div class="menu-bottom"><div class="mb-left"><span>Intelligent Investing</span><span>No. 01 · 2026</span></div><div class="mb-right"><span>Mogo Inc.</span><span>Orion Digital · TSX·NASDAQ : ORIO</span></div></div>
+</div>
+
+<div class="container">
+<section class="page-header">
+  <div class="page-masthead" data-type>Intelligent Investing &nbsp;·&nbsp; No. 01 &nbsp;·&nbsp; 2026</div>
+  <div class="page-breadcrumb"><a href="II Site V2 - Edition.html">Edition</a><span class="sep">/</span><a href="II Site V2 - Product.html">Product</a><span class="sep">/</span><span class="current">Research</span></div>
+  <h1 class="page-title">Research</h1>
+  <div class="page-deck">Not a stock picker. Not a signal engine. Not a shortcut. A disciplined research environment for people who intend to do the work.</div>
+  <div class="page-meta">
+    <div class="meta-col"><span class="meta-lbl">Module</span><span class="meta-val">/03</span></div>
+    <div class="meta-col"><span class="meta-lbl">Data source</span><span class="meta-val">Fiscal.ai Max</span></div>
+    <div class="meta-col"><span class="meta-lbl">AI</span><span class="meta-val">Bring your own</span></div>
+  </div>
+</section>
+</div>
+
+<div class="container">
+<section>
+  <div class="sec-head"><span class="sec-num">/01</span><span class="sec-name">Premise</span></div>
+  <div class="declarative"><p>Serious investors analyze businesses.<br>Everyone else trades on price.</p></div>
+  <div class="prose" style="margin-top: 48px;">
+    <p>Most retail platforms surface price, news, and social sentiment. These are the easiest signals to display and the least useful for capital allocation.</p>
+    <p>This platform inverts that. The research surface defaults to <em>multi-year financial history, capital allocation patterns, and the business behind the ticker.</em></p>
+  </div>
+</section>
+</div>
+
+<div class="container">
+<section>
+  <div class="sec-head"><span class="sec-num">/02</span><span class="sec-name">Fiscal.ai Max</span></div>
+  <div class="declarative"><p>Professional-grade research.<br>Included.</p></div>
+  <div class="prose" style="margin-top: 32px;">
+    <p>Every membership includes Fiscal.ai Max, normally $99/month. Multi-year income statements, balance sheets, cash flow statements. Return on capital. Free cash flow. Margin trends. Capital allocation history. Clean comparisons across companies and time.</p>
+  </div>
+  <div class="ai-grid">
+    <div class="ai-cell"><div class="ai-name">Statements</div><div class="ai-desc">Multi-year income, balance sheet, and cash flow data &mdash; structured for direct comparison.</div></div>
+    <div class="ai-cell"><div class="ai-name">Capital Allocation</div><div class="ai-desc">Return on capital. Free cash flow generation. Reinvestment history. The story of how value compounds.</div></div>
+    <div class="ai-cell"><div class="ai-name">Comparison</div><div class="ai-desc">Same metrics across companies and time. The honest view of a business in context.</div></div>
+  </div>
+</section>
+</div>
+
+<div class="container">
+<section>
+  <div class="sec-head"><span class="sec-num">/03</span><span class="sec-name">Bring your own AI</span></div>
+  <div class="declarative"><p>Use the AI you already trust.</p></div>
+  <div class="prose" style="margin-top: 32px;">
+    <p>The system provides structured research prompts. Copy them. Paste them into Claude, ChatGPT, or Perplexity. Bring the analysis back to the memo.</p>
+    <p>This is intentional. The AI you choose is the AI you're accountable to. The platform does not become a black box of inferred recommendations. <em>The decision remains yours.</em></p>
+  </div>
+  <div class="steps-list">
+    <div class="step-row"><span class="step-num">/01</span><span class="step-name">Open the Stock Page</span><span class="step-desc">Navigate to the ticker you're investigating. The Research & Analysis card sits in the workflow, not as a separate destination.</span></div>
+    <div class="step-row"><span class="step-num">/02</span><span class="step-name">Copy the protocol</span><span class="step-desc">An 11-step research protocol prepared for that company. Specific. Structured. Designed to be pasted into any capable AI.</span></div>
+    <div class="step-row"><span class="step-num">/03</span><span class="step-name">Run with Claude · ChatGPT · Perplexity</span><span class="step-desc">Quick links to your preferred environment. Bring the prompt with you.</span></div>
+    <div class="step-row"><span class="step-num">/04</span><span class="step-name">Return with analysis</span><span class="step-desc">Use what you learned to write the memo. Investment Case, Kill Criteria, Intrinsic Value, Margin of Safety.</span></div>
+    <div class="step-row"><span class="step-num">/05</span><span class="step-name">Pressure-test before sealing</span><span class="step-desc">Pre-seal pressure-test prompts. Run the memo through the AI you trust. Adjust or commit.</span></div>
+  </div>
+</section>
+</div>
+
+<div class="container">
+<section>
+  <div class="sec-head"><span class="sec-num">/04</span><span class="sec-name">Surface</span></div>
+  <div class="plate">
+    <div class="plate-screen">
+      <div class="ph-title">Research &amp; Analysis</div>
+      <div class="ph-detail">ATZ · 11-step protocol · copy-paste prompts · Claude · ChatGPT · Perplexity · Fiscal.ai Max</div>
+    </div>
+    <div class="plate-caption">
+      <span class="fig-num">Fig. 01</span>
+      <span class="fig-title">The Research surface.</span>
+      <p>Lives on each Stock Page. Not a separate destination. Research happens in flow with the memo.</p>
+      <p>The card contains the structured prompt for that company, links to your chosen AI, and a button to open the same ticker directly in Fiscal.ai for primary-source verification.</p>
+      <span class="footnote">The AI supports analysis. It does not make decisions. This research layer exists to raise the standard of thinking inside the platform.</span>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="container">
+<section>
+  <div class="sec-head"><span class="sec-num">/05</span><span class="sec-name">Doctrine</span></div>
+  <div class="declarative"><p>Research is a discipline.<br>Not a feature.</p></div>
+  <div class="prose" style="margin-top: 48px;">
+    <p>Trading apps treat research as a tab you visit once before clicking buy. This platform treats research as the workflow that <em>produces</em> the memo. The two are inseparable.</p>
+    <p>If the research isn't done, the memo can't be sealed. If the memo can't be sealed, the position doesn't open. The discipline holds.</p>
+  </div>
+</section>
+</div>
+
+<div class="container">
+<section>
+  <div class="sec-head"><span class="sec-num">/06</span><span class="sec-name">Connected surfaces</span></div>
+  <div class="prose"><p>Research feeds the memo. The memo gets tested against the benchmark. Outcomes feed the calibration record.</p></div>
+  <div class="related-grid">
+    <a href="II Site V2 - Memo.html" class="related-card">
+      <div class="rc-num">/01</div>
+      <div><div class="rc-name">The Memo</div><div class="rc-desc">Where research becomes commitment. Investment Case, Kill Criteria, Intrinsic Value.</div></div>
+      <span class="rc-arrow">→ Read</span>
+    </a>
+    <a href="II Site V2 - Benchmark.html" class="related-card">
+      <div class="rc-num">/02</div>
+      <div><div class="rc-name">Benchmark</div><div class="rc-desc">Whether the research produced alpha or you should have bought the index.</div></div>
+      <span class="rc-arrow">→ Read</span>
+    </a>
+    <a href="II Site V2 - Calibration.html" class="related-card">
+      <div class="rc-num">/04</div>
+      <div><div class="rc-name">Calibration</div><div class="rc-desc">Over decades, whether your research produced better-than-coin-flip judgment.</div></div>
+      <span class="rc-arrow">→ Read</span>
+    </a>
+  </div>
+</section>
+</div>
+
+<div class="container">
+<section class="cta-section">
+  <div class="cta-canon">Do the work.<br>Bring the AI you already use.</div>
+  <a href="II Site V2 - GetTheApp.html" class="cta-button">Open Account →</a>
+</section>
+</div>
+
+<footer><div class="container">
+  <div class="footer-mast"><div class="colophon-mast">Intelligent Investing &nbsp;·&nbsp; No. 01 &nbsp;·&nbsp; 2026</div><div class="colophon-pub">Published by Mogo Inc. &nbsp;·&nbsp; Orion Digital Corp. (NASDAQ &amp; TSX: ORIO)</div></div>
+  <div class="footer-cols">
+    <div class="footer-col"><h4>Product</h4><a href="II Site V2 - Memo.html">The Memo</a><a href="II Site V2 - Benchmark.html">Benchmark</a><a href="II Site V2 - Research.html">Research</a><a href="II Site V2 - Calibration.html">Calibration</a></div>
+    <div class="footer-col"><h4>Resources</h4><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a></div>
+    <div class="footer-col"><h4>Documents</h4><a href="II Site V2 - Manifesto.html">Manifesto</a><a href="II Site V2 - Documents-Managed.html">Managed</a><a href="II Site V2 - Documents-SelfDirected.html">Self-Directed</a></div>
+    <div class="footer-col"><h4>Company</h4><a href="II Site V2 - About.html">About</a><a href="II Site V2 - About.html#contact">Contact</a></div>
+    <div class="footer-col"><h4>Account</h4><a href="II Site V2 - GetTheApp.html">Get the App</a></div>
+    <div class="footer-col"><h4>Social</h4><a href="#">Instagram</a><a href="#">X</a><a href="#">TikTok</a><a href="#">YouTube</a></div>
+  </div>
+  <div class="footer-legal"><p>Past returns are no guarantee of future performance.</p><p>Managed accounts opened with IntelligentInvesting Wealth Management Inc. Self-Directed accounts with IntelligentInvesting Securities Inc. CIRO member. CIPF member.</p></div>
+  <div class="footer-bottom"><span>© 2026 Orion Digital Corp.</span><div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div></div>
+</div></footer>
+
+<script>
+const hamburger=document.querySelector('.hamburger');const menuOverlay=document.querySelector('.menu-overlay');const menuClose=document.querySelector('.ml-close');const body=document.body;
+function openMenu(){menuOverlay.classList.add('open');hamburger.classList.add('open');body.classList.add('menu-open');}
+function closeMenu(){menuOverlay.classList.remove('open');hamburger.classList.remove('open');body.classList.remove('menu-open');}
+hamburger.addEventListener('click',e=>{e.stopPropagation();menuOverlay.classList.contains('open')?closeMenu():openMenu();});
+  menuClose.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menuOverlay.classList.contains('open')) closeMenu(); });
+</script>
+
+<script>
+(function () {
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.querySelectorAll('[data-type]').forEach(function (el) { el.setAttribute('data-type-text', el.textContent); el.textContent = ''; });
+  function typeEl(el, done) { var full = el.getAttribute('data-type-text') || ''; el.textContent = ''; el.classList.add('type-caret'); var i = 0; (function tick() { if (i <= full.length) { el.textContent = full.slice(0, i); i++; setTimeout(tick, 40); } else { el.classList.remove('type-caret'); if (done) done(); } })(); }
+  function typeSection(sec) { var els = sec.querySelectorAll('[data-type]'); var idx = 0; (function next() { if (idx < els.length) { typeEl(els[idx], function () { idx++; next(); }); } })(); }
+  var io = new IntersectionObserver(function (entries) { entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); typeSection(e.target); io.unobserve(e.target); } }); }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('section').forEach(function (s) { s.classList.add('reveal'); io.observe(s); });
+})();
+</script>
+</body>
+</html>

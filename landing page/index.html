@@ -1,21 +1,437 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#000000" />
-    <title>II — Landing Page</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-    <style>
-      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-      html, body { height: 100%; background: #000; }
-      #root { height: 100%; display: flex; }
-    </style>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Site Index · Intelligent Investing V2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --c-black: #000;
+  --c-1000: #1C1C1C;
+  --c-900: #232627;
+  --c-800: #565B5E;
+  --c-700: #929292;
+  --c-600: #A7A7A7;
+  --c-400: #C7C7C7;
+  --c-200: #E3E2E2;
+  --c-white: #FFF;
+  --c-warning: #FDAD00;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--c-black);
+  color: var(--c-600);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-feature-settings: 'tnum' 1, 'lnum' 1, 'ss01' 1;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 96px 40px;
+}
+
+@media (max-width: 900px) {
+  .container { padding: 64px 24px; }
+}
+
+.head {
+  border-bottom: 0.5px solid var(--c-900);
+  padding-bottom: 32px;
+  margin-bottom: 64px;
+}
+
+.eyebrow {
+  font-size: 12px;
+  color: var(--c-700);
+  letter-spacing: 0.06em;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: clamp(48px, 7vw, 96px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: var(--c-white);
+  font-weight: 400;
+  margin-bottom: 24px;
+}
+
+.deck {
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--c-400);
+  max-width: 640px;
+}
+
+.section-head {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 24px;
+  align-items: baseline;
+  padding: 32px 0 18px;
+  border-bottom: 0.5px solid var(--c-900);
+  margin-top: 56px;
+}
+
+.sec-num {
+  font-size: 12px;
+  color: var(--c-700);
+  letter-spacing: 0.06em;
+}
+
+.sec-name {
+  font-size: 22px;
+  color: var(--c-200);
+  letter-spacing: -0.02em;
+}
+
+.sec-count {
+  font-size: 13px;
+  color: var(--c-700);
+  font-feature-settings: 'tnum' 1;
+}
+
+.page-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 200px 100px;
+  gap: 24px;
+  align-items: baseline;
+  padding: 24px 0;
+  border-bottom: 0.5px solid var(--c-900);
+  text-decoration: none;
+  color: inherit;
+  transition: padding 0.2s ease;
+}
+
+.page-row:hover {
+  padding-left: 8px;
+}
+
+.page-row:hover .pr-title { color: var(--c-white); }
+.page-row:hover .pr-arrow { color: var(--c-400); transform: translateX(4px); }
+
+.pr-num {
+  font-size: 13px;
+  color: var(--c-700);
+  letter-spacing: 0.04em;
+  font-feature-settings: 'tnum' 1;
+}
+
+.pr-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pr-title {
+  font-size: 20px;
+  color: var(--c-200);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  transition: color 0.15s ease;
+}
+
+.pr-title .tag {
+  display: inline-block;
+  font-size: 10px;
+  color: var(--c-warning);
+  border: 0.5px solid var(--c-warning);
+  padding: 2px 6px;
+  letter-spacing: 0.06em;
+  margin-left: 12px;
+  vertical-align: middle;
+}
+
+.pr-desc {
+  font-size: 14px;
+  color: var(--c-600);
+  line-height: 1.5;
+  max-width: 540px;
+}
+
+.pr-file {
+  font-size: 12px;
+  color: var(--c-800);
+  font-feature-settings: 'tnum' 1;
+  font-family: 'SF Mono', 'Monaco', monospace;
+  letter-spacing: -0.005em;
+}
+
+.pr-arrow {
+  font-size: 18px;
+  color: var(--c-700);
+  text-align: right;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+@media (max-width: 900px) {
+  .page-row {
+    grid-template-columns: 60px 1fr auto;
+    gap: 16px;
+  }
+  .pr-file { display: none; }
+}
+
+.footer-meta {
+  margin-top: 96px;
+  padding-top: 32px;
+  border-top: 0.5px solid var(--c-900);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  font-size: 12px;
+  color: var(--c-700);
+  letter-spacing: 0.04em;
+}
+
+.fm-right { text-align: right; }
+
+@media (max-width: 600px) {
+  .footer-meta { grid-template-columns: 1fr; }
+  .fm-right { text-align: left; }
+}
+
+.dev-note {
+  margin-top: 32px;
+  padding: 20px;
+  border: 0.5px solid var(--c-900);
+  background: var(--c-1000);
+  font-size: 13px;
+  color: var(--c-700);
+  line-height: 1.5;
+}
+
+.dev-note strong {
+  color: var(--c-200);
+  font-weight: 400;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="head">
+    <div class="eyebrow">Intelligent Investing &nbsp;·&nbsp; Site Prototype V2 &nbsp;·&nbsp; June 2026</div>
+    <h1 class="title">Site Index</h1>
+    <p class="deck">All 14 prototype pages of the Intelligent Investing site. Click any row to preview that page in the browser.</p>
+  </div>
+
+  <!-- LANDING -->
+  <div class="section-head">
+    <span class="sec-num">/01</span>
+    <span class="sec-name">Landing</span>
+    <span class="sec-count">1 page</span>
+  </div>
+
+  <a href="II Site V2 - Edition.html" class="page-row">
+    <span class="pr-num">/01</span>
+    <div class="pr-content">
+      <h3 class="pr-title">Home <span class="tag">Cover</span></h3>
+      <p class="pr-desc">Edition cover · Statement · The System (Palantir wordmarks) · Manifesto teaser · Pricing teaser · Final canon. Multi-page hub entry point.</p>
+    </div>
+    <span class="pr-file">Edition.html</span>
+    <span class="pr-arrow">→</span>
+  </a>
+
+  <!-- PRODUCT -->
+  <div class="section-head">
+    <span class="sec-num">/02</span>
+    <span class="sec-name">Product</span>
+    <span class="sec-count">5 pages</span>
+  </div>
+
+  <a href="II Site V2 - Product.html" class="page-row">
+    <span class="pr-num">/02·a</span>
+    <div class="pr-content">
+      <h3 class="pr-title">Product Index</h3>
+      <p class="pr-desc">System overview. Routes to the four product surfaces via Palantir-style wordmark list.</p>
+    </div>
+    <span class="pr-file">Product.html</span>
+    <span class="pr-arrow">→</span>
+  </a>
+
+  <a href="II Site V2 - Memo.html" class="page-row">
+    <span class="pr-num">/02·b</span>
+    <div class="pr-content">
+      <h3 class="pr-title">The Memo</h3>
+      <p class="pr-desc">Sealed thesis system. Anatomy (Classify · Size · Investment Case · Calibration). Lifecycle states. Open Questions surface.</p>
+    </div>
+    <span class="pr-file">Memo.html</span>
+    <span class="pr-arrow">→</span>
+  </a>
+
+  <a href="II Site V2 - Benchmark.html" class="page-row">
+    <span class="pr-num">/02·c</span>
+    <div class="pr-content">
+      <h3 class="pr-title">Benchmark <span class="tag">Heart</span></h3>
+      <p class="pr-desc">S&amp;P 500 accountability. Per-tranche shadow ledger. The honest gap to passive. Dave&rsquo;s declared &ldquo;heart&rdquo; of the system.</p>
+    </div>
+    <span class="pr-file">Benchmark.html</span>
+    <span class="pr-arrow">→</span>
+  </a>
+
+  <a href="II Site V2 - Research.html" class="page-row">
+    <span class="pr-num">/02·d</span>
+    <div class="pr-content">
+      <h3 class="pr-title">Research</h3>
+      <p class="pr-desc">Fiscal.ai Max + BYO AI. 11-step research protocol. Disciplined research environment for people who intend to do the work.</p>
+    </div>
+    <span class="pr-file">Research.html</span>
+    <span class="pr-arrow">→</span>
+  </a>
+
+  <a href="II Site V2 - Calibration.html" class="page-row">
+    <span class="pr-num">/02·e</span>
+    <div class="pr-content">
+      <h3 class="pr-title">Calibration</h3>
+      <p class="pr-desc">Confidence stated, then tested. Accuracy · Predictions · Next Judgment. Judgment quality measurable over decades.</p>
+    </div>
+    <span class="pr-file">Calibration.html</span>
+    <span class="pr-arrow">→</span>
+  </a>
+
+  <!-- COMMERCIAL -->
+  <div class="section-head">
+    <span class="sec-num">/03</span>
+    <span class="sec-name">Commercial</span>
+    <span class="sec-count">1 page</span>
+  </div>
+
+  <a href="II Site V2 - Pricing.html" class="page-row">
+    <span class="pr-num">/03·a</span>
+    <div class="pr-content">
+      <h3 class="pr-title">Pricing</h3>
+      <p class="pr-desc">$20/mo · 0.10% on Managed assets. Two-track comparison. &ldquo;Your success is our retention model.&rdquo;</p>
+    </div>
+    <span class="pr-file">Pricing.html</span>
+    <span class="pr-arrow">→</span>
+  </a>
+
+  <!-- MARKETING (JOURNAL) -->
+  <div class="section-head">
+    <span class="sec-num">/04</span>
+    <span class="sec-name">Marketing &mdash; Journal</span>
+    <span class="sec-count">2 pages</span>
+  </div>
+
+  <a href="II Site V2 - Journal.html" class="page-row">
+    <span class="pr-num">/04·a</span>
+    <div class="pr-content">
+      <h3 class="pr-title">Journal Index</h3>
+      <p class="pr-desc">Editorial essays, market commentary, doctrine deep-dives. Tarsila&rsquo;s marketing content lives here.</p>
+    </div>
+    <span class="pr-file">Journal.html</span>
+    <span class="pr-arrow">→</span>
+  </a>
+
+  <a href="II Site V2 - Journal-Slug.html" class="page-row">
+    <span class="pr-num">/04·b</span>
+    <div class="pr-content">
+      <h3 class="pr-title">Journal Article Template</h3>
+      <p class="pr-desc">Individual article template (sample: &ldquo;The shadow of the S&amp;P 500&rdquo;). Hero + body + related entries.</p>
+    </div>
+    <span class="pr-file">Journal-Slug.html</span>
+    <span class="pr-arrow">→</span>
+  </a>
+
+  <!-- DOCUMENTS -->
+  <div class="section-head">
+    <span class="sec-num">/05</span>
+    <span class="sec-name">Documents</span>
+    <span class="sec-count">3 pages</span>
+  </div>
+
+  <a href="II Site V2 - Manifesto.html" class="page-row">
+    <span class="pr-num">/05·a</span>
+    <div class="pr-content">
+      <h3 class="pr-title">Manifesto</h3>
+      <p class="pr-desc">14 NO. doctrine in full. Pilots/Surgeons quote opener. Verbatim from existing site content.</p>
+    </div>
+    <span class="pr-file">Manifesto.html</span>
+    <span class="pr-arrow">→</span>
+  </a>
+
+  <a href="II Site V2 - Documents-Managed.html" class="page-row">
+    <span class="pr-num">/05·b</span>
+    <div class="pr-content">
+      <h3 class="pr-title">Managed &mdash; Legal &amp; Compliance</h3>
+      <p class="pr-desc">IntelligentInvesting Wealth Management Inc. Operating entity, fees (0.10%), custody (CI Investment Services), portfolio construction.</p>
+    </div>
+    <span class="pr-file">Documents-Managed.html</span>
+    <span class="pr-arrow">→</span>
+  </a>
+
+  <a href="II Site V2 - Documents-SelfDirected.html" class="page-row">
+    <span class="pr-num">/05·c</span>
+    <div class="pr-content">
+      <h3 class="pr-title">Self-Directed &mdash; Legal &amp; Compliance</h3>
+      <p class="pr-desc">IntelligentInvesting Securities Inc. Trading, FX rules, no commissions, custody, order types (Limit default, GTC, ±10% guardrail).</p>
+    </div>
+    <span class="pr-file">Documents-SelfDirected.html</span>
+    <span class="pr-arrow">→</span>
+  </a>
+
+  <!-- COMPANY -->
+  <div class="section-head">
+    <span class="sec-num">/06</span>
+    <span class="sec-name">Company</span>
+    <span class="sec-count">1 page</span>
+  </div>
+
+  <a href="II Site V2 - About.html" class="page-row">
+    <span class="pr-num">/06·a</span>
+    <div class="pr-content">
+      <h3 class="pr-title">About &mdash; Mogo · Orion Digital · Contact</h3>
+      <p class="pr-desc">Position · Publisher · Regulatory structure · Contact (emails · offices · regulators). Combined About + Contact in colophon style.</p>
+    </div>
+    <span class="pr-file">About.html</span>
+    <span class="pr-arrow">→</span>
+  </a>
+
+  <!-- FUNCTIONAL -->
+  <div class="section-head">
+    <span class="sec-num">/07</span>
+    <span class="sec-name">Functional</span>
+    <span class="sec-count">1 page</span>
+  </div>
+
+  <a href="II Site V2 - GetTheApp.html" class="page-row">
+    <span class="pr-num">/07·a</span>
+    <div class="pr-content">
+      <h3 class="pr-title">Get the App</h3>
+      <p class="pr-desc">Mobile-first. App Store badge · QR code · Sign In deep link. Calibration flow happens in-app.</p>
+    </div>
+    <span class="pr-file">GetTheApp.html</span>
+    <span class="pr-arrow">→</span>
+  </a>
+
+  <div class="dev-note">
+    <strong>Note:</strong> This is a development index. All cross-page navigation works locally — click any page to preview, then use the in-page navbar, dropdowns, hamburger menu, footer, and wordmark links to test the full site flow. The hamburger menu (top-right) opens a Cinque-style full-screen overlay on every page.
+  </div>
+
+  <div class="footer-meta">
+    <div class="fm-left">
+      <div>Intelligent Investing &nbsp;·&nbsp; No. 01 &nbsp;·&nbsp; 2026</div>
+    </div>
+    <div class="fm-right">
+      <div>14 pages &nbsp;·&nbsp; built June 2026</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
 </html>
