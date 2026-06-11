@@ -80,14 +80,66 @@ section { padding: 130px 0; position: relative; }
 .alloc-top { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); align-items: start; }
 .alloc-head { grid-column: 1 / 7; }
 .alloc-sub { grid-column: 7 / 13; }
-.alloc-stage { position: relative; height: 560px; margin-top: 56px; }
-.ap-card { position: absolute; border: 0.5px dashed var(--c-600); background: transparent; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: var(--c-600); }
-.ap-card.c-back { top: 9%; right: 0; width: 66%; height: 82%; z-index: 1; background: var(--c-elev); }
-.ap-card.c-front { top: 0; left: 0; width: 38%; height: 100%; z-index: 2; background: var(--c-1000); box-shadow: 0 0 0 8px var(--c-elev); }
-.ap-ph { display: flex; flex-direction: column; align-items: center; gap: 12px; color: var(--c-700); }
-.ap-ph svg { width: clamp(32px, 4vw, 44px); height: auto; opacity: 0.8; }
-.ap-ph span { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: var(--c-700); }
-@media (max-width: 900px) { .alloc-head, .alloc-sub { grid-column: 1 / -1; } .alloc-sub { margin-top: 24px; } .alloc-stage { height: auto; margin-top: 48px; } .ap-card { position: static; width: 100% !important; height: 220px; margin-bottom: 16px; box-shadow: none !important; } }
+.alloc-stage { position: relative; display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); grid-template-rows: 290px 262px; row-gap: 28px; margin-top: 96px; }
+.alloc-stage::before { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; background-image: repeating-linear-gradient(to right, var(--c-1000) 0 0.5px, transparent 0.5px calc(100% / 12)), repeating-linear-gradient(to bottom, var(--c-1000) 0 0.5px, transparent 0.5px 72px); -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent); }
+.ap-conn { grid-column: 4 / 8; grid-row: 2; align-self: center; position: relative; height: 0.5px; background: var(--c-800); z-index: 1; }
+.ap-conn::after { content: ''; position: absolute; right: -2.5px; top: -2px; width: 5px; height: 5px; background: var(--c-elev); border: 0.5px solid var(--c-700); }
+.ap-card { position: relative; box-sizing: border-box; background: var(--c-1000); border: 0.5px solid var(--c-900); padding: 22px 24px; overflow: hidden; display: flex; flex-direction: column; z-index: 2; }
+.ap-tag { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: var(--c-700); }
+.ap-sub { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--c-800); }
+.ap-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 22px; }
+/* Total — small accent, lower-left */
+.ap-total { grid-column: 1 / 4; grid-row: 2; background: var(--c-surface); justify-content: space-between; }
+.ap-total .ap-k { display: block; font-size: 11px; letter-spacing: 0.04em; color: var(--c-700); text-align: right; }
+.ap-total .ap-big { display: block; font-family: var(--mono); font-size: 22px; color: var(--c-white); text-align: right; font-variant-numeric: tabular-nums; margin-top: 6px; }
+.ap-total .ap-unit { font-size: 13px; color: var(--c-700); }
+/* Core — middle (Managed) — all data right-aligned, per dashboard */
+.ap-core { grid-column: 1 / 6; grid-row: 1; }
+.ap-cdata { display: flex; flex-direction: column; align-items: flex-end; gap: 24px; }
+.ap-cblock { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.ap-clabel { font-size: 11px; letter-spacing: 0.04em; color: var(--c-700); }
+.ap-cnum { font-family: var(--mono); font-size: 22px; color: var(--c-white); font-variant-numeric: tabular-nums; }
+.ap-cgain { display: flex; gap: 9px; font-size: 11px; margin-top: 2px; }
+.ap-cgain .gp { font-family: var(--mono); color: var(--c-400); }
+.ap-csmall { font-family: var(--mono); font-size: 13px; color: var(--c-400); }
+.ap-crows { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.ap-crow { display: flex; gap: 13px; align-items: baseline; }
+.ap-crow .tk { font-size: 13px; color: var(--c-700); }
+.ap-crow .pc { font-family: var(--mono); font-size: 13px; color: var(--c-400); font-variant-numeric: tabular-nums; }
+/* Active — hero, right (Holdings) */
+.ap-active { grid-column: 8 / 13; grid-row: 1 / 3; z-index: 3; background: var(--c-elev); border: 0.5px solid var(--c-800); }
+.ap-tick { position: absolute; width: 7px; height: 7px; border: 0.5px solid var(--c-700); }
+.ap-tick.tl { top: 8px; left: 8px; border-right: 0; border-bottom: 0; }
+.ap-tick.tr { top: 8px; right: 8px; border-left: 0; border-bottom: 0; }
+.ap-tick.bl { bottom: 8px; left: 8px; border-right: 0; border-top: 0; }
+.ap-tick.br { bottom: 8px; right: 8px; border-left: 0; border-top: 0; }
+.ap-holds { display: flex; flex-direction: column; }
+.ap-hold { padding: 16px 0; border-top: 0.5px solid var(--c-1000); display: flex; flex-direction: column; gap: 11px; }
+.ap-hold:first-child { border-top: 0; padding-top: 0; }
+.aph-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+.aph-name { display: flex; flex-direction: column; gap: 5px; }
+.aph-tkrow { display: flex; align-items: baseline; gap: 9px; }
+.aph-tkr { font-family: var(--mono); font-size: 13px; letter-spacing: 0.04em; color: var(--c-white); }
+.aph-wt { font-size: 11px; color: var(--c-700); }
+.aph-class { font-size: 11px; color: var(--c-700); }
+.aph-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.aph-line { display: flex; align-items: baseline; gap: 10px; }
+.aph-px { font-family: var(--mono); font-size: 13px; color: var(--c-200); font-variant-numeric: tabular-nums; }
+.aph-line.sub .aph-px { color: var(--c-400); }
+.aph-chg { font-size: 11px; color: var(--c-700); }
+.aph-badges { display: flex; flex-wrap: wrap; gap: 6px; }
+.bdg { font-family: var(--mono); font-size: 11px; letter-spacing: 0.02em; padding: 2px 7px; border: 0.5px solid var(--c-800); color: var(--c-600); }
+.bdg.amber { color: var(--c-warning); border-color: var(--c-warning); }
+.bdg.red { color: var(--c-urgent); border-color: var(--c-urgent); }
+.bdg.green { color: var(--c-live); border-color: var(--c-live); }
+@media (max-width: 900px) {
+  .alloc-head, .alloc-sub { grid-column: 1 / -1; }
+  .alloc-sub { margin-top: 24px; }
+  .alloc-stage { display: flex; flex-direction: column; gap: 16px; margin-top: 64px; }
+  .ap-card { grid-column: 1 / -1 !important; grid-row: auto !important; width: 100% !important; }
+  .ap-active { order: -1; }
+  .ap-conn { display: none; }
+}
 @media (max-width: 900px) { .alloc-left, .alloc-product { grid-column: 1 / -1; } .alloc-product { margin-top: 36px; } }
 @media (max-width: 900px) { section { padding: 84px 0; } }
 
@@ -174,16 +226,17 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 .rung.gap .rk { color: var(--c-white); }
 .rung.gap .rv { color: var(--c-warning); }
 .e01-note { max-width: 520px; margin: 48px auto 0; font-size: 15px; line-height: 1.7; color: var(--c-600); }
-@media (max-width: 900px) { .hero-main, .hero-figure { grid-column: 1 / -1; } .hero-figure { display: none; } section.hero::before { background-size: 110% auto; background-position: center bottom; } }
+@media (max-width: 1200px) { section.hero { height: auto; min-height: 100dvh; align-items: flex-start; padding: 132px 0 96px; } .hero-wrap { transform: none; } .hero-main, .hero-figure { grid-column: 1 / -1; } .hero-figure { margin-top: 52px; max-width: 440px; } section.hero::before { background-size: 110% auto; background-position: center bottom; } }
 
 /* module grid */
 .modules { display: flex; flex-direction: column; margin-top: 56px; border-bottom: 0.5px solid var(--c-900); }
 .module { position: relative; display: grid; grid-template-columns: minmax(140px, 1fr) minmax(0, 1.6fr) minmax(150px, 1fr) 18px; align-items: center; gap: 32px; padding: 16px 0; border-top: 0.5px solid var(--c-900); text-decoration: none; color: inherit; }
 .module .m-name { font-size: clamp(26px, 2.6vw, 36px); color: var(--c-700); font-weight: 400; letter-spacing: -0.03em; line-height: 1; transition: color 0.15s ease; }
 .module:hover .m-name { color: var(--c-white); }
-.module .m-fig { height: 180px; border: 0.5px solid var(--c-900); overflow: hidden; opacity: 0; transition: opacity 0.25s ease; }
-.module .m-fig img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.08); }
-.module:hover .m-fig { opacity: 1; }
+.module .m-fig { height: 180px; border: 0.5px solid var(--c-900); overflow: hidden; transition: border-color 0.3s ease; }
+.module .m-fig img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.08); transition: transform 0.5s cubic-bezier(0.2,0.6,0.2,1); }
+.module:hover .m-fig { border-color: var(--c-800); }
+.module:hover .m-fig img { transform: scale(1.12); }
 .module .m-desc { font-size: 15px; line-height: 1.5; color: var(--c-600); }
 .module .m-open { color: var(--c-700); display: inline-flex; align-items: center; justify-content: flex-end; transition: color 0.15s ease; }
 .module:hover .m-open { color: var(--c-white); }
@@ -247,7 +300,7 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 /* ontology — the decision model (standalone band) */
 .onto-lead { font-size: 17px; line-height: 1.6; color: var(--c-600); max-width: 620px; }
 .onto-graph { position: relative; margin-top: 44px; padding: 44px clamp(24px, 3vw, 56px) 40px; }
-.onto-graph::before { content: ''; position: absolute; inset: 0; pointer-events: none; background-image: repeating-linear-gradient(to right, var(--c-1000) 0, var(--c-1000) 0.5px, transparent 0.5px, transparent 72px), repeating-linear-gradient(to bottom, var(--c-1000) 0, var(--c-1000) 0.5px, transparent 0.5px, transparent 72px); }
+.onto-graph::before { content: ''; position: absolute; inset: 0; pointer-events: none; background-image: repeating-linear-gradient(to right, var(--c-1000) 0, var(--c-1000) 0.5px, transparent 0.5px, transparent 72px), repeating-linear-gradient(to bottom, var(--c-1000) 0, var(--c-1000) 0.5px, transparent 0.5px, transparent 72px); background-position: center center; -webkit-mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%); mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%); }
 .onto-flow { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); column-gap: var(--gutter); }
 .onto-flow::before { content: ''; position: absolute; top: 4px; left: 0; right: 0; border-top: 0.5px solid var(--c-800); }
 .ophase { position: relative; }
@@ -290,6 +343,18 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
   .onto-graph.in .onto-sig { opacity: 1; transition-delay: 1.15s; }
   .oh-dot { animation: dot-pulse 2.2s ease-in-out infinite; }
 }
+
+/* two tracks — core + active (light) */
+.tracks { margin-top: 64px; border-top: 0.5px solid var(--c-900); padding-top: 40px; }
+.tracks-head { font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; color: var(--c-700); margin-bottom: 32px; }
+.tracks-grid { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); align-items: start; }
+.track { grid-column: span 6; padding-left: clamp(24px, 3vw, 44px); border-left: 0.5px solid var(--c-900); }
+.track:first-child { padding-left: 0; border-left: none; }
+.track-label { font-size: 22px; color: var(--c-200); letter-spacing: -0.02em; }
+.track.track-core .track-label { color: var(--c-400); }
+.track-sub { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-700); margin-top: 8px; }
+.track-desc { font-size: 15px; line-height: 1.6; color: var(--c-600); margin-top: 18px; max-width: 360px; }
+@media (max-width: 760px) { .track { grid-column: 1 / -1; padding-left: 0; border-left: none; } .track + .track { margin-top: 36px; } }
 
 /* journal — changelog-style horizontal timeline */
 .journal-title { font-size: clamp(24px, 3vw, 34px); color: var(--c-200); font-weight: 400; letter-spacing: -0.025em; }
@@ -361,6 +426,8 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   /* product placeholders — outline wipes open (0 -> fill) */
   .alloc-stage .ap-card { clip-path: inset(0 100% 0 0); transition: clip-path 0.9s cubic-bezier(0.5,0,0.2,1); transition-delay: var(--d, 0s); }
   .alloc-stage.in .ap-card { clip-path: inset(0 0 0 0); }
+  .alloc-stage .ap-conn { opacity: 0; transition: opacity 0.6s ease 0.55s; }
+  .alloc-stage.in .ap-conn { opacity: 1; }
   /* hero text rises individually on load */
   .hero-main .hero-eyebrow, .hero-main .hero-h, .hero-main .hero-sub, .hero-main .hero-cta { opacity: 0; animation: hero-rise 0.85s cubic-bezier(0.2,0.6,0.2,1) forwards; }
   .hero-main .hero-eyebrow { animation-delay: 0.10s; }
@@ -494,9 +561,22 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   <p class="e01-note">What cannot be reconstructed cannot be evaluated. What cannot be evaluated cannot be improved. This is the layer we are building.</p>
 </section></div>
 
+<!-- MANIFESTO (id=entry-04, displayed No.02 — moved above product) -->
+<div class="container"><section id="entry-04">
+  <div class="entry-head"><span class="entry-no" data-type>No. 02</span><span class="entry-name" data-type>Manifesto</span></div>
+  <h2 class="statement">The claims everything ladders back to.</h2>
+  <div class="tenets">
+    <div class="tenet">You are buying a business, not trading a stock.</div>
+    <div class="tenet">Judgment must be recorded before it can be improved.</div>
+    <div class="tenet">The benchmark is not optional.</div>
+    <div class="tenet">We are paid to make you better, not more active.</div>
+  </div>
+  <a href="II Site V2 - Manifesto.html" class="link" style="display:inline-flex;align-items:center;gap:6px;margin-top:32px;"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span class="roll"><span class="roll-in"><span>Read the Full Doctrine</span><span>Read the Full Doctrine</span></span></span></a>
+</section></div>
+
 <!-- ENTRY 02 — The Allocator -->
 <section id="entry-02" class="band"><div class="container">
-  <div class="entry-head"><span class="entry-no" data-type>No. 02</span><span class="entry-name" data-type>The Allocator</span></div>
+  <div class="entry-head"><span class="entry-no" data-type>No. 03</span><span class="entry-name" data-type>The Allocator</span></div>
   <div class="alloc-top">
     <div class="alloc-head">
       <h2 class="statement">Most people own positions.<br>Allocators own decisions.</h2>
@@ -504,8 +584,79 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     <p class="prose alloc-sub">An investor owns positions. An allocator owns the <em>reasoning</em> behind them, and stays accountable to it over time. The objective is not activity. It is capability.</p>
   </div>
   <div class="alloc-stage">
-    <div class="ap-card c-back"><span class="ap-ph"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="6" y="9" width="36" height="30" rx="2"/><circle cx="17" cy="19" r="3.5"/><path d="M10 35 L21 24 L29 31 L34 27 L41 33"/></svg><span>Dashboard</span></span></div>
-    <div class="ap-card c-front"><span class="ap-ph"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="6" y="9" width="36" height="30" rx="2"/><circle cx="17" cy="19" r="3.5"/><path d="M10 35 L21 24 L29 31 L34 27 L41 33"/></svg><span>Decision Record</span></span></div>
+    <span class="ap-conn c2"></span>
+    <div class="ap-card ap-total">
+      <span class="ap-tag">// Total</span>
+      <div>
+        <span class="ap-k">Total Value</span>
+        <span class="ap-big">173,249.00 <span class="ap-unit">CAD</span></span>
+      </div>
+    </div>
+    <div class="ap-card ap-core">
+      <div class="ap-head"><span class="ap-tag">// Core</span><span class="ap-sub">Managed</span></div>
+      <div class="ap-cdata">
+        <div class="ap-cblock">
+          <span class="ap-clabel">Value</span>
+          <span class="ap-cnum">126,471.77</span>
+          <div class="ap-cgain"><span class="ap-clabel">All Time</span><span class="gp">+6,365.65</span><span class="gp">(+5.3%)</span></div>
+        </div>
+        <div class="ap-cblock">
+          <span class="ap-clabel">Projection</span>
+          <span class="ap-csmall">1.68M</span>
+        </div>
+        <div class="ap-crows">
+          <div class="ap-crow"><span class="tk">Equity (S&amp;P 500)</span><span class="pc">50%</span></div>
+          <div class="ap-crow"><span class="tk">Fixed Income</span><span class="pc">25%</span></div>
+          <div class="ap-crow"><span class="tk">Money Market</span><span class="pc">25%</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="ap-card ap-active">
+      <span class="ap-tick tl"></span><span class="ap-tick tr"></span><span class="ap-tick bl"></span><span class="ap-tick br"></span>
+      <div class="ap-head"><span class="ap-tag">// Active</span><span class="ap-sub">Self-Directed</span></div>
+      <div class="ap-holds">
+        <div class="ap-hold">
+          <div class="aph-top">
+            <div class="aph-name"><div class="aph-tkrow"><span class="aph-tkr">AAPL</span><span class="aph-wt">10% WT</span></div><span class="aph-class">Compounder</span></div>
+            <div class="aph-right">
+              <div class="aph-line"><span class="aph-px">12,500.00 CAD</span><span class="aph-chg">+38.2%</span></div>
+              <div class="aph-line sub"><span class="aph-px">232.40 USD</span><span class="aph-chg">+1.1%</span></div>
+            </div>
+          </div>
+          <div class="aph-badges"><span class="bdg amber">Earnings</span><span class="bdg">52 Week High</span></div>
+        </div>
+        <div class="ap-hold">
+          <div class="aph-top">
+            <div class="aph-name"><div class="aph-tkrow"><span class="aph-tkr">ORIO.TO</span><span class="aph-wt">25% WT</span></div><span class="aph-class">Compounder</span></div>
+            <div class="aph-right">
+              <div class="aph-line"><span class="aph-px">18,950.00 CAD</span><span class="aph-chg">+42.6%</span></div>
+              <div class="aph-line sub"><span class="aph-px">87.60 CAD</span><span class="aph-chg">+0.8%</span></div>
+            </div>
+          </div>
+          <div class="aph-badges"><span class="bdg amber">Earnings</span><span class="bdg">Reverse Split</span><span class="bdg">52 Week High</span><span class="bdg">Stock Split</span></div>
+        </div>
+        <div class="ap-hold">
+          <div class="aph-top">
+            <div class="aph-name"><div class="aph-tkrow"><span class="aph-tkr">BWEN</span><span class="aph-wt">20% WT</span></div><span class="aph-class">Spec</span></div>
+            <div class="aph-right">
+              <div class="aph-line"><span class="aph-px">12,950.00 CAD</span><span class="aph-chg">+22.6%</span></div>
+              <div class="aph-line sub"><span class="aph-px">82.40 USD</span><span class="aph-chg">-2.8%</span></div>
+            </div>
+          </div>
+          <div class="aph-badges"><span class="bdg red">Delisted</span></div>
+        </div>
+        <div class="ap-hold">
+          <div class="aph-top">
+            <div class="aph-name"><div class="aph-tkrow"><span class="aph-tkr">EOSCR</span><span class="aph-wt">15% WT</span></div><span class="aph-class">Spec</span></div>
+            <div class="aph-right">
+              <div class="aph-line"><span class="aph-px">14,880.00 CAD</span><span class="aph-chg">+27.9%</span></div>
+              <div class="aph-line sub"><span class="aph-px">156.30 USD</span><span class="aph-chg">-1.2%</span></div>
+            </div>
+          </div>
+          <div class="aph-badges"><span class="bdg red">Stock Halted</span><span class="bdg">Open Order</span><span class="bdg green">Top Mover</span></div>
+        </div>
+      </div>
+    </div>
   </div>
 </div></section>
 
@@ -528,34 +679,36 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 
 <!-- ENTRY 03 — The System -->
 <div class="container"><section id="entry-03">
-  <div class="entry-head"><span class="entry-no" data-type>No. 03</span><span class="entry-name" data-type>The System</span></div>
+  <div class="entry-head"><span class="entry-no" data-type>No. 04</span><span class="entry-name" data-type>The System</span></div>
   <h2 class="statement">A position begins before a purchase.<br>It begins with an explanation.</h2>
   <div class="modules">
     <a href="II Site V2 - Memo.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Memo</span><span>Memo</span></span></span></span><span class="m-fig"><img src="images/contentteammogo_httpss.mj.runVOvOujARmhA_front_viewBLANK_scre_af8b60bf-bf94-4017-9e74-fdbb978a3654_3.png" alt="" loading="lazy"></span><span class="m-desc">Thesis, sizing, and kill criteria. Recorded.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
-    <a href="II Site V2 - Benchmark.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Benchmark</span><span>Benchmark</span></span></span></span><span class="m-fig"><img src="images/contentteammogo_a_thin_glowing_benchmark_grid_plane_near_the_TO_b2e807e7-2b12-4cf8-814d-c8862a85fd26.png" alt="" loading="lazy"></span><span class="m-desc">Your decisions against the S&amp;P 500.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
     <a href="II Site V2 - Research.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Research</span><span>Research</span></span></span></span><span class="m-fig"><img src="images/This%20is%20the%20shape%20of%20a%20decision.png" alt="" loading="lazy"></span><span class="m-desc">Institutional research, now included.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+    <a href="II Site V2 - Benchmark.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Benchmark</span><span>Benchmark</span></span></span></span><span class="m-fig"><img src="images/contentteammogo_a_thin_glowing_benchmark_grid_plane_near_the_TO_b2e807e7-2b12-4cf8-814d-c8862a85fd26.png" alt="" loading="lazy"></span><span class="m-desc">Your decisions against the S&amp;P 500.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
     <a href="II Site V2 - Calibration.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Calibration</span><span>Calibration</span></span></span></span><span class="m-fig"><img src="images/We%20don%27t%20sell%20confidence.%20We%20sell%20the%20discipline%20to%20face%20the%20mirror..png" alt="" loading="lazy"></span><span class="m-desc">Expectations against outcomes. Measured.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
   </div>
   <p class="prose" style="margin-top:36px; max-width:680px;">Each module operates on a real, funded account: opened, custodied, and traded through our own regulated entities. The value is not in joining the system. It is in operating it.</p>
-</section></div>
-
-<!-- ENTRY 04 — Manifesto -->
-<div class="container"><section id="entry-04">
-  <div class="entry-head"><span class="entry-no" data-type>No. 04</span><span class="entry-name" data-type>Manifesto</span></div>
-  <h2 class="statement">The claims everything ladders back to.</h2>
-  <div class="tenets">
-    <div class="tenet">You are buying a business, not trading a stock.</div>
-    <div class="tenet">Judgment must be recorded before it can be improved.</div>
-    <div class="tenet">The benchmark is not optional.</div>
-    <div class="tenet">We are paid to make you better, not more active.</div>
+  <div class="tracks">
+    <div class="tracks-head">Two Tracks</div>
+    <div class="tracks-grid">
+      <div class="track">
+        <div class="track-label">Active</div>
+        <div class="track-sub">Self-directed</div>
+        <p class="track-desc">Every decision underwritten, recorded, and measured against the benchmark.</p>
+      </div>
+      <div class="track track-core">
+        <div class="track-label">Core</div>
+        <div class="track-sub">Managed</div>
+        <p class="track-desc">A disciplined S&amp;P&nbsp;500 base. The benchmark you answer to. 0.10%, no performance fees.</p>
+      </div>
+    </div>
   </div>
-  <a href="II Site V2 - Manifesto.html" class="link" style="display:inline-flex;align-items:center;gap:6px;margin-top:32px;"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span class="roll"><span class="roll-in"><span>Read the Full Doctrine</span><span>Read the Full Doctrine</span></span></span></a>
 </section></div>
 
 <!-- No. 05 — Evidence (dummy content for internal review) -->
 <div class="container"><section id="evidence">
   <div class="entry-head"><span class="entry-no" data-type>No. 05</span><span class="entry-name" data-type>Evidence</span></div>
-  <h2 class="statement">Access was solved. The gap was never information.</h2>
+  <h2 class="statement">The gap was never information.</h2>
   <div class="ev-figs">
     <a href="II Site V2 - Benchmark.html" class="ev-fig">
       <div class="ev-num">9 in 10</div>
@@ -726,7 +879,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 
     function stagger(q, step) { document.querySelectorAll(q).forEach(function (el, i) { el.style.setProperty('--d', (i * step).toFixed(2) + 's'); }); }
     stagger('.rung', 0.09); stagger('#entry-03 .module', 0.08); stagger('#journal .tl-item', 0.08); stagger('footer .footer-legal', 0.05);
-    var sel = '#trust .trust-line, #trust .trust-strip, #entry-01 .e01-h, .rung, #entry-01 .e01-note, #entry-02 .statement, #entry-03 .statement, #entry-03 .module, #entry-03 .prose, #ontology .onto-lead, #entry-04 .statement, #entry-04 .prose, #entry-04 .link, #evidence .statement, #evidence .prose, #evidence .ev-fig, #entry-04 .tenet, #entry-06 .statement, #entry-06 .prose, #entry-06 .link, #journal .statement, #journal .tl-item, #journal .tl-all, #close .close-h, #close .cta-btn, footer .footer-copy, footer .footer-social, footer .footer-legal, footer .footer-reset';
+    var sel = '#trust .trust-line, #trust .trust-strip, #entry-01 .e01-h, .rung, #entry-01 .e01-note, #entry-02 .statement, #entry-02 .alloc-sub, #entry-03 .statement, #entry-03 .module, #entry-03 .prose, #ontology .onto-lead, #entry-04 .statement, #entry-04 .prose, #entry-04 .link, #evidence .statement, #evidence .prose, #evidence .ev-fig, #entry-04 .tenet, #entry-03 .tracks-head, #entry-03 .track, #entry-06 .statement, #entry-06 .prose, #entry-06 .link, #journal .statement, #journal .tl-item, #journal .tl-all, #close .close-h, #close .cta-btn, footer .footer-copy, footer .footer-social, footer .footer-legal, footer .footer-reset';
     var items = document.querySelectorAll(sel);
     items.forEach(function (el) { el.classList.add('ri'); });
     var rio = new IntersectionObserver(function (entries) { entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); rio.unobserve(e.target); } }); }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' });
