@@ -214,23 +214,45 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 /* evidence */
 .evidence-stats { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: var(--gutter); margin-top: 52px; }
 .ev-stat { padding-top: 26px; border-top: 0.5px solid var(--c-900); }
-.ev-num { font-size: clamp(34px, 4vw, 40px); color: var(--c-200); font-weight: 400; letter-spacing: -0.03em; line-height: 1; font-feature-settings: 'tnum' 1; }
-.ev-label { font-size: 15px; line-height: 1.5; color: var(--c-600); margin-top: 14px; }
+.ev-num { font-size: clamp(28px, 3vw, 34px); color: var(--c-200); font-weight: 400; letter-spacing: -0.03em; line-height: 1; font-feature-settings: 'tnum' 1; }
+.ev-label { font-size: 15px; line-height: 1.5; color: var(--c-600); margin-top: 14px; min-height: 68px; }
 .ev-src { font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; color: var(--c-700); margin-top: 16px; }
 .ev-placeholder { font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; line-height: 1.6; color: var(--c-800); margin-top: 22px; }
 .tenets { display: flex; flex-direction: column; margin-top: 44px; border-bottom: 0.5px solid var(--c-900); max-width: 760px; }
 .tenet { padding: 22px 0; border-top: 0.5px solid var(--c-900); font-size: 17px; color: var(--c-400); letter-spacing: -0.01em; }
-.ev-figs { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 56px; align-items: start; }
-.ev-fig { display: block; text-decoration: none; color: var(--c-700); padding: 28px clamp(24px, 3vw, 44px) 0; border-left: 0.5px solid var(--c-900); border-top: 0.5px solid var(--c-900); }
-.ev-fig:first-child { padding-left: 0; border-left: none; }
+.ev-figs { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 56px; align-items: stretch; }
+.ev-fig { display: flex; flex-direction: column; text-decoration: none; color: var(--c-700); padding: 0 clamp(24px, 3vw, 44px); border-left: 0.5px solid var(--c-900); }
+.ev-fig:first-child { border-left: none; }
 .ev-figno { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: var(--c-700); }
 .ev-art { height: 190px; display: flex; align-items: center; justify-content: center; margin: 56px 0 22px; }
 .ev-art svg { width: 100%; max-width: 300px; height: auto; }
-.ev-figtitle { font-size: 17px; color: var(--c-200); font-weight: 400; letter-spacing: -0.01em; }
+.ev-figtitle { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-400); }
 .ev-fig:hover .ev-figtitle { color: var(--c-white); }
 .ev-figcap { font-size: 14px; line-height: 1.5; color: var(--c-600); margin-top: 8px; max-width: 280px; }
 @media (max-width: 760px) { .ev-figs { grid-template-columns: 1fr; row-gap: 44px; } .ev-fig { border-left: none; padding: 0; } }
 @media (prefers-reduced-motion: no-preference) { .ev-art svg { transition: transform 0.5s cubic-bezier(0.2,0.6,0.2,1); } .ev-fig:hover .ev-art svg { transform: translateY(-6px) scale(1.04); } }
+.ev-card { background: var(--c-elev); border: 0.5px solid var(--c-900); border-radius: 3px; padding: 18px 20px 16px; margin: 24px 0 0; transition: border-color 0.4s ease; flex: 1 1 auto; display: flex; flex-direction: column; }
+.ev-fig:hover .ev-card { border-color: var(--c-800); }
+.ev-card-top { display: flex; align-items: center; justify-content: space-between; }
+.ev-card-title { font-size: 14px; color: var(--c-200); letter-spacing: -0.01em; }
+.ev-card-tab { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; color: var(--c-700); border: 0.5px solid var(--c-900); border-radius: 2px; padding: 3px 8px; }
+.ev-card-sub { font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; color: var(--c-700); margin-top: 12px; }
+.ev-chart { width: 100%; height: auto; display: block; margin-top: 14px; }
+.ev-card-legend { display: flex; gap: 18px; margin-top: auto; padding-top: 16px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; color: var(--c-700); }
+.ev-card-legend span { display: flex; align-items: center; gap: 6px; }
+.ev-card-legend .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+.ev-card-legend .dot.you { background: var(--c-white); }
+.ev-card-legend .dot.spx { background: var(--c-800); }
+.ev-rec { margin-top: 16px; flex: 1; display: flex; flex-direction: column; }
+.ev-rec-row.sealed { margin-top: auto; }
+.ev-rec-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 9px 0; border-top: 0.5px solid var(--c-1000); }
+.ev-rec-row:first-child { border-top: none; }
+.ev-rec-k { font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; color: var(--c-700); white-space: nowrap; }
+.ev-rec-v { height: 0.5px; background: var(--c-800); transition: background 0.4s ease; }
+.ev-fig:hover .ev-rec-v { background: var(--c-700); }
+.ev-rec-stamp { display: flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; color: var(--c-600); }
+.ev-rec-stamp .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--c-white); }
+@media (prefers-reduced-motion: no-preference) { .ev-line-you { stroke-dasharray: 380; stroke-dashoffset: 0; } .ev-fig:hover .ev-line-you { animation: ev-draw 0.9s cubic-bezier(0.4,0,0.1,1); } @keyframes ev-draw { from { stroke-dashoffset: 380; } to { stroke-dashoffset: 0; } } }
 @media (max-width: 760px) { .evidence-stats { grid-template-columns: 1fr; row-gap: 8px; } }
 
 /* journal — changelog-style horizontal timeline */
@@ -473,25 +495,52 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
       <div class="ev-num">9 in 10</div>
       <div class="ev-label">active funds underperform their benchmark over fifteen years.</div>
       <div class="ev-src">S&amp;P SPIVA &middot; [verify]</div>
-      <div class="ev-art"><svg viewBox="0 0 220 160" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><line x1="34" y1="140" x2="190" y2="140" stroke-opacity="0.4"/><path d="M34 112 L 72 104 L 110 82 L 150 58 L 190 34"/><path d="M34 116 L 72 112 L 110 102 L 150 96 L 190 82" stroke-opacity="0.5"/></svg></div>
-      <h3 class="ev-figtitle">Benchmark</h3>
-      <p class="ev-figcap">Your decisions vs. the S&amp;P&nbsp;500.</p>
+      <div class="ev-card">
+        <div class="ev-card-top"><span class="ev-card-title">Benchmark</span><span class="ev-card-tab">15Y</span></div>
+        <div class="ev-card-sub">Your decisions vs. the S&amp;P&nbsp;500</div>
+        <svg class="ev-chart" viewBox="0 0 280 120" fill="none" aria-hidden="true">
+          <line x1="0" y1="22" x2="280" y2="22" stroke="#1C1C1C" stroke-width="0.5"/>
+          <line x1="0" y1="60" x2="280" y2="60" stroke="#1C1C1C" stroke-width="0.5"/>
+          <line x1="0" y1="98" x2="280" y2="98" stroke="#1C1C1C" stroke-width="0.5"/>
+          <polyline points="0,92 56,86 112,80 168,70 224,60 280,52" stroke="#565B5E" stroke-width="1.25"/>
+          <polyline class="ev-line-you" points="0,94 56,84 112,66 168,48 224,28 280,12" stroke="#FFFFFF" stroke-width="1.5"/>
+          <circle cx="280" cy="12" r="2.5" fill="#FFFFFF"/>
+        </svg>
+        <div class="ev-card-legend"><span><span class="dot you"></span>You</span><span><span class="dot spx"></span>S&amp;P&nbsp;500</span></div>
+      </div>
     </a>
     <a href="II Site V2 - Calibration.html" class="ev-fig">
       <div class="ev-num">~1.7%</div>
       <div class="ev-label">annual return the average investor loses to mistimed buying and selling.</div>
       <div class="ev-src">Morningstar &middot; [verify]</div>
-      <div class="ev-art"><svg viewBox="0 0 220 160" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><line x1="34" y1="140" x2="190" y2="140" stroke-opacity="0.4"/><line x1="34" y1="20" x2="34" y2="140" stroke-opacity="0.4"/><line x1="34" y1="140" x2="186" y2="24" stroke-dasharray="3 3" stroke-opacity="0.6"/><path d="M34 140 C 86 122, 116 70, 186 30"/><circle cx="74" cy="120" r="2.4" fill="currentColor" stroke="none"/><circle cx="110" cy="86" r="2.4" fill="currentColor" stroke="none"/><circle cx="150" cy="52" r="2.4" fill="currentColor" stroke="none"/></svg></div>
-      <h3 class="ev-figtitle">Calibration</h3>
-      <p class="ev-figcap">Confidence against outcomes.</p>
+      <div class="ev-card">
+        <div class="ev-card-top"><span class="ev-card-title">Calibration</span><span class="ev-card-tab">BRIER</span></div>
+        <div class="ev-card-sub">Confidence against outcomes</div>
+        <svg class="ev-chart" viewBox="0 0 280 120" fill="none" aria-hidden="true">
+          <line x1="0" y1="108" x2="280" y2="108" stroke="#1C1C1C" stroke-width="0.5"/>
+          <line x1="2" y1="12" x2="2" y2="108" stroke="#1C1C1C" stroke-width="0.5"/>
+          <line x1="2" y1="108" x2="272" y2="12" stroke="#565B5E" stroke-width="1" stroke-dasharray="3 3"/>
+          <polyline class="ev-line-you" points="30,98 78,82 126,76 174,50 222,34 262,16" stroke="#FFFFFF" stroke-width="1.25"/>
+          <circle cx="30" cy="98" r="2.6" fill="#FFFFFF"/><circle cx="78" cy="82" r="2.6" fill="#FFFFFF"/><circle cx="126" cy="76" r="2.6" fill="#FFFFFF"/><circle cx="174" cy="50" r="2.6" fill="#FFFFFF"/><circle cx="222" cy="34" r="2.6" fill="#FFFFFF"/><circle cx="262" cy="16" r="2.6" fill="#FFFFFF"/>
+        </svg>
+        <div class="ev-card-legend"><span><span class="dot you"></span>Your calls</span><span><span class="dot spx"></span>Perfect</span></div>
+      </div>
     </a>
     <a href="II Site V2 - Memo.html" class="ev-fig">
       <div class="ev-num">4%</div>
       <div class="ev-label">of stocks account for nearly all net market wealth created since 1926.</div>
       <div class="ev-src">Bessembinder &middot; [verify]</div>
-      <div class="ev-art"><svg viewBox="0 0 220 160" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><rect x="46" y="18" width="128" height="124" rx="2" stroke-opacity="0.55"/><line x1="64" y1="46" x2="150" y2="46"/><line x1="64" y1="66" x2="156" y2="66"/><line x1="64" y1="86" x2="124" y2="86"/><line x1="64" y1="112" x2="150" y2="112" stroke-dasharray="3 3"/></svg></div>
-      <h3 class="ev-figtitle">Decision Record</h3>
-      <p class="ev-figcap">Recorded before the trade.</p>
+      <div class="ev-card">
+        <div class="ev-card-top"><span class="ev-card-title">Decision Record</span><span class="ev-card-tab">MEMO</span></div>
+        <div class="ev-card-sub">Recorded before the trade</div>
+        <div class="ev-rec">
+          <div class="ev-rec-row"><span class="ev-rec-k">Thesis</span><span class="ev-rec-v" style="width: 58%;"></span></div>
+          <div class="ev-rec-row"><span class="ev-rec-k">Intrinsic value</span><span class="ev-rec-v" style="width: 38%;"></span></div>
+          <div class="ev-rec-row"><span class="ev-rec-k">Kill criteria</span><span class="ev-rec-v" style="width: 48%;"></span></div>
+          <div class="ev-rec-row"><span class="ev-rec-k">Position</span><span class="ev-rec-v" style="width: 30%;"></span></div>
+          <div class="ev-rec-row sealed"><span class="ev-rec-k">Sealed</span><span class="ev-rec-stamp"><span class="dot"></span>before trade</span></div>
+        </div>
+      </div>
     </a>
   </div>
 </section></div>
