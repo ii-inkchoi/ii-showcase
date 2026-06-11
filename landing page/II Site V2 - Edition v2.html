@@ -567,12 +567,12 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 
 <!-- JOURNAL — recent writing -->
 <div class="container"><section id="journal">
-  <div class="entry-head"><span class="entry-no" data-type>No. 07</span></div>
-  <h2 class="journal-title">Journal</h2>
+  <div class="entry-head"><span class="entry-no" data-type>No. 07</span><span class="entry-name" data-type>Journal</span></div>
+  <h2 class="statement">Recent thinking, on the record.</h2>
   <div class="timeline">
     <a href="II Site V2 - Journal.html" class="tl-item active">
       <span class="tl-node"></span>
-      <span class="tl-fig"><img src="images/jr-memo.png" alt="" loading="lazy"></span>
+      <span class="tl-fig"><img src="images/jr-memo.png" style="object-position: center bottom;" alt="" loading="lazy"></span>
       <h3 class="tl-title">The cost of unrecorded judgment</h3>
       <p class="tl-excerpt">The industry instrumented every layer of investing except the one that compounds.</p>
       <span class="tl-date">Jun 3, 2026</span>
@@ -662,7 +662,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 
     function stagger(q, step) { document.querySelectorAll(q).forEach(function (el, i) { el.style.setProperty('--d', (i * step).toFixed(2) + 's'); }); }
     stagger('.rung', 0.09); stagger('#entry-03 .module', 0.08); stagger('#journal .tl-item', 0.08); stagger('footer .footer-legal', 0.05);
-    var sel = '#trust .trust-line, #trust .trust-strip, #entry-01 .e01-h, .rung, #entry-01 .e01-note, #entry-02 .statement, #entry-03 .statement, #entry-03 .module, #entry-03 .prose, #entry-04 .statement, #entry-04 .prose, #entry-04 .link, #evidence .statement, #evidence .prose, #evidence .ev-fig, #entry-04 .tenet, #entry-06 .statement, #entry-06 .prose, #entry-06 .link, #journal .journal-title, #journal .tl-item, #journal .tl-all, #close .close-h, #close .cta-btn, footer .footer-copy, footer .footer-social, footer .footer-legal, footer .footer-reset';
+    var sel = '#trust .trust-line, #trust .trust-strip, #entry-01 .e01-h, .rung, #entry-01 .e01-note, #entry-02 .statement, #entry-03 .statement, #entry-03 .module, #entry-03 .prose, #entry-04 .statement, #entry-04 .prose, #entry-04 .link, #evidence .statement, #evidence .prose, #evidence .ev-fig, #entry-04 .tenet, #entry-06 .statement, #entry-06 .prose, #entry-06 .link, #journal .statement, #journal .tl-item, #journal .tl-all, #close .close-h, #close .cta-btn, footer .footer-copy, footer .footer-social, footer .footer-legal, footer .footer-reset';
     var items = document.querySelectorAll(sel);
     items.forEach(function (el) { el.classList.add('ri'); });
     var rio = new IntersectionObserver(function (entries) { entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); rio.unobserve(e.target); } }); }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' });
