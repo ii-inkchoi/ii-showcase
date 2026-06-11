@@ -244,6 +244,53 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 .ev-rec-stamp .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--c-white); }
 @media (prefers-reduced-motion: no-preference) { .ev-line-you { stroke-dasharray: 380; stroke-dashoffset: 0; } .ev-fig:hover .ev-line-you { animation: ev-draw 0.9s cubic-bezier(0.5,0,0.2,1); } @keyframes ev-draw { from { stroke-dashoffset: 380; } to { stroke-dashoffset: 0; } } }
 
+/* ontology — the decision model (standalone band) */
+.onto-lead { font-size: 17px; line-height: 1.6; color: var(--c-600); max-width: 620px; }
+.onto-graph { position: relative; margin-top: 44px; padding: 44px clamp(24px, 3vw, 56px) 40px; }
+.onto-graph::before { content: ''; position: absolute; inset: 0; pointer-events: none; background-image: repeating-linear-gradient(to right, var(--c-1000) 0, var(--c-1000) 0.5px, transparent 0.5px, transparent 72px), repeating-linear-gradient(to bottom, var(--c-1000) 0, var(--c-1000) 0.5px, transparent 0.5px, transparent 72px); }
+.onto-flow { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); column-gap: var(--gutter); }
+.onto-flow::before { content: ''; position: absolute; top: 4px; left: 0; right: 0; border-top: 0.5px solid var(--c-800); }
+.ophase { position: relative; }
+.ophase-node { display: block; width: 8px; height: 8px; background: var(--c-700); box-shadow: 0 0 0 5px var(--c-black); margin-bottom: 26px; }
+.ophase:first-child .ophase-node { background: var(--c-white); }
+.ophase-label { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; color: var(--c-400); margin-bottom: 16px; }
+.ophase-label .pn { color: var(--c-700); margin-right: 9px; }
+.ophase-terms { display: flex; flex-direction: column; gap: 10px; }
+.ophase-terms span { font-size: 15px; color: var(--c-400); letter-spacing: -0.01em; }
+.onto-return { position: relative; height: 28px; margin-top: 14px; border: 0.5px dashed var(--c-800); border-top: none; }
+.onto-return .lbl { position: absolute; left: 50%; bottom: -7px; transform: translateX(-50%); background: var(--c-black); padding: 0 14px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; color: var(--c-700); white-space: nowrap; }
+@media (max-width: 760px) { .onto-graph::before { display: none; } .onto-graph { padding: 0; } .onto-flow { grid-template-columns: 1fr; row-gap: 28px; } .onto-flow::before { display: none; } .ophase-node { margin-bottom: 14px; } .onto-return { display: none; } }
+@media (prefers-reduced-motion: no-preference) {
+  .onto-flow::before { transform: scaleX(0); transform-origin: left; }
+  .onto-graph.in .onto-flow::before { transform: scaleX(1); transition: transform 0.9s cubic-bezier(0.5,0,0.2,1); }
+  .ophase { opacity: 0; transform: translateY(16px); transition: opacity 0.6s cubic-bezier(0.2,0.6,0.2,1), transform 0.6s cubic-bezier(0.2,0.6,0.2,1); }
+  .onto-graph.in .ophase { opacity: 1; transform: none; }
+  .onto-graph.in .ophase:nth-child(1) { transition-delay: 0.30s; }
+  .onto-graph.in .ophase:nth-child(2) { transition-delay: 0.45s; }
+  .onto-graph.in .ophase:nth-child(3) { transition-delay: 0.60s; }
+  .onto-graph.in .ophase:nth-child(4) { transition-delay: 0.75s; }
+  .onto-return { opacity: 0; transform: translateY(-6px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2,0.6,0.2,1); transition-delay: 1s; }
+  .onto-graph.in .onto-return { opacity: 1; transform: none; }
+}
+.onto-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 30px; }
+.oh-title { font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; color: var(--c-400); }
+.oh-status { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; color: var(--c-700); display: inline-flex; align-items: center; gap: 8px; }
+.oh-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--c-live); display: inline-block; }
+.og-mark { position: absolute; width: 10px; height: 10px; pointer-events: none; }
+.og-mark.tl { top: 12px; left: 12px; border-top: 0.5px solid var(--c-700); border-left: 0.5px solid var(--c-700); }
+.og-mark.tr { top: 12px; right: 12px; border-top: 0.5px solid var(--c-700); border-right: 0.5px solid var(--c-700); }
+.og-mark.bl { bottom: 12px; left: 12px; border-bottom: 0.5px solid var(--c-700); border-left: 0.5px solid var(--c-700); }
+.og-mark.br { bottom: 12px; right: 12px; border-bottom: 0.5px solid var(--c-700); border-right: 0.5px solid var(--c-700); }
+.onto-sig { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; color: var(--c-800); margin-top: 30px; }
+.onto-sig .wedge { color: var(--c-700); margin-right: 8px; }
+@media (prefers-reduced-motion: no-preference) {
+  .onto-head, .onto-sig, .og-mark { opacity: 0; transition: opacity 0.6s ease; }
+  .onto-graph.in .onto-head { opacity: 1; }
+  .onto-graph.in .og-mark { opacity: 1; transition-delay: 0.15s; }
+  .onto-graph.in .onto-sig { opacity: 1; transition-delay: 1.15s; }
+  .oh-dot { animation: dot-pulse 2.2s ease-in-out infinite; }
+}
+
 /* journal — changelog-style horizontal timeline */
 .journal-title { font-size: clamp(24px, 3vw, 34px); color: var(--c-200); font-weight: 400; letter-spacing: -0.025em; }
 .timeline { position: relative; display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); row-gap: 36px; margin-top: 56px; }
@@ -462,6 +509,23 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   </div>
 </div></section>
 
+<!-- ONTOLOGY — the decision model (standalone band) -->
+<div class="container"><section id="ontology">
+  <p class="onto-lead">One model underneath every decision. The last step sharpens the next.</p>
+  <div class="onto-graph">
+    <span class="og-mark tl"></span><span class="og-mark tr"></span><span class="og-mark bl"></span><span class="og-mark br"></span>
+    <div class="onto-head"><span class="oh-title">Decision Model</span><span class="oh-status"><span class="oh-dot"></span>Live &middot; 10 objects</span></div>
+    <div class="onto-flow">
+      <div class="ophase"><span class="ophase-node"></span><div class="ophase-label"><span class="pn">01</span>Form</div><div class="ophase-terms"><span>Allocator</span><span>Thesis</span><span>Probability</span><span>Intrinsic value</span></div></div>
+      <div class="ophase"><span class="ophase-node"></span><div class="ophase-label"><span class="pn">02</span>Commit</div><div class="ophase-terms"><span>Kill criteria</span><span>Position</span></div></div>
+      <div class="ophase"><span class="ophase-node"></span><div class="ophase-label"><span class="pn">03</span>Observe</div><div class="ophase-terms"><span>Outcome</span><span>Calibration</span></div></div>
+      <div class="ophase"><span class="ophase-node"></span><div class="ophase-label"><span class="pn">04</span>Improve</div><div class="ophase-terms"><span>Re-underwriting</span><span>Learning</span></div></div>
+    </div>
+    <div class="onto-return"><span class="lbl">&#8634; Improve feeds the next Form. Judgment compounds.</span></div>
+    <div class="onto-sig"><span class="wedge">//</span>Re-underwritten on every outcome.</div>
+  </div>
+</section></div>
+
 <!-- ENTRY 03 — The System -->
 <div class="container"><section id="entry-03">
   <div class="entry-head"><span class="entry-no" data-type>No. 03</span><span class="entry-name" data-type>The System</span></div>
@@ -662,7 +726,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 
     function stagger(q, step) { document.querySelectorAll(q).forEach(function (el, i) { el.style.setProperty('--d', (i * step).toFixed(2) + 's'); }); }
     stagger('.rung', 0.09); stagger('#entry-03 .module', 0.08); stagger('#journal .tl-item', 0.08); stagger('footer .footer-legal', 0.05);
-    var sel = '#trust .trust-line, #trust .trust-strip, #entry-01 .e01-h, .rung, #entry-01 .e01-note, #entry-02 .statement, #entry-03 .statement, #entry-03 .module, #entry-03 .prose, #entry-04 .statement, #entry-04 .prose, #entry-04 .link, #evidence .statement, #evidence .prose, #evidence .ev-fig, #entry-04 .tenet, #entry-06 .statement, #entry-06 .prose, #entry-06 .link, #journal .statement, #journal .tl-item, #journal .tl-all, #close .close-h, #close .cta-btn, footer .footer-copy, footer .footer-social, footer .footer-legal, footer .footer-reset';
+    var sel = '#trust .trust-line, #trust .trust-strip, #entry-01 .e01-h, .rung, #entry-01 .e01-note, #entry-02 .statement, #entry-03 .statement, #entry-03 .module, #entry-03 .prose, #ontology .onto-lead, #entry-04 .statement, #entry-04 .prose, #entry-04 .link, #evidence .statement, #evidence .prose, #evidence .ev-fig, #entry-04 .tenet, #entry-06 .statement, #entry-06 .prose, #entry-06 .link, #journal .statement, #journal .tl-item, #journal .tl-all, #close .close-h, #close .cta-btn, footer .footer-copy, footer .footer-social, footer .footer-legal, footer .footer-reset';
     var items = document.querySelectorAll(sel);
     items.forEach(function (el) { el.classList.add('ri'); });
     var rio = new IntersectionObserver(function (entries) { entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); rio.unobserve(e.target); } }); }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' });
@@ -676,6 +740,8 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     }
 
     var tline = document.querySelector('.timeline'); if (tline) rio.observe(tline);
+    var og = document.querySelector('#ontology .onto-graph');
+    if (og) { var ogo = new IntersectionObserver(function (entries) { entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); ogo.unobserve(e.target); } }); }, { threshold: 0.2 }); ogo.observe(og); }
   })();
 
   // memo card — type the answers (values + investment case), labels stay
