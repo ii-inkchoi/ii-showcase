@@ -279,10 +279,15 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   .hero-main .hero-cta { animation-delay: 0.58s; }
 }
 @keyframes hero-rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
-.scramble { white-space: nowrap; }
+.roll { display: inline-block; overflow: hidden; vertical-align: bottom; height: 1lh; }
+.roll-in { display: block; }
+.roll-in > span { display: block; }
 @media (prefers-reduced-motion: no-preference) {
-  .timeline::before { transform: scaleX(0); transform-origin: left; transition: transform 0.8s cubic-bezier(0.5,0,0.2,1); }
+  .roll-in { transition: transform 0.42s cubic-bezier(0.45,0,0.15,1); }
+  a:hover .roll-in { transform: translateY(-50%); }
+  .timeline::before { transform: scaleX(0); transform-origin: left; transition: transform 1.4s cubic-bezier(0.4,0,0.1,1); }
   .timeline.in::before { transform: scaleX(1); }
+  .tl-item.active .tl-node { animation: dot-pulse 2.2s ease-in-out infinite; }
   .rung::before { transform: scaleY(0); transform-origin: top center; transition: transform 0.55s ease; transition-delay: var(--d, 0s); }
   .rung.in::before { transform: scaleY(1); }
   /* module divider lines draw 0 -> full width */
@@ -297,6 +302,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   .memo-fig .mf-divider { transform: scaleX(0); transform-origin: left; animation: line-draw 0.6s cubic-bezier(0.5,0,0.2,1) 1s both; }
 }
 @keyframes line-draw { to { transform: scaleX(1); } }
+@keyframes dot-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
 @keyframes draw-tr { 0% { clip-path: inset(0 100% 100% 0); } 50% { clip-path: inset(0 0 100% 0); } 100% { clip-path: inset(0 0 0 0); } }
 @keyframes draw-bl { 0% { clip-path: inset(100% 0 0 100%); } 50% { clip-path: inset(100% 0 0 0); } 100% { clip-path: inset(0 0 0 0); } }
 @keyframes iceberg-float { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-16px) scale(1.02); } }@keyframes memo-rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
@@ -346,8 +352,8 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
         <h1 class="hero-h">The investing industry built access.<br>It never built judgment infrastructure.</h1>
         <p class="hero-sub">A capital allocation system for people who would rather see reality than be reassured by it.</p>
         <div class="hero-cta">
-          <a href="II Site V2 - GetTheApp.html" class="pri"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="scramble" data-text="Proceed Deliberately">Proceed Deliberately</span></a>
-          <a href="II Site V2 - Product.html" class="sec"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="scramble" data-text="See the System">See the System</span></a>
+          <a href="II Site V2 - GetTheApp.html" class="pri"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Proceed Deliberately</span><span>Proceed Deliberately</span></span></span></a>
+          <a href="II Site V2 - Product.html" class="sec"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>See the System</span><span>See the System</span></span></span></a>
         </div>
       </div>
       <div class="hero-figure memo-fig">
@@ -405,10 +411,10 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   <div class="entry-head"><span class="entry-no" data-type>Entry No. 03</span><span class="entry-name" data-type>The System</span></div>
   <h2 class="statement">A position begins before a purchase.<br>It begins with an explanation.</h2>
   <div class="modules">
-    <a href="II Site V2 - Memo.html" class="module"><span class="m-name">Memo</span><span class="m-fig">[ image ]</span><span class="m-desc">Thesis, sizing, and kill criteria. Recorded.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
-    <a href="II Site V2 - Benchmark.html" class="module"><span class="m-name">Benchmark</span><span class="m-fig">[ image ]</span><span class="m-desc">Your decisions against the S&amp;P 500.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
-    <a href="II Site V2 - Research.html" class="module"><span class="m-name">Research</span><span class="m-fig">[ image ]</span><span class="m-desc">Institutional research, now included.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
-    <a href="II Site V2 - Calibration.html" class="module"><span class="m-name">Calibration</span><span class="m-fig">[ image ]</span><span class="m-desc">Expectations against outcomes. Measured.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+    <a href="II Site V2 - Memo.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Memo</span><span>Memo</span></span></span></span><span class="m-fig">[ image ]</span><span class="m-desc">Thesis, sizing, and kill criteria. Recorded.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+    <a href="II Site V2 - Benchmark.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Benchmark</span><span>Benchmark</span></span></span></span><span class="m-fig">[ image ]</span><span class="m-desc">Your decisions against the S&amp;P 500.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+    <a href="II Site V2 - Research.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Research</span><span>Research</span></span></span></span><span class="m-fig">[ image ]</span><span class="m-desc">Institutional research, now included.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+    <a href="II Site V2 - Calibration.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Calibration</span><span>Calibration</span></span></span></span><span class="m-fig">[ image ]</span><span class="m-desc">Expectations against outcomes. Measured.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
   </div>
   <p class="prose" style="margin-top:36px; max-width:680px;">Each module operates on a real, funded account: opened, custodied, and traded through our own regulated entities. The value is not in joining the system. It is in operating it.</p>
 </section></div>
@@ -471,7 +477,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 <div class="container"><section id="close">
   <div class="close-wrap">
     <h2 class="close-h">The objective is not to make more decisions.<br>The objective is to become better at making them.</h2>
-    <a href="II Site V2 - GetTheApp.html" class="cta-btn"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="scramble" data-text="Proceed Deliberately">Proceed Deliberately</span></a>
+    <a href="II Site V2 - GetTheApp.html" class="cta-btn"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Proceed Deliberately</span><span>Proceed Deliberately</span></span></span></a>
   </div>
 </section></div>
 
@@ -541,27 +547,6 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     }
 
     var tline = document.querySelector('.timeline'); if (tline) rio.observe(tline);
-
-    var SC = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    document.querySelectorAll('.scramble').forEach(function (el) {
-      var t = el.getAttribute('data-text') || el.textContent; var raf, start;
-      el.addEventListener('mouseenter', function () {
-        cancelAnimationFrame(raf); start = null;
-        var reveal = t.split('').map(function (_, i) { return i * 1.8 + Math.random() * 4; });
-        function tick(ts) {
-          if (start === null) start = ts;
-          var f = (ts - start) / 26, done = true;
-          el.textContent = t.split('').map(function (c, i) {
-            if (c === ' ') return ' ';
-            if (f >= reveal[i]) return c;
-            done = false; return SC[Math.floor(Math.random() * SC.length)];
-          }).join('');
-          if (done) el.textContent = t; else raf = requestAnimationFrame(tick);
-        }
-        raf = requestAnimationFrame(tick);
-      });
-      el.addEventListener('mouseleave', function () { cancelAnimationFrame(raf); el.textContent = t; });
-    });
   })();
 
 </script>
