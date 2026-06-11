@@ -90,7 +90,7 @@ section { padding: 130px 0; position: relative; }
 
 /* hero */
 section.hero { position: relative; height: 100vh; height: 100dvh; display: flex; align-items: center; padding: 0; overflow: hidden; }
-section.hero::before { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: url('contentteammogo_a_data-iceberg_crossing_a_single_horizontal_wat_89ae1729-183d-4fba-942d-f49eec034b32.png') center 58vh / 100% auto no-repeat; opacity: 0.5; will-change: transform; }
+section.hero::before { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: url('contentteammogo_a_data-iceberg_crossing_a_single_horizontal_wat_89ae1729-183d-4fba-942d-f49eec034b32.png') center 58vh / 100% auto no-repeat; opacity: 0.32; will-change: transform; }
 section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: linear-gradient(to bottom, rgba(0,0,0,0) 66%, rgba(0,0,0,1) 100%); }.hero-wrap { position: relative; z-index: 1; transform: translateY(-6%); width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--frame); }
 .hero-top { display: grid; grid-template-columns: repeat(8, 1fr); column-gap: var(--gutter); align-items: center; }
 .hero-main { grid-column: 1 / 6; }
@@ -116,7 +116,7 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 .memo-fig .mf-v { font-size: 13px; color: var(--c-400); text-align: right; }
 .memo-fig .mf-meta { color: var(--c-700); margin-left: 4px; }
 .memo-fig .mf-case-label { font-size: 13px; color: var(--c-700); border-bottom: 0.5px dotted var(--c-800); padding-bottom: 1px; display: inline-block; margin: 14px 0 8px; }
-.memo-fig .mf-prose { font-size: 13px; line-height: 1.6; color: var(--c-400); }
+.memo-fig .mf-prose { font-size: 13px; line-height: 1.6; color: var(--c-400); min-height: 4.8em; }
 .memo-fig .mf-readmore { font-size: 11px; color: var(--c-700); margin-top: 10px; }
 .memo-fig .mf-divider { height: 0.5px; background: var(--c-900); margin: 14px 0; }
 .memo-fig .mf-foot { display: flex; justify-content: flex-end; }
@@ -185,7 +185,8 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 .module { position: relative; display: grid; grid-template-columns: minmax(140px, 1fr) minmax(0, 1.6fr) minmax(150px, 1fr) 18px; align-items: center; gap: 32px; padding: 16px 0; border-top: 0.5px solid var(--c-900); text-decoration: none; color: inherit; }
 .module .m-name { font-size: clamp(26px, 2.6vw, 36px); color: var(--c-700); font-weight: 400; letter-spacing: -0.03em; line-height: 1; transition: color 0.15s ease; }
 .module:hover .m-name { color: var(--c-white); }
-.module .m-fig { height: 180px; border: 0.5px dashed var(--c-800); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.25s ease; font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: var(--c-700); }
+.module .m-fig { height: 180px; border: 0.5px solid var(--c-900); overflow: hidden; opacity: 0; transition: opacity 0.25s ease; }
+.module .m-fig img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.08); }
 .module:hover .m-fig { opacity: 1; }
 .module .m-desc { font-size: 15px; line-height: 1.5; color: var(--c-600); }
 .module .m-open { color: var(--c-700); display: inline-flex; align-items: center; justify-content: flex-end; transition: color 0.15s ease; }
@@ -282,8 +283,9 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 .roll { display: inline-block; overflow: hidden; vertical-align: bottom; height: 1lh; }
 .roll-in { display: block; }
 .roll-in > span { display: block; }
+.roll-in > span:last-child { color: var(--c-white); }
 @media (prefers-reduced-motion: no-preference) {
-  .roll-in { transition: transform 0.42s cubic-bezier(0.45,0,0.15,1); }
+  .roll-in { transition: transform 0.55s cubic-bezier(0.16,1,0.3,1); }
   a:hover .roll-in { transform: translateY(-50%); }
   .timeline::before { transform: scaleX(0); transform-origin: left; transition: transform 1.4s cubic-bezier(0.4,0,0.1,1); }
   .timeline.in::before { transform: scaleX(1); }
@@ -365,7 +367,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
           <div class="mf-row"><span class="mf-k">Confidence</span><span class="mf-v">62% <span class="mf-meta">&middot; 3y</span></span></div>
           <div class="mf-row"><span class="mf-k">Idea Origin</span><span class="mf-v">13F</span></div>
           <div class="mf-case-label">Investment Case</div>
-          <p class="mf-prose">A high-quality DTC business with a durable in-house brand portfolio, proven domestic unit economics, and a long runway in the US market.</p>
+          <p class="mf-prose types">A high-quality DTC business with a durable in-house brand portfolio, proven domestic unit economics, and a long runway in the US market.</p>
           <div class="mf-readmore">Read Full Memo</div>
           <div class="mf-divider"></div>
           <div class="mf-foot"><span class="mf-cta">Re-underwrite <span>&rsaquo;</span></span></div>
@@ -411,10 +413,10 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   <div class="entry-head"><span class="entry-no" data-type>Entry No. 03</span><span class="entry-name" data-type>The System</span></div>
   <h2 class="statement">A position begins before a purchase.<br>It begins with an explanation.</h2>
   <div class="modules">
-    <a href="II Site V2 - Memo.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Memo</span><span>Memo</span></span></span></span><span class="m-fig">[ image ]</span><span class="m-desc">Thesis, sizing, and kill criteria. Recorded.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
-    <a href="II Site V2 - Benchmark.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Benchmark</span><span>Benchmark</span></span></span></span><span class="m-fig">[ image ]</span><span class="m-desc">Your decisions against the S&amp;P 500.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
-    <a href="II Site V2 - Research.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Research</span><span>Research</span></span></span></span><span class="m-fig">[ image ]</span><span class="m-desc">Institutional research, now included.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
-    <a href="II Site V2 - Calibration.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Calibration</span><span>Calibration</span></span></span></span><span class="m-fig">[ image ]</span><span class="m-desc">Expectations against outcomes. Measured.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+    <a href="II Site V2 - Memo.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Memo</span><span>Memo</span></span></span></span><span class="m-fig"><img src="images/contentteammogo_httpss.mj.runVOvOujARmhA_front_viewBLANK_scre_af8b60bf-bf94-4017-9e74-fdbb978a3654_3.png" alt="" loading="lazy"></span><span class="m-desc">Thesis, sizing, and kill criteria. Recorded.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+    <a href="II Site V2 - Benchmark.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Benchmark</span><span>Benchmark</span></span></span></span><span class="m-fig"><img src="images/contentteammogo_a_thin_glowing_benchmark_grid_plane_near_the_TO_b2e807e7-2b12-4cf8-814d-c8862a85fd26.png" alt="" loading="lazy"></span><span class="m-desc">Your decisions against the S&amp;P 500.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+    <a href="II Site V2 - Research.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Research</span><span>Research</span></span></span></span><span class="m-fig"><img src="images/This%20is%20the%20shape%20of%20a%20decision.png" alt="" loading="lazy"></span><span class="m-desc">Institutional research, now included.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+    <a href="II Site V2 - Calibration.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Calibration</span><span>Calibration</span></span></span></span><span class="m-fig"><img src="images/We%20don%27t%20sell%20confidence.%20We%20sell%20the%20discipline%20to%20face%20the%20mirror..png" alt="" loading="lazy"></span><span class="m-desc">Expectations against outcomes. Measured.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
   </div>
   <p class="prose" style="margin-top:36px; max-width:680px;">Each module operates on a real, funded account: opened, custodied, and traded through our own regulated entities. The value is not in joining the system. It is in operating it.</p>
 </section></div>
@@ -547,6 +549,21 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     }
 
     var tline = document.querySelector('.timeline'); if (tline) rio.observe(tline);
+  })();
+
+  // memo card — type the answers (values + investment case), labels stay
+  (function () {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var card = document.querySelector('.memo-fig .mf-card'); if (!card) return;
+    var els = Array.prototype.slice.call(card.querySelectorAll('.types'));
+    if (!els.length) return;
+    els.forEach(function (el) { el.setAttribute('data-tt', el.textContent); el.textContent = ''; });
+    var idx = 0;
+    function typeOne(el, done) {
+      var full = el.getAttribute('data-tt'); var i = 0; el.classList.add('type-caret');
+      (function tick() { if (i <= full.length) { el.textContent = full.slice(0, i); i++; setTimeout(tick, 20); } else { el.classList.remove('type-caret'); done(); } })();
+    }
+    setTimeout(function next() { if (idx < els.length) { typeOne(els[idx], function () { idx++; next(); }); } }, 500);
   })();
 
 </script>
