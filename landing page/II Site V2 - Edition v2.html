@@ -90,7 +90,7 @@ section { padding: 130px 0; position: relative; }
 
 /* hero */
 section.hero { position: relative; height: 100vh; height: 100dvh; display: flex; align-items: center; padding: 0; overflow: hidden; }
-section.hero::before { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: url('contentteammogo_a_data-iceberg_crossing_a_single_horizontal_wat_89ae1729-183d-4fba-942d-f49eec034b32.png') center 58vh / 100% auto no-repeat; opacity: 0.65; will-change: transform; }
+section.hero::before { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: url('contentteammogo_a_data-iceberg_crossing_a_single_horizontal_wat_89ae1729-183d-4fba-942d-f49eec034b32.png') center 58vh / 100% auto no-repeat; opacity: 0.5; will-change: transform; }
 section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: linear-gradient(to bottom, rgba(0,0,0,0) 66%, rgba(0,0,0,1) 100%); }.hero-wrap { position: relative; z-index: 1; transform: translateY(-6%); width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--frame); }
 .hero-top { display: grid; grid-template-columns: repeat(8, 1fr); column-gap: var(--gutter); align-items: center; }
 .hero-main { grid-column: 1 / 6; }
@@ -182,7 +182,7 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 
 /* module grid */
 .modules { display: flex; flex-direction: column; margin-top: 40px; border-bottom: 0.5px solid var(--c-900); }
-.module { display: grid; grid-template-columns: minmax(140px, 1fr) minmax(0, 1.6fr) minmax(150px, 1fr) 18px; align-items: center; gap: 32px; padding: 16px 0; border-top: 0.5px solid var(--c-900); text-decoration: none; color: inherit; }
+.module { position: relative; display: grid; grid-template-columns: minmax(140px, 1fr) minmax(0, 1.6fr) minmax(150px, 1fr) 18px; align-items: center; gap: 32px; padding: 16px 0; border-top: 0.5px solid var(--c-900); text-decoration: none; color: inherit; }
 .module .m-name { font-size: clamp(26px, 2.6vw, 36px); color: var(--c-700); font-weight: 400; letter-spacing: -0.03em; line-height: 1; transition: color 0.15s ease; }
 .module:hover .m-name { color: var(--c-white); }
 .module .m-fig { height: 180px; border: 0.5px dashed var(--c-800); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.25s ease; font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: var(--c-700); }
@@ -261,7 +261,44 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   .memo-fig .mf-dot { animation: memo-pulse 2.4s ease-in-out infinite; }
   .hero-scroll .sa { animation: scroll-bob 1.8s ease-in-out infinite; }
   section.hero::before { animation: iceberg-float 7s ease-in-out infinite; }
+  .rung.gap .node { animation: gap-pulse 2.4s ease-in-out infinite; }
 }
+@keyframes gap-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(255,122,0,0); } 50% { box-shadow: 0 0 0 5px rgba(255,122,0,0.14); } }
+@media (prefers-reduced-motion: no-preference) {
+  /* per-element scroll reveal — rises individually as you scroll */
+  .ri { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.2,0.6,0.2,1), transform 0.7s cubic-bezier(0.2,0.6,0.2,1); transition-delay: var(--d, 0s); }
+  .ri.in { opacity: 1; transform: none; }
+  /* product placeholders — outline wipes open (0 -> fill) */
+  .alloc-stage .ap-card { clip-path: inset(0 100% 0 0); transition: clip-path 0.9s cubic-bezier(0.6,0,0.2,1); transition-delay: var(--d, 0s); }
+  .alloc-stage.in .ap-card { clip-path: inset(0 0 0 0); }
+  /* hero text rises individually on load */
+  .hero-main .hero-eyebrow, .hero-main .hero-h, .hero-main .hero-sub, .hero-main .hero-cta { opacity: 0; animation: hero-rise 0.85s cubic-bezier(0.2,0.6,0.2,1) forwards; }
+  .hero-main .hero-eyebrow { animation-delay: 0.10s; }
+  .hero-main .hero-h { animation-delay: 0.22s; }
+  .hero-main .hero-sub { animation-delay: 0.42s; }
+  .hero-main .hero-cta { animation-delay: 0.58s; }
+}
+@keyframes hero-rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+.scramble { white-space: nowrap; }
+@media (prefers-reduced-motion: no-preference) {
+  .timeline::before { transform: scaleX(0); transform-origin: left; transition: transform 0.8s cubic-bezier(0.5,0,0.2,1); }
+  .timeline.in::before { transform: scaleX(1); }
+  .rung::before { transform: scaleY(0); transform-origin: top center; transition: transform 0.55s ease; transition-delay: var(--d, 0s); }
+  .rung.in::before { transform: scaleY(1); }
+  /* module divider lines draw 0 -> full width */
+  .module { border-top-color: transparent; }
+  .module::after { content: ''; position: absolute; top: 0; left: 0; right: 0; border-top: 0.5px solid var(--c-900); transform: scaleX(0); transform-origin: left; transition: transform 0.7s cubic-bezier(0.5,0,0.2,1); transition-delay: var(--d, 0s); }
+  .module.in::after { transform: scaleX(1); }
+  /* memo card outline draws into a rectangle */
+  .memo-fig .mf-card { position: relative; border-color: transparent; }
+  .memo-fig .mf-card::before, .memo-fig .mf-card::after { content: ''; position: absolute; inset: 0; pointer-events: none; }
+  .memo-fig .mf-card::before { border-top: 0.5px solid var(--c-900); border-right: 0.5px solid var(--c-900); animation: draw-tr 0.7s cubic-bezier(0.6,0,0.2,1) 0.35s both; }
+  .memo-fig .mf-card::after { border-bottom: 0.5px solid var(--c-900); border-left: 0.5px solid var(--c-900); animation: draw-bl 0.7s cubic-bezier(0.6,0,0.2,1) 0.35s both; }
+  .memo-fig .mf-divider { transform: scaleX(0); transform-origin: left; animation: line-draw 0.6s cubic-bezier(0.5,0,0.2,1) 1s both; }
+}
+@keyframes line-draw { to { transform: scaleX(1); } }
+@keyframes draw-tr { 0% { clip-path: inset(0 100% 100% 0); } 50% { clip-path: inset(0 0 100% 0); } 100% { clip-path: inset(0 0 0 0); } }
+@keyframes draw-bl { 0% { clip-path: inset(100% 0 0 100%); } 50% { clip-path: inset(100% 0 0 0); } 100% { clip-path: inset(0 0 0 0); } }
 @keyframes iceberg-float { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-16px) scale(1.02); } }@keyframes memo-rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 @keyframes memo-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
 @keyframes scroll-bob { 0%, 100% { transform: translateY(0) rotate(90deg); } 50% { transform: translateY(4px) rotate(90deg); } }
@@ -309,8 +346,8 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
         <h1 class="hero-h">The investing industry built access.<br>It never built judgment infrastructure.</h1>
         <p class="hero-sub">A capital allocation system for people who would rather see reality than be reassured by it.</p>
         <div class="hero-cta">
-          <a href="II Site V2 - GetTheApp.html" class="pri"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span>Proceed Deliberately</a>
-          <a href="II Site V2 - Product.html" class="sec"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span>See the System</a>
+          <a href="II Site V2 - GetTheApp.html" class="pri"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="scramble" data-text="Proceed Deliberately">Proceed Deliberately</span></a>
+          <a href="II Site V2 - Product.html" class="sec"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="scramble" data-text="See the System">See the System</span></a>
         </div>
       </div>
       <div class="hero-figure memo-fig">
@@ -373,7 +410,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     <a href="II Site V2 - Research.html" class="module"><span class="m-name">Research</span><span class="m-fig">[ image ]</span><span class="m-desc">Institutional research, now included.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
     <a href="II Site V2 - Calibration.html" class="module"><span class="m-name">Calibration</span><span class="m-fig">[ image ]</span><span class="m-desc">Expectations against outcomes. Measured.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
   </div>
-  <p class="prose" style="margin-top:36px;">Each module operates on a real, funded account: opened, custodied, and traded through our own regulated entities. The value is not in joining the system. It is in operating it.</p>
+  <p class="prose" style="margin-top:36px; max-width:680px;">Each module operates on a real, funded account: opened, custodied, and traded through our own regulated entities. The value is not in joining the system. It is in operating it.</p>
 </section></div>
 
 <!-- ENTRY 04 — Manifesto -->
@@ -434,7 +471,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 <div class="container"><section id="close">
   <div class="close-wrap">
     <h2 class="close-h">The objective is not to make more decisions.<br>The objective is to become better at making them.</h2>
-    <a href="II Site V2 - GetTheApp.html" class="cta-btn"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span>Proceed Deliberately</a>
+    <a href="II Site V2 - GetTheApp.html" class="cta-btn"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="scramble" data-text="Proceed Deliberately">Proceed Deliberately</span></a>
   </div>
 </section></div>
 
@@ -478,15 +515,46 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     if (navbar) navbar.classList.toggle('scrolled', y > 40);
   }, { passive: true });
 
-  // motion — reveal + label typing. honors reduced-motion.
+  // motion — per-element scroll reveal + label typing. honors reduced-motion.
   (function () {
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     document.querySelectorAll('[data-type]').forEach(function (el) { el.setAttribute('data-type-text', el.textContent); el.textContent = ''; });
     function typeEl(el, done) { var full = el.getAttribute('data-type-text') || ''; el.textContent = ''; el.classList.add('type-caret'); var i = 0; (function tick() { if (i <= full.length) { el.textContent = full.slice(0, i); i++; setTimeout(tick, 40); } else { el.classList.remove('type-caret'); if (done) done(); } })(); }
     function typeSection(sec) { var els = sec.querySelectorAll('[data-type]'); var idx = 0; (function next() { if (idx < els.length) { typeEl(els[idx], function () { idx++; next(); }); } })(); }
-    var io = new IntersectionObserver(function (entries) { entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); typeSection(e.target); io.unobserve(e.target); } }); }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-    document.querySelectorAll('section').forEach(function (s) { s.classList.add('reveal'); io.observe(s); });
+    var tio = new IntersectionObserver(function (entries) { entries.forEach(function (e) { if (e.isIntersecting) { typeSection(e.target); tio.unobserve(e.target); } }); }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
+    document.querySelectorAll('section').forEach(function (s) { tio.observe(s); });
     var hero = document.querySelector('section.hero'); if (hero) typeSection(hero);
+
+    function stagger(q, step) { document.querySelectorAll(q).forEach(function (el, i) { el.style.setProperty('--d', (i * step).toFixed(2) + 's'); }); }
+    stagger('.rung', 0.09); stagger('#entry-03 .module', 0.08); stagger('#journal .tl-item', 0.08); stagger('footer .footer-legal', 0.05);
+    var sel = '#entry-01 .e01-h, .rung, #entry-01 .e01-note, #entry-02 .statement, .alloc-sub, #entry-03 .statement, #entry-03 .module, #entry-03 .prose, #entry-04 .statement, #entry-04 .prose, #entry-04 .link, #entry-05 .price-line, #entry-05 .prose, #entry-05 .link, #altitude .altitude, #journal .journal-title, #journal .tl-item, #journal .tl-all, #close .close-h, #close .cta-btn, footer .footer-copy, footer .footer-social, footer .footer-legal, footer .footer-reset';
+    var items = document.querySelectorAll(sel);
+    items.forEach(function (el) { el.classList.add('ri'); });
+    var rio = new IntersectionObserver(function (entries) { entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); rio.unobserve(e.target); } }); }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' });
+    items.forEach(function (el) { rio.observe(el); });
+
+    var stage = document.querySelector('.alloc-stage');
+    if (stage) {
+      document.querySelectorAll('.alloc-stage .ap-card').forEach(function (el, i) { el.style.setProperty('--d', (i * 0.2) + 's'); });
+      var sio = new IntersectionObserver(function (entries) { entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); sio.unobserve(e.target); } }); }, { threshold: 0.2 });
+      sio.observe(stage);
+    }
+
+    var tline = document.querySelector('.timeline'); if (tline) rio.observe(tline);
+
+    var SC = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    document.querySelectorAll('.scramble').forEach(function (el) {
+      var t = el.getAttribute('data-text') || el.textContent; var iv;
+      el.addEventListener('mouseenter', function () {
+        clearInterval(iv); var pos = 0;
+        iv = setInterval(function () {
+          el.textContent = t.split('').map(function (c, i) { return (c === ' ' || i < pos || i >= pos + 3) ? c : SC[Math.floor(Math.random() * SC.length)]; }).join('');
+          pos++;
+          if (pos > t.length) { clearInterval(iv); el.textContent = t; }
+        }, 35);
+      });
+      el.addEventListener('mouseleave', function () { clearInterval(iv); el.textContent = t; });
+    });
   })();
 
 </script>
