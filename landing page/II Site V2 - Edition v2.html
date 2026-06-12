@@ -122,11 +122,11 @@ section { padding: 130px 0; position: relative; }
 .aph-wt { font-size: 17px; color: var(--c-700); letter-spacing: -0.02em; }
 .aph-class { font-size: 14px; color: var(--c-700); }
 .aph-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
-.aph-line { display: grid; grid-template-columns: 96px 34px 56px; align-items: baseline; column-gap: 8px; }
-.aph-num { text-align: right; font-size: 17px; font-weight: 300; color: var(--c-white); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
-.aph-unit { font-size: 17px; font-weight: 300; color: var(--c-400); }
+.aph-line { display: grid; grid-template-columns: 92px 38px 72px; align-items: baseline; column-gap: 10px; }
+.aph-num { justify-self: end; text-align: right; font-size: 17px; font-weight: 300; color: var(--c-white); font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1; letter-spacing: -0.02em; }
+.aph-unit { justify-self: start; font-size: 17px; font-weight: 300; color: var(--c-400); }
 .aph-line.sub .aph-num { color: var(--c-200); }
-.aph-chg { text-align: right; font-size: 17px; color: var(--c-700); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.aph-chg { justify-self: end; text-align: right; font-size: 17px; color: var(--c-700); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1; }
 .aph-badges { display: flex; flex-wrap: wrap; gap: 6px; }
 .bdg { display: inline-flex; align-items: center; justify-content: center; line-height: 1; font-size: 11px; font-weight: 500; letter-spacing: 0.01em; padding: 5px 9px; border-radius: 3px; color: var(--c-400); background: color-mix(in srgb, var(--c-white) 9%, transparent); }
 .bdg.amber { color: var(--c-warning); background: color-mix(in srgb, var(--c-warning) 11%, transparent); }
@@ -140,7 +140,7 @@ section { padding: 130px 0; position: relative; }
   .ap-active { order: -1; }
 }
 @media (max-width: 900px) { .alloc-left, .alloc-product { grid-column: 1 / -1; } .alloc-product { margin-top: 36px; } }
-@media (max-width: 900px) { section { padding: 84px 0; } }
+@media (max-width: 900px) { section { padding: 72px 0; } }
 
 /* hero */
 section.hero { position: relative; height: 100vh; height: 100dvh; display: flex; align-items: center; padding: 0; overflow: hidden; }
@@ -150,7 +150,7 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 .hero-main { grid-column: 1 / 9; }
 .hero-eyebrow { font-family: var(--mono); font-size: 13px; color: var(--c-700); letter-spacing: 0.04em; margin-bottom: 36px; }
 .hero-h { font-size: clamp(30px, 4.4vw, 60px); line-height: 1.12; letter-spacing: -0.03em; color: var(--c-200); font-weight: 400; }
-.hero-sub { font-size: 17px; line-height: 1.5; color: var(--c-600); max-width: 460px; margin-top: 28px; }
+.hero-sub { font-size: 17px; line-height: 1.5; color: var(--c-600); max-width: 460px; margin-top: 28px; text-wrap: balance; }
 .hero-cta { margin-top: 40px; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; font-size: 15px; }
 .hero-cta .pri, .hero-cta .sec { display: inline-flex; align-items: center; gap: 8px; }
 .hero-cta .pri { color: var(--c-white); }
@@ -251,6 +251,12 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 .module:hover .m-fig { border-color: var(--c-800); }
 .module:hover .m-fig img { transform: scale(1.12); filter: brightness(1); }
 .module .m-ph { display: flex; align-items: center; justify-content: center; height: 100%; font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: var(--c-700); }
+.m-memo { display: flex; flex-direction: column; justify-content: center; gap: 11px; height: 100%; padding: 0 30px; }
+.m-memo .mm-row { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; }
+.m-memo .mm-k { font-size: 13px; color: var(--c-700); border-bottom: 0.5px dotted var(--c-800); padding-bottom: 1px; }
+.m-memo .mm-v { font-size: 13px; color: var(--c-400); }
+.m-memo .mm-seal { display: flex; align-items: center; gap: 7px; margin-top: 8px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; color: var(--c-600); }
+.m-memo .mm-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--c-live); display: inline-block; }
 .module .m-desc { font-size: 15px; line-height: 1.5; color: var(--c-600); }
 .module .m-open { color: var(--c-700); display: inline-flex; align-items: center; justify-content: flex-end; transition: color 0.15s ease; }
 .module:hover .m-open { color: var(--c-white); }
@@ -342,9 +348,18 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 .ophase-label .pn { color: var(--c-700); margin-right: 9px; }
 .ophase-terms { display: flex; flex-direction: column; gap: 10px; }
 .ophase-terms span { font-size: 15px; color: var(--c-400); letter-spacing: -0.01em; }
-.onto-return { position: relative; height: 28px; margin-top: 14px; border: 0.5px dashed var(--c-800); border-top: none; }
-.onto-return .lbl { position: absolute; left: 50%; bottom: -7px; transform: translateX(-50%); background: var(--c-black); padding: 0 14px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; color: var(--c-700); white-space: nowrap; }
-@media (max-width: 760px) { .onto-graph { padding: 0; } .onto-flow { grid-template-columns: 1fr; row-gap: 28px; } .onto-flow::before { display: none; } .ophase-node { margin-bottom: 14px; } .onto-return { display: none; } }
+.onto-return { position: relative; margin-top: 24px; border-top: 0.5px dashed var(--c-800); }
+.onto-return::before { content: ''; position: absolute; left: -1px; top: -5px; width: 6px; height: 6px; border-left: 0.5px solid var(--c-700); border-top: 0.5px solid var(--c-700); transform: rotate(45deg); }
+.onto-return .lbl { position: absolute; left: 50%; top: -8px; transform: translateX(-50%); background: var(--c-black); padding: 0 14px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; color: var(--c-700); white-space: nowrap; }
+@media (max-width: 760px) {
+  .onto-graph { padding: 0; }
+  .onto-flow { grid-template-columns: 1fr; row-gap: 34px; }
+  .onto-flow::before { display: none; }
+  .ophase { position: relative; padding-left: 24px; }
+  .ophase-node { position: absolute; left: 0; top: 4px; margin-bottom: 0; }
+  .ophase-label { margin-bottom: 14px; }
+  .onto-return { display: none; }
+}
 @media (prefers-reduced-motion: no-preference) {
   .onto-flow::before { transform: scaleX(0); transform-origin: left; }
   .onto-graph.in .onto-flow::before { transform: scaleX(1); transition: transform 0.9s cubic-bezier(0.5,0,0.2,1); }
@@ -398,6 +413,49 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 .tl-all { display: inline-flex; align-items: center; gap: 6px; margin-top: 52px; }
 @media (max-width: 900px) { .tl-item { grid-column: span 6; } .timeline::before { display: none; } .tl-node { margin-bottom: 20px; } }
 @media (max-width: 560px) { .tl-item { grid-column: span 12; } }
+@media (max-width: 640px) {
+  /* content uses full width on phone (was 8 of 12 cols) */
+  #entry-01 .statement, #entry-01 .ladder, #entry-01 .e01-note,
+  #entry-03 .statement, #entry-04 .statement, #entry-04 .tenets,
+  #evidence .statement, #journal .statement, .observe-line { grid-column: 1 / -1; }
+  #entry-03 .prose { grid-column: 1 / -1 !important; }
+  /* headlines: tame size */
+  .statement, .observe-line, .close-h { font-size: clamp(22px, 6.5vw, 28px); }
+  .hero-h { font-size: clamp(28px, 7.5vw, 34px); }
+  /* montage: smaller data + tighter padding */
+  .ap-card { padding: 18px; }
+  .ap-cnum, .ap-total .ap-big { font-size: 24px; }
+  .ap-ctitle { font-size: 22px; }
+  .ap-csub, .ap-clabel, .ap-csmall, .ap-cgain, .ap-crow .tk, .ap-crow .pc,
+  .ap-total .ap-k, .ap-total .ap-unit,
+  .aph-tkr, .aph-wt, .aph-num, .aph-unit, .aph-chg { font-size: 15px; }
+  /* Active holdings: stack name over values, left-align (no overflow) */
+  .aph-top { flex-direction: column; gap: 8px; }
+  .aph-right { align-items: flex-start; }
+  .aph-line { display: flex; gap: 8px; }
+  .aph-num, .aph-chg { justify-self: auto; text-align: left; }
+  /* tenets → single column */
+  .tenets { grid-template-columns: 1fr; }
+  .tenet, .tenet:nth-child(odd), .tenet:nth-child(even) { padding-left: 0; padding-right: 0; border-right: none; }
+  /* spacing: tighten the vertical rhythm */
+  .modules, .offering, .tenets, .ev-figs, .timeline, .onto-graph, .alloc-stage { margin-top: 40px; }
+  .entry-head { margin-bottom: 20px; }
+  /* trust band: compact (little content, was airy) */
+  #trust { padding: 52px 0; }
+  .trust-strip { margin-top: 30px; padding-top: 22px; }
+  /* hero memo: show essence only on phone (record + decision rows) — declutter */
+  .memo-fig .mf-case-label, .memo-fig .mf-prose, .memo-fig .mf-readmore,
+  .memo-fig .mf-foot, .memo-fig .mf-divider, .memo-fig .mf-notes { display: none; }
+  /* Core/Total: left-align data on phone (fills width, no empty left) */
+  .ap-cdata, .ap-cblock { align-items: stretch; }
+  .ap-clabel, .ap-cnum, .ap-csmall, .ap-cgain { text-align: left; }
+  .ap-crow { justify-content: space-between; }
+  .ap-total { justify-content: flex-start; }
+  .ap-total .ap-k, .ap-total .ap-big { text-align: left; }
+  /* comfortable tap targets */
+  .hero-cta { gap: 22px; }
+  .hero-cta .pri, .hero-cta .sec, .cta-btn, .link, .tl-all { padding: 6px 0; }
+}
 
 /* footer */
 footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 12px; line-height: 1.7; color: var(--c-800); }
@@ -699,7 +757,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     </div>
   </div>
   <div class="modules">
-    <a href="II Site V2 - Memo.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Memo</span><span>Memo</span></span></span></span><span class="m-fig"><span class="m-ph">Memo</span></span><span class="m-desc">Thesis, sizing, and kill criteria. Recorded.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+    <a href="II Site V2 - Memo.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Memo</span><span>Memo</span></span></span></span><span class="m-fig"><span class="m-memo" aria-hidden="true"><span class="mm-row"><span class="mm-k">Thesis</span><span class="mm-v">Recorded</span></span><span class="mm-row"><span class="mm-k">Sizing</span><span class="mm-v">Core &middot; 12.2%</span></span><span class="mm-row"><span class="mm-k">Kill criteria</span><span class="mm-v">Set</span></span><span class="mm-seal"><span class="mm-dot"></span>Sealed &middot; before trade</span></span></span><span class="m-desc">Thesis, sizing, and kill criteria. Recorded.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
     <a href="II Site V2 - Research.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Research</span><span>Research</span></span></span></span><span class="m-fig"><span class="m-ph">Research</span></span><span class="m-desc">Institutional research, now included.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
     <a href="II Site V2 - Benchmark.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Benchmark</span><span>Benchmark</span></span></span></span><span class="m-fig"><span class="m-ph">Benchmark</span></span><span class="m-desc">Your decisions against the S&amp;P 500.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
     <a href="II Site V2 - Calibration.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Calibration</span><span>Calibration</span></span></span></span><span class="m-fig"><span class="m-ph">Calibration</span></span><span class="m-desc">Expectations against outcomes. Measured.</span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
