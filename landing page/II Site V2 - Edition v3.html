@@ -238,8 +238,10 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 .offer-name { font-size: 18px; color: var(--c-200); letter-spacing: -0.01em; margin-bottom: 12px; }
 .offer-desc { font-size: 14px; line-height: 1.62; color: var(--c-600); }
 .offer-foot { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-700); margin-top: 28px; padding-top: 20px; border-top: 0.5px solid var(--c-900); }
+#edge .container { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); }
+#edge .edge-mark, #edge .edge-desc, #edge .link { grid-column: 1 / 6; }
 .edge-mark { font-size: clamp(26px, 3vw, 40px); line-height: 1.22; color: var(--c-200); letter-spacing: -0.025em; }
-.edge-desc { font-size: 15px; line-height: 1.7; color: var(--c-600); max-width: 520px; margin-top: 32px; }
+.edge-desc { font-size: 15px; line-height: 1.7; color: var(--c-600); max-width: none; margin-top: 32px; }
 @media (max-width: 900px) { .offering { grid-template-columns: 1fr; row-gap: 8px; } .offer-item { padding-right: 0; } }
 .prose { font-size: 15px; line-height: 1.7; color: var(--c-600); max-width: 520px; }
 .prose em { font-style: normal; color: var(--c-200); }
@@ -251,8 +253,8 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 #entry-01 .e01-copy { grid-column: 1 / 6; }
 #entry-01 .ladder { grid-column: 7 / 13; margin-top: 52px; align-self: stretch; }
 .ladder { position: relative; margin: 0; text-align: left; display: flex; flex-direction: column; justify-content: space-between; }
-.ladder::before { content: ''; position: absolute; left: 3.25px; top: 14px; height: calc((100% - 28px) * 0.6667); border-left: 0.5px solid var(--c-800); }
-.ladder::after { content: ''; position: absolute; left: 3.25px; bottom: 14px; height: calc((100% - 28px) * 0.3333); border-left: 0.5px dashed var(--c-warning); }
+.ladder::before { content: ''; position: absolute; left: 3.5px; transform: translateX(-50%); width: 0.5px; top: 14px; height: calc((100% - 28px) * 0.6667); background: var(--c-800); }
+.ladder::after { content: ''; position: absolute; left: 3.5px; transform: translateX(-50%); width: 0.5px; bottom: 14px; height: calc((100% - 28px) * 0.3333); background: repeating-linear-gradient(to bottom, var(--c-warning) 0 3px, transparent 3px 7px); }
 .rung { position: relative; display: flex; align-items: center; gap: 14px; padding: 0 0 0 30px; }
 .rdots { flex: 1; border-bottom: 1px dotted var(--c-800); }
 .rung.gap .rdots { border-bottom-color: var(--c-warning); }
@@ -631,7 +633,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 
 <!-- TRUST — broker clarity (moved below Reality: observation before credentials) -->
 <section id="trust" class="band"><div class="container">
-  <p class="trust-line">A licensed brokerage with the decision layer built in. <b>Not a separate tool bolted onto your broker.</b></p>
+  <p class="trust-line">A licensed brokerage with the decision layer built in. <b>Not a tool bolted onto your broker.</b></p>
   <div class="trust-strip">
     <div class="trust-item"><span class="ti-num">$500M</span><span class="ti-lbl">custodied</span></div>
     <div class="trust-item"><span class="ti-num">Licensed</span><span class="ti-lbl">brokerage &amp; portfolio manager</span></div>
