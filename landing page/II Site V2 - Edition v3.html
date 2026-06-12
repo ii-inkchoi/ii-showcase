@@ -79,7 +79,7 @@ section { padding: 130px 0; position: relative; }
 .band { background: var(--c-elev); }
 .alloc-2col { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); align-items: center; }
 .alloc-copy { grid-column: 1 / 6; }
-.prose.alloc-sub { max-width: none; text-wrap: balance; margin-top: 32px; }
+.prose.alloc-sub { max-width: none; margin-top: 32px; }
 .alloc-stage { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: var(--gutter); align-items: stretch; margin-top: 48px; margin-bottom: 0; }
 .ap-card { position: relative; box-sizing: border-box; background: var(--c-elev); border: 0.5px solid var(--c-900); padding: 22px 24px; overflow: hidden; display: flex; flex-direction: column; z-index: 2; }
 .ap-chead { display: flex; flex-direction: column; gap: 5px; margin-bottom: 28px; }
@@ -263,6 +263,8 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 .rung.gap .rk { color: var(--c-white); }
 .rung.gap .rv { color: var(--c-warning); }
 .e01-note { max-width: none; margin: 32px 0 0; font-size: 15px; line-height: 1.7; color: var(--c-600); }
+.prose.alloc-sub { font-size: 15px; line-height: 1.7; }
+#entry-06 .prose { font-size: 15px; line-height: 1.7; max-width: none; }
 @media (max-width: 1200px) { section.hero { height: auto; min-height: 100dvh; align-items: flex-start; padding: 132px 0 96px; } .hero-wrap { transform: none; } .hero-main, .hero-figure { grid-column: 1 / -1; } .hero-figure { margin-top: 52px; max-width: 440px; } }
 
 /* module grid */
