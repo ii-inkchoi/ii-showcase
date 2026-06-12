@@ -127,15 +127,16 @@ section { padding: 130px 0; position: relative; }
 .aph-wt { font-size: 17px; color: var(--c-700); letter-spacing: -0.02em; }
 .aph-class { font-size: 14px; color: var(--c-700); }
 .aph-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
-.aph-line { display: flex; align-items: baseline; gap: 13px; }
-.aph-px { font-size: 17px; font-weight: 300; color: var(--c-white); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
-.aph-line.sub .aph-px { color: var(--c-200); }
-.aph-chg { font-size: 17px; color: var(--c-700); letter-spacing: -0.02em; }
+.aph-line { display: grid; grid-template-columns: 96px 34px 56px; align-items: baseline; column-gap: 8px; }
+.aph-num { text-align: right; font-size: 17px; font-weight: 300; color: var(--c-white); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.aph-unit { font-size: 17px; font-weight: 300; color: var(--c-400); }
+.aph-line.sub .aph-num { color: var(--c-200); }
+.aph-chg { text-align: right; font-size: 17px; color: var(--c-700); letter-spacing: -0.02em; }
 .aph-badges { display: flex; flex-wrap: wrap; gap: 6px; }
-.bdg { font-size: 11px; font-weight: 500; letter-spacing: 0.01em; padding: 4px 9px; border-radius: 3px; color: var(--c-400); background: color-mix(in srgb, var(--c-white) 9%, transparent); }
-.bdg.amber { color: var(--c-warning); background: color-mix(in srgb, var(--c-warning) 16%, transparent); }
-.bdg.red { color: var(--c-urgent); background: color-mix(in srgb, var(--c-urgent) 16%, transparent); }
-.bdg.green { color: var(--c-live); background: color-mix(in srgb, var(--c-live) 16%, transparent); }
+.bdg { display: inline-flex; align-items: center; justify-content: center; line-height: 1; font-size: 11px; font-weight: 500; letter-spacing: 0.01em; padding: 5px 9px; border-radius: 3px; color: var(--c-400); background: color-mix(in srgb, var(--c-white) 9%, transparent); }
+.bdg.amber { color: var(--c-warning); background: color-mix(in srgb, var(--c-warning) 11%, transparent); }
+.bdg.red { color: var(--c-urgent); background: color-mix(in srgb, var(--c-urgent) 11%, transparent); }
+.bdg.green { color: var(--c-live); background: color-mix(in srgb, var(--c-live) 11%, transparent); }
 @media (max-width: 900px) {
   .alloc-head, .alloc-sub { grid-column: 1 / -1; }
   .alloc-sub { margin-top: 24px; }
@@ -616,7 +617,6 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
       <div class="ophase"><span class="ophase-node"></span><div class="ophase-label"><span class="pn">04</span>Improve</div><div class="ophase-terms"><span>Re-underwriting</span><span>Learning</span></div></div>
     </div>
     <div class="onto-return"><span class="lbl">&#8634; Improve feeds the next Form. Judgment compounds.</span></div>
-    <div class="onto-sig"><span class="wedge">//</span>Re-underwritten on every outcome.</div>
   </div>
 </div></section>
 
@@ -667,8 +667,8 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
           <div class="aph-top">
             <div class="aph-name"><div class="aph-tkrow"><span class="aph-tkr">AAPL</span><span class="aph-wt">10% WT</span></div><span class="aph-class">Compounder</span></div>
             <div class="aph-right">
-              <div class="aph-line"><span class="aph-px">12,500.00 CAD</span><span class="aph-chg">+38.2%</span></div>
-              <div class="aph-line sub"><span class="aph-px">232.40 USD</span><span class="aph-chg">+1.1%</span></div>
+              <div class="aph-line"><span class="aph-num">12,500.00</span><span class="aph-unit">CAD</span><span class="aph-chg">+38.2%</span></div>
+              <div class="aph-line sub"><span class="aph-num">232.40</span><span class="aph-unit">USD</span><span class="aph-chg">+1.1%</span></div>
             </div>
           </div>
           <div class="aph-badges"><span class="bdg amber">Earnings</span><span class="bdg">52 Week High</span></div>
@@ -677,8 +677,8 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
           <div class="aph-top">
             <div class="aph-name"><div class="aph-tkrow"><span class="aph-tkr">ORIO.TO</span><span class="aph-wt">25% WT</span></div><span class="aph-class">Compounder</span></div>
             <div class="aph-right">
-              <div class="aph-line"><span class="aph-px">18,950.00 CAD</span><span class="aph-chg">+42.6%</span></div>
-              <div class="aph-line sub"><span class="aph-px">87.60 CAD</span><span class="aph-chg">+0.8%</span></div>
+              <div class="aph-line"><span class="aph-num">18,950.00</span><span class="aph-unit">CAD</span><span class="aph-chg">+42.6%</span></div>
+              <div class="aph-line sub"><span class="aph-num">87.60</span><span class="aph-unit">CAD</span><span class="aph-chg">+0.8%</span></div>
             </div>
           </div>
           <div class="aph-badges"><span class="bdg amber">Earnings</span><span class="bdg">Reverse Split</span><span class="bdg">52 Week High</span><span class="bdg">Stock Split</span></div>
@@ -687,8 +687,8 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
           <div class="aph-top">
             <div class="aph-name"><div class="aph-tkrow"><span class="aph-tkr">BWEN</span><span class="aph-wt">20% WT</span></div><span class="aph-class">Spec</span></div>
             <div class="aph-right">
-              <div class="aph-line"><span class="aph-px">12,950.00 CAD</span><span class="aph-chg">+22.6%</span></div>
-              <div class="aph-line sub"><span class="aph-px">82.40 USD</span><span class="aph-chg">-2.8%</span></div>
+              <div class="aph-line"><span class="aph-num">12,950.00</span><span class="aph-unit">CAD</span><span class="aph-chg">+22.6%</span></div>
+              <div class="aph-line sub"><span class="aph-num">82.40</span><span class="aph-unit">USD</span><span class="aph-chg">-2.8%</span></div>
             </div>
           </div>
           <div class="aph-badges"><span class="bdg red">Delisted</span></div>
@@ -697,8 +697,8 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
           <div class="aph-top">
             <div class="aph-name"><div class="aph-tkrow"><span class="aph-tkr">EOSCR</span><span class="aph-wt">15% WT</span></div><span class="aph-class">Spec</span></div>
             <div class="aph-right">
-              <div class="aph-line"><span class="aph-px">14,880.00 CAD</span><span class="aph-chg">+27.9%</span></div>
-              <div class="aph-line sub"><span class="aph-px">156.30 USD</span><span class="aph-chg">-1.2%</span></div>
+              <div class="aph-line"><span class="aph-num">14,880.00</span><span class="aph-unit">CAD</span><span class="aph-chg">+27.9%</span></div>
+              <div class="aph-line sub"><span class="aph-num">156.30</span><span class="aph-unit">USD</span><span class="aph-chg">-1.2%</span></div>
             </div>
           </div>
           <div class="aph-badges"><span class="bdg red">Stock Halted</span><span class="bdg">Open Order</span><span class="bdg green">Top Mover</span></div>
