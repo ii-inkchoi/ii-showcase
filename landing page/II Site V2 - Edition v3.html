@@ -255,6 +255,7 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 .ladder { position: relative; margin: 0; text-align: left; display: flex; flex-direction: column; justify-content: space-between; }
 .ladder::before { content: ''; position: absolute; left: 3.5px; transform: translateX(-50%); width: 0.5px; top: 14px; height: calc((100% - 28px) * 0.6667); background: var(--c-800); }
 .ladder::after { content: ''; position: absolute; left: 3.5px; transform: translateX(-50%); width: 0.5px; bottom: 14px; height: calc((100% - 28px) * 0.3333); background: repeating-linear-gradient(to bottom, var(--c-warning) 0 3px, transparent 3px 7px); }
+.lad-pulse { position: absolute; left: 3.5px; transform: translateX(-50%); width: 0.5px; height: 16px; top: 14px; background: var(--c-white); opacity: 0; }
 .rung { position: relative; display: flex; align-items: center; gap: 14px; padding: 0 0 0 30px; }
 .rdots { flex: 1; border-bottom: 1px dotted var(--c-800); }
 .rung.gap .rdots { border-bottom-color: var(--c-warning); }
@@ -506,9 +507,22 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   .memo-fig .mf-dot { animation: memo-pulse 2.4s ease-in-out infinite; }
   .hero-scroll .sa { animation: scroll-bob 1.8s ease-in-out infinite; }
   section.hero::before { animation: iceberg-float 7s ease-in-out infinite; }
-  .rung.gap .node { animation: gap-pulse 2.4s ease-in-out infinite; }
+  /* reality ladder — the recording signal: pulse runs the spine, stamps three rows, dies in the dashed gap */
+  .lad-pulse { animation: lad-run 8.4s linear infinite; }
+  .rung:nth-child(2) .node { animation: node-tick 8.4s linear infinite 0s; }
+  .rung:nth-child(3) .node { animation: node-tick 8.4s linear infinite 2.41s; }
+  .rung:nth-child(4) .node { animation: node-tick 8.4s linear infinite 4.81s; }
+  .rung:nth-child(2) .rv { animation: rv-stamp 8.4s linear infinite 0s; }
+  .rung:nth-child(3) .rv { animation: rv-stamp 8.4s linear infinite 2.41s; }
+  .rung:nth-child(4) .rv { animation: rv-stamp 8.4s linear infinite 4.81s; }
+  .rung.gap .node { animation: jnode-flash 8.4s linear infinite 7.22s; }
+  .rung.gap .rv { animation: rvj-flash 8.4s linear infinite 7.22s; }
 }
-@keyframes gap-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(255,122,0,0); } 50% { box-shadow: 0 0 0 5px rgba(255,122,0,0.14); } }
+@keyframes lad-run { 0% { top: 14px; opacity: 0; } 2% { opacity: 0.9; } 60% { opacity: 0.9; } 72% { opacity: 0; } 86% { top: calc(100% - 30px); opacity: 0; } 100% { top: calc(100% - 30px); opacity: 0; } }
+@keyframes node-tick { 0%, 8%, 100% { border-color: var(--c-800); box-shadow: 0 0 0 0 rgba(255,255,255,0); } 2%, 5% { border-color: var(--c-white); box-shadow: 0 0 0 4px rgba(255,255,255,0.07); } }
+@keyframes rv-stamp { 0%, 8%, 100% { color: var(--c-400); } 2%, 5% { color: var(--c-white); } }
+@keyframes jnode-flash { 0%, 10%, 100% { box-shadow: 0 0 0 0 rgba(255,122,0,0); } 2%, 6% { box-shadow: 0 0 0 6px rgba(255,122,0,0.18); } }
+@keyframes rvj-flash { 0%, 10%, 100% { color: var(--c-warning); } 2%, 6% { color: var(--c-white); } }
 @media (prefers-reduced-motion: no-preference) {
   /* per-element scroll reveal — rises individually as you scroll */
   .ri { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.2,0.6,0.2,1), transform 0.7s cubic-bezier(0.2,0.6,0.2,1); transition-delay: var(--d, 0s); }
@@ -624,6 +638,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     <p class="e01-note" style="margin-top:18px; color:var(--c-200);">Intelligent Investing exists because it was not.</p>
   </div>
   <div class="ladder">
+    <span class="lad-pulse" aria-hidden="true"></span>
     <div class="rung"><span class="node"></span><span class="rk">Transactions</span><span class="rdots"></span><span class="rv">Recorded</span></div>
     <div class="rung"><span class="node"></span><span class="rk">Activity</span><span class="rdots"></span><span class="rv">Recorded</span></div>
     <div class="rung"><span class="node"></span><span class="rk">Outcomes</span><span class="rdots"></span><span class="rv">Recorded</span></div>
