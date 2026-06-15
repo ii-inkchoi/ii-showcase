@@ -167,7 +167,10 @@ section { padding: 130px 0; position: relative; }
 }
 @media (max-width: 1180px) and (min-width: 901px) { .alloc-stage { grid-template-columns: 1fr; row-gap: 16px; } }
 @media (max-width: 900px) { section { padding: 72px 0; } }
-@media (max-width: 760px) { #entry-02 .onto-graph { display: none; } section.hero .hero-figure { position: relative; top: auto; right: auto; transform: none; grid-column: auto; width: 100%; max-width: 300px; margin: 60px auto 16px; } section.hero .ht-line { stroke: var(--c-600); opacity: 0.85; } section.hero .ht-eq { stroke: var(--c-200); opacity: 1; } .hbr { display: inline; } section.hero { padding: 80px 0 56px !important; } }
+@media (max-width: 760px) { #entry-02 .onto-graph { display: none; } section.hero .hero-main { display: flex; flex-direction: column; min-height: calc(100dvh - 224px); }
+  section.hero .hero-figure { position: relative; top: auto; right: auto; transform: none; grid-column: auto; width: 100%; max-width: min(300px, calc(100dvh - 600px)); margin: 40px auto 0; }
+  section.hero .hero-cta { margin-top: auto; padding-top: 28px; }
+  section.hero .hero-eyebrow { margin-bottom: 16px; } section.hero .ht-line { stroke: var(--c-600); opacity: 0.85; } section.hero .ht-eq { stroke: var(--c-200); opacity: 1; } .hbr { display: inline; } section.hero { padding: 128px 0 96px !important; } }
 @media (max-width: 760px) {
   #trust, #entry-01, #entry-02, #entry-03, #evidence, #entry-06, #entry-04, #journal { position: relative; }
   #trust::before, #entry-01::before, #entry-02::before, #entry-03::before, #evidence::before, #entry-06::before, #entry-04::before, #journal::before { content: ''; position: absolute; top: 0; left: 50%; width: 100vw; transform: translateX(-50%); border-top: 0.5px solid var(--c-800); pointer-events: none; }
@@ -414,7 +417,7 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 .ev-figtitle { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-400); }
 .ev-fig:hover .ev-figtitle { color: var(--c-white); }
 .ev-figcap { font-size: 14px; line-height: 1.5; color: var(--c-600); margin-top: 8px; max-width: 280px; }
-@media (max-width: 760px) { .ev-figs { row-gap: 16px; } .ev-fig { grid-column: span 12; background: var(--c-elev); border: 0.5px solid var(--c-900); padding: 26px; } .ev-num { font-size: 24px; } .ev-label { max-width: none; min-height: 0; } }
+@media (max-width: 760px) { .ev-figs { row-gap: 16px; } .ev-fig { grid-column: span 12; background: var(--c-elev); border: 0.5px solid var(--c-900); padding: clamp(28px, 3vw, 44px); } .ev-num { font-size: 24px; } .ev-label { max-width: none; min-height: 0; } }
 @media (prefers-reduced-motion: no-preference) { .ev-art svg { transition: transform 0.5s cubic-bezier(0.2,0.6,0.2,1); } .ev-fig:hover .ev-art svg { transform: translateY(-6px) scale(1.04); } }
 .ev-card { margin: 28px 0 0; flex: 1 1 auto; display: flex; flex-direction: column; }
 .ev-fig:hover .ev-card-title { color: var(--c-white); }
@@ -727,7 +730,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   <div class="hero-wrap">
     <div class="hero-top">
       <div class="hero-main">
-        <div class="hero-eyebrow" data-type>Intelligent Investing &nbsp;·&nbsp; No. 01 &nbsp;·&nbsp; 2026</div>
+        <div class="hero-eyebrow" data-type>Intelligent Investing</div>
         <h1 class="hero-h">The investing industry <br class="hbr">built access.<br>It never built judgment infrastructure.</h1>
         <p class="hero-sub">Access was solved. Allocator development was not.</p>
         <div class="hero-cta">
