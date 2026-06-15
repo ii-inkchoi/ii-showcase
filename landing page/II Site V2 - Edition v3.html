@@ -85,6 +85,11 @@ a { text-decoration: none; }
 
 /* layout */
 .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--frame); box-sizing: border-box; }
+.grid-overlay { position: fixed; inset: 0; z-index: 2000; pointer-events: none; display: none; }
+.grid-overlay.on { display: block; }
+.grid-overlay .container { height: 100%; }
+.grid-overlay .go-grid { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); height: 100%; }
+.grid-overlay .go-grid span { background: var(--c-200); opacity: 0.07; }
 section { padding: 130px 0; position: relative; }
 .band { background: var(--c-elev); }
 .alloc-2col { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); align-items: center; }
@@ -287,7 +292,7 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 /* entry 01 — centered broken-spine infographic */
 #entry-01 { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); align-items: start; }
 #entry-01 .e01-copy { grid-column: 1 / 8; }
-#entry-01 .e01-note { max-width: 520px; }
+#entry-01 .e01-note { max-width: 660px; }
 #entry-01 .ladder { grid-column: 7 / 13; margin-top: 52px; align-self: stretch; }
 .ladder { position: relative; margin: 0; text-align: left; display: flex; flex-direction: column; justify-content: space-between; }
 .ladder::before { content: ''; position: absolute; left: 3.5px; transform: translateX(-50%); width: 0.5px; top: 14px; height: calc((100% - 28px) * 0.6667); background: var(--c-800); }
@@ -390,14 +395,14 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 .tenets { display: grid; grid-template-columns: 1fr; margin-top: 56px; border-top: 0.5px solid var(--c-900); }
 .tenet { padding: 24px 0; border-bottom: 0.5px solid var(--c-900); font-size: 17px; color: var(--c-400); letter-spacing: -0.01em; }
 .ev-figs { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); margin-top: 56px; align-items: stretch; }
-.ev-fig { display: flex; flex-direction: column; grid-column: span 4; text-decoration: none; color: var(--c-700); position: relative; padding: clamp(24px, 2.4vw, 34px); background-color: var(--c-elev); background-repeat: no-repeat; background-size: 4px 4px; background-position: 6px 6px, calc(100% - 6px) 6px, 6px calc(100% - 6px), calc(100% - 6px) calc(100% - 6px); background-image: linear-gradient(var(--c-700), var(--c-700)), linear-gradient(var(--c-700), var(--c-700)), linear-gradient(var(--c-700), var(--c-700)), linear-gradient(var(--c-700), var(--c-700)); }
+.ev-fig { display: flex; flex-direction: column; grid-column: span 4; text-decoration: none; color: var(--c-700); background: var(--c-elev); border: 0.5px solid var(--c-900); padding: clamp(28px, 3vw, 40px); }
 .ev-figno { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: var(--c-700); }
 .ev-art { height: 190px; display: flex; align-items: center; justify-content: center; margin: 56px 0 22px; }
 .ev-art svg { width: 100%; max-width: 300px; height: auto; }
 .ev-figtitle { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-400); }
 .ev-fig:hover .ev-figtitle { color: var(--c-white); }
 .ev-figcap { font-size: 14px; line-height: 1.5; color: var(--c-600); margin-top: 8px; max-width: 280px; }
-@media (max-width: 760px) { .ev-figs { row-gap: 44px; } .ev-fig, .ev-fig:first-child { grid-column: span 12; background-position: 6px 6px, calc(100% - 6px) 6px, 6px calc(100% - 6px), calc(100% - 6px) calc(100% - 6px); background-image: linear-gradient(var(--c-700), var(--c-700)), linear-gradient(var(--c-700), var(--c-700)), linear-gradient(var(--c-700), var(--c-700)), linear-gradient(var(--c-700), var(--c-700)); } }
+@media (max-width: 760px) { .ev-figs { row-gap: 16px; } .ev-fig { grid-column: span 12; } }
 @media (prefers-reduced-motion: no-preference) { .ev-art svg { transition: transform 0.5s cubic-bezier(0.2,0.6,0.2,1); } .ev-fig:hover .ev-art svg { transform: translateY(-6px) scale(1.04); } }
 .ev-card { margin: 28px 0 0; flex: 1 1 auto; display: flex; flex-direction: column; }
 .ev-fig:hover .ev-card-title { color: var(--c-white); }
@@ -664,6 +669,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 </style>
 </head>
 <body>
+<div id="gridOverlay" class="grid-overlay" aria-hidden="true"><div class="container"><div class="go-grid"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div>
 <div class="grid-overlay" id="gridOverlay" aria-hidden="true"><div class="go-inner"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
 
 <nav class="navbar">
@@ -736,7 +742,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   <div class="entry-head" style="grid-column:1 / -1;"><span class="entry-no" data-type>No. 01</span><span class="entry-name" data-type>Reality</span></div>
   <h2 class="statement" style="grid-column:1 / 10;">Very few systems record judgment.</h2>
   <div class="e01-copy">
-    <p class="e01-note" style="color:var(--c-400);">An investor can execute every trade correctly, yet build a portfolio they cannot explain.</p>
+    <p class="e01-note" style="color:var(--c-400);">An investor can execute every trade correctly, yet not explain the portfolio.</p>
     <p class="e01-note" style="margin-top:18px;">Most platforms solved the execution layer. The judgment layer, the framework for recording decisions, measuring them against a benchmark, and learning from outcomes, was left to the investor to figure out alone.</p>
     <p class="e01-note" style="margin-top:18px; color:var(--c-200);">Intelligent Investing exists because it was not.</p>
   </div>
@@ -774,39 +780,13 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   </div>
 </div></section>
 
-<!-- No. 03 — Evidence (dummy content for internal review) -->
-<div class="container"><section id="evidence">
-  <div class="entry-head"><span class="entry-no" data-type>No. 03</span><span class="entry-name" data-type>Evidence</span></div>
-  <h2 class="statement">The gap was never information.</h2>
-  <div class="ev-figs">
-    <a href="II Site V2 - Benchmark.html" class="ev-fig">
-      <div class="ev-card-title">Benchmark</div>
-      <div class="ev-num">9 in 10</div>
-      <div class="ev-label">investors, managed or self-directed, fail to beat their benchmark over fifteen years.</div>
-      <div class="ev-src">S&amp;P SPIVA, 2024</div>
-    </a>
-    <a href="II Site V2 - Calibration.html" class="ev-fig">
-      <div class="ev-card-title">Calibration</div>
-      <div class="ev-num">~1.7%</div>
-      <div class="ev-label">annual return the average investor loses to mistimed buying and selling.</div>
-      <div class="ev-src">Morningstar, 2024</div>
-    </a>
-    <a href="II Site V2 - Memo.html" class="ev-fig">
-      <div class="ev-card-title">Decision Record</div>
-      <div class="ev-num">4%</div>
-      <div class="ev-label">of stocks account for nearly all net market wealth created since 1926.</div>
-      <div class="ev-src">Bessembinder, 2018</div>
-    </a>
-  </div>
-</section></div>
-
 <!-- ENTRY 03 — The System (offering + product + modules) -->
 <div class="container"><section id="entry-03">
-  <div class="entry-head"><span class="entry-no" data-type>No. 04</span><span class="entry-name" data-type>The System</span></div>
+  <div class="entry-head"><span class="entry-no" data-type>No. 03</span><span class="entry-name" data-type>The System</span></div>
   <h2 class="statement">A position begins before a purchase.<br>It begins with an explanation.</h2>
   <div class="systracks">
     <div class="systrack">
-      <div class="systrack-copy"><div class="systrack-name">Manage</div><p class="systrack-desc">Rules-based allocation into the S&amp;P 500 on a weekly schedule. No decisions required. Discipline by design. The default is the market. Manage is how most people should begin.</p><a href="II Site V2 - Managed.html" class="systrack-cta">Explore Managed<svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></a></div>
+      <div class="systrack-copy"><div class="systrack-name">Manage</div><p class="systrack-desc">Rules-based allocation into the S&amp;P 500 on a weekly schedule. No decisions required. Discipline by design. The default is the market. Manage is how most people should begin.</p><a href="II Site V2 - Managed.html" class="systrack-cta"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>Explore Managed</a></div>
       <div class="ap-card ap-core">
             <div class="ap-cdata">
         <div class="ap-cblock">
@@ -827,7 +807,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     </div>
     </div>
     <div class="systrack">
-      <div class="systrack-copy"><div class="systrack-name">Self-Directed</div><p class="systrack-desc">A structured environment for building and reviewing investment theses. Thesis, benchmark, kill criteria, review. The process before the position. Not zero-commission execution. A decision system.</p><a href="II Site V2 - Self-Directed.html" class="systrack-cta">Explore Self-Directed<svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></a></div>
+      <div class="systrack-copy"><div class="systrack-name">Self-Directed</div><p class="systrack-desc">A structured environment for building and reviewing investment theses. Thesis, benchmark, kill criteria, review. The process before the position. Not zero-commission execution. A decision system.</p><a href="II Site V2 - Self-Directed.html" class="systrack-cta"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>Explore Self-Directed</a></div>
       <div class="ap-card ap-active">
             <div class="ap-ahead"><span class="aph-h">Active Positions</span><span class="aph-cnt">9</span></div>
       <div class="ap-holds">
@@ -864,13 +844,39 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     </div>
     </div>
     <div class="systrack">
-      <div class="systrack-copy"><div class="systrack-name">Fiscal.ai</div><p class="systrack-desc">Research infrastructure supporting independent judgment. Not a recommendation engine. A thinking tool that sits alongside Self-Directed without replacing the investor&rsquo;s reasoning.</p><a href="https://fiscal.ai" target="_blank" rel="noopener" class="systrack-cta">Visit Fiscal.ai<svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></a></div>
+      <div class="systrack-copy"><div class="systrack-name">Fiscal.ai</div><p class="systrack-desc">Research infrastructure supporting independent judgment. Not a recommendation engine. A thinking tool that sits alongside Self-Directed without replacing the investor&rsquo;s reasoning.</p><a href="https://fiscal.ai" target="_blank" rel="noopener" class="systrack-cta"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>Visit Fiscal.ai</a></div>
       <div class="ap-card ap-fiscal">
             <img class="fis-img" src="images/fiscalai.png" alt="Fiscal.ai" loading="lazy">
     </div>
     </div>
   </div>
   <p class="offer-foot">One subscription. One operating system.</p>
+</section></div>
+
+<!-- No. 03 — Evidence (dummy content for internal review) -->
+<div class="container"><section id="evidence">
+  <div class="entry-head"><span class="entry-no" data-type>No. 04</span><span class="entry-name" data-type>Evidence</span></div>
+  <h2 class="statement">The gap was never information.</h2>
+  <div class="ev-figs">
+    <a href="II Site V2 - Benchmark.html" class="ev-fig">
+      <div class="ev-card-title">Benchmark</div>
+      <div class="ev-num">9 in 10</div>
+      <div class="ev-label">investors, managed or self-directed, fail to beat their benchmark over fifteen years.</div>
+      <div class="ev-src">S&amp;P SPIVA, 2024</div>
+    </a>
+    <a href="II Site V2 - Calibration.html" class="ev-fig">
+      <div class="ev-card-title">Calibration</div>
+      <div class="ev-num">~1.7%</div>
+      <div class="ev-label">annual return the average investor loses to mistimed buying and selling.</div>
+      <div class="ev-src">Morningstar, 2024</div>
+    </a>
+    <a href="II Site V2 - Memo.html" class="ev-fig">
+      <div class="ev-card-title">Decision Record</div>
+      <div class="ev-num">4%</div>
+      <div class="ev-label">of stocks account for nearly all net market wealth created since 1926.</div>
+      <div class="ev-src">Bessembinder, 2018</div>
+    </a>
+  </div>
 </section></div>
 
 <!-- ENTRY 06 — Membership -->
@@ -1226,6 +1232,15 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
       var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: 0.25 });
       io.observe(steps);
     } else { steps.classList.add('in'); }
+  })();
+
+  // dev — press "g" to toggle the 12-column grid overlay
+  (function () {
+    var o = document.getElementById('gridOverlay'); if (!o) return;
+    document.addEventListener('keydown', function (e) {
+      var t = e.target; if (t && /^(input|textarea|select)$/i.test(t.tagName)) return;
+      if ((e.key === 'g' || e.key === 'G') && !e.metaKey && !e.ctrlKey && !e.altKey) { o.classList.toggle('on'); }
+    });
   })();
 
   // hero — the loop: a wireframe torus. one continuous surface, no start and no end.
