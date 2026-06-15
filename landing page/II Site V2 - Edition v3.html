@@ -163,11 +163,11 @@ section { padding: 130px 0; position: relative; }
   .alloc-sub { margin-top: 24px; }
   .alloc-stage { display: flex; flex-direction: column; gap: 16px; margin-top: 44px; }
   .ap-card { grid-column: 1 / -1 !important; grid-row: auto !important; width: 100% !important; }
-  .systrack .ap-card { width: 340px !important; max-width: 92% !important; justify-self: center; height: 620px !important; min-height: 0; }
+  .systrack .ap-card { width: 364px !important; max-width: 94% !important; justify-self: center; height: 420px !important; min-height: 0 !important; }
 }
 @media (max-width: 1180px) and (min-width: 901px) { .alloc-stage { grid-template-columns: 1fr; row-gap: 16px; } }
 @media (max-width: 900px) { section { padding: 72px 0; } }
-@media (max-width: 760px) { #entry-02 .onto-graph { display: none; } section.hero .hero-figure { position: relative; top: auto; right: auto; transform: none; grid-column: auto; width: 100%; max-width: 320px; margin: 88px auto 24px; } section.hero .ht-line { stroke: var(--c-600); opacity: 0.85; } section.hero .ht-eq { stroke: var(--c-200); opacity: 1; } .hbr { display: inline; } }
+@media (max-width: 760px) { #entry-02 .onto-graph { display: none; } section.hero .hero-figure { position: relative; top: auto; right: auto; transform: none; grid-column: auto; width: 100%; max-width: 300px; margin: 60px auto 16px; } section.hero .ht-line { stroke: var(--c-600); opacity: 0.85; } section.hero .ht-eq { stroke: var(--c-200); opacity: 1; } .hbr { display: inline; } section.hero { padding: 80px 0 56px !important; } }
 @media (max-width: 760px) {
   #trust, #entry-01, #entry-02, #entry-03, #evidence, #entry-06, #entry-04, #journal { position: relative; }
   #trust::before, #entry-01::before, #entry-02::before, #entry-03::before, #evidence::before, #entry-06::before, #entry-04::before, #journal::before { content: ''; position: absolute; top: 0; left: 50%; width: 100vw; transform: translateX(-50%); border-top: 0.5px solid var(--c-800); pointer-events: none; }
@@ -264,10 +264,11 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 .offer-item { padding-top: 28px; padding-right: 24px; }
 .offer-name { font-size: 18px; color: var(--c-200); letter-spacing: -0.01em; margin-bottom: 12px; }
 .offer-desc { font-size: 14px; line-height: 1.62; color: var(--c-600); }
-.offer-foot { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-700); margin-top: 44px; padding-top: 20px; border-top: 0.5px solid var(--c-800); }
+.offer-foot { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-700); margin-top: 44px; padding-top: 20px; border-top: 0; }
 .systracks { display: flex; flex-direction: column; margin-top: 24px; }
 .systrack { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); align-items: center; padding: 44px 0; border-top: 0.5px solid var(--c-800); }
 .systrack:first-child { border-top: 0; }
+.systrack:last-child { border-bottom: 0.5px solid var(--c-800); }
 .systrack-copy { grid-column: 1 / 5; }
 .systrack-name { font-size: 18px; color: var(--c-200); letter-spacing: -0.01em; }
 .systrack-desc { font-size: 14px; line-height: 1.62; color: var(--c-600); margin-top: 14px; }
@@ -277,11 +278,11 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 .systrack .ap-card { aspect-ratio: auto; min-height: 500px; grid-column: 9 / 13; justify-self: stretch; align-self: end; margin-bottom: -44px; border-color: var(--c-800); border-radius: 20px 20px 0 0; padding: 0 26px 30px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05); }
 .systrack .ap-fiscal { padding: 0; }
 .systrack .ap-fiscal .fis-img { top: 46px; height: calc(100% - 46px); }
-.ap-bar { display: flex; justify-content: space-between; align-items: center; margin: 0 -22px 22px; padding: 14px 20px 11px; border-bottom: 0.5px solid var(--c-1000); font-family: var(--mono); }
-.ap-fiscal .ap-bar { position: relative; z-index: 2; margin: 0; padding: 14px 20px 11px; }
+.ap-bar { display: flex; justify-content: space-between; align-items: center; margin: 0 -26px 22px; padding: 14px 26px 11px; border-bottom: 0.5px solid var(--c-1000); font-family: var(--mono); }
+.ap-fiscal .ap-bar { position: relative; z-index: 2; margin: 0; padding: 14px 26px 11px; }
 .ap-bar-time { font-size: 12px; letter-spacing: 0.02em; color: var(--c-200); font-variant-numeric: tabular-nums; }
 .ap-bar-ic { display: block; width: 52px; height: 12px; color: var(--c-200); }
-@media (max-width: 900px) { .systrack { position: relative; grid-template-columns: 1fr; row-gap: 28px; padding: 40px 0 0; border-top: 0; } .systrack-copy, .systrack .ap-card { grid-column: 1 / -1; } .systrack .ap-card { align-self: auto; margin-bottom: 0; } .systrack::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); border-top: 0.5px solid var(--c-800); } }
+@media (max-width: 900px) { .systrack { position: relative; grid-template-columns: 1fr; row-gap: 28px; padding: 40px 0 0; border-top: 0; } .systrack-copy, .systrack .ap-card { grid-column: 1 / -1; } .systrack .ap-card { align-self: auto; margin-bottom: 0; } .systrack::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); border-top: 0.5px solid var(--c-800); } .systrack:last-child { border-bottom: 0; } }
 #edge .container { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); }
 #edge .entry-head, #edge .edge-desc, #edge .link { grid-column: 1 / 5; }
 #edge .edge-mark { grid-column: 1 / 6; }
@@ -727,7 +728,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     <div class="hero-top">
       <div class="hero-main">
         <div class="hero-eyebrow" data-type>Intelligent Investing &nbsp;·&nbsp; No. 01 &nbsp;·&nbsp; 2026</div>
-        <h1 class="hero-h">The investing industry<br class="hbr">built access.<br>It never built judgment infrastructure.</h1>
+        <h1 class="hero-h">The investing industry <br class="hbr">built access.<br>It never built judgment infrastructure.</h1>
         <p class="hero-sub">Access was solved. Allocator development was not.</p>
         <div class="hero-cta">
           <a href="II Site V2 - GetTheApp.html" class="pri"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Begin</span><span>Begin</span></span></span></a>
