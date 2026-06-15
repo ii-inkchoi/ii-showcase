@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intelligent Investing — Website Plan & Progress (DRAFT)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Chakra+Petch:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --c-black:#000000; --c-elev:#0A0A0A; --c-1000:#1C1C1C; --c-900:#232627; --c-800:#565B5E;
+  --c-700:#929292; --c-600:#A7A7A7; --c-400:#C7C7C7; --c-200:#E3E2E2; --c-white:#FFFFFF;
+  --c-warning:#FF7A00;
+  --font:'Inter',-apple-system,system-ui,sans-serif; --mono:'Chakra Petch',monospace;
+  --maxw:980px; --frame:clamp(24px,5vw,64px);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--c-black);color:var(--c-200);font-family:var(--font);line-height:1.55;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:var(--frame);}
+.mono{font-family:var(--mono);letter-spacing:0.08em;}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:0.14em;color:var(--c-700);}
+h1{font-size:34px;font-weight:400;letter-spacing:-0.03em;line-height:1.12;color:var(--c-white);margin:14px 0;}
+h2{font-size:22px;font-weight:400;letter-spacing:-0.02em;color:var(--c-white);}
+h3{font-size:15px;font-weight:500;color:var(--c-200);}
+p{font-size:15px;color:var(--c-600);}
+a{color:var(--c-400);}
+
+.wip{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;letter-spacing:0.14em;color:var(--c-warning);border:0.5px solid var(--c-warning);border-radius:3px;padding:6px 12px;}
+.wip .dot{width:6px;height:6px;background:var(--c-warning);border-radius:50%;}
+
+header{border-bottom:0.5px solid var(--c-900);padding-bottom:36px;margin-bottom:48px;}
+.meta{font-family:var(--mono);font-size:11px;letter-spacing:0.06em;color:var(--c-700);margin-top:16px;}
+
+section{padding:36px 0;border-top:0.5px solid var(--c-900);}
+section:first-of-type{border-top:0;}
+.sec-no{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;color:var(--c-warning);}
+section h2{margin:6px 0 20px;}
+
+.lead{font-size:17px;color:var(--c-200);max-width:62ch;margin-bottom:14px;}
+.note{font-size:14px;color:var(--c-700);max-width:62ch;}
+.note b{color:var(--c-200);font-weight:500;}
+
+.map{font-family:var(--mono);font-size:13px;line-height:1.9;color:var(--c-400);background:var(--c-elev);border:0.5px solid var(--c-900);border-radius:6px;padding:24px;white-space:pre;overflow-x:auto;}
+
+.nav-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;}
+.pill{font-family:var(--mono);font-size:12px;letter-spacing:0.04em;color:var(--c-400);border:0.5px solid var(--c-900);border-radius:3px;padding:7px 12px;background:var(--c-elev);}
+.pill.cta{color:var(--c-warning);border-color:var(--c-warning);}
+
+table{width:100%;border-collapse:collapse;margin-top:8px;}
+th,td{text-align:left;padding:12px 10px;border-bottom:0.5px solid var(--c-900);font-size:14px;vertical-align:top;}
+th{font-family:var(--mono);font-size:11px;letter-spacing:0.1em;color:var(--c-700);font-weight:400;}
+td:first-child{color:var(--c-200);width:34%;}
+td .n{font-family:var(--mono);color:var(--c-warning);font-size:12px;margin-right:8px;}
+.st{font-family:var(--mono);font-size:11px;letter-spacing:0.04em;white-space:nowrap;}
+.st.active{color:var(--c-warning);}
+.st.done{color:var(--c-400);}
+.st.todo{color:var(--c-700);}
+.st.ext{color:var(--c-600);}
+
+ul{list-style:none;margin-top:8px;}
+li{position:relative;padding-left:22px;font-size:15px;color:var(--c-600);margin-bottom:11px;}
+li::before{content:'';position:absolute;left:0;top:9px;width:6px;height:6px;border:0.5px solid var(--c-800);}
+li b{color:var(--c-200);font-weight:500;}
+
+footer{border-top:0.5px solid var(--c-900);margin-top:48px;padding-top:28px;font-family:var(--mono);font-size:11px;letter-spacing:0.06em;color:var(--c-700);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <span class="eyebrow">Intelligent Investing</span>
+    <h1>Website Plan &amp; Progress</h1>
+    <div class="wip"><span class="dot"></span>Work in Progress · Draft</div>
+    <div class="meta">Shared for team review — Marketing &amp; Stakeholders · Last updated 2026‑06‑15 · Prototype, not final</div>
+  </header>
+
+  <section>
+    <span class="sec-no">01</span>
+    <h2>What this is</h2>
+    <p class="lead">The marketing website for Intelligent Investing — a self‑directed investor platform built on one idea: judgment must be recorded before it can be improved.</p>
+    <p class="note"><b>Brand direction:</b> severe, institutional, monochrome. Bloomberg / Palantir tone — not Robinhood / Wealthsimple. The site reads as serious infrastructure, not a consumer fintech app.</p>
+    <p class="note" style="margin-top:14px;"><b>Purpose:</b> explain the thesis · present the two tracks (Managed, Self‑Directed) + research · build credibility (regulatory, evidence, manifesto) · convert to app / membership.</p>
+  </section>
+
+  <section>
+    <span class="sec-no">02</span>
+    <h2>Sitemap</h2>
+    <div class="map">Home
+├─ Managed                 — rules‑based allocation track
+├─ Self‑Directed           — thesis / decision‑record track
+│   └─ Research (Fiscal.ai) — research infrastructure
+├─ Journal                 — editorial / weekly read
+│   └─ Journal article      (detail / slug page)
+├─ Pricing
+├─ About
+│   └─ Manifesto
+├─ Knowledge Hub
+├─ Evidence  (linked from Home)
+│   ├─ Benchmark
+│   ├─ Calibration
+│   └─ Decision Record (Memo)
+├─ Documents (Managed)     — disclosures / legal
+├─ Documents (Self‑Directed)
+└─ Get the App</div>
+    <div class="nav-pills">
+      <span class="pill">Managed</span><span class="pill">Self‑Directed</span><span class="pill">Journal</span>
+      <span class="pill">Pricing</span><span class="pill">About</span><span class="pill">Knowledge Hub</span>
+      <span class="pill cta">Get the App</span>
+    </div>
+  </section>
+
+  <section>
+    <span class="sec-no">03</span>
+    <h2>Homepage structure</h2>
+    <p class="note">A single narrative scroll.</p>
+    <table>
+      <tr><th>No.</th><th>Section</th><th>Role</th></tr>
+      <tr><td><span class="n">—</span>Hero</td><td colspan="2">“The investing industry built access. It never built judgment infrastructure.” + animated torus + CTA</td></tr>
+      <tr><td><span class="n">—</span>Trust band</td><td colspan="2">Regulatory Standing · Investor Protection · Asset Custody · Institutional Backing</td></tr>
+      <tr><td><span class="n">01</span>Reality</td><td colspan="2">“Very few systems record judgment.” — recorded vs not‑recorded ladder</td></tr>
+      <tr><td><span class="n">02</span>The Allocator</td><td colspan="2">What an allocator actually is — capability, not activity</td></tr>
+      <tr><td><span class="n">03</span>The System</td><td colspan="2">Manage / Self‑Directed / Fiscal.ai — shown as in‑app phone screens</td></tr>
+      <tr><td><span class="n">04</span>Evidence</td><td colspan="2">3 data points (9 in 10 · ~1.7% · 4%) → Benchmark / Calibration / Decision Record</td></tr>
+      <tr><td><span class="n">05</span>Membership</td><td colspan="2">$20/mo · membership revenue, not transaction revenue</td></tr>
+      <tr><td><span class="n">06</span>On the Record</td><td colspan="2">Manifesto + The Edge (2‑column)</td></tr>
+      <tr><td><span class="n">07</span>Journal</td><td colspan="2">Latest editorial entries</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <span class="sec-no">04</span>
+    <h2>Page status</h2>
+    <p class="note"><span class="st active">● in refinement</span> &nbsp; <span class="st done">● built</span> &nbsp; <span class="st todo">● draft copy / stub</span> &nbsp; <span class="st ext">● external</span></p>
+    <table>
+      <tr><th>Page</th><th>Status</th><th>Notes</th></tr>
+      <tr><td>Home</td><td><span class="st active">in refinement</span></td><td>Most active. Heavy mobile/tablet optimization (hero, phone‑frame cards, responsive).</td></tr>
+      <tr><td>Managed</td><td><span class="st done">built</span></td><td>Feature overview, how‑it‑works, portfolio types, performance table, regulatory.</td></tr>
+      <tr><td>Self‑Directed</td><td><span class="st done">built</span></td><td>Framework, modules (Memo / Research / Benchmark / Calibration), regulatory.</td></tr>
+      <tr><td>Journal (index + article)</td><td><span class="st done">built</span></td><td>3 article entries + full long‑form article template.</td></tr>
+      <tr><td>Knowledge Hub</td><td><span class="st done">built</span></td><td>4 content groups, 16 knowledge cards with real questions.</td></tr>
+      <tr><td>Research (Fiscal.ai)</td><td><span class="st done">built</span></td><td>5 sections — Premise, Fiscal.ai Max, BYO AI, Surface, Doctrine.</td></tr>
+      <tr><td>Manifesto</td><td><span class="st done">built</span></td><td>All 14 doctrine entries with real copy.</td></tr>
+      <tr><td>Evidence: Benchmark / Calibration / Memo</td><td><span class="st done">built</span></td><td>Full sections — data, mechanism, doctrine. Linked from Home.</td></tr>
+      <tr><td>Documents (Managed / Self‑Directed)</td><td><span class="st done">built</span></td><td>Fees, custody, regulatory, order types — real disclosure content.</td></tr>
+      <tr><td>Pricing</td><td><span class="st done">built · draft copy</span></td><td>$20/mo, included list, FAQ — some compliance placeholders to finalize.</td></tr>
+      <tr><td>About</td><td><span class="st done">built · draft copy</span></td><td>Philosophy, manifesto, founders, regulatory — founder bios + compliance placeholders.</td></tr>
+      <tr><td>Get the App</td><td><span class="st todo">stub</span></td><td>Heading + App Store / QR placeholders only.</td></tr>
+      <tr><td>The Edge</td><td><span class="st ext">external</span></td><td>Webflow — weekly read newsletter.</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <span class="sec-no">05</span>
+    <h2>Recent progress</h2>
+    <ul>
+      <li><b>Mobile / tablet optimization</b> of the homepage — the biggest current focus.</li>
+      <li><b>Hero:</b> headline line‑breaks tuned per breakpoint; animated wireframe torus centered below the sub‑headline; CTA anchored to stay in view on any device.</li>
+      <li><b>The System:</b> product cards redesigned as phone‑frame mockups (status bar, rounded top), unified desktop &amp; mobile, sitting on full‑width section dividers.</li>
+      <li><b>Evidence:</b> stat numbers as the protagonist, count‑up animation, On‑the‑Record card style.</li>
+      <li><b>Design system enforcement:</b> monochrome token palette, Inter + Chakra Petch type scale, validated automatically.</li>
+    </ul>
+  </section>
+
+  <footer>This document is a living draft — anything marked “in refinement” or “scaffolded” is not final. · Intelligent Investing</footer>
+
+</div>
+</body>
+</html>
