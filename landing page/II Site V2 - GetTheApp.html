@@ -9,12 +9,15 @@
 :root{--c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-800:#565B5E;--c-700:#929292;--c-600:#A7A7A7;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFF; --frame: clamp(24px, 4vw, 48px); --maxw: 1680px; --gutter: clamp(16px, 1.5vw, 24px); --c-elev: #0A0A0A;}
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{background:var(--c-black);color:var(--c-600);font-family:'Inter',sans-serif;font-feature-settings:'tnum' 1,'lnum' 1,'ss01' 1;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased;font-weight:400;}
-body{min-height:100vh;font-size:16px;line-height:1.55;}body.menu-open{overflow:hidden;}
+body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient(180deg,var(--c-elev) 0,var(--c-black) 560px);}body.menu-open{overflow:hidden;}
 .navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(0,0,0,0.7);backdrop-filter:blur(10px);}
-.navbar-inner{display:flex;align-items:center;justify-content:space-between;padding:22px 40px;gap:32px;}
-@media (max-width: 900px) { .navbar-inner { padding: 22px 24px !important; } }
-.navbar-brand img{height:13px;}
-.nav-links-desktop{display:none !important;}
+.navbar-inner{display:flex;align-items:center;justify-content:space-between;padding:var(--frame);gap:32px;position:relative;}
+
+.navbar-brand img{height:14px;width:auto;display:block;}
+.nav-links{display:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);align-items:center;gap:24px;}
+.nav-links a{color:var(--c-700);font-size:13px;letter-spacing:0.02em;text-decoration:none;transition:color 0.15s ease;}
+.nav-links a:hover{color:var(--c-white);}
+@media(min-width:1024px){.nav-links{display:inline-flex;}.hamburger{display:none;}}
 
 .nav-item{position:relative;}
 .nav-link{color:var(--c-400);text-decoration:none;font-size:13px;letter-spacing:0.02em;padding:8px 0;display:inline-flex;align-items:center;gap:6px;transition:color 0.15s ease;}
@@ -63,7 +66,7 @@ body{min-height:100vh;font-size:16px;line-height:1.55;}body.menu-open{overflow:h
 .qr-lbl{font-size:11px;color:var(--c-700);letter-spacing:0.04em;}
 .gta-sign-in{margin-top:48px;padding-top:48px;border-top:0.5px solid var(--c-900);max-width:480px;width:100%;}
 .gta-sign-in-lbl{font-size:13px;color:var(--c-700);margin-bottom:16px;}
-.gta-sign-in a{color:var(--c-200);text-decoration:none;font-size:16px;border-bottom:0.5px solid var(--c-700);padding-bottom:4px;transition:all 0.15s ease;}
+.gta-sign-in a{color:var(--c-200);text-decoration:none;font-size:15px;border-bottom:0.5px solid var(--c-700);padding-bottom:4px;transition:all 0.15s ease;}
 .gta-sign-in a:hover{color:var(--c-200);border-bottom-color:var(--c-200);}
 .gta-note{margin-top:80px;font-size:13px;color:var(--c-700);max-width:500px;line-height:1.6;}
 footer{border-top:0.5px solid var(--c-900);padding:96px 0 36px;font-size:14px;line-height:1.7;color:var(--c-800);}
@@ -80,30 +83,25 @@ footer{border-top:0.5px solid var(--c-900);padding:96px 0 36px;font-size:14px;li
 .footer-bottom .footer-legal-links{display:flex;gap:24px;}
 .footer-bottom .footer-legal-links a{color:var(--c-700);text-decoration:none;}
 @media(max-width:600px){.footer-bottom{flex-direction:column;gap:16px;align-items:flex-start;}}
+@media (prefers-reduced-motion: no-preference){.ri{opacity:0;transform:translateY(24px);transition:opacity 0.7s cubic-bezier(0.2,0.6,0.2,1),transform 0.7s cubic-bezier(0.2,0.6,0.2,1);transition-delay:var(--d,0s);}.ri.in{opacity:1;transform:none;}}
 </style>
 </head>
 <body>
 <nav class="navbar"><div class="navbar-inner">
-  <a href="II Site V2 - Edition.html" class="navbar-brand"><img src="Logo.svg" alt="II"></a>
-  <div class="nav-links-desktop">
-    <div class="nav-item"><a href="II Site V2 - Product.html" class="nav-link">Product <span class="nav-caret"></span></a><div class="nav-dropdown"><a href="II Site V2 - Memo.html">The Memo</a><a href="II Site V2 - Benchmark.html">Benchmark</a><a href="II Site V2 - Research.html">Research</a><a href="II Site V2 - Calibration.html">Calibration</a></div></div>
-    <div class="nav-item"><a href="II Site V2 - Journal.html" class="nav-link">Journal</a></div>
-    <div class="nav-item"><a href="II Site V2 - Pricing.html" class="nav-link">Pricing</a></div>
-    <div class="nav-item"><a href="II Site V2 - Documents-Managed.html" class="nav-link">Documents <span class="nav-caret"></span></a><div class="nav-dropdown"><a href="II Site V2 - Manifesto.html">Manifesto</a><a href="II Site V2 - Documents-Managed.html">Managed</a><a href="II Site V2 - Documents-SelfDirected.html">Self-Directed</a></div></div>
-    <div class="nav-item"><a href="II Site V2 - About.html" class="nav-link">About</a></div>
-  </div>
+  <a href="II Site V2 - Edition v3.html" class="navbar-brand"><img src="Logo.svg" alt="II"></a>
+  <div class="nav-links"><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a></div>
   <div class="navbar-right"><a href="II Site V2 - GetTheApp.html" class="navbar-cta">Get the App</a><button class="hamburger" type="button"><span></span><span></span></button></div>
 </div></nav>
 <div class="menu-overlay">
-  <div class="menu-top"><a href="II Site V2 - Edition.html" class="ml-logo"><img src="Logo.svg" alt="II"></a><button class="ml-close" type="button">Close ×</button></div>
-  <div class="menu-center"><a href="II Site V2 - Product.html">Product</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - Documents-Managed.html">Documents</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - GetTheApp.html">Get the App</a></div>
+  <div class="menu-top"><a href="II Site V2 - Edition v3.html" class="ml-logo"><img src="Logo.svg" alt="II"></a><button class="ml-close" type="button">Close ×</button></div>
+  <div class="menu-center"><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a><a href="II Site V2 - GetTheApp.html">Get the App</a></div>
   <div class="menu-bottom"><div class="mb-left"><span>Intelligent Investing</span><span>No. 01 · 2026</span></div><div class="mb-right"><span>Mogo Inc.</span><span>Orion Digital · TSX·NASDAQ : ORIO</span></div></div>
 </div>
 
 <section class="gta-section">
   <div class="gta-eyebrow">Intelligent Investing &nbsp;·&nbsp; iOS</div>
-  <h1 class="gta-title">Mobile-first.<br>By design.</h1>
-  <div class="gta-deck">Intelligent Investing is built for iOS. Sign-up takes you through Calibration first — a five-minute screening that decides whether the system is right for you.</div>
+  <h1 class="gta-title ri" style="--d:0.06s">Mobile-first.<br>By design.</h1>
+  <div class="gta-deck ri" style="--d:0.14s">Intelligent Investing is built for iOS. Sign-up takes you through Calibration first — a five-minute screening that decides whether the system is right for you.</div>
 
   <div class="gta-actions">
     <a href="https://apps.apple.com" class="gta-store">
@@ -146,5 +144,6 @@ hamburger.addEventListener('click',e=>{e.stopPropagation();menuOverlay.classList
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menuOverlay.classList.contains('open')) closeMenu(); });
 </script>
 
+<script>if('IntersectionObserver' in window){var rio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');rio.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -6% 0px'});document.querySelectorAll('.ri').forEach(function(el){rio.observe(el);});}else{document.querySelectorAll('.ri').forEach(function(el){el.classList.add('in');});}</script>
 </body>
 </html>

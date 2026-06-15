@@ -9,12 +9,15 @@
 :root{--c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-800:#565B5E;--c-700:#929292;--c-600:#A7A7A7;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFF; --frame: clamp(24px, 4vw, 48px); --maxw: 1680px; --gutter: clamp(16px, 1.5vw, 24px); --c-elev: #0A0A0A;}
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{background:var(--c-black);color:var(--c-600);font-family:'Inter',sans-serif;font-feature-settings:'tnum' 1,'lnum' 1,'ss01' 1;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased;font-weight:400;}
-body{min-height:100vh;font-size:16px;line-height:1.55;}body.menu-open{overflow:hidden;}
+body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient(180deg,var(--c-elev) 0,var(--c-black) 560px);}body.menu-open{overflow:hidden;}
 .navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(0,0,0,0.7);backdrop-filter:blur(10px);}
-.navbar-inner{display:flex;align-items:center;justify-content:space-between;padding:22px 40px;gap:32px;}
-@media (max-width: 900px) { .navbar-inner { padding: 22px 24px !important; } }
-.navbar-brand img{height:13px;}
-.nav-links-desktop{display:none !important;}
+.navbar-inner{display:flex;align-items:center;justify-content:space-between;padding:var(--frame);gap:32px;position:relative;}
+
+.navbar-brand img{height:14px;width:auto;display:block;}
+.nav-links{display:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);align-items:center;gap:24px;}
+.nav-links a{color:var(--c-700);font-size:13px;letter-spacing:0.02em;text-decoration:none;transition:color 0.15s ease;}
+.nav-links a:hover{color:var(--c-white);}
+@media(min-width:1024px){.nav-links{display:inline-flex;}.hamburger{display:none;}}
 
 .nav-item{position:relative;}
 .nav-link{color:var(--c-400);text-decoration:none;font-size:13px;letter-spacing:0.02em;padding:8px 0;display:inline-flex;align-items:center;gap:6px;transition:color 0.15s ease;}
@@ -53,24 +56,73 @@ body{min-height:100vh;font-size:16px;line-height:1.55;}body.menu-open{overflow:h
 .page-header{padding:180px 0 80px;}
 .page-breadcrumb{font-size:12px;color:var(--c-700);letter-spacing:0.06em;margin-bottom:36px;display:flex;align-items:center;gap:10px;}
 .page-breadcrumb a{color:var(--c-700);text-decoration:none;}.page-breadcrumb .sep{color:var(--c-800);}.page-breadcrumb .current{color:var(--c-200);}
-.page-title{font-size:clamp(48px,8vw,120px);line-height:0.95;letter-spacing:-0.045em;color:var(--c-200);font-weight:400;margin-bottom:48px;}
-.page-deck{font-size:clamp(20px,1.8vw,24px);line-height:1.4;letter-spacing:-0.015em;color:var(--c-400);max-width:760px;text-wrap:balance;}
-.sec{padding:96px 0;border-bottom:0.5px solid var(--c-900);}
-.sec-head{display:grid;grid-template-columns:120px 1fr;gap:32px;align-items:baseline;margin-bottom:56px;}
-.sec-num{font-size:13px;color:var(--c-700);letter-spacing:0.04em;}
-.sec-name{font-size:22px;color:var(--c-200);letter-spacing:-0.02em;}
+.page-eyebrow{font-size:12px;color:var(--c-700);letter-spacing:0.16em;margin-bottom:20px;}
+.page-title{font-size:clamp(34px,5vw,64px);line-height:1.02;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:48px;}
+.page-deck{font-size:clamp(17px,1.6vw,22px);line-height:1.4;letter-spacing:-0.015em;color:var(--c-400);max-width:760px;text-wrap:balance;}
+.section-eyebrow{font-size:12px;color:var(--c-700);letter-spacing:0.16em;margin-bottom:48px;}
 .declarative{font-size:clamp(28px,3.5vw,44px);line-height:1.18;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;max-width:880px;text-wrap:balance;}
 .declarative p+p{margin-top:28px;}
-.prose{font-size:16px;line-height:1.7;color:var(--c-600);max-width:720px;}
+.prose{font-size:15px;line-height:1.7;color:var(--c-600);max-width:720px;}
 .prose p{text-wrap:balance;}.prose p+p{margin-top:14px;}.prose em{font-style:normal;color:var(--c-200);}
-.colophon-block{display:grid;grid-template-columns:160px 1fr;gap:32px;margin-top:48px;padding:32px 0;border-top:0.5px solid var(--c-900);}
-.colophon-block:last-child{border-bottom:0.5px solid var(--c-900);}
-.cb-lbl{font-size:11px;color:var(--c-700);letter-spacing:0.08em;}
-.cb-val{font-size:16px;color:var(--c-200);line-height:1.55;}
-.cb-val .cv-line+.cv-line{margin-top:6px;display:block;}
-.cb-val a{color:var(--c-200);text-decoration:underline;text-decoration-color:var(--c-800);transition:text-decoration-color 0.15s ease;}
-.cb-val a:hover{text-decoration-color:var(--c-200);}
-@media(max-width:900px){.colophon-block{grid-template-columns:1fr;gap:8px;}}
+
+/* — Philosophy — */
+.philosophy-section{padding:96px 0;border-top:0.5px solid var(--c-900);}
+.philosophy-statement{font-size:clamp(28px,3.5vw,44px);line-height:1.18;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;max-width:880px;text-wrap:balance;margin-bottom:48px;}
+.philosophy-prose{font-size:18px;line-height:1.7;color:var(--c-400);letter-spacing:-0.01em;max-width:760px;}
+.philosophy-prose p+p{margin-top:28px;}
+
+/* — Manifesto — */
+.manifesto-section{padding:96px 0;border-top:0.5px solid var(--c-900);}
+.manifesto-statement{font-size:clamp(28px,3.5vw,44px);line-height:1.18;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;max-width:880px;text-wrap:balance;margin-bottom:48px;}
+.manifesto-prose{font-size:18px;line-height:1.7;color:var(--c-400);letter-spacing:-0.01em;max-width:760px;}
+.manifesto-prose p+p{margin-top:24px;}
+.manifesto-prose em{font-style:normal;color:var(--c-200);}
+.manifesto-tenets{list-style:none;margin:28px 0 0;padding:0;max-width:760px;}
+.manifesto-tenets li{font-size:18px;line-height:1.6;color:var(--c-400);padding:18px 0;border-top:0.5px solid var(--c-900);}
+.manifesto-tenets li:last-child{border-bottom:0.5px solid var(--c-900);}
+.manifesto-tenets li em{font-style:normal;color:var(--c-200);}
+.manifesto-actions{margin-top:48px;}
+.link{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--c-200);text-decoration:none;}
+.link .arr{font-family:monospace;color:var(--c-700);transition:color 0.2s ease;}
+.link:hover{color:var(--c-white);}
+.link:hover .arr{color:var(--c-400);}
+.link .roll{display:inline-block;overflow:hidden;vertical-align:bottom;height:1lh;}
+.link .roll-in{display:block;}
+.link .roll-in>span{display:block;}
+@media (prefers-reduced-motion: no-preference){.link .roll-in{transition:transform 0.55s cubic-bezier(0.16,1,0.3,1);}.link:hover .roll-in{transform:translateY(-50%);}}
+
+/* — Founders — */
+.founders-section{padding:96px 0;border-top:0.5px solid var(--c-900);}
+.founder-rows{display:flex;flex-direction:column;}
+.founder-row{display:grid;grid-template-columns:minmax(0,260px) 1fr;gap:48px;padding:40px 0;border-top:0.5px solid var(--c-900);}
+.founder-row:last-of-type{border-bottom:0.5px solid var(--c-900);}
+.founder-name{font-size:18px;letter-spacing:-0.02em;color:var(--c-white);margin-bottom:12px;}
+.founder-title{font-family:monospace;font-size:11px;color:var(--c-700);letter-spacing:0.1em;}
+.founder-bio{font-size:14px;line-height:1.65;color:var(--c-600);font-style:italic;max-width:560px;}
+
+/* — Regulatory & Institutional (from Managed) — */
+.reg-section{padding:96px 0;border-top:0.5px solid var(--c-900);}
+.reg-rows{display:flex;flex-direction:column;}
+.reg-row{display:grid;grid-template-columns:minmax(0,260px) 1fr;gap:48px;padding:32px 0;border-top:0.5px solid var(--c-900);}
+.reg-row:last-of-type{border-bottom:0.5px solid var(--c-900);}
+.reg-label{font-size:12px;color:var(--c-200);letter-spacing:0.08em;}
+.reg-desc{font-size:14px;line-height:1.65;color:var(--c-700);font-style:italic;max-width:760px;}
+
+/* — Closing CTA (from Managed) — */
+.cta-section{text-align:center;padding:160px 0 100px;border-top:0.5px solid var(--c-900);}
+.cta-canon{font-size:clamp(28px,3.5vw,44px);line-height:1.2;letter-spacing:-0.025em;color:var(--c-200);margin-bottom:48px;text-wrap:balance;}
+.cta-button{display:inline-flex;align-items:center;gap:8px;font-size:15px;color:var(--c-white);text-decoration:none;}
+.cta-button .arr{display:inline-flex;align-items:center;line-height:1;}
+.cta-button .arr-svg{width:13px;height:13px;display:block;}
+.cta-button .roll{display:inline-block;overflow:hidden;vertical-align:bottom;height:1lh;}
+.cta-button .roll-in{display:block;}
+.cta-button .roll-in>span{display:block;}
+@media (prefers-reduced-motion: no-preference){.cta-button .roll-in{transition:transform 0.55s cubic-bezier(0.16,1,0.3,1);}.cta-button:hover .roll-in{transform:translateY(-50%);}}
+
+@media(max-width:760px){
+  .founder-row{grid-template-columns:1fr;gap:14px;}
+  .reg-row{grid-template-columns:1fr;gap:14px;}
+}
 footer{border-top:0.5px solid var(--c-900);padding:96px 0 36px;font-size:14px;line-height:1.7;color:var(--c-800);}
 .footer-mast{margin-bottom:64px;}
 .colophon-mast{font-size:13px;color:var(--c-600);margin-bottom:6px;}.colophon-pub{font-size:13px;color:var(--c-700);}
@@ -86,126 +138,92 @@ footer{border-top:0.5px solid var(--c-900);padding:96px 0 36px;font-size:14px;li
 .footer-bottom .footer-legal-links{display:flex;gap:24px;}
 .footer-bottom .footer-legal-links a{color:var(--c-700);text-decoration:none;}
 @media(max-width:600px){.footer-bottom{flex-direction:column;gap:16px;align-items:flex-start;}}
+@media (prefers-reduced-motion: no-preference){.ri{opacity:0;transform:translateY(24px);transition:opacity 0.7s cubic-bezier(0.2,0.6,0.2,1),transform 0.7s cubic-bezier(0.2,0.6,0.2,1);transition-delay:var(--d,0s);}.ri.in{opacity:1;transform:none;}}
 </style>
 </head>
 <body>
 <nav class="navbar"><div class="navbar-inner">
-  <a href="II Site V2 - Edition.html" class="navbar-brand"><img src="Logo.svg" alt="II"></a>
-  <div class="nav-links-desktop">
-    <div class="nav-item"><a href="II Site V2 - Product.html" class="nav-link">Product <span class="nav-caret"></span></a><div class="nav-dropdown"><a href="II Site V2 - Memo.html">The Memo</a><a href="II Site V2 - Benchmark.html">Benchmark</a><a href="II Site V2 - Research.html">Research</a><a href="II Site V2 - Calibration.html">Calibration</a></div></div>
-    <div class="nav-item"><a href="II Site V2 - Journal.html" class="nav-link">Journal</a></div>
-    <div class="nav-item"><a href="II Site V2 - Pricing.html" class="nav-link">Pricing</a></div>
-    <div class="nav-item"><a href="II Site V2 - Documents-Managed.html" class="nav-link">Documents <span class="nav-caret"></span></a><div class="nav-dropdown"><a href="II Site V2 - Manifesto.html">Manifesto</a><a href="II Site V2 - Documents-Managed.html">Managed</a><a href="II Site V2 - Documents-SelfDirected.html">Self-Directed</a></div></div>
-    <div class="nav-item"><a href="II Site V2 - About.html" class="nav-link active">About</a></div>
-  </div>
+  <a href="II Site V2 - Edition v3.html" class="navbar-brand"><img src="Logo.svg" alt="II"></a>
+  <div class="nav-links"><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a></div>
   <div class="navbar-right"><a href="II Site V2 - GetTheApp.html" class="navbar-cta">Get the App</a><button class="hamburger" type="button"><span></span><span></span></button></div>
 </div></nav>
 <div class="menu-overlay">
-  <div class="menu-top"><a href="II Site V2 - Edition.html" class="ml-logo"><img src="Logo.svg" alt="II"></a><button class="ml-close" type="button">Close ×</button></div>
-  <div class="menu-center"><a href="II Site V2 - Product.html">Product</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - Documents-Managed.html">Documents</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - GetTheApp.html">Get the App</a></div>
+  <div class="menu-top"><a href="II Site V2 - Edition v3.html" class="ml-logo"><img src="Logo.svg" alt="II"></a><button class="ml-close" type="button">Close ×</button></div>
+  <div class="menu-center"><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a><a href="II Site V2 - GetTheApp.html">Get the App</a></div>
   <div class="menu-bottom"><div class="mb-left"><span>Intelligent Investing</span><span>No. 01 · 2026</span></div><div class="mb-right"><span>Mogo Inc.</span><span>Orion Digital · TSX·NASDAQ : ORIO</span></div></div>
 </div>
 
 <div class="container">
 <section class="page-header">
-  <div class="page-breadcrumb"><a href="II Site V2 - Edition.html">Intelligent Investing</a><span class="sep">/</span><span class="current">About</span></div>
-  <h1 class="page-title">About</h1>
-  <div class="page-deck">Published by Mogo Inc. and Orion Digital Corp. A platform built for investors who refuse to confuse activity with progress.</div>
+  <div class="page-eyebrow ri" style="--d:0.04s">About</div>
+  <h1 class="page-title ri" style="--d:0.08s">Modern investing solved execution. It did not solve judgment.</h1>
+  <div class="page-deck ri" style="--d:0.16s">Intelligent Investing was built to make the practice of serious investing operationally possible.</div>
 </section>
+</div>
 
-<section class="sec">
-  <div class="sec-head"><span class="sec-num">/01</span><span class="sec-name">Position</span></div>
-  <div class="declarative"><p>Intelligent Investing was built<br>by people tired of platforms that<br>reward delusion.</p></div>
-  <div class="prose" style="margin-top: 48px;">
-    <p>The investing industry has spent two decades optimizing for engagement. More trades. More alerts. More noise. The customer&rsquo;s portfolio is rarely the primary metric.</p>
-    <p>Mogo Inc. and Orion Digital Corp. built Intelligent Investing as the opposite: <em>a discipline-first capital allocation system designed for compounding over decades, not engagement over weeks.</em></p>
-    <p>Our metric is not your activity. It is whether you remained disciplined. Whether you wrote down your thinking. Whether your calibration improved. Whether you stayed long enough for compounding to do its work.</p>
-  </div>
-</section>
-
-<section class="sec">
-  <div class="sec-head"><span class="sec-num">/02</span><span class="sec-name">Publisher</span></div>
-  <div class="colophon-block">
-    <span class="cb-lbl">Operating Entity</span>
-    <div class="cb-val">
-      <span class="cv-line">Mogo Inc.</span>
-      <span class="cv-line">A subsidiary of Orion Digital Corp.</span>
-      <span class="cv-line">Established 2003. TSX-listed since 2015.</span>
-    </div>
-  </div>
-  <div class="colophon-block">
-    <span class="cb-lbl">Parent Company</span>
-    <div class="cb-val">
-      <span class="cv-line">Orion Digital Corp.</span>
-      <span class="cv-line">NASDAQ &amp; TSX: ORIO</span>
-      <span class="cv-line"><a href="https://www.orion-digital.com/" target="_blank" rel="noopener">orion-digital.com</a></span>
-    </div>
+<div class="container">
+<section class="philosophy-section">
+  <div class="philosophy-statement ri" style="--d:0s">We are not building a friendly investing app. We are building a serious one.</div>
+  <div class="philosophy-prose">
+    <p class="ri" style="--d:0.04s">Warmth is easy. Authority is earned. The platform exists because the execution layer was already solved. Zero commissions, instant transfers, clean UI — those problems were commoditized. What remained unsolved was the judgment layer.</p>
+    <p class="ri" style="--d:0.08s">Most retail investors have no system for recording why they made a decision. No framework for measuring whether their choices are improving. No infrastructure for the practice of allocator development. That is what Intelligent Investing addresses.</p>
+    <p class="ri" style="--d:0.12s">The product is not competing on fees or features. It is competing on reducing the emotional friction around serious investing.</p>
   </div>
 </section>
+</div>
 
-<section class="sec">
-  <div class="sec-head"><span class="sec-num">/03</span><span class="sec-name">Regulatory Structure</span></div>
-  <div class="prose" style="margin-bottom: 32px;">
-    <p>Intelligent Investing operates through two regulated entities — an investment dealer and a portfolio manager — to provide different services. Each entity is separate and responsible only for the services it provides.</p>
+<div class="container">
+<section class="manifesto-section">
+  <div class="section-eyebrow ri" style="--d:0s">Manifesto</div>
+  <div class="manifesto-statement ri" style="--d:0.04s">We are not here to make investing feel easy. We are here to remove illusion — not replace it with a better story.</div>
+  <div class="manifesto-prose">
+    <p class="ri" style="--d:0.06s">Investing is not trading. It is capital allocation — the difference between reacting and deciding. Intelligent Investing is a discipline-first capital allocation system, designed to compound capital over decades. It is not a tool. It is a system you operate inside.</p>
+    <p class="ri" style="--d:0.08s">Most underperformance is not analytical. It is behavioural. The system is built to surface overconfidence, impatience, and narrative chasing, then apply pressure in the opposite direction. Not through motivation. Through design.</p>
   </div>
-  <div class="colophon-block">
-    <span class="cb-lbl">Self-Directed Track</span>
-    <div class="cb-val">
-      <span class="cv-line">IntelligentInvesting Securities Inc.</span>
-      <span class="cv-line">Investment dealer · CIRO member · CIPF member</span>
+  <ul class="manifesto-tenets">
+    <li class="ri" style="--d:0.1s"><em>Discipline over prediction.</em> Outcomes improve when error is reduced, not when forecasts multiply.</li>
+    <li class="ri" style="--d:0.12s"><em>Structure over willpower.</em> Good intentions fail without constraints.</li>
+    <li class="ri" style="--d:0.14s"><em>Time as the primary edge.</em> Compounding requires duration most cannot tolerate.</li>
+    <li class="ri" style="--d:0.16s"><em>Friction as intelligence.</em> If a decision feels too easy, it usually is.</li>
+  </ul>
+  <div class="manifesto-actions ri" style="--d:0.18s">
+    <a href="II Site V2 - Manifesto.html" class="link"><span class="arr">→</span><span class="roll"><span class="roll-in"><span>Read the Full Doctrine</span><span>Read the Full Doctrine</span></span></span></a>
+  </div>
+</section>
+</div>
+
+<div class="container">
+<section class="founders-section">
+  <div class="section-eyebrow ri" style="--d:0s">Founders</div>
+  <div class="founder-rows">
+    <div class="founder-row ri" style="--d:0.04s">
+      <div class="founder-id"><div class="founder-name">David Feller</div><div class="founder-title">[TITLE — PROOF &amp; FACTS REQUIRED]</div></div>
+      <p class="founder-bio">[Founder bio — Proof &amp; Facts and compliance review required before publish]</p>
     </div>
-  </div>
-  <div class="colophon-block">
-    <span class="cb-lbl">Managed Track</span>
-    <div class="cb-val">
-      <span class="cv-line">IntelligentInvesting Wealth Management Inc.</span>
-      <span class="cv-line">Registered portfolio manager</span>
-    </div>
-  </div>
-  <div class="colophon-block">
-    <span class="cb-lbl">Custodian</span>
-    <div class="cb-val">
-      <span class="cv-line">CI Investment Services Inc.</span>
-      <span class="cv-line">CIRO member · CIPF coverage as per CIPF policy</span>
+    <div class="founder-row ri" style="--d:0.08s">
+      <div class="founder-id"><div class="founder-name">Gregory Feller</div><div class="founder-title">[TITLE — PROOF &amp; FACTS REQUIRED]</div></div>
+      <p class="founder-bio">[Founder bio — Proof &amp; Facts and compliance review required before publish]</p>
     </div>
   </div>
 </section>
+</div>
 
-<section class="sec" id="contact">
-  <div class="sec-head"><span class="sec-num">/04</span><span class="sec-name">Contact</span></div>
-  <div class="colophon-block">
-    <span class="cb-lbl">Account &amp; Trading Support</span>
-    <div class="cb-val">
-      <span class="cv-line">In-app via Intercom (recommended)</span>
-      <span class="cv-line"><a href="mailto:support@intelligentinvesting.ai">support@intelligentinvesting.ai</a></span>
-    </div>
+<div class="container">
+<section class="reg-section">
+  <div class="section-eyebrow ri" style="--d:0s">Regulatory &amp; Institutional</div>
+  <div class="reg-rows">
+    <div class="reg-row ri" style="--d:0.04s"><div class="reg-label">Regulatory Standing</div><p class="reg-desc">[CIRO registration — compliance-approved language required before publish]</p></div>
+    <div class="reg-row ri" style="--d:0.06s"><div class="reg-label">Investor Protection</div><p class="reg-desc">[CIPF membership — compliance-approved language required before publish]</p></div>
+    <div class="reg-row ri" style="--d:0.08s"><div class="reg-label">Asset Custody</div><p class="reg-desc">[Custodian and asset segregation — compliance-approved language required before publish]</p></div>
+    <div class="reg-row ri" style="--d:0.1s"><div class="reg-label">Institutional Backing</div><p class="reg-desc">[Orion Digital / Mogo public company reference — source validate and route if investor-facing before publish]</p></div>
   </div>
-  <div class="colophon-block">
-    <span class="cb-lbl">Business Inquiries</span>
-    <div class="cb-val">
-      <span class="cv-line"><a href="mailto:inquiries@mogo.ca">inquiries@mogo.ca</a></span>
-    </div>
-  </div>
-  <div class="colophon-block">
-    <span class="cb-lbl">Media</span>
-    <div class="cb-val">
-      <span class="cv-line"><a href="mailto:press@orion-digital.com">press@orion-digital.com</a></span>
-    </div>
-  </div>
-  <div class="colophon-block">
-    <span class="cb-lbl">Offices</span>
-    <div class="cb-val">
-      <span class="cv-line">Vancouver, BC</span>
-      <span class="cv-line">Toronto, ON</span>
-    </div>
-  </div>
-  <div class="colophon-block">
-    <span class="cb-lbl">Colophon</span>
-    <div class="cb-val">
-      <span class="cv-line">Type set in Inter</span>
-      <span class="cv-line">Edition: No. 01 · 2026</span>
-    </div>
-  </div>
+</section>
+</div>
+
+<div class="container">
+<section class="cta-section">
+  <div class="cta-canon">The platform is available now.</div>
+  <a href="II Site V2 - GetTheApp.html" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Download the App</span><span>Download the App</span></span></span></a>
 </section>
 </div>
 
@@ -231,5 +249,6 @@ hamburger.addEventListener('click',e=>{e.stopPropagation();menuOverlay.classList
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menuOverlay.classList.contains('open')) closeMenu(); });
 </script>
 
+<script>if('IntersectionObserver' in window){var rio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');rio.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -6% 0px'});document.querySelectorAll('.ri').forEach(function(el){rio.observe(el);});}else{document.querySelectorAll('.ri').forEach(function(el){el.classList.add('in');});}</script>
 </body>
 </html>

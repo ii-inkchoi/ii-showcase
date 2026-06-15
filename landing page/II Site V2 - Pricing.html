@@ -9,12 +9,15 @@
 :root{--c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-800:#565B5E;--c-700:#929292;--c-600:#A7A7A7;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFF; --frame: clamp(24px, 4vw, 48px); --maxw: 1680px; --gutter: clamp(16px, 1.5vw, 24px); --c-elev: #0A0A0A;}
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{background:var(--c-black);color:var(--c-600);font-family:'Inter',sans-serif;font-feature-settings:'tnum' 1,'lnum' 1,'ss01' 1;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased;font-weight:400;}
-body{min-height:100vh;font-size:16px;line-height:1.55;}body.menu-open{overflow:hidden;}
+body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient(180deg,var(--c-elev) 0,var(--c-black) 560px);}body.menu-open{overflow:hidden;}
 .navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(0,0,0,0.7);backdrop-filter:blur(10px);}
-.navbar-inner{display:flex;align-items:center;justify-content:space-between;padding:22px 40px;gap:32px;}
-@media (max-width: 900px) { .navbar-inner { padding: 22px 24px !important; } }
-.navbar-brand img{height:13px;}
-.nav-links-desktop{display:none !important;}
+.navbar-inner{display:flex;align-items:center;justify-content:space-between;padding:var(--frame);gap:32px;position:relative;}
+
+.navbar-brand img{height:14px;width:auto;display:block;}
+.nav-links{display:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);align-items:center;gap:24px;}
+.nav-links a{color:var(--c-700);font-size:13px;letter-spacing:0.02em;text-decoration:none;transition:color 0.15s ease;}
+.nav-links a:hover{color:var(--c-white);}
+@media(min-width:1024px){.nav-links{display:inline-flex;}.hamburger{display:none;}}
 
 .nav-item{position:relative;}
 .nav-link{color:var(--c-400);text-decoration:none;font-size:13px;letter-spacing:0.02em;padding:8px 0;display:inline-flex;align-items:center;gap:6px;transition:color 0.15s ease;}
@@ -55,14 +58,14 @@ section{padding:120px 0;}
 .page-header{padding:180px 0 80px;border-bottom:0.5px solid var(--c-900);}
 .page-breadcrumb{font-size:12px;color:var(--c-700);letter-spacing:0.06em;margin-bottom:36px;display:flex;align-items:center;gap:10px;}
 .page-breadcrumb a{color:var(--c-700);text-decoration:none;}.page-breadcrumb .sep{color:var(--c-800);}.page-breadcrumb .current{color:var(--c-200);}
-.page-title{font-size:clamp(48px,8vw,120px);line-height:0.95;letter-spacing:-0.045em;color:var(--c-200);font-weight:400;margin-bottom:48px;}
-.page-deck{font-size:clamp(20px,1.8vw,24px);line-height:1.4;letter-spacing:-0.015em;color:var(--c-400);max-width:760px;text-wrap:balance;}
+.page-title{font-size:clamp(34px,5vw,64px);line-height:1.02;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:48px;}
+.page-deck{font-size:clamp(17px,1.6vw,22px);line-height:1.4;letter-spacing:-0.015em;color:var(--c-400);max-width:760px;text-wrap:balance;}
 .sec-head{display:grid;grid-template-columns:80px 1fr;gap:32px;align-items:baseline;margin-bottom:64px;padding-bottom:18px;border-bottom:0.5px solid var(--c-900);}
 .sec-num{font-size:13px;color:var(--c-700);letter-spacing:0.04em;}
 .sec-name{font-size:22px;color:var(--c-200);letter-spacing:-0.02em;}
 .declarative{font-size:clamp(28px,3.5vw,44px);line-height:1.18;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;max-width:880px;text-wrap:balance;}
 .declarative p+p{margin-top:28px;}
-.prose{font-size:16px;line-height:1.7;color:var(--c-600);max-width:720px;}
+.prose{font-size:15px;line-height:1.7;color:var(--c-600);max-width:720px;}
 .prose p{text-wrap:balance;}.prose p+p{margin-top:14px;}.prose em{font-style:normal;color:var(--c-200);}
 .big-num{font-size:clamp(64px,9vw,140px);line-height:0.95;letter-spacing:-0.045em;color:var(--c-200);margin-top:32px;}
 .pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:64px;}
@@ -70,7 +73,7 @@ section{padding:120px 0;}
 .price-card{border:0.5px solid var(--c-900);padding:48px 40px;background:var(--c-1000);}
 .price-card .ptrack{font-size:11px;color:var(--c-700);letter-spacing:0.08em;margin-bottom:20px;}
 .price-card .pname{font-size:32px;color:var(--c-200);letter-spacing:-0.025em;margin-bottom:36px;}
-.price-card .prow{display:flex;justify-content:space-between;align-items:baseline;padding:18px 0;border-bottom:0.5px solid var(--c-900);font-size:16px;}
+.price-card .prow{display:flex;justify-content:space-between;align-items:baseline;padding:18px 0;border-bottom:0.5px solid var(--c-900);font-size:15px;}
 .price-card .prow:last-of-type{border-bottom:none;}
 .price-card .prow .lbl{color:var(--c-700);}
 .price-card .prow .val{color:var(--c-200);text-align:right;font-feature-settings:'tnum' 1;}
@@ -84,8 +87,13 @@ section{padding:120px 0;}
 @media(max-width:900px){.compare-row{grid-template-columns:1fr;row-gap:8px;}}
 .cta-section{text-align:center;padding:160px 0 100px;border-top:0.5px solid var(--c-900);margin-top:80px;}
 .cta-canon{font-size:clamp(28px,3.5vw,44px);line-height:1.2;letter-spacing:-0.025em;color:var(--c-200);margin-bottom:48px;text-wrap:balance;}
-.cta-button{display:inline-block;font-size:14px;color:var(--c-200);text-decoration:none;border:0.5px solid var(--c-700);padding:14px 28px;transition:all 0.15s ease;}
-.cta-button:hover{color:var(--c-200);border-color:var(--c-200);}
+.cta-button{display:inline-flex;align-items:center;gap:8px;font-size:15px;color:var(--c-white);text-decoration:none;}
+.cta-button .arr{display:inline-flex;align-items:center;line-height:1;}
+.cta-button .arr-svg{width:13px;height:13px;display:block;}
+.cta-button .roll{display:inline-block;overflow:hidden;vertical-align:bottom;height:1lh;}
+.cta-button .roll-in{display:block;}
+.cta-button .roll-in>span{display:block;}
+@media (prefers-reduced-motion: no-preference){.cta-button .roll-in{transition:transform 0.55s cubic-bezier(0.16,1,0.3,1);}.cta-button:hover .roll-in{transform:translateY(-50%);}}
 footer{border-top:0.5px solid var(--c-900);padding:96px 0 36px;font-size:14px;line-height:1.7;color:var(--c-800);}
 .footer-mast{margin-bottom:64px;}
 .colophon-mast{font-size:13px;color:var(--c-600);margin-bottom:6px;}.colophon-pub{font-size:13px;color:var(--c-700);}
@@ -101,106 +109,111 @@ footer{border-top:0.5px solid var(--c-900);padding:96px 0 36px;font-size:14px;li
 .footer-bottom .footer-legal-links{display:flex;gap:24px;}
 .footer-bottom .footer-legal-links a{color:var(--c-700);text-decoration:none;}
 @media(max-width:600px){.footer-bottom{flex-direction:column;gap:16px;align-items:flex-start;}}
+@media (prefers-reduced-motion: no-preference){.ri{opacity:0;transform:translateY(24px);transition:opacity 0.7s cubic-bezier(0.2,0.6,0.2,1),transform 0.7s cubic-bezier(0.2,0.6,0.2,1);transition-delay:var(--d,0s);}.ri.in{opacity:1;transform:none;}}
+
+/* — Pricing body sections — */
+.page-eyebrow{font-size:12px;color:var(--c-700);letter-spacing:0.16em;margin-bottom:20px;}
+.section-eyebrow{font-size:12px;color:var(--c-700);letter-spacing:0.16em;margin-bottom:48px;}
+
+.price-section{padding:96px 0;border-top:0.5px solid var(--c-900);text-align:center;}
+.price-display{font-size:clamp(64px,12vw,140px);line-height:0.95;letter-spacing:-0.045em;color:var(--c-200);font-weight:300;}
+.price-period{font-size:12px;color:var(--c-700);letter-spacing:0.16em;margin-top:24px;}
+.price-note{font-size:14px;line-height:1.65;color:var(--c-600);font-style:italic;margin-top:24px;max-width:560px;margin-left:auto;margin-right:auto;}
+
+.included-section{padding:96px 0;border-top:0.5px solid var(--c-900);}
+.included-rows{display:flex;flex-direction:column;}
+.included-row{display:grid;grid-template-columns:minmax(0,100px) 1fr;gap:48px;align-items:baseline;padding:32px 0;border-top:0.5px solid var(--c-900);}
+.included-row:last-of-type{border-bottom:0.5px solid var(--c-900);}
+.included-index{font-size:13px;color:var(--c-700);font-feature-settings:'tnum' 1;letter-spacing:0.04em;}
+.included-text{font-size:18px;line-height:1.5;letter-spacing:-0.015em;color:var(--c-200);max-width:760px;}
+
+.faq-section{padding:96px 0;border-top:0.5px solid var(--c-900);}
+.faq-rows{display:flex;flex-direction:column;}
+.faq-row{display:flex;flex-direction:column;gap:14px;padding:32px 0;border-top:0.5px solid var(--c-900);}
+.faq-row:last-of-type{border-bottom:0.5px solid var(--c-900);}
+.faq-q{font-size:18px;line-height:1.4;letter-spacing:-0.015em;color:var(--c-white);}
+.faq-a{font-size:14px;line-height:1.65;color:var(--c-600);font-style:italic;max-width:760px;}
+
+.reg-section{padding:96px 0;border-top:0.5px solid var(--c-900);}
+.reg-rows{display:flex;flex-direction:column;}
+.reg-row{display:grid;grid-template-columns:minmax(0,260px) 1fr;gap:48px;padding:32px 0;border-top:0.5px solid var(--c-900);}
+.reg-row:last-of-type{border-bottom:0.5px solid var(--c-900);}
+.reg-label{font-size:12px;color:var(--c-200);letter-spacing:0.08em;}
+.reg-desc{font-size:14px;line-height:1.65;color:var(--c-700);font-style:italic;max-width:760px;}
+
+@media(max-width:760px){
+  .included-row{grid-template-columns:1fr;gap:14px;}
+  .reg-row{grid-template-columns:1fr;gap:14px;}
+}
 </style>
 </head>
 <body>
 <nav class="navbar"><div class="navbar-inner">
-  <a href="II Site V2 - Edition.html" class="navbar-brand"><img src="Logo.svg" alt="II"></a>
-  <div class="nav-links-desktop">
-    <div class="nav-item"><a href="II Site V2 - Product.html" class="nav-link">Product <span class="nav-caret"></span></a><div class="nav-dropdown"><a href="II Site V2 - Memo.html">The Memo</a><a href="II Site V2 - Benchmark.html">Benchmark</a><a href="II Site V2 - Research.html">Research</a><a href="II Site V2 - Calibration.html">Calibration</a></div></div>
-    <div class="nav-item"><a href="II Site V2 - Journal.html" class="nav-link">Journal</a></div>
-    <div class="nav-item"><a href="II Site V2 - Pricing.html" class="nav-link active">Pricing</a></div>
-    <div class="nav-item"><a href="II Site V2 - Documents-Managed.html" class="nav-link">Documents <span class="nav-caret"></span></a><div class="nav-dropdown"><a href="II Site V2 - Manifesto.html">Manifesto</a><a href="II Site V2 - Documents-Managed.html">Managed</a><a href="II Site V2 - Documents-SelfDirected.html">Self-Directed</a></div></div>
-    <div class="nav-item"><a href="II Site V2 - About.html" class="nav-link">About</a></div>
-  </div>
+  <a href="II Site V2 - Edition v3.html" class="navbar-brand"><img src="Logo.svg" alt="II"></a>
+  <div class="nav-links"><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a></div>
   <div class="navbar-right"><a href="II Site V2 - GetTheApp.html" class="navbar-cta">Get the App</a><button class="hamburger" type="button"><span></span><span></span></button></div>
 </div></nav>
 <div class="menu-overlay">
-  <div class="menu-top"><a href="II Site V2 - Edition.html" class="ml-logo"><img src="Logo.svg" alt="II"></a><button class="ml-close" type="button">Close ×</button></div>
-  <div class="menu-center"><a href="II Site V2 - Product.html">Product</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - Documents-Managed.html">Documents</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - GetTheApp.html">Get the App</a></div>
+  <div class="menu-top"><a href="II Site V2 - Edition v3.html" class="ml-logo"><img src="Logo.svg" alt="II"></a><button class="ml-close" type="button">Close ×</button></div>
+  <div class="menu-center"><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a><a href="II Site V2 - GetTheApp.html">Get the App</a></div>
   <div class="menu-bottom"><div class="mb-left"><span>Intelligent Investing</span><span>No. 01 · 2026</span></div><div class="mb-right"><span>Mogo Inc.</span><span>Orion Digital · TSX·NASDAQ : ORIO</span></div></div>
 </div>
 
 <div class="container">
 <section class="page-header">
-  <div class="page-breadcrumb"><a href="II Site V2 - Edition.html">Intelligent Investing</a><span class="sep">/</span><span class="current">Pricing</span></div>
-  <h1 class="page-title">Pricing</h1>
-  <div class="page-deck">Aligned with long-term outcomes. Not with activity. The cost is $20 per month, and the structure is built so we only succeed when you do.</div>
+  <div class="page-eyebrow ri" style="--d:0.04s">Pricing</div>
+  <h1 class="page-title ri" style="--d:0.08s">One subscription.</h1>
+  <div class="page-deck ri" style="--d:0.16s">Manage, Self-Directed, and access to Fiscal.ai. Billed monthly.</div>
 </section>
 </div>
 
 <div class="container">
-<section>
-  <div class="sec-head"><span class="sec-num">/01</span><span class="sec-name">The cost</span></div>
-  <div class="declarative"><p>The cost is $20 per month.<br>Cancel anytime.</p></div>
-  <div class="big-num">$20 / mo</div>
-  <div class="prose" style="margin-top: 48px;">
-    <p>One flat membership. Self-Directed and Managed both included. Use one, both, or switch between them.</p>
-    <p>No commissions. No FX markup. No performance fees. <em>No incentive to make you trade more than you should.</em></p>
+<section class="price-section">
+  <div class="price-display ri" style="--d:0.04s">$20</div>
+  <div class="price-period ri" style="--d:0.08s">PER MONTH</div>
+  <p class="price-note ri" style="--d:0.12s">[Draft — fee amount requires Proof &amp; Facts validation and compliance review before publish]</p>
+</section>
+</div>
+
+<div class="container">
+<section class="included-section">
+  <div class="section-eyebrow ri" style="--d:0s">What's Included</div>
+  <div class="included-rows">
+    <div class="included-row ri" style="--d:0.04s"><div class="included-index">01</div><p class="included-text">Manage — Rules-based S&amp;P 500 allocation on a weekly schedule.</p></div>
+    <div class="included-row ri" style="--d:0.06s"><div class="included-index">02</div><p class="included-text">Self-Directed — A decision system for building and reviewing investment theses.</p></div>
+    <div class="included-row ri" style="--d:0.08s"><div class="included-index">03</div><p class="included-text">Fiscal.ai access — Third-party research platform included as a membership benefit.</p></div>
   </div>
 </section>
 </div>
 
 <div class="container">
-<section>
-  <div class="sec-head"><span class="sec-num">/02</span><span class="sec-name">Two tracks · Same membership</span></div>
-  <div class="pricing-grid">
-    <div class="price-card">
-      <div class="ptrack">Track · 01</div>
-      <div class="pname">Self-Directed</div>
-      <div class="prow"><span class="lbl">Membership</span><span class="val">$20 / month</span></div>
-      <div class="prow"><span class="lbl">Capital management</span><span class="val">You</span></div>
-      <div class="prow"><span class="lbl">Commissions</span><span class="val">None</span></div>
-      <div class="prow"><span class="lbl">FX markup</span><span class="val">None</span></div>
-      <div class="prow"><span class="lbl">Research</span><span class="val">Fiscal.ai Max included<span class="small">otherwise $99 / mo</span></span></div>
-      <div class="prow"><span class="lbl">Commitment</span><span class="val">Cancel anytime</span></div>
-      <a href="II Site V2 - GetTheApp.html" class="pcta">Open Account →</a>
-    </div>
-    <div class="price-card">
-      <div class="ptrack">Track · 02</div>
-      <div class="pname">Managed</div>
-      <div class="prow"><span class="lbl">Membership</span><span class="val">$20 / month</span></div>
-      <div class="prow"><span class="lbl">Managed portfolio</span><span class="val">0.10% / yr<span class="small">a fraction of what funds charge</span></span></div>
-      <div class="prow"><span class="lbl">Commissions</span><span class="val">None</span></div>
-      <div class="prow"><span class="lbl">FX markup</span><span class="val">None</span></div>
-      <div class="prow"><span class="lbl">Performance fees</span><span class="val">None</span></div>
-      <div class="prow"><span class="lbl">Commitment</span><span class="val">Cancel anytime</span></div>
-      <a href="II Site V2 - GetTheApp.html" class="pcta">Open Account →</a>
-    </div>
-  </div>
-</section>
-</div>
-
-<div class="container">
-<section>
-  <div class="sec-head"><span class="sec-num">/03</span><span class="sec-name">What's included</span></div>
-  <div class="prose"><p>Both tracks include access to the full system. Memo, Benchmark, Research, Calibration. The only difference between Self-Directed and Managed is who allocates capital: you, or Mogo.</p></div>
-  <div class="compare-list">
-    <div class="compare-row"><span class="compare-lbl">The Memo</span><span class="compare-val">Included</span><span class="compare-val">Included</span></div>
-    <div class="compare-row"><span class="compare-lbl">Benchmark vs S&amp;P 500</span><span class="compare-val">Included</span><span class="compare-val">Included</span></div>
-    <div class="compare-row"><span class="compare-lbl">Fiscal.ai Max Research</span><span class="compare-val">Included</span><span class="compare-val">Included</span></div>
-    <div class="compare-row"><span class="compare-lbl">Calibration record</span><span class="compare-val">Included</span><span class="compare-val">Included</span></div>
-    <div class="compare-row"><span class="compare-lbl">Capital allocation</span><span class="compare-val">By you</span><span class="compare-val">By Mogo (0.10% / yr)</span></div>
-  </div>
-</section>
-</div>
-
-<div class="container">
-<section>
-  <div class="sec-head"><span class="sec-num">/04</span><span class="sec-name">Doctrine</span></div>
-  <div class="declarative"><p>Your success is our retention model.</p></div>
-  <div class="prose" style="margin-top: 48px;">
-    <p>Most trading platforms make money when you trade. The more you transact, the more they earn. Your activity is their revenue. Your discipline is their loss.</p>
-    <p>That model produces the behavior it rewards: overtrading, narrative chasing, churn.</p>
-    <p>This platform makes money when you stay. Membership is flat. Management fee is small and only on managed assets. No commissions. No FX markup. No performance fees. <em>The longer you stay disciplined, the longer we earn.</em></p>
+<section class="faq-section">
+  <div class="section-eyebrow ri" style="--d:0s">Common Questions</div>
+  <div class="faq-rows">
+    <div class="faq-row ri" style="--d:0.04s"><h3 class="faq-q">How does billing work?</h3><p class="faq-a">[Compliance-approved billing language required before publish]</p></div>
+    <div class="faq-row ri" style="--d:0.06s"><h3 class="faq-q">Can I cancel at any time?</h3><p class="faq-a">[Compliance-approved cancellation language required before publish]</p></div>
+    <div class="faq-row ri" style="--d:0.08s"><h3 class="faq-q">What account types are supported?</h3><p class="faq-a">[Compliance-approved account type language required — TFSA, RRSP, and other registered account details]</p></div>
+    <div class="faq-row ri" style="--d:0.1s"><h3 class="faq-q">Are there trading commissions?</h3><p class="faq-a">[Compliance-approved commission language required before publish]</p></div>
   </div>
 </section>
 </div>
 
 <div class="container">
 <section class="cta-section">
-  <div class="cta-canon">$20 a month.<br>The rest is yours to compound.</div>
-  <a href="II Site V2 - GetTheApp.html" class="cta-button">Open Account →</a>
+  <div class="cta-canon">Start with Manage, Self-Directed, or both.</div>
+  <a href="II Site V2 - GetTheApp.html" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Download the App</span><span>Download the App</span></span></span></a>
+</section>
+</div>
+
+<div class="container">
+<section class="reg-section">
+  <div class="section-eyebrow ri" style="--d:0s">Regulatory &amp; Institutional</div>
+  <div class="reg-rows">
+    <div class="reg-row ri" style="--d:0.04s"><div class="reg-label">Regulatory Standing</div><p class="reg-desc">[CIRO registration — compliance-approved language required before publish]</p></div>
+    <div class="reg-row ri" style="--d:0.06s"><div class="reg-label">Investor Protection</div><p class="reg-desc">[CIPF membership — compliance-approved language required before publish]</p></div>
+    <div class="reg-row ri" style="--d:0.08s"><div class="reg-label">Asset Custody</div><p class="reg-desc">[Custodian and asset segregation — compliance-approved language required before publish]</p></div>
+    <div class="reg-row ri" style="--d:0.1s"><div class="reg-label">Institutional Backing</div><p class="reg-desc">[Orion Digital / Mogo — Proof &amp; Facts review required before publish]</p></div>
+  </div>
 </section>
 </div>
 
@@ -226,5 +239,6 @@ hamburger.addEventListener('click',e=>{e.stopPropagation();menuOverlay.classList
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menuOverlay.classList.contains('open')) closeMenu(); });
 </script>
 
+<script>if('IntersectionObserver' in window){var rio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');rio.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -6% 0px'});document.querySelectorAll('.ri').forEach(function(el){rio.observe(el);});}else{document.querySelectorAll('.ri').forEach(function(el){el.classList.add('in');});}</script>
 </body>
 </html>
