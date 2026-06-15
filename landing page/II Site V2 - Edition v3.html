@@ -168,7 +168,7 @@ section { padding: 130px 0; position: relative; }
 @media (max-width: 1180px) and (min-width: 901px) { .alloc-stage { grid-template-columns: 1fr; row-gap: 16px; } }
 @media (max-width: 900px) { section { padding: 72px 0; } }
 @media (max-width: 760px) { #entry-02 .onto-graph { display: none; } section.hero .hero-main { display: flex; flex-direction: column; min-height: calc(100dvh - 240px); }
-  section.hero .hero-figure { position: absolute; left: 50%; right: auto; top: auto; bottom: 96px; transform: translateX(-50%); grid-column: auto; width: 86%; max-width: min(290px, calc(100dvh - 540px)); margin: 0; z-index: -1; pointer-events: none; animation: none; opacity: 1; }
+  section.hero .hero-figure { position: absolute; left: 50%; right: auto; top: auto; bottom: 96px; transform: translateX(-50%); grid-column: auto; width: 92vw; max-width: min(380px, calc(100dvh - 440px)); margin: 0; z-index: -1; pointer-events: none; animation: none; opacity: 1; }
   section.hero .hero-cta { margin-top: auto; padding-top: 28px; }
   section.hero .hero-eyebrow { margin-bottom: 16px; } section.hero .ht-line { stroke: var(--c-600); opacity: 0.85; } section.hero .ht-eq { stroke: var(--c-200); opacity: 1; } section.hero .hbr { display: inline; } section.hero { padding: 128px 0 112px !important; } section.hero .hero-scroll { bottom: 60px; color: var(--c-400); } }
 @media (max-width: 760px) {
@@ -285,6 +285,8 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 .ap-fiscal .ap-bar { position: relative; z-index: 2; margin: 0; padding: 14px 26px 11px; }
 .ap-bar-time { font-size: 12px; letter-spacing: 0.02em; color: var(--c-200); font-variant-numeric: tabular-nums; }
 .ap-bar-ic { display: block; width: 49.8px; height: 12px; color: var(--c-200); }
+.ap-embed { flex: 1 1 auto; display: flex; flex-direction: column; margin: 0 -26px -30px; overflow: hidden; background: var(--c-black); }
+.ap-embed-frame { flex: 1 1 auto; display: block; width: 100%; border: 0; background: var(--c-black); pointer-events: none; }
 @media (max-width: 900px) { .systrack { position: relative; grid-template-columns: 1fr; row-gap: 28px; padding: 40px 0 0; border-top: 0; } .systrack-copy, .systrack .ap-card { grid-column: 1 / -1; } .systrack .ap-card { align-self: auto; margin-bottom: 0; } .systrack::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); border-top: 0.5px solid var(--c-800); } .systrack:last-child { border-bottom: 0; } }
 #edge .container { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); }
 #edge .entry-head, #edge .edge-desc, #edge .link { grid-column: 1 / 5; }
@@ -549,7 +551,7 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
   #journal .timeline { display: flex; overflow-x: auto; gap: 16px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; margin: 56px 0 0; padding: 0 var(--frame); }
   #journal .timeline::-webkit-scrollbar { display: none; }
   #journal .tl-item { flex: 0 0 78%; scroll-snap-align: start; }
-  #journal .tl-item:nth-of-type(4) { display: block; }
+  #journal .tl-item:nth-of-type(4) { display: none; }
 }
 @media (max-width: 640px) {
   /* content uses full width on phone (was 8 of 12 cols) */
@@ -807,60 +809,14 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
       <div class="systrack-copy"><div class="systrack-name">Manage</div><p class="systrack-desc">Rules-based allocation into the S&amp;P 500 on a weekly schedule. No decisions required. Discipline by design. The default is the market. Manage is how most people should begin.</p><a href="II Site V2 - Managed.html" class="systrack-cta"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>Explore Managed</a></div>
       <div class="ap-card ap-core">
         <div class="ap-bar"><span class="ap-bar-time">9:41</span><svg class="ap-bar-ic" viewBox="0 0 49.8 12" fill="none" aria-hidden="true"><rect x="0" y="7" width="2" height="4" rx="0.5" fill="currentColor"/><rect x="3.5" y="5" width="2" height="6" rx="0.5" fill="currentColor"/><rect x="7" y="3" width="2" height="8" rx="0.5" fill="currentColor"/><rect x="10.5" y="1" width="2" height="10" rx="0.5" fill="currentColor"/><path d="M18 4.6C20.2 2.7 25.8 2.7 28 4.6" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M19.6 6.3C21 5.1 25 5.1 26.4 6.3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><circle cx="23" cy="8.4" r="1" fill="currentColor"/><rect x="34" y="3.2" width="13.5" height="6.6" rx="1.6" stroke="currentColor" stroke-width="1" opacity="0.45"/><rect x="35.5" y="4.6" width="9.5" height="3.8" rx="0.7" fill="currentColor"/><path d="M49.1 5.2V7.8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
-            <div class="ap-cdata">
-        <div class="ap-cblock">
-          <span class="ap-clabel">Value</span>
-          <span class="ap-cnum">126,471.77</span>
-          <div class="ap-cgain"><span class="ap-clabel">All Time</span><span class="gp">+6,365.65 (+5.3%)</span></div>
-        </div>
-        <div class="ap-cblock">
-          <span class="ap-clabel">Projection</span>
-          <span class="ap-cproj">1.68M</span>
-        </div>
-        <div class="ap-cblock ap-ctbl">
-          <div class="ap-crow"><span class="tk">Equity (S&amp;P 500)</span><span class="pc">50%</span></div>
-          <div class="ap-crow"><span class="tk">Fixed Income</span><span class="pc">25%</span></div>
-          <div class="ap-crow"><span class="tk">Money Market</span><span class="pc">25%</span></div>
-        </div>
-      </div>
+        <div class="ap-embed"><iframe class="ap-embed-frame" src="ii-app.html?embed#managed" title="Managed dashboard" aria-hidden="true" tabindex="-1" scrolling="no" loading="lazy"></iframe></div>
     </div>
     </div>
     <div class="systrack">
       <div class="systrack-copy"><div class="systrack-name">Self-Directed</div><p class="systrack-desc">A structured environment for building and reviewing investment theses. Thesis, benchmark, kill criteria, review. The process before the position. Not zero-commission execution. A decision system.</p><a href="II Site V2 - Self-Directed.html" class="systrack-cta"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>Explore Self-Directed</a></div>
       <div class="ap-card ap-active">
         <div class="ap-bar"><span class="ap-bar-time">9:41</span><svg class="ap-bar-ic" viewBox="0 0 49.8 12" fill="none" aria-hidden="true"><rect x="0" y="7" width="2" height="4" rx="0.5" fill="currentColor"/><rect x="3.5" y="5" width="2" height="6" rx="0.5" fill="currentColor"/><rect x="7" y="3" width="2" height="8" rx="0.5" fill="currentColor"/><rect x="10.5" y="1" width="2" height="10" rx="0.5" fill="currentColor"/><path d="M18 4.6C20.2 2.7 25.8 2.7 28 4.6" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M19.6 6.3C21 5.1 25 5.1 26.4 6.3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><circle cx="23" cy="8.4" r="1" fill="currentColor"/><rect x="34" y="3.2" width="13.5" height="6.6" rx="1.6" stroke="currentColor" stroke-width="1" opacity="0.45"/><rect x="35.5" y="4.6" width="9.5" height="3.8" rx="0.7" fill="currentColor"/><path d="M49.1 5.2V7.8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
-            <div class="ap-ahead"><span class="aph-h">Active Positions</span><span class="aph-cnt">9</span></div>
-      <div class="ap-holds">
-        <div class="ap-hold">
-          <div class="aph-top">
-            <div class="aph-name"><div class="aph-tkrow"><span class="aph-tkr">AAPL</span><span class="aph-wt">10% WT</span></div><span class="aph-class">Compounder</span></div>
-            <div class="aph-right">
-              <div class="aph-line"><span class="aph-num">12,500.00</span><span class="aph-unit">CAD</span><span class="aph-chg">+38.2%</span></div>
-              <div class="aph-line sub"><span class="aph-num">232.40</span><span class="aph-unit">USD</span><span class="aph-chg">+1.1%</span></div>
-            </div>
-          </div>
-          <div class="aph-badges"><span class="bdg amber">Earnings</span><span class="bdg">52 Week High</span></div>
-        </div>
-        <div class="ap-hold">
-          <div class="aph-top">
-            <div class="aph-name"><div class="aph-tkrow"><span class="aph-tkr">ORIO.TO</span><span class="aph-wt">25% WT</span></div><span class="aph-class">Compounder</span></div>
-            <div class="aph-right">
-              <div class="aph-line"><span class="aph-num">18,950.00</span><span class="aph-unit">CAD</span><span class="aph-chg">+42.6%</span></div>
-              <div class="aph-line sub"><span class="aph-num">87.60</span><span class="aph-unit">CAD</span><span class="aph-chg">+0.8%</span></div>
-            </div>
-          </div>
-          <div class="aph-badges"><span class="bdg amber">Earnings</span><span class="bdg">52 Week High</span><span class="bdg">Top Mover</span></div>
-        </div>
-        <div class="ap-hold">
-          <div class="aph-top">
-            <div class="aph-name"><div class="aph-tkrow"><span class="aph-tkr">BWEN</span><span class="aph-wt">20% WT</span></div><span class="aph-class">Spec</span></div>
-            <div class="aph-right">
-              <div class="aph-line"><span class="aph-num">12,950.00</span><span class="aph-unit">CAD</span><span class="aph-chg">+22.6%</span></div>
-              <div class="aph-line sub"><span class="aph-num">82.40</span><span class="aph-unit">USD</span><span class="aph-chg">-2.8%</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
+        <div class="ap-embed"><iframe class="ap-embed-frame" src="ii-app.html?embed#active" title="Self-Directed positions" aria-hidden="true" tabindex="-1" scrolling="no" loading="lazy"></iframe></div>
     </div>
     </div>
     <div class="systrack">
@@ -907,7 +863,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
       <div class="entry-head"><span class="entry-no" data-type>No. 05</span><span class="entry-name" data-type>Membership</span></div>
       <h2 class="statement">The cost is $20 per month.</h2>
       <p class="prose" style="margin-top:32px;">Membership revenue, not transaction revenue. The structure aligns our incentives with long-term outcomes, not activity.</p>
-      <a href="II Site V2 - Pricing.html" class="link" style="display:inline-flex;align-items:center;gap:6px;margin-top:28px;"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span class="roll"><span class="roll-in"><span>See the Two Tracks</span><span>See the Two Tracks</span></span></span></a>
+      <a href="II Site V2 - Pricing.html" class="link" style="display:inline-flex;align-items:center;gap:6px;margin-top:28px;"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span class="roll"><span class="roll-in"><span>Start Membership</span><span>Start Membership</span></span></span></a>
     </div>
     <div class="mb-right">
       <div class="mb-row"><span class="mb-k">Fiscal.ai Max</span><span class="mb-v">Included</span></div>
@@ -1450,6 +1406,23 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
       (function tick() { if (i <= full.length) { el.textContent = full.slice(0, i); i++; setTimeout(tick, 20); } else { el.classList.remove('type-caret'); done(); } })();
     }
     setTimeout(function next() { if (idx < els.length) { typeOne(els[idx], function () { idx++; next(); }); } }, 500);
+  })();
+
+  // System cards: trigger the embedded app's scroll-settle when the card enters view
+  // (offscreen iframes throttle requestAnimationFrame, so we run it on intersection).
+  (function () {
+    var frames = document.querySelectorAll('.ap-embed-frame');
+    if (!frames.length || !('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var f = en.target; io.unobserve(f);
+        var run = function () { try { if (f.contentWindow && f.contentWindow.iiSettle) f.contentWindow.iiSettle(); } catch (e) {} };
+        if (f.contentWindow && f.contentWindow.iiSettle) run();
+        else f.addEventListener('load', run);
+      });
+    }, { threshold: 0.35 });
+    frames.forEach(function (f) { io.observe(f); });
   })();
 
 </script>
