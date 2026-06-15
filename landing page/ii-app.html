@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Intelligent Investing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#000000;
+    --white:#ffffff;
+    --gray:#929292;     /* labels */
+    --silver:#c7c7c7;   /* values / titles */
+    --abbey:#565b5e;    /* secondary / muted */
+    --divider:#1c1c1c;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html,body{
+    height:100%;
+    width:100%;
+    background:#000;
+    overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:geometricPrecision;
+  }
+
+  /* Black backdrop — fills the window, centers the device both axes. */
+  #stage{
+    position:fixed;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#000;
+    overflow:hidden;
+  }
+
+  /* Phone device — fixed mobile ratio (393 x 852 screen + bezel).
+     Scaled uniformly by JS to ~95% of the viewport height. */
+  #device{
+    position:relative;
+    flex:0 0 auto;
+    padding:14px;
+    background:#0c0c0c;
+    border:1.5px solid #262626;
+    border-radius:54px;
+    transform-origin:center center;
+    overflow:hidden;
+    font-family:'Inter', sans-serif;
+    font-weight:400;
+    font-feature-settings:'tnum' 1, 'lnum' 1;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* The screen — fixed mobile viewport; the page scrolls inside it. */
+  #screen{
+    position:relative;
+    width:393px;
+    height:852px;
+    overflow-y:auto;
+    overflow-x:hidden;
+    background:var(--black);
+    border-radius:40px;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+  }
+  #screen::-webkit-scrollbar{ display:none; }
+
+  /* The content — fixed mobile width, natural (tall) height, scrolls within. */
+  #frame{
+    position:relative;
+    width:393px;
+    background:var(--black);
+    color:var(--white);
+    font-family:'Inter', sans-serif;
+    font-weight:400;
+    font-feature-settings:'tnum' 1, 'lnum' 1;
+    overflow:hidden;
+  }
+
+  /* Embedded return-user stock screen — same device frame, shown on tap */
+  #stockFrame{ position:absolute; top:0; left:0; width:393px; height:100%; border:0; background:var(--black); display:none; }
+  #screen.show-stock{ overflow:hidden; }
+  #screen.show-stock #frame{ display:none; }
+  #screen.show-stock #stockFrame{ display:block; }
+
+  /* Bottom-sheet info modal (contained inside the phone screen) */
+  .sheet-backdrop{ position:absolute; top:14px; left:14px; right:14px; bottom:14px; border-radius:40px; background:rgba(0,0,0,0.55); opacity:0; pointer-events:none; transition:opacity 240ms ease; z-index:20; }
+  .sheet-backdrop.open{ opacity:1; pointer-events:auto; }
+  .info-sheet{ position:absolute; left:14px; right:14px; bottom:14px; max-height:680px; display:flex; flex-direction:column; overflow:hidden; background:#0a0a0a; border-top:1px solid var(--divider); border-radius:18px 18px 40px 40px; transform:translateY(120%); transition:transform 280ms cubic-bezier(0.22,0.61,0.36,1); z-index:21; }
+  .info-sheet.open{ transform:translateY(0); }
+  .sheet-grab{ width:36px; height:4px; border-radius:2px; background:#2a2a2a; margin:10px auto 0; flex:0 0 auto; }
+  .sheet-close{ position:absolute; top:12px; right:14px; width:28px; height:28px; display:flex; align-items:center; justify-content:center; background:none; border:none; color:var(--silver); font-size:20px; line-height:1; cursor:pointer; padding:0; }
+  .sheet-close:active{ opacity:.5; }
+  .sheet-content{ overflow-y:auto; padding:22px 20px 30px; scrollbar-width:none; -ms-overflow-style:none; }
+  .sheet-content::-webkit-scrollbar{ display:none; }
+  .sheet-title{ font-size:18px; letter-spacing:-0.36px; line-height:20.7px; color:var(--white); margin-bottom:8px; }
+  .sheet-lead{ font-size:13px; line-height:1.6; color:#929292; letter-spacing:-0.22px; }
+  .sheet-sec-label{ font-size:13px; letter-spacing:-0.22px; color:#565b5e; margin:28px 0 8px; }
+  .col-note{ display:flex; justify-content:space-between; gap:14px; padding:10px 0; border-top:1px solid var(--divider); }
+  .col-note .k{ font-size:13px; color:var(--silver); letter-spacing:-0.26px; white-space:nowrap; }
+  .col-note .v{ font-size:13px; color:#929292; letter-spacing:-0.22px; text-align:right; line-height:1.5; }
+  .legend-row{ display:flex; align-items:flex-start; gap:11px; padding:12px 0; border-top:1px solid var(--divider); }
+  .legend-dot{ width:7px; height:7px; border-radius:50%; flex:0 0 auto; margin-top:6px; }
+  .legend-dot.red{ background:#fd0200; } .legend-dot.amber{ background:#fdad00; } .legend-dot.white{ background:#fff; } .legend-dot.gray{ background:#929292; }
+  .legend-name{ font-size:13px; color:var(--silver); letter-spacing:-0.26px; line-height:1.45; }
+  .legend-desc{ font-size:13px; color:#929292; line-height:1.5; letter-spacing:-0.22px; margin-top:3px; }
+  .legend-eg{ font-size:11px; color:#565b5e; letter-spacing:-0.22px; line-height:1.45; margin-top:4px; }
+
+  /* ---------- Header ---------- */
+  .header{ position:absolute; left:0; top:0; width:393px; height:71px; }
+  .header .divider{ position:absolute; left:0; right:0; bottom:0; height:1px; background:var(--divider); }
+  .logo{
+    position:absolute; left:30px; bottom:21px;
+    font-size:23px; font-weight:700; line-height:1;
+    letter-spacing:-1px; color:var(--white);
+    font-family:'Inter',sans-serif;
+  }
+  .h-icon{ position:absolute; color:var(--white); }
+  .h-search{ right:79px; bottom:24px; width:17px; height:17px; }
+  .h-nav{ right:30px; bottom:25px; width:17px; height:13px; }
+  .h-icon svg{ display:block; width:100%; height:100%; }
+
+  /* ---------- Generic ---------- */
+  .pad{ padding-left:13.5px; padding-right:13.5px; }
+  .hr{ height:1px; background:var(--divider); width:100%; }
+
+  .col{ display:flex; flex-direction:column; }
+  .end{ align-items:flex-end; text-align:right; }
+  .start{ align-items:flex-start; text-align:left; }
+
+  /* type tokens */
+  .t-label{ font-size:13px; letter-spacing:-0.22px; color:var(--gray); line-height:16.25px; }
+  .t-label-26{ font-size:13px; letter-spacing:-0.26px; color:var(--gray); line-height:normal; }
+  .t-title{ font-size:18px; letter-spacing:-0.36px; color:var(--silver); line-height:20.7px; }
+  .t-sub{ font-size:15px; letter-spacing:-0.3px; color:var(--abbey); line-height:18px; }
+  .t-15-silver{ font-size:15px; letter-spacing:-0.3px; color:var(--silver); line-height:normal; }
+  .t-22{ font-size:22px; letter-spacing:-0.44px; color:var(--white); line-height:normal; }
+  .t-13-silver{ font-size:13px; letter-spacing:-0.26px; color:var(--silver); line-height:normal; }
+
+  /* ---------- Total Value ---------- */
+  .total-value{
+    position:absolute; left:0; top:141px; width:393px;
+    display:flex; flex-direction:column; align-items:flex-end;
+    gap:7.625px; padding:11px 13.5px 0; text-align:right;
+  }
+  .total-value .amount{ font-size:28px; letter-spacing:-0.56px; line-height:normal; color:var(--white); }
+  .total-value .amount .cad{ color:var(--abbey); }
+
+  /* ---------- Sections ---------- */
+  .section{ position:absolute; left:0; width:393px; display:flex; flex-direction:column; gap:30px; }
+  .section.managed{ top:280.625px; }
+  .section.active{ top:753.31px; }
+
+  .s-inner{ display:flex; flex-direction:column; gap:50px; width:100%; }
+
+  .s-title-row{ display:flex; justify-content:space-between; align-items:flex-start; width:100%; }
+  .s-title-col{ display:flex; flex-direction:column; gap:10px; }
+
+  .data-col{ display:flex; flex-direction:column; align-items:flex-end; width:100%; }
+  .data-block{ display:flex; flex-direction:column; align-items:flex-end; gap:6px; width:100%; }
+
+  /* account switch */
+  .acct-sw{ display:flex; align-items:center; gap:5px; }
+  .acct-sw .chev{ width:7px; height:4px; color:var(--silver); }
+  .acct-sw .chev svg{ display:block; width:100%; height:100%; }
+
+  /* gain row */
+  .gain-row{ display:flex; align-items:center; justify-content:flex-end; gap:10px; width:100%; }
+  .gain-pair{ display:flex; align-items:center; gap:4px; }
+
+  /* position tables */
+  .pos-group{ display:flex; flex-direction:column; align-items:flex-end; gap:10px; width:100%; }
+  .pos-head{ font-size:15px; letter-spacing:-0.3px; color:var(--silver); line-height:17.25px; text-align:right; }
+  .pos-head .n{ margin-left:10px; }
+  .tbl{ display:flex; flex-direction:column; align-items:flex-end; gap:6px; width:100%; }
+  .tbl-row{ display:flex; align-items:center; justify-content:flex-end; gap:10px; }
+  .tbl-row .ticker{ color:var(--gray); font-size:13px; letter-spacing:-0.26px; line-height:normal; }
+  .tbl-row .pct{ color:var(--silver); font-size:13px; letter-spacing:-0.26px; line-height:normal; }
+  .view-all{ font-size:13px; letter-spacing:-0.26px; color:var(--silver); line-height:normal; text-align:right; width:100%; }
+
+  /* Section collapse (accordion) */
+  .sec-head-right{ display:flex; align-items:center; gap:10px; }
+  .sec-chevron{ background:none; border:none; padding:4px; margin:-4px 0 -4px -2px; cursor:pointer; color:#929292; display:inline-flex; align-items:center; -webkit-tap-highlight-color:transparent; transition:transform 180ms ease; }
+  .sec-chevron svg{ display:block; width:11px; height:7px; }
+  /* ↗ — trailing "tap to open" indicator (system convention) */
+  .open-ind{ display:inline-flex; align-items:center; margin-left:7px; vertical-align:middle; }
+  .open-ind svg{ display:block; width:13px; height:13px; }
+  .pos-group.collapsed .sec-chevron{ transform:rotate(-90deg); }
+  .pos-group.collapsed .holdings,
+  .pos-group.collapsed .more-toggle,
+  .pos-group.collapsed .view-all{ display:none; }
+
+  /* Triage: quiet positions hidden until expanded */
+  .holding.is-quiet{ display:none; }
+  .holdings.show-all .holding.is-quiet{ display:flex; }
+
+  /* Expand-in-place toggle */
+  .more-toggle{ width:100%; text-align:right; font-size:13px; letter-spacing:-0.26px; color:var(--silver); line-height:normal; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+  .more-toggle .mt-sub{ color:#565b5e; }
+
+  /* open orders — now sits left of the Active Positions header, grayed back */
+  .open-orders{ display:flex; align-items:baseline; gap:6px; }
+  .open-orders .lbl,.open-orders .n{ font-size:15px; letter-spacing:-0.3px; color:#929292; line-height:17.25px; }
+
+  /* Active Positions header row: Open Orders (left) · Active Positions (right) */
+  .ap-head-row{ display:flex; align-items:baseline; justify-content:space-between; width:100%; gap:12px; }
+  #activePosHead{ color:var(--white); cursor:pointer; }
+
+  /* ---------- Holdings rows (rich Active Positions) ---------- */
+  .holdings{ display:flex; flex-direction:column; width:100%; }
+  .holding{
+    display:flex; flex-direction:column;
+    width:100%; gap:14px; padding:20px 0; text-align:left;
+  }
+  .holding:not(:first-child){ border-top:1px solid var(--divider); }
+  a.holding{ text-decoration:none; color:inherit; cursor:pointer; transition:background 120ms linear; }
+  a.holding:hover{ background:rgba(255,255,255,0.02); }
+
+  .holding-top{
+    display:flex; justify-content:space-between; align-items:flex-start;
+    width:100%; gap:12px;
+  }
+  .h-ticker{
+    display:flex; align-items:baseline; gap:8px;
+    font-size:13px; font-weight:500; line-height:1.4; color:var(--white);
+    text-transform:uppercase; letter-spacing:0;
+  }
+  .h-wt{ font-weight:400; font-size:13px; color:#929292; letter-spacing:-0.26px; }
+  .h-name{ display:flex; flex-direction:column; align-items:flex-start; gap:5px; }
+  .h-cat{ font-size:11px; color:#929292; letter-spacing:0; line-height:1; }
+
+  .h-badges{ display:flex; flex-wrap:nowrap; gap:6px; width:100%; }
+  .badge{
+    font-size:9px; font-weight:500; line-height:1.3;
+    padding:5px 6px; border-radius:3px; white-space:nowrap; letter-spacing:0;
+  }
+  /* Tier 1 — capital at risk / disruption. Used rarely. */
+  .badge.critical{ background:rgba(253,2,0,0.15); color:#fd0200; }
+  /* Tier 2 — a decision/clock is pending. */
+  .badge.soon{ background:rgba(253,173,0,0.14); color:#fdad00; }
+  /* Tier 3 — notable but neutral. Read, don't react. */
+  .badge.notable{ background:rgba(255,255,255,0.10); color:var(--white); }
+  /* Tier 4 — ambient context. Same chip as notable, but gray text recedes. */
+  .badge.ambient{ background:rgba(255,255,255,0.10); color:#929292; }
+
+
+  .h-right{ display:flex; flex-direction:column; align-items:flex-end; gap:6px; text-align:right; }
+  .h-line{ display:flex; align-items:baseline; justify-content:flex-end; gap:12px; white-space:nowrap; }
+  .h-line .amt{ color:var(--white); font-weight:300; letter-spacing:-0.3px; min-width:106px; text-align:right; }
+  .h-line .chg{ color:#929292; font-size:13px; letter-spacing:-0.26px; min-width:50px; text-align:right; }
+  .h-line.overall .amt{ font-size:13px; }
+  .h-line.today .amt{ font-size:13px; }
+
+  /* One-line note preview (watchlist) — truncates with … if it would wrap */
+  .h-note{ font-size:13px; color:#929292; letter-spacing:-0.22px; line-height:1.5; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="device">
+    <div id="screen">
+      <div id="frame">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">//</div>
+      <div class="h-icon h-search">
+        <svg viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.3"/>
+          <line x1="11.2" y1="11.2" x2="16" y2="16" stroke="currentColor" stroke-width="1.3"/>
+        </svg>
+      </div>
+      <div class="h-icon h-nav">
+        <svg viewBox="0 0 17 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="0" y1="1" x2="17" y2="1" stroke="currentColor" stroke-width="1.3"/>
+          <line x1="0" y1="6.5" x2="17" y2="6.5" stroke="currentColor" stroke-width="1.3"/>
+          <line x1="0" y1="12" x2="17" y2="12" stroke="currentColor" stroke-width="1.3"/>
+        </svg>
+      </div>
+      <div class="divider"></div>
+    </div>
+
+    <!-- Total Value -->
+    <div class="total-value">
+      <div class="t-label">Total Value</div>
+      <div class="amount">173,249.00&nbsp;<span class="cad">CAD</span></div>
+    </div>
+
+    <!-- Managed / Core -->
+    <div class="section managed pad">
+      <div class="hr"></div>
+      <div class="s-inner">
+        <div class="s-title-col">
+          <div class="t-title">Core</div>
+          <div class="t-sub">Managed</div>
+        </div>
+        <div class="data-col" style="gap:50px;">
+          <div class="data-block">
+            <div class="t-label">Value</div>
+            <div class="t-22">126,471.77</div>
+            <div class="gain-row">
+              <div class="t-label-26">All Time</div>
+              <div class="gain-pair">
+                <div class="t-13-silver">+6,365.65</div>
+                <div class="t-13-silver">(+5.3%)</div>
+              </div>
+            </div>
+          </div>
+          <div class="data-block">
+            <div class="t-label">Projection</div>
+            <div class="t-15-silver">1.68M</div>
+          </div>
+          <div class="tbl">
+            <div class="tbl-row"><div class="ticker">Equity (S&amp;P 500)</div><div class="pct">50%</div></div>
+            <div class="tbl-row"><div class="ticker">Fixed Income</div><div class="pct">25%</div></div>
+            <div class="tbl-row"><div class="ticker">Money Market</div><div class="pct">25%</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active / Self-Directed -->
+    <div class="section active pad">
+      <div class="hr"></div>
+      <div class="s-inner">
+        <div class="s-title-row">
+          <div class="s-title-col">
+            <div class="t-title">Active</div>
+            <div class="t-sub">Self-Directed</div>
+          </div>
+          <div class="acct-sw">
+            <div class="t-15-silver" style="line-height:20.25px;">RRSP</div>
+            <div class="chev">
+              <svg viewBox="0 0 7 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0.5 0.5L3.5 3.5L6.5 0.5" stroke="currentColor" stroke-width="1"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="data-col" style="gap:53px;">
+
+          <!-- Value -->
+          <div class="data-block">
+            <div class="t-label">Value</div>
+            <div class="t-22">46,777.23</div>
+            <div class="gain-row">
+              <div class="t-label-26">All Time</div>
+              <div class="gain-pair">
+                <div class="t-13-silver">+2,353.46</div>
+                <div class="t-13-silver">(+5.3%)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cash -->
+          <div class="data-block">
+            <div class="t-label-26">Cash (10%)</div>
+            <div class="t-15-silver">4,677.72</div>
+          </div>
+
+          <!-- Active Positions -->
+          <div class="pos-group" style="margin-top:30px;">
+            <div class="ap-head-row">
+              <div class="open-orders"><span class="lbl">Open Orders</span><span class="n">2</span></div>
+              <div class="sec-head-right">
+                <button class="sec-chevron" aria-label="Collapse section"><svg viewBox="0 0 11 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1.5L5.5 6L10 1.5" stroke="currentColor" stroke-width="1.2"/></svg></button>
+                <div class="pos-head" id="activePosHead">Active Positions<span class="n">20</span><span class="open-ind" aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 10L10 3M4.5 3H10V8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="square" stroke-linejoin="miter"/></svg></span></div>
+              </div>
+            </div>
+            <div class="holdings">
+
+              <a class="holding" id="aaplLink" href="#">
+                <div class="holding-top">
+                  <div class="h-name">
+                    <div class="h-ticker">AAPL<span class="h-wt">10% WT</span></div>
+                    <div class="h-cat">Compounder</div>
+                  </div>
+                  <div class="h-right">
+                    <div class="h-line overall"><span class="amt">12,500.00 CAD</span><span class="chg">+38.2%</span></div>
+                    <div class="h-line today"><span class="amt">232.40 USD</span><span class="chg">+1.1%</span></div>
+                  </div>
+                </div>
+                <div class="h-badges">
+                  <span class="badge soon">Earnings</span>
+                  <span class="badge ambient">52 Week High</span>
+                </div>
+              </a>
+
+              <div class="holding">
+                <div class="holding-top">
+                  <div class="h-name">
+                    <div class="h-ticker">ORIO.TO<span class="h-wt">25% WT</span></div>
+                    <div class="h-cat">Emerging Compounder</div>
+                  </div>
+                  <div class="h-right">
+                    <div class="h-line overall"><span class="amt">18,950.00 CAD</span><span class="chg">+42.6%</span></div>
+                    <div class="h-line today"><span class="amt">87.60 CAD</span><span class="chg">+0.8%</span></div>
+                  </div>
+                </div>
+                <div class="h-badges">
+                  <span class="badge ambient">52 Week High</span>
+                  <span class="badge soon">Earnings</span>
+                  <span class="badge ambient">Stock Split</span>
+                  <span class="badge notable">Reverse Split</span>
+                </div>
+              </div>
+
+              <div class="holding">
+                <div class="holding-top">
+                  <div class="h-name">
+                    <div class="h-ticker">BWEN<span class="h-wt">20% WT</span></div>
+                    <div class="h-cat">Speculative</div>
+                  </div>
+                  <div class="h-right">
+                    <div class="h-line overall"><span class="amt">12,950.00 CAD</span><span class="chg">+22.6%</span></div>
+                    <div class="h-line today"><span class="amt">82.40 USD</span><span class="chg">-2.8%</span></div>
+                  </div>
+                </div>
+                <div class="h-badges">
+                  <span class="badge critical">Delisted</span>
+                </div>
+              </div>
+
+              <div class="holding">
+                <div class="holding-top">
+                  <div class="h-name">
+                    <div class="h-ticker">EOSCR<span class="h-wt">15% WT</span></div>
+                    <div class="h-cat">Situational Mispricing</div>
+                  </div>
+                  <div class="h-right">
+                    <div class="h-line overall"><span class="amt">14,880.00 CAD</span><span class="chg">+27.9%</span></div>
+                    <div class="h-line today"><span class="amt">156.30 USD</span><span class="chg">-1.2%</span></div>
+                  </div>
+                </div>
+                <div class="h-badges">
+                  <span class="badge ambient">Top Mover</span>
+                  <span class="badge soon">Open Order</span>
+                  <span class="badge critical">Stock Halted</span>
+                </div>
+              </div>
+
+              <div class="holding">
+                <div class="holding-top">
+                  <div class="h-name">
+                    <div class="h-ticker">NVDA<span class="h-wt">12% WT</span></div>
+                    <div class="h-cat">Compounder</div>
+                  </div>
+                  <div class="h-right">
+                    <div class="h-line overall"><span class="amt">12,100.00 CAD</span><span class="chg">+24.3%</span></div>
+                    <div class="h-line today"><span class="amt">141.80 USD</span><span class="chg">-0.4%</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="holding">
+                <div class="holding-top">
+                  <div class="h-name">
+                    <div class="h-ticker">AMD<span class="h-wt">8% WT</span></div>
+                    <div class="h-cat">Emerging Compounder</div>
+                  </div>
+                  <div class="h-right">
+                    <div class="h-line overall"><span class="amt">10,400.00 CAD</span><span class="chg">+34.9%</span></div>
+                    <div class="h-line today"><span class="amt">184.00 USD</span><span class="chg">-0.9%</span></div>
+                  </div>
+                </div>
+                <div class="h-badges">
+                  <span class="badge ambient">Top Mover</span>
+                  <span class="badge ambient">Order Complete</span>
+                </div>
+              </div>
+
+              <div class="holding">
+                <div class="holding-top">
+                  <div class="h-name">
+                    <div class="h-ticker">MSFT<span class="h-wt">7% WT</span></div>
+                    <div class="h-cat">Compounder</div>
+                  </div>
+                  <div class="h-right">
+                    <div class="h-line overall"><span class="amt">9,800.00 CAD</span><span class="chg">+28.4%</span></div>
+                    <div class="h-line today"><span class="amt">478.20 USD</span><span class="chg">+0.6%</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="holding">
+                <div class="holding-top">
+                  <div class="h-name">
+                    <div class="h-ticker">GOOGL<span class="h-wt">6% WT</span></div>
+                    <div class="h-cat">Compounder</div>
+                  </div>
+                  <div class="h-right">
+                    <div class="h-line overall"><span class="amt">8,400.00 CAD</span><span class="chg">+19.2%</span></div>
+                    <div class="h-line today"><span class="amt">188.40 USD</span><span class="chg">+0.3%</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="holding">
+                <div class="holding-top">
+                  <div class="h-name">
+                    <div class="h-ticker">COST<span class="h-wt">5% WT</span></div>
+                    <div class="h-cat">Compounder</div>
+                  </div>
+                  <div class="h-right">
+                    <div class="h-line overall"><span class="amt">7,100.00 CAD</span><span class="chg">+22.7%</span></div>
+                    <div class="h-line today"><span class="amt">905.10 USD</span><span class="chg">+0.4%</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="holding">
+                <div class="holding-top">
+                  <div class="h-name">
+                    <div class="h-ticker">V<span class="h-wt">4% WT</span></div>
+                    <div class="h-cat">Compounder</div>
+                  </div>
+                  <div class="h-right">
+                    <div class="h-line overall"><span class="amt">5,600.00 CAD</span><span class="chg">+14.9%</span></div>
+                    <div class="h-line today"><span class="amt">312.80 USD</span><span class="chg">-0.2%</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="holding">
+                <div class="holding-top">
+                  <div class="h-name">
+                    <div class="h-ticker">TSM<span class="h-wt">4% WT</span></div>
+                    <div class="h-cat">Emerging Compounder</div>
+                  </div>
+                  <div class="h-right">
+                    <div class="h-line overall"><span class="amt">4,200.00 CAD</span><span class="chg">+41.3%</span></div>
+                    <div class="h-line today"><span class="amt">198.60 USD</span><span class="chg">+1.0%</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="holding">
+                <div class="holding-top">
+                  <div class="h-name">
+                    <div class="h-ticker">BRK.B<span class="h-wt">3% WT</span></div>
+                    <div class="h-cat">Compounder</div>
+                  </div>
+                  <div class="h-right">
+                    <div class="h-line overall"><span class="amt">3,900.00 CAD</span><span class="chg">+11.5%</span></div>
+                    <div class="h-line today"><span class="amt">472.30 USD</span><span class="chg">+0.1%</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="holding">
+                <div class="holding-top">
+                  <div class="h-name">
+                    <div class="h-ticker">UNH<span class="h-wt">3% WT</span></div>
+                    <div class="h-cat">Compounder</div>
+                  </div>
+                  <div class="h-right">
+                    <div class="h-line overall"><span class="amt">3,600.00 CAD</span><span class="chg">+8.4%</span></div>
+                    <div class="h-line today"><span class="amt">528.10 USD</span><span class="chg">-0.5%</span></div>
+                  </div>
+                </div>
+                <div class="h-badges"><span class="badge soon">Earnings</span></div>
+              </div>
+
+              <div class="holding">
+                <div class="holding-top">
+                  <div class="h-name">
+                    <div class="h-ticker">HD<span class="h-wt">2% WT</span></div>
+                    <div class="h-cat">Compounder</div>
+                  </div>
+                  <div class="h-right">
+                    <div class="h-line overall"><span class="amt">3,100.00 CAD</span><span class="chg">+13.2%</span></div>
+                    <div class="h-line today"><span class="amt">412.70 USD</span><span class="chg">+0.2%</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="holding">
+                <div class="holding-top">
+                  <div class="h-name">
+                    <div class="h-ticker">LLY<span class="h-wt">2% WT</span></div>
+                    <div class="h-cat">Compounder</div>
+                  </div>
+                  <div class="h-right">
+                    <div class="h-line overall"><span class="amt">2,800.00 CAD</span><span class="chg">+33.6%</span></div>
+                    <div class="h-line today"><span class="amt">902.40 USD</span><span class="chg">+0.7%</span></div>
+                  </div>
+                </div>
+                <div class="h-badges"><span class="badge ambient">52 Week High</span></div>
+              </div>
+
+              <div class="holding">
+                <div class="holding-top">
+                  <div class="h-name">
+                    <div class="h-ticker">ASML<span class="h-wt">2% WT</span></div>
+                    <div class="h-cat">Emerging Compounder</div>
+                  </div>
+                  <div class="h-right">
+                    <div class="h-line overall"><span class="amt">2,500.00 CAD</span><span class="chg">+29.1%</span></div>
+                    <div class="h-line today"><span class="amt">712.40 USD</span><span class="chg">+0.9%</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="holding">
+                <div class="holding-top">
+                  <div class="h-name">
+                    <div class="h-ticker">ADBE<span class="h-wt">1% WT</span></div>
+                    <div class="h-cat">Compounder</div>
+                  </div>
+                  <div class="h-right">
+                    <div class="h-line overall"><span class="amt">1,900.00 CAD</span><span class="chg">+6.8%</span></div>
+                    <div class="h-line today"><span class="amt">548.20 USD</span><span class="chg">-0.3%</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="holding">
+                <div class="holding-top">
+                  <div class="h-name">
+                    <div class="h-ticker">NFLX<span class="h-wt">1% WT</span></div>
+                    <div class="h-cat">Compounder</div>
+                  </div>
+                  <div class="h-right">
+                    <div class="h-line overall"><span class="amt">1,700.00 CAD</span><span class="chg">+24.5%</span></div>
+                    <div class="h-line today"><span class="amt">712.80 USD</span><span class="chg">+0.6%</span></div>
+                  </div>
+                </div>
+                <div class="h-badges"><span class="badge soon">Earnings</span></div>
+              </div>
+
+              <div class="holding">
+                <div class="holding-top">
+                  <div class="h-name">
+                    <div class="h-ticker">CRM<span class="h-wt">1% WT</span></div>
+                    <div class="h-cat">Compounder</div>
+                  </div>
+                  <div class="h-right">
+                    <div class="h-line overall"><span class="amt">1,500.00 CAD</span><span class="chg">+9.7%</span></div>
+                    <div class="h-line today"><span class="amt">328.40 USD</span><span class="chg">-0.1%</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="holding">
+                <div class="holding-top">
+                  <div class="h-name">
+                    <div class="h-ticker">ABNB<span class="h-wt">1% WT</span></div>
+                    <div class="h-cat">Speculative</div>
+                  </div>
+                  <div class="h-right">
+                    <div class="h-line overall"><span class="amt">1,200.00 CAD</span><span class="chg">-4.2%</span></div>
+                    <div class="h-line today"><span class="amt">132.60 USD</span><span class="chg">-1.4%</span></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="more-toggle" id="apMore"></div>
+          </div>
+
+          <!-- Under Review (watchlist — not owned: no P/L, stock-only badges) -->
+          <div class="pos-group">
+            <div class="sec-head-right">
+              <button class="sec-chevron" aria-label="Collapse section"><svg viewBox="0 0 11 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1.5L5.5 6L10 1.5" stroke="currentColor" stroke-width="1.2"/></svg></button>
+              <div class="pos-head">Under Review<span class="n">5</span></div>
+            </div>
+            <div class="holdings watchlist">
+
+              <div class="holding">
+                <div class="holding-top">
+                  <div class="h-name">
+                    <div class="h-ticker">SHOP.TO</div>
+                  </div>
+                  <div class="h-right">
+                    <div class="h-line today"><span class="amt">142.30 CAD</span><span class="chg">+1.4%</span></div>
+                  </div>
+                </div>
+                <div class="h-note">Watching for re-acceleration in merchant solutions; revisit after the next print.</div>
+                <div class="h-badges">
+                  <span class="badge soon">Earnings</span>
+                  <span class="badge ambient">52 Week High</span>
+                </div>
+              </div>
+
+              <div class="holding">
+                <div class="holding-top">
+                  <div class="h-name">
+                    <div class="h-ticker">PLTR</div>
+                  </div>
+                  <div class="h-right">
+                    <div class="h-line today"><span class="amt">41.80 USD</span><span class="chg">+2.2%</span></div>
+                  </div>
+                </div>
+                <div class="h-note">Valuation rich — wait for a pullback toward the low 30s before initiating.</div>
+                <div class="h-badges">
+                  <span class="badge ambient">Top Mover</span>
+                </div>
+              </div>
+
+              <div class="holding">
+                <div class="holding-top">
+                  <div class="h-name">
+                    <div class="h-ticker">SAVA</div>
+                  </div>
+                  <div class="h-right">
+                    <div class="h-line today"><span class="amt">26.10 USD</span><span class="chg">-8.4%</span></div>
+                  </div>
+                </div>
+                <div class="h-note">Binary on trial data; currently halted. No action until it reopens and the facts are clear.</div>
+                <div class="h-badges">
+                  <span class="badge critical">Stock Halted</span>
+                  <span class="badge ambient">Top Mover</span>
+                </div>
+              </div>
+
+              <div class="holding">
+                <div class="holding-top">
+                  <div class="h-name">
+                    <div class="h-ticker">CRWD</div>
+                  </div>
+                  <div class="h-right">
+                    <div class="h-line today"><span class="amt">412.50 USD</span><span class="chg">+1.9%</span></div>
+                  </div>
+                </div>
+                <div class="h-note">Strong execution; entry only on a reset after the post-earnings move.</div>
+                <div class="h-badges">
+                  <span class="badge soon">Earnings</span>
+                </div>
+              </div>
+
+              <div class="holding">
+                <div class="holding-top">
+                  <div class="h-name">
+                    <div class="h-ticker">RIVN</div>
+                  </div>
+                  <div class="h-right">
+                    <div class="h-line today"><span class="amt">13.20 USD</span><span class="chg">-3.6%</span></div>
+                  </div>
+                </div>
+                <div class="h-note">Cash burn the key risk — track gross-margin trajectory before any starter position.</div>
+                <div class="h-badges">
+                  <span class="badge ambient">52 Week Low</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+      </div>
+
+      <iframe id="stockFrame" title="Apple Inc · AAPL"></iframe>
+    </div>
+
+    <div class="sheet-backdrop" id="sheetBackdrop"></div>
+      <aside class="info-sheet" id="infoSheet" role="dialog" aria-label="About Active Positions">
+        <div class="sheet-grab"></div>
+        <button class="sheet-close" id="sheetClose" aria-label="Close">&times;</button>
+        <div class="sheet-content">
+          <div class="sheet-title">Active Positions</div>
+          <p class="sheet-lead">Your self-directed holdings. Each row carries its weight, your classification, value and return, and any flags that require attention.</p>
+
+          <div class="sheet-sec-label">The row</div>
+          <div class="col-note"><span class="k">25% WT</span><span class="v">Share of active capital</span></div>
+          <div class="col-note"><span class="k">Compounder / Spec</span><span class="v">Your classification of the position</span></div>
+          <div class="col-note"><span class="k">12,500.00 CAD · +38.2%</span><span class="v">Overall value and total return</span></div>
+          <div class="col-note"><span class="k">232.40 USD · +1.1%</span><span class="v">Last price and today's change</span></div>
+
+          <div class="sheet-sec-label">Flags</div>
+          <div class="legend-row"><span class="legend-dot red"></span><div><div class="legend-name">Red — Capital at risk</div><div class="legend-desc">The position is untradeable, or your thesis has broken. Read this first.</div><div class="legend-eg">Stock Halted · Delisted · Margin Call</div></div></div>
+          <div class="legend-row"><span class="legend-dot amber"></span><div><div class="legend-name">Amber — A decision is pending</div><div class="legend-desc">A clock is running. Worth a look, not alarm.</div><div class="legend-eg">Earnings · Open Order · Review Due</div></div></div>
+          <div class="legend-row"><span class="legend-dot white"></span><div><div class="legend-name">White — Notable</div><div class="legend-desc">Worth knowing. No action required.</div><div class="legend-eg">Reverse Split · Merger · Overweight</div></div></div>
+          <div class="legend-row"><span class="legend-dot gray"></span><div><div class="legend-name">Gray — Context</div><div class="legend-desc">Background detail. Present, but recedes.</div><div class="legend-eg">Stock Split · Top Mover · 52 Week High · Order Complete</div></div></div>
+        </div>
+      </aside>
+  </div>
+</div>
+
+<script>
+  // The return-user Apple stock page, embedded as a second screen in this file.
+  var STOCK_AAPL_B64 = "";
+  function decodeB64(b){ return new TextDecoder().decode(Uint8Array.from(atob(b), function(c){ return c.charCodeAt(0); })); }
+
+  var device = document.getElementById('device');
+  var frame = document.getElementById('frame');
+  var screenEl = document.getElementById('screen');
+  var stockFrame = document.getElementById('stockFrame');
+  var active = document.querySelector('.section.active');
+
+  // Scale the phone (fixed mobile ratio) to ~95% of the viewport, centered.
+  function fit() {
+    if (frame.offsetParent !== null) {
+      frame.style.height = (active.offsetTop + active.offsetHeight + 40) + 'px';
+    }
+    device.style.transform = 'none';
+    var dw = device.offsetWidth, dh = device.offsetHeight;
+    var s = Math.min(0.95 * window.innerHeight / dh, 0.95 * window.innerWidth / dw);
+    device.style.transform = 'scale(' + s + ')';
+  }
+  window.addEventListener('resize', fit);
+  window.addEventListener('orientationchange', fit);
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(fit); }
+
+  // ── Per-position data (mirrors the dashboard rows) ──────────────────
+  var BADGE_STYLE = {
+    critical: 'background:rgba(253,2,0,0.15);color:#fd0200',
+    soon:     'background:rgba(253,173,0,0.14);color:#fdad00',
+    notable:  'background:rgba(255,255,255,0.10);color:#fff',
+    ambient:  'background:rgba(255,255,255,0.10);color:#929292'
+  };
+  // Severity order, left→right: red, amber, white, gray.
+  var TIER_RANK = { critical:0, soon:1, notable:2, ambient:3 };
+  function rankT(t){ return (t in TIER_RANK) ? TIER_RANK[t] : 99; }
+  function rankEl(el){ if(el.classList.contains('critical'))return 0; if(el.classList.contains('soon'))return 1; if(el.classList.contains('notable'))return 2; if(el.classList.contains('ambient'))return 3; return 99; }
+  var POSITIONS = {
+    'AAPL':    { name:'Apple Inc',              price:'232.40 USD', entry:'+38.2%', badges:[['Earnings','soon'],['52 Week High','ambient']] },
+    'ORIO.TO': { name:'Orion Digital',          price:'87.60 CAD',  entry:'+42.6%', badges:[['52 Week High','ambient'],['Earnings','soon'],['Stock Split','ambient'],['Reverse Split','notable']] },
+    'BWEN':    { name:'Broadwind',              price:'82.40 USD',  entry:'+22.6%', badges:[['Delisted','critical']] },
+    'EOSCR':   { name:'Eos Energy',             price:'156.30 USD', entry:'+27.9%', badges:[['Top Mover','ambient'],['Open Order','soon'],['Stock Halted','critical']] },
+    'NVDA':    { name:'NVIDIA',                 price:'141.80 USD', entry:'+24.3%', badges:[] },
+    'AMD':     { name:'Advanced Micro Devices', price:'184.00 USD', entry:'+34.9%', badges:[['Top Mover','ambient'],['Order Complete','ambient']] },
+    'MSFT':    { name:'Microsoft', price:'478.20 USD', entry:'+28.4%', badges:[] },
+    'GOOGL':   { name:'Alphabet',  price:'188.40 USD', entry:'+19.2%', badges:[] },
+    'COST':    { name:'Costco',    price:'905.10 USD', entry:'+22.7%', badges:[] },
+    'V':       { name:'Visa',      price:'312.80 USD', entry:'+14.9%', badges:[] },
+    'TSM':     { name:'Taiwan Semiconductor', price:'198.60 USD', entry:'+41.3%', badges:[] },
+    'BRK.B':   { name:'Berkshire Hathaway',   price:'472.30 USD', entry:'+11.5%', badges:[] },
+    'UNH':     { name:'UnitedHealth', price:'528.10 USD', entry:'+8.4%',  badges:[['Earnings','soon']] },
+    'HD':      { name:'Home Depot',   price:'412.70 USD', entry:'+13.2%', badges:[] },
+    'LLY':     { name:'Eli Lilly',    price:'902.40 USD', entry:'+33.6%', badges:[['52 Week High','ambient']] },
+    'ASML':    { name:'ASML Holding', price:'712.40 USD', entry:'+29.1%', badges:[] },
+    'ADBE':    { name:'Adobe',        price:'548.20 USD', entry:'+6.8%',  badges:[] },
+    'NFLX':    { name:'Netflix',      price:'712.80 USD', entry:'+24.5%', badges:[['Earnings','soon']] },
+    'CRM':     { name:'Salesforce',   price:'328.40 USD', entry:'+9.7%',  badges:[] },
+    'ABNB':    { name:'Airbnb',       price:'132.60 USD', entry:'-4.2%',  badges:[] }
+  };
+  var currentTicker = 'AAPL';
+
+  // Rewrite the embedded stock page header + badges for the tapped ticker.
+  function patchStock(t) {
+    var d = stockFrame.contentDocument; var p = POSITIONS[t]; if (!d || !p) return;
+    var tp = d.querySelector('.t-primary'); if (tp) tp.textContent = p.name + ' · ' + t;
+    var sec = d.querySelector('.t-secondary');
+    if (sec) sec.innerHTML = 'Last Price <span class="price">' + p.price + '</span> <span class="t-entry">' + p.entry + ' vs entry</span>';
+    var tb = d.querySelector('.title-block');
+    if (tb) {
+      if (!d.getElementById('dashBadgeAnim')) {
+        var st = d.createElement('style'); st.id = 'dashBadgeAnim';
+        st.textContent = '@keyframes dashBadgePulse{0%,100%{opacity:1}50%{opacity:.4}}.dash-pulse{animation:dashBadgePulse 1.1s ease-in-out 2 both}@media(prefers-reduced-motion:reduce){.dash-pulse{animation:none}}';
+        (d.head || d.documentElement).appendChild(st);
+      }
+      var row = d.getElementById('dashBadges');
+      if (!row) { row = d.createElement('div'); row.id = 'dashBadges'; tb.parentNode.insertBefore(row, tb.nextSibling); }
+      row.setAttribute('style', 'display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;padding:14px 20px 0;');
+      row.innerHTML = p.badges.slice().sort(function (a, b) { return rankT(a[1]) - rankT(b[1]); }).map(function (b) {
+        var pulse = (b[1] === 'critical' || b[1] === 'soon') ? ' class="dash-pulse"' : '';
+        return '<span' + pulse + ' style="font-family:Inter,sans-serif;font-size:9px;font-weight:500;line-height:1.3;letter-spacing:0;padding:5px 6px;border-radius:3px;white-space:nowrap;' + BADGE_STYLE[b[1]] + '">' + b[0] + '</span>';
+      }).join('');
+      row.style.display = p.badges.length ? 'flex' : 'none';
+    }
+    try { d.title = t + ' — Stock Page'; } catch (e) {}
+  }
+
+  // Screen switching — stays on this page, just swaps the visible screen.
+  function showStock(t) {
+    currentTicker = t || currentTicker;
+    if (!stockFrame.getAttribute('data-loaded')) {
+      stockFrame.srcdoc = decodeB64(STOCK_AAPL_B64);
+      stockFrame.setAttribute('data-loaded', '1');
+    } else {
+      patchStock(currentTicker);
+    }
+    screenEl.classList.add('show-stock');
+    screenEl.scrollTop = 0;
+  }
+  function showDashboard() {
+    screenEl.classList.remove('show-stock');
+    fit();
+  }
+  // Wire the stock page's Back / Exit (same-origin srcdoc), then patch for the ticker.
+  stockFrame.addEventListener('load', function () {
+    try {
+      var d = stockFrame.contentDocument; if (!d) return;
+      var nav = function (e) { if (e) e.preventDefault(); showDashboard(); };
+      var b = d.querySelector('.back'); if (b) b.addEventListener('click', nav);
+      [].slice.call(d.querySelectorAll('a,button')).forEach(function (el) {
+        if (/^\s*exit\s*$/i.test(el.textContent)) el.addEventListener('click', nav);
+      });
+      patchStock(currentTicker);
+    } catch (e) {}
+  });
+
+  // Order each row's badges left→right by severity: red, amber, white, gray.
+  [].slice.call(document.querySelectorAll('.h-badges')).forEach(function (box) {
+    [].slice.call(box.querySelectorAll('.badge'))
+      .sort(function (a, b) { return rankEl(a) - rankEl(b); })
+      .forEach(function (s) { box.appendChild(s); });
+  });
+
+  // Make every owned position open its stock page (watchlist rows are display-only).
+  var activeHoldings = document.querySelector('.holdings:not(.watchlist)');
+  if (activeHoldings) {
+    [].slice.call(activeHoldings.querySelectorAll('.holding')).forEach(function (h) {
+      var tk = h.querySelector('.h-ticker');
+      var t = tk && tk.childNodes[0] ? (tk.childNodes[0].textContent || '').trim() : '';
+      if (t) { h.setAttribute('data-ticker', t); h.style.cursor = 'pointer'; }
+    });
+    activeHoldings.addEventListener('click', function (e) {
+      var h = e.target.closest('.holding'); if (!h) return;
+      var t = h.getAttribute('data-ticker'); if (!t) return;
+      e.preventDefault(); showStock(t);
+    });
+  }
+
+  // Active Positions header → bottom-sheet explainer.
+  var infoSheet = document.getElementById('infoSheet');
+  var sheetBackdrop = document.getElementById('sheetBackdrop');
+  function openSheet() { sheetBackdrop.classList.add('open'); infoSheet.classList.add('open'); infoSheet.style.transform = 'translateY(0)'; }
+  function closeSheet() { sheetBackdrop.classList.remove('open'); infoSheet.classList.remove('open'); infoSheet.style.transform = ''; }
+  var apHead = document.getElementById('activePosHead');
+  if (apHead) apHead.addEventListener('click', openSheet);
+  var sheetClose = document.getElementById('sheetClose');
+  if (sheetClose) sheetClose.addEventListener('click', closeSheet);
+  if (sheetBackdrop) sheetBackdrop.addEventListener('click', closeSheet);
+
+  // Accordion — chevron collapses/expands its section.
+  [].slice.call(document.querySelectorAll('.sec-chevron')).forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault(); e.stopPropagation();
+      var g = btn.closest('.pos-group'); if (g) g.classList.toggle('collapsed');
+    });
+  });
+
+  // Active Positions — order by weight (desc); show up to 20, rest behind a toggle.
+  (function () {
+    var box = document.querySelector('.holdings:not(.watchlist)'); if (!box) return;
+    var CAP = 20;
+    var rows = [].slice.call(box.querySelectorAll('.holding'));
+    rows.forEach(function (h) { var w = h.querySelector('.h-wt'); var m = w && w.textContent.match(/(\d+(?:\.\d+)?)/); h._wt = m ? parseFloat(m[1]) : 0; });
+    rows.sort(function (a, b) { return b._wt - a._wt; });
+    rows.forEach(function (h) { box.appendChild(h); }); // reorder DOM by weight
+    var extra = rows.length - CAP;
+    rows.forEach(function (h, i) { if (i >= CAP) h.classList.add('is-quiet'); });
+    var toggle = document.getElementById('apMore');
+    if (toggle) {
+      if (extra > 0) {
+        var setLabel = function () { toggle.innerHTML = box.classList.contains('show-all') ? 'Show less' : (extra + ' more'); };
+        setLabel();
+        toggle.addEventListener('click', function () { box.classList.toggle('show-all'); setLabel(); });
+      } else { toggle.style.display = 'none'; }
+    }
+  })();
+
+  fit();
+</script>
+
+<!-- Embed mode: shown inside the marketing site's phone cards (?embed). Screen only, scaled to the iframe, scrolled to a section. -->
+<style>
+  body.embed #stage{ display:block; background:transparent; }
+  body.embed #device{ padding:0 !important; border:0 !important; border-radius:0 !important; background:transparent !important; transform:none !important; }
+  body.embed #screen{ border-radius:0; transform-origin:top left; }
+</style>
+<script>
+(function(){
+  if (location.search.indexOf('embed') === -1) return;
+  document.body.classList.add('embed');
+  var screenEl = document.getElementById('screen');
+  function fitEmbed(){
+    var s = window.innerWidth / 393;
+    screenEl.style.width = '393px';
+    screenEl.style.height = (window.innerHeight / s) + 'px';
+    screenEl.style.transform = 'scale(' + s + ')';
+  }
+  function tween(to, dur){
+    var start = screenEl.scrollTop, change = to - start, t0 = null;
+    function step(ts){
+      if (t0 === null) t0 = ts;
+      var p = Math.min(1, (ts - t0) / dur);
+      var e = 1 - Math.pow(1 - p, 3);            // easeOutCubic
+      screenEl.scrollTop = start + change * e;
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  function destTop(){
+    var hash = (location.hash || '').replace('#','');
+    var sel = hash === 'active' ? '.section.active' : (hash === 'managed' ? '.section.managed' : null);
+    var target = sel ? document.querySelector(sel) : null;
+    return target ? Math.max(0, target.offsetTop - 16) : null;  // section title just under the status bar
+  }
+  function prep(){ fitEmbed(); var d = destTop(); if (d != null) screenEl.scrollTop = Math.max(0, d); }  // land on the section directly (robust if the settle never triggers)
+  // Called by the parent page when the card scrolls into view (offscreen iframes throttle rAF).
+  function countUp(el, dur){
+    var full = el.getAttribute('data-full') || el.textContent.trim();
+    el.setAttribute('data-full', full);
+    var m = full.match(/^([^\d\-]*)([\d,]*\.?\d+)(.*)$/); if (!m) return;
+    var prefix = m[1], numStr = m[2], suffix = m[3];
+    var decimals = (numStr.split('.')[1] || '').length;
+    var target = parseFloat(numStr.replace(/,/g, ''));
+    function fmt(v){ return v.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals }); }
+    var t0 = null;
+    function step(ts){ if (t0 === null) t0 = ts; var p = Math.min(1, (ts - t0) / dur); var e = 1 - Math.pow(1 - p, 3); el.textContent = prefix + fmt(target * e) + suffix; if (p < 1) requestAnimationFrame(step); }
+    el.textContent = prefix + fmt(0) + suffix;
+    requestAnimationFrame(step);
+    setTimeout(function(){ el.textContent = full; }, dur + 200);  // final value even if rAF is throttled
+  }
+  var settledOnce = {};
+  window.iiSettle = function(){
+    fitEmbed();
+    var hash = (location.hash || '').replace('#','');
+    var sec = document.querySelector(hash === 'active' ? '.section.active' : (hash === 'managed' ? '.section.managed' : '.section'));
+    if (!sec) return;
+    var d = Math.max(0, sec.offsetTop - 16);
+    screenEl.scrollTop = Math.max(0, d - 120);   // start above…
+    tween(d, 850);                               // …settle in 0.85s (scrolled-and-stopped feel)
+    setTimeout(function(){ screenEl.scrollTop = d; }, 1000);  // guarantee final position if rAF is throttled
+    if (!settledOnce[hash]) { settledOnce[hash] = 1; sec.querySelectorAll('.t-22').forEach(function(el){ countUp(el, 1100); }); }  // count up the value once
+  };
+  window.addEventListener('resize', fitEmbed);
+  prep();
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(prep); }
+})();
+</script>
+</body>
+</html>
