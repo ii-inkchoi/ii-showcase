@@ -90,7 +90,7 @@ section { padding: 130px 0; position: relative; }
 .alloc-2col { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); align-items: center; }
 .alloc-copy { grid-column: 1 / 6; }
 .prose.alloc-sub { max-width: none; margin-top: 32px; }
-.alloc-stage { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: var(--gutter); align-items: stretch; margin-top: 48px; margin-bottom: 0; }
+.alloc-stage { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: var(--gutter); align-items: stretch; margin-top: 72px; margin-bottom: 0; }
 .ap-card { position: relative; box-sizing: border-box; min-height: 360px; background: var(--c-elev); border: 0.5px solid var(--c-900); padding: 34px 24px; overflow: hidden; display: flex; flex-direction: column; z-index: 2; }
 .ap-chead { display: flex; flex-direction: column; gap: 5px; margin-bottom: 28px; }
 .ap-ctitle { font-size: 24px; color: var(--c-400); letter-spacing: -0.02em; }
@@ -255,7 +255,14 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 .offer-item { padding-top: 28px; padding-right: 24px; }
 .offer-name { font-size: 18px; color: var(--c-200); letter-spacing: -0.01em; margin-bottom: 12px; }
 .offer-desc { font-size: 14px; line-height: 1.62; color: var(--c-600); }
-.offer-foot { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-700); margin-top: 28px; padding-top: 20px; border-top: 0.5px solid var(--c-900); }
+.offer-foot { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-700); margin-top: 44px; padding-top: 20px; border-top: 0.5px solid var(--c-900); }
+.systracks { display: flex; flex-direction: column; margin-top: 24px; }
+.systrack { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); align-items: center; padding: 44px 0; border-top: 0.5px solid var(--c-900); }
+.systrack-copy { grid-column: 1 / 5; }
+.systrack-name { font-size: 18px; color: var(--c-200); letter-spacing: -0.01em; }
+.systrack-desc { font-size: 14px; line-height: 1.62; color: var(--c-600); margin-top: 14px; max-width: 380px; }
+.systrack .ap-card { aspect-ratio: auto; min-height: 300px; grid-column: 7 / 13; }
+@media (max-width: 900px) { .systrack { grid-template-columns: 1fr; row-gap: 28px; } .systrack-copy, .systrack .ap-card { grid-column: 1 / -1; } }
 #edge .container { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); }
 #edge .edge-mark, #edge .edge-desc, #edge .link { grid-column: 1 / 6; }
 .edge-mark { font-size: clamp(26px, 3vw, 40px); line-height: 1.22; color: var(--c-200); letter-spacing: -0.025em; }
@@ -627,10 +634,10 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   <div class="navbar-inner">
     <a href="II Site V2 - Edition v3.html" class="navbar-brand"><img src="Logo.svg" alt="Intelligent Investing"></a>
     <div class="nav-links">
-      <a href="II Site V2 - Product.html">Product</a>
+      <a href="II Site V2 - Managed.html">Managed</a>
+      <a href="II Site V2 - Self-Directed.html">Self-Directed</a>
       <a href="II Site V2 - Journal.html">Journal</a>
       <a href="II Site V2 - Pricing.html">Pricing</a>
-      <a href="II Site V2 - Manifesto.html">Manifesto</a>
       <a href="II Site V2 - About.html">About</a>
       <a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a>
     </div>
@@ -645,10 +652,10 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 <div class="menu-overlay">
   <div class="menu-top"><a href="II Site V2 - Edition v3.html" class="ml-logo"><img src="Logo.svg" alt="II"></a><button class="ml-close" type="button">Close ×</button></div>
   <div class="menu-center">
-    <a href="II Site V2 - Product.html">Product</a>
+    <a href="II Site V2 - Managed.html">Managed</a>
+    <a href="II Site V2 - Self-Directed.html">Self-Directed</a>
     <a href="II Site V2 - Journal.html">Journal</a>
     <a href="II Site V2 - Pricing.html">Pricing</a>
-    <a href="II Site V2 - Manifesto.html">Manifesto</a>
     <a href="II Site V2 - About.html">About</a>
     <a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a>
     <a href="II Site V2 - GetTheApp.html">Get the App</a>
@@ -736,13 +743,10 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 <div class="container"><section id="entry-03">
   <div class="entry-head"><span class="entry-no" data-type>No. 03</span><span class="entry-name" data-type>The System</span></div>
   <h2 class="statement">A position begins before a purchase.<br>It begins with an explanation.</h2>
-  <div class="offering">
-    <div class="offer-item"><div class="offer-name">Manage</div><p class="offer-desc">Rules-based allocation into the S&amp;P 500 on a weekly schedule. No decisions required. Discipline by design. The default is the market. Manage is how most people should begin.</p></div>
-    <div class="offer-item"><div class="offer-name">Self-Directed</div><p class="offer-desc">A structured environment for building and reviewing investment theses. Thesis, benchmark, kill criteria, review. The process before the position. Not zero-commission execution. A decision system.</p></div>
-    <div class="offer-item"><div class="offer-name">Fiscal.ai</div><p class="offer-desc">Research infrastructure supporting independent judgment. It informs the work. It does not do the work. The reasoning stays yours.</p></div>
-  </div>
-  <div class="alloc-stage">
-    <div class="ap-card ap-core">
+  <div class="systracks">
+    <div class="systrack">
+      <div class="systrack-copy"><div class="systrack-name">Manage</div><p class="systrack-desc">Rules-based allocation into the S&amp;P 500 on a weekly schedule. No decisions required. Discipline by design. The default is the market. Manage is how most people should begin.</p></div>
+      <div class="ap-card ap-core">
             <div class="ap-cdata">
         <div class="ap-cblock">
           <span class="ap-clabel">Value</span>
@@ -760,7 +764,10 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
         </div>
       </div>
     </div>
-    <div class="ap-card ap-active">
+    </div>
+    <div class="systrack">
+      <div class="systrack-copy"><div class="systrack-name">Self-Directed</div><p class="systrack-desc">A structured environment for building and reviewing investment theses. Thesis, benchmark, kill criteria, review. The process before the position. Not zero-commission execution. A decision system.</p></div>
+      <div class="ap-card ap-active">
             <div class="ap-ahead"><span class="aph-h">Active Positions</span><span class="aph-cnt">9</span></div>
       <div class="ap-holds">
         <div class="ap-hold">
@@ -794,16 +801,20 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
         </div>
       </div>
     </div>
-    <div class="ap-card ap-fiscal">
+    </div>
+    <div class="systrack">
+      <div class="systrack-copy"><div class="systrack-name">Fiscal.ai</div><p class="systrack-desc">Research infrastructure supporting independent judgment. Not a recommendation engine. A thinking tool that sits alongside Self-Directed without replacing the investor&rsquo;s reasoning.</p></div>
+      <div class="ap-card ap-fiscal">
             <img class="fis-img" src="images/fiscalai.png" alt="Fiscal.ai" loading="lazy">
+    </div>
     </div>
   </div>
   <p class="offer-foot">One subscription. One operating system.</p>
   <div class="modules">
-    <a href="II Site V2 - Memo.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Memo</span><span>Memo</span></span></span></span><span class="m-desc">Thesis, sizing, and kill criteria. Recorded.</span><span class="m-glyph" aria-hidden="true"><svg viewBox="0 0 64 40" fill="none"><line x1="12" y1="14" x2="34" y2="14" stroke="#565B5E" stroke-width="0.75"/><line x1="12" y1="20" x2="30" y2="20" stroke="#565B5E" stroke-width="0.75"/><line x1="12" y1="26" x2="32" y2="26" stroke="#565B5E" stroke-width="0.75"/><rect x="44" y="14" width="6" height="6" stroke="#565B5E" stroke-width="0.75"/><rect x="46.25" y="16.25" width="1.5" height="1.5" fill="#FFFFFF"/></svg></span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
-    <a href="II Site V2 - Research.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Research</span><span>Research</span></span></span></span><span class="m-desc">Institutional research, now included.</span><span class="m-glyph" aria-hidden="true"><svg viewBox="0 0 64 40" fill="none"><rect x="22" y="8" width="16" height="24" stroke="#565B5E" stroke-width="0.75"/><line x1="26" y1="14" x2="34" y2="14" stroke="#565B5E" stroke-width="0.75"/><line x1="26" y1="19" x2="34" y2="19" stroke="#565B5E" stroke-width="0.75"/><line x1="26" y1="24" x2="31" y2="24" stroke="#565B5E" stroke-width="0.75"/><line x1="38" y1="20" x2="44" y2="20" stroke="#565B5E" stroke-width="0.75"/><rect x="44" y="17" width="6" height="6" stroke="#565B5E" stroke-width="0.75"/><rect x="46.25" y="19.25" width="1.5" height="1.5" fill="#FFFFFF"/></svg></span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
-    <a href="II Site V2 - Benchmark.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Benchmark</span><span>Benchmark</span></span></span></span><span class="m-desc">Your decisions against the S&amp;P 500.</span><span class="m-glyph" aria-hidden="true"><svg viewBox="0 0 64 40" fill="none"><polyline points="10,30 24,26 38,18 50,10" stroke="#565B5E" stroke-width="0.75"/><rect x="47" y="7" width="6" height="6" stroke="#565B5E" stroke-width="0.75"/><rect x="49.25" y="9.25" width="1.5" height="1.5" fill="#FFFFFF"/></svg></span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
-    <a href="II Site V2 - Calibration.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Calibration</span><span>Calibration</span></span></span></span><span class="m-desc">Expectations against outcomes. Measured.</span><span class="m-glyph" aria-hidden="true"><svg viewBox="0 0 64 40" fill="none"><line x1="10" y1="32" x2="54" y2="8" stroke="#565B5E" stroke-width="0.75" stroke-dasharray="2 3"/><rect x="27.8" y="19.2" width="4" height="4" stroke="#565B5E" stroke-width="0.75"/><rect x="44.5" y="8.5" width="6" height="6" stroke="#565B5E" stroke-width="0.75"/><rect x="46.75" y="10.75" width="1.5" height="1.5" fill="#FFFFFF"/></svg></span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+    <a href="II Site V2 - Memo.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Memo</span><span>Memo</span></span></span></span><span class="m-desc">Thesis, sizing, and kill criteria. Recorded.</span><span class="m-glyph" aria-hidden="true"><svg viewBox="0 0 64 40" fill="none"><line x1="12" y1="14" x2="34" y2="14" stroke="var(--c-800)" stroke-width="0.75"/><line x1="12" y1="20" x2="30" y2="20" stroke="var(--c-800)" stroke-width="0.75"/><line x1="12" y1="26" x2="32" y2="26" stroke="var(--c-800)" stroke-width="0.75"/><rect x="44" y="14" width="6" height="6" stroke="var(--c-800)" stroke-width="0.75"/><rect x="46.25" y="16.25" width="1.5" height="1.5" fill="var(--c-white)"/></svg></span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+    <a href="II Site V2 - Research.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Research</span><span>Research</span></span></span></span><span class="m-desc">Institutional research, now included.</span><span class="m-glyph" aria-hidden="true"><svg viewBox="0 0 64 40" fill="none"><rect x="22" y="8" width="16" height="24" stroke="var(--c-800)" stroke-width="0.75"/><line x1="26" y1="14" x2="34" y2="14" stroke="var(--c-800)" stroke-width="0.75"/><line x1="26" y1="19" x2="34" y2="19" stroke="var(--c-800)" stroke-width="0.75"/><line x1="26" y1="24" x2="31" y2="24" stroke="var(--c-800)" stroke-width="0.75"/><line x1="38" y1="20" x2="44" y2="20" stroke="var(--c-800)" stroke-width="0.75"/><rect x="44" y="17" width="6" height="6" stroke="var(--c-800)" stroke-width="0.75"/><rect x="46.25" y="19.25" width="1.5" height="1.5" fill="var(--c-white)"/></svg></span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+    <a href="II Site V2 - Benchmark.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Benchmark</span><span>Benchmark</span></span></span></span><span class="m-desc">Your decisions against SPY.</span><span class="m-glyph" aria-hidden="true"><svg viewBox="0 0 64 40" fill="none"><polyline points="10,30 24,26 38,18 50,10" stroke="var(--c-800)" stroke-width="0.75"/><rect x="47" y="7" width="6" height="6" stroke="var(--c-800)" stroke-width="0.75"/><rect x="49.25" y="9.25" width="1.5" height="1.5" fill="var(--c-white)"/></svg></span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+    <a href="II Site V2 - Calibration.html" class="module"><span class="m-name"><span class="roll"><span class="roll-in"><span>Calibration</span><span>Calibration</span></span></span></span><span class="m-desc">Expectations against outcomes. Measured.</span><span class="m-glyph" aria-hidden="true"><svg viewBox="0 0 64 40" fill="none"><line x1="10" y1="32" x2="54" y2="8" stroke="var(--c-800)" stroke-width="0.75" stroke-dasharray="2 3"/><rect x="27.8" y="19.2" width="4" height="4" stroke="var(--c-800)" stroke-width="0.75"/><rect x="44.5" y="8.5" width="6" height="6" stroke="var(--c-800)" stroke-width="0.75"/><rect x="46.75" y="10.75" width="1.5" height="1.5" fill="var(--c-white)"/></svg></span><span class="m-open"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
   </div>
   <div style="display:grid; grid-template-columns:repeat(12,1fr); column-gap:var(--gutter); margin-top:36px;"><p class="prose" style="grid-column:1 / 7; max-width:none;">Each module operates on a real, funded account: opened, custodied, and traded through our own regulated entities. The value is not in joining the system. It is in operating it.</p></div>
 </section></div>
@@ -1130,7 +1141,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
         var nEl = line.querySelector('.aph-num'), cEl = line.querySelector('.aph-chg');
         if (!nEl || !cEl) return;
         var nBase = parseFloat(nEl.textContent.replace(/,/g, '')), cBase = parseFloat(cEl.textContent.replace(/[+%]/g, ''));
-        units.push({ cur: nBase, tgt: nBase, base: nBase, amp: nBase * 0.0012, render: function (v) { nEl.textContent = money(v, 2); cEl.textContent = pct(cBase + (v - nBase) / nBase * 100); }, en: function (p) { nEl.textContent = money(nBase * p, 2); cEl.textContent = pct(cBase * p); } });
+        units.push({ cur: nBase, tgt: nBase, base: nBase, amp: nBase * 0.0002, render: function (v) { nEl.textContent = money(v, 2); cEl.textContent = pct(cBase + (v - nBase) / nBase * 100); }, en: function (p) { nEl.textContent = money(nBase * p, 2); cEl.textContent = pct(cBase * p); } });
       });
     }
     var core = document.querySelector('.ap-core');
@@ -1141,36 +1152,26 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
         var mm = gEl.textContent.match(/([\d,\.]+)\s*\(([+\-]?[\d\.]+)%\)/);
         if (mm) {
           var basis = vBase - parseFloat(mm[1].replace(/,/g, ''));
-          units.push({ cur: vBase, tgt: vBase, base: vBase, amp: vBase * 0.0012, render: function (v) { var g = v - basis; vEl.textContent = money(v, 2); gEl.textContent = '+' + money(g, 2) + ' (' + pct(basis ? g / basis * 100 : 0) + ')'; }, en: function (p) { var g = (vBase - basis) * p; vEl.textContent = money(vBase * p, 2); gEl.textContent = '+' + money(g, 2) + ' (' + pct(basis ? (vBase - basis) / basis * 100 * p : 0) + ')'; } });
+          units.push({ cur: vBase, tgt: vBase, base: vBase, amp: vBase * 0.0002, render: function (v) { var g = v - basis; vEl.textContent = money(v, 2); gEl.textContent = '+' + money(g, 2) + ' (' + pct(basis ? g / basis * 100 : 0) + ')'; }, en: function (p) { var g = (vBase - basis) * p; vEl.textContent = money(vBase * p, 2); gEl.textContent = '+' + money(g, 2) + ' (' + pct(basis ? (vBase - basis) / basis * 100 * p : 0) + ')'; } });
         }
       }
     }
     if (!units.length) return;
-    units.forEach(function (u) { u.en(0); });
-    var visible = false, started = false, sec = document.querySelector('.alloc-stage');
+    var visible = false, started = false, sec = document.querySelector('.systracks');
     function cycle(u) {
       setTimeout(function step() {
-        if (!visible) { setTimeout(step, 1000); return; }
-        var from = u.cur, to = u.base + (Math.random() - 0.5) * 2 * u.amp, start = Date.now(), dur = 900 + Math.random() * 500;
+        if (!visible) { setTimeout(step, 1200); return; }
+        var from = u.cur, to = u.base + (Math.random() - 0.5) * 2 * u.amp, start = Date.now(), dur = 1100 + Math.random() * 600;
         var id = setInterval(function () {
           var e = Math.min(1, (Date.now() - start) / dur), k = e < 0.5 ? 2 * e * e : 1 - Math.pow(-2 * e + 2, 2) / 2;
           u.cur = from + (to - from) * k; u.render(u.cur);
           if (e >= 1) { clearInterval(id); cycle(u); }
-        }, 60);
-      }, 2500 + Math.random() * 3500);
-    }
-    function enter() {
-      if (started) return; started = true;
-      var t0 = Date.now(), dur = 1150;
-      var id = setInterval(function () {
-        var e = Math.min(1, (Date.now() - t0) / dur), p = 1 - Math.pow(1 - e, 3);
-        units.forEach(function (u) { u.en(p); });
-        if (e >= 1) { clearInterval(id); units.forEach(function (u) { u.cur = u.base; }); units.forEach(cycle); }
-      }, 40);
+        }, 70);
+      }, 5000 + Math.random() * 4000);
     }
     if (sec && 'IntersectionObserver' in window) {
-      new IntersectionObserver(function (es) { es.forEach(function (e) { visible = e.isIntersecting; if (e.isIntersecting) enter(); }); }, { threshold: 0.15 }).observe(sec);
-    } else { visible = true; enter(); }
+      new IntersectionObserver(function (es) { es.forEach(function (e) { visible = e.isIntersecting; if (e.isIntersecting && !started) { started = true; units.forEach(cycle); } }); }, { threshold: 0.15 }).observe(sec);
+    } else { visible = true; units.forEach(cycle); }
   })();
 
   // reality ladder — single rAF clock drives the dot down the spine; nodes light as it crosses (synced like the hexagon)
