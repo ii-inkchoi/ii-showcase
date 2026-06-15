@@ -163,7 +163,7 @@ section { padding: 130px 0; position: relative; }
   .alloc-sub { margin-top: 24px; }
   .alloc-stage { display: flex; flex-direction: column; gap: 16px; margin-top: 44px; }
   .ap-card { grid-column: 1 / -1 !important; grid-row: auto !important; width: 100% !important; }
-  .systrack .ap-card { width: 90% !important; max-width: 340px !important; justify-self: center !important; margin-left: auto !important; margin-right: auto !important; height: 420px !important; min-height: 0 !important; }
+  .systrack .ap-card { width: 90% !important; max-width: 340px !important; justify-self: center !important; margin-left: auto !important; margin-right: auto !important; height: 560px !important; min-height: 0 !important; }
 }
 @media (max-width: 1180px) and (min-width: 901px) { .alloc-stage { grid-template-columns: 1fr; row-gap: 16px; } }
 @media (max-width: 900px) { section { padding: 72px 0; } }
@@ -1444,8 +1444,8 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
         var r = f.getBoundingClientRect();
         var visible = r.top < vh * 0.85 && r.bottom > vh * 0.15 && r.height > 0;
         if (visible && !seen[i]) {
-          if (f.contentWindow && f.contentWindow.iiSettle) { seen[i] = true; try { f.contentWindow.iiSettle(); } catch (e) {} }
-          // if the iframe isn't ready yet, leave seen[i] false so the next scroll / load retries
+          seen[i] = true;
+          try { f.contentWindow.postMessage('iiSettle', '*'); } catch (e) {}  // postMessage works regardless of origin (file:// / cross-host) — direct .iiSettle() call can be blocked
         } else if (!visible && seen[i]) {
           seen[i] = false;  // re-arm so it replays next time the card scrolls back into view
         }
@@ -1453,7 +1453,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     }
     window.addEventListener('scroll', check, { passive: true });
     window.addEventListener('resize', check);
-    frames.forEach(function (f) { f.addEventListener('load', check); });
+    frames.forEach(function (f, i) { f.addEventListener('load', function () { seen[i] = false; check(); }); });  // re-arm + re-send once the iframe (and its message listener) is ready
     check();
   })();
 
