@@ -167,7 +167,7 @@ section { padding: 130px 0; position: relative; }
 }
 @media (max-width: 1180px) and (min-width: 901px) { .alloc-stage { grid-template-columns: 1fr; row-gap: 16px; } }
 @media (max-width: 900px) { section { padding: 72px 0; } }
-@media (max-width: 760px) { #entry-02 .og-label, #entry-02 .og-clabel { font-size: 15px; } #entry-02 .og-sub, #entry-02 .og-csub { font-size: 14px; } #entry-02 .onto-viz { opacity: 1; transform: none; } section.hero .hero-main { display: flex; flex-direction: column; min-height: calc(100dvh - 240px); }
+@media (max-width: 760px) { #entry-02 .onto-viz { display: none; } #entry-02 .onto-mobile { display: block; } section.hero .hero-main { display: flex; flex-direction: column; min-height: calc(100dvh - 240px); }
   section.hero .hero-figure { position: absolute; left: 50%; right: auto; top: auto; bottom: 96px; transform: translateX(-50%); grid-column: auto; width: 92vw; max-width: min(380px, calc(100dvh - 440px)); margin: 0; z-index: -1; pointer-events: none; animation: none; opacity: 1; }
   section.hero .hero-cta { margin-top: auto; padding-top: 28px; }
   section.hero .hero-eyebrow { margin-bottom: 16px; } section.hero .ht-line { stroke: var(--c-600); opacity: 0.85; } section.hero .ht-eq { stroke: var(--c-200); opacity: 1; } section.hero .hbr { display: inline; } section.hero { padding: 128px 0 112px !important; } section.hero .hero-scroll { bottom: 60px; color: var(--c-400); } }
@@ -491,6 +491,17 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 
 /* ontology — the decision model (radial) */
 .onto-graph { position: relative; grid-column: 7 / 13; }
+.onto-mobile { display: none; }
+.om-hub { text-align: center; margin-bottom: 32px; }
+.om-hub-t { display: block; font-family: var(--mono); font-size: 13px; letter-spacing: 0.14em; color: var(--c-200); }
+.om-hub-s { display: block; font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-700); margin-top: 8px; }
+.om-flow { position: relative; list-style: none; margin: 0; padding: 0; }
+.om-flow::before { content: ''; position: absolute; left: 4px; top: 12px; bottom: 12px; width: 0.5px; background: var(--c-800); }
+.om-stage { position: relative; padding: 16px 0 16px 30px; }
+.om-stage:not(:first-child) { border-top: 0.5px solid var(--c-900); }
+.om-node { position: absolute; left: 0; top: 20px; width: 9px; height: 9px; border: 0.5px solid var(--c-800); background: var(--c-elev); }
+.om-label { display: block; font-family: var(--mono); font-size: 13px; letter-spacing: 0.1em; color: var(--c-200); }
+.om-sub { display: block; font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-700); margin-top: 5px; }
 .onto-viz { position: relative; width: 100%; }
 .onto-viz::before { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; background-image: repeating-linear-gradient(to right, var(--c-1000) 0 0.5px, transparent 0.5px 44px), repeating-linear-gradient(to bottom, var(--c-1000) 0 0.5px, transparent 0.5px 44px); -webkit-mask-image: radial-gradient(ellipse at 50% 50%, #000 52%, transparent 80%); mask-image: radial-gradient(ellipse at 50% 50%, #000 52%, transparent 80%); }
 .onto-viz svg { position: relative; z-index: 1; width: 100%; height: auto; display: block; overflow: visible; }
@@ -796,6 +807,17 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
           </g>
           <g id="ogNodes"></g><g id="ogAnn"></g>
         </svg>
+      </div>
+      <div class="onto-mobile" aria-hidden="true">
+        <div class="om-hub"><span class="om-hub-t">Decision Record</span><span class="om-hub-s">would you initiate today?</span></div>
+        <ol class="om-flow">
+          <li class="om-stage"><span class="om-node"></span><span class="om-label">Allocator</span><span class="om-sub">the product</span></li>
+          <li class="om-stage"><span class="om-node"></span><span class="om-label">Thesis</span><span class="om-sub">the reasoned case</span></li>
+          <li class="om-stage"><span class="om-node"></span><span class="om-label">Position</span><span class="om-sub">capital committed</span></li>
+          <li class="om-stage"><span class="om-node"></span><span class="om-label">Outcome</span><span class="om-sub">thesis resolved</span></li>
+          <li class="om-stage"><span class="om-node"></span><span class="om-label">Calibration</span><span class="om-sub">confidence vs. reality</span></li>
+          <li class="om-stage"><span class="om-node"></span><span class="om-label">Re-underwriting</span><span class="om-sub">what changed?</span></li>
+        </ol>
       </div>
     </div>
   </div>
@@ -1410,21 +1432,29 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     setTimeout(function next() { if (idx < els.length) { typeOne(els[idx], function () { idx++; next(); }); } }, 500);
   })();
 
-  // System cards: trigger the embedded app's scroll-settle when the card enters view
-  // (offscreen iframes throttle requestAnimationFrame, so we run it on intersection).
+  // System cards: trigger the embedded app's scroll-settle + count-up when the card enters view.
+  // Scroll-based (getBoundingClientRect) — more reliable across devices than IntersectionObserver on iframes.
   (function () {
-    var frames = document.querySelectorAll('.ap-embed-frame');
-    if (!frames.length || !('IntersectionObserver' in window)) return;
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (!en.isIntersecting) return;
-        var f = en.target; io.unobserve(f);
-        var run = function () { try { if (f.contentWindow && f.contentWindow.iiSettle) f.contentWindow.iiSettle(); } catch (e) {} };
-        if (f.contentWindow && f.contentWindow.iiSettle) run();
-        else f.addEventListener('load', run);
+    var frames = [].slice.call(document.querySelectorAll('.ap-embed-frame'));
+    if (!frames.length) return;
+    var seen = [];
+    function check() {
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      frames.forEach(function (f, i) {
+        var r = f.getBoundingClientRect();
+        var visible = r.top < vh * 0.85 && r.bottom > vh * 0.15 && r.height > 0;
+        if (visible && !seen[i]) {
+          seen[i] = true;
+          try { if (f.contentWindow && f.contentWindow.iiSettle) f.contentWindow.iiSettle(); } catch (e) {}
+        } else if (!visible && seen[i]) {
+          seen[i] = false;  // re-arm so it replays next time the card scrolls back into view
+        }
       });
-    }, { threshold: 0.35 });
-    frames.forEach(function (f) { io.observe(f); });
+    }
+    window.addEventListener('scroll', check, { passive: true });
+    window.addEventListener('resize', check);
+    frames.forEach(function (f) { f.addEventListener('load', check); });
+    check();
   })();
 
 </script>
