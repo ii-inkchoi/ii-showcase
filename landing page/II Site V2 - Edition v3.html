@@ -167,7 +167,7 @@ section { padding: 130px 0; position: relative; }
 }
 @media (max-width: 1180px) and (min-width: 901px) { .alloc-stage { grid-template-columns: 1fr; row-gap: 16px; } }
 @media (max-width: 900px) { section { padding: 72px 0; } }
-@media (max-width: 760px) { #entry-02 .onto-graph { display: none; } section.hero .hero-main { display: flex; flex-direction: column; min-height: calc(100dvh - 240px); }
+@media (max-width: 760px) { #entry-02 .og-label, #entry-02 .og-clabel { font-size: 15px; } #entry-02 .og-sub, #entry-02 .og-csub { font-size: 14px; } #entry-02 .onto-viz { opacity: 1; transform: none; } section.hero .hero-main { display: flex; flex-direction: column; min-height: calc(100dvh - 240px); }
   section.hero .hero-figure { position: absolute; left: 50%; right: auto; top: auto; bottom: 96px; transform: translateX(-50%); grid-column: auto; width: 92vw; max-width: min(380px, calc(100dvh - 440px)); margin: 0; z-index: -1; pointer-events: none; animation: none; opacity: 1; }
   section.hero .hero-cta { margin-top: auto; padding-top: 28px; }
   section.hero .hero-eyebrow { margin-bottom: 16px; } section.hero .ht-line { stroke: var(--c-600); opacity: 0.85; } section.hero .ht-eq { stroke: var(--c-200); opacity: 1; } section.hero .hbr { display: inline; } section.hero { padding: 128px 0 112px !important; } section.hero .hero-scroll { bottom: 60px; color: var(--c-400); } }
@@ -389,7 +389,8 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 .mb-row { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; padding: 16px 0; border-bottom: 0.5px solid var(--c-800); }
 .mb-k { font-size: 15px; color: var(--c-400); }
 .mb-v { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-600); text-align: right; }
-@media (max-width: 900px) { .mb-left, .mb-right { grid-column: 1 / -1; } .mb-right { margin-top: 32px; } }
+.mb-cta-m { display: none; }
+@media (max-width: 900px) { .mb-left, .mb-right { grid-column: 1 / -1; } .mb-right { margin-top: 32px; } .mb-cta-d { display: none !important; } .mb-cta-m { display: inline-flex; grid-column: 1 / -1; margin-top: 24px; } }
 .altitude { font-size: clamp(22px, 2.4vw, 30px); line-height: 1.45; letter-spacing: -0.02em; color: var(--c-400); max-width: 760px; }
 .close-wrap { text-align: center; }
 .close-h { font-size: clamp(26px, 3vw, 40px); line-height: 1.22; letter-spacing: -0.025em; color: var(--c-200); font-weight: 400; }
@@ -863,7 +864,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
       <div class="entry-head"><span class="entry-no" data-type>No. 05</span><span class="entry-name" data-type>Membership</span></div>
       <h2 class="statement">The cost is $20 per month.</h2>
       <p class="prose" style="margin-top:32px;">Membership revenue, not transaction revenue. The structure aligns our incentives with long-term outcomes, not activity.</p>
-      <a href="II Site V2 - Pricing.html" class="link" style="display:inline-flex;align-items:center;gap:6px;margin-top:28px;"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span class="roll"><span class="roll-in"><span>Start Membership</span><span>Start Membership</span></span></span></a>
+      <a href="II Site V2 - Pricing.html" class="link mb-cta-d" style="display:inline-flex;align-items:center;gap:6px;margin-top:28px;"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span class="roll"><span class="roll-in"><span>Start Membership</span><span>Start Membership</span></span></span></a>
     </div>
     <div class="mb-right">
       <div class="mb-row"><span class="mb-k">Fiscal.ai Max</span><span class="mb-v">Included</span></div>
@@ -871,6 +872,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
       <div class="mb-row"><span class="mb-k">FX markup</span><span class="mb-v">None</span></div>
       <div class="mb-row"><span class="mb-k">Managed portfolios</span><span class="mb-v">0.10% &middot; no performance fees</span></div>
     </div>
+    <a href="II Site V2 - Pricing.html" class="link mb-cta-m" style="align-items:center;gap:6px;"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span class="roll"><span class="roll-in"><span>Start Membership</span><span>Start Membership</span></span></span></a>
   </div>
 </div></section>
 
