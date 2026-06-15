@@ -272,10 +272,11 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 .edge-mark { font-size: clamp(26px, 3vw, 40px); line-height: 1.22; color: var(--c-200); letter-spacing: -0.025em; }
 .edge-desc { font-size: 15px; line-height: 1.7; color: var(--c-600); max-width: none; margin-top: 32px; }
 #entry-04 .otr-2col { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; column-gap: clamp(16px, 1.6vw, 24px); margin-top: 16px; }
-.otr-col { background: var(--c-1000); border: 0.5px solid var(--c-900); padding: clamp(28px, 3vw, 44px); }
+.otr-col { background: var(--c-elev); border: 0.5px solid var(--c-900); padding: clamp(28px, 3vw, 44px); }
 #entry-04 .otr-col .statement { grid-column: auto; font-size: clamp(24px, 2.4vw, 32px); }
 .otr-label { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-700); margin-bottom: 20px; }
 .otr-prose { font-size: 15px; line-height: 1.7; color: var(--c-600); margin-top: 24px; max-width: none; }
+.otr-merged { font-size: clamp(20px, 1.8vw, 24px); line-height: 1.45; color: var(--c-200); letter-spacing: -0.015em; }
 @media (max-width: 760px) { #entry-04 .otr-2col { grid-template-columns: 1fr; row-gap: 16px; } }
 @media (max-width: 900px) { .offering { grid-template-columns: 1fr; row-gap: 8px; } .offer-item { padding-right: 0; } }
 .prose { font-size: 15px; line-height: 1.7; color: var(--c-600); max-width: 520px; }
@@ -896,14 +897,12 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   <div class="otr-2col">
     <div class="otr-col">
       <div class="otr-label">Manifesto</div>
-      <h2 class="statement">Everything ladders back to claims.</h2>
-      <p class="otr-prose">The market humbles everyone. Judgment must be recorded before it can be improved.</p>
+      <p class="otr-merged">Everything ladders back to claims. The market humbles everyone, and judgment must be recorded before it can be improved.</p>
       <a href="II Site V2 - Manifesto.html" class="link" style="display:inline-flex;align-items:center;gap:6px;margin-top:28px;"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span class="roll"><span class="roll-in"><span>Read the Full Doctrine</span><span>Read the Full Doctrine</span></span></span></a>
     </div>
     <div class="otr-col">
       <div class="otr-label">The Edge</div>
-      <h2 class="statement">The weekly read.</h2>
-      <p class="otr-prose">For investors who want to think more carefully about what they are doing and why it matters.</p>
+      <p class="otr-merged">The weekly read, for investors who want to think more carefully about what they are doing and why it matters.</p>
       <a href="https://intelligentinvesting.webflow.io/the-edge" target="_blank" rel="noopener" class="link" style="display:inline-flex;align-items:center;gap:6px;margin-top:28px;"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span class="roll"><span class="roll-in"><span>Subscribe</span><span>Subscribe</span></span></span></a>
     </div>
   </div>
