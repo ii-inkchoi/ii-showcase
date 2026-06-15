@@ -167,10 +167,10 @@ section { padding: 130px 0; position: relative; }
 }
 @media (max-width: 1180px) and (min-width: 901px) { .alloc-stage { grid-template-columns: 1fr; row-gap: 16px; } }
 @media (max-width: 900px) { section { padding: 72px 0; } }
-@media (max-width: 760px) { #entry-02 .onto-graph { display: none; } section.hero .hero-main { display: flex; flex-direction: column; min-height: calc(100dvh - 224px); }
-  section.hero .hero-figure { position: relative; top: auto; right: auto; transform: none; grid-column: auto; width: 100%; max-width: min(300px, calc(100dvh - 600px)); margin: 40px auto 0; }
+@media (max-width: 760px) { #entry-02 .onto-graph { display: none; } section.hero .hero-main { display: flex; flex-direction: column; min-height: calc(100dvh - 240px); }
+  section.hero .hero-figure { position: absolute; left: 50%; right: auto; top: auto; bottom: 96px; transform: translateX(-50%); grid-column: auto; width: 86%; max-width: min(290px, calc(100dvh - 540px)); margin: 0; z-index: -1; pointer-events: none; animation: none; opacity: 1; }
   section.hero .hero-cta { margin-top: auto; padding-top: 28px; }
-  section.hero .hero-eyebrow { margin-bottom: 16px; } section.hero .ht-line { stroke: var(--c-600); opacity: 0.85; } section.hero .ht-eq { stroke: var(--c-200); opacity: 1; } .hbr { display: inline; } section.hero { padding: 128px 0 96px !important; } }
+  section.hero .hero-eyebrow { margin-bottom: 16px; } section.hero .ht-line { stroke: var(--c-600); opacity: 0.85; } section.hero .ht-eq { stroke: var(--c-200); opacity: 1; } section.hero .hbr { display: inline; } section.hero { padding: 128px 0 112px !important; } section.hero .hero-scroll { bottom: 60px; color: var(--c-400); } }
 @media (max-width: 760px) {
   #trust, #entry-01, #entry-02, #entry-03, #evidence, #entry-06, #entry-04, #journal { position: relative; }
   #trust::before, #entry-01::before, #entry-02::before, #entry-03::before, #evidence::before, #entry-06::before, #entry-04::before, #journal::before { content: ''; position: absolute; top: 0; left: 50%; width: 100vw; transform: translateX(-50%); border-top: 0.5px solid var(--c-800); pointer-events: none; }
@@ -258,7 +258,7 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 .trust-item { grid-column: span 3; display: flex; flex-direction: column; gap: 7px; border-left: 0.5px solid var(--c-900); padding-left: 20px; }
 .ti-num { font-size: 22px; color: var(--c-200); letter-spacing: -0.02em; line-height: 1; }
 .ti-lbl { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-700); }
-@media (max-width: 760px) { .trust-item { grid-column: span 12; border-left: 0; padding-left: 0; border-top: 0.5px solid var(--c-900); padding-top: 16px; } .trust-strip { row-gap: 20px; } .ti-num { font-size: 24px; } }
+@media (max-width: 760px) { .trust-item { grid-column: span 12; border-left: 0; padding-left: 0; border-top: 0.5px solid var(--c-900); padding-top: 16px; } .trust-strip { row-gap: 20px; } .ti-num { font-size: 22px; } }
 
 /* entry sections */
 .entry-head { display: flex; align-items: baseline; gap: 20px; margin-bottom: 28px; }
@@ -566,11 +566,10 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
   .ap-ctitle { font-size: 22px; }
   .ap-csub, .ap-clabel, .ap-csmall, .ap-cgain, .ap-crow .tk, .ap-crow .pc,
   .aph-tkr, .aph-wt, .aph-num, .aph-unit, .aph-chg { font-size: 15px; }
-  /* Active holdings: stack name over values, left-align (no overflow) */
-  .aph-top { flex-direction: column; gap: 8px; }
-  .aph-right { align-items: flex-start; }
-  .aph-line { display: flex; gap: 8px; }
-  .aph-num, .aph-chg { justify-self: auto; text-align: left; }
+  /* Active holdings: keep name left / values right (card is wide enough) */
+  .aph-tkr, .aph-wt, .aph-num, .aph-unit, .aph-chg { font-size: 13px; }
+  .aph-line { display: flex; gap: 8px; justify-content: flex-end; }
+  .aph-num, .aph-chg { justify-self: auto; text-align: right; }
   /* tenets → single column */
   .tenets { grid-template-columns: 1fr; }
   .tenet, .tenet:nth-child(odd), .tenet:nth-child(even) { padding-left: 0; padding-right: 0; border-right: none; }
@@ -722,7 +721,6 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     <a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a>
     <a href="II Site V2 - GetTheApp.html">Get the App</a>
   </div>
-  <div class="menu-bottom"><div class="mb-left"><span>Intelligent Investing</span><br><span>No. 01 · 2026</span></div></div>
 </div>
 
 <!-- HERO -->
