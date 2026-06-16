@@ -205,7 +205,7 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 .hero-slide { pointer-events: none; transition: opacity 0.4s ease; }
 .hero-slide:not(.is-active) { opacity: 0 !important; }   /* beats the torus ht-in animation (animation > normal rule, but important > animation) so the inactive slide truly fades out */
 .hero-slide.is-active { opacity: 1; }
-.hero-app-frame { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; height: auto; aspect-ratio: 424 / 883; border: 0; background: transparent; pointer-events: none; }
+.hero-app-frame { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) perspective(950px) rotateY(-24deg) rotateX(3deg); transform-origin: center center; width: 100%; height: auto; aspect-ratio: 424 / 883; border: 0; background: transparent; pointer-events: none; }
 .hero-toggle { position: absolute; right: max(var(--frame), calc((100% - var(--maxw)) / 2 + var(--frame))); bottom: 48px; left: auto; top: auto; transform: none; display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 13px; letter-spacing: 0.04em; pointer-events: auto; z-index: 3; }
 .hero-toggle .ht-opt { color: var(--c-700); cursor: pointer; transition: color 0.15s ease; }
 .hero-toggle .ht-opt.is-active { color: var(--c-200); }
