@@ -967,6 +967,9 @@
   body.embed #stage{ display:block; background:transparent; }
   body.embed #device{ padding:0 !important; border:0 !important; border-radius:0 !important; background:transparent !important; transform:none !important; }
   body.embed #screen{ border-radius:0; transform-origin:top left; }
+  body.embed .logo{ font-size:14px; bottom:27px; }
+  body.embed .section{ padding-left:28px; padding-right:28px; }
+  body.embed .header{ padding-left:28px; padding-right:28px; }
 </style>
 <script>
 (function(){
@@ -979,6 +982,14 @@
     screenEl.style.width = '393px';
     screenEl.style.height = (window.innerHeight / s) + 'px';
     screenEl.style.transform = 'scale(' + s + ')';
+    // GUARANTEE scroll room below the content. Sections are position:absolute, so scrollHeight collapses when
+    // sections below (active, etc.) are short/unloaded (lazy images). A small scrollHeight makes the
+    // `Math.min(d, scrollHeight - clientHeight)` cap pull the settle down until the last row sits flush on the
+    // bottom edge = the cut. This spacer keeps scrollHeight large regardless of what has loaded, so the cap
+    // can never eat the bottom margin. (This was the real device-only cause of the cut.)
+    var sp = document.getElementById('_iiRoom');
+    if (!sp) { sp = document.createElement('div'); sp.id = '_iiRoom'; sp.setAttribute('aria-hidden', 'true'); sp.style.cssText = 'position:absolute;left:0;width:1px;height:1px;pointer-events:none;'; screenEl.appendChild(sp); }
+    sp.style.top = (screenEl.clientHeight * 3 + 800) + 'px';
   }
   function tween(to, dur){
     var start = screenEl.scrollTop, change = to - start, t0 = null;
@@ -1002,6 +1013,7 @@
   // at the correct content position even if the settle animation never triggers on a given device.
   function computeTarget(){
     var hash = (__P.split('#')[1] || '');
+    if (!hash) return { sec: document.querySelector('.section'), d: 0 };   // no hash → main dashboard top (total-value overview)
     var sec = document.querySelector(hash === 'active' ? '.section.active' : (hash === 'managed' ? '.section.managed' : '.section'));
     if (!sec) return null;
     var targetTop = sec.offsetTop;
@@ -1016,7 +1028,26 @@
     var d = Math.max(0, targetTop - 16);
     return { sec: sec, d: Math.min(d, Math.max(0, screenEl.scrollHeight - screenEl.clientHeight)) };
   }
-  function prep(){ fitEmbed(); var t = computeTarget(); if (t) screenEl.scrollTop = t.d; }  // land at the correct content position directly (robust even if the settle never triggers)
+  function prep(){ fitEmbed(); var t = computeTarget(); var isCore=(__P.split('#')[1]||'')==='core'; if (t) screenEl.scrollTop = isCore ? 0 : t.d; _ensureLastRowVisible(); }  // #core reveal starts at the top (Total Value); others land directly
+  // Self-correcting safety net: after layout settles, GUARANTEE the managed allocation table's last row
+  // (Money Market) clears the bottom edge with a margin — re-measures the real rendered position, so it is
+  // immune to clientHeight mis-measurement / scale-transition timing that differs device-to-device.
+  function _ensureLastRowVisible(){
+    var hash = (__P.split('#')[1] || ''); if (hash !== 'managed') return;
+    var tbl = document.querySelector('.section.managed .tbl'); if (!tbl) return;
+    var last = tbl.lastElementChild || tbl;
+    var ch = screenEl.clientHeight;
+    var lastBottom = _absTop(last) + last.offsetHeight;
+    var marg = Math.round(ch * 0.12);
+    var maxD = Math.max(0, screenEl.scrollHeight - ch);
+    var need = Math.min(maxD, lastBottom - ch + marg);   // minimal scrollTop so the last row clears the bottom by `marg`
+    if (screenEl.scrollTop < need) screenEl.scrollTop = need;   // last row was cut -> pull it fully into view
+    // TEMP on-device diagnostic — shows the real measurements so the cut cause can be confirmed; remove once fixed
+    var _d = document.getElementById('_iiDbg');
+    if (!_d) { _d = document.createElement('div'); _d.id = '_iiDbg'; _d.style.cssText = 'position:fixed;top:2px;left:2px;z-index:99;font-family:monospace;font-size:13px;color:orange;background:rgba(0,0,0,0.72);padding:2px 6px;pointer-events:none;'; screenEl.appendChild(_d); }
+    var _mmB = Math.round(lastBottom - screenEl.scrollTop);
+    _d.textContent = 'ch' + Math.round(ch) + ' sh' + Math.round(screenEl.scrollHeight) + ' st' + Math.round(screenEl.scrollTop) + ' mm' + _mmB + (_mmB > ch ? ' CUT' : ' OK');
+  }
   // Called by the parent page when the card scrolls into view (offscreen iframes throttle rAF).
   function countUp(el, dur){
     var full = el.getAttribute('data-full') || el.textContent.trim();
@@ -1037,9 +1068,17 @@
     fitEmbed();
     var t = computeTarget(); if (!t) return;
     var d = t.d;
-    screenEl.scrollTop = Math.max(0, d - 120);   // start above…
-    tween(d, 850);                               // …settle in 0.85s (scrolled-and-stopped feel)
-    setTimeout(function(){ screenEl.scrollTop = d; }, 1000);  // guarantee final position if rAF is throttled
+    var isCore = (__P.split('#')[1]||'') === 'core';
+    if (isCore) {                                // reveal: hold on Total Value (top), then scroll so Core sits at top
+      screenEl.scrollTop = 0;
+      setTimeout(function(){ tween(d, 950); }, 1400);
+      setTimeout(function(){ screenEl.scrollTop = d; }, 2600);
+    } else {
+      screenEl.scrollTop = Math.max(0, d - 120);   // start above…
+      tween(d, 850);                               // …settle in 0.85s (scrolled-and-stopped feel)
+      setTimeout(function(){ screenEl.scrollTop = d; _ensureLastRowVisible(); }, 1000);  // guarantee final position if rAF is throttled
+      setTimeout(_ensureLastRowVisible, 1350);  // re-check after scale/transition fully applies — device-robust
+    }
     t.sec.querySelectorAll('.t-22').forEach(function(el){ countUp(el, 1100); });  // count up the value (replays each time the card enters view)
   };
   window.addEventListener('message', function (e) { if (e.data === 'iiSettle') window.iiSettle(); });  // parent triggers settle/count-up on view (origin-independent)
