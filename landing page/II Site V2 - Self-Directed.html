@@ -6,7 +6,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-800:#565B5E;--c-700:#929292;--c-600:#A7A7A7;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFF;--c-warning:#FF7A00; --frame: clamp(24px, 4vw, 48px); --maxw: 1680px; --gutter: clamp(16px, 1.5vw, 24px); --c-elev: #0A0A0A; --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; --mono: 'Chakra Petch', ui-monospace, monospace;}
+:root{--c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-800:#565B5E;--c-700:#929292;--c-600:#A7A7A7;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFF;--c-warning:#FF7A00;--c-amber:#FDAD00; --frame: clamp(24px, 4vw, 48px); --maxw: 1680px; --gutter: clamp(16px, 1.5vw, 24px); --c-elev: #0A0A0A; --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; --mono: 'Chakra Petch', ui-monospace, monospace;}
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{background:var(--c-black);color:var(--c-600);font-family:'Inter',sans-serif;font-feature-settings:'tnum' 1,'lnum' 1,'ss01' 1;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased;font-weight:400;}
 body{min-height:100vh;font-size:15px;line-height:1.55;background:var(--c-black);}body.menu-open{overflow:hidden;}
@@ -86,9 +86,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 
 /* — Body sections (shared idiom with Managed) — */
 .page-eyebrow{font-family:var(--mono);font-size:12px;color:var(--c-700);letter-spacing:0.04em;margin-bottom:28px;}
-.page-actions{margin-top:48px;}
-.sd-showcase{display:flex;justify-content:center;margin-top:64px;}
-.memo-section{padding:130px 0;border-top:0.5px solid var(--c-900);}
+.page-actions{margin-top:48px;}.memo-section{padding:130px 0;border-top:0.5px solid var(--c-900);}
 .memo-grid{display:grid;grid-template-columns:1fr;gap:48px;align-items:start;}
 @media(min-width:1024px){.memo-grid{grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);row-gap:0;}.memo-text{grid-column:1 / 7;}.memo-grid .dr-doc{grid-column:9 / 13;}}
 .memo-lead{font-size:clamp(24px,3vw,34px);line-height:1.15;letter-spacing:-0.03em;color:var(--c-200);margin-bottom:28px;font-weight:400;}
@@ -118,11 +116,49 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 @media(max-width:900px){.dr-doc{max-width:380px;margin:0 auto;}}
 .acc-section{padding:130px 0;border-top:0.5px solid var(--c-900);}
 .acc-headline{font-size:clamp(24px,3vw,34px);line-height:1.15;letter-spacing:-0.03em;color:var(--c-200);max-width:760px;margin-bottom:48px;text-wrap:balance;font-weight:400;}
-.acc-grid{display:grid;grid-template-columns:1fr;gap:48px;align-items:start;}
-@media(min-width:1024px){.acc-grid{grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);row-gap:0;}.acc-left{grid-column:1 / 7;}.acc-grid .sd-showcase{grid-column:9 / 13;}}
-.acc-grid .sd-showcase{margin-top:0;}
-.acc-point{padding:28px 0;border-top:0.5px solid var(--c-900);}
-.acc-point:last-child{border-bottom:0.5px solid var(--c-900);}
+.acc-rows{margin-top:48px;display:flex;flex-direction:column;}
+.acc-row{padding:44px 0;border-top:0.5px solid var(--c-900);display:grid;grid-template-columns:1fr;gap:32px;align-items:center;}
+.acc-row:last-of-type{border-bottom:0.5px solid var(--c-900);}
+@media(min-width:1024px){.acc-row{grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);}.acc-row-text{grid-column:1 / 6;}.acc-shot{grid-column:9 / 13;}}
+.acc-shot{border:0.5px solid var(--c-800);background:var(--c-elev);border-radius:20px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.05);padding:8px 26px 24px;}
+.perf-block{display:flex;flex-direction:column;gap:16px;width:100%;padding:18px 0 4px;}
+.perf-header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;}
+.perf-label{font-size:15px;color:var(--c-200);letter-spacing:-0.01em;line-height:1.15;}
+.perf-scope{font-size:13px;color:var(--c-700);}
+.perf-row{display:flex;justify-content:space-between;align-items:baseline;width:100%;white-space:nowrap;}
+.perf-key{font-size:13px;color:var(--c-700);font-feature-settings:'lnum' 1,'tnum' 1;letter-spacing:-0.02em;}
+.perf-val{font-size:15px;color:var(--c-200);font-feature-settings:'lnum' 1,'tnum' 1;letter-spacing:-0.02em;}
+.perf-row.diff{margin-top:16px;padding-top:16px;border-top:0.5px solid var(--c-900);}
+.perf-row.diff .perf-val{color:var(--c-white);}
+.perf-pp{color:var(--c-700);margin-left:6px;font-size:13px;}
+.perf-chev{color:var(--c-700);font-size:14px;font-weight:300;line-height:1;}
+.cal-block{display:flex;flex-direction:column;align-items:flex-end;gap:9px;width:100%;padding:18px 0 6px;text-align:right;}
+.cal-head{font-size:15px;color:var(--c-200);letter-spacing:-0.01em;margin-bottom:3px;}
+.cal-row{display:flex;gap:12px;align-items:baseline;}
+.cal-key{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;}
+.cal-val{font-size:15px;color:var(--c-200);font-feature-settings:'lnum' 1,'tnum' 1;letter-spacing:-0.02em;}
+.ap-head-row{display:flex;align-items:baseline;justify-content:space-between;width:100%;gap:12px;padding:18px 0 0;}
+.open-orders{display:flex;align-items:baseline;gap:6px;}
+.open-orders .lbl,.open-orders .n{font-size:15px;letter-spacing:-0.01em;color:var(--c-700);}
+.ap-title{color:var(--c-white);font-size:15px;}
+.ap-title .n{color:var(--c-700);margin-left:8px;}
+.holdings{display:flex;flex-direction:column;width:100%;}
+.holding{display:flex;flex-direction:column;width:100%;gap:14px;padding:20px 0;}
+.holding:not(:first-child){border-top:0.5px solid var(--c-1000);}
+.holding-top{display:flex;justify-content:space-between;align-items:flex-start;width:100%;gap:12px;}
+.h-ticker{display:flex;align-items:baseline;gap:8px;font-size:13px;font-weight:500;line-height:1.4;color:var(--c-white);}
+.h-wt{font-weight:400;font-size:13px;color:var(--c-700);letter-spacing:-0.02em;}
+.h-name{display:flex;flex-direction:column;align-items:flex-start;gap:5px;}
+.h-cat{font-size:11px;color:var(--c-700);line-height:1;}
+.h-badges{display:flex;flex-wrap:nowrap;gap:6px;}
+.badge{font-size:9px;font-weight:500;line-height:1.3;padding:5px 6px;border-radius:3px;white-space:nowrap;}
+.badge.soon{background:rgba(253,173,0,0.14);color:var(--c-amber);}
+.badge.notable{background:rgba(255,255,255,0.10);color:var(--c-white);}
+.badge.ambient{background:rgba(255,255,255,0.10);color:var(--c-700);}
+.h-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;text-align:right;}
+.h-line{display:flex;align-items:baseline;justify-content:flex-end;gap:12px;white-space:nowrap;}
+.h-line .amt{color:var(--c-white);font-weight:300;letter-spacing:-0.01em;font-size:13px;}
+.h-line .chg{color:var(--c-700);font-size:13px;letter-spacing:-0.02em;}
 .acc-pt-k{font-size:22px;color:var(--c-200);letter-spacing:-0.02em;margin-bottom:12px;}
 .acc-pt-d{font-size:15px;line-height:1.7;color:var(--c-600);max-width:660px;}
 .acc-sysnote{font-size:15px;line-height:1.7;color:var(--c-700);max-width:660px;margin-top:32px;}
@@ -135,13 +171,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .doc-row:hover .doc-arrow{transform:translateX(4px);color:var(--c-400);}
 .doc-name{font-size:17px;color:var(--c-400);letter-spacing:-0.01em;}
 .doc-arrow{display:inline-flex;align-items:center;color:var(--c-700);transition:all 0.3s ease;}
-.doc-arrow svg{width:14px;height:14px;display:block;}.sd-phone{width:100%;max-width:520px;aspect-ratio:1 / 2.0;background:var(--c-elev);border:0.5px solid var(--c-800);border-radius:28px;overflow:hidden;position:relative;display:flex;flex-direction:column;}
-.sd-phone .dev-bar{display:flex;justify-content:space-between;align-items:center;padding:14px 22px 11px;border-bottom:0.5px solid var(--c-1000);font-family:var(--mono);position:relative;}
-.sd-phone .dev-bar::after{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:62px;height:16px;background:var(--c-black);border:0.5px solid var(--c-700);border-radius:9px;pointer-events:none;}
-.sd-phone .dev-bar-time{font-size:12px;letter-spacing:0.02em;color:var(--c-200);font-variant-numeric:tabular-nums;}
-.sd-phone .dev-bar-ic{display:block;width:49.8px;height:12px;color:var(--c-200);}
-.sd-phone .ap-embed{flex:1 1 auto;display:flex;flex-direction:column;overflow:hidden;background:var(--c-black);}
-.sd-phone .ap-embed-frame{flex:1 1 auto;width:100%;border:0;background:var(--c-black);pointer-events:none;}
+.doc-arrow svg{width:14px;height:14px;display:block;}
 .section-eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:0.04em;margin-bottom:28px;display:flex;gap:20px;}
 .se-no{color:var(--c-700);}
 .se-name{color:var(--c-400);}
@@ -164,7 +194,9 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .acct-list{display:flex;flex-direction:column;margin-top:40px;}
 .acct-item{border-top:0.5px solid var(--c-900);}
 .acct-item:last-of-type{border-bottom:0.5px solid var(--c-900);}
-.acct-sum{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 0;cursor:pointer;transition:padding 0.3s ease;}
+.acct-sum{list-style:none;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;padding:22px 0;cursor:pointer;transition:padding 0.3s ease;}
+.acct-main{display:flex;flex-direction:column;gap:10px;}
+.acct-d{font-size:15px;line-height:1.7;color:var(--c-600);max-width:560px;}
 .acct-sum::-webkit-details-marker{display:none;}
 .acct-sum:hover{padding-left:8px;}
 .acct-k{font-size:17px;color:var(--c-400);letter-spacing:-0.01em;transition:color 0.2s ease;}
@@ -265,24 +297,55 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 
 <div class="container">
 <section class="acc-section">
-  <div class="acc-grid">
-    <div class="acc-left">
-      <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 03</span><span class="se-name">Accountability</span></div>
-      <h2 class="acc-headline ri" style="--d:0.04s">Every dollar is benchmarked. Every forecast is scored.</h2>
-      <div class="acc-points">
-      <div class="acc-point ri" style="--d:0.06s"><div class="acc-pt-k">Benchmark</div><p class="acc-pt-d">Every position, measured against the S&amp;P 500, dollar for dollar. The gap is shown plainly, including when negative.</p></div>
-      <div class="acc-point ri" style="--d:0.08s"><div class="acc-pt-k">Calibration</div><p class="acc-pt-d">Stated confidence, scored against what actually happened. Most active investors are overconfident, and the record proves it.</p></div>
-      <div class="acc-point ri" style="--d:0.1s"><div class="acc-pt-k">Active Positions</div><p class="acc-pt-d">What you hold, ordered by weight. Each position is open, measured, and accountable to the memo that opened it.</p></div>
+  <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 03</span><span class="se-name">Accountability</span></div>
+  <h2 class="acc-headline ri" style="--d:0.04s">Every dollar is benchmarked. Every forecast is scored.</h2>
+  <div class="acc-rows">
+    <div class="acc-row ri" style="--d:0.06s">
+      <div class="acc-row-text"><div class="acc-pt-k">Benchmark</div><p class="acc-pt-d">Every position, measured against the S&amp;P 500, dollar for dollar. The gap is shown plainly, including when negative.</p></div>
+      <div class="acc-shot">
+        <div class="perf-block">
+          <div class="perf-header"><span class="perf-label">S&amp;P 500 Benchmark <span class="perf-scope">&middot; All Accounts</span></span><span class="perf-chev" aria-hidden="true">&rsaquo;</span></div>
+          <div class="perf-row"><span class="perf-key">Portfolio Value</span><span class="perf-val">46,782.11</span></div>
+          <div class="perf-row"><span class="perf-key">S&amp;P 500 Value</span><span class="perf-val">50,627.41</span></div>
+          <div class="perf-row diff"><span class="perf-key">Difference</span><span class="perf-val">&minus;3,845.30<span class="perf-pp">&minus;7.60%</span></span></div>
+        </div>
+      </div>
     </div>
-      <p class="acc-sysnote ri" style="--d:0.12s">Every holding has a Position Page with alerts, notes, performance, research, news, market data, and full history. Names under review are staged before capital is committed, and Fiscal.ai research is included with membership.</p>
+    <div class="acc-row ri" style="--d:0.08s">
+      <div class="acc-row-text"><div class="acc-pt-k">Calibration</div><p class="acc-pt-d">Stated confidence, scored against what actually happened. Most active investors are overconfident, and the record proves it.</p></div>
+      <div class="acc-shot">
+        <div class="cal-block">
+          <div class="cal-head">Calibration</div>
+          <div class="cal-row"><span class="cal-key">Accuracy</span><span class="cal-val">54%</span></div>
+          <div class="cal-row"><span class="cal-key">Predictions</span><span class="cal-val">17</span></div>
+          <div class="cal-row"><span class="cal-key">Next Judgment</span><span class="cal-val">Apr 1, 2027</span></div>
+        </div>
+      </div>
     </div>
-    <div class="sd-showcase ri" style="--d:0.12s">
-      <div class="sd-phone">
-        <div class="dev-bar"><span class="dev-bar-time">9:41</span><svg class="dev-bar-ic" viewBox="0 0 49.8 12" fill="none" aria-hidden="true"><rect x="0" y="7" width="2" height="4" rx="0.5" fill="currentColor"/><rect x="3.5" y="5" width="2" height="6" rx="0.5" fill="currentColor"/><rect x="7" y="3" width="2" height="8" rx="0.5" fill="currentColor"/><rect x="10.5" y="1" width="2" height="10" rx="0.5" fill="currentColor"/><path d="M18 4.6C20.2 2.7 25.8 2.7 28 4.6" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M19.6 6.3C21 5.1 25 5.1 26.4 6.3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><circle cx="23" cy="8.4" r="1" fill="currentColor"/><rect x="34" y="3.2" width="13.5" height="6.6" rx="1.6" stroke="currentColor" stroke-width="1" opacity="0.45"/><rect x="35.5" y="4.6" width="9.5" height="3.8" rx="0.7" fill="currentColor"/><path d="M49.1 5.2V7.8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
-        <div class="ap-embed"><iframe class="ap-embed-frame" src="ii-app-9.html?embed&amp;v=12#bench" title="Self-Directed accountability" aria-hidden="true" tabindex="-1" scrolling="no" loading="lazy"></iframe></div>
+    <div class="acc-row ri" style="--d:0.1s">
+      <div class="acc-row-text"><div class="acc-pt-k">Active Positions</div><p class="acc-pt-d">What you hold, ordered by weight. Each position is open, measured, and accountable to the memo that opened it.</p></div>
+      <div class="acc-shot">
+        <div class="ap-head-row"><div class="open-orders"><span class="lbl">Open Orders</span><span class="n">2</span></div><div class="ap-title">Active Positions<span class="n">20</span></div></div>
+        <div class="holdings">
+          <div class="holding">
+            <div class="holding-top">
+              <div class="h-name"><div class="h-ticker">ORIO.TO<span class="h-wt">25% WT</span></div><div class="h-cat">Emerging Compounder</div></div>
+              <div class="h-right"><div class="h-line overall"><span class="amt">18,950.00 CAD</span><span class="chg">+42.6%</span></div><div class="h-line today"><span class="amt">87.60 CAD</span><span class="chg">+0.8%</span></div></div>
+            </div>
+            <div class="h-badges"><span class="badge ambient">52 Week High</span><span class="badge soon">Earnings</span><span class="badge notable">Reverse Split</span></div>
+          </div>
+          <div class="holding">
+            <div class="holding-top">
+              <div class="h-name"><div class="h-ticker">BWEN<span class="h-wt">20% WT</span></div><div class="h-cat">Speculative</div></div>
+              <div class="h-right"><div class="h-line overall"><span class="amt">12,950.00 CAD</span><span class="chg">+22.6%</span></div><div class="h-line today"><span class="amt">82.40 USD</span><span class="chg">&minus;2.8%</span></div></div>
+            </div>
+            <div class="h-badges"><span class="badge ambient">Stock Split</span></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+  <p class="acc-sysnote ri" style="--d:0.14s">Every holding has a Position Page with alerts, notes, performance, research, news, market data, and full history. Names under review are staged before capital is committed, and Fiscal.ai research is included with membership.</p>
 </section>
 </div>
 
@@ -291,14 +354,14 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 04</span><span class="se-name">Account Types</span></div>
   <div class="acct-list">
     <details class="acct-item ri" style="--d:0.04s">
-      <summary class="acct-sum"><span class="acct-k">TFSA</span><span class="acct-sum-r"><span class="acct-v">Tax-free</span><span class="acct-chev"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6L8 10.5L12 6" stroke="currentColor" stroke-width="1.1"/></svg></span></span></summary>
+      <summary class="acct-sum"><span class="acct-main"><span class="acct-k">TFSA</span><span class="acct-d">Growth and withdrawals are completely tax-free, within an annual contribution limit that carries forward when unused. The most flexible registered account, with no tax on what compounds inside it.</span></span><span class="acct-sum-r"><span class="acct-v">Tax-free</span><span class="acct-chev"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6L8 10.5L12 6" stroke="currentColor" stroke-width="1.1"/></svg></span></span></summary>
       <div class="acct-detail">
         <div class="acct-dgrp"><span class="acct-dgrp-h">Pros</span><p>Growth and withdrawals are completely tax-free. The annual contribution limit is $7,000 (2025), plus any unused room from prior years, which carries forward indefinitely with no expiry. Funds stay accessible without penalties or age limits.</p></div>
         <div class="acct-dgrp"><span class="acct-dgrp-h">Cons</span><p>Annual contribution caps limit how much can be invested each year, and withdrawals reduce available room until the next calendar year.</p></div>
       </div>
     </details>
     <details class="acct-item ri" style="--d:0.06s">
-      <summary class="acct-sum"><span class="acct-k">RRSP</span><span class="acct-sum-r"><span class="acct-v">Tax-deferred</span><span class="acct-chev"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6L8 10.5L12 6" stroke="currentColor" stroke-width="1.1"/></svg></span></span></summary>
+      <summary class="acct-sum"><span class="acct-main"><span class="acct-k">RRSP</span><span class="acct-d">Contributions reduce your taxable income now, and investment growth is deferred until you withdraw, usually in retirement when your marginal rate is lower. Built for long-horizon, tax-aware compounding.</span></span><span class="acct-sum-r"><span class="acct-v">Tax-deferred</span><span class="acct-chev"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6L8 10.5L12 6" stroke="currentColor" stroke-width="1.1"/></svg></span></span></summary>
       <div class="acct-detail">
         <div class="acct-dgrp"><span class="acct-dgrp-h">Pros</span><p>Contributions reduce taxable income in the current year, or can be carried to a future year, and growth is tax-deferred until withdrawal. The annual limit is 18% of earned income, up to $32,490 (2025), plus any unused room, which carries forward automatically.</p></div>
         <div class="acct-dgrp"><span class="acct-dgrp-h">Cons</span><p>Withdrawals are fully taxed as income. Early withdrawals permanently reduce contribution room, except under the Home Buyers' Plan or Lifelong Learning Plan. The account must convert to a RRIF by age 71, ending tax-deferred compounding.</p></div>
@@ -306,7 +369,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
       </div>
     </details>
     <details class="acct-item ri" style="--d:0.08s">
-      <summary class="acct-sum"><span class="acct-k">Non-Registered</span><span class="acct-sum-r"><span class="acct-v">Taxable</span><span class="acct-chev"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6L8 10.5L12 6" stroke="currentColor" stroke-width="1.1"/></svg></span></span></summary>
+      <summary class="acct-sum"><span class="acct-main"><span class="acct-k">Non-Registered</span><span class="acct-d">No contribution limit and no withdrawal restrictions, but investment income and capital gains are taxed each year. Typically used once your registered accounts are fully funded.</span></span><span class="acct-sum-r"><span class="acct-v">Taxable</span><span class="acct-chev"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6L8 10.5L12 6" stroke="currentColor" stroke-width="1.1"/></svg></span></span></summary>
       <div class="acct-detail">
         <div class="acct-dgrp"><span class="acct-dgrp-h">Pros</span><p>Unlimited contribution capacity, with no withdrawal limits or age restrictions. Realized capital losses can offset taxable capital gains.</p></div>
         <div class="acct-dgrp"><span class="acct-dgrp-h">Cons</span><p>Investment income and capital gains are taxed each year, reducing long-term compounding. There is no tax-sheltering or contribution carry-forward, and no structural advantage over registered accounts.</p></div>
@@ -370,7 +433,5 @@ hamburger.addEventListener('click',e=>{e.stopPropagation();menuOverlay.classList
   (function(){var o=document.getElementById('gridOverlay');if(!o)return;document.addEventListener('keydown',function(e){var t=e.target;if(t&&/^(input|textarea|select)$/i.test(t.tagName))return;if((e.key==='g'||e.key==='G'||e.key==='ㅎ')&&!e.metaKey&&!e.ctrlKey&&!e.altKey){o.classList.toggle('on');}});})();
 </script>
 
-<script>if('IntersectionObserver' in window){var rio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');rio.unobserve(e.target);}});},{threshold:0.14,rootMargin:'0px 0px -8% 0px'});document.querySelectorAll('.ri').forEach(function(el){rio.observe(el);});}else{document.querySelectorAll('.ri').forEach(function(el){el.classList.add('in');});}</script>
-<script>(function(){var frames=[].slice.call(document.querySelectorAll('.ap-embed-frame'));if(!frames.length)return;var seen=[];function check(){var vh=window.innerHeight||document.documentElement.clientHeight;frames.forEach(function(f,i){var r=f.getBoundingClientRect();var visible=r.top<vh*0.85&&r.bottom>vh*0.15&&r.height>0;if(visible&&!seen[i]){seen[i]=true;try{f.contentWindow.postMessage('iiSettle','*');}catch(e){}}else if(!visible&&seen[i]){seen[i]=false;}});}window.addEventListener('scroll',check,{passive:true});window.addEventListener('resize',check);frames.forEach(function(f,i){f.addEventListener('load',function(){seen[i]=false;check();});});check();})();</script>
-</body>
+<script>if('IntersectionObserver' in window){var rio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');rio.unobserve(e.target);}});},{threshold:0.14,rootMargin:'0px 0px -8% 0px'});document.querySelectorAll('.ri').forEach(function(el){rio.observe(el);});}else{document.querySelectorAll('.ri').forEach(function(el){el.classList.add('in');});}</script></body>
 </html>
