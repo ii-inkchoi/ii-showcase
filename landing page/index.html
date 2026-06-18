@@ -988,7 +988,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 }
 #underwriting .cg-lbl { font-family:var(--mono); fill:var(--c-800); letter-spacing:0.04em; }
 #underwriting .cg-tick { font-family:var(--mono); fill:var(--c-700); }
-@media (max-width:900px){ #underwriting .aw-2col{ grid-template-columns:1fr; gap:40px; } #underwriting .aw-text, #underwriting .cal-col{ grid-column:1 / -1; } #underwriting .cal-col{ margin-top:0; } }
+@media (max-width:900px){ #underwriting .aw-2col{ grid-template-columns:1fr; gap:40px; } #underwriting .aw-text, #underwriting .cal-col{ grid-column:1 / -1; } #underwriting .cal-col{ margin-top:0; } #underwriting .uw-bridge{ margin-top:24px; } }
 </style>
 
 <!-- ENTRY - Benchmark (NEW: the S&P 500 comparison, from the product dashboard - Dave's "arguably most important" feature) -->
@@ -1140,7 +1140,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 #research .rs-link { display:inline-flex; align-items:center; gap:6px; margin-top:28px; font-family:var(--mono); font-size:13px; letter-spacing:0.04em; color:var(--c-400); text-decoration:none; transition:color 0.15s ease; }
 #research .rs-link:hover { color:var(--c-white); }
 #research .rs-link .arr-svg { width:13px; height:13px; }
-#research .rs-card { border:0.5px solid var(--c-800); background:var(--c-elev); border-radius:28px; overflow:hidden; box-shadow:inset 0 1px 0 rgba(255,255,255,0.05); position:relative; -webkit-mask-image:linear-gradient(to bottom, #000 92%, transparent 100%); mask-image:linear-gradient(to bottom, #000 92%, transparent 100%); }
+#research .rs-card { border:0.5px solid var(--c-800); background:var(--c-elev); border-radius:28px; overflow:hidden; box-shadow:inset 0 1px 0 rgba(255,255,255,0.05); position:relative; }
 #research .rs-img { display:block; width:100%; height:auto; }
 #research .rs-bar { display:flex; align-items:center; gap:7px; padding:13px 16px; border-bottom:0.5px solid var(--c-900); }
 #research .rs-bar span { width:9px; height:9px; border-radius:50%; border:0.5px solid var(--c-700); flex-shrink:0; }
@@ -1155,7 +1155,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
       <a href="https://fiscal.ai" target="_blank" rel="noopener" class="rs-link"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>Visit Fiscal.ai</a>
     </div>
     <div class="rs-col">
-      <div class="rs-card"><div class="rs-bar"><span></span><span></span><span></span></div><img class="rs-img" src="images/fiscalai.png" alt="Fiscal.ai"></div>
+      <div class="rs-card"><img class="rs-img" src="images/fiscalai.png" alt="Fiscal.ai"></div>
     </div>
   </div>
 </section></div>
@@ -1299,7 +1299,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     var hero = document.querySelector('section.hero'); if (hero) typeSection(hero);
 
     function stagger(q, step) { document.querySelectorAll(q).forEach(function (el, i) { el.style.setProperty('--d', (i * step).toFixed(2) + 's'); }); }
-    stagger('.rung', 0.09); stagger('#entry-03 .module', 0.08); stagger('#journal .tl-item', 0.08); stagger('footer .footer-legal', 0.05);
+    stagger('.rung', 0.08); stagger('#entry-03 .module', 0.08); stagger('#journal .tl-item', 0.08); stagger('footer .footer-legal', 0.08);
     var sel = '#trust .trust-line, #trust .trust-strip, #entry-01 .statement, .rung, #entry-01 .e01-note, #entry-02 .statement, #entry-02 .alloc-sub, #entry-03 .statement, #entry-03 .offer-item, #entry-03 .offer-foot, #entry-03 .module, #entry-03 .prose, #entry-04 .statement, #entry-04 .link, #entry-04 .tenet, #evidence .statement, #evidence .prose, #evidence .ev-fig, #edge .edge-mark, #edge .edge-desc, #edge .link, #entry-06 .statement, #entry-06 .prose, #entry-06 .link, #journal .statement, #journal .tl-item, #journal .tl-all, #close .close-h, #close .cta-btn, footer .footer-copy, footer .footer-social, footer .footer-legal, footer .footer-reset';
     var items = document.querySelectorAll(sel);
     items.forEach(function (el) { el.classList.add('ri'); });
@@ -1554,7 +1554,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
       requestAnimationFrame(step);
     }
     if ('IntersectionObserver' in window) {
-      var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { run(e.target); io.unobserve(e.target); } }); }, { threshold: 0.6 });
+      var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { run(e.target); io.unobserve(e.target); } }); }, { threshold: 0.3 });
       nums.forEach(function (el) { io.observe(el); });
     } else { nums.forEach(run); }
   })();
