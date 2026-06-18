@@ -142,6 +142,11 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .open-orders .lbl,.open-orders .n{font-size:15px;letter-spacing:-0.01em;color:var(--c-700);}
 .ap-title{color:var(--c-white);font-size:15px;}
 .ap-title .n{color:var(--c-700);margin-left:8px;}
+.ap-ind{display:inline-flex;align-items:center;margin-left:8px;color:var(--c-400);}
+.ap-ind svg{width:12px;height:12px;display:block;}
+.ap-right{display:flex;align-items:center;gap:16px;}
+.ap-chev{display:inline-flex;color:var(--c-700);}
+.ap-chev svg{width:11px;height:7px;display:block;}
 .holdings{display:flex;flex-direction:column;width:100%;}
 .holding{display:flex;flex-direction:column;width:100%;gap:14px;padding:20px 0;}
 .holding:not(:first-child){border-top:0.5px solid var(--c-1000);}
@@ -325,7 +330,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
     <div class="acc-row ri" style="--d:0.1s">
       <div class="acc-row-text"><div class="acc-pt-k">Active Positions</div><p class="acc-pt-d">What you hold, ordered by weight. Each position is open, measured, and accountable to the memo that opened it.</p></div>
       <div class="acc-shot">
-        <div class="ap-head-row"><div class="open-orders"><span class="lbl">Open Orders</span><span class="n">2</span></div><div class="ap-title">Active Positions<span class="n">20</span></div></div>
+        <div class="ap-head-row"><div class="open-orders"><span class="lbl">Open Orders</span><span class="n">2</span></div><div class="ap-right"><span class="ap-chev" aria-hidden="true"><svg viewBox="0 0 11 7" fill="none"><path d="M1 1.5L5.5 6L10 1.5" stroke="currentColor" stroke-width="1.2"/></svg></span><div class="ap-title">Active Positions<span class="n">20</span><span class="ap-ind" aria-hidden="true"><svg viewBox="0 0 13 13" fill="none"><path d="M3 10L10 3M4.5 3H10V8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="square" stroke-linejoin="miter"/></svg></span></div></div></div>
         <div class="holdings">
           <div class="holding">
             <div class="holding-top">
