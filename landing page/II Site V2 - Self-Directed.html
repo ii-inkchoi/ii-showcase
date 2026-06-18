@@ -62,7 +62,7 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:var(--c-black);
 .grid-overlay .go-grid{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);height:100%;}
 .grid-overlay .go-grid span{background:var(--c-200);opacity:0.07;}
 @media(max-width:900px){.container{padding:0 24px;}.memo-section,.how-section,.acc-section,.accounts-section,.docs-section{padding:72px 0;}}
-.page-header{padding:180px 0 80px;border-bottom:0.5px solid var(--c-900);}.page-title{font-size:clamp(34px,5vw,64px);line-height:1.02;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:48px;}
+.page-header{padding:180px 0 80px;border-bottom:0.5px solid var(--c-900);}.page-title{font-size:clamp(34px,4.6vw,56px);line-height:1.04;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:48px;}
 .page-deck{font-size:clamp(17px,1.6vw,22px);line-height:1.4;letter-spacing:-0.015em;color:var(--c-400);max-width:760px;text-wrap:balance;}.cta-section{text-align:center;padding:160px 0 100px;border-top:0.5px solid var(--c-900);}
 .cta-canon{font-size:clamp(28px,3.5vw,44px);line-height:1.2;letter-spacing:-0.025em;color:var(--c-200);margin:0 auto 48px;max-width:880px;text-wrap:balance;}
 .cta-button{display:inline-flex;align-items:center;gap:8px;font-size:15px;color:var(--c-white);text-decoration:none;}
@@ -90,7 +90,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .sd-showcase{display:flex;justify-content:center;margin-top:64px;}
 .memo-section{padding:130px 0;border-top:0.5px solid var(--c-900);}
 .memo-grid{display:grid;grid-template-columns:1fr;gap:48px;align-items:start;}
-@media(min-width:1024px){.memo-grid{grid-template-columns:minmax(0,1fr) minmax(0,440px);gap:80px;}}
+@media(min-width:1024px){.memo-grid{grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);row-gap:0;}.memo-text{grid-column:1 / 7;}.memo-grid .dr-doc{grid-column:9 / 13;}}
 .memo-lead{font-size:clamp(24px,3vw,34px);line-height:1.15;letter-spacing:-0.03em;color:var(--c-200);margin-bottom:28px;font-weight:400;}
 .memo-body{font-size:15px;line-height:1.7;color:var(--c-600);max-width:660px;}
 .memo-body p+p{margin-top:14px;}
@@ -119,17 +119,15 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .acc-section{padding:130px 0;border-top:0.5px solid var(--c-900);}
 .acc-headline{font-size:clamp(24px,3vw,34px);line-height:1.15;letter-spacing:-0.03em;color:var(--c-200);max-width:760px;margin-bottom:48px;text-wrap:balance;font-weight:400;}
 .acc-grid{display:grid;grid-template-columns:1fr;gap:48px;align-items:start;}
-@media(min-width:1024px){.acc-grid{grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);gap:0;}.acc-left{grid-column:1 / 7;}.acc-grid .sd-showcase{grid-column:9 / 13;}}
+@media(min-width:1024px){.acc-grid{grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);row-gap:0;}.acc-left{grid-column:1 / 7;}.acc-grid .sd-showcase{grid-column:9 / 13;}}
 .acc-grid .sd-showcase{margin-top:0;}
 .acc-point{padding:28px 0;border-top:0.5px solid var(--c-900);}
 .acc-point:last-child{border-bottom:0.5px solid var(--c-900);}
 .acc-pt-k{font-size:22px;color:var(--c-200);letter-spacing:-0.02em;margin-bottom:12px;}
-.acc-pt-d{font-size:15px;line-height:1.7;color:var(--c-600);max-width:660px;}.sys-strip{margin-top:64px;padding-top:48px;border-top:0.5px solid var(--c-900);display:grid;grid-template-columns:1fr;gap:32px;}
-.sys-name{font-size:15px;color:var(--c-400);letter-spacing:-0.01em;margin-bottom:10px;}
-.sys-cap{font-size:15px;line-height:1.7;color:var(--c-600);}
-@media(min-width:760px){.sys-strip{grid-template-columns:repeat(3,1fr);gap:var(--gutter);}}
+.acc-pt-d{font-size:15px;line-height:1.7;color:var(--c-600);max-width:660px;}
+.acc-sysnote{font-size:15px;line-height:1.7;color:var(--c-700);max-width:660px;margin-top:32px;}
 .docs-section{padding:130px 0;border-top:0.5px solid var(--c-900);}
-.doc-list{display:flex;flex-direction:column;margin-top:40px;}
+.doc-list{display:flex;flex-direction:column;margin-top:0;}
 .doc-row{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 0;border-top:0.5px solid var(--c-900);text-decoration:none;color:inherit;transition:padding 0.3s ease;}
 .doc-row:last-of-type{border-bottom:0.5px solid var(--c-900);}
 .doc-row:hover{padding-left:8px;}
@@ -137,7 +135,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .doc-row:hover .doc-arrow{transform:translateX(4px);color:var(--c-400);}
 .doc-name{font-size:17px;color:var(--c-400);letter-spacing:-0.01em;}
 .doc-arrow{display:inline-flex;align-items:center;color:var(--c-700);transition:all 0.3s ease;}
-.doc-arrow svg{width:14px;height:14px;display:block;}.sd-phone{width:100%;max-width:400px;aspect-ratio:1 / 2.2;background:var(--c-elev);border:0.5px solid var(--c-800);border-radius:28px;overflow:hidden;position:relative;display:flex;flex-direction:column;-webkit-mask-image:linear-gradient(to bottom,#000 66%,rgba(0,0,0,0.45) 84%,transparent 100%);mask-image:linear-gradient(to bottom,#000 66%,rgba(0,0,0,0.45) 84%,transparent 100%);}
+.doc-arrow svg{width:14px;height:14px;display:block;}.sd-phone{width:100%;max-width:520px;aspect-ratio:1 / 2.35;background:var(--c-elev);border:0.5px solid var(--c-800);border-radius:28px;overflow:hidden;position:relative;display:flex;flex-direction:column;}
 .sd-phone .dev-bar{display:flex;justify-content:space-between;align-items:center;padding:14px 22px 11px;border-bottom:0.5px solid var(--c-1000);font-family:var(--mono);position:relative;}
 .sd-phone .dev-bar::after{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:62px;height:16px;background:var(--c-black);border:0.5px solid var(--c-700);border-radius:9px;pointer-events:none;}
 .sd-phone .dev-bar-time{font-size:12px;letter-spacing:0.02em;color:var(--c-200);font-variant-numeric:tabular-nums;}
@@ -149,26 +147,36 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .se-name{color:var(--c-400);}
 
 .how-section{padding:130px 0;border-top:0.5px solid var(--c-900);}
-@media(min-width:1024px){.how-section{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);}.how-section>.section-eyebrow,.how-section>.how-closing{grid-column:1 / -1;}.how-section .how-steps{grid-column:1 / 7;}}
+@media(min-width:760px){.how-section{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}.how-section>.how-intro{grid-column:1 / 6;}.how-section .how-steps{grid-column:9 / 13;}}
 .how-steps{display:flex;flex-direction:column;position:relative;}
-.how-steps::before{content:"";position:absolute;top:0;bottom:0;left:153px;width:0.5px;background:var(--c-900);}
-.how-step{display:grid;grid-template-columns:110px 22px 1fr;column-gap:32px;align-items:start;padding:36px 0;border-top:0.5px solid var(--c-900);}
-.how-node{grid-column:2;justify-self:center;width:9px;height:9px;border:0.5px solid var(--c-700);background:var(--c-black);margin-top:12px;position:relative;z-index:1;}
+.how-steps::before{content:"";position:absolute;top:0;bottom:0;left:11px;width:0.5px;background:var(--c-900);}
+.how-step{display:grid;grid-template-columns:22px 1fr;column-gap:32px;align-items:start;padding:36px 0;border-top:0.5px solid var(--c-900);}
+.how-node{grid-column:1;justify-self:center;width:9px;height:9px;border:0.5px solid var(--c-700);background:var(--c-black);margin-top:12px;position:relative;z-index:1;}
 .how-step:last-of-type{border-bottom:0.5px solid var(--c-900);}
 .how-num{font-size:clamp(34px,5vw,40px);line-height:1;color:var(--c-900);letter-spacing:-0.02em;font-weight:300;}
 .how-title{font-size:22px;line-height:1.2;letter-spacing:-0.02em;color:var(--c-white);font-weight:400;margin-bottom:14px;}
 .how-desc{font-size:15px;line-height:1.7;color:var(--c-600);max-width:660px;}
-.how-closing{font-size:15px;line-height:1.7;color:var(--c-600);margin-top:48px;max-width:660px;text-wrap:balance;}
+.how-headline{font-size:clamp(24px,3vw,34px);line-height:1.15;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin:28px 0 18px;text-wrap:balance;}
+.how-lead{font-size:15px;line-height:1.7;color:var(--c-600);max-width:660px;}
 
 .accounts-section{padding:130px 0;border-top:0.5px solid var(--c-900);}
-@media(min-width:760px){.accounts-section{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);}.accounts-section>.section-eyebrow{grid-column:1 / -1;}.accounts-section .acct-rows{grid-column:6 / 13;}}
-.acct-rows{display:flex;flex-direction:column;margin-top:24px;}
-.acct-row{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:16px 0;border-top:0.5px solid var(--c-900);}
-.acct-row:last-of-type{border-bottom:0.5px solid var(--c-900);}
-.acct-main{display:flex;flex-direction:column;gap:8px;}
-.acct-k{font-size:15px;color:var(--c-400);letter-spacing:-0.01em;}
-.acct-d{font-size:15px;line-height:1.7;color:var(--c-600);max-width:660px;}
+@media(min-width:760px){.docs-section{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}.docs-section>.section-eyebrow{grid-column:1 / 7;}.docs-section .doc-list{grid-column:7 / 13;}}
+.acct-list{display:flex;flex-direction:column;margin-top:40px;}
+.acct-item{border-top:0.5px solid var(--c-900);}
+.acct-item:last-of-type{border-bottom:0.5px solid var(--c-900);}
+.acct-sum{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 0;cursor:pointer;transition:padding 0.3s ease;}
+.acct-sum::-webkit-details-marker{display:none;}
+.acct-sum:hover{padding-left:8px;}
+.acct-k{font-size:17px;color:var(--c-400);letter-spacing:-0.01em;transition:color 0.2s ease;}
+.acct-sum:hover .acct-k,.acct-item[open] .acct-k{color:var(--c-white);}
+.acct-sum-r{display:flex;align-items:center;gap:18px;}
 .acct-v{font-family:var(--mono);font-size:12px;letter-spacing:0.04em;color:var(--c-700);white-space:nowrap;}
+.acct-chev{display:inline-flex;color:var(--c-700);transition:transform 0.3s ease;}
+.acct-chev svg{width:14px;height:14px;display:block;}
+.acct-item[open] .acct-chev{transform:rotate(180deg);}
+.acct-detail{padding:4px 0 30px;display:flex;flex-direction:column;gap:22px;max-width:660px;}
+.acct-dgrp-h{font-family:var(--mono);font-size:12px;letter-spacing:0.06em;color:var(--c-400);display:block;margin-bottom:8px;}
+.acct-dgrp p{font-size:15px;line-height:1.7;color:var(--c-600);}
 @media(max-width:760px){
   .how-step{grid-template-columns:1fr;gap:16px;}.how-steps::before{display:none;}.how-node{display:none;}}
 </style>
@@ -233,25 +241,25 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 
 <div class="container">
 <section class="how-section">
-  <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 02</span><span class="se-name">The Process</span></div>
+  <div class="how-intro">
+    <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 02</span><span class="se-name">The Process</span></div>
+    <h2 class="how-headline ri" style="--d:0.04s">A memo is not written once.</h2>
+    <p class="how-lead ri" style="--d:0.08s">Writing it is the first pass. As the thesis is tested it is re-underwritten, version by version, and every capital decision answers to the record, not the other way around.</p>
+  </div>
   <div class="how-steps">
     <div class="how-step ri" style="--d:0.04s">
-      <div class="how-num">01</div>
       <i class="how-node"></i>
       <div class="how-body"><h3 class="how-title">Write</h3><p class="how-desc">The first time, you fill out the memo: classification, sizing, confidence, idea origin, and the investment case.</p></div>
     </div>
     <div class="how-step ri" style="--d:0.08s">
-      <div class="how-num">02</div>
       <i class="how-node"></i>
-      <div class="how-body"><h3 class="how-title">Re-underwrite</h3><p class="how-desc">As the thesis is tested, you revise it section by section. Each revision is a new version. The original is never overwritten.</p></div>
+      <div class="how-body"><h3 class="how-title">Re-underwrite</h3><p class="how-desc">As the thesis is tested, you revise it section by section. Each revision becomes a new version.</p></div>
     </div>
     <div class="how-step ri" style="--d:0.12s">
-      <div class="how-num">03</div>
       <i class="how-node"></i>
-      <div class="how-body"><h3 class="how-title">Capital Decision</h3><p class="how-desc">The decision to initiate, increase, or reduce follows the memo. Not the other way around.</p></div>
+      <div class="how-body"><h3 class="how-title">Capital Decision</h3><p class="how-desc">The capital decision to initiate, increase, or reduce always follows the memo, never the other way around.</p></div>
     </div>
   </div>
-  <p class="how-closing ri" style="--d:0.16s">A memo is not written once.</p>
 </section>
 </div>
 
@@ -264,8 +272,9 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
       <div class="acc-points">
       <div class="acc-point ri" style="--d:0.06s"><div class="acc-pt-k">Benchmark</div><p class="acc-pt-d">Every position, measured against the S&amp;P 500, dollar for dollar. The gap is shown plainly, including when negative.</p></div>
       <div class="acc-point ri" style="--d:0.08s"><div class="acc-pt-k">Calibration</div><p class="acc-pt-d">Stated confidence, scored against what actually happened. Most active investors are overconfident, and the record proves it.</p></div>
-      <div class="acc-point ri" style="--d:0.1s"><div class="acc-pt-k">Active Positions</div><p class="acc-pt-d">What you hold, ordered by weight. Each position is open, measured, and accountable to its memo.</p></div>
+      <div class="acc-point ri" style="--d:0.1s"><div class="acc-pt-k">Active Positions</div><p class="acc-pt-d">What you hold, ordered by weight. Each position is open, measured, and accountable to the memo that opened it.</p></div>
     </div>
+      <p class="acc-sysnote ri" style="--d:0.12s">Every holding has a Position Page with alerts, notes, performance, research, news, market data, and full history. Names under review are staged before capital is committed, and Fiscal.ai research is included with membership.</p>
     </div>
     <div class="sd-showcase ri" style="--d:0.12s">
       <div class="sd-phone">
@@ -274,21 +283,36 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
       </div>
     </div>
   </div>
-  <div class="sys-strip">
-    <div class="sys-item ri" style="--d:0.14s"><div class="sys-name">The Position Page</div><p class="sys-cap">Alerts, notes, performance, research and analysis, news, market data, and full history. One page for every holding.</p></div>
-    <div class="sys-item ri" style="--d:0.16s"><div class="sys-name">Under Review</div><p class="sys-cap">The names you are researching but have not yet bought. A staging area before any capital is committed.</p></div>
-    <div class="sys-item ri" style="--d:0.18s"><div class="sys-name">Research</div><p class="sys-cap">Fiscal.ai, a third-party research platform included with membership. Fundamentals, filings, and estimates.</p></div>
-  </div>
 </section>
 </div>
 
 <div class="container">
 <section class="accounts-section">
   <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 04</span><span class="se-name">Account Types</span></div>
-  <div class="acct-rows">
-    <div class="acct-row ri" style="--d:0.04s"><div class="acct-main"><span class="acct-k">TFSA</span><p class="acct-d">Tax-free growth and withdrawals, within an annual contribution limit.</p></div><span class="acct-v">Tax-free</span></div>
-    <div class="acct-row ri" style="--d:0.06s"><div class="acct-main"><span class="acct-k">RRSP</span><p class="acct-d">Contributions lower taxable income; growth is deferred until withdrawal.</p></div><span class="acct-v">Tax-deferred</span></div>
-    <div class="acct-row ri" style="--d:0.08s"><div class="acct-main"><span class="acct-k">Non-Registered</span><p class="acct-d">No contribution limit; income and gains are taxed each year.</p></div><span class="acct-v">Taxable</span></div>
+  <div class="acct-list">
+    <details class="acct-item ri" style="--d:0.04s">
+      <summary class="acct-sum"><span class="acct-k">TFSA</span><span class="acct-sum-r"><span class="acct-v">Tax-free</span><span class="acct-chev"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6L8 10.5L12 6" stroke="currentColor" stroke-width="1.1"/></svg></span></span></summary>
+      <div class="acct-detail">
+        <div class="acct-dgrp"><span class="acct-dgrp-h">Pros</span><p>Growth and withdrawals are completely tax-free. The annual contribution limit is $7,000 (2025), plus any unused room from prior years, which carries forward indefinitely with no expiry. Funds stay accessible without penalties or age limits.</p></div>
+        <div class="acct-dgrp"><span class="acct-dgrp-h">Cons</span><p>Annual contribution caps limit how much can be invested each year, and withdrawals reduce available room until the next calendar year.</p></div>
+      </div>
+    </details>
+    <details class="acct-item ri" style="--d:0.06s">
+      <summary class="acct-sum"><span class="acct-k">RRSP</span><span class="acct-sum-r"><span class="acct-v">Tax-deferred</span><span class="acct-chev"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6L8 10.5L12 6" stroke="currentColor" stroke-width="1.1"/></svg></span></span></summary>
+      <div class="acct-detail">
+        <div class="acct-dgrp"><span class="acct-dgrp-h">Pros</span><p>Contributions reduce taxable income in the current year, or can be carried to a future year, and growth is tax-deferred until withdrawal. The annual limit is 18% of earned income, up to $32,490 (2025), plus any unused room, which carries forward automatically.</p></div>
+        <div class="acct-dgrp"><span class="acct-dgrp-h">Cons</span><p>Withdrawals are fully taxed as income. Early withdrawals permanently reduce contribution room, except under the Home Buyers' Plan or Lifelong Learning Plan. The account must convert to a RRIF by age 71, ending tax-deferred compounding.</p></div>
+        <div class="acct-dgrp"><span class="acct-dgrp-h">Use case</span><p>Commonly used by higher-income investors reducing taxable income during peak earning years while building long-term wealth.</p></div>
+      </div>
+    </details>
+    <details class="acct-item ri" style="--d:0.08s">
+      <summary class="acct-sum"><span class="acct-k">Non-Registered</span><span class="acct-sum-r"><span class="acct-v">Taxable</span><span class="acct-chev"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6L8 10.5L12 6" stroke="currentColor" stroke-width="1.1"/></svg></span></span></summary>
+      <div class="acct-detail">
+        <div class="acct-dgrp"><span class="acct-dgrp-h">Pros</span><p>Unlimited contribution capacity, with no withdrawal limits or age restrictions. Realized capital losses can offset taxable capital gains.</p></div>
+        <div class="acct-dgrp"><span class="acct-dgrp-h">Cons</span><p>Investment income and capital gains are taxed each year, reducing long-term compounding. There is no tax-sheltering or contribution carry-forward, and no structural advantage over registered accounts.</p></div>
+        <div class="acct-dgrp"><span class="acct-dgrp-h">Use case</span><p>Typically used only after maximizing TFSA and RRSP contributions, or for short-term investing where preserving registered room is a priority.</p></div>
+      </div>
+    </details>
   </div>
 </section>
 </div>
