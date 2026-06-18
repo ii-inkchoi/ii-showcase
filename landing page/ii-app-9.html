@@ -15,6 +15,7 @@
     --silver:#c7c7c7;   /* values / titles */
     --abbey:#565b5e;    /* secondary / muted */
     --divider:#1c1c1c;
+    --c-900:#232627;    /* row hairline - matches Unified Dashboard perf-block */
   }
 
   *{ margin:0; padding:0; box-sizing:border-box; }
@@ -120,7 +121,7 @@
     letter-spacing:-1px; color:var(--white);
     font-family:'Inter',sans-serif;
   }
-  .h-icon{ position:absolute; color:var(--white); }
+  .h-icon{ position:absolute; color:var(--gray); }
   .h-search{ right:79px; bottom:24px; width:17px; height:17px; }
   .h-nav{ right:30px; bottom:25px; width:17px; height:13px; }
   .h-icon svg{ display:block; width:100%; height:100%; }
@@ -139,7 +140,7 @@
   .t-title{ font-size:18px; letter-spacing:-0.36px; color:var(--silver); line-height:20.7px; }
   .t-sub{ font-size:15px; letter-spacing:-0.3px; color:var(--abbey); line-height:18px; }
   .t-15-silver{ font-size:15px; letter-spacing:-0.3px; color:var(--silver); line-height:normal; }
-  .t-22{ font-size:22px; letter-spacing:-0.44px; color:var(--white); line-height:normal; }
+  .t-22{ font-size:22px; letter-spacing:-0.44px; color:var(--white); line-height:normal; font-feature-settings:'tnum' 1, 'lnum' 1; }
   .t-13-silver{ font-size:13px; letter-spacing:-0.26px; color:var(--silver); line-height:normal; }
 
   /* ---------- Total Value ---------- */
@@ -148,7 +149,7 @@
     display:flex; flex-direction:column; align-items:flex-end;
     gap:7.625px; padding:11px 13.5px 0; text-align:right;
   }
-  .total-value .amount{ font-size:28px; letter-spacing:-0.56px; line-height:normal; color:var(--white); }
+  .total-value .amount{ font-size:28px; letter-spacing:-0.56px; line-height:normal; color:var(--white); font-feature-settings:'tnum' 1, 'lnum' 1; }
   .total-value .amount .cad{ color:var(--abbey); }
 
   /* ---------- Sections ---------- */
@@ -271,15 +272,15 @@
       <div class="logo">//</div>
       <div class="h-icon h-search">
         <svg viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.3"/>
-          <line x1="11.2" y1="11.2" x2="16" y2="16" stroke="currentColor" stroke-width="1.3"/>
+          <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1"/>
+          <line x1="11.2" y1="11.2" x2="16" y2="16" stroke="currentColor" stroke-width="1"/>
         </svg>
       </div>
       <div class="h-icon h-nav">
         <svg viewBox="0 0 17 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <line x1="0" y1="1" x2="17" y2="1" stroke="currentColor" stroke-width="1.3"/>
-          <line x1="0" y1="6.5" x2="17" y2="6.5" stroke="currentColor" stroke-width="1.3"/>
-          <line x1="0" y1="12" x2="17" y2="12" stroke="currentColor" stroke-width="1.3"/>
+          <line x1="0" y1="1" x2="17" y2="1" stroke="currentColor" stroke-width="1"/>
+          <line x1="0" y1="6.5" x2="17" y2="6.5" stroke="currentColor" stroke-width="1"/>
+          <line x1="0" y1="12" x2="17" y2="12" stroke="currentColor" stroke-width="1"/>
         </svg>
       </div>
       <div class="divider"></div>
@@ -288,7 +289,7 @@
     <!-- Total Value -->
     <div class="total-value">
       <div class="t-label">Total Value</div>
-      <div class="amount">173,249.00&nbsp;<span class="cad">CAD</span></div>
+      <div class="amount"><span class="amt-n">173,249.00</span>&nbsp;<span class="cad">CAD</span></div>
     </div>
 
     <!-- Managed / Core -->
@@ -363,6 +364,46 @@
             <div class="t-label-26">Cash (10%)</div>
             <div class="t-15-silver">4,677.72</div>
           </div>
+
+          <!-- Performance vs S&P 500 (ref: Unified Dashboard v2 perf-block) -->
+          <style>
+            .perf-block{ display:flex; flex-direction:column; gap:16px; width:100%; padding:16px 0; border-top:0.5px solid var(--c-900); border-bottom:0.5px solid var(--c-900); color:inherit; text-decoration:none; -webkit-tap-highlight-color:transparent; }
+            .perf-block:active{ opacity:0.5; transition:opacity 80ms ease; }
+            .perf-header{ display:flex; flex-direction:row; justify-content:space-between; align-items:baseline; gap:12px; }
+            .perf-label{ font-size:15px; color:var(--silver); letter-spacing:-0.3px; line-height:1.15; text-align:left; }
+            .perf-scope{ font-size:13px; color:var(--gray); letter-spacing:-0.22px; }
+            .perf-row{ display:flex; justify-content:space-between; align-items:baseline; width:100%; white-space:nowrap; }
+            .perf-key{ font-size:13px; color:var(--gray); font-feature-settings:'lnum' 1,'tnum' 1; letter-spacing:-0.02em; }
+            .perf-val{ font-size:15px; color:var(--silver); font-feature-settings:'lnum' 1,'tnum' 1; letter-spacing:-0.02em; }
+            .perf-row.diff{ position:relative; margin-top:16px; }
+            .perf-row.diff::before{ content:''; position:absolute; top:-16px; left:0; right:0; height:0; border-top:0.5px solid var(--c-900); }
+            .perf-row.diff .perf-key{ color:var(--gray); }
+            .perf-row.diff .perf-val{ color:var(--white); }
+            .perf-pp{ color:var(--gray); margin-left:6px; font-size:13px; }
+            .perf-chev{ color:var(--gray); font-size:14px; font-weight:300; line-height:1; margin-left:4px; }
+            .cal-block{ display:flex; flex-direction:column; align-items:flex-end; gap:9px; width:100%; padding:24px 0 4px; text-align:right; color:inherit; text-decoration:none; -webkit-tap-highlight-color:transparent; }
+            .cal-block:active{ opacity:0.5; transition:opacity 80ms ease; }
+            .cal-head{ font-size:15px; color:var(--silver); letter-spacing:-0.3px; margin-bottom:3px; }
+            .cal-row{ display:flex; gap:12px; align-items:baseline; }
+            .cal-key{ font-size:13px; color:var(--gray); letter-spacing:-0.02em; }
+            .cal-val{ font-size:15px; color:var(--silver); font-feature-settings:'lnum' 1,'tnum' 1; letter-spacing:-0.02em; }
+          </style>
+          <a class="perf-block" id="bench" href="#" aria-label="S&amp;P 500 benchmark">
+            <div class="perf-header">
+              <span class="perf-label">S&amp;P 500 Benchmark <span class="perf-scope">&middot; All Accounts</span></span>
+              <span class="perf-chev" aria-hidden="true">&rsaquo;</span>
+            </div>
+            <div class="perf-row"><span class="perf-key">Portfolio Value</span><span class="perf-val">46,782.11</span></div>
+            <div class="perf-row"><span class="perf-key">S&amp;P 500 Value</span><span class="perf-val">50,627.41</span></div>
+            <div class="perf-row diff"><span class="perf-key">Difference</span><span class="perf-val">&minus;3,845.30<span class="perf-pp">&minus;7.60%</span></span></div>
+          </a>
+
+          <a class="cal-block" href="#" aria-label="Calibration">
+            <div class="cal-head">Calibration</div>
+            <div class="cal-row"><span class="cal-key">Accuracy</span><span class="cal-val">54%</span></div>
+            <div class="cal-row"><span class="cal-key">Predictions</span><span class="cal-val">17</span></div>
+            <div class="cal-row"><span class="cal-key">Next Judgment</span><span class="cal-val">Apr 1, 2027</span></div>
+          </a>
 
           <!-- Active Positions -->
           <div class="pos-group" style="margin-top:30px;">
@@ -1014,7 +1055,7 @@
   function computeTarget(){
     var hash = (__P.split('#')[1] || '');
     if (!hash) return { sec: document.querySelector('.section'), d: 0 };   // no hash → main dashboard top (total-value overview)
-    var sec = document.querySelector(hash === 'active' ? '.section.active' : (hash === 'managed' ? '.section.managed' : '.section'));
+    var sec = document.querySelector((hash === 'active' || hash === 'self') ? '.section.active' : (hash === 'managed' ? '.section.managed' : '.section'));
     if (!sec) return null;
     var targetTop = sec.offsetTop;
     if (hash === 'active') {
@@ -1024,6 +1065,8 @@
       var tblm = sec.querySelector('.tbl');
       // keep the allocation table (Money Market) ~20% of the frame above the bottom — proportional, so it can't cut even if clientHeight is slightly mis-measured; never scroll above the section
       targetTop = tblm ? Math.max(_absTop(sec), _absTop(tblm) + tblm.offsetHeight - screenEl.clientHeight * 0.80 + 16) : _absTop(sec);
+    } else if (hash === 'self') {
+      targetTop = _absTop(sec);   // Self-Directed section header (Active / Self-Directed + value), not the positions list
     }
     var d = Math.max(0, targetTop - 16);
     return { sec: sec, d: Math.min(d, Math.max(0, screenEl.scrollHeight - screenEl.clientHeight)) };
@@ -1095,6 +1138,25 @@
   window.addEventListener('resize', fitEmbed);
   prep();
   if (document.fonts && document.fonts.ready) { document.fonts.ready.then(prep); }
+
+  // live tick - a few seconds after load the main Value numbers gently drift around base (monochrome, no +/- colour). real-app feel.
+  (function(){
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    function fmtN(n, dec){ return n.toLocaleString('en-US', { minimumFractionDigits:dec, maximumFractionDigits:dec }); }
+    function tweenTo(el, to){
+      var from = el._cur, t0 = null, dur = 900;
+      function step(ts){ if(t0===null)t0=ts; var p=Math.min(1,(ts-t0)/dur); var e=1-Math.pow(1-p,3); var v=from+(to-from)*e; el._cur=v; el.textContent=fmtN(v, el._dec); if(p<1) requestAnimationFrame(step); }
+      requestAnimationFrame(step);
+    }
+    function tick(){
+      document.querySelectorAll('.section .t-22, .total-value .amt-n').forEach(function(el){
+        if (el._base == null){ var b = parseFloat(el.textContent.replace(/,/g,'')); if(isNaN(b)){ el._base = NaN; return; } el._base = b; el._cur = b; el._dec = (el.textContent.split('.')[1]||'').length; }
+        if (isNaN(el._base)) return;
+        tweenTo(el, el._base * (1 + (Math.random()*0.001 - 0.0005)));
+      });
+    }
+    setInterval(tick, 3500);
+  })();
 })();
 </script>
 

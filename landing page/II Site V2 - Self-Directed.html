@@ -4,13 +4,14 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Self-Directed · Intelligent Investing</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-800:#565B5E;--c-700:#929292;--c-600:#A7A7A7;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFF;--c-warning:#FDAD00; --frame: clamp(24px, 4vw, 48px); --maxw: 1680px; --gutter: clamp(16px, 1.5vw, 24px); --c-elev: #0A0A0A;}
+:root{--c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-800:#565B5E;--c-700:#929292;--c-600:#A7A7A7;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFF;--c-warning:#FF7A00; --frame: clamp(24px, 4vw, 48px); --maxw: 1680px; --gutter: clamp(16px, 1.5vw, 24px); --c-elev: #0A0A0A; --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; --mono: 'Chakra Petch', ui-monospace, monospace;}
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{background:var(--c-black);color:var(--c-600);font-family:'Inter',sans-serif;font-feature-settings:'tnum' 1,'lnum' 1,'ss01' 1;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased;font-weight:400;}
-body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient(180deg,var(--c-elev) 0,var(--c-black) 560px);}body.menu-open{overflow:hidden;}
-.navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(0,0,0,0.7);backdrop-filter:blur(10px);}
+body{min-height:100vh;font-size:15px;line-height:1.55;background:var(--c-black);}body.menu-open{overflow:hidden;}
+.navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:transparent;transition:background 0.3s ease,backdrop-filter 0.3s ease;}
+.navbar.scrolled{background:rgba(0,0,0,0.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
 .navbar-inner{display:flex;align-items:center;justify-content:space-between;padding:var(--frame);gap:32px;position:relative;}
 .navbar-brand img{height:14px;width:auto;display:block;}
 .nav-links{display:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);align-items:center;gap:24px;}
@@ -55,7 +56,7 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .menu-bottom{display:grid;grid-template-columns:1fr 1fr;align-items:end;padding:clamp(28px,4vw,56px) clamp(40px,6vw,80px);gap:24px;font-size:11px;color:var(--c-700);}
 .menu-bottom .mb-left{display:flex;flex-direction:column;gap:4px;}.menu-bottom .mb-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
 .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--frame); box-sizing: border-box; }
-@media(max-width:900px){.container{padding:0 24px;}}
+@media(max-width:900px){.container{padding:0 24px;}.intro,.how-section,.compounds-section,.modules-section,.reg-section,.accounts-section{padding:72px 0;}}
 .page-header{padding:180px 0 80px;border-bottom:0.5px solid var(--c-900);}
 .page-breadcrumb{font-size:12px;color:var(--c-700);letter-spacing:0.06em;margin-bottom:36px;display:flex;align-items:center;gap:10px;}
 .page-breadcrumb a{color:var(--c-700);text-decoration:none;}.page-breadcrumb .sep{color:var(--c-800);}.page-breadcrumb .current{color:var(--c-200);}
@@ -103,16 +104,120 @@ footer{border-top:0.5px solid var(--c-900);padding:96px 0 36px;font-size:14px;li
 .footer-bottom .footer-legal-links{display:flex;gap:24px;}
 .footer-bottom .footer-legal-links a{color:var(--c-700);text-decoration:none;}
 @media(max-width:600px){.footer-bottom{flex-direction:column;gap:16px;align-items:flex-start;}}
-@media (prefers-reduced-motion: no-preference){.ri{opacity:0;transform:translateY(24px);transition:opacity 0.7s cubic-bezier(0.2,0.6,0.2,1),transform 0.7s cubic-bezier(0.2,0.6,0.2,1);transition-delay:var(--d,0s);}.ri.in{opacity:1;transform:none;}}
+@media (prefers-reduced-motion: no-preference){.ri{opacity:0;transform:translateY(24px);transition:opacity 0.6s cubic-bezier(0.2,0.6,0.2,1),transform 0.6s cubic-bezier(0.2,0.6,0.2,1);transition-delay:var(--d,0s);}.ri.in{opacity:1;transform:none;}}
 
 /* — Body sections (shared idiom with Managed) — */
-.page-eyebrow{font-size:12px;color:var(--c-700);letter-spacing:0.16em;margin-bottom:20px;}
+.page-eyebrow{font-family:var(--mono);font-size:12px;color:var(--c-700);letter-spacing:0.04em;margin-bottom:28px;}
 .page-actions{margin-top:48px;}
-.section-eyebrow{font-size:12px;color:var(--c-700);letter-spacing:0.16em;margin-bottom:48px;}
+.sd-showcase{display:flex;justify-content:center;margin-top:64px;}
+.memo-section{padding:96px 0;border-top:0.5px solid var(--c-900);}
+.memo-grid{display:grid;grid-template-columns:1fr;gap:48px;align-items:center;}
+@media(min-width:1024px){.memo-grid{grid-template-columns:minmax(0,1fr) minmax(0,440px);gap:80px;}}
+.memo-lead{font-size:clamp(24px,3vw,34px);line-height:1.15;letter-spacing:-0.03em;color:var(--c-200);margin-bottom:28px;font-weight:400;}
+.memo-body{font-size:15px;line-height:1.7;color:var(--c-600);max-width:480px;}
+.memo-body p+p{margin-top:14px;}
+.memo-pull{font-size:17px;line-height:1.5;color:var(--c-400);margin-top:28px;max-width:480px;text-wrap:balance;}
+.dev-bar{display:flex;justify-content:space-between;align-items:center;padding:14px 22px 11px;border-bottom:0.5px solid var(--c-1000);font-family:var(--mono);position:relative;}
+.dev-bar::after{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:62px;height:16px;background:var(--c-black);border:0.5px solid var(--c-700);border-radius:9px;pointer-events:none;}
+.dev-bar-time{font-size:12px;letter-spacing:0.02em;color:var(--c-200);font-variant-numeric:tabular-nums;}
+.dev-bar-ic{display:block;width:49.8px;height:12px;color:var(--c-200);}
+.dr-doc{border:0.5px solid var(--c-800);background:var(--c-elev);border-radius:28px;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,0.05);position:relative;height:672px;padding-bottom:32px;-webkit-mask-image:linear-gradient(to bottom,#000 82%,transparent 100%);mask-image:linear-gradient(to bottom,#000 82%,transparent 100%);}
+.dr-head{display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding:22px 28px;border-bottom:0.5px solid var(--c-900);}
+.dr-tk{font-size:17px;color:var(--c-200);letter-spacing:-0.01em;}
+.dr-co{font-size:13px;color:var(--c-700);margin-left:10px;}
+.dr-link{font-size:13px;color:var(--c-600);letter-spacing:-0.01em;white-space:nowrap;}
+.dr-fields{margin:0;}
+.dr-row{display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding:20px 28px;border-bottom:0.5px solid var(--c-1000);}
+.dr-row dt{font-size:15px;color:var(--c-600);letter-spacing:-0.01em;text-decoration:underline;text-decoration-color:var(--c-900);text-underline-offset:4px;}
+.dr-row dd{margin:0;font-size:15px;color:var(--c-200);letter-spacing:-0.01em;text-align:right;}
+.dr-sub{color:var(--c-700);}
+.dr-case{padding:18px 28px 20px;border-bottom:0.5px solid var(--c-1000);}
+.dr-case-label{font-size:15px;color:var(--c-600);text-decoration:underline;text-decoration-color:var(--c-900);text-underline-offset:4px;margin-bottom:12px;}
+.dr-thesis{margin:0 0 14px;font-size:15px;line-height:1.6;color:var(--c-400);max-height:200px;overflow:hidden;-webkit-mask-image:linear-gradient(to bottom,#000 55%,transparent 100%);mask-image:linear-gradient(to bottom,#000 55%,transparent 100%);}
+.dr-thesis b{color:var(--c-200);font-weight:400;}
+.dr-foot{display:flex;justify-content:flex-end;padding:16px 28px;}
+.dr-foot .dr-link{color:var(--c-200);}
+@media(max-width:900px){.dr-doc{max-width:380px;margin:0 auto;}}
+.acc-section{padding:96px 0;border-top:0.5px solid var(--c-900);}
+.acc-headline{font-size:clamp(24px,3vw,34px);line-height:1.15;letter-spacing:-0.03em;color:var(--c-200);max-width:760px;margin-bottom:48px;text-wrap:balance;font-weight:400;}
+.acc-grid{display:grid;grid-template-columns:1fr;gap:48px;align-items:center;}
+@media(min-width:1024px){.acc-grid{grid-template-columns:minmax(0,1fr) minmax(0,400px);gap:80px;}}
+.acc-grid .sd-showcase{margin-top:0;}
+.acc-point{padding:28px 0;border-top:0.5px solid var(--c-900);}
+.acc-point:last-child{border-bottom:0.5px solid var(--c-900);}
+.acc-pt-k{font-size:14px;color:var(--c-200);letter-spacing:-0.01em;margin-bottom:10px;}
+.acc-pt-d{font-size:14px;line-height:1.6;color:var(--c-600);max-width:560px;}
+.sys-note{font-size:14px;line-height:1.7;color:var(--c-700);max-width:760px;}
+.sys-note+.sys-note{margin-top:12px;}
+.sys-rows{display:flex;flex-direction:column;margin-top:40px;}
+.sys-row{display:grid;grid-template-columns:minmax(0,220px) 1fr;gap:48px;padding:28px 0;border-top:0.5px solid var(--c-900);}
+.sys-row:last-of-type{border-bottom:0.5px solid var(--c-900);}
+.sys-label{font-size:15px;color:var(--c-200);letter-spacing:-0.01em;}
+.sys-desc{font-size:14px;line-height:1.6;color:var(--c-600);max-width:560px;}
+.docs-section{padding:96px 0;border-top:0.5px solid var(--c-900);}
+.doc-list{display:flex;flex-direction:column;margin-top:40px;}
+.doc-row{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 0;border-top:0.5px solid var(--c-900);text-decoration:none;color:inherit;transition:padding 0.3s ease;}
+.doc-row:last-of-type{border-bottom:0.5px solid var(--c-900);}
+.doc-row:hover{padding-left:8px;}
+.doc-row:hover .doc-name{color:var(--c-white);}
+.doc-row:hover .doc-arrow{transform:translateX(4px);color:var(--c-400);}
+.doc-name{font-size:17px;color:var(--c-400);letter-spacing:-0.01em;}
+.doc-arrow{font-size:15px;color:var(--c-700);transition:all 0.3s ease;}
+@media(max-width:760px){.sys-row{grid-template-columns:1fr;gap:12px;}}
+.trust-line{font-size:13px;line-height:1.6;color:var(--c-600);max-width:620px;}
+.trust-line b{color:var(--c-white);font-weight:400;}
+.trust-strip{display:grid;grid-template-columns:repeat(5,1fr);column-gap:var(--gutter);margin-top:48px;}
+.trust-item{display:flex;flex-direction:column;gap:7px;border-left:0.5px solid var(--c-800);padding-left:20px;}
+.ti-num{font-size:22px;color:var(--c-200);letter-spacing:-0.02em;line-height:1.1;}
+.ti-lbl{font-family:var(--mono);font-size:12px;letter-spacing:0.04em;color:var(--c-700);}
+.trust-foot{font-size:12px;line-height:1.6;color:var(--c-800);max-width:760px;margin-top:40px;}
+@media(max-width:760px){.trust-item{border-left:0;padding-left:0;border-top:0.5px solid var(--c-800);padding-top:16px;}.trust-strip{grid-template-columns:1fr 1fr;row-gap:20px;}.ti-num{font-size:18px;}}
+.acc-card{border:0.5px solid var(--c-800);background:var(--c-elev);border-radius:20px;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,0.05);padding:24px 26px;}
+.acc-blk+.acc-blk{margin-top:22px;padding-top:22px;border-top:0.5px solid var(--c-1000);}
+.acc-blk-hd{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;}
+.acc-blk-t{font-size:13px;color:var(--c-700);font-family:var(--mono);letter-spacing:0.04em;}
+.acc-blk-scope{font-size:12px;color:var(--c-800);}
+.acc-r{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;}
+.acc-rk{font-size:13px;color:var(--c-700);}
+.acc-rv{font-size:14px;color:var(--c-400);font-feature-settings:'tnum' 1,'lnum' 1;}
+.acc-r.diff .acc-rv{color:var(--c-white);}
+.acc-pp{color:var(--c-700);font-size:12px;margin-left:6px;}
+.acc-pos{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-top:0.5px solid var(--c-1000);}
+.acc-pos-tk{font-size:13px;color:var(--c-400);}
+.acc-pos-sub{color:var(--c-700);margin-left:8px;font-size:12px;}
+.acc-pos-v{font-size:13px;color:var(--c-700);font-feature-settings:'tnum' 1;}
+.acc-cards{display:grid;grid-template-columns:1fr;gap:20px;margin-top:48px;}
+@media(min-width:900px){.acc-cards{grid-template-columns:repeat(3,1fr);}}
+.acc-c{border:0.5px solid var(--c-800);background:var(--c-elev);border-radius:18px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.05);padding:22px 22px 16px;display:flex;flex-direction:column;}
+.acc-c-t{font-size:13px;color:var(--c-700);font-family:var(--mono);letter-spacing:0.04em;}
+.acc-c-d{font-size:13px;line-height:1.5;color:var(--c-600);margin:8px 0 18px;}
+.cal-hd{font-family:var(--mono);font-size:11px;color:var(--c-700);letter-spacing:0.04em;text-align:right;margin-bottom:2px;}
+.cal-chart{display:block;width:100%;height:auto;margin:4px 0;}
+.cg-axis{stroke:var(--c-900);stroke-width:1;}
+.cg-cal{stroke:var(--c-700);stroke-width:1;stroke-dasharray:3 3;}
+.cg-dot{fill:var(--c-600);}
+.cg-dot.sel{fill:none;stroke:var(--c-200);stroke-width:1;stroke-dasharray:2 2;}
+.cg-lbl{font-family:var(--mono);fill:var(--c-800);letter-spacing:0.04em;}
+.cg-tick{font-family:var(--mono);fill:var(--c-700);}
+.cal-stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:0.5px solid var(--c-1000);margin-top:14px;}
+.cal-stat{padding:12px 6px 0;}
+.cal-stat+.cal-stat{border-left:0.5px solid var(--c-1000);}
+.cal-stat .k{font-size:12px;color:var(--c-700);}
+.cal-stat .v{font-size:22px;color:var(--c-200);letter-spacing:-0.02em;margin-top:4px;}
+.sd-phone{width:100%;max-width:400px;aspect-ratio:1 / 2.2;background:var(--c-elev);border:0.5px solid var(--c-900);border-radius:32px;overflow:hidden;position:relative;display:flex;flex-direction:column;}
+.sd-phone .dev-bar{display:flex;justify-content:space-between;align-items:center;padding:14px 22px 11px;border-bottom:0.5px solid var(--c-1000);font-family:var(--mono);position:relative;}
+.sd-phone .dev-bar::after{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:62px;height:16px;background:var(--c-black);border:0.5px solid var(--c-900);border-radius:9px;pointer-events:none;}
+.sd-phone .dev-bar-time{font-size:12px;letter-spacing:0.02em;color:var(--c-200);font-variant-numeric:tabular-nums;}
+.sd-phone .dev-bar-ic{display:block;width:49.8px;height:12px;color:var(--c-200);}
+.sd-phone .ap-embed{flex:1 1 auto;display:flex;flex-direction:column;overflow:hidden;background:var(--c-black);}
+.sd-phone .ap-embed-frame{flex:1 1 auto;width:100%;border:0;background:var(--c-black);pointer-events:none;}
+.section-eyebrow{font-family:var(--mono);font-size:12px;color:var(--c-700);letter-spacing:0.04em;margin-bottom:28px;}
 
 .how-section{padding:96px 0;border-top:0.5px solid var(--c-900);}
-.how-steps{display:flex;flex-direction:column;}
-.how-step{display:grid;grid-template-columns:minmax(0,180px) 1fr;gap:48px;align-items:baseline;padding:40px 0;border-top:0.5px solid var(--c-900);}
+.how-steps{display:flex;flex-direction:column;position:relative;}
+.how-steps::before{content:"";position:absolute;top:0;bottom:0;left:153px;width:0.5px;background:var(--c-900);}
+.how-step{display:grid;grid-template-columns:110px 22px 1fr;column-gap:32px;align-items:start;padding:36px 0;border-top:0.5px solid var(--c-900);}
+.how-node{grid-column:2;justify-self:center;width:9px;height:9px;border:0.5px solid var(--c-700);background:var(--c-black);margin-top:12px;position:relative;z-index:1;}
 .how-step:last-of-type{border-bottom:0.5px solid var(--c-900);}
 .how-num{font-size:clamp(34px,5vw,40px);line-height:1;color:var(--c-900);letter-spacing:-0.02em;font-weight:300;}
 .how-title{font-size:22px;line-height:1.2;letter-spacing:-0.02em;color:var(--c-white);font-weight:400;margin-bottom:14px;}
@@ -149,7 +254,7 @@ footer{border-top:0.5px solid var(--c-900);padding:96px 0 36px;font-size:14px;li
 .account-item:first-child{border-left:none;}
 
 @media(max-width:760px){
-  .how-step{grid-template-columns:1fr;gap:16px;}
+  .how-step{grid-template-columns:1fr;gap:16px;}.how-steps::before{display:none;}.how-node{display:none;}
   .module-row{grid-template-columns:1fr auto;gap:8px 24px;}
   .module-desc{grid-column:1 / -1;}
   .reg-row{grid-template-columns:1fr;gap:14px;}
@@ -165,11 +270,11 @@ footer{border-top:0.5px solid var(--c-900);padding:96px 0 36px;font-size:14px;li
   
   <div class="nav-links"><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a></div>
   
-  <div class="navbar-right"><div class="lang-toggle"><span class="lt active">EN</span><span class="sep">·</span><span class="lt">FR</span></div><a href="II Site V2 - GetTheApp.html" class="navbar-cta">Get the App</a><button class="hamburger" type="button"><span></span><span></span></button></div>
+  <div class="navbar-right"><div class="lang-toggle"><span class="lt active">EN</span><span class="sep">·</span><span class="lt">FR</span></div><a href="II Site V2 - GetTheApp.html" class="navbar-cta">Get Access</a><button class="hamburger" type="button"><span></span><span></span></button></div>
 </div></nav>
 <div class="menu-overlay">
   <div class="menu-top"><a href="index.html" class="ml-logo"><img src="Logo.svg" alt="II"></a><button class="ml-close" type="button">Close ×</button></div>
-  <div class="menu-center"><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a><a href="II Site V2 - GetTheApp.html">Get the App</a></div>
+  <div class="menu-center"><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a><a href="II Site V2 - GetTheApp.html">Get Access</a></div>
   <div class="menu-bottom"><div class="mb-left"><span>Intelligent Investing</span><span>No. 01 · 2026</span></div><div class="mb-right"><span>Mogo Inc.</span><span>Orion Digital · TSX·NASDAQ : ORIO</span></div></div>
 </div>
 
@@ -177,74 +282,98 @@ footer{border-top:0.5px solid var(--c-900);padding:96px 0 36px;font-size:14px;li
 <section class="page-header">
   <div class="page-eyebrow ri" style="--d:0.04s">Self-Directed</div>
   <h1 class="page-title ri" style="--d:0.08s">The decision comes before the trade.</h1>
-  <div class="page-deck ri" style="--d:0.16s">Most self-directed investors record their outcomes. Very few record their reasoning. Without the reasoning, the outcome teaches you nothing.</div>
-  <div class="page-actions ri" style="--d:0.24s"><a href="II Site V2 - GetTheApp.html" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Download the App</span><span>Download the App</span></span></span></a></div>
+  <div class="page-deck ri" style="--d:0.16s">Most investors record outcomes. Few record the reasoning behind them. Without the reasoning, the outcome teaches nothing.</div>
+  <div class="page-actions ri" style="--d:0.24s"><a href="II Site V2 - GetTheApp.html" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Begin</span><span>Begin</span></span></span></a></div>
+</section>
+</div>
+
+<div class="container">
+<section class="memo-section">
+  <div class="section-eyebrow ri" style="--d:0s">The Memo</div>
+  <div class="memo-grid">
+    <div class="memo-text">
+      <h2 class="memo-lead ri" style="--d:0.04s">Every position begins with a memo.</h2>
+      <div class="memo-body ri" style="--d:0.08s">
+        <p>A sealed record of the reasoning behind a position: classification, sizing, confidence, where the idea came from, and the case for it.</p>
+        <p>Once sealed, it locks. Editing it creates a new version. The original is never overwritten.</p>
+      </div>
+      <p class="memo-pull ri" style="--d:0.12s">You will read it later and disagree with yourself. That is the record working.</p>
+    </div>
+    <article class="dr-doc ri" style="--d:0.1s">
+      <div class="dev-bar"><span class="dev-bar-time">9:41</span><svg class="dev-bar-ic" viewBox="0 0 49.8 12" fill="none" aria-hidden="true"><rect x="0" y="7" width="2" height="4" rx="0.5" fill="currentColor"/><rect x="3.5" y="5" width="2" height="6" rx="0.5" fill="currentColor"/><rect x="7" y="3" width="2" height="8" rx="0.5" fill="currentColor"/><rect x="10.5" y="1" width="2" height="10" rx="0.5" fill="currentColor"/><path d="M18 4.6C20.2 2.7 25.8 2.7 28 4.6" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M19.6 6.3C21 5.1 25 5.1 26.4 6.3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><circle cx="23" cy="8.4" r="1" fill="currentColor"/><rect x="34" y="3.2" width="13.5" height="6.6" rx="1.6" stroke="currentColor" stroke-width="1" opacity="0.45"/><rect x="35.5" y="4.6" width="9.5" height="3.8" rx="0.7" fill="currentColor"/><path d="M49.1 5.2V7.8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+      <header class="dr-head">
+        <div class="dr-id"><span class="dr-tk">AAPL</span><span class="dr-co">Apple Inc</span></div>
+        <span class="dr-link">Underwriting record &rsaquo;</span>
+      </header>
+      <dl class="dr-fields">
+        <div class="dr-row"><dt>Classification</dt><dd>Compounder</dd></div>
+        <div class="dr-row"><dt>Sizing</dt><dd>Core <span class="dr-sub">&middot; 12.2%</span></dd></div>
+        <div class="dr-row"><dt>Confidence</dt><dd>62% <span class="dr-sub">&middot; 3y</span></dd></div>
+        <div class="dr-row"><dt>Idea Origin</dt><dd>13F</dd></div>
+      </dl>
+      <div class="dr-case">
+        <div class="dr-case-label">Investment Case</div>
+        <p class="dr-thesis"><b>Thesis.</b> Apple is a US growth story in its middle innings. The US flywheel, flagship-led brand-building, app-driven engagement, and disciplined new-box openings that pay back in under a year, can roughly double the US fleet while e-commerce climbs.</p>
+        <span class="dr-link">Read Full Memo &rsaquo;</span>
+      </div>
+      <footer class="dr-foot"><span class="dr-link">Re-underwrite &rsaquo;</span></footer>
+    </article>
+  </div>
 </section>
 </div>
 
 <div class="container">
 <section class="how-section">
-  <div class="section-eyebrow ri" style="--d:0s">The Framework</div>
+  <div class="section-eyebrow ri" style="--d:0s">The Process</div>
   <div class="how-steps">
     <div class="how-step ri" style="--d:0.04s">
       <div class="how-num">01</div>
-      <div class="how-body"><h3 class="how-title">Thesis</h3><p class="how-desc">State the investment rationale before entering a position. What you believe, and why. Written down, before the trade.</p></div>
+      <i class="how-node"></i>
+      <div class="how-body"><h3 class="how-title">Write</h3><p class="how-desc">The first time, you fill out the memo: classification, sizing, confidence, idea origin, and the investment case.</p></div>
     </div>
     <div class="how-step ri" style="--d:0.08s">
       <div class="how-num">02</div>
-      <div class="how-body"><h3 class="how-title">Benchmark</h3><p class="how-desc">Define what you are measuring against. The market is the default. Everything else must be earned before it can be claimed.</p></div>
+      <i class="how-node"></i>
+      <div class="how-body"><h3 class="how-title">Re-underwrite</h3><p class="how-desc">As the thesis is tested, you revise it section by section. Each revision is a new version. The original is never overwritten.</p></div>
     </div>
     <div class="how-step ri" style="--d:0.12s">
       <div class="how-num">03</div>
-      <div class="how-body"><h3 class="how-title">Kill Line</h3><p class="how-desc">Set the conditions that end the position before emotion does. Price, time, or thesis invalidation. Defined in advance.</p></div>
-    </div>
-    <div class="how-step ri" style="--d:0.16s">
-      <div class="how-num">04</div>
-      <div class="how-body"><h3 class="how-title">Review</h3><p class="how-desc">Examine the decision against the outcome. The accuracy of the thesis, not just the direction of the price.</p></div>
+      <i class="how-node"></i>
+      <div class="how-body"><h3 class="how-title">Capital Decision</h3><p class="how-desc">The decision to initiate, increase, or reduce follows the memo. Not the other way around.</p></div>
     </div>
   </div>
-  <p class="how-closing ri" style="--d:0.2s">This is not a trading interface. It is a decision system.</p>
+  <p class="how-closing ri" style="--d:0.16s">A memo is not written once.</p>
 </section>
 </div>
 
 <div class="container">
-<section class="compounds-section">
-  <div class="section-eyebrow ri" style="--d:0s">What This Changes</div>
-  <div class="compounds-prose">
-    <p class="ri" style="--d:0.04s">Without a written thesis, every position is a guess with a ticker attached. The outcome &mdash; good or bad &mdash; confirms the guess. It does not improve the investor.</p>
-    <p class="ri" style="--d:0.08s">Most retail investors know their returns. Very few know whether their decisions are any good. The framework separates the two. Returns are a product of market conditions as much as judgment. Decision quality is measurable independent of outcome.</p>
-    <p class="ri" style="--d:0.12s">Self-Directed does not prevent bad decisions. It makes them legible. That is the only way to improve.</p>
+<section class="acc-section">
+  <div class="section-eyebrow ri" style="--d:0s">Accountability</div>
+  <h2 class="acc-headline ri" style="--d:0.04s">Every dollar is benchmarked. Every forecast is scored.</h2>
+  <div class="acc-grid">
+    <div class="acc-points">
+      <div class="acc-point ri" style="--d:0.06s"><div class="acc-pt-k">Benchmark</div><p class="acc-pt-d">Every position, measured against the S&amp;P 500, dollar for dollar. The gap is shown plainly, including when negative.</p></div>
+      <div class="acc-point ri" style="--d:0.08s"><div class="acc-pt-k">Calibration</div><p class="acc-pt-d">Stated confidence, scored against what happened. Most active investors are overconfident.</p></div>
+      <div class="acc-point ri" style="--d:0.1s"><div class="acc-pt-k">Active Positions</div><p class="acc-pt-d">What you hold, ordered by weight.</p></div>
+    </div>
+    <div class="sd-showcase ri" style="--d:0.12s">
+      <div class="sd-phone">
+        <div class="dev-bar"><span class="dev-bar-time">9:41</span><svg class="dev-bar-ic" viewBox="0 0 49.8 12" fill="none" aria-hidden="true"><rect x="0" y="7" width="2" height="4" rx="0.5" fill="currentColor"/><rect x="3.5" y="5" width="2" height="6" rx="0.5" fill="currentColor"/><rect x="7" y="3" width="2" height="8" rx="0.5" fill="currentColor"/><rect x="10.5" y="1" width="2" height="10" rx="0.5" fill="currentColor"/><path d="M18 4.6C20.2 2.7 25.8 2.7 28 4.6" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M19.6 6.3C21 5.1 25 5.1 26.4 6.3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><circle cx="23" cy="8.4" r="1" fill="currentColor"/><rect x="34" y="3.2" width="13.5" height="6.6" rx="1.6" stroke="currentColor" stroke-width="1" opacity="0.45"/><rect x="35.5" y="4.6" width="9.5" height="3.8" rx="0.7" fill="currentColor"/><path d="M49.1 5.2V7.8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+        <div class="ap-embed"><iframe class="ap-embed-frame" src="ii-app-9.html?embed&amp;v=12#bench" title="Self-Directed accountability" aria-hidden="true" tabindex="-1" scrolling="no" loading="lazy"></iframe></div>
+      </div>
+    </div>
   </div>
 </section>
 </div>
 
 <div class="container">
 <section class="modules-section">
-  <div class="section-eyebrow ri" style="--d:0s">The Modules</div>
-  <div class="modules-rows">
-    <a href="II Site V2 - Memo.html" class="module-row ri" style="--d:0.04s">
-      <span class="module-name">Memo</span><span class="module-desc">Thesis, sizing, and kill criteria. Recorded.</span><span class="module-arrow">↗</span>
-    </a>
-    <a href="II Site V2 - Research.html" class="module-row ri" style="--d:0.08s">
-      <span class="module-name">Research</span><span class="module-desc">Institutional research, now included.</span><span class="module-arrow">↗</span>
-    </a>
-    <a href="II Site V2 - Benchmark.html" class="module-row ri" style="--d:0.12s">
-      <span class="module-name">Benchmark</span><span class="module-desc">Your decisions against SPY.</span><span class="module-arrow">↗</span>
-    </a>
-    <a href="II Site V2 - Calibration.html" class="module-row ri" style="--d:0.16s">
-      <span class="module-name">Calibration</span><span class="module-desc">Expectations against outcomes. Measured.</span><span class="module-arrow">↗</span>
-    </a>
-  </div>
-  <p class="modules-closing ri" style="--d:0.2s">Each module operates on a real, funded account: opened, custodied, and traded through our own regulated entities. The value is not in joining the system. It is in operating it.</p>
-</section>
-</div>
-
-<div class="container">
-<section class="compounds-section">
-  <div class="section-eyebrow ri" style="--d:0s">Research Infrastructure</div>
-  <div class="compounds-prose">
-    <p class="ri" style="--d:0.04s">Intelligent Investing membership includes access to Fiscal.ai, a third-party research platform independently operated outside of Intelligent Investing.</p>
-    <p class="ri" style="--d:0.08s">Fiscal.ai is not an Intelligent Investing product. Access is included as a membership benefit. Visit fiscal.ai directly for full product details.</p>
+  <div class="section-eyebrow ri" style="--d:0s">The System</div>
+  <h2 class="acc-headline ri" style="--d:0.04s">Every holding carries its own record.</h2>
+  <div class="sys-rows">
+    <div class="sys-row ri" style="--d:0.06s"><div class="sys-label">The Position Page</div><p class="sys-desc">Alerts, notes, performance, research and analysis, news, market data, and full history. One page for every holding.</p></div>
+    <div class="sys-row ri" style="--d:0.08s"><div class="sys-label">Under Review</div><p class="sys-desc">The names you are researching but have not yet bought.</p></div>
+    <div class="sys-row ri" style="--d:0.1s"><div class="sys-label">Research</div><p class="sys-desc">Fiscal.ai, a third-party platform, included with membership.</p></div>
   </div>
 </section>
 </div>
@@ -252,12 +381,15 @@ footer{border-top:0.5px solid var(--c-900);padding:96px 0 36px;font-size:14px;li
 <div class="container">
 <section class="reg-section">
   <div class="section-eyebrow ri" style="--d:0s">Regulatory &amp; Institutional</div>
-  <div class="reg-rows">
-    <div class="reg-row ri" style="--d:0.04s"><div class="reg-label">Regulatory Standing</div><p class="reg-desc">Your investment account is opened with IntelligentInvesting Securities Inc., an Investment Dealer registered with the Canadian Investment Regulatory Organization (CIRO), offering Order Execution Only (OEO) account services.</p></div>
-    <div class="reg-row ri" style="--d:0.06s"><div class="reg-label">Investor Protection</div><p class="reg-desc">Your investments are CIPF-protected, with coverage up to $1,000,000 for TFSAs and another $1,000,000 for RRSPs. They are securely held by a member of CIRO and protected by CIPF within specified limits.</p></div>
-    <div class="reg-row ri" style="--d:0.08s"><div class="reg-label">CIPF Coverage</div><p class="reg-desc">Customers&rsquo; accounts are protected by CIPF in accordance with its coverage policy. A brochure describing the scope and nature of coverage is available upon request or at www.cipf.ca.</p></div>
-    <div class="reg-row ri" style="--d:0.1s"><div class="reg-label">Institutional Backing</div><p class="reg-desc">[Institutional backing and public company reference — Proof &amp; Facts source and investor-facing route required before publish]</p></div>
+  <p class="trust-line ri" style="--d:0.04s">A licensed brokerage with the decision layer built in. <b>Not a tool bolted onto your broker.</b></p>
+  <div class="trust-strip">
+    <div class="trust-item ri" style="--d:0.06s"><span class="ti-num" style="color:var(--c-white);">~$500M</span><span class="ti-lbl">Assets Custodied</span></div>
+    <div class="trust-item ri" style="--d:0.08s"><span class="ti-num">Regulatory Standing</span><span class="ti-lbl">CIRO registration</span></div>
+    <div class="trust-item ri" style="--d:0.1s"><span class="ti-num">Investor Protection</span><span class="ti-lbl">CIPF membership</span></div>
+    <div class="trust-item ri" style="--d:0.12s"><span class="ti-num">Asset Custody</span><span class="ti-lbl">Custodian &amp; segregation</span></div>
+    <div class="trust-item ri" style="--d:0.14s"><span class="ti-num">Institutional Backing</span><span class="ti-lbl">Orion Digital / Mogo</span></div>
   </div>
+  <p class="trust-foot ri" style="--d:0.16s">Accounts are opened with IntelligentInvesting Securities Inc., a CIRO member, and are CIPF-protected up to $1,000,000 per registered account type.</p>
 </section>
 </div>
 
@@ -273,9 +405,25 @@ footer{border-top:0.5px solid var(--c-900);padding:96px 0 36px;font-size:14px;li
 </div>
 
 <div class="container">
+<section class="docs-section">
+  <div class="section-eyebrow ri" style="--d:0s">Documents &amp; Resources</div>
+  <div class="doc-list">
+    <a href="#" class="doc-row ri" style="--d:0.04s"><span class="doc-name">FAQ</span><span class="doc-arrow">&rarr;</span></a>
+    <a href="#" class="doc-row ri" style="--d:0.06s"><span class="doc-name">Privacy Policy &amp; Security Practices</span><span class="doc-arrow">&rarr;</span></a>
+    <a href="#" class="doc-row ri" style="--d:0.08s"><span class="doc-name">Fee Schedule</span><span class="doc-arrow">&rarr;</span></a>
+    <a href="#" class="doc-row ri" style="--d:0.1s"><span class="doc-name">Self-Directed Investing App Terms of Use</span><span class="doc-arrow">&rarr;</span></a>
+    <a href="#" class="doc-row ri" style="--d:0.12s"><span class="doc-name">Complaint Handling Procedures</span><span class="doc-arrow">&rarr;</span></a>
+    <a href="#" class="doc-row ri" style="--d:0.14s"><span class="doc-name">Best Execution Policy</span><span class="doc-arrow">&rarr;</span></a>
+    <a href="#" class="doc-row ri" style="--d:0.16s"><span class="doc-name">Relationship Disclosure</span><span class="doc-arrow">&rarr;</span></a>
+    <a href="#" class="doc-row ri" style="--d:0.18s"><span class="doc-name">Mogo Terms &amp; Conditions</span><span class="doc-arrow">&rarr;</span></a>
+  </div>
+</section>
+</div>
+
+<div class="container">
 <section class="cta-section">
   <div class="cta-canon">Self-Directed is available as part of the Intelligent Investing subscription.</div>
-  <a href="II Site V2 - GetTheApp.html" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Download the App</span><span>Download the App</span></span></span></a>
+  <a href="II Site V2 - GetTheApp.html" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Begin</span><span>Begin</span></span></span></a>
 </section>
 </div>
 
@@ -286,7 +434,7 @@ footer{border-top:0.5px solid var(--c-900);padding:96px 0 36px;font-size:14px;li
     <div class="footer-col"><h4>Resources</h4><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a></div>
     <div class="footer-col"><h4>Documents</h4><a href="II Site V2 - Manifesto.html">Manifesto</a><a href="II Site V2 - Documents-Managed.html">Managed</a><a href="II Site V2 - Documents-SelfDirected.html">Self-Directed</a></div>
     <div class="footer-col"><h4>Company</h4><a href="II Site V2 - About.html">About</a><a href="II Site V2 - About.html#contact">Contact</a></div>
-    <div class="footer-col"><h4>Account</h4><a href="II Site V2 - GetTheApp.html">Get the App</a></div>
+    <div class="footer-col"><h4>Account</h4><a href="II Site V2 - GetTheApp.html">Get Access</a></div>
     <div class="footer-col"><h4>Social</h4><a href="#">Instagram</a><a href="#">X</a><a href="#">TikTok</a><a href="#">YouTube</a></div>
   </div>
   <div class="footer-legal"><p>Past returns are no guarantee of future performance.</p></div>
@@ -299,8 +447,10 @@ function closeMenu(){menuOverlay.classList.remove('open');hamburger.classList.re
 hamburger.addEventListener('click',e=>{e.stopPropagation();menuOverlay.classList.contains('open')?closeMenu():openMenu();});
   menuClose.addEventListener('click', closeMenu);
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menuOverlay.classList.contains('open')) closeMenu(); });
+  const navbar=document.querySelector('.navbar');window.addEventListener('scroll',()=>{if(navbar)navbar.classList.toggle('scrolled',window.scrollY>40);},{passive:true});
 </script>
 
-<script>if('IntersectionObserver' in window){var rio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');rio.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -6% 0px'});document.querySelectorAll('.ri').forEach(function(el){rio.observe(el);});}else{document.querySelectorAll('.ri').forEach(function(el){el.classList.add('in');});}</script>
+<script>if('IntersectionObserver' in window){var rio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');rio.unobserve(e.target);}});},{threshold:0.14,rootMargin:'0px 0px -8% 0px'});document.querySelectorAll('.ri').forEach(function(el){rio.observe(el);});}else{document.querySelectorAll('.ri').forEach(function(el){el.classList.add('in');});}</script>
+<script>(function(){var frames=[].slice.call(document.querySelectorAll('.ap-embed-frame'));if(!frames.length)return;var seen=[];function check(){var vh=window.innerHeight||document.documentElement.clientHeight;frames.forEach(function(f,i){var r=f.getBoundingClientRect();var visible=r.top<vh*0.85&&r.bottom>vh*0.15&&r.height>0;if(visible&&!seen[i]){seen[i]=true;try{f.contentWindow.postMessage('iiSettle','*');}catch(e){}}else if(!visible&&seen[i]){seen[i]=false;}});}window.addEventListener('scroll',check,{passive:true});window.addEventListener('resize',check);frames.forEach(function(f,i){f.addEventListener('load',function(){seen[i]=false;check();});});check();})();</script>
 </body>
 </html>
