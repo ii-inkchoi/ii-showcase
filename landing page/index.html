@@ -271,7 +271,9 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
 #layers { background: var(--c-1000); }
 .layers-head { font-size: clamp(22px,2.6vw,28px); line-height: 1.15; letter-spacing: -0.03em; color: var(--c-200); font-weight: 400; }
 .layers-list { display: flex; flex-direction: column; margin-top: 44px; }
-.layers-row { display: grid; grid-template-columns: minmax(0,260px) 1fr auto; column-gap: 40px; align-items: baseline; padding: 24px 0; border-top: 0.5px solid var(--c-900); }
+.layers-row { display: grid; grid-template-columns: minmax(0,260px) 1fr auto; column-gap: 40px; align-items: baseline; padding: 24px 0; border-top: 0.5px solid var(--c-900); transition: padding-left 0.3s ease; }
+.layers-row:hover { padding-left: 8px; }
+.layers-row:hover .layers-k { color: var(--c-white); }
 .layers-row:last-of-type { border-bottom: 0.5px solid var(--c-900); }
 .layers-k { font-size: 17px; color: var(--c-200); letter-spacing: -0.01em; }
 .layers-d { font-size: 14px; line-height: 1.6; color: var(--c-700); }
@@ -347,20 +349,23 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
 .rung.gap .node { border-color: var(--c-warning); background: var(--c-warning); }
 .rung.gap .rk { color: var(--c-white); }
 .rung.gap .rv { color: var(--c-warning); }
-#entry-01 .e01-steps { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); margin-top: 48px; position: relative; }
-#entry-01 .e01-steps .step { grid-column: span 3; }
+#entry-01 .e01-steps { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(9, 1fr); column-gap: 16px; margin-top: 48px; position: relative; }
+#entry-01 .e01-steps .step:nth-of-type(1) { grid-column: 1; }
+#entry-01 .e01-steps .step:nth-of-type(2) { grid-column: 3; }
+#entry-01 .e01-steps .step:nth-of-type(3) { grid-column: 5; }
+#entry-01 .e01-steps .step:nth-of-type(4) { grid-column: 9; }
 .step { position: relative; display: flex; flex-direction: column; padding-right: 24px; }
 .step-no { font-family: var(--mono); font-size: 13px; color: var(--c-700); line-height: 1; letter-spacing: 0.1em; font-feature-settings: 'tnum' 1; }
 .rail-node { width: 9px; height: 9px; border: 0.5px solid var(--c-800); background: var(--c-elev); margin-top: 14px; position: relative; z-index: 1; }
 .rail-node.gap { border-color: var(--c-warning); background: transparent; }
-.step:not(:last-child)::after { content: ''; position: absolute; left: 4px; top: 31px; width: 100%; border-top: 0.5px solid var(--c-800); z-index: 0; }
-.step.seg-break::after { border-top: 0.5px dashed var(--c-warning); }
+.step:not(:last-child)::after { content: ''; position: absolute; left: 4px; top: 31px; width: calc(200% + 32px); border-top: 0.5px solid var(--c-800); z-index: 0; }
+.step.seg-break::after { border-top: 0.5px dashed var(--c-warning); width: calc(400% + 64px); }
 .step-name { font-size: 15px; color: var(--c-200); margin-top: 22px; letter-spacing: -0.01em; line-height: 1.25; }
 .step-tag { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; color: var(--c-700); margin-top: 10px; }
 .step.gap .step-no { color: var(--c-warning); }
 .step.gap .step-name { color: var(--c-white); }
 .step.gap .step-tag { color: var(--c-warning); }
-@media (max-width: 760px) { #entry-01 .e01-steps { grid-template-columns: 1fr; column-gap: 0; row-gap: 0; margin-top: 32px; } #entry-01 .step::after { display: none; } #entry-01 .rail-node { display: none; } #entry-01 .step { display: flex; flex-direction: row; align-items: baseline; gap: 12px; padding: 16px 0; border-top: 0.5px solid var(--c-900); } #entry-01 .step-name { font-size: 14px; margin-top: 0; } #entry-01 .step-tag { margin-top: 0; margin-left: auto; } }
+@media (max-width: 760px) { #entry-01 .e01-steps { grid-template-columns: 1fr; column-gap: 0; row-gap: 0; margin-top: 32px; } #entry-01 .e01-steps .step:nth-of-type(n) { grid-column: auto; } #entry-01 .step::after { display: none; } #entry-01 .rail-node { display: none; } #entry-01 .step { display: flex; flex-direction: row; align-items: baseline; gap: 12px; padding: 16px 0; border-top: 0.5px solid var(--c-900); } #entry-01 .step-name { font-size: 14px; margin-top: 0; } #entry-01 .step-tag { margin-top: 0; margin-left: auto; } }
 .rail-flow { position: absolute; top: 31px; left: 0; width: 28%; height: 1px; margin-top: -0.5px; background: linear-gradient(90deg, transparent, var(--c-600), transparent); opacity: 0; pointer-events: none; }
 @media (prefers-reduced-motion: no-preference) {
   .e01-steps .step-no, .e01-steps .step-name, .e01-steps .step-tag { opacity: 0; transform: translateY(12px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2,0.6,0.2,1); transition-delay: var(--d, 0s); }
@@ -809,7 +814,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   <div class="rec-body">
     <div class="rec-text">
       <div class="entry-head"><span class="entry-no" data-type>No. 01</span><span class="entry-name" data-type>The Record</span></div>
-      <h2 class="statement" style="grid-column:auto; margin:0 0 28px;">Most products record transactions.<br>Intelligent Investing records judgment.</h2>
+      <h2 class="statement" style="grid-column:auto; margin:0 0 28px;">Others record transactions.<br>This one records judgment.</h2>
       <p class="e01-note" style="color:var(--c-400);">An investor can execute every trade correctly, yet not explain the portfolio. Most platforms solved execution; the judgment layer, recording decisions and measuring them against a benchmark, was left to the investor. <b style="color:var(--c-200);font-weight:400;">Intelligent Investing exists because it was not.</b></p>
       <p class="e01-note" style="margin-top:18px;">Every position carries its reasoning, recorded the moment capital is committed and re-underwritten on schedule. <b style="color:var(--c-200);font-weight:400;">The portfolio is the artifact. The record is the product.</b></p>
     </div>
@@ -954,7 +959,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     <div class="uw-step"><span class="uw-no">04</span><i class="uw-node"></i><span class="uw-name">Kill Criteria</span></div>
     <div class="uw-step"><span class="uw-no">05</span><i class="uw-node"></i><span class="uw-name">Position Size</span></div>
     <div class="uw-step"><span class="uw-no">06</span><i class="uw-node"></i><span class="uw-name">Decision Record</span></div>
-    <div class="uw-step"><span class="uw-no">07</span><i class="uw-node"></i><span class="uw-name">Quarterly Re&#8209;underwriting</span></div>
+    <div class="uw-step"><span class="uw-no">07</span><i class="uw-node"></i><span class="uw-name">Re&#8209;underwriting</span></div>
     <div class="uw-step"><span class="uw-no">08</span><i class="uw-node"></i><span class="uw-name">Calibration</span></div>
     <div class="uw-step"><span class="uw-no">09</span><i class="uw-node"></i><span class="uw-name">Institutional Memory</span></div>
   </div>
