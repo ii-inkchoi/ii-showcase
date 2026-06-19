@@ -369,6 +369,8 @@
           <style>
             .perf-block{ display:flex; flex-direction:column; gap:16px; width:100%; padding:16px 0; border-top:0.5px solid var(--c-900); border-bottom:0.5px solid var(--c-900); color:inherit; text-decoration:none; -webkit-tap-highlight-color:transparent; }
             .perf-block:active{ opacity:0.5; transition:opacity 80ms ease; }
+            .perf-block:focus{ outline:none; }
+            .perf-block:focus:not(:focus-visible){ outline:none; }
             .perf-header{ display:flex; flex-direction:row; justify-content:space-between; align-items:baseline; gap:12px; }
             .perf-label{ font-size:15px; color:var(--silver); letter-spacing:-0.3px; line-height:1.15; text-align:left; }
             .perf-scope{ font-size:13px; color:var(--gray); letter-spacing:-0.22px; }
@@ -1055,7 +1057,7 @@
   function computeTarget(){
     var hash = (__P.split('#')[1] || '');
     if (!hash) return { sec: document.querySelector('.section'), d: 0 };   // no hash → main dashboard top (total-value overview)
-    var sec = document.querySelector((hash === 'active' || hash === 'self') ? '.section.active' : (hash === 'managed' ? '.section.managed' : '.section'));
+    var sec = document.querySelector((hash === 'active' || hash === 'self' || hash === 'bench') ? '.section.active' : (hash === 'managed' ? '.section.managed' : '.section'));
     if (!sec) return null;
     var targetTop = sec.offsetTop;
     if (hash === 'active') {
@@ -1067,6 +1069,8 @@
       targetTop = tblm ? Math.max(_absTop(sec), _absTop(tblm) + tblm.offsetHeight - screenEl.clientHeight * 0.80 + 16) : _absTop(sec);
     } else if (hash === 'self') {
       targetTop = _absTop(sec);   // Self-Directed section header (Active / Self-Directed + value), not the positions list
+    } else if (hash === 'bench') {
+      var bb = document.getElementById('bench'); targetTop = bb ? Math.max(0, _absTop(bb) - 24) : _absTop(sec);   // S&P 500 Benchmark at top → calibration + active positions below it
     }
     var d = Math.max(0, targetTop - 16);
     return { sec: sec, d: Math.min(d, Math.max(0, screenEl.scrollHeight - screenEl.clientHeight)) };
