@@ -63,7 +63,7 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:var(--c-black);
 .grid-overlay .go-grid span{background:var(--c-200);opacity:0.07;}
 @media(max-width:900px){.container{padding:0 24px;}.memo-section,.how-section,.acc-section,.accounts-section,.docs-section{padding:72px 0;}}
 .page-header{padding:180px 0 80px;border-bottom:0.5px solid var(--c-900);background-color:var(--c-1000);}.page-title{font-size:clamp(34px,4.6vw,56px);line-height:1.04;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:48px;}
-.page-deck{font-size:clamp(17px,1.6vw,22px);line-height:1.4;letter-spacing:-0.015em;color:var(--c-400);max-width:760px;text-wrap:balance;}.cta-section{text-align:center;padding:160px 0 100px;border-top:0.5px solid var(--c-900);}
+.page-deck{font-size:clamp(17px,1.6vw,22px);line-height:1.4;letter-spacing:-0.015em;color:var(--c-400);max-width:760px;text-wrap:balance;}.cta-section{text-align:center;padding:160px 0 100px;}
 .cta-canon{font-size:clamp(28px,3.5vw,44px);line-height:1.2;letter-spacing:-0.025em;color:var(--c-200);margin:0 auto 48px;max-width:880px;text-wrap:balance;}
 .cta-button{display:inline-flex;align-items:center;gap:8px;font-size:15px;color:var(--c-white);text-decoration:none;}
 .cta-button .arr{display:inline-flex;align-items:center;line-height:1;}
@@ -86,7 +86,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 
 /* — Body sections (shared idiom with Managed) — */
 .page-eyebrow{font-family:var(--mono);font-size:12px;color:var(--c-700);letter-spacing:0.04em;margin-bottom:28px;}
-.page-actions{margin-top:48px;}.memo-section{padding:130px 0;border-top:0.5px solid var(--c-900);}
+.page-actions{margin-top:48px;}.memo-section{padding:130px 0;}
 .memo-grid{display:grid;grid-template-columns:1fr;gap:48px;align-items:start;}
 @media(min-width:1024px){.memo-grid{grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);row-gap:0;}.memo-text{grid-column:1 / 7;}.memo-grid .dr-doc{grid-column:9 / 13;}}
 .memo-lead{font-size:clamp(24px,3vw,34px);line-height:1.15;letter-spacing:-0.03em;color:var(--c-200);margin-bottom:28px;font-weight:400;}
@@ -114,7 +114,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .dr-foot{display:flex;justify-content:flex-end;padding:16px 28px;}
 .dr-foot .dr-link{color:var(--c-200);}
 @media(max-width:900px){.dr-doc{max-width:380px;margin:0 auto;}}
-.acc-section{padding:130px 0;border-top:0.5px solid var(--c-900);}
+.acc-section{padding:130px 0;}
 .acc-headline{font-size:clamp(24px,3vw,34px);line-height:1.15;letter-spacing:-0.03em;color:var(--c-200);max-width:760px;margin-bottom:48px;text-wrap:balance;font-weight:400;}
 .acc-rows{margin-top:48px;display:flex;flex-direction:column;}
 .acc-row{padding:44px 0;border-top:0.5px solid var(--c-900);display:grid;grid-template-columns:1fr;gap:32px;align-items:center;}
@@ -167,7 +167,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .acc-pt-k{font-size:22px;color:var(--c-200);letter-spacing:-0.02em;margin-bottom:12px;}
 .acc-pt-d{font-size:15px;line-height:1.7;color:var(--c-600);max-width:660px;}
 .acc-sysnote{font-size:15px;line-height:1.7;color:var(--c-700);max-width:660px;margin-top:32px;}
-.docs-section{padding:130px 0;border-top:0.5px solid var(--c-900);}
+.docs-section{padding:130px 0;}
 .doc-list{display:flex;flex-direction:column;margin-top:0;}
 .doc-row{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 0;border-top:0.5px solid var(--c-900);text-decoration:none;color:inherit;transition:padding 0.3s ease;}
 .doc-row:last-of-type{border-bottom:0.5px solid var(--c-900);}
@@ -181,7 +181,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .se-no{color:var(--c-700);}
 .se-name{color:var(--c-400);}
 
-.how-section{padding:130px 0;border-top:0.5px solid var(--c-900);}
+.how-section{padding:130px 0;}
 @media(min-width:760px){.how-section{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}.how-section>.how-intro{grid-column:1 / 6;}.how-section .how-steps{grid-column:9 / 13;}}
 .how-steps{display:flex;flex-direction:column;position:relative;}
 .how-steps::before{content:"";position:absolute;top:0;bottom:0;left:11px;width:0.5px;background:var(--c-900);}
@@ -194,7 +194,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .how-headline{font-size:clamp(24px,3vw,34px);line-height:1.15;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin:28px 0 18px;text-wrap:balance;}
 .how-lead{font-size:15px;line-height:1.7;color:var(--c-600);max-width:660px;}
 
-.accounts-section{padding:130px 0;border-top:0.5px solid var(--c-900);}
+.accounts-section{padding:130px 0;}
 @media(min-width:760px){.docs-section,.accounts-section{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}.docs-section>.section-eyebrow,.accounts-section>.section-eyebrow{grid-column:1 / 7;}.docs-section .doc-list{grid-column:7 / 13;}.accounts-section .acct-list{grid-column:7 / 13;}}
 .acct-list{display:flex;flex-direction:column;margin-top:40px;}
 .acct-item{border-top:0.5px solid var(--c-900);}
@@ -215,7 +215,9 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .acct-dgrp-h{font-family:var(--mono);font-size:12px;letter-spacing:0.06em;color:var(--c-400);display:block;margin-bottom:8px;}
 .acct-dgrp p{font-size:15px;line-height:1.7;color:var(--c-600);}
 @media(max-width:760px){
-  .how-step{grid-template-columns:1fr;gap:16px;}.how-steps::before{display:none;}.how-node{display:none;}}
+  .how-step{grid-template-columns:1fr;gap:16px;}.how-steps::before{display:none;}.how-node{display:none;}
+  .memo-section,.acc-section,.docs-section,.how-section,.accounts-section,.cta-section{position:relative;}
+  .memo-section::before,.acc-section::before,.docs-section::before,.how-section::before,.accounts-section::before,.cta-section::before{content:'';position:absolute;top:0;left:50%;width:100vw;transform:translateX(-50%);border-top:0.5px solid var(--c-900);pointer-events:none;}}
 </style>
 </head>
 <body>
