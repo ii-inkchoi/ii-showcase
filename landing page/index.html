@@ -806,14 +806,12 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 
 <!-- ENTRY 01 - Statement: the missing layer -->
 <div class="container"><section id="entry-01">
-  <div class="entry-head" style="grid-column:1 / -1;"><span class="entry-no" data-type>No. 01</span><span class="entry-name" data-type>The Record</span></div>
   <div class="rec-body">
     <div class="rec-text">
+      <div class="entry-head"><span class="entry-no" data-type>No. 01</span><span class="entry-name" data-type>The Record</span></div>
       <h2 class="statement" style="grid-column:auto; margin:0 0 28px;">Most products record transactions.<br>Intelligent Investing records judgment.</h2>
-      <p class="e01-note" style="color:var(--c-400);">An investor can execute every trade correctly, yet not explain the portfolio.</p>
-      <p class="e01-note" style="margin-top:18px;">Most platforms solved the execution layer. The judgment layer, the framework for recording decisions, measuring them against a benchmark, and learning from outcomes, was left to the investor to figure out alone.</p>
-      <p class="e01-note" style="margin-top:28px; color:var(--c-200);">Intelligent Investing exists because it was not.</p>
-      <p class="e01-note" style="margin-top:28px;">Every position carries its reasoning: classification, sizing, confidence, origin, and the full investment case, recorded the moment capital is committed and re-underwritten on schedule. <b style="color:var(--c-200);font-weight:400;">The portfolio is the artifact. The record is the product.</b></p>
+      <p class="e01-note" style="color:var(--c-400);">An investor can execute every trade correctly, yet not explain the portfolio. Most platforms solved execution; the judgment layer, recording decisions and measuring them against a benchmark, was left to the investor. <b style="color:var(--c-200);font-weight:400;">Intelligent Investing exists because it was not.</b></p>
+      <p class="e01-note" style="margin-top:18px;">Every position carries its reasoning, recorded the moment capital is committed and re-underwritten on schedule. <b style="color:var(--c-200);font-weight:400;">The portfolio is the artifact. The record is the product.</b></p>
     </div>
     <div class="rec-img">
       <article class="dr-doc">
@@ -848,9 +846,9 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 
 <!-- ENTRY - Decision Record (P1: the hero object - what recording judgment actually looks like) -->
 <style>
-#entry-01 .rec-body { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); align-items: start; margin-top: 8px; }
+#entry-01 .rec-body { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); align-items: center; margin-top: 8px; }
 #entry-01 .rec-text { grid-column: 1 / 6; }
-#entry-01 .rec-img { grid-column: 9 / 13; margin-top: -36px; }
+#entry-01 .rec-img { grid-column: 9 / 13; margin-top: 0; }
 .dr-cap { margin: 16px 0 0; font-size: 13px; color: var(--c-600); letter-spacing: -0.01em; text-align: right; }
 .dr-doc { border: 0.5px solid var(--c-800); background: var(--c-elev); border-radius: 28px; overflow: hidden; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); position: relative; height: 672px; padding-bottom: 32px; -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent 100%); mask-image: linear-gradient(to bottom, #000 82%, transparent 100%); }
 /* mobile feel - dynamic island (kept severe/monochrome): a black pill centred in the status bar */
@@ -907,9 +905,9 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 }
 </style>
 <div class="container"><section id="underwriting">
-  <div class="entry-head" style="grid-column:1 / -1;"><span class="entry-no" data-type>No. 02</span><span class="entry-name" data-type>The Allocator</span></div>
   <div class="aw-2col">
   <div class="aw-text">
+    <div class="entry-head"><span class="entry-no" data-type>No. 02</span><span class="entry-name" data-type>The Allocator</span></div>
     <h2 class="statement" style="grid-column:auto; margin:0 0 28px;">Most people own positions.<br>Allocators own decisions.</h2>
     <p class="aw-textbody" style="margin:0 0 18px;">An allocator owns the reasoning behind every position and stays accountable to it. The objective is decision quality, not activity.</p>
     <p class="aw-textbody" style="margin-top:18px; color:var(--c-200);">Each decision is recorded as a probability and a time horizon, then scored against what happened. Confidence, made measurable.</p>
@@ -964,9 +962,9 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 
 <!-- ENTRY - Calibration (NEW: confidence vs. outcome - Dave's "most important / most engaging" feature. Chart HTML to be supplied; placeholder for now) -->
 <style>
-#underwriting .aw-2col { grid-column:1 / -1; display:grid; grid-template-columns:repeat(12,1fr); column-gap:var(--gutter); align-items:start; margin-top:8px; }
-#underwriting .aw-text { grid-column:1 / 6; align-self:start; }
-#underwriting .cal-col { grid-column:9 / 13; margin-top:-28px; }
+#underwriting .aw-2col { grid-column:1 / -1; display:grid; grid-template-columns:repeat(12,1fr); column-gap:var(--gutter); align-items:center; margin-top:8px; }
+#underwriting .aw-text { grid-column:1 / 6; align-self:center; }
+#underwriting .cal-col { grid-column:9 / 13; margin-top:0; }
 #underwriting .aw-textbody { font-size:15px; line-height:1.7; color:var(--c-600); margin:0; }
 #underwriting .aw-2col .uw-flow { grid-column:auto; margin-top:0; }
 #underwriting .aw-cap { font-size:13px; letter-spacing:-0.01em; color:var(--c-600); margin:0 0 16px; }
@@ -1006,9 +1004,9 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 
 <!-- ENTRY - Benchmark (NEW: the S&P 500 comparison, from the product dashboard - Dave's "arguably most important" feature) -->
 <style>
-#benchmark .bm-wrap { grid-column:1 / -1; display:grid; grid-template-columns:repeat(12,1fr); column-gap:var(--gutter); align-items:start; margin-top:8px; }
+#benchmark .bm-wrap { grid-column:1 / -1; display:grid; grid-template-columns:repeat(12,1fr); column-gap:var(--gutter); align-items:center; margin-top:8px; }
 #benchmark .bm-text { grid-column:1 / 6; }
-#benchmark .bm-col { grid-column:9 / 13; margin-top:-28px; }
+#benchmark .bm-col { grid-column:9 / 13; margin-top:0; }
 #benchmark .bm-aside { font-size:15px; line-height:1.7; color:var(--c-600); }
 #benchmark .bm-aside b { color:var(--c-200); font-weight:400; }
 #benchmark .bm-card { border:0.5px solid var(--c-800); background:var(--c-elev); border-radius:28px; overflow:hidden; box-shadow:inset 0 1px 0 rgba(255,255,255,0.05); position:relative; height:672px; -webkit-mask-image:linear-gradient(to bottom, #000 92%, transparent 100%); mask-image:linear-gradient(to bottom, #000 92%, transparent 100%); }
@@ -1037,9 +1035,9 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 }
 </style>
 <div class="container"><section id="benchmark">
-  <div class="entry-head" style="grid-column:1 / -1;"><span class="entry-no" data-type>No. 03</span><span class="entry-name" data-type>Benchmark</span></div>
   <div class="bm-wrap">
     <div class="bm-text">
+      <div class="entry-head"><span class="entry-no" data-type>No. 03</span><span class="entry-name" data-type>Benchmark</span></div>
       <h2 class="statement" style="grid-column:auto; margin:0 0 28px;">A return is only real when measured against the market.</h2>
       <p class="bm-aside">Serious allocators always know where they stand against the market. Most apps make sure you never have to look. <b>Intelligent Investing puts it on every screen: your portfolio against the same capital invested in the S&amp;P 500, in dollars.</b></p>
       <p class="bm-aside" style="margin-top:18px;">Not a percentage buried in a statement, but a live figure recalculated as the market moves. The comparison is the default, not a setting you have to find. <b>Sometimes it is not the number you want to see. That is the point.</b></p>
