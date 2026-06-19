@@ -175,8 +175,8 @@ section { padding: 130px 0; position: relative; }
   section.hero .hero-stack-02 { height: auto; width: 80%; aspect-ratio: 424 / 883; left: 50%; right: auto; top: auto; bottom: 0; transform: translateX(-50%); }
   section.hero .hero-toggle { right: var(--frame); left: auto; bottom: 96px; transform: none; } }
 @media (max-width: 760px) {
-  #trust, #entry-01, #entry-02, #underwriting, #benchmark, #entry-03, #evidence, #research, #entry-06, #entry-04, #journal, #close { position: relative; }
-  #trust::before, #entry-01::before, #entry-02::before, #underwriting::before, #benchmark::before, #entry-03::before, #evidence::before, #research::before, #entry-06::before, #entry-04::before, #close::before { content: ''; position: absolute; top: 0; left: 50%; width: 100vw; transform: translateX(-50%); border-top: 0.5px solid var(--c-900); pointer-events: none; }
+  #trust, #system-intro, #entry-01, #entry-02, #underwriting, #benchmark, #entry-03, #evidence, #research, #entry-06, #entry-04, #journal, #close { position: relative; }
+  #trust::before, #system-intro::before, #entry-01::before, #entry-02::before, #underwriting::before, #benchmark::before, #entry-03::before, #evidence::before, #research::before, #entry-06::before, #entry-04::before, #close::before { content: ''; position: absolute; top: 0; left: 50%; width: 100vw; transform: translateX(-50%); border-top: 0.5px solid var(--c-900); pointer-events: none; }
   #underwriting, #benchmark, #entry-03, #evidence, #entry-04, #research { border-top: 0; }
   .offer-foot { border-top: 0 !important; padding-top: 0; }
 }
@@ -273,6 +273,14 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
 .trust-item { display: flex; flex-direction: column; gap: 7px; border-left: 0.5px solid var(--c-800); padding-left: 20px; }
 .ti-num { font-size: 22px; color: var(--c-200); letter-spacing: -0.02em; line-height: 1; }
 .ti-lbl { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-700); }
+#system-intro { background: var(--c-elev); padding: 96px 0; }
+.sys-intro-head { font-size: clamp(22px,2.6vw,28px); line-height: 1.15; letter-spacing: -0.03em; color: var(--c-200); font-weight: 400; }
+.sys-intro-strip { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: var(--gutter); margin-top: 44px; }
+.sys-intro-item { display: flex; flex-direction: column; gap: 10px; border-left: 0.5px solid var(--c-800); padding-left: 20px; }
+.sii-k { font-size: 17px; color: var(--c-200); letter-spacing: -0.01em; }
+.sii-d { font-size: 14px; line-height: 1.6; color: var(--c-700); max-width: 280px; }
+.sys-intro-foot { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-700); margin-top: 36px; }
+@media (max-width: 760px) { .sys-intro-strip { grid-template-columns: 1fr; row-gap: 24px; } .sys-intro-item { border-left: 0; padding-left: 0; border-top: 0.5px solid var(--c-800); padding-top: 16px; } }
 @media (max-width: 760px) { .trust-item { grid-column: span 12; border-left: 0; padding-left: 0; border-top: 0.5px solid var(--c-800); padding-top: 16px; } .trust-strip { row-gap: 20px; } .ti-num { font-size: 18px; } }
 
 /* entry sections */
@@ -776,6 +784,17 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   <a href="#entry-01" class="hero-scroll" aria-label="Scroll to begin"><span class="sa">&darr;</span></a>
 </section>
 
+<!-- SYSTEM INTRO - product reality before philosophy (P2) -->
+<section id="system-intro" class="band"><div class="container">
+  <h2 class="sys-intro-head">One membership. Three layers.</h2>
+  <div class="sys-intro-strip">
+    <div class="sys-intro-item"><span class="sii-k">Managed Portfolios</span><span class="sii-d">Discretionary portfolios, managed and benchmarked for you.</span></div>
+    <div class="sys-intro-item"><span class="sii-k">Self-Directed Investing</span><span class="sii-d">Your own positions, each opened with a sealed memo.</span></div>
+    <div class="sys-intro-item"><span class="sii-k">Fiscal.ai Research</span><span class="sii-d">Third-party research, fundamentals to filings, included.</span></div>
+  </div>
+  <p class="sys-intro-foot">Connected by a permanent decision record.</p>
+</div></section>
+
 <!-- TRUST - broker clarity (above Reality: credentials first) -->
 <section id="trust" class="band"><div class="container">
   <p class="trust-line">A licensed brokerage with the decision layer built in. <b>Not a tool bolted onto your broker.</b></p>
@@ -814,7 +833,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
       </dl>
       <div class="dr-case">
         <div class="dr-case-label">Investment Case</div>
-        <p class="dr-thesis"><b>Thesis.</b> Apple is a US growth story in its middle innings. The US flywheel, flagship-led brand-building, app-driven engagement, and disciplined new-box openings that pay back in under a year, can roughly double the US fleet while e-commerce climbs.</p>
+        <p class="dr-thesis"><b>Thesis.</b> Apple is a cash-generative compounder in the middle of a Services transition. An installed base of more than two billion active devices turns one-time hardware buyers into recurring, high-margin Services revenue, while pricing power and steady buybacks compound value per share. The risk is hardware maturity in a saturated smartphone market; the case is that ecosystem lock-in and Services carry the next leg.</p>
         <span class="dr-link">Read Full Memo &rsaquo;</span>
       </div>
       <footer class="dr-foot"><span class="dr-link">Re-underwrite &rsaquo;</span></footer>
