@@ -4,9 +4,9 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Managed · Intelligent Investing</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-800:#565B5E;--c-700:#929292;--c-600:#A7A7A7;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFF;--c-warning:#FDAD00; --frame: clamp(24px, 4vw, 48px); --maxw: 1680px; --gutter: clamp(16px, 1.5vw, 24px); --c-elev: #0A0A0A;}
+:root{--c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-800:#565B5E;--c-700:#929292;--c-600:#A7A7A7;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFF;--c-warning:#FDAD00; --frame: clamp(24px, 4vw, 48px); --maxw: 1680px; --gutter: clamp(16px, 1.5vw, 24px); --c-elev: #0A0A0A; --mono:'Chakra Petch',ui-monospace,monospace;}
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{background:var(--c-black);color:var(--c-600);font-family:'Inter',sans-serif;font-feature-settings:'tnum' 1,'lnum' 1,'ss01' 1;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased;font-weight:400;}
 body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient(180deg,var(--c-elev) 0,var(--c-black) 560px);}body.menu-open{overflow:hidden;}
@@ -56,7 +56,11 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .menu-bottom .mb-left{display:flex;flex-direction:column;gap:4px;}.menu-bottom .mb-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
 .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--frame); box-sizing: border-box; }
 @media(max-width:900px){.container{padding:0 24px;}}
-.page-header{padding:180px 0 80px;border-bottom:0.5px solid var(--c-900);display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:center;}
+.page-header{padding:230px 0;border-bottom:0.5px solid var(--c-800);background:linear-gradient(180deg,var(--c-900) 0%,var(--c-900) 38%,var(--c-black) 100%);position:relative;overflow:hidden;}
+.page-header .container{position:relative;z-index:1;}
+.pg-art{position:absolute;top:0;right:0;height:100%;width:46%;z-index:0;pointer-events:none;display:flex;align-items:center;justify-content:center;}
+.pg-art canvas{width:clamp(320px,34vw,520px);height:clamp(320px,34vw,520px);display:block;}
+@media(max-width:900px){.pg-art{display:none;}}
 .ph-text{grid-column:1 / 8;}
 .ph-figure{grid-column:8 / 13;position:relative;}
 .ph-figure svg{width:100%;height:auto;display:block;overflow:visible;}
@@ -75,7 +79,7 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .page-breadcrumb{font-size:12px;color:var(--c-700);letter-spacing:0.06em;margin-bottom:36px;display:flex;align-items:center;gap:10px;}
 .page-breadcrumb a{color:var(--c-700);text-decoration:none;}.page-breadcrumb .sep{color:var(--c-800);}.page-breadcrumb .current{color:var(--c-200);}
 .page-masthead{font-size:13px;color:var(--c-700);letter-spacing:0.04em;font-feature-settings:'tnum' 1;margin-bottom:20px;}
-.page-title{font-size:clamp(34px,5vw,64px);line-height:1.02;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:48px;}
+.page-title{font-size:clamp(34px,4.6vw,56px);line-height:1.04;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:48px;}
 .page-deck{font-size:clamp(17px,1.6vw,22px);line-height:1.4;letter-spacing:-0.015em;color:var(--c-400);max-width:760px;text-wrap:balance;}
 .wordmarks{padding:32px 0;}
 .wordmark-row{display:grid;grid-template-columns:minmax(0,400px) 1fr;gap:80px;align-items:center;padding:56px 0;border-bottom:0.5px solid var(--c-900);text-decoration:none;color:inherit;transition:padding 0.3s ease;}
@@ -120,12 +124,12 @@ footer{border-top:0.5px solid var(--c-900);padding:96px 0 36px;font-size:14px;li
 @media(max-width:600px){.footer-bottom{flex-direction:column;gap:16px;align-items:flex-start;}}
 @media (prefers-reduced-motion: no-preference){.ri{opacity:0;transform:translateY(24px);transition:opacity 0.7s cubic-bezier(0.2,0.6,0.2,1),transform 0.7s cubic-bezier(0.2,0.6,0.2,1);transition-delay:var(--d,0s);}.ri.in{opacity:1;transform:none;}}
 
-/* — Managed body sections — */
-.page-eyebrow{font-size:12px;color:var(--c-700);letter-spacing:0.16em;margin-bottom:20px;}
+/* Managed body sections */
+.page-eyebrow{font-family:var(--mono);font-size:12px;color:var(--c-700);letter-spacing:0.04em;margin-bottom:28px;}
 .page-actions{margin-top:48px;}
-.section-eyebrow{font-size:12px;color:var(--c-700);letter-spacing:0.16em;margin-bottom:48px;}
+.section-eyebrow{font-family:var(--mono);font-size:12px;color:var(--c-700);letter-spacing:0.04em;margin-bottom:48px;}
 
-.how-section{padding:96px 0;border-top:0.5px solid var(--c-900);}
+.how-section{padding:130px 0;}
 .how-steps{display:flex;flex-direction:column;}
 .how-step{display:grid;grid-template-columns:minmax(0,180px) 1fr;gap:48px;align-items:baseline;padding:40px 0;border-top:0.5px solid var(--c-900);}
 .how-step:last-of-type{border-bottom:0.5px solid var(--c-900);}
@@ -134,31 +138,33 @@ footer{border-top:0.5px solid var(--c-900);padding:96px 0 36px;font-size:14px;li
 .how-desc{font-size:15px;line-height:1.6;color:var(--c-600);max-width:560px;}
 .how-closing{font-size:17px;line-height:1.5;color:var(--c-600);margin-top:48px;max-width:560px;text-wrap:balance;}
 
-.compounds-section{padding:96px 0;border-top:0.5px solid var(--c-900);}
+.compounds-section{padding:130px 0;}
 .compounds-prose{max-width:760px;}
 .compounds-prose p{font-size:18px;line-height:1.7;color:var(--c-400);letter-spacing:-0.01em;}
 .compounds-prose p+p{margin-top:28px;}
 
-.reg-section{padding:96px 0;border-top:0.5px solid var(--c-900);}
+.reg-section{padding:130px 0;}
 .reg-rows{display:flex;flex-direction:column;}
 .reg-row{display:grid;grid-template-columns:minmax(0,260px) 1fr;gap:48px;padding:32px 0;border-top:0.5px solid var(--c-900);}
 .reg-row:last-of-type{border-bottom:0.5px solid var(--c-900);}
 .reg-label{font-size:12px;color:var(--c-200);letter-spacing:0.08em;}
 .reg-desc{font-size:14px;line-height:1.65;color:var(--c-700);font-style:italic;max-width:760px;}
 
-.accounts-section{padding:96px 0;border-top:0.5px solid var(--c-900);}
+.accounts-section{padding:130px 0;}
 .accounts-row{display:flex;align-items:stretch;border-top:0.5px solid var(--c-900);border-bottom:0.5px solid var(--c-900);}
 .account-item{flex:1;padding:40px 0;text-align:center;font-size:22px;letter-spacing:-0.02em;color:var(--c-200);border-left:0.5px solid var(--c-900);}
 .account-item:first-child{border-left:none;}
 
-.portfolios-section{padding:96px 0;border-top:0.5px solid var(--c-900);}
+.portfolios-section{padding:130px 0;}
 .portfolio-rows{display:flex;flex-direction:column;}
 .portfolio-row{display:flex;align-items:baseline;justify-content:space-between;gap:32px;padding:28px 0;border-top:0.5px solid var(--c-900);}
 .portfolio-row:last-of-type{border-bottom:0.5px solid var(--c-900);}
 .portfolio-name{font-size:18px;letter-spacing:-0.02em;color:var(--c-white);}
 .portfolio-alloc{font-size:14px;color:var(--c-700);text-align:right;font-feature-settings:'tnum' 1;}
 
-.perf-section{padding:96px 0;border-top:0.5px solid var(--c-900);}
+.perf-section{padding:130px 0;}
+@media(max-width:900px){.how-section,.compounds-section,.reg-section,.accounts-section,.portfolios-section,.perf-section{padding:72px 0;}}
+@media(max-width:760px){.how-section,.compounds-section,.reg-section,.accounts-section,.portfolios-section,.perf-section{position:relative;}.how-section::before,.compounds-section::before,.reg-section::before,.accounts-section::before,.portfolios-section::before,.perf-section::before{content:'';position:absolute;top:0;left:50%;width:100vw;transform:translateX(-50%);border-top:0.5px solid var(--c-900);pointer-events:none;}}
 .perf-scroll{width:100%;overflow-x:auto;}
 .perf-table{width:100%;border-collapse:collapse;font-feature-settings:'tnum' 1,'lnum' 1;}
 .perf-table th{font-size:12px;font-weight:400;color:var(--c-700);letter-spacing:0.04em;text-align:right;padding:0 0 18px;border-bottom:0.5px solid var(--c-900);white-space:nowrap;}
@@ -269,7 +275,7 @@ footer{border-top:0.5px solid var(--c-900);padding:96px 0 36px;font-size:14px;li
     <div class="reg-row ri" style="--d:0.04s"><div class="reg-label">Regulatory Standing</div><p class="reg-desc">IntelligentInvesting Wealth Management Inc. is registered in each province and territory where it conducts business and is subject to regulation by the applicable provincial or territorial securities regulatory authority, with the Autorité des Marchés Financiers (AMF) serving as its principal regulator.</p></div>
     <div class="reg-row ri" style="--d:0.06s"><div class="reg-label">Investor Protection</div><p class="reg-desc">Investment accounts held with CI Investment Services Inc., a custodian, are protected by CIPF in accordance with its coverage policy. A brochure describing the scope and nature of coverage, as well as the limitations and exclusions of coverage, is available upon request.</p></div>
     <div class="reg-row ri" style="--d:0.08s"><div class="reg-label">Portfolio Manager</div><p class="reg-desc">Investment accounts are opened with IntelligentInvesting Wealth Management Inc., a registered portfolio manager.</p></div>
-    <div class="reg-row ri" style="--d:0.1s"><div class="reg-label">Institutional Backing</div><p class="reg-desc">[Institutional backing and public company reference — Proof &amp; Facts source and investor-facing route required before publish]</p></div>
+    <div class="reg-row ri" style="--d:0.1s"><div class="reg-label">Institutional Backing</div><p class="reg-desc">[Institutional backing and public company reference. Proof &amp; Facts source and investor-facing route required before publish]</p></div>
   </div>
 </section>
 </div>
@@ -305,7 +311,7 @@ footer{border-top:0.5px solid var(--c-900);padding:96px 0 36px;font-size:14px;li
     <table class="perf-table">
       <thead>
         <tr>
-          <th class="perf-th-name">Net of Fees — as of May 29, 2026</th>
+          <th class="perf-th-name">Net of Fees &middot; as of May 29, 2026</th>
           <th>1M</th><th>3M</th><th>YTD</th><th>1Y</th><th>3Y</th><th>5Y</th><th>10Y*</th>
         </tr>
       </thead>
@@ -331,7 +337,7 @@ footer{border-top:0.5px solid var(--c-900);padding:96px 0 36px;font-size:14px;li
           <td>0.18%</td><td>0.54%</td><td>0.90%</td><td>2.35%</td><td>3.65%</td><td>3.09%</td><td>2.00%</td>
         </tr>
         <tr class="perf-benchmark">
-          <td class="perf-td-name"><span class="perf-pname">S&amp;P 500 (CAD)**</span><span class="perf-palloc">Benchmark — As of Jan 30, 2026</span></td>
+          <td class="perf-td-name"><span class="perf-pname">S&amp;P 500 (CAD)**</span><span class="perf-palloc">Benchmark &middot; As of Jan 30, 2026</span></td>
           <td>6.54%</td><td>11.63%</td><td>11.82%</td><td>30.03%</td><td>24.16%</td><td>17.19%</td><td>16.25%</td>
         </tr>
       </tbody>

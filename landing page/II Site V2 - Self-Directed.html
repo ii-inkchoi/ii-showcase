@@ -62,10 +62,10 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:var(--c-black);
 .grid-overlay .go-grid{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);height:100%;}
 .grid-overlay .go-grid span{background:var(--c-200);opacity:0.07;}
 @media(max-width:900px){.container{padding:0 24px;}.memo-section,.how-section,.acc-section,.accounts-section,.docs-section{padding:72px 0;}}
-.page-header{padding:315px 0 144px;border-bottom:0.5px solid var(--c-900);background-color:var(--c-1000);position:relative;overflow:hidden;}
+.page-header{padding:230px 0;border-bottom:0.5px solid var(--c-800);background:linear-gradient(180deg,var(--c-900) 0%,var(--c-900) 38%,var(--c-black) 100%);position:relative;overflow:hidden;}
 .page-header .container{position:relative;z-index:1;}
 .pg-art{position:absolute;top:0;right:0;height:100%;width:46%;z-index:0;pointer-events:none;display:flex;align-items:center;justify-content:center;}
-.pg-art canvas{width:clamp(220px,26vw,400px);height:clamp(220px,26vw,400px);display:block;}
+.pg-art canvas{width:clamp(320px,34vw,520px);height:clamp(320px,34vw,520px);display:block;}
 @media(max-width:900px){.pg-art{display:none;}}
 .page-title{font-size:clamp(34px,4.6vw,56px);line-height:1.04;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:48px;}
 .page-deck{font-size:clamp(17px,1.6vw,22px);line-height:1.4;letter-spacing:-0.015em;color:var(--c-400);max-width:760px;text-wrap:balance;}.cta-section{text-align:center;padding:160px 0 100px;}
@@ -259,7 +259,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   function size(){var r=cv.getBoundingClientRect();W=r.width;H=r.height;cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);ctx.setTransform(DPR,0,0,DPR,0,0);}
   function draw(){
     ctx.clearRect(0,0,W,H);
-    var S=Math.min(W,H)*0.34, cx=W*0.5, cy=H*0.5;
+    var S=Math.min(W,H)*0.42, cx=W*0.5, cy=H*0.5;
     var tau=1.15+1.05*Math.sin(t*0.00009), thb=t*0.0007;
     var cTa=Math.cos(tau),sTa=Math.sin(tau);
     function proj(x,y,z){var y2=y*cTa-z*sTa, z2=y*sTa+z*cTa;return [cx+x*S, cy-y2*S, z2];}
