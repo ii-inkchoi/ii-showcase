@@ -56,12 +56,12 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .menu-bottom .mb-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
 .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--frame); box-sizing: border-box; }
 section{padding:120px 0;}
-@media(max-width:900px){.container{padding:0 24px;}section{padding:80px 0;}}
+@media(max-width:900px){.container{padding:0 24px;}section.price-section,section.included-section,section.faq-section,section.cta-section,section.reg-section{padding:72px 0;}}
 .page-header{padding:314px 0 180px;border-bottom:0.5px solid var(--c-800);background:linear-gradient(180deg,var(--c-black) 0%,var(--c-surface) 62%,var(--c-surface) 100%);position:relative;overflow:hidden;min-height:793px;box-sizing:border-box;}
 .page-header .container{position:relative;z-index:1;}
 .pg-art{position:absolute;top:0;right:0;height:100%;width:46%;z-index:0;pointer-events:none;display:flex;align-items:center;justify-content:center;padding-top:134px;box-sizing:border-box;}
 .pg-art canvas{width:clamp(340px,35vw,500px);height:clamp(340px,35vw,500px);display:block;}
-@media(max-width:900px){.pg-art{display:none;}}
+@media(max-width:760px){.page-header{padding:128px 0 88px;min-height:auto;display:flex;flex-direction:column;}.page-header .container{order:1;}.page-header .page-title,.page-header .page-deck{max-width:none;}.pg-art{position:static;order:2;width:100%;height:auto;left:auto;right:auto;top:auto;padding-top:0;margin-top:40px;opacity:0.8;}.pg-art canvas{width:clamp(280px,84vw,380px);height:clamp(280px,84vw,380px);}}
 .lang-toggle{display:inline-flex;align-items:center;gap:8px;font-size:13px;letter-spacing:0.02em;font-feature-settings:'tnum' 1;}
 .lang-toggle .lt{color:var(--c-700);text-decoration:none;cursor:pointer;transition:color 0.15s ease;}
 .lang-toggle .lt.active{color:var(--c-200);}
@@ -201,12 +201,17 @@ footer{border-top:0.5px solid var(--c-900);padding:96px 0 36px;font-size:14px;li
         p0=P;}
     }
     ctx.globalCompositeOperation='source-over';
+    var gate=Math.sin(t*0.00024);if(gate<0)gate=0;
+    var off=(Math.sin(t*0.00110)*0.7+Math.sin(t*0.00059+1.3)*0.45)*gate*PI*0.92;
     for(var k2=0;k2<K;k2++){
       var g2=PI*(k2+0.5)/K, sg2=Math.sin(g2), cg2=Math.cos(g2);
-      var Pb=proj(sg2*Math.cos(thb), cg2, sg2*Math.sin(thb)), dn2=(Pb[2]+1)/2;if(dn2<0)dn2=0;if(dn2>1)dn2=1;
-      var sz=1.3+2.2*dn2;
-      ctx.fillStyle='rgba('+Hb[0]+','+Hb[1]+','+Hb[2]+','+(0.30+0.66*dn2).toFixed(3)+')';
-      ctx.beginPath();ctx.arc(Pb[0],Pb[1],sz,0,TAU);ctx.fill();
+      var angs=[thb,thb+off];
+      for(var a=0;a<angs.length;a++){
+        var Pb=proj(sg2*Math.cos(angs[a]), cg2, sg2*Math.sin(angs[a])), dn2=(Pb[2]+1)/2;if(dn2<0)dn2=0;if(dn2>1)dn2=1;
+        var sz=1.3+2.2*dn2;
+        ctx.fillStyle='rgba('+Hb[0]+','+Hb[1]+','+Hb[2]+','+(0.30+0.66*dn2).toFixed(3)+')';
+        ctx.beginPath();ctx.arc(Pb[0],Pb[1],sz,0,TAU);ctx.fill();
+      }
     }
     if(!reduce)t+=16;
   }
@@ -219,7 +224,7 @@ footer{border-top:0.5px solid var(--c-900);padding:96px 0 36px;font-size:14px;li
   if('ResizeObserver' in window){new ResizeObserver(function(){size();if(reduce)draw();}).observe(cv);}
 })();</script>
 <div class="container">  <h1 class="page-title ri" style="--d:0.08s">One subscription.</h1>
-  <div class="page-deck ri" style="--d:0.16s">Manage, Self-Directed, and access to Fiscal.ai. Billed monthly.</div>
+  <div class="page-deck ri" style="--d:0.16s">One plan covers the Managed track, the Self-Directed track, and access to Fiscal.ai. Billed monthly.</div>
 </div>
 </section>
 
