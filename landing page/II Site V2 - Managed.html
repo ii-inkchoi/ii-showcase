@@ -130,11 +130,13 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .se-name{color:var(--c-400);}
 
 .how-section{padding:130px 0;}
-.how-steps{display:flex;flex-direction:column;}
-.how-step{display:grid;grid-template-columns:minmax(0,64px) 1fr;gap:48px;align-items:baseline;padding:40px 0;border-top:0.5px solid var(--c-900);}
+.how-steps{display:flex;flex-direction:column;position:relative;}
+.how-steps::before{content:'';position:absolute;left:13px;top:28px;bottom:28px;width:0.5px;background:var(--c-900);}
+.how-step{display:grid;grid-template-columns:28px 1fr;column-gap:32px;align-items:start;padding:36px 0;border-top:0.5px solid var(--c-900);}
 .how-step:last-of-type{border-bottom:0.5px solid var(--c-900);}
-.how-num{font-size:clamp(34px,5vw,40px);line-height:1;color:var(--c-900);letter-spacing:-0.02em;font-weight:300;}
-.how-title{font-size:22px;line-height:1.2;letter-spacing:-0.02em;color:var(--c-white);font-weight:400;margin-bottom:14px;}
+.how-node{justify-self:center;width:9px;height:9px;border:0.5px solid var(--c-700);background:var(--c-black);margin-top:6px;position:relative;z-index:1;}
+.how-num{display:block;font-family:var(--mono);font-size:12px;letter-spacing:0.04em;color:var(--c-700);margin-bottom:12px;}
+.how-title{font-size:18px;line-height:1.3;letter-spacing:-0.02em;color:var(--c-white);font-weight:400;margin-bottom:14px;}
 .how-desc{font-size:15px;line-height:1.6;color:var(--c-600);max-width:560px;}
 .how-closing{font-size:17px;line-height:1.5;color:var(--c-600);margin-top:48px;max-width:560px;text-wrap:balance;}
 
@@ -146,14 +148,14 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .dont-rows{display:flex;flex-direction:column;}
 .dont-row{display:flex;flex-direction:column;gap:10px;padding:32px 0;border-top:0.5px solid var(--c-900);}
 .dont-row:last-of-type{border-bottom:0.5px solid var(--c-900);}
-.dont-label{font-size:17px;color:var(--c-white);letter-spacing:-0.01em;}
+.dont-label{font-size:18px;color:var(--c-white);letter-spacing:-0.02em;}
 .dont-desc{font-size:15px;line-height:1.65;color:var(--c-600);max-width:560px;}
-.pf-marker{width:8px;height:8px;flex-shrink:0;display:inline-block;}
-.pf-equity-growth{background:var(--pf-equity-growth);}
-.pf-balanced-growth{background:var(--pf-balanced-growth);}
-.pf-balanced{background:var(--pf-balanced);}
-.pf-balanced-income{background:var(--pf-balanced-income);}
-.pf-money-market{background:var(--pf-money-market);}
+.pf-equity-growth{background:var(--pf-equity-growth) url("images/01 Equity Growth.png") center/cover no-repeat;}
+.pf-balanced-growth{background:var(--pf-balanced-growth) url("images/02 balanced growth.png") center/cover no-repeat;}
+.pf-balanced{background:var(--pf-balanced) url("images/03 BALANCED.png") center/cover no-repeat;}
+.pf-balanced-income{background:var(--pf-balanced-income) url("images/04 balanced income.png") center/cover no-repeat;}
+.pf-money-market{background:var(--pf-money-market) url("images/05 Money Market.png") center/cover no-repeat;}
+.pf-screen>span,.pf-card-cover>span{display:none;}
 
 .accounts-section{padding:130px 0;}
 @media(min-width:760px){.accounts-section{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}.accounts-section>.section-eyebrow{grid-column:1 / 7;}.accounts-section .acct-list{grid-column:7 / 13;}}
@@ -165,7 +167,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .acct-d{font-size:15px;line-height:1.7;color:var(--c-600);max-width:560px;}
 .acct-sum::-webkit-details-marker{display:none;}
 .acct-sum:hover{padding-left:8px;}
-.acct-k{font-size:17px;color:var(--c-400);letter-spacing:-0.01em;transition:color 0.2s ease;}
+.acct-k{font-size:18px;color:var(--c-white);letter-spacing:-0.02em;transition:color 0.2s ease;}
 .acct-sum:hover .acct-k,.acct-item[open] .acct-k{color:var(--c-white);}
 .acct-sum-r{display:flex;align-items:center;gap:18px;}
 .acct-v{font-family:var(--mono);font-size:12px;letter-spacing:0.04em;color:var(--c-700);white-space:nowrap;}
@@ -177,7 +179,30 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .acct-dgrp p{font-size:15px;line-height:1.7;color:var(--c-600);}
 
 .portfolios-section{padding:130px 0;}
-.pf-stage{position:relative;width:100%;max-width:340px;aspect-ratio:9 / 19.5;margin:0 0 0 auto;}
+.pf-rows{display:flex;flex-direction:column;}
+.pf-row{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;padding:32px 0;border-top:0.5px solid var(--c-900);}
+.pf-row:last-child{border-bottom:0.5px solid var(--c-900);}
+.pf-row-head{grid-column:1 / 4;display:flex;flex-direction:column;gap:6px;}
+.pf-row-title{font-size:18px;color:var(--c-white);letter-spacing:-0.02em;}
+.pf-row-alloc{font-size:13px;color:var(--c-700);letter-spacing:-0.01em;}
+.pf-row-detail{grid-column:9 / 13;display:flex;flex-direction:column;}
+.pf-rd{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-top:0.5px solid var(--c-900);}
+.pf-rd:first-child{border-top:none;padding-top:0;}
+.pf-rd-k{font-size:13px;color:var(--c-700);letter-spacing:-0.01em;}
+.pf-rd-v{font-size:13px;color:var(--c-400);text-align:right;font-feature-settings:'tnum' 1;letter-spacing:-0.01em;}
+.pf-row-img{grid-column:6 / 9;grid-row:1;width:80%;aspect-ratio:16 / 9;border:0.5px solid var(--c-900);}
+@media(max-width:760px){.pf-row{grid-template-columns:1fr;gap:14px;align-items:start;}.pf-row-head,.pf-row-detail{grid-column:auto;}.pf-row-img{display:none;}}
+.pf-right{display:grid;grid-template-columns:subgrid;align-items:start;}
+.pf-stats{grid-column:span 3;min-width:0;}
+.pf-dots{display:none;}
+.pf-stat-row{display:flex;justify-content:space-between;align-items:baseline;gap:24px;padding:14px 0;border-top:0.5px solid var(--c-900);}
+.pf-stat-row:last-child{border-bottom:0.5px solid var(--c-900);}
+.pf-stat-k{font-size:13px;color:var(--c-700);letter-spacing:-0.01em;}
+.pf-stat-v{font-size:14px;color:var(--c-200);text-align:right;font-feature-settings:'tnum' 1;letter-spacing:-0.01em;}
+.pf-stage{position:relative;grid-column:span 3;justify-self:end;width:100%;max-width:260px;aspect-ratio:9 / 19.5;}
+.pf-carousel{display:none;}
+.pf-card-band{height:6px;background-image:none;}
+.pf-card-name{font-size:18px;color:var(--c-white);letter-spacing:-0.02em;margin:20px 0 8px;}
 .pf-phone{position:absolute;inset:0;border:0.5px solid var(--c-800);border-radius:28px;overflow:hidden;background:var(--c-elev);opacity:0;transition:opacity 0.45s ease;}
 .pf-phone.is-active{opacity:1;}
 .pf-phone img{width:100%;height:100%;object-fit:cover;display:block;}
@@ -185,30 +210,56 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .pf-ph-tag{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;color:var(--c-black);opacity:0.6;}
 .pf-ph-name{font-size:34px;line-height:1.05;letter-spacing:-0.03em;color:var(--c-black);margin-top:16px;}
 .pf-ph-note{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;color:var(--c-black);opacity:0.4;margin-top:auto;}
-@media(max-width:760px){.pf-stage{margin:0 auto 40px;}}
-.pf-left .section-eyebrow{margin-bottom:0;}
-.pf-headline{font-size:22px;line-height:1.2;letter-spacing:-0.02em;color:var(--c-200);font-weight:400;margin-top:20px;}
-.pf-deck{font-size:15px;line-height:1.6;color:var(--c-600);margin-top:16px;max-width:440px;}
-.pf-steps{margin-top:40px;display:flex;flex-direction:column;}
-.pf-step{display:block;width:100%;padding:18px 0;background:none;border:none;border-top:0.5px solid var(--c-900);text-align:left;cursor:pointer;font-family:inherit;transition:padding-left 0.25s ease;}
+@media(max-width:760px){.portfolios-section .pf-steps,.portfolios-section .pf-right{display:none;}.pf-carousel{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;margin:0 -24px;padding:4px 24px 0;scrollbar-width:none;}.pf-carousel::-webkit-scrollbar{display:none;}.pf-card{flex:0 0 84%;scroll-snap-align:center;display:flex;flex-direction:column;}.pf-dots{display:flex;justify-content:center;gap:8px;margin-top:24px;}.pf-dot{width:6px;height:6px;border:0.5px solid var(--c-700);}.pf-dot.is-on{background:var(--c-400);border-color:var(--c-400);}}
+.pf-head .section-eyebrow{margin-bottom:0;}
+.pf-headline{font-size:clamp(28px,3.4vw,34px);line-height:1.1;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:20px;}
+.pf-deck{font-size:15px;line-height:1.6;color:var(--c-600);margin-top:16px;}
+.pf-steps{margin-top:0;display:flex;flex-direction:column;}
+.pf-step{position:relative;display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;padding:18px 0;background:none;border:none;border-top:0.5px solid var(--c-900);text-align:left;cursor:pointer;font-family:inherit;transition:padding-left 0.25s ease;}
+.pf-step.is-active{padding-left:16px;}
+.pf-step.is-active::before{content:'';position:absolute;left:0;top:16px;bottom:16px;width:1px;background:var(--c-white);}
+.pf-step:hover .pf-step-name{color:var(--c-400);}
 .pf-step:last-child{border-bottom:0.5px solid var(--c-900);}
 .pf-step:hover{padding-left:8px;}
 .pf-step:focus{outline:none;}
 .pf-step:focus-visible{outline:1px solid var(--c-800);outline-offset:2px;}
 .pf-step-body{display:flex;flex-direction:column;gap:6px;}
 .pf-step-name{display:inline-flex;align-items:center;gap:14px;font-size:18px;color:var(--c-600);letter-spacing:-0.02em;transition:color 0.3s ease;}
-.pf-step-mk{opacity:0.35;transition:opacity 0.3s ease;}
 .pf-step-sub{font-size:13px;color:var(--c-800);transition:color 0.3s ease;}
 .pf-step.is-active .pf-step-name{color:var(--c-white);}
-.pf-step.is-active .pf-step-mk{opacity:1;}
 .pf-step.is-active .pf-step-sub{color:var(--c-700);}
+
+.proj-head .section-eyebrow{margin-bottom:0;}
+.proj-headline{font-size:clamp(28px,3.4vw,34px);line-height:1.1;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:20px;}
+.proj-deck{font-size:15px;line-height:1.6;color:var(--c-600);margin-top:16px;}
+.proj-board{margin-top:0;}
+.proj-sum-label{font-family:var(--mono);font-size:12px;letter-spacing:0.04em;color:var(--c-700);}
+.proj-value{font-size:40px;line-height:1;letter-spacing:-0.03em;color:var(--c-white);margin-top:16px;font-feature-settings:'tnum' 1;}
+.proj-cur{font-size:17px;color:var(--c-700);margin-left:8px;letter-spacing:0;}
+.proj-projrow{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-top:0.5px solid var(--c-900);margin-top:24px;}
+.proj-projrow .k{font-size:13px;color:var(--c-700);letter-spacing:-0.01em;}
+.proj-projrow .v{font-size:15px;color:var(--c-200);font-feature-settings:'tnum' 1;}
+.proj-meta{font-size:12px;color:var(--c-700);margin-top:16px;letter-spacing:-0.01em;}
+.proj-goal{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;padding:20px 0;border-top:0.5px solid var(--c-900);}
+.proj-goal:last-child{border-bottom:0.5px solid var(--c-900);}
+.proj-goal-name{font-size:17px;color:var(--c-white);letter-spacing:-0.02em;}
+.proj-goal-sub{font-size:12px;color:var(--c-700);margin-top:5px;}
+.proj-goal-val{font-size:15px;color:var(--c-400);margin-top:12px;font-feature-settings:'tnum' 1;}
+.proj-goal-r{text-align:right;flex-shrink:0;display:flex;flex-direction:column;}
+.proj-goal-plabel{font-size:12px;color:var(--c-700);}
+.proj-goal-proj{font-size:22px;color:var(--c-200);margin-top:6px;letter-spacing:-0.02em;font-feature-settings:'tnum' 1;}
 
 .perf-section{padding:130px 0;}
 @media(min-width:760px){
-  .compounds-section,.how-section,.dont-section,.portfolios-section{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}
+  .compounds-section,.how-section,.dont-section,.portfolios-section,.proj-section{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}
+  .proj-section .proj-head{grid-column:1 / 7;margin-bottom:40px;}
+  .proj-section .proj-board{grid-column:1 / 13;display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}
+  .proj-section .proj-summary{grid-column:1 / 6;}
+  .proj-section .proj-goals{grid-column:7 / 13;}
   .compounds-section>.section-eyebrow,.how-section>.section-eyebrow,.dont-section>.section-eyebrow,.portfolios-section>.section-eyebrow{grid-column:1 / 7;}
-  .how-section .how-steps,.how-section .how-closing,.dont-section .dont-rows,.portfolios-section .pf-stage{grid-column:7 / 13;}
-  .portfolios-section .pf-left{grid-column:1 / 7;}
+  .how-section .how-steps,.how-section .how-closing,.dont-section .dont-rows,.portfolios-section .pf-right{grid-column:7 / 13;}
+  .portfolios-section .pf-head{grid-column:1 / 7;margin-bottom:40px;}
+  .portfolios-section .pf-rows{grid-column:1 / 13;}
   .compounds-section .compounds-prose{grid-column:7 / 12;}
 }
 @media(max-width:900px){.how-section,.compounds-section,.dont-section,.accounts-section,.portfolios-section,.perf-section{padding:72px 0;}}
@@ -235,8 +286,12 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .perf-footnote{font-size:12px;line-height:1.6;color:var(--c-700);margin-top:32px;max-width:900px;}
 
 @media(max-width:760px){
-  .how-step{grid-template-columns:1fr;gap:16px;}
+  .how-step{grid-template-columns:1fr;gap:8px;}
+  .how-steps::before{display:none;}
+  .how-node{display:none;}
   .dont-row{grid-template-columns:1fr;gap:14px;}
+  .perf-table td:not(.perf-td-name),.perf-table th:not(.perf-th-name){padding-left:24px;}
+  .proj-summary{margin-bottom:32px;}
 }
 </style>
 </head>
@@ -327,16 +382,16 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 02</span><span class="se-name">How It Works</span></div>
   <div class="how-steps">
     <div class="how-step ri" style="--d:0.04s">
-      <div class="how-num">01</div>
-      <div class="how-body"><h3 class="how-title">Answer a few questions</h3><p class="how-desc">A short calibration reads your time horizon, risk tolerance, and goals.</p></div>
+      <span class="how-node"></span>
+      <div class="how-body"><span class="how-num">01</span><h3 class="how-title">Answer a few questions</h3><p class="how-desc">A short calibration reads your time horizon, risk tolerance, and capacity for loss, in a few quick questions.</p></div>
     </div>
     <div class="how-step ri" style="--d:0.08s">
-      <div class="how-num">02</div>
-      <div class="how-body"><h3 class="how-title">Get matched to a portfolio</h3><p class="how-desc">From full equity to capital preservation, the system recommends the profile that fits your needs. You confirm it.</p></div>
+      <span class="how-node"></span>
+      <div class="how-body"><span class="how-num">02</span><h3 class="how-title">Get matched to a portfolio</h3><p class="how-desc">From full equity to capital preservation, the system recommends the profile that fits your needs. You confirm it.</p></div>
     </div>
     <div class="how-step ri" style="--d:0.12s">
-      <div class="how-num">03</div>
-      <div class="how-body"><h3 class="how-title">Weekly, automatically</h3><p class="how-desc">Set a contribution and it runs on schedule regardless of market conditions. That consistency is the point, not a feature.</p></div>
+      <span class="how-node"></span>
+      <div class="how-body"><span class="how-num">03</span><h3 class="how-title">Weekly, automatically</h3><p class="how-desc">Set a contribution and it runs on schedule regardless of market conditions. That consistency is the point, not a feature.</p></div>
     </div>
   </div>
   <p class="how-closing ri" style="--d:0.16s">The default is the market. Managed makes that the practice.</p>
@@ -356,31 +411,110 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 
 <div class="container">
 <section class="portfolios-section">
-  <div class="pf-left">
+  <div class="pf-head">
     <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 04</span><span class="se-name">The Portfolios</span></div>
     <h2 class="pf-headline ri" style="--d:0.04s">The Profile That Fits</h2>
     <p class="pf-deck ri" style="--d:0.06s">Answer a few questions and the system recommends the right profile, from full equity to capital preservation.</p>
-    <div class="pf-steps ri" style="--d:0.1s">
-      <button class="pf-step is-active" data-pf="equity-growth" type="button"><span class="pf-step-body"><span class="pf-step-name"><span class="pf-marker pf-equity-growth pf-step-mk"></span>Equity Growth</span><span class="pf-step-sub">100% Equity</span></span></button>
-      <button class="pf-step" data-pf="balanced-growth" type="button"><span class="pf-step-body"><span class="pf-step-name"><span class="pf-marker pf-balanced-growth pf-step-mk"></span>Balanced Growth</span><span class="pf-step-sub">70% Equity / 30% Fixed Income</span></span></button>
-      <button class="pf-step" data-pf="balanced" type="button"><span class="pf-step-body"><span class="pf-step-name"><span class="pf-marker pf-balanced pf-step-mk"></span>Balanced</span><span class="pf-step-sub">50% Equity / 50% Fixed Income</span></span></button>
-      <button class="pf-step" data-pf="balanced-income" type="button"><span class="pf-step-body"><span class="pf-step-name"><span class="pf-marker pf-balanced-income pf-step-mk"></span>Balanced Income</span><span class="pf-step-sub">70% Fixed Income / 30% Money Market</span></span></button>
-      <button class="pf-step" data-pf="money-market" type="button"><span class="pf-step-body"><span class="pf-step-name"><span class="pf-marker pf-money-market pf-step-mk"></span>Cautious Income</span><span class="pf-step-sub">100% Money Market</span></span></button>
+  </div>
+  <div class="pf-rows">
+    <div class="pf-row ri" style="--d:0.04s">
+      <div class="pf-row-head"><span class="pf-row-title">Equity Growth</span></div>
+      <div class="pf-row-detail">
+        <div class="pf-rd"><span class="pf-rd-k">Strategy</span><span class="pf-rd-v">100% Equity (S&amp;P 500)</span></div>
+        <div class="pf-rd"><span class="pf-rd-k">Long-term Return</span><span class="pf-rd-v">~11%</span></div>
+        <div class="pf-rd"><span class="pf-rd-k">Risk Level</span><span class="pf-rd-v">5 / 5</span></div>
+        <div class="pf-rd"><span class="pf-rd-k">Peak Drawdown</span><span class="pf-rd-v">50%+</span></div>
+        <div class="pf-rd"><span class="pf-rd-k">Management Fee</span><span class="pf-rd-v">0.10%</span></div>
+      </div>
+      <div class="pf-row-img pf-equity-growth"></div>
+    </div>
+    <div class="pf-row ri" style="--d:0.06s">
+      <div class="pf-row-head"><span class="pf-row-title">Balanced Growth</span></div>
+      <div class="pf-row-detail">
+        <div class="pf-rd"><span class="pf-rd-k">Strategy</span><span class="pf-rd-v">70% Equity / 30% Fixed Income</span></div>
+        <div class="pf-rd"><span class="pf-rd-k">Long-term Return</span><span class="pf-rd-v">~9%</span></div>
+        <div class="pf-rd"><span class="pf-rd-k">Risk Level</span><span class="pf-rd-v">4 / 5</span></div>
+        <div class="pf-rd"><span class="pf-rd-k">Peak Drawdown</span><span class="pf-rd-v">~30&ndash;35%</span></div>
+        <div class="pf-rd"><span class="pf-rd-k">Management Fee</span><span class="pf-rd-v">0.10%</span></div>
+      </div>
+      <div class="pf-row-img pf-balanced-growth"></div>
+    </div>
+    <div class="pf-row ri" style="--d:0.08s">
+      <div class="pf-row-head"><span class="pf-row-title">Balanced</span></div>
+      <div class="pf-row-detail">
+        <div class="pf-rd"><span class="pf-rd-k">Strategy</span><span class="pf-rd-v">50% Equity / 50% Fixed Income</span></div>
+        <div class="pf-rd"><span class="pf-rd-k">Long-term Return</span><span class="pf-rd-v">~7%</span></div>
+        <div class="pf-rd"><span class="pf-rd-k">Risk Level</span><span class="pf-rd-v">3 / 5</span></div>
+        <div class="pf-rd"><span class="pf-rd-k">Peak Drawdown</span><span class="pf-rd-v">~20&ndash;25%</span></div>
+        <div class="pf-rd"><span class="pf-rd-k">Management Fee</span><span class="pf-rd-v">0.10%</span></div>
+      </div>
+      <div class="pf-row-img pf-balanced"></div>
+    </div>
+    <div class="pf-row ri" style="--d:0.1s">
+      <div class="pf-row-head"><span class="pf-row-title">Balanced Income</span></div>
+      <div class="pf-row-detail">
+        <div class="pf-rd"><span class="pf-rd-k">Strategy</span><span class="pf-rd-v">70% Fixed Income / 30% Money Market</span></div>
+        <div class="pf-rd"><span class="pf-rd-k">Yield</span><span class="pf-rd-v">3.06%</span></div>
+        <div class="pf-rd"><span class="pf-rd-k">Risk Level</span><span class="pf-rd-v">2 / 5</span></div>
+        <div class="pf-rd"><span class="pf-rd-k">Peak Drawdown</span><span class="pf-rd-v">Minimal</span></div>
+        <div class="pf-rd"><span class="pf-rd-k">Management Fee</span><span class="pf-rd-v">0.10%</span></div>
+      </div>
+      <div class="pf-row-img pf-balanced-income"></div>
+    </div>
+    <div class="pf-row ri" style="--d:0.12s">
+      <div class="pf-row-head"><span class="pf-row-title">Cautious Income</span></div>
+      <div class="pf-row-detail">
+        <div class="pf-rd"><span class="pf-rd-k">Strategy</span><span class="pf-rd-v">100% Money Market</span></div>
+        <div class="pf-rd"><span class="pf-rd-k">Yield</span><span class="pf-rd-v">2.63%</span></div>
+        <div class="pf-rd"><span class="pf-rd-k">Risk Level</span><span class="pf-rd-v">1 / 5</span></div>
+        <div class="pf-rd"><span class="pf-rd-k">Peak Drawdown</span><span class="pf-rd-v">Minimal</span></div>
+        <div class="pf-rd"><span class="pf-rd-k">Management Fee</span><span class="pf-rd-v">0.10%</span></div>
+      </div>
+      <div class="pf-row-img pf-money-market"></div>
     </div>
   </div>
-  <div class="pf-stage ri" style="--d:0.08s" aria-hidden="true">
-    <div class="pf-phone is-active" data-pf="equity-growth"><div class="pf-screen pf-equity-growth"><span class="pf-ph-tag">Core / Equity Growth</span><span class="pf-ph-name">500 ×&nbsp;S&amp;P</span><span class="pf-ph-note">Image Placeholder</span></div></div>
-    <div class="pf-phone" data-pf="balanced-growth"><div class="pf-screen pf-balanced-growth"><span class="pf-ph-tag">Core / Balanced Growth</span><span class="pf-ph-name">500 ×&nbsp;S&amp;P</span><span class="pf-ph-note">Image Placeholder</span></div></div>
-    <div class="pf-phone" data-pf="balanced"><div class="pf-screen pf-balanced"><span class="pf-ph-tag">Core / Balanced</span><span class="pf-ph-name">500 ×&nbsp;S&amp;P</span><span class="pf-ph-note">Image Placeholder</span></div></div>
-    <div class="pf-phone" data-pf="balanced-income"><div class="pf-screen pf-balanced-income"><span class="pf-ph-tag">Income / Balanced Income</span><span class="pf-ph-name">BA</span><span class="pf-ph-note">Image Placeholder</span></div></div>
-    <div class="pf-phone" data-pf="money-market"><div class="pf-screen pf-money-market"><span class="pf-ph-tag">Income / Money Market</span><span class="pf-ph-name">MO</span><span class="pf-ph-note">Image Placeholder</span></div></div>
+</section>
+</div>
+
+<div class="container">
+<section class="proj-section">
+  <div class="proj-head">
+    <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 05</span><span class="se-name">The Projection</span></div>
+    <h2 class="proj-headline ri" style="--d:0.04s">Every contribution has a destination.</h2>
+    <p class="proj-deck ri" style="--d:0.06s">Each account is a goal with a target. The system funds it weekly and projects the path it is on.</p>
+  </div>
+  <div class="proj-board">
+    <div class="proj-summary ri" style="--d:0.04s">
+      <div class="proj-sum-label">System-Managed Capital</div>
+      <div class="proj-value">75,000.00<span class="proj-cur">CAD</span></div>
+      <div class="proj-projrow"><span class="k">Projection</span><span class="v">1.23M</span></div>
+      <div class="proj-meta">53-Week Consistency &middot; Auto-Invest On</div>
+    </div>
+    <div class="proj-goals ri" style="--d:0.06s">
+      <div class="proj-goal">
+        <div class="proj-goal-l">
+          <div class="proj-goal-name">Millionaire Goal</div>
+          <div class="proj-goal-sub">TFSA &middot; Equity Growth</div>
+          <div class="proj-goal-val">55,000.00</div>
+        </div>
+        <div class="proj-goal-r"><span class="proj-goal-plabel">Projection</span><span class="proj-goal-proj">902.00K</span></div>
+      </div>
+      <div class="proj-goal">
+        <div class="proj-goal-l">
+          <div class="proj-goal-name">Property Purchase</div>
+          <div class="proj-goal-sub">RRSP &middot; Equity Growth</div>
+          <div class="proj-goal-val">20,000.00</div>
+        </div>
+        <div class="proj-goal-r"><span class="proj-goal-plabel">Projection</span><span class="proj-goal-proj">328.00K</span></div>
+      </div>
+    </div>
   </div>
 </section>
 </div>
 
 <div class="container">
 <section class="perf-section">
-  <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 05</span><span class="se-name">The Record</span></div>
+  <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 06</span><span class="se-name">The Record</span></div>
   <div class="perf-scroll ri" style="--d:0.04s">
     <table class="perf-table">
       <thead>
@@ -391,23 +525,23 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
       </thead>
       <tbody>
         <tr>
-          <td class="perf-td-name"><span class="perf-pname"><span class="pf-marker pf-equity-growth"></span>Equity Growth</span><span class="perf-palloc">100% Equity</span></td>
+          <td class="perf-td-name"><span class="perf-pname">Equity Growth</span><span class="perf-palloc">100% Equity</span></td>
           <td>6.71%</td><td>11.54%</td><td>11.70%</td><td>29.70%</td><td>23.36%</td><td>15.14%</td><td>16.25%</td>
         </tr>
         <tr>
-          <td class="perf-td-name"><span class="perf-pname"><span class="pf-marker pf-balanced-growth"></span>Balanced Growth</span><span class="perf-palloc">70% Equity / 30% Fixed Income</span></td>
+          <td class="perf-td-name"><span class="perf-pname">Balanced Growth</span><span class="perf-palloc">70% Equity / 30% Fixed Income</span></td>
           <td>4.71%</td><td>7.78%</td><td>8.56%</td><td>21.56%</td><td>17.45%</td><td>10.65%</td><td>11.89%</td>
         </tr>
         <tr>
-          <td class="perf-td-name"><span class="perf-pname"><span class="pf-marker pf-balanced"></span>Balanced</span><span class="perf-palloc">50% Equity / 50% Fixed Income</span></td>
+          <td class="perf-td-name"><span class="perf-pname">Balanced</span><span class="perf-palloc">50% Equity / 50% Fixed Income</span></td>
           <td>3.37%</td><td>5.27%</td><td>6.47%</td><td>16.13%</td><td>13.51%</td><td>7.67%</td><td>8.99%</td>
         </tr>
         <tr>
-          <td class="perf-td-name"><span class="perf-pname"><span class="pf-marker pf-balanced-income"></span>Balanced Income</span><span class="perf-palloc">70% Fixed Income / 30% Money Market</span></td>
+          <td class="perf-td-name"><span class="perf-pname">Balanced Income</span><span class="perf-palloc">70% Fixed Income / 30% Money Market</span></td>
           <td>0.08%</td><td>−0.53%</td><td>1.14%</td><td>2.50%</td><td>3.65%</td><td>1.06%</td><td>1.80%</td>
         </tr>
         <tr>
-          <td class="perf-td-name"><span class="perf-pname"><span class="pf-marker pf-money-market"></span>Cautious Income</span><span class="perf-palloc">100% Money Market</span></td>
+          <td class="perf-td-name"><span class="perf-pname">Cautious Income</span><span class="perf-palloc">100% Money Market</span></td>
           <td>0.18%</td><td>0.54%</td><td>0.90%</td><td>2.35%</td><td>3.65%</td><td>3.09%</td><td>2.00%</td>
         </tr>
         <tr class="perf-benchmark">
@@ -423,7 +557,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 
 <div class="container">
 <section class="accounts-section">
-  <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 06</span><span class="se-name">Account Types</span></div>
+  <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 07</span><span class="se-name">Account Types</span></div>
   <div class="acct-list">
     <details class="acct-item ri" style="--d:0.04s">
       <summary class="acct-sum"><span class="acct-main"><span class="acct-k">TFSA</span><span class="acct-d">Growth and withdrawals are completely tax-free, within an annual contribution limit that carries forward when unused. The most flexible registered account, with no tax on what compounds inside it.</span></span><span class="acct-sum-r"><span class="acct-v">Tax-free</span><span class="acct-chev"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6L8 10.5L12 6" stroke="currentColor" stroke-width="1.1"/></svg></span></span></summary>
@@ -489,7 +623,26 @@ hamburger.addEventListener('click',e=>{e.stopPropagation();menuOverlay.classList
 
 <script>if('IntersectionObserver' in window){var rio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');rio.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -6% 0px'});document.querySelectorAll('.ri').forEach(function(el){rio.observe(el);});}else{document.querySelectorAll('.ri').forEach(function(el){el.classList.add('in');});}</script>
 <script>(function(){var nb=document.querySelector(".navbar");if(nb)window.addEventListener("scroll",function(){nb.classList.toggle("scrolled",window.scrollY>40);},{passive:true});})();</script>
-<script>(function(){var steps=document.querySelectorAll('.pf-step[data-pf]'),phones=document.querySelectorAll('.pf-phone[data-pf]');if(!steps.length||!phones.length)return;function act(pf){steps.forEach(function(s){s.classList.toggle('is-active',s.getAttribute('data-pf')===pf);});phones.forEach(function(p){p.classList.toggle('is-active',p.getAttribute('data-pf')===pf);});}steps.forEach(function(s){var pf=s.getAttribute('data-pf');s.addEventListener('mouseenter',function(){act(pf);});s.addEventListener('focus',function(){act(pf);});s.addEventListener('click',function(){act(pf);});});})();</script>
+<script>(function(){
+  var PF={
+    'equity-growth':{name:'Equity Growth',strategy:'100% Equity (S&P 500)',retLabel:'Long-term Return',ret:'~11%',risk:'5 / 5',dd:'50%+'},
+    'balanced-growth':{name:'Balanced Growth',strategy:'70% Equity / 30% Fixed Income',retLabel:'Long-term Return',ret:'~9%',risk:'4 / 5',dd:'~30–35%'},
+    'balanced':{name:'Balanced',strategy:'50% Equity / 50% Fixed Income',retLabel:'Long-term Return',ret:'~7%',risk:'3 / 5',dd:'~20–25%'},
+    'balanced-income':{name:'Balanced Income',strategy:'70% Fixed Income / 30% Money Market',retLabel:'Yield',ret:'3.06%',risk:'2 / 5',dd:'Minimal'},
+    'money-market':{name:'Cautious Income',strategy:'100% Money Market',retLabel:'Yield',ret:'2.63%',risk:'1 / 5',dd:'Minimal'}
+  };
+  var steps=document.querySelectorAll('.pf-step[data-pf]'),phones=document.querySelectorAll('.pf-phone[data-pf]'),stats=document.querySelector('.pf-stats');
+  if(!steps.length)return;
+  function setStat(k,v){var el=stats&&stats.querySelector('[data-k="'+k+'"]');if(el)el.textContent=v;}
+  function act(pf){
+    steps.forEach(function(s){s.classList.toggle('is-active',s.getAttribute('data-pf')===pf);});
+    phones.forEach(function(p){p.classList.toggle('is-active',p.getAttribute('data-pf')===pf);});
+    var d=PF[pf];if(d){setStat('name',d.name);setStat('strategy',d.strategy);setStat('retLabel',d.retLabel);setStat('ret',d.ret);setStat('risk',d.risk);setStat('dd',d.dd);}
+  }
+  steps.forEach(function(s){var pf=s.getAttribute('data-pf');s.addEventListener('mouseenter',function(){act(pf);});s.addEventListener('focus',function(){act(pf);});s.addEventListener('click',function(){act(pf);});});
+  var carousel=document.querySelector('.pf-carousel'),dots=document.querySelectorAll('.pf-dot');
+  if(carousel&&dots.length){carousel.addEventListener('scroll',function(){var i=Math.round(carousel.scrollLeft/(carousel.scrollWidth/dots.length));i=Math.max(0,Math.min(dots.length-1,i));dots.forEach(function(dt,j){dt.classList.toggle('is-on',j===i);});},{passive:true});}
+})();</script>
 <script src="grid-overlay.js"></script>
 </body>
 </html>
