@@ -57,11 +57,6 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:var(--c-black);
 .menu-bottom{display:grid;grid-template-columns:1fr 1fr;align-items:end;padding:clamp(28px,4vw,56px) clamp(40px,6vw,80px);gap:24px;font-size:11px;color:var(--c-700);}
 .menu-bottom .mb-left{display:flex;flex-direction:column;gap:4px;}.menu-bottom .mb-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
 .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--frame); box-sizing: border-box; }
-.grid-overlay{position:fixed;inset:0;z-index:2000;pointer-events:none;display:none;}
-.grid-overlay.on{display:block;}
-.grid-overlay .container{height:100%;}
-.grid-overlay .go-grid{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);height:100%;}
-.grid-overlay .go-grid span{background:var(--c-200);opacity:0.07;}
 @media(max-width:900px){.container{padding:0 24px;}section.memo-section,section.how-section,section.acc-section,section.accounts-section,section.docs-section{padding:72px 0;}}
 .page-header{padding:314px 0 180px;border-bottom:0.5px solid var(--c-800);background:linear-gradient(180deg,var(--c-black) 0%,var(--c-surface) 62%,var(--c-surface) 100%);position:relative;overflow:hidden;min-height:793px;box-sizing:border-box;}
 .page-header .container{position:relative;z-index:1;}
@@ -229,7 +224,6 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 </style>
 </head>
 <body>
-<div id="gridOverlay" class="grid-overlay" aria-hidden="true"><div class="container"><div class="go-grid"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div>
 <nav class="navbar"><div class="navbar-inner">
   <a href="index.html" class="navbar-brand"><img src="Logo.svg" alt="II"></a>
   
@@ -495,7 +489,6 @@ hamburger.addEventListener('click',e=>{e.stopPropagation();menuOverlay.classList
   menuClose.addEventListener('click', closeMenu);
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menuOverlay.classList.contains('open')) closeMenu(); });
   const navbar=document.querySelector('.navbar');window.addEventListener('scroll',()=>{if(navbar)navbar.classList.toggle('scrolled',window.scrollY>40);},{passive:true});
-  (function(){var o=document.getElementById('gridOverlay');if(!o)return;document.addEventListener('keydown',function(e){var t=e.target;if(t&&/^(input|textarea|select)$/i.test(t.tagName))return;if((e.key==='g'||e.key==='G'||e.key==='ㅎ')&&!e.metaKey&&!e.ctrlKey&&!e.altKey){o.classList.toggle('on');}});})();
 </script>
 
 <script>if('IntersectionObserver' in window){var rio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');rio.unobserve(e.target);}});},{threshold:0.14,rootMargin:'0px 0px -8% 0px'});document.querySelectorAll('.ri').forEach(function(el){rio.observe(el);});}else{document.querySelectorAll('.ri').forEach(function(el){el.classList.add('in');});}</script><script src="grid-overlay.js"></script>
