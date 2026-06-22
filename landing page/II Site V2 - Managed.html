@@ -177,39 +177,66 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .acct-dgrp p{font-size:15px;line-height:1.7;color:var(--c-600);}
 
 .portfolios-section{padding:130px 0;}
-.portfolio-rows{display:flex;flex-direction:column;}
-.portfolio-row{display:flex;align-items:baseline;justify-content:space-between;gap:32px;padding:28px 0;border-top:0.5px solid var(--c-900);}
-.portfolio-row:last-of-type{border-bottom:0.5px solid var(--c-900);}
-.portfolio-name{font-size:18px;letter-spacing:-0.02em;color:var(--c-white);display:inline-flex;align-items:center;gap:14px;}
-.portfolio-alloc{font-size:14px;color:var(--c-700);text-align:right;font-feature-settings:'tnum' 1;}
+.pf-stage{position:relative;width:100%;max-width:340px;aspect-ratio:9 / 19.5;margin:0 0 0 auto;}
+.pf-phone{position:absolute;inset:0;border:0.5px solid var(--c-800);border-radius:28px;overflow:hidden;background:var(--c-elev);opacity:0;transition:opacity 0.45s ease;}
+.pf-phone.is-active{opacity:1;}
+.pf-phone img{width:100%;height:100%;object-fit:cover;display:block;}
+.pf-screen{position:absolute;inset:0;display:flex;flex-direction:column;align-items:flex-start;padding:28px;}
+.pf-ph-tag{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;color:var(--c-black);opacity:0.6;}
+.pf-ph-name{font-size:34px;line-height:1.05;letter-spacing:-0.03em;color:var(--c-black);margin-top:16px;}
+.pf-ph-note{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;color:var(--c-black);opacity:0.4;margin-top:auto;}
+@media(max-width:760px){.pf-stage{margin:0 auto 40px;}}
+.pf-left .section-eyebrow{margin-bottom:0;}
+.pf-headline{font-size:22px;line-height:1.2;letter-spacing:-0.02em;color:var(--c-200);font-weight:400;margin-top:20px;}
+.pf-deck{font-size:15px;line-height:1.6;color:var(--c-600);margin-top:16px;max-width:440px;}
+.pf-steps{margin-top:40px;display:flex;flex-direction:column;}
+.pf-step{display:block;width:100%;padding:18px 0;background:none;border:none;border-top:0.5px solid var(--c-900);text-align:left;cursor:pointer;font-family:inherit;transition:padding-left 0.25s ease;}
+.pf-step:last-child{border-bottom:0.5px solid var(--c-900);}
+.pf-step:hover{padding-left:8px;}
+.pf-step:focus{outline:none;}
+.pf-step:focus-visible{outline:1px solid var(--c-800);outline-offset:2px;}
+.pf-step-body{display:flex;flex-direction:column;gap:6px;}
+.pf-step-name{display:inline-flex;align-items:center;gap:14px;font-size:18px;color:var(--c-600);letter-spacing:-0.02em;transition:color 0.3s ease;}
+.pf-step-mk{opacity:0.35;transition:opacity 0.3s ease;}
+.pf-step-sub{font-size:13px;color:var(--c-800);transition:color 0.3s ease;}
+.pf-step.is-active .pf-step-name{color:var(--c-white);}
+.pf-step.is-active .pf-step-mk{opacity:1;}
+.pf-step.is-active .pf-step-sub{color:var(--c-700);}
 
 .perf-section{padding:130px 0;}
 @media(min-width:760px){
   .compounds-section,.how-section,.dont-section,.portfolios-section{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}
   .compounds-section>.section-eyebrow,.how-section>.section-eyebrow,.dont-section>.section-eyebrow,.portfolios-section>.section-eyebrow{grid-column:1 / 7;}
-  .how-section .how-steps,.how-section .how-closing,.dont-section .dont-rows,.portfolios-section .portfolio-rows{grid-column:7 / 13;}
+  .how-section .how-steps,.how-section .how-closing,.dont-section .dont-rows,.portfolios-section .pf-stage{grid-column:7 / 13;}
+  .portfolios-section .pf-left{grid-column:1 / 7;}
   .compounds-section .compounds-prose{grid-column:7 / 12;}
 }
 @media(max-width:900px){.how-section,.compounds-section,.dont-section,.accounts-section,.portfolios-section,.perf-section{padding:72px 0;}}
 @media(max-width:760px){.how-section,.compounds-section,.dont-section,.accounts-section,.portfolios-section,.perf-section{position:relative;}.how-section::before,.compounds-section::before,.dont-section::before,.accounts-section::before,.portfolios-section::before,.perf-section::before{content:'';position:absolute;top:0;left:50%;width:100vw;transform:translateX(-50%);border-top:0.5px solid var(--c-900);pointer-events:none;}}
 .perf-scroll{width:100%;overflow-x:auto;}
-.perf-table{width:100%;border-collapse:collapse;table-layout:fixed;font-feature-settings:'tnum' 1,'lnum' 1;}
+.perf-table{width:100%;border-collapse:collapse;font-feature-settings:'tnum' 1,'lnum' 1;}
 .perf-table th{font-size:12px;font-weight:400;color:var(--c-700);letter-spacing:0.04em;text-align:right;padding:0 0 18px;border-bottom:0.5px solid var(--c-900);white-space:nowrap;}
-.perf-table th.perf-th-name{text-align:left;letter-spacing:0.02em;width:41.666%;}
-.perf-table th:not(.perf-th-name){width:8.334%;}
+.perf-table th.perf-th-name{text-align:left;letter-spacing:0.02em;}
 .perf-table td{font-size:14px;color:var(--c-400);text-align:right;padding:20px 0;border-bottom:0.5px solid var(--c-900);white-space:nowrap;font-feature-settings:'tnum' 1;}
 .perf-table td.perf-td-name{text-align:left;display:flex;flex-direction:column;gap:5px;}
 .perf-pname{font-size:15px;color:var(--c-200);letter-spacing:-0.01em;display:inline-flex;align-items:center;gap:10px;}
 .perf-palloc{font-size:12px;color:var(--c-700);}
 .perf-benchmark td{border-top:0.5px solid var(--c-800);}
+@media(min-width:760px){
+  .perf-table{display:block;}
+  .perf-table thead,.perf-table tbody{display:contents;}
+  .perf-table tr{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:center;border-bottom:0.5px solid var(--c-900);}
+  .perf-table th,.perf-table td{border-bottom:none;}
+  .perf-table th.perf-th-name,.perf-table td.perf-td-name{grid-column:1 / 6;}
+  .perf-benchmark{border-top:0.5px solid var(--c-800);}
+  .perf-benchmark td{border-top:none;}
+}
 .perf-benchmark .perf-pname{color:var(--c-400);}
 .perf-footnote{font-size:12px;line-height:1.6;color:var(--c-700);margin-top:32px;max-width:900px;}
 
 @media(max-width:760px){
   .how-step{grid-template-columns:1fr;gap:16px;}
   .dont-row{grid-template-columns:1fr;gap:14px;}
-  .portfolio-row{flex-direction:column;gap:6px;}
-  .portfolio-alloc{text-align:left;}
 }
 </style>
 </head>
@@ -279,7 +306,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   if('ResizeObserver' in window){new ResizeObserver(function(){size();if(reduce)draw();}).observe(cv);}
 })();</script>
 <div class="container">    <h1 class="page-title ri" style="--d:0.08s">The market, every week, without the decision.</h1>
-    <div class="page-deck ri" style="--d:0.16s">Choose a portfolio. Set a weekly contribution. Five risk profiles, from full equity to capital preservation. Managed automatically.</div>
+    <div class="page-deck ri" style="--d:0.16s">Answer a few questions. The system matches you to a portfolio and invests a weekly contribution, automatically.</div>
     <div class="page-actions ri" style="--d:0.24s"><a href="II Site V2 - GetTheApp.html" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Download the App</span><span>Download the App</span></span></span></a></div>
   </div>
 </section>
@@ -301,15 +328,15 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   <div class="how-steps">
     <div class="how-step ri" style="--d:0.04s">
       <div class="how-num">01</div>
-      <div class="how-body"><h3 class="how-title">Set your contribution</h3><p class="how-desc">Choose a weekly amount. It withdraws automatically on schedule. The amount can be changed or paused at any time.</p></div>
+      <div class="how-body"><h3 class="how-title">Answer a few questions</h3><p class="how-desc">A short calibration reads your time horizon, risk tolerance, and goals.</p></div>
     </div>
     <div class="how-step ri" style="--d:0.08s">
       <div class="how-num">02</div>
-      <div class="how-body"><h3 class="how-title">Choose your portfolio</h3><p class="how-desc">Select from five risk profiles. From full equity to capital preservation. The allocation is managed automatically. You set the risk level once.</p></div>
+      <div class="how-body"><h3 class="how-title">Get matched to a portfolio</h3><p class="how-desc">From full equity to capital preservation, the system recommends the profile that fits your needs. You confirm it.</p></div>
     </div>
     <div class="how-step ri" style="--d:0.12s">
       <div class="how-num">03</div>
-      <div class="how-body"><h3 class="how-title">Weekly, automatically</h3><p class="how-desc">Contributions run on schedule regardless of market conditions. That consistency is the point, not a feature.</p></div>
+      <div class="how-body"><h3 class="how-title">Weekly, automatically</h3><p class="how-desc">Set a contribution and it runs on schedule regardless of market conditions. That consistency is the point, not a feature.</p></div>
     </div>
   </div>
   <p class="how-closing ri" style="--d:0.16s">The default is the market. Managed makes that the practice.</p>
@@ -329,13 +356,24 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 
 <div class="container">
 <section class="portfolios-section">
-  <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 04</span><span class="se-name">The Portfolios</span></div>
-  <div class="portfolio-rows">
-    <div class="portfolio-row ri" style="--d:0.04s"><span class="portfolio-name"><span class="pf-marker pf-equity-growth"></span>Equity Growth</span><span class="portfolio-alloc">100% Equity</span></div>
-    <div class="portfolio-row ri" style="--d:0.06s"><span class="portfolio-name"><span class="pf-marker pf-balanced-growth"></span>Balanced Growth</span><span class="portfolio-alloc">70% Equity / 30% Fixed Income</span></div>
-    <div class="portfolio-row ri" style="--d:0.08s"><span class="portfolio-name"><span class="pf-marker pf-balanced"></span>Balanced</span><span class="portfolio-alloc">50% Equity / 50% Fixed Income</span></div>
-    <div class="portfolio-row ri" style="--d:0.1s"><span class="portfolio-name"><span class="pf-marker pf-balanced-income"></span>Balanced Income</span><span class="portfolio-alloc">70% Fixed Income / 30% Money Market</span></div>
-    <div class="portfolio-row ri" style="--d:0.12s"><span class="portfolio-name"><span class="pf-marker pf-money-market"></span>Cautious Income</span><span class="portfolio-alloc">100% Money Market</span></div>
+  <div class="pf-left">
+    <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 04</span><span class="se-name">The Portfolios</span></div>
+    <h2 class="pf-headline ri" style="--d:0.04s">The Profile That Fits</h2>
+    <p class="pf-deck ri" style="--d:0.06s">Answer a few questions and the system recommends the right profile, from full equity to capital preservation.</p>
+    <div class="pf-steps ri" style="--d:0.1s">
+      <button class="pf-step is-active" data-pf="equity-growth" type="button"><span class="pf-step-body"><span class="pf-step-name"><span class="pf-marker pf-equity-growth pf-step-mk"></span>Equity Growth</span><span class="pf-step-sub">100% Equity</span></span></button>
+      <button class="pf-step" data-pf="balanced-growth" type="button"><span class="pf-step-body"><span class="pf-step-name"><span class="pf-marker pf-balanced-growth pf-step-mk"></span>Balanced Growth</span><span class="pf-step-sub">70% Equity / 30% Fixed Income</span></span></button>
+      <button class="pf-step" data-pf="balanced" type="button"><span class="pf-step-body"><span class="pf-step-name"><span class="pf-marker pf-balanced pf-step-mk"></span>Balanced</span><span class="pf-step-sub">50% Equity / 50% Fixed Income</span></span></button>
+      <button class="pf-step" data-pf="balanced-income" type="button"><span class="pf-step-body"><span class="pf-step-name"><span class="pf-marker pf-balanced-income pf-step-mk"></span>Balanced Income</span><span class="pf-step-sub">70% Fixed Income / 30% Money Market</span></span></button>
+      <button class="pf-step" data-pf="money-market" type="button"><span class="pf-step-body"><span class="pf-step-name"><span class="pf-marker pf-money-market pf-step-mk"></span>Cautious Income</span><span class="pf-step-sub">100% Money Market</span></span></button>
+    </div>
+  </div>
+  <div class="pf-stage ri" style="--d:0.08s" aria-hidden="true">
+    <div class="pf-phone is-active" data-pf="equity-growth"><div class="pf-screen pf-equity-growth"><span class="pf-ph-tag">Core / Equity Growth</span><span class="pf-ph-name">500 ×&nbsp;S&amp;P</span><span class="pf-ph-note">Image Placeholder</span></div></div>
+    <div class="pf-phone" data-pf="balanced-growth"><div class="pf-screen pf-balanced-growth"><span class="pf-ph-tag">Core / Balanced Growth</span><span class="pf-ph-name">500 ×&nbsp;S&amp;P</span><span class="pf-ph-note">Image Placeholder</span></div></div>
+    <div class="pf-phone" data-pf="balanced"><div class="pf-screen pf-balanced"><span class="pf-ph-tag">Core / Balanced</span><span class="pf-ph-name">500 ×&nbsp;S&amp;P</span><span class="pf-ph-note">Image Placeholder</span></div></div>
+    <div class="pf-phone" data-pf="balanced-income"><div class="pf-screen pf-balanced-income"><span class="pf-ph-tag">Income / Balanced Income</span><span class="pf-ph-name">BA</span><span class="pf-ph-note">Image Placeholder</span></div></div>
+    <div class="pf-phone" data-pf="money-market"><div class="pf-screen pf-money-market"><span class="pf-ph-tag">Income / Money Market</span><span class="pf-ph-name">MO</span><span class="pf-ph-note">Image Placeholder</span></div></div>
   </div>
 </section>
 </div>
@@ -451,6 +489,7 @@ hamburger.addEventListener('click',e=>{e.stopPropagation();menuOverlay.classList
 
 <script>if('IntersectionObserver' in window){var rio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');rio.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -6% 0px'});document.querySelectorAll('.ri').forEach(function(el){rio.observe(el);});}else{document.querySelectorAll('.ri').forEach(function(el){el.classList.add('in');});}</script>
 <script>(function(){var nb=document.querySelector(".navbar");if(nb)window.addEventListener("scroll",function(){nb.classList.toggle("scrolled",window.scrollY>40);},{passive:true});})();</script>
+<script>(function(){var steps=document.querySelectorAll('.pf-step[data-pf]'),phones=document.querySelectorAll('.pf-phone[data-pf]');if(!steps.length||!phones.length)return;function act(pf){steps.forEach(function(s){s.classList.toggle('is-active',s.getAttribute('data-pf')===pf);});phones.forEach(function(p){p.classList.toggle('is-active',p.getAttribute('data-pf')===pf);});}steps.forEach(function(s){var pf=s.getAttribute('data-pf');s.addEventListener('mouseenter',function(){act(pf);});s.addEventListener('focus',function(){act(pf);});s.addEventListener('click',function(){act(pf);});});})();</script>
 <script src="grid-overlay.js"></script>
 </body>
 </html>
