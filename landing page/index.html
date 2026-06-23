@@ -81,11 +81,6 @@ a { text-decoration: none; }
 
 /* layout */
 .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--frame); box-sizing: border-box; }
-.grid-overlay { position: fixed; inset: 0; z-index: 2000; pointer-events: none; display: none; }
-.grid-overlay.on { display: block; }
-.grid-overlay .container { height: 100%; }
-.grid-overlay .go-grid { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); height: 100%; }
-.grid-overlay .go-grid span { background: var(--c-200); opacity: 0.07; }
 section { padding: 130px 0; position: relative; }
 .band { background: var(--c-elev); }
 .alloc-2col { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); align-items: center; }
@@ -729,7 +724,6 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 </style>
 </head>
 <body>
-<div id="gridOverlay" class="grid-overlay" aria-hidden="true"><div class="container"><div class="go-grid"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div>
 
 <nav class="navbar">
   <div class="navbar-inner">
@@ -1589,14 +1583,6 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     } else { steps.classList.add('in'); }
   })();
 
-  // dev - press "g" to toggle the 12-column grid overlay
-  (function () {
-    var o = document.getElementById('gridOverlay'); if (!o) return;
-    document.addEventListener('keydown', function (e) {
-      var t = e.target; if (t && /^(input|textarea|select)$/i.test(t.tagName)) return;
-      if ((e.key === 'g' || e.key === 'G' || e.key === 'ㅎ') && !e.metaKey && !e.ctrlKey && !e.altKey) { o.classList.toggle('on'); }
-    });
-  })();
 
   // evidence - count the stat numbers up on scroll into view (once, eased)
   (function () {

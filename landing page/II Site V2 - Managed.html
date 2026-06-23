@@ -6,7 +6,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-surface:#151515;--c-800:#565B5E;--c-700:#929292;--c-600:#A7A7A7;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFF;--c-warning:#FF7A00;--pf-equity-growth:#FF451C;--pf-balanced-growth:#ECFD21;--pf-balanced:#2C8042;--pf-balanced-income:#BEEDFD;--pf-money-market:#BEFDCF; --frame: clamp(24px, 4vw, 48px); --maxw: 1680px; --gutter: clamp(16px, 1.5vw, 24px); --c-elev: #0A0A0A; --mono:'Chakra Petch',ui-monospace,monospace;}
+:root{--c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-surface:#151515;--c-800:#565B5E;--c-700:#929292;--c-600:#A7A7A7;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFF;--c-warning:#FF7A00;--c-live:#02CB45;--pf-equity-growth:#FF451C;--pf-balanced-growth:#ECFD21;--pf-balanced:#2C8042;--pf-balanced-income:#BEEDFD;--pf-money-market:#BEFDCF; --frame: clamp(24px, 4vw, 48px); --maxw: 1680px; --gutter: clamp(16px, 1.5vw, 24px); --c-elev: #0A0A0A; --mono:'Chakra Petch',ui-monospace,monospace;}
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{background:var(--c-black);color:var(--c-600);font-family:'Inter',sans-serif;font-feature-settings:'tnum' 1,'lnum' 1,'ss01' 1;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased;font-weight:400;}
 body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient(180deg,var(--c-elev) 0,var(--c-black) 560px);}body.menu-open{overflow:hidden;}
@@ -232,35 +232,78 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .proj-head .section-eyebrow{margin-bottom:0;}
 .proj-headline{font-size:clamp(28px,3.4vw,34px);line-height:1.1;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:20px;}
 .proj-deck{font-size:15px;line-height:1.6;color:var(--c-600);margin-top:16px;}
-.proj-board{margin-top:0;}
-.proj-sum-label{font-family:var(--mono);font-size:12px;letter-spacing:0.04em;color:var(--c-700);}
-.proj-value{font-size:40px;line-height:1;letter-spacing:-0.03em;color:var(--c-white);margin-top:16px;font-feature-settings:'tnum' 1;}
-.proj-cur{font-size:17px;color:var(--c-700);margin-left:8px;letter-spacing:0;}
-.proj-projrow{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-top:0.5px solid var(--c-900);margin-top:24px;}
-.proj-projrow .k{font-size:13px;color:var(--c-700);letter-spacing:-0.01em;}
-.proj-projrow .v{font-size:15px;color:var(--c-200);font-feature-settings:'tnum' 1;}
-.proj-meta{font-size:12px;color:var(--c-700);margin-top:16px;letter-spacing:-0.01em;}
-.proj-goal{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;padding:20px 0;border-top:0.5px solid var(--c-900);}
-.proj-goal:last-child{border-bottom:0.5px solid var(--c-900);}
-.proj-goal-name{font-size:17px;color:var(--c-white);letter-spacing:-0.02em;}
-.proj-goal-sub{font-size:12px;color:var(--c-700);margin-top:5px;}
-.proj-goal-val{font-size:15px;color:var(--c-400);margin-top:12px;font-feature-settings:'tnum' 1;}
-.proj-goal-r{text-align:right;flex-shrink:0;display:flex;flex-direction:column;}
-.proj-goal-plabel{font-size:12px;color:var(--c-700);}
-.proj-goal-proj{font-size:22px;color:var(--c-200);margin-top:6px;letter-spacing:-0.02em;font-feature-settings:'tnum' 1;}
+.proj-board{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;align-items:stretch;}
+.pp{flex:0 0 340px;max-width:340px;border:0.5px solid var(--c-800);border-radius:28px;overflow:hidden;background:var(--c-black);display:flex;flex-direction:column;}
+.pp>.pp-screen,.pp>.ppg{flex:1;}
+.pp-screen{display:flex;flex-direction:column;padding:24px 24px 32px;}
+.pp-top{display:flex;justify-content:space-between;align-items:center;padding-bottom:20px;border-bottom:0.5px solid var(--c-900);}
+.pp-back{display:inline-flex;color:var(--c-400);}
+.pp-back svg{width:16px;height:16px;}
+.pp-exit{font-size:12px;color:var(--c-400);letter-spacing:-0.01em;}
+.pp-hero{text-align:right;margin-top:52px;}
+.pp-title{font-size:18px;color:var(--c-white);letter-spacing:-0.05em;}
+.pp-tv-l{font-size:12px;color:var(--c-700);margin-top:32px;}
+.pp-tv{font-size:24px;color:var(--c-white);letter-spacing:-0.03em;margin-top:6px;font-feature-settings:'tnum' 1;}
+.pp-cur{font-size:24px;color:var(--c-700);margin-left:6px;letter-spacing:-0.02em;}
+.pp-pj-l{font-size:12px;color:var(--c-700);margin-top:24px;}
+.pp-pj{font-size:13px;color:var(--c-white);margin-top:5px;font-feature-settings:'tnum' 1;}
+.pp-status{margin-top:40px;}
+.pp-skip{font-size:12px;color:var(--c-white);letter-spacing:-0.01em;}
+.pp-weeks{font-size:12px;color:var(--c-white);margin-top:24px;letter-spacing:-0.01em;}
+.pp-acct{font-size:12px;color:var(--c-700);margin-top:40px;padding-bottom:14px;border-bottom:0.5px solid var(--c-900);}
+.pp-goal{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:20px 0;border-bottom:0.5px solid var(--c-900);}
+.pp-goal-name{font-size:15px;color:var(--c-white);letter-spacing:-0.02em;}
+.pp-goal-val{font-size:12px;color:var(--c-white);margin-top:5px;font-feature-settings:'tnum' 1;}
+.pp-goal-sub{font-size:12px;color:var(--c-400);margin-top:5px;}
+.pp-goal-r{text-align:right;flex-shrink:0;display:flex;flex-direction:column;}
+.pp-goal-pl{font-size:11px;color:var(--c-700);}
+.pp-goal-pv{font-size:11px;color:var(--c-white);margin-top:5px;font-feature-settings:'tnum' 1;}
+.pp-links{margin-top:32px;display:flex;flex-direction:column;gap:20px;}
+.pp-link{font-size:13px;color:var(--c-400);letter-spacing:-0.01em;}
+.ppg-top{display:flex;justify-content:space-between;align-items:center;padding:24px 24px 20px;border-bottom:0.5px solid var(--c-900);}
+.ppg-top .pp-back{color:var(--c-400);}
+.ppg-top-sp{width:16px;}
+.ppg-title{display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center;}
+.ppg-t1{font-size:11px;color:var(--c-white);letter-spacing:0.02em;}
+.ppg-t2{font-size:10px;color:var(--c-600);}
+.ppg-hero{position:relative;background:var(--c-black);min-height:280px;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;padding:28px 24px;}
+.ppg-val{font-size:34px;color:var(--c-white);letter-spacing:-0.03em;text-align:right;font-weight:300;line-height:1.05;font-feature-settings:'tnum' 1;}
+.ppg-cur{display:block;font-size:34px;color:var(--c-600);letter-spacing:-0.02em;font-weight:300;line-height:1.05;}
+.ppg-ring{position:absolute;bottom:24px;right:24px;width:42px;height:42px;display:inline-flex;align-items:center;justify-content:center;}
+.ppg-ring svg{position:absolute;inset:0;width:42px;height:42px;}
+.ppg-ring-t{font-family:var(--mono);font-size:10px;color:var(--c-white);}
+.ppg-body{padding:24px;}
+.ppg-card{background:var(--c-surface);border-radius:5px;padding:14px;}
+.ppg-card-top{display:flex;justify-content:space-between;gap:16px;}
+.ppg-cr{text-align:right;}
+.ppg-num{font-size:13px;color:var(--c-white);letter-spacing:-0.01em;font-feature-settings:'tnum' 1;}
+.ppg-sub{font-size:9px;color:var(--c-700);margin-top:4px;}
+.ppg-live{color:var(--c-live);background:rgba(2,203,69,0.08);padding:2px 6px;border-radius:3px;font-size:8px;margin-left:4px;}
+.ppg-weekly{font-size:9px;color:var(--c-400);margin-top:14px;}
+.ppg-bars{display:block;width:100%;height:20px;margin-top:8px;}
+.ppg-row2{display:flex;gap:12px;margin-top:12px;}
+.ppg-mini{flex:1;background:var(--c-surface);border-radius:5px;padding:12px;display:flex;flex-direction:column;}
+.ppg-mini-l{font-size:9px;color:var(--c-400);}
+.ppg-mini-v{font-size:13px;color:var(--c-white);letter-spacing:-0.01em;margin-top:6px;font-feature-settings:'tnum' 1;}
+.ppg-up{color:var(--c-live);font-size:9px;}
+.ppg-mini-s{font-size:9px;color:var(--c-700);margin-top:6px;}
+.ppg-deposit{margin-top:18px;border:0.5px solid var(--c-600);border-radius:5px;padding:12px;text-align:center;font-size:12px;color:var(--c-white);letter-spacing:0.05em;}
 
 .perf-section{padding:130px 0;}
 @media(min-width:760px){
   .compounds-section,.how-section,.dont-section,.portfolios-section,.proj-section{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}
-  .proj-section .proj-head{grid-column:1 / 7;margin-bottom:40px;}
-  .proj-section .proj-board{grid-column:1 / 13;display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}
-  .proj-section .proj-summary{grid-column:1 / 6;}
-  .proj-section .proj-goals{grid-column:7 / 13;}
+  .proj-section .proj-head{grid-column:1 / 7;margin-bottom:48px;}
+  .proj-section .proj-board{grid-column:1 / 13;}
   .compounds-section>.section-eyebrow,.how-section>.section-eyebrow,.dont-section>.section-eyebrow,.portfolios-section>.section-eyebrow{grid-column:1 / 7;}
   .how-section .how-steps,.how-section .how-closing,.dont-section .dont-rows,.portfolios-section .pf-right{grid-column:7 / 13;}
   .portfolios-section .pf-head{grid-column:1 / 7;margin-bottom:40px;}
   .portfolios-section .pf-rows{grid-column:1 / 13;}
   .compounds-section .compounds-prose{grid-column:7 / 12;}
+}
+@media(min-width:1200px){
+  .proj-section .proj-board{grid-column:7 / 13;display:grid;grid-template-columns:1fr 1fr;column-gap:var(--gutter);align-items:stretch;}
+  .proj-section .proj-board .pp{max-width:none;width:100%;display:flex;flex-direction:column;}
+  .proj-section .proj-board .pp>.pp-screen,.proj-section .proj-board .pp>.ppg{flex:1;}
 }
 @media(max-width:900px){.how-section,.compounds-section,.dont-section,.accounts-section,.portfolios-section,.perf-section{padding:72px 0;}}
 @media(max-width:760px){.how-section,.compounds-section,.dont-section,.accounts-section,.portfolios-section,.perf-section{position:relative;}.how-section::before,.compounds-section::before,.dont-section::before,.accounts-section::before,.portfolios-section::before,.perf-section::before{content:'';position:absolute;top:0;left:50%;width:100vw;transform:translateX(-50%);border-top:0.5px solid var(--c-900);pointer-events:none;}}
@@ -291,7 +334,6 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   .how-node{display:none;}
   .dont-row{grid-template-columns:1fr;gap:14px;}
   .perf-table td:not(.perf-td-name),.perf-table th:not(.perf-th-name){padding-left:24px;}
-  .proj-summary{margin-bottom:32px;}
 }
 </style>
 </head>
@@ -301,11 +343,11 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   
   <div class="nav-links"><a href="II Site V2 - Managed.html" class="active">Managed</a><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a></div>
   
-  <div class="navbar-right"><div class="lang-toggle"><span class="lt active">EN</span><span class="sep">·</span><span class="lt">FR</span></div><a href="II Site V2 - GetTheApp.html" class="navbar-cta">Get the App</a><button class="hamburger" type="button"><span></span><span></span></button></div>
+  <div class="navbar-right"><div class="lang-toggle"><span class="lt active">EN</span><span class="sep">·</span><span class="lt">FR</span></div><a href="II Site V2 - GetTheApp.html" class="navbar-cta">Get Access</a><button class="hamburger" type="button"><span></span><span></span></button></div>
 </div></nav>
 <div class="menu-overlay">
   <div class="menu-top"><a href="index.html" class="ml-logo"><img src="Logo.svg" alt="II"></a><button class="ml-close" type="button">Close ×</button></div>
-  <div class="menu-center"><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a><a href="II Site V2 - GetTheApp.html">Get the App</a></div>
+  <div class="menu-center"><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a><a href="II Site V2 - GetTheApp.html">Get Access</a></div>
   <div class="menu-bottom"><div class="mb-left"><span>Intelligent Investing</span><span>No. 01 · 2026</span></div><div class="mb-right"><span>Mogo Inc.</span><span>Orion Digital · TSX·NASDAQ : ORIO</span></div></div>
 </div>
 
@@ -423,9 +465,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
         <div class="pf-rd"><span class="pf-rd-k">Strategy</span><span class="pf-rd-v">100% Equity (S&amp;P 500)</span></div>
         <div class="pf-rd"><span class="pf-rd-k">Long-term Return</span><span class="pf-rd-v">~11%</span></div>
         <div class="pf-rd"><span class="pf-rd-k">Risk Level</span><span class="pf-rd-v">5 / 5</span></div>
-        <div class="pf-rd"><span class="pf-rd-k">Peak Drawdown</span><span class="pf-rd-v">50%+</span></div>
-        <div class="pf-rd"><span class="pf-rd-k">Management Fee</span><span class="pf-rd-v">0.10%</span></div>
-      </div>
+        <div class="pf-rd"><span class="pf-rd-k">Peak Drawdown</span><span class="pf-rd-v">50%+</span></div>      </div>
       <div class="pf-row-img pf-equity-growth"></div>
     </div>
     <div class="pf-row ri" style="--d:0.06s">
@@ -434,9 +474,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
         <div class="pf-rd"><span class="pf-rd-k">Strategy</span><span class="pf-rd-v">70% Equity / 30% Fixed Income</span></div>
         <div class="pf-rd"><span class="pf-rd-k">Long-term Return</span><span class="pf-rd-v">~9%</span></div>
         <div class="pf-rd"><span class="pf-rd-k">Risk Level</span><span class="pf-rd-v">4 / 5</span></div>
-        <div class="pf-rd"><span class="pf-rd-k">Peak Drawdown</span><span class="pf-rd-v">~30&ndash;35%</span></div>
-        <div class="pf-rd"><span class="pf-rd-k">Management Fee</span><span class="pf-rd-v">0.10%</span></div>
-      </div>
+        <div class="pf-rd"><span class="pf-rd-k">Peak Drawdown</span><span class="pf-rd-v">~30&ndash;35%</span></div>      </div>
       <div class="pf-row-img pf-balanced-growth"></div>
     </div>
     <div class="pf-row ri" style="--d:0.08s">
@@ -445,9 +483,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
         <div class="pf-rd"><span class="pf-rd-k">Strategy</span><span class="pf-rd-v">50% Equity / 50% Fixed Income</span></div>
         <div class="pf-rd"><span class="pf-rd-k">Long-term Return</span><span class="pf-rd-v">~7%</span></div>
         <div class="pf-rd"><span class="pf-rd-k">Risk Level</span><span class="pf-rd-v">3 / 5</span></div>
-        <div class="pf-rd"><span class="pf-rd-k">Peak Drawdown</span><span class="pf-rd-v">~20&ndash;25%</span></div>
-        <div class="pf-rd"><span class="pf-rd-k">Management Fee</span><span class="pf-rd-v">0.10%</span></div>
-      </div>
+        <div class="pf-rd"><span class="pf-rd-k">Peak Drawdown</span><span class="pf-rd-v">~20&ndash;25%</span></div>      </div>
       <div class="pf-row-img pf-balanced"></div>
     </div>
     <div class="pf-row ri" style="--d:0.1s">
@@ -456,9 +492,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
         <div class="pf-rd"><span class="pf-rd-k">Strategy</span><span class="pf-rd-v">70% Fixed Income / 30% Money Market</span></div>
         <div class="pf-rd"><span class="pf-rd-k">Yield</span><span class="pf-rd-v">3.06%</span></div>
         <div class="pf-rd"><span class="pf-rd-k">Risk Level</span><span class="pf-rd-v">2 / 5</span></div>
-        <div class="pf-rd"><span class="pf-rd-k">Peak Drawdown</span><span class="pf-rd-v">Minimal</span></div>
-        <div class="pf-rd"><span class="pf-rd-k">Management Fee</span><span class="pf-rd-v">0.10%</span></div>
-      </div>
+        <div class="pf-rd"><span class="pf-rd-k">Peak Drawdown</span><span class="pf-rd-v">Minimal</span></div>      </div>
       <div class="pf-row-img pf-balanced-income"></div>
     </div>
     <div class="pf-row ri" style="--d:0.12s">
@@ -467,9 +501,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
         <div class="pf-rd"><span class="pf-rd-k">Strategy</span><span class="pf-rd-v">100% Money Market</span></div>
         <div class="pf-rd"><span class="pf-rd-k">Yield</span><span class="pf-rd-v">2.63%</span></div>
         <div class="pf-rd"><span class="pf-rd-k">Risk Level</span><span class="pf-rd-v">1 / 5</span></div>
-        <div class="pf-rd"><span class="pf-rd-k">Peak Drawdown</span><span class="pf-rd-v">Minimal</span></div>
-        <div class="pf-rd"><span class="pf-rd-k">Management Fee</span><span class="pf-rd-v">0.10%</span></div>
-      </div>
+        <div class="pf-rd"><span class="pf-rd-k">Peak Drawdown</span><span class="pf-rd-v">Minimal</span></div>      </div>
       <div class="pf-row-img pf-money-market"></div>
     </div>
   </div>
@@ -484,28 +516,67 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
     <p class="proj-deck ri" style="--d:0.06s">Each account is a goal with a target. The system funds it weekly and projects the path it is on.</p>
   </div>
   <div class="proj-board">
-    <div class="proj-summary ri" style="--d:0.04s">
-      <div class="proj-sum-label">System-Managed Capital</div>
-      <div class="proj-value">75,000.00<span class="proj-cur">CAD</span></div>
-      <div class="proj-projrow"><span class="k">Projection</span><span class="v">1.23M</span></div>
-      <div class="proj-meta">53-Week Consistency &middot; Auto-Invest On</div>
-    </div>
-    <div class="proj-goals ri" style="--d:0.06s">
-      <div class="proj-goal">
-        <div class="proj-goal-l">
-          <div class="proj-goal-name">Millionaire Goal</div>
-          <div class="proj-goal-sub">TFSA &middot; Equity Growth</div>
-          <div class="proj-goal-val">55,000.00</div>
+    <div class="pp ri" style="--d:0.06s">
+      <div class="pp-screen">
+        <div class="pp-top">
+          <span class="pp-back"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.1"/></svg></span>
+          <span class="pp-exit">Exit</span>
         </div>
-        <div class="proj-goal-r"><span class="proj-goal-plabel">Projection</span><span class="proj-goal-proj">902.00K</span></div>
+        <div class="pp-hero">
+          <div class="pp-title">System-Managed Capital</div>
+          <div class="pp-tv-l">Total Value</div>
+          <div class="pp-tv">75,000.00<span class="pp-cur">CAD</span></div>
+          <div class="pp-pj-l">Projection</div>
+          <div class="pp-pj">1.23M</div>
+        </div>
+        <div class="pp-status">
+          <div class="pp-skip">Skipping this cycle</div>
+          <div class="pp-weeks">53 weeks</div>
+        </div>
+        <div class="pp-acct">Account</div>
+        <div class="pp-goal">
+          <div class="pp-goal-l">
+            <div class="pp-goal-name">Millionaire Goal</div>
+            <div class="pp-goal-val">55,000.00</div>
+            <div class="pp-goal-sub">TFSA &middot; Equity Growth</div>
+          </div>
+          <div class="pp-goal-r"><span class="pp-goal-pl">Projection</span><span class="pp-goal-pv">902.00K</span></div>
+        </div>
+        <div class="pp-goal">
+          <div class="pp-goal-l">
+            <div class="pp-goal-name">Property Purchase</div>
+            <div class="pp-goal-val">20,000.00</div>
+            <div class="pp-goal-sub">RRSP &middot; Equity Growth</div>
+          </div>
+          <div class="pp-goal-r"><span class="pp-goal-pl">Projection</span><span class="pp-goal-pv">328.00K</span></div>
+        </div>
       </div>
-      <div class="proj-goal">
-        <div class="proj-goal-l">
-          <div class="proj-goal-name">Property Purchase</div>
-          <div class="proj-goal-sub">RRSP &middot; Equity Growth</div>
-          <div class="proj-goal-val">20,000.00</div>
+    </div>
+    <div class="pp ri" style="--d:0.1s">
+      <div class="ppg">
+        <div class="ppg-top">
+          <span class="pp-back"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.1"/></svg></span>
+          <span class="ppg-title"><span class="ppg-t1">MILLIONAIRE GOAL</span><span class="ppg-t2">TFSA &middot; Equity Growth</span></span>
+          <span class="ppg-top-sp"></span>
         </div>
-        <div class="proj-goal-r"><span class="proj-goal-plabel">Projection</span><span class="proj-goal-proj">328.00K</span></div>
+        <div class="ppg-hero">
+          <div class="ppg-val">42,348.35<span class="ppg-cur">CAD</span></div>
+        </div>
+        <div class="ppg-body">
+          <div class="ppg-card">
+            <div class="ppg-card-top">
+              <div class="ppg-cl"><div class="ppg-num">10,500.34</div><div class="ppg-sub">Invested <span class="ppg-live">Auto-Invest On</span></div></div>
+              <div class="ppg-cr"><div class="ppg-num">89.24M</div><div class="ppg-sub">Projection</div></div>
+            </div>
+            <div class="ppg-weekly">Weekly: 100.00</div>
+            <svg class="ppg-bars" viewBox="0 0 300 24" fill="var(--c-700)" aria-hidden="true" preserveAspectRatio="none"><rect x="1.0" y="22.9" width="1.4" height="1.1"/><rect x="6.4" y="22.9" width="1.4" height="1.1"/><rect x="11.7" y="22.7" width="1.4" height="1.3"/><rect x="17.1" y="22.7" width="1.4" height="1.3"/><rect x="22.4" y="22.8" width="1.4" height="1.2"/><rect x="27.8" y="23.0" width="1.4" height="1.0"/><rect x="33.1" y="22.7" width="1.4" height="1.3"/><rect x="38.5" y="22.7" width="1.4" height="1.3"/><rect x="43.9" y="22.5" width="1.4" height="1.5"/><rect x="49.2" y="21.6" width="1.4" height="2.4"/><rect x="54.6" y="21.9" width="1.4" height="2.1"/><rect x="59.9" y="21.8" width="1.4" height="2.2"/><rect x="65.3" y="21.5" width="1.4" height="2.5"/><rect x="70.6" y="22.2" width="1.4" height="1.8"/><rect x="76.0" y="21.8" width="1.4" height="2.2"/><rect x="81.4" y="21.3" width="1.4" height="2.7"/><rect x="86.7" y="20.9" width="1.4" height="3.1"/><rect x="92.1" y="20.3" width="1.4" height="3.7"/><rect x="97.4" y="19.5" width="1.4" height="4.5"/><rect x="102.8" y="19.8" width="1.4" height="4.2"/><rect x="108.1" y="20.7" width="1.4" height="3.3"/><rect x="113.5" y="19.7" width="1.4" height="4.3"/><rect x="118.9" y="20.7" width="1.4" height="3.3"/><rect x="124.2" y="19.9" width="1.4" height="4.1"/><rect x="129.6" y="17.6" width="1.4" height="6.4"/><rect x="134.9" y="18.3" width="1.4" height="5.7"/><rect x="140.3" y="17.1" width="1.4" height="6.9"/><rect x="145.6" y="17.0" width="1.4" height="7.0"/><rect x="151.0" y="18.5" width="1.4" height="5.5"/><rect x="156.4" y="18.6" width="1.4" height="5.4"/><rect x="161.7" y="17.8" width="1.4" height="6.2"/><rect x="167.1" y="17.1" width="1.4" height="6.9"/><rect x="172.4" y="16.4" width="1.4" height="7.6"/><rect x="177.8" y="13.1" width="1.4" height="10.9"/><rect x="183.1" y="14.5" width="1.4" height="9.5"/><rect x="188.5" y="15.4" width="1.4" height="8.6"/><rect x="193.9" y="13.9" width="1.4" height="10.1"/><rect x="199.2" y="17.6" width="1.4" height="6.4"/><rect x="204.6" y="15.6" width="1.4" height="8.4"/><rect x="209.9" y="12.9" width="1.4" height="11.1"/><rect x="215.3" y="13.0" width="1.4" height="11.0"/><rect x="220.6" y="10.3" width="1.4" height="13.7"/><rect x="226.0" y="9.8" width="1.4" height="14.2"/><rect x="231.4" y="11.6" width="1.4" height="12.4"/><rect x="236.7" y="13.9" width="1.4" height="10.1"/><rect x="242.1" y="12.0" width="1.4" height="12.0"/><rect x="247.4" y="13.1" width="1.4" height="10.9"/><rect x="252.8" y="11.7" width="1.4" height="12.3"/><rect x="258.1" y="4.9" width="1.4" height="19.1"/><rect x="263.5" y="8.1" width="1.4" height="15.9"/><rect x="268.9" y="6.4" width="1.4" height="17.6"/><rect x="274.2" y="5.8" width="1.4" height="18.2"/><rect x="279.6" y="11.9" width="1.4" height="12.1"/><rect x="284.9" y="9.9" width="1.4" height="14.1"/><rect x="290.3" y="8.1" width="1.4" height="15.9"/><rect x="295.6" y="6.6" width="1.4" height="17.4"/></svg>
+          </div>
+          <div class="ppg-row2">
+            <div class="ppg-mini"><span class="ppg-mini-l">UPCOMING</span><span class="ppg-mini-v">100.00</span><span class="ppg-mini-s">Jun 16</span></div>
+            <div class="ppg-mini"><span class="ppg-mini-l">CONSISTENCY</span><span class="ppg-mini-v">53 <span class="ppg-up">&#9650;</span></span><span class="ppg-mini-s">Weeks</span></div>
+          </div>
+          <div class="ppg-deposit">DEPOSIT</div>
+        </div>
       </div>
     </div>
   </div>
