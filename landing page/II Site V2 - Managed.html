@@ -81,8 +81,8 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .page-breadcrumb{font-size:12px;color:var(--c-700);letter-spacing:0.06em;margin-bottom:36px;display:flex;align-items:center;gap:10px;}
 .page-breadcrumb a{color:var(--c-700);text-decoration:none;}.page-breadcrumb .sep{color:var(--c-800);}.page-breadcrumb .current{color:var(--c-200);}
 .page-masthead{font-size:13px;color:var(--c-700);letter-spacing:0.04em;font-feature-settings:'tnum' 1;margin-bottom:20px;}
-.page-title{font-size:clamp(34px,4.6vw,56px);line-height:1.04;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:48px;max-width:calc((100% + var(--gutter)) / 12 * 8 - var(--gutter));}
-.page-deck{font-size:clamp(17px,1.6vw,22px);line-height:1.4;letter-spacing:-0.015em;color:var(--c-400);max-width:calc((100% + var(--gutter)) / 12 * 7 - var(--gutter));text-wrap:balance;}
+.page-title{font-size:clamp(34px,4.6vw,56px);line-height:1.04;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:48px;max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));}
+.page-deck{font-size:clamp(17px,1.6vw,22px);line-height:1.4;letter-spacing:-0.015em;color:var(--c-400);max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));text-wrap:balance;}
 .wordmarks{padding:32px 0;}
 .wordmark-row{display:grid;grid-template-columns:minmax(0,400px) 1fr;gap:80px;align-items:center;padding:56px 0;border-bottom:0.5px solid var(--c-900);text-decoration:none;color:inherit;transition:padding 0.3s ease;}
 .wordmark-row:first-of-type{border-top:0.5px solid var(--c-900);}
@@ -141,8 +141,10 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .how-closing{font-size:17px;line-height:1.5;color:var(--c-600);margin-top:48px;max-width:560px;text-wrap:balance;}
 
 .compounds-section{padding:130px 0;}
-.compounds-prose p{font-size:18px;line-height:1.7;color:var(--c-400);letter-spacing:-0.01em;}
+.compounds-prose p{font-size:15px;line-height:1.7;color:var(--c-400);letter-spacing:-0.01em;}
 .compounds-prose p+p{margin-top:24px;}
+.compounds-headline{font-size:clamp(28px,3.4vw,34px);line-height:1.12;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:0;}
+.compounds-section .section-eyebrow{margin-bottom:28px;}
 
 .dont-section{padding:130px 0;}
 .dont-rows{display:flex;flex-direction:column;}
@@ -190,7 +192,8 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .pf-rd:first-child{border-top:none;padding-top:0;}
 .pf-rd-k{font-size:13px;color:var(--c-700);letter-spacing:-0.01em;}
 .pf-rd-v{font-size:13px;color:var(--c-400);text-align:right;font-feature-settings:'tnum' 1;letter-spacing:-0.01em;}
-.pf-row-img{grid-column:6 / 9;grid-row:1;width:80%;aspect-ratio:16 / 9;border:0.5px solid var(--c-900);}
+.pf-row-img{grid-column:6 / 9;grid-row:1;width:80%;aspect-ratio:16 / 9;border:0.5px solid var(--c-900);opacity:0;transition:opacity 0.5s ease;}
+.pf-row:hover .pf-row-img{opacity:1;}
 @media(max-width:760px){.pf-row{grid-template-columns:1fr;gap:14px;align-items:start;}.pf-row-head,.pf-row-detail{grid-column:auto;}.pf-row-img{display:none;}}
 .pf-right{display:grid;grid-template-columns:subgrid;align-items:start;}
 .pf-stats{grid-column:span 3;min-width:0;}
@@ -212,7 +215,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .pf-ph-note{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;color:var(--c-black);opacity:0.4;margin-top:auto;}
 @media(max-width:760px){.portfolios-section .pf-steps,.portfolios-section .pf-right{display:none;}.pf-carousel{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;margin:0 -24px;padding:4px 24px 0;scrollbar-width:none;}.pf-carousel::-webkit-scrollbar{display:none;}.pf-card{flex:0 0 84%;scroll-snap-align:center;display:flex;flex-direction:column;}.pf-dots{display:flex;justify-content:center;gap:8px;margin-top:24px;}.pf-dot{width:6px;height:6px;border:0.5px solid var(--c-700);}.pf-dot.is-on{background:var(--c-400);border-color:var(--c-400);}}
 .pf-head .section-eyebrow{margin-bottom:0;}
-.pf-headline{font-size:clamp(28px,3.4vw,34px);line-height:1.1;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:20px;}
+.pf-headline{font-size:clamp(28px,3.4vw,34px);line-height:1.12;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:20px;}
 .pf-deck{font-size:15px;line-height:1.6;color:var(--c-600);margin-top:16px;}
 .pf-steps{margin-top:0;display:flex;flex-direction:column;}
 .pf-step{position:relative;display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;padding:18px 0;background:none;border:none;border-top:0.5px solid var(--c-900);text-align:left;cursor:pointer;font-family:inherit;transition:padding-left 0.25s ease;}
@@ -230,7 +233,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .pf-step.is-active .pf-step-sub{color:var(--c-700);}
 
 .proj-head .section-eyebrow{margin-bottom:0;}
-.proj-headline{font-size:clamp(28px,3.4vw,34px);line-height:1.1;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:20px;}
+.proj-headline{font-size:clamp(28px,3.4vw,34px);line-height:1.12;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:20px;}
 .proj-deck{font-size:15px;line-height:1.6;color:var(--c-600);margin-top:16px;}
 .proj-board{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;align-items:stretch;}
 .pp{flex:0 0 340px;max-width:340px;border:0.5px solid var(--c-800);border-radius:28px;overflow:hidden;background:var(--c-black);display:flex;flex-direction:column;}
@@ -298,7 +301,9 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   .how-section .how-steps,.how-section .how-closing,.dont-section .dont-rows,.portfolios-section .pf-right{grid-column:7 / 13;}
   .portfolios-section .pf-head{grid-column:1 / 7;margin-bottom:40px;}
   .portfolios-section .pf-rows{grid-column:1 / 13;}
-  .compounds-section .compounds-prose{grid-column:7 / 12;}
+  .compounds-section .compounds-prose{grid-column:7 / 12;grid-row:2;}
+  .compounds-section .compounds-headline{grid-column:1 / 6;grid-row:2;}
+  .compounds-section>.section-eyebrow{grid-row:1;}
 }
 @media(min-width:1200px){
   .proj-section .proj-board{grid-column:7 / 13;display:grid;grid-template-columns:1fr 1fr;column-gap:var(--gutter);align-items:stretch;}
@@ -341,13 +346,13 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 <nav class="navbar"><div class="navbar-inner">
   <a href="index.html" class="navbar-brand"><img src="Logo.svg" alt="II"></a>
   
-  <div class="nav-links"><a href="II Site V2 - Managed.html" class="active">Managed</a><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a></div>
+  <div class="nav-links"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html" class="active">Managed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a></div>
   
   <div class="navbar-right"><div class="lang-toggle"><span class="lt active">EN</span><span class="sep">·</span><span class="lt">FR</span></div><a href="II Site V2 - GetTheApp.html" class="navbar-cta">Get Access</a><button class="hamburger" type="button"><span></span><span></span></button></div>
 </div></nav>
 <div class="menu-overlay">
   <div class="menu-top"><a href="index.html" class="ml-logo"><img src="Logo.svg" alt="II"></a><button class="ml-close" type="button">Close ×</button></div>
-  <div class="menu-center"><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a><a href="II Site V2 - GetTheApp.html">Get Access</a></div>
+  <div class="menu-center"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a><a href="II Site V2 - GetTheApp.html">Get Access</a></div>
   <div class="menu-bottom"><div class="mb-left"><span>Intelligent Investing</span><span>No. 01 · 2026</span></div><div class="mb-right"><span>Mogo Inc.</span><span>Orion Digital · TSX·NASDAQ : ORIO</span></div></div>
 </div>
 
@@ -411,9 +416,10 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 <div class="container">
 <section class="compounds-section">
   <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 01</span><span class="se-name">The Decision Is the Risk</span></div>
+  <h2 class="compounds-headline ri" style="--d:0.04s">Removing the decision removes the moment of failure.</h2>
   <div class="compounds-prose">
     <p class="ri" style="--d:0.04s">The most costly investing mistake most people make is not choosing the wrong stock. It is selling during a downturn, pausing contributions when conviction weakens, or waiting for the right moment to start.</p>
-    <p class="ri" style="--d:0.08s">Removing the decision removes the moment of failure. Weekly contributions accumulate through market cycles without requiring the investor to make a correct call at the wrong time.</p>
+    <p class="ri" style="--d:0.08s">Weekly contributions accumulate through market cycles without requiring the investor to make a correct call at the wrong time.</p>
     <p class="ri" style="--d:0.12s">Managed is not passive. It is disciplined. The discipline is in the consistency, not the strategy.</p>
   </div>
 </section>

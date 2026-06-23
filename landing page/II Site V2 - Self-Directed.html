@@ -63,8 +63,8 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:var(--c-black);
 .pg-art{position:absolute;top:0;right:0;height:100%;width:46%;z-index:0;pointer-events:none;display:flex;align-items:center;justify-content:center;padding-top:134px;box-sizing:border-box;}
 .pg-art canvas{width:clamp(340px,35vw,500px);height:clamp(340px,35vw,500px);display:block;}
 @media(max-width:760px){.page-header{padding:128px 0 88px;min-height:auto;display:flex;flex-direction:column;}.page-header .container{order:1;}.page-header .page-title,.page-header .page-deck{max-width:none;}.pg-art{position:static;order:2;width:100%;height:auto;left:auto;right:auto;top:auto;padding-top:0;margin-top:40px;opacity:0.8;}.pg-art canvas{width:clamp(280px,84vw,380px);height:clamp(280px,84vw,380px);}}
-.page-title{font-size:clamp(34px,4.6vw,56px);line-height:1.04;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:48px;max-width:calc((100% + var(--gutter)) / 12 * 8 - var(--gutter));}
-.page-deck{font-size:clamp(17px,1.6vw,22px);line-height:1.4;letter-spacing:-0.015em;color:var(--c-400);max-width:calc((100% + var(--gutter)) / 12 * 7 - var(--gutter));text-wrap:balance;}.cta-section{text-align:center;padding:160px 0 100px;}
+.page-title{font-size:clamp(34px,4.6vw,56px);line-height:1.04;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:48px;max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));}
+.page-deck{font-size:clamp(17px,1.6vw,22px);line-height:1.4;letter-spacing:-0.015em;color:var(--c-400);max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));text-wrap:balance;}.cta-section{text-align:center;padding:160px 0 100px;}
 .cta-canon{font-size:clamp(28px,3.5vw,44px);line-height:1.2;letter-spacing:-0.025em;color:var(--c-200);margin:0 auto 48px;max-width:880px;text-wrap:balance;}
 .cta-button{display:inline-flex;align-items:center;gap:8px;font-size:15px;color:var(--c-white);text-decoration:none;}
 .cta-button .arr{display:inline-flex;align-items:center;line-height:1;}
@@ -90,7 +90,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .page-actions{margin-top:48px;}.memo-section{padding:130px 0;}
 .memo-grid{display:grid;grid-template-columns:1fr;gap:48px;align-items:start;}
 @media(min-width:1024px){.memo-grid{grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);row-gap:0;align-items:center;}.memo-text{grid-column:1 / 7;}.memo-grid .dr-doc{grid-column:9 / 13;}}
-.memo-lead{font-size:clamp(24px,3vw,34px);line-height:1.15;letter-spacing:-0.03em;color:var(--c-200);margin-bottom:28px;font-weight:400;}
+.memo-lead{font-size:clamp(28px,3.4vw,34px);line-height:1.12;letter-spacing:-0.03em;color:var(--c-200);margin-bottom:28px;font-weight:400;}
 .memo-body{font-size:15px;line-height:1.7;color:var(--c-600);max-width:660px;}
 .memo-body p+p{margin-top:14px;}
 .memo-pull{font-size:15px;line-height:1.7;color:var(--c-400);margin-top:28px;max-width:660px;text-wrap:balance;}
@@ -118,7 +118,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .acc-section{padding:130px 0;position:relative;}
 .acc-section::after{content:'';position:absolute;top:0;bottom:0;left:50%;width:100vw;transform:translateX(-50%);background:var(--c-surface);z-index:0;}
 .acc-section>*{position:relative;z-index:1;}
-.acc-headline{font-size:clamp(24px,3vw,34px);line-height:1.15;letter-spacing:-0.03em;color:var(--c-200);max-width:760px;margin-bottom:48px;text-wrap:balance;font-weight:400;}
+.acc-headline{font-size:clamp(28px,3.4vw,34px);line-height:1.12;letter-spacing:-0.03em;color:var(--c-200);max-width:760px;margin-bottom:48px;text-wrap:balance;font-weight:400;}
 .acc-rows{margin-top:48px;display:flex;flex-direction:column;}
 .acc-row{padding:44px 0;border-top:0.5px solid var(--c-900);display:grid;grid-template-columns:1fr;gap:32px;align-items:center;}
 .acc-row:last-of-type{border-bottom:0.5px solid var(--c-900);}
@@ -194,7 +194,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .how-num{font-size:clamp(34px,5vw,40px);line-height:1;color:var(--c-900);letter-spacing:-0.02em;font-weight:300;}
 .how-title{font-size:22px;line-height:1.2;letter-spacing:-0.02em;color:var(--c-white);font-weight:400;margin-bottom:14px;}
 .how-desc{font-size:15px;line-height:1.7;color:var(--c-600);max-width:660px;}
-.how-headline{font-size:clamp(24px,3vw,34px);line-height:1.15;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin:28px 0 18px;text-wrap:balance;}
+.how-headline{font-size:clamp(28px,3.4vw,34px);line-height:1.12;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin:28px 0 18px;text-wrap:balance;}
 .how-lead{font-size:15px;line-height:1.7;color:var(--c-600);max-width:660px;}
 
 .accounts-section{padding:130px 0;}
@@ -227,7 +227,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 <nav class="navbar"><div class="navbar-inner">
   <a href="index.html" class="navbar-brand"><img src="Logo.svg" alt="II"></a>
   
-  <div class="nav-links"><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Self-Directed.html" class="active">Self-Directed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a></div>
+  <div class="nav-links"><a href="II Site V2 - Self-Directed.html" class="active">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a></div>
   
   <div class="navbar-right"><div class="lang-toggle"><span class="lt active">EN</span><span class="sep">·</span><span class="lt">FR</span></div><a href="II Site V2 - GetTheApp.html" class="navbar-cta">Get Access</a><button class="hamburger" type="button"><span></span><span></span></button></div>
 </div></nav>
