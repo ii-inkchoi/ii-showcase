@@ -103,12 +103,15 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 
 /* · Founders · */
 .founders-section{padding:96px 0;border-top:0.5px solid var(--c-900);}
+.founders-layout{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);}
+.founders-head{grid-column:1 / 7;}
 .founders-intro{font-size:15px;line-height:1.6;color:var(--c-600);max-width:620px;margin-bottom:40px;}
-.founder-rows{display:flex;flex-direction:column;gap:44px;margin-top:8px;}
-.founder-row{display:grid;grid-template-columns:minmax(0,260px) 1fr;gap:28px 48px;padding:0;}
+.founder-rows{display:grid;grid-template-columns:1fr 1fr;column-gap:var(--gutter);grid-column:7 / 13;}
+.founder-row{display:flex;flex-direction:column;gap:20px;padding:0;}
+.founder-photo{aspect-ratio:1 / 1;width:100%;background:var(--c-surface);border:0.5px solid var(--c-900);}
 .founder-name{font-size:18px;letter-spacing:-0.02em;color:var(--c-white);margin-bottom:12px;}
 .founder-title{font-family:var(--mono);font-size:11px;color:var(--c-700);letter-spacing:0.04em;}
-.founder-bio{font-size:13px;line-height:1.6;color:var(--c-800);max-width:560px;}
+.founder-bio{font-size:13px;line-height:1.6;color:var(--c-800);}
 
 /* · Regulatory & Institutional (from Managed) · */
 .reg-section{padding:96px 0;border-top:0.5px solid var(--c-900);}
@@ -131,7 +134,9 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 @media (prefers-reduced-motion: no-preference){.cta-button .roll-in{transition:transform 0.55s cubic-bezier(0.16,1,0.3,1);}.cta-button:hover .roll-in{transform:translateY(-50%);}}
 
 @media(max-width:760px){
-  .founder-row{grid-template-columns:1fr;gap:14px;}
+  .founders-layout{grid-template-columns:1fr;}
+  .founders-head{grid-column:auto;}
+  .founder-rows{grid-column:auto;grid-template-columns:1fr;gap:40px;}
   .trust-strip{grid-template-columns:1fr;row-gap:20px;}
   .trust-item{border-left:0;padding-left:0;border-top:0.5px solid var(--c-800);padding-top:16px;}
 }
@@ -233,17 +238,23 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 
 <div class="container">
 <section class="founders-section">
+  <div class="founders-layout">
+  <div class="founders-head">
   <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 02</span><span class="se-name">Founders</span></div>
   <p class="founders-intro ri" style="--d:0.04s">The company is led by operators focused on building investment infrastructure around judgment, discipline, and long-term capital allocation.</p>
+  </div>
   <div class="founder-rows">
     <div class="founder-row ri" style="--d:0.04s">
+      <div class="founder-photo"></div>
       <div class="founder-id"><div class="founder-name">David Feller</div><div class="founder-title">Role/title pending.</div></div>
       <p class="founder-bio">Final founder copy to be provided by Dave or Aidan.</p>
     </div>
     <div class="founder-row ri" style="--d:0.08s">
+      <div class="founder-photo"></div>
       <div class="founder-id"><div class="founder-name">Gregory Feller</div><div class="founder-title">Role/title pending.</div></div>
       <p class="founder-bio">Final founder copy to be provided by Dave or Aidan.</p>
     </div>
+  </div>
   </div>
 </section>
 </div>

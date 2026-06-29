@@ -59,21 +59,22 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .page-title{font-size:clamp(34px,4.6vw,56px);line-height:1.04;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:48px;max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));text-wrap:balance;}
 .page-deck{font-size:clamp(17px,1.6vw,22px);line-height:1.4;letter-spacing:-0.015em;color:var(--c-400);max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));}
 .hub{padding:40px 0 80px;}
-.hub-group{margin-top:80px;}
+.hub-group{margin-top:120px;}
 .hub-group:first-of-type{margin-top:40px;}
-.hub-glabel{font-family:var(--mono);font-size:12px;letter-spacing:0.14em;color:var(--c-400);}
+.hub-glabel{font-family:var(--mono);font-size:12px;letter-spacing:0.04em;display:flex;gap:20px;}
+.hub-glabel .se-no{color:var(--c-700);}.hub-glabel .se-name{color:var(--c-400);}
 .hub-gdesc{font-size:17px;line-height:1.4;letter-spacing:-0.01em;color:var(--c-700);max-width:560px;margin-top:14px;}
-.hub-grid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:40px;border-top:0.5px solid var(--c-900);}
-.hub-card{display:flex;flex-direction:column;min-height:248px;padding:32px 32px 34px;border-bottom:0.5px solid var(--c-900);border-right:0.5px solid var(--c-900);text-decoration:none;color:inherit;transition:background 0.3s ease;}
-.hub-card:nth-child(3n){border-right:none;}
+.hub-grid{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);margin-top:40px;}
+.hub-card{display:flex;flex-direction:column;grid-column:span 4;min-height:248px;padding:32px 32px 34px;border-left:0.5px solid var(--c-900);text-decoration:none;color:inherit;transition:background 0.3s ease;}
 .hub-card:hover{background:var(--c-elev);}
-.hc-tag{font-family:var(--mono);font-size:11px;letter-spacing:0.12em;color:var(--c-700);margin-bottom:18px;}
-.hc-q{font-size:22px;line-height:1.22;letter-spacing:-0.02em;color:var(--c-200);transition:color 0.15s ease;}
+.hc-tag{font-family:var(--mono);font-size:11px;letter-spacing:0.04em;color:var(--c-700);margin-bottom:18px;}
+.hc-q{font-size:22px;line-height:1.22;letter-spacing:-0.02em;color:var(--c-200);font-weight:400;transition:color 0.15s ease;}
 .hub-card:hover .hc-q{color:var(--c-white);}
 .hc-desc{font-size:14px;line-height:1.55;color:var(--c-600);margin-top:14px;}
 .hc-read{margin-top:auto;padding-top:24px;font-size:13px;letter-spacing:0.01em;color:var(--c-700);display:inline-flex;align-items:center;gap:6px;transition:color 0.15s ease;}
+.hc-read .arr-svg{width:12px;height:12px;display:block;}
 .hub-card:hover .hc-read{color:var(--c-200);}
-@media(max-width:900px){.hub-grid{grid-template-columns:1fr;}.hub-card{border-right:none;min-height:0;}}
+@media(max-width:900px){.hub-grid{grid-template-columns:1fr;}.hub-card{grid-column:auto;border-left:none;min-height:0;}.hub-card + .hub-card{border-top:0.5px solid var(--c-900);}}
 footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;line-height:1.7;color:var(--c-800);}.footer-copy{font-size:13px;color:var(--c-600);}
 .footer-copy a{color:var(--c-600);text-decoration:underline;}
 .footer-social{display:flex;gap:18px;margin-top:22px;}
@@ -165,46 +166,42 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 <section class="hub">
 
   <div class="hub-group">
-    <div class="hub-glabel ri" style="--d:0s">ACCOUNT INFRASTRUCTURE</div>
+    <div class="hub-glabel ri" style="--d:0s"><span class="se-no">No. 01</span><span class="se-name">Account Infrastructure</span></div>
     <div class="hub-gdesc ri" style="--d:0.06s">The accounts available to Canadian investors and how each one works within the tax system.</div>
     <div class="hub-grid">
-      <a href="#" class="hub-card ri"><span class="hc-tag">ACCOUNTS</span><h2 class="hc-q">What is a TFSA?</h2><p class="hc-desc">How a Tax-Free Savings Account works, what you can hold in it, and why it is usually the right place to start.</p><span class="hc-read">Read &rarr;</span></a>
-      <a href="#" class="hub-card ri"><span class="hc-tag">ACCOUNTS</span><h2 class="hc-q">What is an RRSP?</h2><p class="hc-desc">How a Registered Retirement Savings Plan reduces your taxable income and compounds over time.</p><span class="hc-read">Read &rarr;</span></a>
-      <a href="#" class="hub-card ri"><span class="hc-tag">ACCOUNTS</span><h2 class="hc-q">TFSA vs RRSP: Which to use first?</h2><p class="hc-desc">The decision framework most Canadians need before they start investing.</p><span class="hc-read">Read &rarr;</span></a>
-      <a href="#" class="hub-card ri"><span class="hc-tag">ACCOUNTS</span><h2 class="hc-q">What is a Non-Registered account?</h2><p class="hc-desc">When it makes sense to invest outside registered accounts, and what the tax implications are.</p><span class="hc-read">Read &rarr;</span></a>
+      <a href="#" class="hub-card ri"><span class="hc-tag">Accounts</span><h2 class="hc-q">What is a TFSA?</h2><p class="hc-desc">How a Tax-Free Savings Account works, what you can hold in it, and why it is usually the right place to start.</p><span class="hc-read">Read <svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+      <a href="#" class="hub-card ri"><span class="hc-tag">Accounts</span><h2 class="hc-q">What is an RRSP?</h2><p class="hc-desc">How a Registered Retirement Savings Plan reduces your taxable income and compounds over time.</p><span class="hc-read">Read <svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+      <a href="#" class="hub-card ri"><span class="hc-tag">Accounts</span><h2 class="hc-q">TFSA vs RRSP: Which to use first?</h2><p class="hc-desc">The decision framework most Canadians need before they start investing.</p><span class="hc-read">Read <svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
     </div>
   </div>
 
   <div class="hub-group">
-    <div class="hub-glabel ri" style="--d:0s">MANAGED INVESTING</div>
+    <div class="hub-glabel ri" style="--d:0s"><span class="se-no">No. 02</span><span class="se-name">Managed Investing</span></div>
     <div class="hub-gdesc ri" style="--d:0.06s">How automated, portfolio-managed investing works and why consistency beats conviction for most investors.</div>
     <div class="hub-grid">
-      <a href="#" class="hub-card ri"><span class="hc-tag">MANAGED</span><h2 class="hc-q">What is dollar-cost averaging?</h2><p class="hc-desc">Why investing a fixed amount on a fixed schedule removes the most damaging variable from investing: timing.</p><span class="hc-read">Read &rarr;</span></a>
-      <a href="#" class="hub-card ri"><span class="hc-tag">MANAGED</span><h2 class="hc-q">What is a portfolio manager?</h2><p class="hc-desc">What registered portfolio managers are, what they are regulated to do, and why the distinction matters.</p><span class="hc-read">Read &rarr;</span></a>
-      <a href="#" class="hub-card ri"><span class="hc-tag">MANAGED</span><h2 class="hc-q">How automated investing works</h2><p class="hc-desc">What happens between setting a weekly contribution and watching your portfolio grow over time.</p><span class="hc-read">Read &rarr;</span></a>
-      <a href="#" class="hub-card ri"><span class="hc-tag">MANAGED</span><h2 class="hc-q">Why portfolio risk profiles matter</h2><p class="hc-desc">The difference between equity, balanced, and capital preservation portfolios and how to choose the right one.</p><span class="hc-read">Read &rarr;</span></a>
+      <a href="#" class="hub-card ri"><span class="hc-tag">Managed</span><h2 class="hc-q">What is dollar-cost averaging?</h2><p class="hc-desc">Why investing a fixed amount on a fixed schedule removes the most damaging variable from investing: timing.</p><span class="hc-read">Read <svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+      <a href="#" class="hub-card ri"><span class="hc-tag">Managed</span><h2 class="hc-q">What is a portfolio manager?</h2><p class="hc-desc">What registered portfolio managers are, what they are regulated to do, and why the distinction matters.</p><span class="hc-read">Read <svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+      <a href="#" class="hub-card ri"><span class="hc-tag">Managed</span><h2 class="hc-q">How automated investing works</h2><p class="hc-desc">What happens between setting a weekly contribution and watching your portfolio grow over time.</p><span class="hc-read">Read <svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
     </div>
   </div>
 
   <div class="hub-group">
-    <div class="hub-glabel ri" style="--d:0s">SELF-DIRECTED INVESTING</div>
+    <div class="hub-glabel ri" style="--d:0s"><span class="se-no">No. 03</span><span class="se-name">Self-Directed Investing</span></div>
     <div class="hub-gdesc ri" style="--d:0.06s">The regulatory framework, tools, and habits behind making your own investment decisions.</div>
     <div class="hub-grid">
-      <a href="#" class="hub-card ri"><span class="hc-tag">SELF-DIRECTED</span><h2 class="hc-q">What is Order Execution Only?</h2><p class="hc-desc">What OEO account services mean for you as an investor and what your dealer is and is not responsible for.</p><span class="hc-read">Read &rarr;</span></a>
-      <a href="#" class="hub-card ri"><span class="hc-tag">SELF-DIRECTED</span><h2 class="hc-q">What is CIRO?</h2><p class="hc-desc">How the Canadian Investment Regulatory Organization oversees investment dealers and what that means for your account.</p><span class="hc-read">Read &rarr;</span></a>
-      <a href="#" class="hub-card ri"><span class="hc-tag">SELF-DIRECTED</span><h2 class="hc-q">What is an ETF?</h2><p class="hc-desc">How exchange-traded funds work, why they are the most common building block for self-directed portfolios.</p><span class="hc-read">Read &rarr;</span></a>
-      <a href="#" class="hub-card ri"><span class="hc-tag">SELF-DIRECTED</span><h2 class="hc-q">How to build a thesis before you buy</h2><p class="hc-desc">The questions to ask before entering a position and how to define your exit conditions in advance.</p><span class="hc-read">Read &rarr;</span></a>
+      <a href="#" class="hub-card ri"><span class="hc-tag">Self-Directed</span><h2 class="hc-q">What is Order Execution Only?</h2><p class="hc-desc">What OEO account services mean for you as an investor and what your dealer is and is not responsible for.</p><span class="hc-read">Read <svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+      <a href="#" class="hub-card ri"><span class="hc-tag">Self-Directed</span><h2 class="hc-q">What is an ETF?</h2><p class="hc-desc">How exchange-traded funds work, why they are the most common building block for self-directed portfolios.</p><span class="hc-read">Read <svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+      <a href="#" class="hub-card ri"><span class="hc-tag">Self-Directed</span><h2 class="hc-q">How to build a thesis before you buy</h2><p class="hc-desc">The questions to ask before entering a position and how to define your exit conditions in advance.</p><span class="hc-read">Read <svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
     </div>
   </div>
 
   <div class="hub-group">
-    <div class="hub-glabel ri" style="--d:0s">INVESTING JUDGMENT</div>
+    <div class="hub-glabel ri" style="--d:0s"><span class="se-no">No. 04</span><span class="se-name">Investing Judgment</span></div>
     <div class="hub-gdesc ri" style="--d:0.06s">The behavioural and cognitive patterns that separate investors who build wealth from those who don't.</div>
     <div class="hub-grid">
-      <a href="#" class="hub-card ri"><span class="hc-tag">JUDGMENT</span><h2 class="hc-q">Why most investors underperform the market</h2><p class="hc-desc">The gap between market returns and investor returns is not about stock selection. It is about behaviour.</p><span class="hc-read">Read &rarr;</span></a>
-      <a href="#" class="hub-card ri"><span class="hc-tag">JUDGMENT</span><h2 class="hc-q">Why timing the market rarely works</h2><p class="hc-desc">What the data shows about missing the best days in the market and why most attempts to time it backfire.</p><span class="hc-read">Read &rarr;</span></a>
-      <a href="#" class="hub-card ri"><span class="hc-tag">JUDGMENT</span><h2 class="hc-q">The case for consistency over conviction</h2><p class="hc-desc">Why a mechanical, repeatable process outperforms high-confidence decisions over long enough time horizons.</p><span class="hc-read">Read &rarr;</span></a>
-      <a href="#" class="hub-card ri"><span class="hc-tag">JUDGMENT</span><h2 class="hc-q">What is behavioural finance?</h2><p class="hc-desc">The biases that systematically distort investment decisions and how to design a system that works around them.</p><span class="hc-read">Read &rarr;</span></a>
+      <a href="#" class="hub-card ri"><span class="hc-tag">Judgment</span><h2 class="hc-q">Why most investors underperform the market</h2><p class="hc-desc">The gap between market returns and investor returns is not about stock selection. It is about behaviour.</p><span class="hc-read">Read <svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+      <a href="#" class="hub-card ri"><span class="hc-tag">Judgment</span><h2 class="hc-q">The case for consistency over conviction</h2><p class="hc-desc">Why a mechanical, repeatable process outperforms high-confidence decisions over long enough time horizons.</p><span class="hc-read">Read <svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+      <a href="#" class="hub-card ri"><span class="hc-tag">Judgment</span><h2 class="hc-q">What is behavioural finance?</h2><p class="hc-desc">The biases that systematically distort investment decisions and how to design a system that works around them.</p><span class="hc-read">Read <svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
     </div>
   </div>
 
