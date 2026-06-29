@@ -23,24 +23,24 @@
   html,body{
     height:100%;
     width:100%;
-    background:#000;
+    background:var(--black);
     overflow:hidden;
     -webkit-font-smoothing:antialiased;
     text-rendering:geometricPrecision;
   }
 
-  /* Black backdrop — fills the window, centers the device both axes. */
+  /* Black backdrop: fills the window, centers the device both axes. */
   #stage{
     position:fixed;
     inset:0;
     display:flex;
     align-items:center;
     justify-content:center;
-    background:#000;
+    background:var(--black);
     overflow:hidden;
   }
 
-  /* Phone device — fixed mobile ratio (393 x 852 screen + bezel).
+  /* Phone device: fixed mobile ratio (393 x 852 screen + bezel).
      Scaled uniformly by JS to ~95% of the viewport height. */
   #device{
     position:relative;
@@ -57,7 +57,7 @@
     -webkit-font-smoothing:antialiased;
   }
 
-  /* The screen — fixed mobile viewport; the page scrolls inside it. */
+  /* The screen: fixed mobile viewport; the page scrolls inside it. */
   #screen{
     position:relative;
     width:393px;
@@ -71,7 +71,7 @@
   }
   #screen::-webkit-scrollbar{ display:none; }
 
-  /* The content — fixed mobile width, natural (tall) height, scrolls within. */
+  /* The content: fixed mobile width, natural (tall) height, scrolls within. */
   #frame{
     position:relative;
     width:393px;
@@ -83,7 +83,7 @@
     overflow:hidden;
   }
 
-  /* Embedded return-user stock screen — same device frame, shown on tap */
+  /* Embedded return-user stock screen: same device frame, shown on tap */
   #stockFrame{ position:absolute; top:0; left:0; width:393px; height:100%; border:0; background:var(--black); display:none; }
   #screen.show-stock{ overflow:hidden; }
   #screen.show-stock #frame{ display:none; }
@@ -100,17 +100,17 @@
   .sheet-content{ overflow-y:auto; padding:22px 20px 30px; scrollbar-width:none; -ms-overflow-style:none; }
   .sheet-content::-webkit-scrollbar{ display:none; }
   .sheet-title{ font-size:18px; letter-spacing:-0.36px; line-height:20.7px; color:var(--white); margin-bottom:8px; }
-  .sheet-lead{ font-size:13px; line-height:1.6; color:#929292; letter-spacing:-0.22px; }
-  .sheet-sec-label{ font-size:13px; letter-spacing:-0.22px; color:#565b5e; margin:28px 0 8px; }
+  .sheet-lead{ font-size:13px; line-height:1.6; color:var(--gray); letter-spacing:-0.22px; }
+  .sheet-sec-label{ font-size:13px; letter-spacing:-0.22px; color:var(--abbey); margin:28px 0 8px; }
   .col-note{ display:flex; justify-content:space-between; gap:14px; padding:10px 0; border-top:1px solid var(--divider); }
   .col-note .k{ font-size:13px; color:var(--silver); letter-spacing:-0.26px; white-space:nowrap; }
-  .col-note .v{ font-size:13px; color:#929292; letter-spacing:-0.22px; text-align:right; line-height:1.5; }
+  .col-note .v{ font-size:13px; color:var(--gray); letter-spacing:-0.22px; text-align:right; line-height:1.5; }
   .legend-row{ display:flex; align-items:flex-start; gap:11px; padding:12px 0; border-top:1px solid var(--divider); }
   .legend-dot{ width:7px; height:7px; border-radius:50%; flex:0 0 auto; margin-top:6px; }
-  .legend-dot.red{ background:#fd0200; } .legend-dot.amber{ background:#fdad00; } .legend-dot.white{ background:#fff; } .legend-dot.gray{ background:#929292; }
+  .legend-dot.red{ background:#fd0200; } .legend-dot.amber{ background:#fdad00; } .legend-dot.white{ background:var(--white); } .legend-dot.gray{ background:var(--gray); }
   .legend-name{ font-size:13px; color:var(--silver); letter-spacing:-0.26px; line-height:1.45; }
-  .legend-desc{ font-size:13px; color:#929292; line-height:1.5; letter-spacing:-0.22px; margin-top:3px; }
-  .legend-eg{ font-size:11px; color:#565b5e; letter-spacing:-0.22px; line-height:1.45; margin-top:4px; }
+  .legend-desc{ font-size:13px; color:var(--gray); line-height:1.5; letter-spacing:-0.22px; margin-top:3px; }
+  .legend-eg{ font-size:11px; color:var(--abbey); letter-spacing:-0.22px; line-height:1.45; margin-top:4px; }
 
   /* ---------- Header ---------- */
   .header{ position:absolute; left:0; top:0; width:393px; height:71px; }
@@ -186,9 +186,9 @@
 
   /* Section collapse (accordion) */
   .sec-head-right{ display:flex; align-items:center; gap:10px; }
-  .sec-chevron{ background:none; border:none; padding:4px; margin:-4px 0 -4px -2px; cursor:pointer; color:#929292; display:inline-flex; align-items:center; -webkit-tap-highlight-color:transparent; transition:transform 180ms ease; }
+  .sec-chevron{ background:none; border:none; padding:4px; margin:-4px 0 -4px -2px; cursor:pointer; color:var(--gray); display:inline-flex; align-items:center; -webkit-tap-highlight-color:transparent; transition:transform 180ms ease; }
   .sec-chevron svg{ display:block; width:11px; height:7px; }
-  /* ↗ — trailing "tap to open" indicator (system convention) */
+  /* Trailing "tap to open" indicator (system convention) */
   .open-ind{ display:inline-flex; align-items:center; margin-left:7px; vertical-align:middle; }
   .open-ind svg{ display:block; width:13px; height:13px; }
   .pos-group.collapsed .sec-chevron{ transform:rotate(-90deg); }
@@ -202,11 +202,11 @@
 
   /* Expand-in-place toggle */
   .more-toggle{ width:100%; text-align:right; font-size:13px; letter-spacing:-0.26px; color:var(--silver); line-height:normal; cursor:pointer; -webkit-tap-highlight-color:transparent; }
-  .more-toggle .mt-sub{ color:#565b5e; }
+  .more-toggle .mt-sub{ color:var(--abbey); }
 
-  /* open orders — now sits left of the Active Positions header, grayed back */
+  /* open orders: now sits left of the Active Positions header, grayed back */
   .open-orders{ display:flex; align-items:baseline; gap:6px; }
-  .open-orders .lbl,.open-orders .n{ font-size:15px; letter-spacing:-0.3px; color:#929292; line-height:17.25px; }
+  .open-orders .lbl,.open-orders .n{ font-size:15px; letter-spacing:-0.3px; color:var(--gray); line-height:17.25px; }
 
   /* Active Positions header row: Open Orders (left) · Active Positions (right) */
   .ap-head-row{ display:flex; align-items:baseline; justify-content:space-between; width:100%; gap:12px; }
@@ -231,34 +231,34 @@
     font-size:13px; font-weight:500; line-height:1.4; color:var(--white);
     text-transform:uppercase; letter-spacing:0;
   }
-  .h-wt{ font-weight:400; font-size:13px; color:#929292; letter-spacing:-0.26px; }
+  .h-wt{ font-weight:400; font-size:13px; color:var(--gray); letter-spacing:-0.26px; }
   .h-name{ display:flex; flex-direction:column; align-items:flex-start; gap:5px; }
-  .h-cat{ font-size:11px; color:#929292; letter-spacing:0; line-height:1; }
+  .h-cat{ font-size:11px; color:var(--gray); letter-spacing:0; line-height:1; }
 
   .h-badges{ display:flex; flex-wrap:nowrap; gap:6px; width:100%; }
   .badge{
     font-size:9px; font-weight:500; line-height:1.3;
     padding:5px 6px; border-radius:3px; white-space:nowrap; letter-spacing:0;
   }
-  /* Tier 1 — capital at risk / disruption. Used rarely. */
+  /* Tier 1: capital at risk / disruption. Used rarely. */
   .badge.critical{ background:rgba(253,2,0,0.15); color:#fd0200; }
-  /* Tier 2 — a decision/clock is pending. */
+  /* Tier 2: a decision/clock is pending. */
   .badge.soon{ background:rgba(253,173,0,0.14); color:#fdad00; }
-  /* Tier 3 — notable but neutral. Read, don't react. */
+  /* Tier 3: notable but neutral. Read, don't react. */
   .badge.notable{ background:rgba(255,255,255,0.10); color:var(--white); }
-  /* Tier 4 — ambient context. Same chip as notable, but gray text recedes. */
-  .badge.ambient{ background:rgba(255,255,255,0.10); color:#929292; }
+  /* Tier 4: ambient context. Same chip as notable, but gray text recedes. */
+  .badge.ambient{ background:rgba(255,255,255,0.10); color:var(--gray); }
 
 
   .h-right{ display:flex; flex-direction:column; align-items:flex-end; gap:6px; text-align:right; }
   .h-line{ display:flex; align-items:baseline; justify-content:flex-end; gap:12px; white-space:nowrap; }
   .h-line .amt{ color:var(--white); font-weight:300; letter-spacing:-0.3px; min-width:106px; text-align:right; }
-  .h-line .chg{ color:#929292; font-size:13px; letter-spacing:-0.26px; min-width:50px; text-align:right; }
+  .h-line .chg{ color:var(--gray); font-size:13px; letter-spacing:-0.26px; min-width:50px; text-align:right; }
   .h-line.overall .amt{ font-size:13px; }
   .h-line.today .amt{ font-size:13px; }
 
-  /* One-line note preview (watchlist) — truncates with … if it would wrap */
-  .h-note{ font-size:13px; color:#929292; letter-spacing:-0.22px; line-height:1.5; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; }
+  /* One-line note preview (watchlist): truncates with … if it would wrap */
+  .h-note{ font-size:13px; color:var(--gray); letter-spacing:-0.22px; line-height:1.5; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; }
 </style>
 </head>
 <body>
@@ -706,7 +706,7 @@
             <div class="more-toggle" id="apMore"></div>
           </div>
 
-          <!-- Under Review (watchlist — not owned: no P/L, stock-only badges) -->
+          <!-- Under Review (watchlist, not owned: no P/L, stock-only badges) -->
           <div class="pos-group">
             <div class="sec-head-right">
               <button class="sec-chevron" aria-label="Collapse section"><svg viewBox="0 0 11 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1.5L5.5 6L10 1.5" stroke="currentColor" stroke-width="1.2"/></svg></button>
@@ -739,7 +739,7 @@
                     <div class="h-line today"><span class="amt">41.80 USD</span><span class="chg">+2.2%</span></div>
                   </div>
                 </div>
-                <div class="h-note">Valuation rich — wait for a pullback toward the low 30s before initiating.</div>
+                <div class="h-note">Valuation rich; wait for a pullback toward the low 30s before initiating.</div>
                 <div class="h-badges">
                   <span class="badge ambient">Top Mover</span>
                 </div>
@@ -785,7 +785,7 @@
                     <div class="h-line today"><span class="amt">13.20 USD</span><span class="chg">-3.6%</span></div>
                   </div>
                 </div>
-                <div class="h-note">Cash burn the key risk — track gross-margin trajectory before any starter position.</div>
+                <div class="h-note">Cash burn the key risk; track gross-margin trajectory before any starter position.</div>
                 <div class="h-badges">
                   <span class="badge ambient">52 Week Low</span>
                 </div>
@@ -818,10 +818,10 @@
           <div class="col-note"><span class="k">232.40 USD · +1.1%</span><span class="v">Last price and today's change</span></div>
 
           <div class="sheet-sec-label">Flags</div>
-          <div class="legend-row"><span class="legend-dot red"></span><div><div class="legend-name">Red — Capital at risk</div><div class="legend-desc">The position is untradeable, or your thesis has broken. Read this first.</div><div class="legend-eg">Stock Halted · Delisted · Margin Call</div></div></div>
-          <div class="legend-row"><span class="legend-dot amber"></span><div><div class="legend-name">Amber — A decision is pending</div><div class="legend-desc">A clock is running. Worth a look, not alarm.</div><div class="legend-eg">Earnings · Open Order · Review Due</div></div></div>
-          <div class="legend-row"><span class="legend-dot white"></span><div><div class="legend-name">White — Notable</div><div class="legend-desc">Worth knowing. No action required.</div><div class="legend-eg">Reverse Split · Merger · Overweight</div></div></div>
-          <div class="legend-row"><span class="legend-dot gray"></span><div><div class="legend-name">Gray — Context</div><div class="legend-desc">Background detail. Present, but recedes.</div><div class="legend-eg">Stock Split · Top Mover · 52 Week High · Order Complete</div></div></div>
+          <div class="legend-row"><span class="legend-dot red"></span><div><div class="legend-name">Red: Capital at risk</div><div class="legend-desc">The position is untradeable, or your thesis has broken. Read this first.</div><div class="legend-eg">Stock Halted · Delisted · Margin Call</div></div></div>
+          <div class="legend-row"><span class="legend-dot amber"></span><div><div class="legend-name">Amber: A decision is pending</div><div class="legend-desc">A clock is running. Worth a look, not alarm.</div><div class="legend-eg">Earnings · Open Order · Review Due</div></div></div>
+          <div class="legend-row"><span class="legend-dot white"></span><div><div class="legend-name">White: Notable</div><div class="legend-desc">Worth knowing. No action required.</div><div class="legend-eg">Reverse Split · Merger · Overweight</div></div></div>
+          <div class="legend-row"><span class="legend-dot gray"></span><div><div class="legend-name">Gray: Context</div><div class="legend-desc">Background detail. Present, but recedes.</div><div class="legend-eg">Stock Split · Top Mover · 52 Week High · Order Complete</div></div></div>
         </div>
       </aside>
   </div>
@@ -909,10 +909,10 @@
       }).join('');
       row.style.display = p.badges.length ? 'flex' : 'none';
     }
-    try { d.title = t + ' — Stock Page'; } catch (e) {}
+    try { d.title = t + ': Stock Page'; } catch (e) {}
   }
 
-  // Screen switching — stays on this page, just swaps the visible screen.
+  // Screen switching: stays on this page, just swaps the visible screen.
   function showStock(t) {
     currentTicker = t || currentTicker;
     if (!stockFrame.getAttribute('data-loaded')) {
@@ -974,7 +974,7 @@
   if (sheetClose) sheetClose.addEventListener('click', closeSheet);
   if (sheetBackdrop) sheetBackdrop.addEventListener('click', closeSheet);
 
-  // Accordion — chevron collapses/expands its section.
+  // Accordion: chevron collapses/expands its section.
   [].slice.call(document.querySelectorAll('.sec-chevron')).forEach(function (btn) {
     btn.addEventListener('click', function (e) {
       e.preventDefault(); e.stopPropagation();
@@ -982,7 +982,7 @@
     });
   });
 
-  // Active Positions — order by weight (desc); show up to 20, rest behind a toggle.
+  // Active Positions: order by weight (desc); show up to 20, rest behind a toggle.
   (function () {
     var box = document.querySelector('.holdings:not(.watchlist)'); if (!box) return;
     var CAP = 20;
@@ -1052,7 +1052,7 @@
     return target ? Math.max(0, target.offsetTop - 16) : null;  // section title just under the status bar
   }
   function _absTop(el){ var o = 0, n = el; while (n && n !== screenEl) { o += n.offsetTop; n = n.offsetParent; } return o; }
-  // Single source of truth for where each card sits — used by BOTH prep and iiSettle, so the card lands
+  // Single source of truth for where each card sits, used by BOTH prep and iiSettle, so the card lands
   // at the correct content position even if the settle animation never triggers on a given device.
   function computeTarget(){
     var hash = (__P.split('#')[1] || '');
@@ -1065,7 +1065,7 @@
       targetTop = pg ? _absTop(pg) : (vba ? _absTop(vba) : sec.offsetTop);                       // "Active Positions" header at top
     } else if (hash === 'managed') {
       var tblm = sec.querySelector('.tbl');
-      // keep the allocation table (Money Market) ~20% of the frame above the bottom — proportional, so it can't cut even if clientHeight is slightly mis-measured; never scroll above the section
+      // keep the allocation table (Money Market) ~20% of the frame above the bottom: proportional, so it can't cut even if clientHeight is slightly mis-measured; never scroll above the section
       targetTop = tblm ? Math.max(_absTop(sec), _absTop(tblm) + tblm.offsetHeight - screenEl.clientHeight * 0.80 + 16) : _absTop(sec);
     } else if (hash === 'self') {
       targetTop = _absTop(sec);   // Self-Directed section header (Active / Self-Directed + value), not the positions list
@@ -1077,7 +1077,7 @@
   }
   function prep(){ fitEmbed(); var t = computeTarget(); var isCore=(__P.split('#')[1]||'')==='core'; if (t) screenEl.scrollTop = isCore ? 0 : t.d; _ensureLastRowVisible(); }  // #core reveal starts at the top (Total Value); others land directly
   // Self-correcting safety net: after layout settles, GUARANTEE the managed allocation table's last row
-  // (Money Market) clears the bottom edge with a margin — re-measures the real rendered position, so it is
+  // (Money Market) clears the bottom edge with a margin, re-measuring the real rendered position, so it is
   // immune to clientHeight mis-measurement / scale-transition timing that differs device-to-device.
   function _ensureLastRowVisible(){
     var hash = (__P.split('#')[1] || ''); if (hash !== 'managed') return;
@@ -1089,7 +1089,7 @@
     var maxD = Math.max(0, screenEl.scrollHeight - ch);
     var need = Math.min(maxD, lastBottom - ch + marg);   // minimal scrollTop so the last row clears the bottom by `marg`
     if (screenEl.scrollTop < need) screenEl.scrollTop = need;   // last row was cut -> pull it fully into view
-    // TEMP on-device diagnostic — shows the real measurements so the cut cause can be confirmed; remove once fixed
+    // TEMP on-device diagnostic: shows the real measurements so the cut cause can be confirmed; remove once fixed
     var _d = document.getElementById('_iiDbg');
     if (!_d) { _d = document.createElement('div'); _d.id = '_iiDbg'; _d.style.cssText = 'position:fixed;top:2px;left:2px;z-index:99;font-family:monospace;font-size:13px;color:orange;background:rgba(0,0,0,0.72);padding:2px 6px;pointer-events:none;'; screenEl.appendChild(_d); }
     var _mmB = Math.round(lastBottom - screenEl.scrollTop);
@@ -1124,12 +1124,12 @@
       screenEl.scrollTop = Math.max(0, d - 120);   // start above…
       tween(d, 850);                               // …settle in 0.85s (scrolled-and-stopped feel)
       setTimeout(function(){ screenEl.scrollTop = d; _ensureLastRowVisible(); }, 1000);  // guarantee final position if rAF is throttled
-      setTimeout(_ensureLastRowVisible, 1350);  // re-check after scale/transition fully applies — device-robust
+      setTimeout(_ensureLastRowVisible, 1350);  // re-check after scale/transition fully applies, device-robust
     }
     t.sec.querySelectorAll('.t-22').forEach(function(el){ countUp(el, 1100); });  // count up the value (replays each time the card enters view)
   };
   window.addEventListener('message', function (e) { if (e.data === 'iiSettle') window.iiSettle(); });  // parent triggers settle/count-up on view (origin-independent)
-  // Self-contained trigger — NO parent dependency. rAF only ticks at ~60fps while this iframe is actually
+  // Self-contained trigger, NO parent dependency. rAF only ticks at ~60fps while this iframe is actually
   // painted on-screen; offscreen it pauses. The first time two ticks land <120ms apart = card is visible → settle.
   var _settled = false;
   function _vtick(ts){
@@ -1179,7 +1179,7 @@
   body.hero-tour #screen.show-stock #frame { display: block; }
   body.hero-tour #screen.show-stock #stockFrame { transform: translateX(0); }
 </style>
-<!-- Hero tour mode: ?hero — a slow, looping cinematic scroll across Managed → Self-Directed for the homepage hero "slide 02", revealing content one element at a time. Self-contained; does NOT touch iiSettle, the message listener, or fitEmbed. -->
+<!-- Hero tour mode: ?hero, a slow, looping cinematic scroll across Managed → Self-Directed for the homepage hero "slide 02", revealing content one element at a time. Self-contained; does NOT touch iiSettle, the message listener, or fitEmbed. -->
 <script>
 (function(){
   if ((window.__MODE || location.search).indexOf('hero') === -1) return;
@@ -1219,13 +1219,13 @@
   function countSection(sec){ if (sec) sec.querySelectorAll('.t-22').forEach(function(el){ heroCount(el, 1100); }); }
   function hideAll(){ [].slice.call(document.querySelectorAll('.hr-show')).forEach(function(el){ el.classList.remove('hr-show'); }); }
   function staggerReveal(els, gap, done){ els.forEach(function(el, i){ setTimeout(function(){ el.classList.add('hr-show'); if (done && i === els.length - 1) done(); }, i * gap); }); }   // each element fades in one at a time
-  // smooth continuous scroll — no choppy jumps
+  // smooth continuous scroll, no choppy jumps
   function pan(to, dur, done){
     var start = screenEl.scrollTop, change = to - start, t0 = null;
     function step(ts){ if (t0 === null) t0 = ts; var p = Math.min(1, (ts - t0) / dur); var e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2; screenEl.scrollTop = start + change * e; if (p < 1) requestAnimationFrame(step); else if (done) done(); }
     requestAnimationFrame(step);
   }
-  // Placeholder stock detail page (original to be swapped in later) — just labels what the page is.
+  // Placeholder stock detail page (original to be swapped in later): just labels what the page is.
   var stockFrame = document.getElementById('stockFrame');
   function detailDoc(tk){
     return '<!doctype html><meta charset="utf-8"><style>'
@@ -1252,7 +1252,7 @@
       staggerReveal(topItems, GAP);                                             // top + Managed: one element at a time
       setTimeout(function(){
         pan(endY(), 1500);                                                      // quick smooth glide to Active
-        setTimeout(function(){ countSection(active); staggerReveal(actItems, GAP); }, 650);   // reveal Active as it scrolls in — kills the blank gap
+        setTimeout(function(){ countSection(active); staggerReveal(actItems, GAP); }, 650);   // reveal Active as it scrolls in, kills the blank gap
         setTimeout(function(){
           showDetail('ORIO.TO');                                                // "tap" a position → detail slides in
           setTimeout(function(){

@@ -68,21 +68,21 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .page-breadcrumb{font-size:12px;color:var(--c-700);letter-spacing:0.06em;margin-bottom:36px;display:flex;align-items:center;gap:10px;}
 .page-breadcrumb a{color:var(--c-700);text-decoration:none;}.page-breadcrumb .sep{color:var(--c-800);}.page-breadcrumb .current{color:var(--c-200);}
 .page-eyebrow{font-size:12px;color:var(--c-700);letter-spacing:0.16em;margin-bottom:20px;}
-.page-title{font-size:clamp(34px,4.6vw,56px);line-height:1.04;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:48px;max-width:calc((100% + var(--gutter)) / 12 * 8 - var(--gutter));}
-.page-deck{font-size:clamp(17px,1.6vw,22px);line-height:1.4;letter-spacing:-0.015em;color:var(--c-400);max-width:calc((100% + var(--gutter)) / 12 * 7 - var(--gutter));text-wrap:balance;}
+.page-title{font-size:clamp(34px,4.6vw,56px);line-height:1.04;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:48px;max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));}
+.page-deck{font-size:clamp(17px,1.6vw,22px);line-height:1.4;letter-spacing:-0.015em;color:var(--c-400);max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));text-wrap:balance;}
 .section-eyebrow{font-size:12px;color:var(--c-700);letter-spacing:0.16em;margin-bottom:48px;}
-.declarative{font-size:clamp(28px,3.5vw,44px);line-height:1.18;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;max-width:880px;text-wrap:balance;}
+.declarative{font-size:clamp(28px,3.4vw,34px);line-height:1.18;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;max-width:880px;text-wrap:balance;}
 .declarative p+p{margin-top:28px;}
 .prose{font-size:15px;line-height:1.7;color:var(--c-600);max-width:720px;}
 .prose p{text-wrap:balance;}.prose p+p{margin-top:14px;}.prose em{font-style:normal;color:var(--c-200);}
 
-/* — Philosophy — */
+/* · Philosophy · */
 .philosophy-section{padding:96px 0;border-top:0.5px solid var(--c-900);}
 .philosophy-statement{font-size:clamp(28px,3.5vw,44px);line-height:1.18;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;max-width:880px;text-wrap:balance;margin-bottom:48px;}
 .philosophy-prose{font-size:18px;line-height:1.7;color:var(--c-400);letter-spacing:-0.01em;max-width:760px;}
 .philosophy-prose p+p{margin-top:28px;}
 
-/* — Manifesto — */
+/* · Manifesto · */
 .manifesto-section{padding:96px 0;border-top:0.5px solid var(--c-900);}
 .manifesto-statement{font-size:clamp(28px,3.5vw,44px);line-height:1.18;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;max-width:880px;text-wrap:balance;margin-bottom:48px;}
 .manifesto-prose{font-size:18px;line-height:1.7;color:var(--c-400);letter-spacing:-0.01em;max-width:760px;}
@@ -102,7 +102,7 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .link .roll-in>span{display:block;}
 @media (prefers-reduced-motion: no-preference){.link .roll-in{transition:transform 0.55s cubic-bezier(0.16,1,0.3,1);}.link:hover .roll-in{transform:translateY(-50%);}}
 
-/* — Founders — */
+/* · Founders · */
 .founders-section{padding:96px 0;border-top:0.5px solid var(--c-900);}
 .founder-rows{display:flex;flex-direction:column;}
 .founder-row{display:grid;grid-template-columns:minmax(0,260px) 1fr;gap:48px;padding:40px 0;border-top:0.5px solid var(--c-900);}
@@ -111,7 +111,7 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .founder-title{font-family:monospace;font-size:11px;color:var(--c-700);letter-spacing:0.1em;}
 .founder-bio{font-size:14px;line-height:1.65;color:var(--c-600);font-style:italic;max-width:560px;}
 
-/* — Regulatory & Institutional (from Managed) — */
+/* · Regulatory & Institutional (from Managed) · */
 .reg-section{padding:96px 0;border-top:0.5px solid var(--c-900);}
 .reg-rows{display:flex;flex-direction:column;}
 .reg-row{display:grid;grid-template-columns:minmax(0,260px) 1fr;gap:48px;padding:32px 0;border-top:0.5px solid var(--c-900);}
@@ -119,7 +119,7 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .reg-label{font-size:12px;color:var(--c-200);letter-spacing:0.08em;}
 .reg-desc{font-size:14px;line-height:1.65;color:var(--c-700);font-style:italic;max-width:760px;}
 
-/* — Closing CTA (from Managed) — */
+/* · Closing CTA (from Managed) · */
 .cta-section{text-align:center;padding:160px 0 100px;border-top:0.5px solid var(--c-900);}
 .cta-canon{font-size:clamp(28px,3.5vw,44px);line-height:1.2;letter-spacing:-0.025em;color:var(--c-200);margin-bottom:48px;text-wrap:balance;}
 .cta-button{display:inline-flex;align-items:center;gap:8px;font-size:15px;color:var(--c-white);text-decoration:none;}
@@ -221,7 +221,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 <section class="philosophy-section">
   <div class="philosophy-statement ri" style="--d:0s">We are not building a friendly investing app. We are building a serious one.</div>
   <div class="philosophy-prose">
-    <p class="ri" style="--d:0.04s">Warmth is easy. Authority is earned. The platform exists because the execution layer was already solved. Zero commissions, instant transfers, clean UI — those problems were commoditized. What remained unsolved was the judgment layer.</p>
+    <p class="ri" style="--d:0.04s">Warmth is easy. Authority is earned. The platform exists because the execution layer was already solved. Zero commissions, instant transfers, clean UI: those problems were commoditized. What remained unsolved was the judgment layer.</p>
     <p class="ri" style="--d:0.08s">Most retail investors have no system for recording why they made a decision. No framework for measuring whether their choices are improving. No infrastructure for the practice of allocator development. That is what Intelligent Investing addresses.</p>
     <p class="ri" style="--d:0.12s">The product is not competing on fees or features. It is competing on reducing the emotional friction around serious investing.</p>
   </div>
@@ -231,9 +231,9 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 <div class="container">
 <section class="manifesto-section">
   <div class="section-eyebrow ri" style="--d:0s">Manifesto</div>
-  <div class="manifesto-statement ri" style="--d:0.04s">We are not here to make investing feel easy. We are here to remove illusion — not replace it with a better story.</div>
+  <div class="manifesto-statement ri" style="--d:0.04s">We are not here to make investing feel easy. We are here to remove illusion, not replace it with a better story.</div>
   <div class="manifesto-prose">
-    <p class="ri" style="--d:0.06s">Investing is not trading. It is capital allocation — the difference between reacting and deciding. Intelligent Investing is a discipline-first capital allocation system, designed to compound capital over decades. It is not a tool. It is a system you operate inside.</p>
+    <p class="ri" style="--d:0.06s">Investing is not trading. It is capital allocation: the difference between reacting and deciding. Intelligent Investing is a discipline-first capital allocation system, designed to compound capital over decades. It is not a tool. It is a system you operate inside.</p>
     <p class="ri" style="--d:0.08s">Most underperformance is not analytical. It is behavioural. The system is built to surface overconfidence, impatience, and narrative chasing, then apply pressure in the opposite direction. Not through motivation. Through design.</p>
   </div>
   <ul class="manifesto-tenets">
@@ -253,12 +253,12 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   <div class="section-eyebrow ri" style="--d:0s">Founders</div>
   <div class="founder-rows">
     <div class="founder-row ri" style="--d:0.04s">
-      <div class="founder-id"><div class="founder-name">David Feller</div><div class="founder-title">[TITLE — PROOF &amp; FACTS REQUIRED]</div></div>
-      <p class="founder-bio">[Founder bio — Proof &amp; Facts and compliance review required before publish]</p>
+      <div class="founder-id"><div class="founder-name">David Feller</div><div class="founder-title">[TITLE: PROOF &amp; FACTS REQUIRED]</div></div>
+      <p class="founder-bio">[Founder bio: Proof &amp; Facts and compliance review required before publish]</p>
     </div>
     <div class="founder-row ri" style="--d:0.08s">
-      <div class="founder-id"><div class="founder-name">Gregory Feller</div><div class="founder-title">[TITLE — PROOF &amp; FACTS REQUIRED]</div></div>
-      <p class="founder-bio">[Founder bio — Proof &amp; Facts and compliance review required before publish]</p>
+      <div class="founder-id"><div class="founder-name">Gregory Feller</div><div class="founder-title">[TITLE: PROOF &amp; FACTS REQUIRED]</div></div>
+      <p class="founder-bio">[Founder bio: Proof &amp; Facts and compliance review required before publish]</p>
     </div>
   </div>
 </section>
@@ -268,10 +268,10 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 <section class="reg-section">
   <div class="section-eyebrow ri" style="--d:0s">Regulatory &amp; Institutional</div>
   <div class="reg-rows">
-    <div class="reg-row ri" style="--d:0.04s"><div class="reg-label">Regulatory Standing</div><p class="reg-desc">[CIRO registration — compliance-approved language required before publish]</p></div>
-    <div class="reg-row ri" style="--d:0.06s"><div class="reg-label">Investor Protection</div><p class="reg-desc">[CIPF membership — compliance-approved language required before publish]</p></div>
-    <div class="reg-row ri" style="--d:0.08s"><div class="reg-label">Asset Custody</div><p class="reg-desc">[Custodian and asset segregation — compliance-approved language required before publish]</p></div>
-    <div class="reg-row ri" style="--d:0.1s"><div class="reg-label">Institutional Backing</div><p class="reg-desc">[Orion Digital / Mogo public company reference — source validate and route if investor-facing before publish]</p></div>
+    <div class="reg-row ri" style="--d:0.04s"><div class="reg-label">Regulatory Standing</div><p class="reg-desc">[CIRO registration: compliance-approved language required before publish]</p></div>
+    <div class="reg-row ri" style="--d:0.06s"><div class="reg-label">Investor Protection</div><p class="reg-desc">[CIPF membership: compliance-approved language required before publish]</p></div>
+    <div class="reg-row ri" style="--d:0.08s"><div class="reg-label">Asset Custody</div><p class="reg-desc">[Custodian and asset segregation: compliance-approved language required before publish]</p></div>
+    <div class="reg-row ri" style="--d:0.1s"><div class="reg-label">Institutional Backing</div><p class="reg-desc">[Orion Digital / Mogo public company reference: source validate and route if investor-facing before publish]</p></div>
   </div>
 </section>
 </div>

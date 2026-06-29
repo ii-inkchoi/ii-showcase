@@ -52,72 +52,76 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .menu-bottom .mb-left{display:flex;flex-direction:column;gap:4px;}.menu-bottom .mb-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
 .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--frame); box-sizing: border-box; }
 @media(max-width:900px){.container{padding:0 24px;}}
-.article-header{padding:180px 0 80px;border-bottom:0.5px solid var(--c-900);max-width:880px;margin:0 auto;}
+.article-header{padding:180px 0 80px;border-bottom:0.5px solid var(--c-900);max-width:680px;margin:0 auto;}
 .article-breadcrumb{font-size:12px;color:var(--c-700);letter-spacing:0.06em;margin-bottom:36px;display:flex;align-items:center;gap:10px;}
 .article-breadcrumb a{color:var(--c-700);text-decoration:none;}.article-breadcrumb .sep{color:var(--c-800);}.article-breadcrumb .current{color:var(--c-200);}
-.article-num{font-size:13px;color:var(--c-700);letter-spacing:0.04em;font-feature-settings:'tnum' 1;margin-bottom:24px;}
-.article-title{font-size:clamp(40px,6vw,80px);line-height:1;letter-spacing:-0.04em;color:var(--c-200);font-weight:400;margin-bottom:32px;text-wrap:balance;}
-.article-deck{font-size:clamp(18px,1.6vw,22px);line-height:1.5;letter-spacing:-0.015em;color:var(--c-400);max-width:680px;text-wrap:balance;margin-bottom:48px;}
+.article-num{font-size:12px;color:var(--c-700);letter-spacing:0.04em;font-feature-settings:'tnum' 1;margin-bottom:24px;}
+.article-title{font-size:clamp(30px,3.8vw,44px);line-height:1.08;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:32px;text-wrap:balance;}
+.article-deck{font-size:18px;line-height:1.5;letter-spacing:-0.015em;color:var(--c-400);max-width:680px;text-wrap:balance;margin-bottom:48px;}
 .article-meta{display:flex;gap:32px;font-size:13px;color:var(--c-700);}
 .article-meta .am-col{display:flex;flex-direction:column;gap:4px;}
 .article-meta .am-lbl{color:var(--c-800);font-size:11px;letter-spacing:0.06em;}
 .article-meta .am-val{color:var(--c-400);font-size:14px;}
-.article-body{padding:80px 0;max-width:720px;margin:0 auto;}
-.article-body p{font-size:18px;line-height:1.7;color:var(--c-600);letter-spacing:-0.005em;margin-bottom:24px;text-wrap:balance;}
-.article-body p:first-letter{font-size:1.4em;color:var(--c-400);}
-.article-body h2{font-size:clamp(28px,3vw,36px);line-height:1.2;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;margin-top:64px;margin-bottom:24px;}
-.article-body h3{font-size:22px;color:var(--c-200);letter-spacing:-0.02em;margin-top:48px;margin-bottom:16px;}
-.article-body blockquote{margin:48px 0;padding-left:24px;border-left:0.5px solid var(--c-700);font-size:22px;line-height:1.4;color:var(--c-400);letter-spacing:-0.015em;}
+.article-body{padding:80px 0;max-width:680px;margin:0 auto;}
+.article-body p{font-size:18px;line-height:1.7;color:var(--c-600);letter-spacing:-0.005em;margin-bottom:24px;}
+.article-fig{margin:48px 0;}
+.article-fig img{width:100%;height:auto;display:block;border:0.5px solid var(--c-900);}
+.article-fig figcaption{font-size:13px;color:var(--c-700);letter-spacing:-0.01em;margin-top:12px;}
+.article-body h2{font-size:clamp(28px,3vw,34px);line-height:1.2;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;margin-top:64px;margin-bottom:24px;}
+.article-body h3{font-size:18px;color:var(--c-200);letter-spacing:-0.02em;font-weight:400;margin-top:48px;margin-bottom:16px;}
+.article-body blockquote{margin:48px 0;padding-left:24px;border-left:0.5px solid var(--c-700);font-size:18px;line-height:1.5;color:var(--c-400);letter-spacing:-0.015em;}
 .article-body em{font-style:normal;color:var(--c-200);}
 .article-body ul,.article-body ol{margin:24px 0;padding-left:24px;color:var(--c-600);font-size:18px;line-height:1.7;}
 .article-body li{margin-bottom:8px;}
 .article-end{padding:64px 0;margin:64px 0;border-top:0.5px solid var(--c-900);border-bottom:0.5px solid var(--c-900);text-align:center;font-size:13px;color:var(--c-700);letter-spacing:0.04em;}
 .article-end .ae-sym{font-size:18px;color:var(--c-400);margin-bottom:12px;}
-.related-section{padding:80px 0;}
+.related-section{padding:80px 0;max-width:680px;margin:0 auto;}
 .related-head{font-size:13px;color:var(--c-700);letter-spacing:0.06em;margin-bottom:32px;}
-.related-list{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;}
+.related-list{display:grid;grid-template-columns:1fr;gap:40px;}
 .related-item{padding:32px 0;border-top:0.5px solid var(--c-900);text-decoration:none;color:inherit;transition:padding 0.3s ease;display:flex;flex-direction:column;gap:8px;}
 .related-item:hover{padding-left:8px;}
 .related-item:hover .ri-title{color:var(--c-200);}
 .ri-num{font-size:11px;color:var(--c-700);letter-spacing:0.04em;}
-.ri-title{font-size:20px;color:var(--c-200);letter-spacing:-0.02em;line-height:1.2;transition:color 0.15s ease;}
+.ri-title{font-size:18px;color:var(--c-200);letter-spacing:-0.02em;line-height:1.2;font-weight:400;transition:color 0.15s ease;}
 .ri-date{font-size:12px;color:var(--c-700);}
+.ri-cat{font-family:var(--mono);font-size:11px;letter-spacing:0.04em;color:var(--c-700);}
 @media(max-width:900px){.related-list{grid-template-columns:1fr;}}
-footer{border-top:0.5px solid var(--c-900);padding:96px 0 36px;font-size:14px;line-height:1.7;color:var(--c-800);}
-.footer-mast{margin-bottom:64px;}
-.colophon-mast{font-size:13px;color:var(--c-600);margin-bottom:6px;}.colophon-pub{font-size:13px;color:var(--c-700);}
-.footer-cols{display:grid;grid-template-columns:repeat(6,1fr);gap:32px;padding-bottom:56px;border-bottom:0.5px solid var(--c-900);}
-.footer-col h4{font-size:11px;color:var(--c-700);letter-spacing:0.08em;margin-bottom:18px;font-weight:400;}
-.footer-col a{display:block;color:var(--c-400);text-decoration:none;font-size:14px;padding:6px 0;}
-.footer-col a:hover{color:var(--c-200);}
-@media(max-width:1024px){.footer-cols{grid-template-columns:repeat(3,1fr);gap:40px 32px;}}
-@media(max-width:600px){.footer-cols{grid-template-columns:repeat(2,1fr);}}
-.footer-legal{font-size:13px;color:var(--c-800);line-height:1.65;max-width:820px;padding-top:56px;}
-.footer-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:56px;padding-top:28px;border-top:0.5px solid var(--c-900);font-size:12px;color:var(--c-800);}
-.footer-bottom .footer-legal-links{display:flex;gap:24px;}
-.footer-bottom .footer-legal-links a{color:var(--c-700);text-decoration:none;}
-@media(max-width:600px){.footer-bottom{flex-direction:column;gap:16px;align-items:flex-start;}}
+footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;line-height:1.7;color:var(--c-800);}.footer-copy{font-size:13px;color:var(--c-600);}
+.footer-copy a{color:var(--c-600);text-decoration:underline;}
+.footer-social{display:flex;gap:18px;margin-top:22px;}
+.footer-social a{color:var(--c-700);display:inline-flex;transition:color 0.15s ease;}
+.footer-social a:hover{color:var(--c-200);}
+.footer-social svg{width:18px;height:18px;}
+.footer-legal{font-size:11px;color:var(--c-800);line-height:1.75;margin-top:18px;}
+.footer-legal:first-of-type{margin-top:36px;}
+.footer-legal a{color:var(--c-700);text-decoration:underline;}
+.footer-reset{display:inline-block;font-size:11px;color:var(--c-700);text-decoration:underline;margin-top:32px;}
 @media (prefers-reduced-motion: no-preference){.ri{opacity:0;transform:translateY(24px);transition:opacity 0.7s cubic-bezier(0.2,0.6,0.2,1),transform 0.7s cubic-bezier(0.2,0.6,0.2,1);transition-delay:var(--d,0s);}.ri.in{opacity:1;transform:none;}}
+.lang-toggle{display:inline-flex;align-items:center;gap:8px;font-size:13px;letter-spacing:0.02em;font-feature-settings:'tnum' 1;}
+.lang-toggle .lt{color:var(--c-700);text-decoration:none;cursor:pointer;transition:color 0.15s ease;}
+.lang-toggle .lt.active{color:var(--c-200);}
+.lang-toggle .lt:hover{color:var(--c-white);}
+.lang-toggle .sep{color:var(--c-800);}
 </style>
 </head>
 <body>
 <nav class="navbar"><div class="navbar-inner">
   <a href="index.html" class="navbar-brand"><img src="Logo.svg" alt="II"></a>
-  <div class="nav-links"><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a></div>
-  <div class="navbar-right"><a href="II Site V2 - GetTheApp.html" class="navbar-cta">Get the App</a><button class="hamburger" type="button"><span></span><span></span></button></div>
+  <div class="nav-links"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Journal.html" class="active">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a></div>
+  <div class="navbar-right"><div class="lang-toggle"><span class="lt active">EN</span><span class="sep">·</span><span class="lt">FR</span></div><a href="II Site V2 - GetTheApp.html" class="navbar-cta">Get Access</a><button class="hamburger" type="button"><span></span><span></span></button></div>
 </div></nav>
 <div class="menu-overlay">
   <div class="menu-top"><a href="index.html" class="ml-logo"><img src="Logo.svg" alt="II"></a><button class="ml-close" type="button">Close ×</button></div>
-  <div class="menu-center"><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a><a href="II Site V2 - GetTheApp.html">Get the App</a></div>
+  <div class="menu-center"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Journal.html" class="active">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a><a href="II Site V2 - GetTheApp.html">Get Access</a></div>
   <div class="menu-bottom"><div class="mb-left"><span>Intelligent Investing</span><span>No. 01 · 2026</span></div><div class="mb-right"><span>Mogo Inc.</span><span>Orion Digital · TSX·NASDAQ : ORIO</span></div></div>
 </div>
 
 <div class="container">
 <section class="article-header">
   <div class="article-breadcrumb ri" style="--d:0s"><a href="index.html">Intelligent Investing</a><span class="sep">/</span><a href="II Site V2 - Journal.html">Journal</a><span class="sep">/</span><span class="current">No. 003</span></div>
-  <div class="article-num ri" style="--d:0.06s">No. 003 &nbsp;·&nbsp; Benchmark &nbsp;·&nbsp; Doctrine</div>
+  <div class="article-num ri" style="--d:0.06s">Benchmark &nbsp;·&nbsp; Doctrine</div>
   <h1 class="article-title ri" style="--d:0.12s">The shadow of the S&amp;P 500</h1>
-  <div class="article-deck ri" style="--d:0.18s">Why every active position deserves to be measured against the index it could have replaced &mdash; and why most platforms hide the comparison.</div>
+  <div class="article-deck ri" style="--d:0.18s">Why every active position deserves to be measured against the index it could have replaced, and why most platforms hide the comparison.</div>
   <div class="article-meta">
     <div class="am-col"><span class="am-lbl">Published</span><span class="am-val">June 8, 2026</span></div>
     <div class="am-col"><span class="am-lbl">Reading time</span><span class="am-val">5 min</span></div>
@@ -134,11 +138,13 @@ footer{border-top:0.5px solid var(--c-900);padding:96px 0 36px;font-size:14px;li
 
   <p>The data on this is consistent across decades and methodologies. Over 10 years, roughly 85% of active managers underperform the S&amp;P 500. Over 20 years, that figure climbs to around 95%. These are highly trained professionals with research teams, dedicated infrastructure, and information access that retail investors cannot replicate.</p>
 
+  <figure class="article-fig"><img src="images/contentteammogo_a_thin_glowing_benchmark_grid_plane_near_the_TO_b2e807e7-2b12-4cf8-814d-c8862a85fd26.png" alt="A benchmark grid plane: the visible peak above the line, the larger mass below it." loading="lazy"><figcaption>The benchmark is the line. What determines the outcome sits below it.</figcaption></figure>
+
   <blockquote>The benchmark is not a competitor. It is the test.</blockquote>
 
   <h2>Why most platforms hide the comparison</h2>
 
-  <p>If the benchmark is the test, you would expect every investing platform to display it prominently. Most do not. Some display it on dedicated screens you have to find. Many display it only on aggregate, not per-position. A few show it but only when convenient &mdash; visible during gains, dim during losses.</p>
+  <p>If the benchmark is the test, you would expect every investing platform to display it prominently. Most do not. Some display it on dedicated screens you have to find. Many display it only on aggregate, not per-position. A few show it but only when convenient: visible during gains, dim during losses.</p>
 
   <p>The reason is structural. Platforms make money when you trade. The benchmark, if shown honestly, would tell most users that their trading is destroying wealth. <em>The comparison the customer needs is the comparison the platform must hide.</em></p>
 
@@ -146,16 +152,16 @@ footer{border-top:0.5px solid var(--c-900);padding:96px 0 36px;font-size:14px;li
 
   <p>Intelligent Investing inverts this. Every dollar that enters a Self-Directed position is mirrored, at the same moment, by a parallel ledger holding SPY. Same dollars. Same timestamps. Same fees.</p>
 
-  <p>The result is not a hypothetical comparison. It is the actual gap between the choice you made and the boring alternative. Available continuously. Visible at every level &mdash; portfolio, position, tranche, decision.</p>
+  <p>The result is not a hypothetical comparison. It is the actual gap between the choice you made and the boring alternative. Available continuously. Visible at every level: portfolio, position, tranche, decision.</p>
 
   <h3>What this looks like in practice</h3>
 
   <p>Open the Performance Dashboard. Three numbers:</p>
 
   <ul>
-    <li>Portfolio return &mdash; what you actually earned</li>
-    <li>S&amp;P 500 return &mdash; what holding the index would have earned</li>
-    <li>Difference &mdash; alpha or shortfall, not hidden</li>
+    <li>Portfolio return: what you actually earned</li>
+    <li>S&amp;P 500 return: what holding the index would have earned</li>
+    <li>Difference: alpha or shortfall, not hidden</li>
   </ul>
 
   <p>Drill into any position to see the same three numbers at the position level. Drill into any tranche to see them at the tranche level. The comparison is recursive and complete.</p>
@@ -167,7 +173,7 @@ footer{border-top:0.5px solid var(--c-900);padding:96px 0 36px;font-size:14px;li
   <p>What you do with that gap is up to you. Many investors, once they see it consistently, choose to allocate more to the managed core and less to active positions. Others double down, treating each shortfall as data to improve. Both responses are valid. What is not valid is operating without knowing.</p>
 
   <div class="article-end">
-    <div class="ae-sym">&mdash;</div>
+    <div class="ae-sym">·</div>
     <div>End of No. 003</div>
   </div>
 </article>
@@ -180,30 +186,38 @@ footer{border-top:0.5px solid var(--c-900);padding:96px 0 36px;font-size:14px;li
     <a href="II Site V2 - Journal-Slug.html" class="related-item">
       <span class="ri-num">No. 002</span>
       <h3 class="ri-title">Sealed before capital moves</h3>
+      <span class="ri-cat">The Memo &middot; Doctrine</span>
       <span class="ri-date">May 28, 2026</span>
     </a>
     <a href="II Site V2 - Journal-Slug.html" class="related-item">
       <span class="ri-num">No. 001</span>
       <h3 class="ri-title">Why we measure calibration, not conviction</h3>
+      <span class="ri-cat">Calibration &middot; Doctrine</span>
       <span class="ri-date">May 15, 2026</span>
     </a>
   </div>
 </section>
 </div>
 
-<footer><div class="container">
-  <div class="footer-mast"><div class="colophon-mast">Intelligent Investing &nbsp;·&nbsp; No. 01 &nbsp;·&nbsp; 2026</div><div class="colophon-pub">Published by Mogo Inc. &nbsp;·&nbsp; Orion Digital Corp. (NASDAQ &amp; TSX: ORIO)</div></div>
-  <div class="footer-cols">
-    <div class="footer-col"><h4>Product</h4><a href="II Site V2 - Memo.html">The Memo</a><a href="II Site V2 - Benchmark.html">Benchmark</a><a href="II Site V2 - Research.html">Research</a><a href="II Site V2 - Calibration.html">Calibration</a></div>
-    <div class="footer-col"><h4>Resources</h4><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a></div>
-    <div class="footer-col"><h4>Documents</h4><a href="II Site V2 - Manifesto.html">Manifesto</a><a href="II Site V2 - Documents-Managed.html">Managed</a><a href="II Site V2 - Documents-SelfDirected.html">Self-Directed</a></div>
-    <div class="footer-col"><h4>Company</h4><a href="II Site V2 - About.html">About</a><a href="II Site V2 - About.html#contact">Contact</a></div>
-    <div class="footer-col"><h4>Account</h4><a href="II Site V2 - GetTheApp.html">Get the App</a></div>
-    <div class="footer-col"><h4>Social</h4><a href="#">Instagram</a><a href="#">X</a><a href="#">TikTok</a><a href="#">YouTube</a></div>
+<footer>
+  <div class="container">
+    <div class="footer-copy">&copy;2026 <a href="#">Orion Digital Corp.</a> All rights reserved.</div>
+    <div class="footer-social">
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+      <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 3c.3 2.3 1.8 3.9 4 4.2v3c-1.5 0-2.9-.4-4-1.2v6.3c0 3.2-2.6 5.7-5.8 5.7S4.4 18.5 4.4 15.3 7 9.6 10.2 9.6c.3 0 .6 0 .9.1v3.1c-.3-.1-.6-.2-.9-.2-1.5 0-2.7 1.2-2.7 2.7s1.2 2.7 2.7 2.7 2.8-1.2 2.8-2.7V3H16z"/></svg></a>
+      <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2H22l-7.6 8.7L23 22h-7l-5.5-7.2L4.2 22H1l8.1-9.3L1 2h7.2l5 6.6L18.9 2zm-1.2 18h1.9L7.4 4H5.5l12.2 16z"/></svg></a>
+      <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 7.5c-.3-1-1-1.8-2-2C19 5 12 5 12 5s-7 0-9 .5c-1 .3-1.8 1-2 2C.5 9.3.5 12 .5 12s0 2.7.5 4.5c.3 1 1 1.8 2 2C5 19 12 19 12 19s7 0 9-.5c1-.3 1.8-1 2-2 .5-1.8.5-4.5.5-4.5s0-2.7-.5-4.5zM9.8 15.3V8.7l5.7 3.3-5.7 3.3z"/></svg></a>
+    </div>
+    <p class="footer-legal">Past returns are no guarantee of future performance.</p>
+    <p class="footer-legal">Managed investing accounts are opened with IntelligentInvesting Wealth Management Inc., a registered portfolio manager. IntelligentInvesting Wealth Management Inc. accounts that are held with CI Investment Services Inc., a custodian, are protected by CIPF in accordance with its coverage policy. CI Investment Services Inc. is a CIRO member. Self-directed investing accounts are opened by IntelligentInvesting Securities Inc., an investment dealer regulated by the Canadian Investment Regulatory Organization (CIRO). IntelligentInvesting Securities Inc. is a CIPF member. IntelligentInvesting Securities Inc. accounts are covered by CIPF. A brochure describing the scope and nature of coverage, as well as the limitations and exclusions of coverage, is available upon request or at <a href="https://www.cipf.ca">www.cipf.ca</a>.</p>
+    <p class="footer-legal">IntelligentInvesting Wealth Management Inc. and IntelligentInvesting Securities Inc. are subsidiaries of Orion Digital Corp. Orion Digital Corp. is not an investment adviser or dealer and does not provide investment advice or deal in securities.</p>
+    <p class="footer-legal">Nothing herein should be considered an offer, solicitation of an offer, or advice to buy or sell securities. Account holdings are for illustrative purposes only. Actual products may differ from those depicted and images contained herein. The Intelligent Investing app incorporates the investing principles of Warren Buffett in its features, design, and content. Neither Orion Digital Corp. nor its affiliates are endorsed by or affiliated with Warren Buffett. All images, names, logos, and brands are the property of their respective owners.</p>
+    <p class="footer-legal">The information contained on this website is provided for informational purposes only and does not constitute a promise of specific results or future performance. Certain statements may contain opinions, assumptions, or forward-looking information that are subject to change and may not reflect actual outcomes. No representation or warranty, express or implied, is made as to the accuracy, completeness, or timeliness of the information presented. Statistics, examples, and projections, where provided, are for illustrative purposes only and should not be relied upon as guarantees of future results.</p>
+    <p class="footer-legal">Investing involves risk, including the potential loss of capital. The risks associated with any investment strategy, product, or service should be carefully considered before making any investment decision.</p>
+    <p class="footer-legal">Fiscal.ai, an AI investment research tool powered by Fiscal.ai, is a third-party product provided &ldquo;as is&rdquo; without warranties on accuracy, completeness, quality, or timeliness. Verify information independently. Fiscal.ai outputs are not investment advice or recommendations and should not be used for investment decisions. By using Fiscal.ai, you agree to our <a href="#">Privacy Policy</a> and <a href="#">Terms of Use</a>.</p>
+    <a href="#" class="footer-reset">Reset Cookie Preferences</a>
   </div>
-  <div class="footer-legal"><p>Past returns are no guarantee of future performance.</p></div>
-  <div class="footer-bottom"><span>© 2026 Orion Digital Corp.</span><div class="footer-legal-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div></div>
-</div></footer>
+</footer>
 <script>
 const hamburger=document.querySelector('.hamburger');const menuOverlay=document.querySelector('.menu-overlay');const menuClose=document.querySelector('.ml-close');const body=document.body;
 function openMenu(){menuOverlay.classList.add('open');hamburger.classList.add('open');body.classList.add('menu-open');}

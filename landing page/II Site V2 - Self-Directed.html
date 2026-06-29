@@ -58,13 +58,13 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:var(--c-black);
 .menu-bottom .mb-left{display:flex;flex-direction:column;gap:4px;}.menu-bottom .mb-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
 .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--frame); box-sizing: border-box; }
 @media(max-width:900px){.container{padding:0 24px;}section.memo-section,section.how-section,section.acc-section,section.accounts-section,section.docs-section{padding:72px 0;}}
-.page-header{padding:314px 0 180px;border-bottom:0.5px solid var(--c-800);background:linear-gradient(180deg,var(--c-black) 0%,var(--c-surface) 62%,var(--c-surface) 100%);position:relative;overflow:hidden;min-height:793px;box-sizing:border-box;}
+.page-header{padding:120px 0;border-bottom:0.5px solid var(--c-800);background:linear-gradient(180deg,var(--c-black) 0%,var(--c-surface) 62%,var(--c-surface) 100%);position:relative;overflow:hidden;min-height:793px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;}
 .page-header .container{position:relative;z-index:1;}
-.pg-art{position:absolute;top:0;right:0;height:100%;width:46%;z-index:0;pointer-events:none;display:flex;align-items:center;justify-content:center;padding-top:134px;box-sizing:border-box;}
+.pg-art{position:absolute;top:0;right:0;height:100%;width:46%;z-index:0;pointer-events:none;display:flex;align-items:center;justify-content:center;padding-top:0;box-sizing:border-box;}
 .pg-art canvas{width:clamp(340px,35vw,500px);height:clamp(340px,35vw,500px);display:block;}
 @media(max-width:760px){.page-header{padding:128px 0 88px;min-height:auto;display:flex;flex-direction:column;}.page-header .container{order:1;}.page-header .page-title,.page-header .page-deck{max-width:none;}.pg-art{position:static;order:2;width:100%;height:auto;left:auto;right:auto;top:auto;padding-top:0;margin-top:40px;opacity:0.8;}.pg-art canvas{width:clamp(280px,84vw,380px);height:clamp(280px,84vw,380px);}}
-.page-title{font-size:clamp(34px,4.6vw,56px);line-height:1.04;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:48px;max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));}
-.page-deck{font-size:clamp(17px,1.6vw,22px);line-height:1.4;letter-spacing:-0.015em;color:var(--c-400);max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));text-wrap:balance;}.cta-section{text-align:center;padding:160px 0 100px;}
+.page-title{font-size:clamp(34px,4.6vw,56px);line-height:1.04;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:48px;max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));}
+.page-deck{font-size:clamp(17px,1.6vw,22px);line-height:1.4;letter-spacing:-0.015em;color:var(--c-400);max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));}.cta-section{text-align:center;padding:160px 0 100px;}
 .cta-canon{font-size:clamp(28px,3.5vw,44px);line-height:1.2;letter-spacing:-0.025em;color:var(--c-200);margin:0 auto 48px;max-width:880px;text-wrap:balance;}
 .cta-button{display:inline-flex;align-items:center;gap:8px;font-size:15px;color:var(--c-white);text-decoration:none;}
 .cta-button .arr{display:inline-flex;align-items:center;line-height:1;}
@@ -85,15 +85,15 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .footer-reset{display:inline-block;font-size:11px;color:var(--c-700);text-decoration:underline;margin-top:32px;}
 @media (prefers-reduced-motion: no-preference){.ri{opacity:0;transform:translateY(24px);transition:opacity 0.6s cubic-bezier(0.2,0.6,0.2,1),transform 0.6s cubic-bezier(0.2,0.6,0.2,1);transition-delay:var(--d,0s);}.ri.in{opacity:1;transform:none;}}
 
-/* — Body sections (shared idiom with Managed) — */
+/* · Body sections (shared idiom with Managed) · */
 .page-eyebrow{font-family:var(--mono);font-size:12px;color:var(--c-700);letter-spacing:0.04em;margin-bottom:28px;}
 .page-actions{margin-top:48px;}.memo-section{padding:130px 0;}
 .memo-grid{display:grid;grid-template-columns:1fr;gap:48px;align-items:start;}
-@media(min-width:1024px){.memo-grid{grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);row-gap:0;align-items:center;}.memo-text{grid-column:1 / 7;}.memo-grid .dr-doc{grid-column:9 / 13;}}
+@media(min-width:1024px){.memo-grid{grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);row-gap:0;align-items:center;}.memo-text{grid-column:1 / 6;}.memo-grid .dr-doc{grid-column:9 / 13;}}
 .memo-lead{font-size:clamp(28px,3.4vw,34px);line-height:1.12;letter-spacing:-0.03em;color:var(--c-200);margin-bottom:28px;font-weight:400;}
-.memo-body{font-size:15px;line-height:1.7;color:var(--c-600);max-width:660px;}
+.memo-body{font-size:15px;line-height:1.7;color:var(--c-600);}
 .memo-body p+p{margin-top:14px;}
-.memo-pull{font-size:15px;line-height:1.7;color:var(--c-400);margin-top:28px;max-width:660px;text-wrap:balance;}
+.memo-pull{font-size:15px;line-height:1.7;color:var(--c-400);margin-top:28px;text-wrap:balance;}
 .dev-bar{display:flex;justify-content:space-between;align-items:center;padding:14px 22px 11px;border-bottom:0.5px solid var(--c-1000);font-family:var(--mono);position:relative;}
 .dev-bar::after{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:62px;height:16px;background:var(--c-black);border:0.5px solid var(--c-700);border-radius:9px;pointer-events:none;}
 .dev-bar-time{font-size:12px;letter-spacing:0.02em;color:var(--c-200);font-variant-numeric:tabular-nums;}
@@ -118,7 +118,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .acc-section{padding:130px 0;position:relative;}
 .acc-section::after{content:'';position:absolute;top:0;bottom:0;left:50%;width:100vw;transform:translateX(-50%);background:var(--c-surface);z-index:0;}
 .acc-section>*{position:relative;z-index:1;}
-.acc-headline{font-size:clamp(28px,3.4vw,34px);line-height:1.12;letter-spacing:-0.03em;color:var(--c-200);max-width:760px;margin-bottom:48px;text-wrap:balance;font-weight:400;}
+.acc-headline{font-size:clamp(28px,3.4vw,34px);line-height:1.12;letter-spacing:-0.03em;color:var(--c-200);max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));margin-bottom:28px;text-wrap:balance;font-weight:400;}
 .acc-rows{margin-top:48px;display:flex;flex-direction:column;}
 .acc-row{padding:44px 0;border-top:0.5px solid var(--c-900);display:grid;grid-template-columns:1fr;gap:32px;align-items:center;}
 .acc-row:last-of-type{border-bottom:0.5px solid var(--c-900);}
@@ -135,11 +135,33 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .perf-row.diff .perf-val{color:var(--c-white);}
 .perf-pp{color:var(--c-700);margin-left:6px;font-size:13px;}
 .perf-chev{color:var(--c-700);font-size:14px;font-weight:300;line-height:1;}
-.cal-block{display:flex;flex-direction:column;align-items:flex-end;gap:9px;width:100%;padding:18px 0 6px;text-align:right;}
-.cal-head{font-size:15px;color:var(--c-200);letter-spacing:-0.01em;margin-bottom:3px;}
-.cal-row{display:flex;gap:12px;align-items:baseline;}
-.cal-key{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;}
-.cal-val{font-size:15px;color:var(--c-200);font-feature-settings:'lnum' 1,'tnum' 1;letter-spacing:-0.02em;}
+.cal-section{padding:130px 0;}
+.cal-lead{font-size:clamp(28px,3.4vw,34px);line-height:1.12;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;text-wrap:balance;margin:0 0 28px;}
+.cal-prose{font-size:15px;line-height:1.7;color:var(--c-600);max-width:calc((100% + var(--gutter)) / 6 * 5 - var(--gutter));}
+.cal-prose + .cal-prose{margin-top:18px;}
+.cal-prose-hi{color:var(--c-200);}
+.cal-card{border:0.5px solid var(--c-800);background:var(--c-elev);border-radius:28px;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,0.05);position:relative;height:672px;-webkit-mask-image:linear-gradient(to bottom,#000 90%,transparent 100%);mask-image:linear-gradient(to bottom,#000 90%,transparent 100%);}
+.cal-cardhd{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:18px 28px 4px;}
+.cal-cardhd .l{font-size:15px;color:var(--c-200);letter-spacing:-0.01em;}
+.cal-cardhd .r{font-family:var(--mono);font-size:11px;letter-spacing:0.04em;color:var(--c-700);text-align:right;line-height:1.55;}
+.cal-chart{display:block;width:100%;height:auto;padding:6px 28px 10px;box-sizing:border-box;}
+.cal-stats{display:grid;grid-template-columns:repeat(3,1fr);padding:0 12px;border-top:0.5px solid var(--c-1000);}
+.cal-stat{padding:14px 16px;}
+.cal-stat + .cal-stat{border-left:0.5px solid var(--c-1000);}
+.cal-stat .k{font-size:13px;color:var(--c-700);}
+.cal-stat .v{font-size:24px;color:var(--c-200);letter-spacing:-0.02em;margin-top:6px;}
+.cal-diag{padding:14px 28px 12px;border-top:0.5px solid var(--c-1000);font-size:15px;color:var(--c-400);letter-spacing:-0.01em;}
+.cal-overtime{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:0 28px 16px;}
+.cal-ot-k{font-size:13px;color:var(--c-700);letter-spacing:-0.01em;}
+.cal-ot-v{font-family:var(--mono);font-size:12px;letter-spacing:0.02em;color:var(--c-400);}
+.cg-axis{stroke:var(--c-900);stroke-width:1;}
+.cg-cal{stroke:var(--c-700);stroke-width:1;stroke-dasharray:3 3;}
+.cg-dot{fill:var(--c-600);}
+.cg-dot.sel{fill:none;stroke:var(--c-200);stroke-width:1;stroke-dasharray:2 2;}
+.cg-lbl{font-family:var(--mono);fill:var(--c-800);letter-spacing:0.04em;}
+.cg-tick{font-family:var(--mono);fill:var(--c-700);}
+@media(min-width:760px){.cal-section{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:center;}.cal-section .cal-text{grid-column:1 / 7;}.cal-section .cal-col{grid-column:9 / 13;}}
+@media(max-width:900px){.cal-section{padding:72px 0;}}
 .ap-head-row{display:flex;align-items:baseline;justify-content:space-between;width:100%;gap:12px;padding:18px 0 0;}
 .open-orders{display:flex;align-items:baseline;gap:6px;}
 .open-orders .lbl,.open-orders .n{font-size:15px;letter-spacing:-0.01em;color:var(--c-700);}
@@ -168,8 +190,8 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .h-line .amt{color:var(--c-white);font-weight:300;letter-spacing:-0.01em;font-size:13px;}
 .h-line .chg{color:var(--c-700);font-size:13px;letter-spacing:-0.02em;}
 .acc-pt-k{font-size:22px;color:var(--c-200);letter-spacing:-0.02em;margin-bottom:12px;}
-.acc-pt-d{font-size:15px;line-height:1.7;color:var(--c-600);max-width:660px;}
-.acc-sysnote{font-size:15px;line-height:1.7;color:var(--c-700);max-width:660px;margin-top:32px;}
+.acc-pt-d{font-size:15px;line-height:1.7;color:var(--c-600);}
+.acc-sysnote{font-size:15px;line-height:1.7;color:var(--c-700);margin-top:32px;max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));}
 .docs-section{padding:130px 0;}
 .doc-list{display:flex;flex-direction:column;margin-top:0;}
 .doc-row{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 0;border-top:0.5px solid var(--c-900);text-decoration:none;color:inherit;transition:padding 0.3s ease;}
@@ -194,8 +216,8 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .how-num{font-size:clamp(34px,5vw,40px);line-height:1;color:var(--c-900);letter-spacing:-0.02em;font-weight:300;}
 .how-title{font-size:22px;line-height:1.2;letter-spacing:-0.02em;color:var(--c-white);font-weight:400;margin-bottom:14px;}
 .how-desc{font-size:15px;line-height:1.7;color:var(--c-600);max-width:660px;}
-.how-headline{font-size:clamp(28px,3.4vw,34px);line-height:1.12;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin:28px 0 18px;text-wrap:balance;}
-.how-lead{font-size:15px;line-height:1.7;color:var(--c-600);max-width:660px;}
+.how-headline{font-size:clamp(28px,3.4vw,34px);line-height:1.12;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin:28px 0 28px;text-wrap:balance;}
+.how-lead{font-size:15px;line-height:1.7;color:var(--c-600);}
 
 .accounts-section{padding:130px 0;}
 @media(min-width:760px){.docs-section,.accounts-section{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}.docs-section>.section-eyebrow,.accounts-section>.section-eyebrow{grid-column:1 / 7;}.docs-section .doc-list{grid-column:7 / 13;}.accounts-section .acct-list{grid-column:7 / 13;}}
@@ -291,7 +313,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   if('ResizeObserver' in window){new ResizeObserver(function(){size();if(reduce)draw();}).observe(cv);}
 })();</script>
 <div class="container">  <h1 class="page-title ri" style="--d:0.08s">The decision comes before the trade.</h1>
-  <div class="page-deck ri" style="--d:0.16s">Most investors record outcomes. Few record the reasoning behind them. Without the reasoning, the outcome teaches nothing.</div>
+  <div class="page-deck ri" style="--d:0.16s">Most investors record outcomes. Few record the reasoning behind them. Without reasoning, the outcome teaches nothing.</div>
   <div class="page-actions ri" style="--d:0.24s"><a href="II Site V2 - GetTheApp.html" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Begin</span><span>Begin</span></span></span></a></div>
 </div>
 </section>
@@ -370,17 +392,6 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
         </div>
       </div>
     </div>
-    <div class="acc-row ri" style="--d:0.08s">
-      <div class="acc-row-text"><div class="acc-pt-k">Calibration</div><p class="acc-pt-d">Stated confidence, scored against what actually happened. Most active investors are overconfident, and the record proves it.</p></div>
-      <div class="acc-shot">
-        <div class="cal-block">
-          <div class="cal-head">Calibration</div>
-          <div class="cal-row"><span class="cal-key">Accuracy</span><span class="cal-val">54%</span></div>
-          <div class="cal-row"><span class="cal-key">Predictions</span><span class="cal-val">17</span></div>
-          <div class="cal-row"><span class="cal-key">Next Judgment</span><span class="cal-val">Apr 1, 2027</span></div>
-        </div>
-      </div>
-    </div>
     <div class="acc-row ri" style="--d:0.1s">
       <div class="acc-row-text"><div class="acc-pt-k">Active Positions</div><p class="acc-pt-d">What you hold, ordered by weight. Each position is open, measured, and accountable to the memo that opened it.</p></div>
       <div class="acc-shot">
@@ -409,8 +420,51 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 </div>
 
 <div class="container">
+<section class="cal-section">
+  <div class="cal-text">
+    <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 04</span><span class="se-name">The Allocator</span></div>
+    <h2 class="cal-lead ri" style="--d:0.04s">Most people own positions.<br>Allocators own decisions.</h2>
+    <p class="cal-prose ri" style="--d:0.08s">An allocator owns the reasoning behind every position and stays accountable to it. The objective is decision quality, not activity.</p>
+    <p class="cal-prose cal-prose-hi ri" style="--d:0.12s">Each decision is recorded as a probability and a time horizon, then scored against what happened. Confidence, made measurable.</p>
+  </div>
+  <div class="cal-col ri" style="--d:0.08s">
+    <div class="cal-card">
+      <div class="dev-bar"><span class="dev-bar-time">9:41</span><svg class="dev-bar-ic" viewBox="0 0 49.8 12" fill="none" aria-hidden="true"><rect x="0" y="7" width="2" height="4" rx="0.5" fill="currentColor"/><rect x="3.5" y="5" width="2" height="6" rx="0.5" fill="currentColor"/><rect x="7" y="3" width="2" height="8" rx="0.5" fill="currentColor"/><rect x="10.5" y="1" width="2" height="10" rx="0.5" fill="currentColor"/><path d="M18 4.6C20.2 2.7 25.8 2.7 28 4.6" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M19.6 6.3C21 5.1 25 5.1 26.4 6.3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><circle cx="23" cy="8.4" r="1" fill="currentColor"/><rect x="34" y="3.2" width="13.5" height="6.6" rx="1.6" stroke="currentColor" stroke-width="1" opacity="0.45"/><rect x="35.5" y="4.6" width="9.5" height="3.8" rx="0.7" fill="currentColor"/><path d="M49.1 5.2V7.8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+      <div class="cal-cardhd"><span class="l">Predicted vs actual</span><span class="r">Y &middot; Actual accuracy<br>X &middot; Confidence</span></div>
+      <svg class="cal-chart" viewBox="0 0 380 258" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <line class="cg-axis" x1="44" y1="24" x2="44" y2="230"/>
+        <line class="cg-axis" x1="44" y1="230" x2="356" y2="230"/>
+        <line class="cg-cal" x1="44" y1="230" x2="356" y2="24"/>
+        <text class="cg-tick" x="39" y="27" text-anchor="end" font-size="9">100%</text>
+        <text class="cg-tick" x="39" y="130" text-anchor="end" font-size="9">50%</text>
+        <text class="cg-tick" x="39" y="232" text-anchor="end" font-size="9">0%</text>
+        <text class="cg-tick" x="44" y="245" text-anchor="middle" font-size="9">0%</text>
+        <text class="cg-tick" x="200" y="245" text-anchor="middle" font-size="9">50%</text>
+        <text class="cg-tick" x="356" y="245" text-anchor="middle" font-size="9">100%</text>
+        <text class="cg-lbl" x="68" y="58" font-size="9">Underconfident</text>
+        <text class="cg-lbl" x="350" y="42" text-anchor="end" font-size="9">Calibrated</text>
+        <text class="cg-lbl" x="350" y="210" text-anchor="end" font-size="9">Overconfident</text>
+        <circle class="cg-dot" cx="225" cy="106" r="4"/>
+        <circle class="cg-dot" cx="244" cy="96" r="4"/>
+        <circle class="cg-dot sel" cx="262" cy="90" r="5.5"/>
+        <circle class="cg-dot" cx="275" cy="148" r="4"/>
+        <circle class="cg-dot" cx="284" cy="154" r="4"/>
+      </svg>
+      <div class="cal-stats">
+        <div class="cal-stat"><div class="k">Average confidence</div><div class="v">71%</div></div>
+        <div class="cal-stat"><div class="k">Actual accuracy</div><div class="v">54%</div></div>
+        <div class="cal-stat"><div class="k">Difference</div><div class="v">&minus;17%</div></div>
+      </div>
+      <div class="cal-diag">Stated confidence exceeds actual accuracy.</div>
+      <div class="cal-overtime"><span class="cal-ot-k">Calibration over time</span><span class="cal-ot-v">&darr; 25% gap reduction</span></div>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="container">
 <section class="accounts-section">
-  <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 04</span><span class="se-name">Account Types</span></div>
+  <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 05</span><span class="se-name">Account Types</span></div>
   <div class="acct-list">
     <details class="acct-item ri" style="--d:0.04s">
       <summary class="acct-sum"><span class="acct-main"><span class="acct-k">TFSA</span><span class="acct-d">Growth and withdrawals are completely tax-free, within an annual contribution limit that carries forward when unused. The most flexible registered account, with no tax on what compounds inside it.</span></span><span class="acct-sum-r"><span class="acct-v">Tax-free</span><span class="acct-chev"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6L8 10.5L12 6" stroke="currentColor" stroke-width="1.1"/></svg></span></span></summary>
@@ -441,7 +495,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 
 <div class="container">
 <section class="docs-section">
-  <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 05</span><span class="se-name">Documents &amp; Resources</span></div>
+  <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 06</span><span class="se-name">Documents &amp; Resources</span></div>
   <div class="doc-list">
     <a href="#" class="doc-row ri" style="--d:0.04s"><span class="doc-name">FAQ</span><span class="doc-arrow"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
     <a href="#" class="doc-row ri" style="--d:0.06s"><span class="doc-name">Privacy Policy &amp; Security Practices</span><span class="doc-arrow"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
