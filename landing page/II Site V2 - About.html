@@ -4,9 +4,9 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>About · Intelligent Investing</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-surface:#151515;--c-800:#565B5E;--c-700:#929292;--c-600:#A7A7A7;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFF; --frame: clamp(24px, 4vw, 48px); --maxw: 1680px; --gutter: clamp(16px, 1.5vw, 24px); --c-elev: #0A0A0A;}
+:root{--c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-surface:#151515;--c-800:#565B5E;--c-700:#929292;--c-600:#A7A7A7;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFF; --frame: clamp(24px, 4vw, 48px); --maxw: 1680px; --gutter: clamp(16px, 1.5vw, 24px); --c-elev: #0A0A0A; --mono:'Chakra Petch',ui-monospace,monospace;}
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{background:var(--c-black);color:var(--c-600);font-family:'Inter',sans-serif;font-feature-settings:'tnum' 1,'lnum' 1,'ss01' 1;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased;font-weight:400;}
 body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient(180deg,var(--c-elev) 0,var(--c-black) 560px);}body.menu-open{overflow:hidden;}
@@ -55,9 +55,9 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .menu-bottom .mb-left{display:flex;flex-direction:column;gap:4px;}.menu-bottom .mb-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
 .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--frame); box-sizing: border-box; }
 @media(max-width:900px){.container{padding:0 24px;}section.philosophy-section,section.manifesto-section,section.founders-section,section.reg-section,section.cta-section{padding:72px 0;}}
-.page-header{padding:314px 0 180px;border-bottom:0.5px solid var(--c-800);background:linear-gradient(180deg,var(--c-black) 0%,var(--c-surface) 62%,var(--c-surface) 100%);position:relative;overflow:hidden;min-height:793px;box-sizing:border-box;}
+.page-header{padding:120px 0;border-bottom:0.5px solid var(--c-800);background:linear-gradient(180deg,var(--c-black) 0%,var(--c-surface) 62%,var(--c-surface) 100%);position:relative;overflow:hidden;min-height:793px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;}
 .page-header .container{position:relative;z-index:1;}
-.pg-art{position:absolute;top:0;right:0;height:100%;width:46%;z-index:0;pointer-events:none;display:flex;align-items:center;justify-content:center;padding-top:134px;box-sizing:border-box;}
+.pg-art{position:absolute;top:0;right:0;height:100%;width:46%;z-index:0;pointer-events:none;display:flex;align-items:center;justify-content:center;padding-top:0;box-sizing:border-box;}
 .pg-art canvas{width:clamp(340px,35vw,500px);height:clamp(340px,35vw,500px);display:block;}
 @media(max-width:760px){.page-header{padding:128px 0 88px;min-height:auto;display:flex;flex-direction:column;}.page-header .container{order:1;}.page-header .page-title,.page-header .page-deck{max-width:none;}.pg-art{position:static;order:2;width:100%;height:auto;left:auto;right:auto;top:auto;padding-top:0;margin-top:40px;opacity:0.8;}.pg-art canvas{width:clamp(280px,84vw,380px);height:clamp(280px,84vw,380px);}}
 .lang-toggle{display:inline-flex;align-items:center;gap:8px;font-size:13px;letter-spacing:0.02em;font-feature-settings:'tnum' 1;}
@@ -68,9 +68,9 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .page-breadcrumb{font-size:12px;color:var(--c-700);letter-spacing:0.06em;margin-bottom:36px;display:flex;align-items:center;gap:10px;}
 .page-breadcrumb a{color:var(--c-700);text-decoration:none;}.page-breadcrumb .sep{color:var(--c-800);}.page-breadcrumb .current{color:var(--c-200);}
 .page-eyebrow{font-size:12px;color:var(--c-700);letter-spacing:0.16em;margin-bottom:20px;}
-.page-title{font-size:clamp(34px,4.6vw,56px);line-height:1.04;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:48px;max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));}
+.page-title{font-size:clamp(34px,4.6vw,56px);line-height:1.04;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:48px;max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));}
 .page-deck{font-size:clamp(17px,1.6vw,22px);line-height:1.4;letter-spacing:-0.015em;color:var(--c-400);max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));}
-.section-eyebrow{font-size:12px;color:var(--c-700);letter-spacing:0.16em;margin-bottom:48px;}
+.section-eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:0.04em;margin-bottom:28px;display:flex;gap:20px;}.se-no{color:var(--c-700);}.se-name{color:var(--c-400);}
 .declarative{font-size:clamp(28px,3.4vw,34px);line-height:1.18;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;max-width:880px;text-wrap:balance;}
 .declarative p+p{margin-top:28px;}
 .prose{font-size:15px;line-height:1.7;color:var(--c-600);max-width:720px;}
@@ -78,23 +78,22 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 
 /* · Philosophy · */
 .philosophy-section{padding:96px 0;border-top:0.5px solid var(--c-900);}
-.philosophy-statement{font-size:clamp(28px,3.5vw,44px);line-height:1.18;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;max-width:880px;text-wrap:balance;margin-bottom:48px;}
-.philosophy-prose{font-size:18px;line-height:1.7;color:var(--c-400);letter-spacing:-0.01em;max-width:760px;}
+.philosophy-statement{font-size:clamp(28px,3.4vw,34px);line-height:1.12;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));text-wrap:balance;margin-bottom:48px;}
+.philosophy-prose{font-size:15px;line-height:1.7;color:var(--c-600);letter-spacing:-0.01em;max-width:680px;}
 .philosophy-prose p+p{margin-top:28px;}
 
 /* · Manifesto · */
 .manifesto-section{padding:96px 0;border-top:0.5px solid var(--c-900);}
-.manifesto-statement{font-size:clamp(28px,3.5vw,44px);line-height:1.18;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;max-width:880px;text-wrap:balance;margin-bottom:48px;}
-.manifesto-prose{font-size:18px;line-height:1.7;color:var(--c-400);letter-spacing:-0.01em;max-width:760px;}
+.manifesto-statement{font-size:clamp(28px,3.4vw,34px);line-height:1.12;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));text-wrap:balance;margin-bottom:48px;}
+.manifesto-prose{font-size:15px;line-height:1.7;color:var(--c-600);letter-spacing:-0.01em;max-width:680px;}
 .manifesto-prose p+p{margin-top:24px;}
 .manifesto-prose em{font-style:normal;color:var(--c-200);}
 .manifesto-tenets{list-style:none;margin:28px 0 0;padding:0;max-width:760px;}
-.manifesto-tenets li{font-size:18px;line-height:1.6;color:var(--c-400);padding:18px 0;border-top:0.5px solid var(--c-900);}
-.manifesto-tenets li:last-child{border-bottom:0.5px solid var(--c-900);}
+.manifesto-tenets li{font-size:15px;line-height:1.6;color:var(--c-400);padding:10px 0;}
 .manifesto-tenets li em{font-style:normal;color:var(--c-200);}
 .manifesto-actions{margin-top:48px;}
 .link{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--c-200);text-decoration:none;}
-.link .arr{font-family:monospace;color:var(--c-700);transition:color 0.2s ease;}
+.link .arr{display:inline-flex;align-items:center;color:var(--c-700);transition:color 0.2s ease;}.link .arr-svg{width:12px;height:12px;display:block;}
 .link:hover{color:var(--c-white);}
 .link:hover .arr{color:var(--c-400);}
 .link .roll{display:inline-block;overflow:hidden;vertical-align:bottom;height:1lh;}
@@ -104,24 +103,25 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 
 /* · Founders · */
 .founders-section{padding:96px 0;border-top:0.5px solid var(--c-900);}
-.founder-rows{display:flex;flex-direction:column;}
-.founder-row{display:grid;grid-template-columns:minmax(0,260px) 1fr;gap:48px;padding:40px 0;border-top:0.5px solid var(--c-900);}
-.founder-row:last-of-type{border-bottom:0.5px solid var(--c-900);}
+.founders-intro{font-size:15px;line-height:1.6;color:var(--c-600);max-width:620px;margin-bottom:40px;}
+.founder-rows{display:flex;flex-direction:column;gap:44px;margin-top:8px;}
+.founder-row{display:grid;grid-template-columns:minmax(0,260px) 1fr;gap:28px 48px;padding:0;}
 .founder-name{font-size:18px;letter-spacing:-0.02em;color:var(--c-white);margin-bottom:12px;}
-.founder-title{font-family:monospace;font-size:11px;color:var(--c-700);letter-spacing:0.1em;}
-.founder-bio{font-size:14px;line-height:1.65;color:var(--c-600);font-style:italic;max-width:560px;}
+.founder-title{font-family:var(--mono);font-size:11px;color:var(--c-700);letter-spacing:0.04em;}
+.founder-bio{font-size:13px;line-height:1.6;color:var(--c-800);max-width:560px;}
 
 /* · Regulatory & Institutional (from Managed) · */
 .reg-section{padding:96px 0;border-top:0.5px solid var(--c-900);}
-.reg-rows{display:flex;flex-direction:column;}
-.reg-row{display:grid;grid-template-columns:minmax(0,260px) 1fr;gap:48px;padding:32px 0;border-top:0.5px solid var(--c-900);}
-.reg-row:last-of-type{border-bottom:0.5px solid var(--c-900);}
-.reg-label{font-size:12px;color:var(--c-200);letter-spacing:0.08em;}
-.reg-desc{font-size:14px;line-height:1.65;color:var(--c-700);font-style:italic;max-width:760px;}
+.trust-line{font-size:13px;line-height:1.6;color:var(--c-600);max-width:620px;}
+.trust-line b{color:var(--c-white);font-weight:400;}
+.trust-strip{display:grid;grid-template-columns:repeat(5,1fr);column-gap:var(--gutter);margin-top:48px;}
+.trust-item{display:flex;flex-direction:column;gap:7px;border-left:0.5px solid var(--c-800);padding-left:20px;}
+.ti-num{font-size:17px;color:var(--c-200);letter-spacing:-0.02em;line-height:1;}
+.ti-lbl{font-family:var(--mono);font-size:12px;letter-spacing:0.04em;color:var(--c-700);}
 
 /* · Closing CTA (from Managed) · */
 .cta-section{text-align:center;padding:160px 0 100px;border-top:0.5px solid var(--c-900);}
-.cta-canon{font-size:clamp(28px,3.5vw,44px);line-height:1.2;letter-spacing:-0.025em;color:var(--c-200);margin-bottom:48px;text-wrap:balance;}
+.cta-canon{font-size:clamp(28px,3.4vw,34px);line-height:1.2;letter-spacing:-0.025em;color:var(--c-200);margin-bottom:48px;text-wrap:balance;}
 .cta-button{display:inline-flex;align-items:center;gap:8px;font-size:15px;color:var(--c-white);text-decoration:none;}
 .cta-button .arr{display:inline-flex;align-items:center;line-height:1;}
 .cta-button .arr-svg{width:13px;height:13px;display:block;}
@@ -132,7 +132,8 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 
 @media(max-width:760px){
   .founder-row{grid-template-columns:1fr;gap:14px;}
-  .reg-row{grid-template-columns:1fr;gap:14px;}
+  .trust-strip{grid-template-columns:1fr;row-gap:20px;}
+  .trust-item{border-left:0;padding-left:0;border-top:0.5px solid var(--c-800);padding-top:16px;}
 }
 footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;line-height:1.7;color:var(--c-800);}.footer-copy{font-size:13px;color:var(--c-600);}
 .footer-copy a{color:var(--c-600);text-decoration:underline;}
@@ -212,53 +213,36 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   if('IntersectionObserver' in window){new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)start();else stop();});},{threshold:0}).observe(cv);}
   if('ResizeObserver' in window){new ResizeObserver(function(){size();if(reduce)draw();}).observe(cv);}
 })();</script>
-<div class="container">  <h1 class="page-title ri" style="--d:0.08s">Modern investing solved execution. It did not solve judgment.</h1>
+<div class="container">  <h1 class="page-title ri" style="--d:0.08s">Execution is solved.<br>Judgment is not.</h1>
   <div class="page-deck ri" style="--d:0.16s">Intelligent Investing was built to make the practice of serious investing operationally possible.</div>
 </div>
 </section>
 
 <div class="container">
 <section class="philosophy-section">
-  <div class="philosophy-statement ri" style="--d:0s">We are not building a friendly investing app. We are building a serious one.</div>
+  <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 01</span><span class="se-name">Philosophy</span></div>
+  <div class="philosophy-statement ri" style="--d:0.04s">We are not building a friendly investing app. We are building a serious one.</div>
   <div class="philosophy-prose">
-    <p class="ri" style="--d:0.04s">Warmth is easy. Authority is earned. The platform exists because the execution layer was already solved. Zero commissions, instant transfers, clean UI: those problems were commoditized. What remained unsolved was the judgment layer.</p>
-    <p class="ri" style="--d:0.08s">Most retail investors have no system for recording why they made a decision. No framework for measuring whether their choices are improving. No infrastructure for the practice of allocator development. That is what Intelligent Investing addresses.</p>
-    <p class="ri" style="--d:0.12s">The product is not competing on fees or features. It is competing on reducing the emotional friction around serious investing.</p>
+    <p class="ri" style="--d:0.04s">Execution has been solved. Zero commissions, instant transfers, and clean interfaces are no longer enough to differentiate an investing platform. What remains unsolved is the judgment layer.</p>
+    <p class="ri" style="--d:0.08s">Most retail investors have no system for recording why they made a decision, no framework for reviewing whether their choices are improving, and no infrastructure for developing as allocators over time.</p>
+    <p class="ri" style="--d:0.12s">Intelligent Investing exists to make that practice operational. It is not built to make investing feel easy. It is built to remove illusion, slow decisions down, and create structure around serious capital allocation.</p>
   </div>
-</section>
-</div>
-
-<div class="container">
-<section class="manifesto-section">
-  <div class="section-eyebrow ri" style="--d:0s">Manifesto</div>
-  <div class="manifesto-statement ri" style="--d:0.04s">We are not here to make investing feel easy. We are here to remove illusion, not replace it with a better story.</div>
-  <div class="manifesto-prose">
-    <p class="ri" style="--d:0.06s">Investing is not trading. It is capital allocation: the difference between reacting and deciding. Intelligent Investing is a discipline-first capital allocation system, designed to compound capital over decades. It is not a tool. It is a system you operate inside.</p>
-    <p class="ri" style="--d:0.08s">Most underperformance is not analytical. It is behavioural. The system is built to surface overconfidence, impatience, and narrative chasing, then apply pressure in the opposite direction. Not through motivation. Through design.</p>
-  </div>
-  <ul class="manifesto-tenets">
-    <li class="ri" style="--d:0.1s"><em>Discipline over prediction.</em> Outcomes improve when error is reduced, not when forecasts multiply.</li>
-    <li class="ri" style="--d:0.12s"><em>Structure over willpower.</em> Good intentions fail without constraints.</li>
-    <li class="ri" style="--d:0.14s"><em>Time as the primary edge.</em> Compounding requires duration most cannot tolerate.</li>
-    <li class="ri" style="--d:0.16s"><em>Friction as intelligence.</em> If a decision feels too easy, it usually is.</li>
-  </ul>
-  <div class="manifesto-actions ri" style="--d:0.18s">
-    <a href="II Site V2 - Manifesto.html" class="link"><span class="arr">→</span><span class="roll"><span class="roll-in"><span>Read the Full Doctrine</span><span>Read the Full Doctrine</span></span></span></a>
-  </div>
+  <div class="manifesto-actions ri" style="--d:0.16s"><a href="II Site V2 - Manifesto.html" class="link"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Read the Manifesto</span><span>Read the Manifesto</span></span></span></a></div>
 </section>
 </div>
 
 <div class="container">
 <section class="founders-section">
-  <div class="section-eyebrow ri" style="--d:0s">Founders</div>
+  <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 02</span><span class="se-name">Founders</span></div>
+  <p class="founders-intro ri" style="--d:0.04s">The company is led by operators focused on building investment infrastructure around judgment, discipline, and long-term capital allocation.</p>
   <div class="founder-rows">
     <div class="founder-row ri" style="--d:0.04s">
-      <div class="founder-id"><div class="founder-name">David Feller</div><div class="founder-title">[TITLE: PROOF &amp; FACTS REQUIRED]</div></div>
-      <p class="founder-bio">[Founder bio: Proof &amp; Facts and compliance review required before publish]</p>
+      <div class="founder-id"><div class="founder-name">David Feller</div><div class="founder-title">Role/title pending.</div></div>
+      <p class="founder-bio">Final founder copy to be provided by Dave or Aidan.</p>
     </div>
     <div class="founder-row ri" style="--d:0.08s">
-      <div class="founder-id"><div class="founder-name">Gregory Feller</div><div class="founder-title">[TITLE: PROOF &amp; FACTS REQUIRED]</div></div>
-      <p class="founder-bio">[Founder bio: Proof &amp; Facts and compliance review required before publish]</p>
+      <div class="founder-id"><div class="founder-name">Gregory Feller</div><div class="founder-title">Role/title pending.</div></div>
+      <p class="founder-bio">Final founder copy to be provided by Dave or Aidan.</p>
     </div>
   </div>
 </section>
@@ -266,12 +250,13 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 
 <div class="container">
 <section class="reg-section">
-  <div class="section-eyebrow ri" style="--d:0s">Regulatory &amp; Institutional</div>
-  <div class="reg-rows">
-    <div class="reg-row ri" style="--d:0.04s"><div class="reg-label">Regulatory Standing</div><p class="reg-desc">[CIRO registration: compliance-approved language required before publish]</p></div>
-    <div class="reg-row ri" style="--d:0.06s"><div class="reg-label">Investor Protection</div><p class="reg-desc">[CIPF membership: compliance-approved language required before publish]</p></div>
-    <div class="reg-row ri" style="--d:0.08s"><div class="reg-label">Asset Custody</div><p class="reg-desc">[Custodian and asset segregation: compliance-approved language required before publish]</p></div>
-    <div class="reg-row ri" style="--d:0.1s"><div class="reg-label">Institutional Backing</div><p class="reg-desc">[Orion Digital / Mogo public company reference: source validate and route if investor-facing before publish]</p></div>
+  <p class="trust-line">A licensed brokerage with the decision layer built in. <b>Not a tool bolted onto your broker.</b></p>
+  <div class="trust-strip">
+    <div class="trust-item ri" style="--d:0.04s"><span class="ti-num" style="color:var(--c-white);">~$500M</span><span class="ti-lbl">Assets Custodied</span></div>
+    <div class="trust-item ri" style="--d:0.06s"><span class="ti-num">Regulatory Standing</span><span class="ti-lbl">CIRO registration</span></div>
+    <div class="trust-item ri" style="--d:0.08s"><span class="ti-num">Investor Protection</span><span class="ti-lbl">CIPF membership</span></div>
+    <div class="trust-item ri" style="--d:0.1s"><span class="ti-num">Asset Custody</span><span class="ti-lbl">Custodian &amp; segregation</span></div>
+    <div class="trust-item ri" style="--d:0.12s"><span class="ti-num">Institutional Backing</span><span class="ti-lbl">Orion Digital / Mogo</span></div>
   </div>
 </section>
 </div>
@@ -279,7 +264,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 <div class="container">
 <section class="cta-section">
   <div class="cta-canon">The platform is available now.</div>
-  <a href="II Site V2 - GetTheApp.html" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Download the App</span><span>Download the App</span></span></span></a>
+  <a href="II Site V2 - GetTheApp.html" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Get Access</span><span>Get Access</span></span></span></a>
 </section>
 </div>
 
