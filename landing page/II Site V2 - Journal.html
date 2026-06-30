@@ -147,37 +147,46 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   function draw(){
     ctx.clearRect(0,0,W,H);
     var S=Math.min(W,H), cx=W*0.5, cy=H*0.5;
-    var ML=S*0.11, MR=S*0.04, MT=S*0.05, MB=S*0.12;
-    var px0=ML, px1=W-MR, pw=px1-px0, plotH=H-MT-MB;
-    var ROWS=22, amp=plotH*0.13, Wx=S*0.62, Wy=-S*0.05, Dx=S*0.24, Dy=-S*0.40, oY=cy+plotH*0.18;
-    var floorH=-plotH*0.20, topH=plotH*0.26;
-    var tt=t*0.0005, cyc=2.0, k=cyc*TAU/pw, i, j, ti, vi, ni;
+    var ax=S*0.45, ay=S*0.20, boxH=S*0.35, waveAmp=S*0.12;
+    var Ox=cx, Oy=cy+S*0.32;
+    var tt=t*0.0006, i, zi, ui;
     function L_(a){return 'rgba('+L[0]+','+L[1]+','+L[2]+','+a+')';}
     function Hb_(a){return 'rgba('+Hb[0]+','+Hb[1]+','+Hb[2]+','+a+')';}
-    function proj(u,depth,hgt){var un=u/pw;return [px0+un*Wx+depth*Dx, oY+un*Wy+depth*Dy-hgt];}
-    function hgtAt(px,z,phase){return amp*(Math.sin(px*k+phase)*0.82+Math.sin(px*k*0.6-phase*1.3+z*2.0)*0.30);}
-    ctx.strokeStyle=L_(0.18);ctx.lineWidth=0.5;
-    for(i=0;i<=8;i++){var uu=pw*i/8,fa=proj(uu,0,floorH),fb=proj(uu,1,floorH);ctx.beginPath();ctx.moveTo(fa[0],fa[1]);ctx.lineTo(fb[0],fb[1]);ctx.stroke();}
-    for(j=0;j<=5;j++){var dd=j/5,ga=proj(0,dd,floorH),gb=proj(pw,dd,floorH);ctx.beginPath();ctx.moveTo(ga[0],ga[1]);ctx.lineTo(gb[0],gb[1]);ctx.stroke();}
-    ctx.strokeStyle=L_(0.55);ctx.lineWidth=0.8;
-    for(ti=0;ti<=40;ti++){var p=proj(pw*ti/40,0,floorH),maj=(ti%5===0);ctx.beginPath();ctx.moveTo(p[0],p[1]);ctx.lineTo(p[0],p[1]+(maj?6:3));ctx.stroke();}
-    var yb=proj(0,0,floorH), ytp=proj(0,0,topH);
-    ctx.strokeStyle=L_(0.42);ctx.beginPath();ctx.moveTo(yb[0],yb[1]);ctx.lineTo(ytp[0],ytp[1]);ctx.stroke();
-    ctx.strokeStyle=L_(0.55);
-    for(vi=0;vi<=11;vi++){var hh=floorH+(topH-floorH)*vi/11,py=proj(0,0,hh);ctx.beginPath();ctx.moveTo(py[0]-6,py[1]);ctx.lineTo(py[0]+1,py[1]);ctx.stroke();}
-    for(var zi=ROWS-1; zi>=0; zi--){
-      var z=zi/(ROWS-1), phase=tt-z*2.2;
-      ctx.strokeStyle=Hb_((0.05+0.55*(1-z)).toFixed(3));ctx.lineWidth=0.3+0.85*(1-z);
+    function proj(u,v,h){return [Ox+(u-v)*ax, Oy-(u+v)*ay-h];}
+    function mv(p){ctx.moveTo(p[0],p[1]);}
+    function ln(p){ctx.lineTo(p[0],p[1]);}
+    function ticks(p0,p1,n,len,me,tdx,tdy){var dx=p1[0]-p0[0],dy=p1[1]-p0[1],ii,f,mx,my,tl;for(ii=0;ii<=n;ii++){f=ii/n;mx=p0[0]+dx*f;my=p0[1]+dy*f;tl=len*((ii%me===0)?1:0.55);ctx.beginPath();ctx.moveTo(mx-tdx*tl,my-tdy*tl);ctx.lineTo(mx+tdx*tl,my+tdy*tl);ctx.stroke();}}
+    ctx.strokeStyle=L_(0.12);ctx.lineWidth=0.5;
+    for(i=0;i<=12;i++){ctx.beginPath();mv(proj(i/12,0,0));ln(proj(i/12,1,0));ctx.stroke();ctx.beginPath();mv(proj(0,i/12,0));ln(proj(1,i/12,0));ctx.stroke();}
+    var B00=proj(0,0,0),B10=proj(1,0,0),B01=proj(0,1,0),B11=proj(1,1,0);
+    var T00=proj(0,0,boxH),T10=proj(1,0,boxH),T01=proj(0,1,boxH),T11=proj(1,1,boxH);
+    ctx.strokeStyle=L_(0.16);ctx.lineWidth=0.6;ctx.beginPath();
+    mv(B00);ln(B10);ln(B11);ln(B01);ln(B00);
+    mv(T00);ln(T10);ln(T11);ln(T01);ln(T00);
+    mv(B00);ln(T00);mv(B10);ln(T10);mv(B11);ln(T11);mv(B01);ln(T01);
+    ctx.stroke();
+    var ROWS=22, k=2.2*TAU;
+    for(zi=ROWS-1;zi>=0;zi--){
+      var z=zi/(ROWS-1), ph=tt-z*1.8;
+      ctx.strokeStyle=Hb_((0.10+0.42*(1-z)).toFixed(3));ctx.lineWidth=0.4+0.6*(1-z);
       ctx.beginPath();
-      for(var px=0;px<=pw;px+=3){var pt=proj(px,z,hgtAt(px,z,phase));if(px===0){ctx.moveTo(pt[0],pt[1]);}else{ctx.lineTo(pt[0],pt[1]);}}
+      for(ui=0;ui<=48;ui++){var u=ui/48, hh=waveAmp*0.9*(Math.sin(u*k+ph)*0.8+Math.sin(u*k*0.6-ph*1.2+z*2.0)*0.3);var p=proj(u,z,hh);if(ui===0)mv(p);else ln(p);}
       ctx.stroke();
     }
-    var nN=6, travel=(t*0.045)%(pw/nN);
-    for(ni=0;ni<nN;ni++){
-      var nu=(pw*ni/nN+travel)%pw, npt=proj(nu,0,hgtAt(nu,0,tt)), nx=npt[0], ny=npt[1];
-      ctx.fillStyle=Hb_(0.95);ctx.beginPath();ctx.arc(nx,ny,2.0,0,TAU);ctx.fill();
+    ctx.strokeStyle=L_(0.55);ctx.lineWidth=0.9;
+    ctx.beginPath();mv(B00);ln(B10);ctx.stroke();
+    ctx.beginPath();mv(B00);ln(B01);ctx.stroke();
+    ctx.beginPath();mv(B00);ln(T00);ctx.stroke();
+    ctx.lineWidth=0.5;
+    ticks(B00,B10,16,5,4,0,1);
+    ticks(B00,B01,16,5,4,0,1);
+    ticks(B00,T00,10,5,2,1,0);
+    var nN=6, travel=(t*0.00009)%(1/nN);
+    for(i=0;i<nN;i++){
+      var nu=(i/nN+travel)%1, nh=waveAmp*0.9*(Math.sin(nu*k+tt)*0.8+Math.sin(nu*k*0.6-tt*1.2)*0.3), np=proj(nu,0,nh);
+      ctx.fillStyle=Hb_(0.95);ctx.beginPath();ctx.arc(np[0],np[1],2.0,0,TAU);ctx.fill();
       ctx.strokeStyle=L_(0.6);ctx.lineWidth=0.6;ctx.setLineDash([2,3]);
-      ctx.beginPath();ctx.moveTo(nx,ny-7);ctx.lineTo(nx,ny-13);ctx.moveTo(nx,ny+7);ctx.lineTo(nx,ny+13);ctx.stroke();ctx.setLineDash([]);
+      ctx.beginPath();ctx.moveTo(np[0],np[1]-7);ctx.lineTo(np[0],np[1]-13);ctx.moveTo(np[0],np[1]+7);ctx.lineTo(np[0],np[1]+13);ctx.stroke();ctx.setLineDash([]);
     }
     if(!reduce)t+=16;
   }
