@@ -80,7 +80,7 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 
 /* · Philosophy · */
 .philosophy-section{padding:130px 0;border-top:0.5px solid var(--c-900);}
-.philosophy-layout{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);}
+.philosophy-layout{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}
 .philosophy-head{grid-column:1 / 6;}
 .philosophy-body{grid-column:7 / 13;}
 .philosophy-statement{font-size:clamp(28px,3.4vw,34px);line-height:1.18;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;text-wrap:balance;margin-bottom:48px;}
@@ -108,8 +108,9 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 
 /* · Founders · */
 .founders-section{padding:130px 0;border-top:0.5px solid var(--c-900);}
-.founders-layout{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);}
+.founders-layout{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:center;}
 .founders-head{grid-column:1 / 6;}
+.founders-headline{font-size:clamp(28px,3.4vw,34px);line-height:1.18;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;text-wrap:balance;margin-bottom:20px;}
 .founders-intro{font-size:15px;line-height:1.6;color:var(--c-600);max-width:620px;margin-bottom:40px;}
 .founder-rows{display:grid;grid-template-columns:1fr 1fr;column-gap:var(--gutter);grid-column:7 / 13;}
 .founder-row{display:flex;flex-direction:column;gap:20px;padding:0;}
@@ -165,12 +166,12 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 <body>
 <nav class="navbar"><div class="navbar-inner">
   <a href="index.html" class="navbar-brand"><img src="Logo.svg" alt="II"></a>
-  <div class="nav-links"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html" class="active">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a></div>
+  <div class="nav-links"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html" class="active">About</a></div>
   <div class="navbar-right"><div class="lang-toggle"><span class="lt active">EN</span><span class="sep">·</span><span class="lt">FR</span></div><a href="II Site V2 - GetTheApp.html" class="navbar-cta">Get Access</a><button class="hamburger" type="button"><span></span><span></span></button></div>
 </div></nav>
 <div class="menu-overlay">
   <div class="menu-top"><a href="index.html" class="ml-logo"><img src="Logo.svg" alt="II"></a><button class="ml-close" type="button">Close ×</button></div>
-  <div class="menu-center"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html" class="active">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a><a href="II Site V2 - GetTheApp.html">Get Access</a></div>
+  <div class="menu-center"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html" class="active">About</a><a href="II Site V2 - GetTheApp.html">Get Access</a></div>
   <div class="menu-bottom"><div class="mb-left"><span>Intelligent Investing</span><span>No. 01 · 2026</span></div><div class="mb-right"><span>Mogo Inc.</span><span>Orion Digital · TSX·NASDAQ : ORIO</span></div></div>
 </div>
 
@@ -256,7 +257,8 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   <div class="founders-layout">
   <div class="founders-head">
   <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 02</span><span class="se-name">Founders</span></div>
-  <p class="founders-intro ri" style="--d:0.04s">The company is led by operators focused on building investment infrastructure around judgment, discipline, and long-term capital allocation.</p>
+  <div class="founders-headline ri" style="--d:0.04s">Operators build the system.</div>
+  <p class="founders-intro ri" style="--d:0.08s">The company is led by operators focused on building investment infrastructure around judgment, discipline, and long-term capital allocation.</p>
   </div>
   <div class="founder-rows">
     <div class="founder-row ri" style="--d:0.04s">
