@@ -54,6 +54,8 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .menu-overlay.open .menu-center a{opacity:1;transform:translateY(0);}
 .menu-overlay.open .menu-center a:nth-child(1){transition-delay:0.15s;}.menu-overlay.open .menu-center a:nth-child(2){transition-delay:0.20s;}.menu-overlay.open .menu-center a:nth-child(3){transition-delay:0.25s;}.menu-overlay.open .menu-center a:nth-child(4){transition-delay:0.30s;}.menu-overlay.open .menu-center a:nth-child(5){transition-delay:0.35s;}.menu-overlay.open .menu-center a:nth-child(6){transition-delay:0.40s;}
 .menu-center a:hover{color:var(--c-white);}
+.menu-center a.active{color:var(--c-white);position:relative;}
+.menu-center a.active::before{content:'';position:absolute;left:-26px;top:50%;width:6px;height:6px;border-radius:50%;background:var(--c-white);transform:translateY(-50%);}
 .menu-bottom{display:grid;grid-template-columns:1fr 1fr;align-items:end;padding:clamp(28px,4vw,56px) clamp(40px,6vw,80px);gap:24px;font-size:11px;color:var(--c-700);}
 .menu-bottom .mb-left{display:flex;flex-direction:column;gap:4px;}.menu-bottom .mb-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
 .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--frame); box-sizing: border-box; }
@@ -102,7 +104,8 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .prose{font-size:15px;line-height:1.7;color:var(--c-600);max-width:720px;margin-top:32px;}
 .prose p{text-wrap:balance;}.prose p+p{margin-top:14px;}.prose em{font-style:normal;color:var(--c-200);}
 .cta-section{text-align:center;padding:160px 0 100px;border-top:0.5px solid var(--c-900);}
-.cta-canon{font-size:clamp(28px,3.4vw,34px);line-height:1.2;letter-spacing:-0.025em;color:var(--c-200);margin:0 auto 48px;max-width:880px;text-wrap:balance;}
+.cta-canon{font-size:clamp(28px,3.4vw,34px);line-height:1.2;letter-spacing:-0.025em;color:var(--c-200);margin:0 auto 48px;max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));text-wrap:balance;}
+@media(max-width:760px){.cta-canon{max-width:none;font-size:clamp(20px,1.8vw,24px);}}
 .cta-button{display:inline-flex;align-items:center;gap:8px;font-size:15px;color:var(--c-white);text-decoration:none;}
 .cta-button .arr{display:inline-flex;align-items:center;line-height:1;}
 .cta-button .arr-svg{width:13px;height:13px;display:block;}
@@ -167,6 +170,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .acct-sum{list-style:none;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;padding:22px 0;cursor:pointer;transition:padding 0.3s ease;}
 .acct-main{display:flex;flex-direction:column;gap:10px;}
 .acct-d{font-size:15px;line-height:1.7;color:var(--c-600);max-width:560px;}
+@media(max-width:760px){.acct-sum{position:relative;}.acct-main{width:100%;}.acct-sum-r{position:absolute;top:22px;right:0;}}
 .acct-sum::-webkit-details-marker{display:none;}
 .acct-sum:hover{padding-left:8px;}
 .acct-k{font-size:18px;color:var(--c-white);letter-spacing:-0.02em;transition:color 0.2s ease;}
@@ -214,6 +218,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .pf-ph-name{font-size:34px;line-height:1.05;letter-spacing:-0.03em;color:var(--c-black);margin-top:16px;}
 .pf-ph-note{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;color:var(--c-black);opacity:0.4;margin-top:auto;}
 @media(max-width:760px){.portfolios-section .pf-steps,.portfolios-section .pf-right{display:none;}.pf-carousel{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;margin:0 -24px;padding:4px 24px 0;scrollbar-width:none;}.pf-carousel::-webkit-scrollbar{display:none;}.pf-card{flex:0 0 84%;scroll-snap-align:center;display:flex;flex-direction:column;}.pf-dots{display:flex;justify-content:center;gap:8px;margin-top:24px;}.pf-dot{width:6px;height:6px;border:0.5px solid var(--c-700);}.pf-dot.is-on{background:var(--c-400);border-color:var(--c-400);}}
+.pf-head{margin-bottom:48px;}
 .pf-head .section-eyebrow{margin-bottom:0;}
 .pf-headline{font-size:clamp(28px,3.4vw,34px);line-height:1.18;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:20px;}
 .pf-deck{font-size:15px;line-height:1.7;color:var(--c-600);margin-top:16px;max-width:calc((100% + var(--gutter)) / 6 * 5 - var(--gutter));}
@@ -232,11 +237,14 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .pf-step.is-active .pf-step-name{color:var(--c-white);}
 .pf-step.is-active .pf-step-sub{color:var(--c-700);}
 
+.proj-head{margin-bottom:48px;}
 .proj-head .section-eyebrow{margin-bottom:0;}
 .proj-headline{font-size:clamp(28px,3.4vw,34px);line-height:1.18;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:20px;}
 .proj-deck{font-size:15px;line-height:1.7;color:var(--c-600);margin-top:16px;max-width:calc((100% + var(--gutter)) / 6 * 5 - var(--gutter));}
+@media(max-width:760px){.pf-deck,.proj-deck{max-width:none;}}
 .proj-board{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;align-items:stretch;}
 .pp{flex:0 0 340px;max-width:340px;border:0.5px solid var(--c-800);border-radius:28px;overflow:hidden;background:var(--c-black);display:flex;flex-direction:column;}
+@media(max-width:760px){.proj-board .pp{flex-basis:100%;max-width:none;}}
 .pp>.pp-screen,.pp>.ppg{flex:1;}
 .pp-screen{display:flex;flex-direction:column;padding:24px 24px 32px;}
 .pp-top{display:flex;justify-content:space-between;align-items:center;padding-bottom:20px;border-bottom:0.5px solid var(--c-900);}
@@ -295,11 +303,11 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .perf-section{padding:130px 0;}
 @media(min-width:760px){
   .compounds-section,.how-section,.dont-section,.portfolios-section,.proj-section{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}
-  .proj-section .proj-head{grid-column:1 / 7;margin-bottom:48px;}
+  .proj-section .proj-head{grid-column:1 / 7;}
   .proj-section .proj-board{grid-column:1 / 13;}
   .compounds-section>.section-eyebrow,.how-section>.section-eyebrow,.dont-section>.section-eyebrow,.portfolios-section>.section-eyebrow{grid-column:1 / 7;}
   .how-section .how-steps,.how-section .how-closing,.dont-section .dont-rows,.portfolios-section .pf-right{grid-column:7 / 13;}
-  .portfolios-section .pf-head{grid-column:1 / 7;margin-bottom:40px;}
+  .portfolios-section .pf-head{grid-column:1 / 7;}
   .portfolios-section .pf-rows{grid-column:1 / 13;}
   .compounds-section .compounds-prose{grid-column:7 / 13;grid-row:1 / 4;margin-top:0;}
   .compounds-section .compounds-headline{grid-column:1 / 6;grid-row:2;}
@@ -310,7 +318,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   .proj-section .proj-board .pp{max-width:none;width:100%;display:flex;flex-direction:column;}
   .proj-section .proj-board .pp>.pp-screen,.proj-section .proj-board .pp>.ppg{flex:1;}
 }
-@media(max-width:900px){.how-section,.compounds-section,.dont-section,.accounts-section,.portfolios-section,.perf-section{padding:72px 0;}}
+@media(max-width:900px){.how-section,.compounds-section,.dont-section,.accounts-section,.portfolios-section,.perf-section,.cta-section{padding:72px 0;}}
 @media(max-width:760px){.how-section,.compounds-section,.dont-section,.accounts-section,.portfolios-section,.perf-section{position:relative;}.how-section::before,.compounds-section::before,.dont-section::before,.accounts-section::before,.portfolios-section::before,.perf-section::before{content:'';position:absolute;top:0;left:50%;width:100vw;transform:translateX(-50%);border-top:0.5px solid var(--c-900);pointer-events:none;}}
 .perf-scroll{width:100%;overflow-x:auto;}
 .perf-table{width:100%;border-collapse:collapse;font-feature-settings:'tnum' 1,'lnum' 1;}
@@ -352,7 +360,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 </div></nav>
 <div class="menu-overlay">
   <div class="menu-top"><a href="index.html" class="ml-logo"><img src="Logo.svg" alt="II"></a><button class="ml-close" type="button">Close ×</button></div>
-  <div class="menu-center"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a><a href="II Site V2 - GetTheApp.html">Get Access</a></div>
+  <div class="menu-center"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html" class="active">Managed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a><a href="II Site V2 - GetTheApp.html">Get Access</a></div>
   <div class="menu-bottom"><div class="mb-left"><span>Intelligent Investing</span><span>No. 01 · 2026</span></div><div class="mb-right"><span>Mogo Inc.</span><span>Orion Digital · TSX·NASDAQ : ORIO</span></div></div>
 </div>
 
@@ -666,7 +674,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 <div class="container">
 <section class="cta-section">
   <div class="cta-canon">Managed is available as part of the Intelligent Investing subscription.</div>
-  <a href="II Site V2 - GetTheApp.html" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Download the App</span><span>Download the App</span></span></span></a>
+  <a href="II Site V2 - GetTheApp.html" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Get Access</span><span>Get Access</span></span></span></a>
 </section>
 </div>
 

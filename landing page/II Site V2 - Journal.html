@@ -50,6 +50,8 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .menu-overlay.open .menu-center a{opacity:1;transform:translateY(0);}
 .menu-overlay.open .menu-center a:nth-child(1){transition-delay:0.15s;}.menu-overlay.open .menu-center a:nth-child(2){transition-delay:0.20s;}.menu-overlay.open .menu-center a:nth-child(3){transition-delay:0.25s;}.menu-overlay.open .menu-center a:nth-child(4){transition-delay:0.30s;}.menu-overlay.open .menu-center a:nth-child(5){transition-delay:0.35s;}.menu-overlay.open .menu-center a:nth-child(6){transition-delay:0.40s;}
 .menu-center a:hover{color:var(--c-white);}
+.menu-center a.active{color:var(--c-white);position:relative;}
+.menu-center a.active::before{content:'';position:absolute;left:-26px;top:50%;width:6px;height:6px;border-radius:50%;background:var(--c-white);transform:translateY(-50%);}
 .menu-bottom{display:grid;grid-template-columns:1fr 1fr;align-items:end;padding:clamp(28px,4vw,56px) clamp(40px,6vw,80px);gap:24px;font-size:11px;color:var(--c-700);}
 .menu-bottom .mb-left{display:flex;flex-direction:column;gap:4px;}.menu-bottom .mb-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
 .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--frame); box-sizing: border-box; }
@@ -98,7 +100,7 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .j-ascii{position:absolute;inset:0;width:100%;height:100%;}
 .j-empty-t{position:relative;z-index:1;}
 @media(max-width:1024px){.j-tile{grid-column:span 6;}}
-@media(max-width:760px){.j-grid{grid-template-columns:1fr;gap:40px;}.j-tile{grid-column:auto;}}
+@media(max-width:760px){.j-grid{grid-template-columns:1fr;gap:0;}.j-tile{grid-column:auto;}.j-tile:nth-child(1),.j-tile:nth-child(2){margin-bottom:40px;}.j-tile:nth-child(n+3) .j-cover{display:none;}.j-tile:nth-child(n+3) .j-info{padding:22px 0;border-top:0.5px solid var(--c-900);}}
 footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;line-height:1.7;color:var(--c-800);}.footer-copy{font-size:13px;color:var(--c-600);}
 .footer-copy a{color:var(--c-600);text-decoration:underline;}
 .footer-social{display:flex;gap:18px;margin-top:22px;}

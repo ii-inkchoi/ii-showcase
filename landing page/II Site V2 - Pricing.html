@@ -51,6 +51,8 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .menu-overlay.open .menu-center a{opacity:1;transform:translateY(0);}
 .menu-overlay.open .menu-center a:nth-child(1){transition-delay:0.15s;}.menu-overlay.open .menu-center a:nth-child(2){transition-delay:0.20s;}.menu-overlay.open .menu-center a:nth-child(3){transition-delay:0.25s;}.menu-overlay.open .menu-center a:nth-child(4){transition-delay:0.30s;}.menu-overlay.open .menu-center a:nth-child(5){transition-delay:0.35s;}.menu-overlay.open .menu-center a:nth-child(6){transition-delay:0.40s;}
 .menu-center a:hover{color:var(--c-white);}
+.menu-center a.active{color:var(--c-white);position:relative;}
+.menu-center a.active::before{content:'';position:absolute;left:-26px;top:50%;width:6px;height:6px;border-radius:50%;background:var(--c-white);transform:translateY(-50%);}
 .menu-bottom{display:grid;grid-template-columns:1fr 1fr;align-items:end;padding:clamp(28px,4vw,56px) clamp(40px,6vw,80px);gap:24px;font-size:11px;color:var(--c-700);}
 .menu-bottom .mb-left{display:flex;flex-direction:column;gap:4px;}
 .menu-bottom .mb-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
@@ -97,7 +99,8 @@ section{padding:130px 0;}
 .compare-val{color:var(--c-200);font-feature-settings:'tnum' 1;}
 @media(max-width:900px){.compare-row{grid-template-columns:1fr;row-gap:8px;}}
 .cta-section{text-align:center;padding:160px 0 100px;border-top:0.5px solid var(--c-900);}
-.cta-canon{font-size:clamp(28px,3.4vw,34px);line-height:1.2;letter-spacing:-0.025em;color:var(--c-200);margin:0 auto 48px;max-width:880px;text-wrap:balance;}
+.cta-canon{font-size:clamp(28px,3.4vw,34px);line-height:1.2;letter-spacing:-0.025em;color:var(--c-200);margin:0 auto 48px;max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));text-wrap:balance;}
+@media(max-width:760px){.cta-canon{max-width:none;font-size:clamp(20px,1.8vw,24px);}}
 .cta-button{display:inline-flex;align-items:center;gap:8px;font-size:15px;color:var(--c-white);text-decoration:none;}
 .cta-button .arr{display:inline-flex;align-items:center;line-height:1;}
 .cta-button .arr-svg{width:13px;height:13px;display:block;}

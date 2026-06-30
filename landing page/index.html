@@ -596,7 +596,8 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
   #entry-03 .prose { grid-column: 1 / -1 !important; }
   /* headlines: tame size */
   .statement { font-size: clamp(22px, 6.5vw, 28px); }
-  .close-h { font-size: clamp(20px, 1.8vw, 24px); }
+  .close-h { font-size: clamp(20px, 1.8vw, 24px); max-width: none; }
+  .hero-sub, #entry-01 .e01-note, #entry-06 .prose { max-width: none; }
   .hero-h { font-size: clamp(24px, 7.4vw, 28px); }
   /* montage: smaller data + tighter padding */
   .ap-card { padding: 18px; }
@@ -966,6 +967,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 #underwriting .aw-text { grid-column:1 / 7; align-self:center; }
 #underwriting .cal-col { grid-column:9 / 13; margin-top:0; }
 #underwriting .aw-textbody { font-size:15px; line-height:1.7; color:var(--c-600); margin:0; max-width:calc((100% + var(--gutter)) / 6 * 5 - var(--gutter)); }
+@media(max-width:640px){#underwriting .aw-textbody{max-width:none;}}
 #underwriting .aw-2col .uw-flow { grid-column:auto; margin-top:0; }
 #underwriting .aw-cap { font-size:13px; letter-spacing:-0.01em; color:var(--c-600); margin:0 0 16px; }
 #underwriting .cal-card { border:0.5px solid var(--c-800); background:var(--c-elev); border-radius:28px; overflow:hidden; box-shadow:inset 0 1px 0 rgba(255,255,255,0.05); position:relative; height:672px; -webkit-mask-image:linear-gradient(to bottom, #000 90%, transparent 100%); mask-image:linear-gradient(to bottom, #000 90%, transparent 100%); }
@@ -1073,6 +1075,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 #calibration { padding-top:0; }
 #calibration .cal-aside { max-width:520px; }
 #benchmark .bm-aside { max-width:calc((100% + var(--gutter)) / 6 * 5 - var(--gutter)); }
+@media(max-width:640px){#benchmark .bm-aside{max-width:none;}}
 @media (max-width:900px){
   #decision-record .dr-wrap, #calibration .cal-wrap, #benchmark .bm-wrap { grid-template-columns:1fr; }
   #decision-record .dr-doc, #calibration .cal-card, #benchmark .bm-card { max-width:380px; }
@@ -1083,8 +1086,10 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 <style>
 #entry-03 .entry-head { grid-column:1 / -1; justify-content:center; }
 #entry-03 .sys-hero { grid-column:1 / -1; text-align:center; max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter)); margin:0 auto; }
+@media(max-width:640px){#entry-03 .sys-hero{max-width:none;}}
 #entry-03 .sys-title { grid-column:auto; margin:0 auto; }
 #entry-03 .sys-intro { font-size:15px; line-height:1.7; color:var(--c-600); margin:22px auto 0; max-width:calc((100% + var(--gutter)) / 6 * 5 - var(--gutter)); }
+@media(max-width:640px){#entry-03 .sys-intro{max-width:none;}}
 #entry-03 .sys-item-name { font-size:18px; color:var(--c-200); letter-spacing:-0.01em; margin-bottom:12px; }
 #entry-03 .sys-item-desc { font-size:15px; line-height:1.7; color:var(--c-600); margin:0; }
 #entry-03 .sys-phone { justify-self:center; width:100%; max-width:400px; aspect-ratio:1 / 2.4; background:var(--c-elev); border-radius:32px; overflow:hidden; position:relative; display:flex; flex-direction:column; -webkit-mask-image:linear-gradient(to bottom, #000 68%, rgba(0,0,0,0.55) 88%, transparent 100%); mask-image:linear-gradient(to bottom, #000 68%, rgba(0,0,0,0.55) 88%, transparent 100%); }
@@ -1306,7 +1311,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 <div class="container"><section id="close">
   <div class="close-wrap">
     <h2 class="close-h">The objective was never more decisions.<br>It is a capital allocation system that holds every one to the record.</h2>
-    <a href="II Site V2 - GetTheApp.html" class="cta-btn"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Begin</span><span>Begin</span></span></span></a>
+    <a href="II Site V2 - GetTheApp.html" class="cta-btn"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Get Access</span><span>Get Access</span></span></span></a>
   </div>
 </section></div>
 

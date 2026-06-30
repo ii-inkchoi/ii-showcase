@@ -54,10 +54,12 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:var(--c-black);
 .menu-overlay.open .menu-center a{opacity:1;transform:translateY(0);}
 .menu-overlay.open .menu-center a:nth-child(1){transition-delay:0.15s;}.menu-overlay.open .menu-center a:nth-child(2){transition-delay:0.20s;}.menu-overlay.open .menu-center a:nth-child(3){transition-delay:0.25s;}.menu-overlay.open .menu-center a:nth-child(4){transition-delay:0.30s;}.menu-overlay.open .menu-center a:nth-child(5){transition-delay:0.35s;}.menu-overlay.open .menu-center a:nth-child(6){transition-delay:0.40s;}
 .menu-center a:hover{color:var(--c-white);}
+.menu-center a.active{color:var(--c-white);position:relative;}
+.menu-center a.active::before{content:'';position:absolute;left:-26px;top:50%;width:6px;height:6px;border-radius:50%;background:var(--c-white);transform:translateY(-50%);}
 .menu-bottom{display:grid;grid-template-columns:1fr 1fr;align-items:end;padding:clamp(28px,4vw,56px) clamp(40px,6vw,80px);gap:24px;font-size:11px;color:var(--c-700);}
 .menu-bottom .mb-left{display:flex;flex-direction:column;gap:4px;}.menu-bottom .mb-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
 .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--frame); box-sizing: border-box; }
-@media(max-width:900px){.container{padding:0 24px;}section.memo-section,section.how-section,section.acc-section,section.accounts-section,section.docs-section{padding:72px 0;}}
+@media(max-width:900px){.container{padding:0 24px;}section.memo-section,section.how-section,section.acc-section,section.accounts-section,section.docs-section,section.cta-section{padding:72px 0;}}
 .page-header{padding:120px 0;border-bottom:0.5px solid var(--c-800);background:linear-gradient(180deg,var(--c-black) 0%,var(--c-surface) 62%,var(--c-surface) 100%);position:relative;overflow:hidden;min-height:793px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;}
 .page-header .container{position:relative;z-index:1;}
 .pg-art{position:absolute;top:0;right:0;height:100%;width:46%;z-index:0;pointer-events:none;display:flex;align-items:center;justify-content:center;padding-top:0;box-sizing:border-box;}
@@ -65,7 +67,8 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:var(--c-black);
 @media(max-width:760px){.page-header{padding:128px 0 88px;min-height:auto;display:flex;flex-direction:column;}.page-header .container{order:1;}.page-header .page-title,.page-header .page-deck{max-width:none;}.pg-art{position:static;order:2;width:100%;height:auto;left:auto;right:auto;top:auto;padding-top:0;margin-top:40px;opacity:0.8;}.pg-art canvas{width:clamp(280px,84vw,380px);height:clamp(280px,84vw,380px);}}
 .page-title{font-size:clamp(34px,4.6vw,56px);line-height:1.1;letter-spacing:-0.02em;color:var(--c-200);font-weight:400;margin-bottom:48px;max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));}
 .page-deck{font-size:clamp(17px,1.6vw,22px);line-height:1.5;letter-spacing:-0.015em;color:var(--c-400);max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));}.cta-section{text-align:center;padding:160px 0 100px;border-top:0.5px solid var(--c-900);}
-.cta-canon{font-size:clamp(28px,3.4vw,34px);line-height:1.2;letter-spacing:-0.025em;color:var(--c-200);margin:0 auto 48px;max-width:880px;text-wrap:balance;}
+.cta-canon{font-size:clamp(28px,3.4vw,34px);line-height:1.2;letter-spacing:-0.025em;color:var(--c-200);margin:0 auto 48px;max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));text-wrap:balance;}
+@media(max-width:760px){.cta-canon{max-width:none;font-size:clamp(20px,1.8vw,24px);}}
 .cta-button{display:inline-flex;align-items:center;gap:8px;font-size:15px;color:var(--c-white);text-decoration:none;}
 .cta-button .arr{display:inline-flex;align-items:center;line-height:1;}
 .cta-button .arr-svg{width:13px;height:13px;display:block;}
@@ -192,6 +195,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .acc-pt-k{font-size:22px;color:var(--c-200);letter-spacing:-0.02em;margin-bottom:12px;}
 .acc-pt-d{font-size:15px;line-height:1.7;color:var(--c-600);}
 .acc-sysnote{font-size:15px;line-height:1.7;color:var(--c-700);margin-top:32px;max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));}
+@media(max-width:760px){.cal-prose,.acc-sysnote,.acc-headline{max-width:none;}}
 .docs-section{padding:130px 0;}
 .doc-list{display:flex;flex-direction:column;margin-top:0;}
 .doc-row{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 0;border-top:0.5px solid var(--c-900);text-decoration:none;color:inherit;transition:padding 0.3s ease;}
@@ -227,6 +231,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .acct-sum{list-style:none;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;padding:22px 0;cursor:pointer;transition:padding 0.3s ease;}
 .acct-main{display:flex;flex-direction:column;gap:10px;}
 .acct-d{font-size:15px;line-height:1.7;color:var(--c-600);max-width:560px;}
+@media(max-width:760px){.acct-sum{position:relative;}.acct-main{width:100%;}.acct-sum-r{position:absolute;top:22px;right:0;}}
 .acct-sum::-webkit-details-marker{display:none;}
 .acct-sum:hover{padding-left:8px;}
 .acct-k{font-size:17px;color:var(--c-400);letter-spacing:-0.01em;transition:color 0.2s ease;}
@@ -255,7 +260,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 </div></nav>
 <div class="menu-overlay">
   <div class="menu-top"><a href="index.html" class="ml-logo"><img src="Logo.svg" alt="II"></a><button class="ml-close" type="button">Close ×</button></div>
-  <div class="menu-center"><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a><a href="II Site V2 - GetTheApp.html">Get Access</a></div>
+  <div class="menu-center"><a href="II Site V2 - Self-Directed.html" class="active">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a><a href="II Site V2 - GetTheApp.html">Get Access</a></div>
   <div class="menu-bottom"><div class="mb-left"><span>Intelligent Investing</span><span>No. 01 · 2026</span></div><div class="mb-right"><span>Mogo Inc.</span><span>Orion Digital · TSX·NASDAQ : ORIO</span></div></div>
 </div>
 
@@ -512,7 +517,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 <div class="container">
 <section class="cta-section">
   <div class="cta-canon">Self-Directed is available as part of the Intelligent Investing subscription.</div>
-  <a href="II Site V2 - GetTheApp.html" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Begin</span><span>Begin</span></span></span></a>
+  <a href="II Site V2 - GetTheApp.html" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Get Access</span><span>Get Access</span></span></span></a>
 </section>
 </div>
 
