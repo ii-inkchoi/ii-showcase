@@ -61,7 +61,7 @@ section{padding:130px 0;}
 @media(max-width:900px){.container{padding:0 24px;}section.price-section,section.included-section,section.faq-section,section.cta-section,section.reg-section{padding:72px 0;}}
 .page-header{padding:120px 0;border-bottom:0.5px solid var(--c-800);background:linear-gradient(180deg,var(--c-black) 0%,var(--c-surface) 62%,var(--c-surface) 100%);position:relative;overflow:hidden;min-height:793px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;}
 .page-header .container{position:relative;z-index:1;}
-.pg-art{position:absolute;top:0;right:0;height:100%;width:46%;z-index:0;pointer-events:none;display:flex;align-items:center;justify-content:center;padding-top:0;box-sizing:border-box;}
+.pg-art{position:absolute;top:0;right:calc(max(0px,(100% - var(--maxw))/2) + var(--frame));height:100%;width:clamp(340px,35vw,500px);z-index:0;pointer-events:none;display:flex;align-items:center;justify-content:center;padding-top:0;box-sizing:border-box;}
 .pg-art canvas{width:clamp(340px,35vw,500px);height:clamp(340px,35vw,500px);display:block;}
 @media(max-width:760px){.page-header{padding:128px 0 88px;min-height:auto;display:flex;flex-direction:column;}.page-header .container{order:1;}.page-header .page-title,.page-header .page-deck{max-width:none;}.pg-art{position:static;order:2;width:100%;height:auto;left:auto;right:auto;top:auto;padding-top:0;margin-top:40px;opacity:0.8;}.pg-art canvas{width:clamp(280px,84vw,380px);height:clamp(280px,84vw,380px);}}
 .lang-toggle{display:inline-flex;align-items:center;gap:8px;font-size:13px;letter-spacing:0.02em;font-feature-settings:'tnum' 1;}
@@ -71,7 +71,7 @@ section{padding:130px 0;}
 .lang-toggle .sep{color:var(--c-800);}
 .page-breadcrumb{font-size:12px;color:var(--c-700);letter-spacing:0.06em;margin-bottom:36px;display:flex;align-items:center;gap:10px;}
 .page-breadcrumb a{color:var(--c-700);text-decoration:none;}.page-breadcrumb .sep{color:var(--c-800);}.page-breadcrumb .current{color:var(--c-200);}
-.page-title{font-size:clamp(34px,4.6vw,56px);line-height:1.1;letter-spacing:-0.02em;color:var(--c-200);font-weight:400;margin-bottom:48px;max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));}
+.page-title{font-size:clamp(34px,4.6vw,56px);line-height:1.1;letter-spacing:-0.02em;color:var(--c-200);font-weight:400;margin-bottom:48px;max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));}
 .page-deck{font-size:clamp(17px,1.6vw,22px);line-height:1.5;letter-spacing:-0.015em;color:var(--c-400);max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));text-wrap:pretty;}
 .sec-head{display:grid;grid-template-columns:80px 1fr;gap:32px;align-items:baseline;margin-bottom:64px;padding-bottom:18px;border-bottom:0.5px solid var(--c-900);}
 .sec-num{font-size:13px;color:var(--c-700);letter-spacing:0.04em;}
@@ -142,13 +142,15 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .included-link:hover{color:var(--c-white);}
 .included-link .arr-svg{width:12px;height:12px;}
 .included-foot{font-family:var(--mono);font-size:12px;letter-spacing:0.04em;color:var(--c-700);margin-top:36px;}
+@media(min-width:760px){.included-section{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}.included-head{grid-column:1 / 7;}.included-main{grid-column:7 / 13;}.included-main .included-rows{margin-top:0;}}
 
 .faq-section{padding:130px 0;border-top:0.5px solid var(--c-900);}
 .faq-rows{display:flex;flex-direction:column;}
 .faq-row{display:flex;flex-direction:column;gap:14px;padding:32px 0;border-top:0.5px solid var(--c-900);}
 .faq-row:last-of-type{border-bottom:0.5px solid var(--c-900);}
 .faq-q{font-size:18px;line-height:1.4;letter-spacing:-0.015em;color:var(--c-white);font-weight:400;}
-.faq-a{font-size:15px;line-height:1.7;color:var(--c-600);max-width:560px;}
+.faq-a{font-size:15px;line-height:1.7;color:var(--c-600);}
+@media(min-width:760px){.faq-section{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}.faq-section>.section-eyebrow{grid-column:1 / 7;}.faq-section .faq-rows{grid-column:7 / 13;}}
 
 .reg-section{padding:130px 0;border-top:0.5px solid var(--c-900);}
 .trust-line{font-size:13px;line-height:1.6;color:var(--c-600);max-width:620px;}
@@ -168,12 +170,12 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 <body>
 <nav class="navbar"><div class="navbar-inner">
   <a href="index.html" class="navbar-brand"><img src="Logo.svg" alt="II"></a>
-  <div class="nav-links"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html" class="active">Pricing</a><a href="II Site V2 - About.html">About</a></div>
+  <div class="nav-links"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html" class="active">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a></div>
   <div class="navbar-right"><div class="lang-toggle"><span class="lt active">EN</span><span class="sep">·</span><span class="lt">FR</span></div><a href="II Site V2 - GetTheApp.html" class="navbar-cta">Get Access</a><button class="hamburger" type="button"><span></span><span></span></button></div>
 </div></nav>
 <div class="menu-overlay">
   <div class="menu-top"><a href="index.html" class="ml-logo"><img src="Logo.svg" alt="II"></a><button class="ml-close" type="button">Close ×</button></div>
-  <div class="menu-center"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html" class="active">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - GetTheApp.html">Get Access</a></div>
+  <div class="menu-center"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html" class="active">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a><a href="II Site V2 - GetTheApp.html">Get Access</a></div>
   <div class="menu-bottom"><div class="mb-left"><span>Intelligent Investing</span><span>No. 01 · 2026</span></div><div class="mb-right"><span>Mogo Inc.</span><span>Orion Digital · TSX·NASDAQ : ORIO</span></div></div>
 </div>
 
@@ -194,32 +196,31 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   function size(){var r=cv.getBoundingClientRect();W=r.width;H=r.height;cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);ctx.setTransform(DPR,0,0,DPR,0,0);}
   function draw(){
     ctx.clearRect(0,0,W,H);
-    var S=Math.min(W,H)*0.42, cx=W*0.5, cy=H*0.5;
-    var tau=1.15+1.05*Math.sin(t*0.00009), thb=t*0.0007;
-    var cTa=Math.cos(tau),sTa=Math.sin(tau);
-    function proj(x,y,z){var y2=y*cTa-z*sTa, z2=y*sTa+z*cTa;return [cx+x*S, cy-y2*S, z2];}
+    var S=Math.min(W,H), cx=W*0.5, cy=H*0.5;
+    var GX=44, GY=20, spanX=S*0.46, rowSpan=S*0.05, layerGap=S*0.30, amp=S*0.052;
+    var tt=t*0.0006;
     ctx.globalCompositeOperation='lighter';
-    for(var k=0;k<K;k++){
-      var g=PI*(k+0.5)/K, sg=Math.sin(g), cg=Math.cos(g), p0=null;
-      for(var s=0;s<=SEG;s++){var th=s/SEG*TAU, P=proj(sg*Math.cos(th), cg, sg*Math.sin(th));
-        if(p0){var dn=((p0[2]+P[2])/2+1)/2;if(dn<0)dn=0;if(dn>1)dn=1;
-          ctx.strokeStyle='rgba('+L[0]+','+L[1]+','+L[2]+','+(0.12+0.34*dn).toFixed(3)+')';ctx.lineWidth=0.8;
-          ctx.beginPath();ctx.moveTo(p0[0],p0[1]);ctx.lineTo(P[0],P[1]);ctx.stroke();}
-        p0=P;}
-    }
-    ctx.globalCompositeOperation='source-over';
-    var gate=Math.sin(t*0.00024);if(gate<0)gate=0;
-    var off=(Math.sin(t*0.00110)*0.7+Math.sin(t*0.00059+1.3)*0.45)*gate*PI*0.92;
-    for(var k2=0;k2<K;k2++){
-      var g2=PI*(k2+0.5)/K, sg2=Math.sin(g2), cg2=Math.cos(g2);
-      var angs=[thb,thb+off];
-      for(var a=0;a<angs.length;a++){
-        var Pb=proj(sg2*Math.cos(angs[a]), cg2, sg2*Math.sin(angs[a])), dn2=(Pb[2]+1)/2;if(dn2<0)dn2=0;if(dn2>1)dn2=1;
-        var sz=1.3+2.2*dn2;
-        ctx.fillStyle='rgba('+Hb[0]+','+Hb[1]+','+Hb[2]+','+(0.30+0.66*dn2).toFixed(3)+')';
-        ctx.beginPath();ctx.arc(Pb[0],Pb[1],sz,0,TAU);ctx.fill();
+    for(var Lz=0;Lz<3;Lz++){
+      var cyL=cy+(Lz-1)*layerGap, ph=Lz*2.1;
+      for(var r=0;r<GY;r++){
+        var v=r/(GY-1);
+        for(var c=0;c<GX;c++){
+          var u=c/(GX-1)*2-1;
+          var z=Math.sin(u*3.0+tt+ph)*0.55+Math.sin(v*3.6-tt*1.25+u*1.8+ph)*0.50+Math.sin((u-v)*2.4+tt*0.7+ph)*0.32;
+          var sx=cx+u*spanX*(0.60+0.40*v);
+          var sy=cyL+(v-0.5)*rowSpan*2-z*amp;
+          var bn=(z+1.37)/2.74; if(bn<0)bn=0; if(bn>1)bn=1;
+          var b=bn*0.66+v*0.34; if(b>1)b=1;
+          var col=b>0.66?Hb:L, sz=0.55+1.7*b;
+          ctx.fillStyle='rgba('+col[0]+','+col[1]+','+col[2]+','+(0.08+0.56*b).toFixed(3)+')';
+          ctx.beginPath();ctx.arc(sx,sy,sz,0,TAU);ctx.fill();
+        }
       }
     }
+    ctx.globalCompositeOperation='source-over';
+    ctx.strokeStyle='rgba('+L[0]+','+L[1]+','+L[2]+',0.32)';ctx.lineWidth=0.6;
+    var mk=S*0.013, ins=S*0.03, mxs=[ins,cx,W-ins], mys=[cy-layerGap*0.5,cy+layerGap*0.5], mi, mj;
+    for(mi=0;mi<3;mi++){for(mj=0;mj<2;mj++){var Mx=mxs[mi],My=mys[mj];ctx.beginPath();ctx.moveTo(Mx-mk,My);ctx.lineTo(Mx+mk,My);ctx.moveTo(Mx,My-mk);ctx.lineTo(Mx,My+mk);ctx.stroke();}}
     if(!reduce)t+=16;
   }
   function loop(){draw();if(running)raf=requestAnimationFrame(loop);}
@@ -237,15 +238,19 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 
 <div class="container">
 <section class="included-section">
+  <div class="included-head">
   <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 01</span><span class="se-name">The Membership</span></div>
   <div class="price-line ri" style="--d:0.04s"><span class="price-display">$20</span><span class="price-period">Per Month</span></div>
   <p class="price-note ri" style="--d:0.12s">Everything below is included.</p>
+  </div>
+  <div class="included-main">
   <div class="included-rows">
     <div class="included-row ri" style="--d:0.04s"><span class="included-k">Managed Portfolios</span><p class="included-text">Rules-based S&amp;P 500 allocation on a weekly schedule.</p><a href="II Site V2 - Managed.html" class="included-link"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>View Managed</a></div>
     <div class="included-row ri" style="--d:0.06s"><span class="included-k">Self-Directed Investing</span><p class="included-text">A decision system for building and reviewing investment theses.</p><a href="II Site V2 - Self-Directed.html" class="included-link"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>View Self-Directed</a></div>
     <div class="included-row ri" style="--d:0.08s"><span class="included-k">Fiscal.ai Research</span><p class="included-text">Third-party research platform, included as a membership benefit.</p><a href="https://fiscal.ai" target="_blank" rel="noopener" class="included-link"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>Visit Fiscal.ai</a></div>
   </div>
   <p class="included-foot">Connected by a permanent decision record.</p>
+  </div>
 </section>
 </div>
 

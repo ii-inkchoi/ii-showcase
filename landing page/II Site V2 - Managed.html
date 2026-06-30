@@ -62,7 +62,7 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 @media(max-width:900px){.container{padding:0 24px;}}
 .page-header{padding:120px 0;border-bottom:0.5px solid var(--c-800);background:linear-gradient(180deg,var(--c-black) 0%,var(--c-surface) 62%,var(--c-surface) 100%);position:relative;overflow:hidden;min-height:793px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;}
 .page-header .container{position:relative;z-index:1;}
-.pg-art{position:absolute;top:0;right:0;height:100%;width:46%;z-index:0;pointer-events:none;display:flex;align-items:center;justify-content:center;padding-top:0;box-sizing:border-box;}
+.pg-art{position:absolute;top:0;right:calc(max(0px,(100% - var(--maxw))/2) + var(--frame));height:100%;width:clamp(340px,35vw,500px);z-index:0;pointer-events:none;display:flex;align-items:center;justify-content:center;padding-top:0;box-sizing:border-box;}
 .pg-art canvas{width:clamp(340px,35vw,500px);height:clamp(340px,35vw,500px);display:block;}
 @media(max-width:760px){.page-header{padding:128px 0 88px;min-height:auto;display:flex;flex-direction:column;}.page-header .container{order:1;}.page-header .page-title,.page-header .page-deck{max-width:none;}.pg-art{position:static;order:2;width:100%;height:auto;left:auto;right:auto;top:auto;padding-top:0;margin-top:40px;opacity:0.8;}.pg-art canvas{width:clamp(280px,84vw,380px);height:clamp(280px,84vw,380px);}}
 .ph-text{grid-column:1 / 8;}
@@ -83,7 +83,7 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .page-breadcrumb{font-size:12px;color:var(--c-700);letter-spacing:0.06em;margin-bottom:36px;display:flex;align-items:center;gap:10px;}
 .page-breadcrumb a{color:var(--c-700);text-decoration:none;}.page-breadcrumb .sep{color:var(--c-800);}.page-breadcrumb .current{color:var(--c-200);}
 .page-masthead{font-size:13px;color:var(--c-700);letter-spacing:0.04em;font-feature-settings:'tnum' 1;margin-bottom:20px;}
-.page-title{font-size:clamp(34px,4.6vw,56px);line-height:1.1;letter-spacing:-0.02em;color:var(--c-200);font-weight:400;margin-bottom:48px;max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));}
+.page-title{font-size:clamp(34px,4.6vw,56px);line-height:1.1;letter-spacing:-0.02em;color:var(--c-200);font-weight:400;margin-bottom:48px;max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));}
 .page-deck{font-size:clamp(17px,1.6vw,22px);line-height:1.5;letter-spacing:-0.015em;color:var(--c-400);max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));}
 .wordmarks{padding:32px 0;}
 .wordmark-row{display:grid;grid-template-columns:minmax(0,400px) 1fr;gap:80px;align-items:center;padding:56px 0;border-bottom:0.5px solid var(--c-900);text-decoration:none;color:inherit;transition:padding 0.3s ease;}
@@ -196,8 +196,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .pf-rd:first-child{border-top:none;padding-top:0;}
 .pf-rd-k{font-size:13px;color:var(--c-700);letter-spacing:-0.01em;}
 .pf-rd-v{font-size:13px;color:var(--c-400);text-align:right;font-feature-settings:'tnum' 1;letter-spacing:-0.01em;}
-.pf-row-img{grid-column:6 / 9;grid-row:1;width:80%;align-self:stretch;background-size:cover;background-position:center;border:0.5px solid var(--c-900);opacity:0;transition:opacity 0.5s ease;}
-.pf-row:hover .pf-row-img{opacity:1;}
+.pf-row-img{display:none;}
 @media(max-width:760px){.pf-row{grid-template-columns:1fr;gap:14px;align-items:start;}.pf-row-head,.pf-row-detail{grid-column:auto;}.pf-row-img{display:none;}}
 .pf-right{display:grid;grid-template-columns:subgrid;align-items:start;}
 .pf-stats{grid-column:span 3;min-width:0;}
@@ -301,6 +300,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .ppg-deposit{margin-top:18px;border:0.5px solid var(--c-600);border-radius:5px;padding:12px;text-align:center;font-size:12px;color:var(--c-white);letter-spacing:0.05em;}
 
 .perf-section{padding:130px 0;}
+.proj-section{padding:130px 0;}
 @media(min-width:760px){
   .compounds-section,.how-section,.dont-section,.portfolios-section,.proj-section{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}
   .proj-section .proj-head{grid-column:1 / 7;}
@@ -320,7 +320,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   .proj-section .proj-board .pp{max-width:none;width:100%;display:flex;flex-direction:column;}
   .proj-section .proj-board .pp>.pp-screen,.proj-section .proj-board .pp>.ppg{flex:1;}
 }
-@media(max-width:900px){.how-section,.compounds-section,.dont-section,.accounts-section,.portfolios-section,.perf-section,.cta-section{padding:72px 0;}}
+@media(max-width:900px){.how-section,.compounds-section,.dont-section,.accounts-section,.portfolios-section,.proj-section,.perf-section,.cta-section{padding:72px 0;}}
 @media(max-width:760px){.how-section,.compounds-section,.dont-section,.accounts-section,.portfolios-section,.perf-section{position:relative;}.how-section::before,.compounds-section::before,.dont-section::before,.accounts-section::before,.portfolios-section::before,.perf-section::before{content:'';position:absolute;top:0;left:50%;width:100vw;transform:translateX(-50%);border-top:0.5px solid var(--c-900);pointer-events:none;}}
 .perf-scroll{width:100%;overflow-x:auto;}
 .perf-table{width:100%;border-collapse:collapse;font-feature-settings:'tnum' 1,'lnum' 1;}
@@ -355,14 +355,14 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 <body>
 <nav class="navbar"><div class="navbar-inner">
   <a href="index.html" class="navbar-brand"><img src="Logo.svg" alt="II"></a>
-  <div class="nav-links"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html" class="active">Managed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a></div>
+  <div class="nav-links"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html" class="active">Managed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a></div>
   
   
   <div class="navbar-right"><div class="lang-toggle"><span class="lt active">EN</span><span class="sep">·</span><span class="lt">FR</span></div><a href="II Site V2 - GetTheApp.html" class="navbar-cta">Get Access</a><button class="hamburger" type="button"><span></span><span></span></button></div>
 </div></nav>
 <div class="menu-overlay">
   <div class="menu-top"><a href="index.html" class="ml-logo"><img src="Logo.svg" alt="II"></a><button class="ml-close" type="button">Close ×</button></div>
-  <div class="menu-center"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html" class="active">Managed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - GetTheApp.html">Get Access</a></div>
+  <div class="menu-center"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html" class="active">Managed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a><a href="II Site V2 - GetTheApp.html">Get Access</a></div>
   <div class="menu-bottom"><div class="mb-left"><span>Intelligent Investing</span><span>No. 01 · 2026</span></div><div class="mb-right"><span>Mogo Inc.</span><span>Orion Digital · TSX·NASDAQ : ORIO</span></div></div>
 </div>
 
@@ -430,7 +430,9 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   <div class="compounds-prose">
     <p class="ri" style="--d:0.04s">The most costly investing mistake most people make is not choosing the wrong stock. It is selling during a downturn, pausing contributions when conviction weakens, or waiting for the right moment to start.</p>
     <p class="ri" style="--d:0.08s">Weekly contributions accumulate through market cycles without requiring the investor to make a correct call at the wrong time.</p>
-    <p class="ri" style="--d:0.12s">Managed is not passive. It is disciplined. The discipline is in the consistency, not the strategy.</p>
+    <p class="ri" style="--d:0.12s">Held to a schedule, contributions no longer depend on how an investor feels in a given week. The system keeps funding the goal through rising, falling, and flat markets, which is exactly when most people hesitate.</p>
+    <p class="ri" style="--d:0.16s">Over a long horizon, outcomes are decided less by which assets are chosen than by whether contributions continue without interruption. The system is built to protect that continuity.</p>
+    <p class="ri" style="--d:0.20s">Managed is not passive. It is disciplined. The discipline is in the consistency, not the strategy.</p>
   </div>
 </section>
 </div>
