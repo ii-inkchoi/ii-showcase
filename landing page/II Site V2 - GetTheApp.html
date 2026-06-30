@@ -4,13 +4,14 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Get the App · Intelligent Investing</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-800:#565B5E;--c-700:#929292;--c-600:#A7A7A7;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFF; --frame: clamp(24px, 4vw, 48px); --maxw: 1680px; --gutter: clamp(16px, 1.5vw, 24px); --c-elev: #0A0A0A;}
+:root{--c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-800:#565B5E;--c-700:#929292;--c-600:#A7A7A7;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFF; --frame: clamp(24px, 4vw, 48px); --maxw: 1680px; --gutter: clamp(16px, 1.5vw, 24px); --c-elev: #0A0A0A; --mono:'Chakra Petch',ui-monospace,monospace;}
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{background:var(--c-black);color:var(--c-600);font-family:'Inter',sans-serif;font-feature-settings:'tnum' 1,'lnum' 1,'ss01' 1;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased;font-weight:400;}
 body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient(180deg,var(--c-elev) 0,var(--c-black) 560px);}body.menu-open{overflow:hidden;}
-.navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(0,0,0,0.7);backdrop-filter:blur(10px);}
+.navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:transparent;transition:background 0.3s ease,backdrop-filter 0.3s ease;}
+.navbar.scrolled{background:rgba(0,0,0,0.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
 .navbar-inner{display:flex;align-items:center;justify-content:space-between;padding:var(--frame);gap:32px;position:relative;}
 
 .navbar-brand img{height:14px;width:auto;display:block;}
@@ -20,15 +21,6 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .nav-links a.active{color:var(--c-white);}
 @media(min-width:1024px){.nav-links{display:inline-flex;}.hamburger{display:none;}}
 
-.nav-item{position:relative;}
-.nav-link{color:var(--c-400);text-decoration:none;font-size:13px;letter-spacing:0.02em;padding:8px 0;display:inline-flex;align-items:center;gap:6px;transition:color 0.15s ease;}
-.nav-link:hover{color:var(--c-white);}
-.nav-caret{display:inline-block;width:0;height:0;border-left:3px solid transparent;border-right:3px solid transparent;border-top:4px solid var(--c-700);margin-left:6px;transition:transform 0.2s ease,border-top-color 0.15s ease;vertical-align:middle;}
-.nav-item:hover .nav-caret{transform:rotate(180deg);color:var(--c-400);}
-.nav-dropdown{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-6px);background:var(--c-1000);border:0.5px solid var(--c-900);padding:18px 24px;min-width:220px;opacity:0;pointer-events:none;transition:all 0.2s ease;}
-.nav-item:hover .nav-dropdown{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);}
-.nav-dropdown a{display:block;color:var(--c-600);text-decoration:none;font-size:13px;padding:8px 0;white-space:nowrap;transition:color 0.15s ease;}
-.nav-dropdown a:hover{color:var(--c-white);}
 .navbar-right{display:flex;align-items:center;gap:24px;}
 .navbar-cta{display:none;color:var(--c-200);text-decoration:none;font-size:13px;border:0.5px solid var(--c-800);padding:8px 16px;}
 @media(min-width:1024px){.navbar-cta{display:inline-block;}}
@@ -58,22 +50,29 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .lang-toggle .lt.active{color:var(--c-200);}
 .lang-toggle .lt:hover{color:var(--c-white);}
 .lang-toggle .sep{color:var(--c-800);}
-.gta-section{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:140px 40px 80px;text-align:center;}
-.gta-eyebrow{font-size:13px;color:var(--c-700);letter-spacing:0.04em;margin-bottom:36px;}
-.gta-title{font-size:clamp(48px,7vw,96px);line-height:1;letter-spacing:-0.04em;color:var(--c-200);font-weight:400;margin-bottom:32px;text-wrap:balance;}
-.gta-deck{font-size:clamp(18px,1.6vw,22px);line-height:1.5;color:var(--c-400);max-width:600px;margin-bottom:64px;text-wrap:balance;}
-.gta-actions{display:flex;gap:32px;align-items:center;flex-wrap:wrap;justify-content:center;margin-bottom:64px;}
-.gta-store{display:inline-flex;flex-direction:column;align-items:center;gap:8px;padding:24px 36px;border:0.5px solid var(--c-800);color:var(--c-200);text-decoration:none;transition:all 0.15s ease;min-width:200px;}
-.gta-store:hover{border-color:var(--c-400);color:var(--c-200);}
-.gta-store .store-lbl{font-size:11px;color:var(--c-700);letter-spacing:0.08em;}
-.gta-store .store-name{font-size:18px;letter-spacing:-0.015em;}
-.gta-qr{padding:24px;border:0.5px solid var(--c-800);display:flex;flex-direction:column;align-items:center;gap:12px;}
+.gta-section{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:140px var(--frame) 80px;max-width:var(--maxw);margin:0 auto;text-align:center;}
+.gta-eyebrow{font-family:var(--mono);font-size:12px;color:var(--c-700);letter-spacing:0.04em;margin-bottom:36px;}
+.gta-title{font-size:clamp(30px,4.4vw,60px);line-height:1.12;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:32px;text-wrap:balance;}
+.gta-deck{font-size:clamp(17px,1.6vw,22px);line-height:1.5;color:var(--c-400);max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));margin-bottom:64px;text-wrap:pretty;}
+@media(max-width:760px){.gta-deck{max-width:none;}}
+.gta-actions{display:flex;gap:32px;align-items:stretch;flex-wrap:wrap;justify-content:center;margin-bottom:64px;}
+.gta-store{display:inline-flex;align-items:center;text-decoration:none;transition:opacity 0.15s ease;}
+.gta-store:hover{opacity:0.85;}
+.gta-badge{height:53px;width:auto;display:block;}
+.gta-qr{padding:24px;border:0.5px solid var(--c-800);display:flex;flex-direction:column;align-items:center;gap:24px;}
 .qr-box{width:120px;height:120px;background:var(--c-1000);border:0.5px solid var(--c-900);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--c-800);}
 .qr-lbl{font-size:11px;color:var(--c-700);letter-spacing:0.04em;}
+@media(min-width:761px){.gta-store{display:none;}}
+@media(max-width:760px){.gta-qr{display:none;}}
 .gta-sign-in{margin-top:48px;padding-top:48px;border-top:0.5px solid var(--c-900);max-width:480px;width:100%;}
 .gta-sign-in-lbl{font-size:13px;color:var(--c-700);margin-bottom:16px;}
-.gta-sign-in a{color:var(--c-200);text-decoration:none;font-size:15px;border-bottom:0.5px solid var(--c-700);padding-bottom:4px;transition:all 0.15s ease;}
-.gta-sign-in a:hover{color:var(--c-200);border-bottom-color:var(--c-200);}
+.cta-button{display:inline-flex;align-items:center;gap:8px;font-size:15px;color:var(--c-white);text-decoration:none;}
+.cta-button .arr{display:inline-flex;align-items:center;line-height:1;}
+.cta-button .arr-svg{width:13px;height:13px;display:block;}
+.cta-button .roll{display:inline-block;overflow:hidden;vertical-align:bottom;height:1lh;}
+.cta-button .roll-in{display:block;}
+.cta-button .roll-in>span{display:block;}
+@media (prefers-reduced-motion: no-preference){.cta-button .roll-in{transition:transform 0.55s cubic-bezier(0.16,1,0.3,1);}.cta-button:hover .roll-in{transform:translateY(-50%);}}
 .gta-note{margin-top:80px;font-size:13px;color:var(--c-700);max-width:500px;line-height:1.6;}
 footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;line-height:1.7;color:var(--c-800);}.footer-copy{font-size:13px;color:var(--c-600);}
 .footer-copy a{color:var(--c-600);text-decoration:underline;}
@@ -92,7 +91,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 <nav class="navbar"><div class="navbar-inner">
   <a href="index.html" class="navbar-brand"><img src="Logo.svg" alt="II"></a>
   <div class="nav-links"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a></div>
-  <div class="navbar-right"><div class="lang-toggle"><span class="lt active">EN</span><span class="sep">·</span><span class="lt">FR</span></div><a href="II Site V2 - GetTheApp.html" class="navbar-cta">Get Access</a><button class="hamburger" type="button"><span></span><span></span></button></div>
+  <div class="navbar-right"><div class="lang-toggle"><span class="lt active">EN</span><span class="sep">·</span><span class="lt">FR</span></div><button class="hamburger" type="button"><span></span><span></span></button></div>
 </div></nav>
 <div class="menu-overlay">
   <div class="menu-top"><a href="index.html" class="ml-logo"><img src="Logo.svg" alt="II"></a><button class="ml-close" type="button">Close ×</button></div>
@@ -102,26 +101,23 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 
 <section class="gta-section">
   <div class="gta-eyebrow">Intelligent Investing &nbsp;·&nbsp; iOS</div>
-  <h1 class="gta-title ri" style="--d:0.06s">Mobile-first.<br>By design.</h1>
-  <div class="gta-deck ri" style="--d:0.14s">Intelligent Investing is built for iOS. Sign-up takes you through Calibration first: a five-minute screening that decides whether the system is right for you.</div>
+  <h1 class="gta-title ri" style="--d:0.06s">Mobile-first. By design.</h1>
+  <div class="gta-deck ri" style="--d:0.14s">Intelligent Investing is built for iOS. Sign-up starts with Calibration: a five-minute screening that decides whether the system is right for you.</div>
 
   <div class="gta-actions">
-    <a href="https://apps.apple.com" class="gta-store">
-      <div class="store-lbl">Download on</div>
-      <div class="store-name">App Store</div>
-    </a>
+    <a href="https://apps.apple.com" class="gta-store"><img class="gta-badge" src="appstore-badge.png" alt="Download on the App Store" width="159" height="53"></a>
     <div class="gta-qr">
       <div class="qr-box">[QR placeholder]</div>
-      <div class="qr-lbl">Scan with iPhone camera</div>
+      <div class="qr-lbl">Scan to install</div>
     </div>
   </div>
 
   <div class="gta-sign-in">
     <div class="gta-sign-in-lbl">Already have an account?</div>
-    <a href="#">Open the app to sign in →</a>
+    <a href="#" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Open the app to sign in</span><span>Open the app to sign in</span></span></span></a>
   </div>
 
-  <div class="gta-note">Currently iOS only. Android availability not announced. The platform is mobile-first by design: the discipline lives where decisions happen.</div>
+  <div class="gta-note">Currently iOS only. Android availability not announced. The discipline lives where decisions happen.</div>
 </section>
 
 <footer>
@@ -153,6 +149,7 @@ hamburger.addEventListener('click',e=>{e.stopPropagation();menuOverlay.classList
 </script>
 
 <script>if('IntersectionObserver' in window){var rio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');rio.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -6% 0px'});document.querySelectorAll('.ri').forEach(function(el){rio.observe(el);});}else{document.querySelectorAll('.ri').forEach(function(el){el.classList.add('in');});}</script>
+<script>(function(){var nb=document.querySelector(".navbar");if(nb)window.addEventListener("scroll",function(){nb.classList.toggle("scrolled",window.scrollY>40);},{passive:true});})();</script>
 <script src="grid-overlay.js"></script>
 </body>
 </html>
