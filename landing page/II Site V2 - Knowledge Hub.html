@@ -149,18 +149,27 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
     var faceA=Math.max(Math.abs(Vx),Math.abs(Vy),Math.abs(Vz));
     var diagA=Math.max(Math.abs(Vx+Vy+Vz),Math.abs(Vx+Vy-Vz),Math.abs(Vx-Vy+Vz),Math.abs(-Vx+Vy+Vz))/1.7320508;
     var flat=Math.max(faceA,diagA), flash=flat<0.90?0:(flat-0.90)/0.10;
-    var albig=(0.18+0.62*flash).toFixed(3);
-    function drawCube(segs, sc, aY, aX, al, lw){
-      var cY=Math.cos(aY), sY=Math.sin(aY), cX=Math.cos(aX), sX=Math.sin(aX), k, j, v, x1, z1, y2;
-      ctx.strokeStyle='rgba('+Hb[0]+','+Hb[1]+','+Hb[2]+','+al+')'; ctx.lineWidth=lw; ctx.beginPath();
-      for(k=0;k<segs.length;k++){var g=segs[k];
-        for(j=0;j<2;j++){v=g[j]; x1=v[0]*cY+v[2]*sY; z1=-v[0]*sY+v[2]*cY; y2=v[1]*cX-z1*sX;
-          if(j===0)ctx.moveTo(cx+x1*sc, cy-y2*sc); else ctx.lineTo(cx+x1*sc, cy-y2*sc);}
-      }
-      ctx.stroke();
+    var albig=0.18+0.62*flash;
+    function proj(v,sc,cY,sY,cX,sX){var x1=v[0]*cY+v[2]*sY, z1=-v[0]*sY+v[2]*cY, y2=v[1]*cX-z1*sX, z2=v[1]*sX+z1*cX;return [cx+x1*sc, cy-y2*sc, z2];}
+    function dcol(z2,base){var dep=(z2+0.7)/1.4;if(dep<0)dep=0;if(dep>1)dep=1;return 'rgba('+Hb[0]+','+Hb[1]+','+Hb[2]+','+(base*(0.30+0.70*dep)).toFixed(3)+')';}
+    function drawCube(segs, sc, aY, aX, base, lw){
+      var cY=Math.cos(aY),sY=Math.sin(aY),cX=Math.cos(aX),sX=Math.sin(aX),k,A,B,gr;
+      ctx.lineWidth=lw;
+      for(k=0;k<segs.length;k++){A=proj(segs[k][0],sc,cY,sY,cX,sX);B=proj(segs[k][1],sc,cY,sY,cX,sX);
+        gr=ctx.createLinearGradient(A[0],A[1],B[0],B[1]);gr.addColorStop(0,dcol(A[2],base));gr.addColorStop(1,dcol(B[2],base));
+        ctx.strokeStyle=gr;ctx.beginPath();ctx.moveTo(A[0],A[1]);ctx.lineTo(B[0],B[1]);ctx.stroke();}
     }
-    drawCube(CUBE4, So, aYb, aXb, albig, 0.7);
-    drawCube(CUBE1, So/3, aYs, aXs, '0.85', 0.7);
+    drawCube(CUBE4, So, aYb, aXb, albig, 0.5);
+    drawCube(CUBE1, So/3, aYs, aXs, 0.85, 0.5);
+    var cYs=Math.cos(aYs),sYs=Math.sin(aYs),cXs=Math.cos(aXs),sXs=Math.sin(aXs),gx,gy,gz,vv,nd;
+    for(gx=-1;gx<=1;gx+=2)for(gy=-1;gy<=1;gy+=2)for(gz=-1;gz<=1;gz+=2){
+      vv=proj([gx*0.5,gy*0.5,gz*0.5],So/3,cYs,sYs,cXs,sXs);nd=(vv[2]+0.7)/1.4;if(nd<0)nd=0;if(nd>1)nd=1;
+      ctx.fillStyle='rgba('+Hb[0]+','+Hb[1]+','+Hb[2]+','+(0.45+0.5*nd).toFixed(3)+')';
+      ctx.beginPath();ctx.arc(vv[0],vv[1],1.3+0.9*nd,0,TAU);ctx.fill();}
+    ctx.strokeStyle='rgba('+L[0]+','+L[1]+','+L[2]+',0.42)';ctx.lineWidth=0.7;
+    var mk=S*0.013,mxs=[S*0.085,W-S*0.085],mys=[S*0.085,H-S*0.085],ma,mb,Mx,My;
+    for(ma=0;ma<2;ma++)for(mb=0;mb<2;mb++){Mx=mxs[ma];My=mys[mb];
+      ctx.beginPath();ctx.moveTo(Mx-mk,My);ctx.lineTo(Mx+mk,My);ctx.moveTo(Mx,My-mk);ctx.lineTo(Mx,My+mk);ctx.stroke();}
     if(!reduce)t+=16;
   }
   function loop(){draw();if(running)raf=requestAnimationFrame(loop);}
