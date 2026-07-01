@@ -158,10 +158,10 @@ section { padding: 130px 0; position: relative; }
 }
 @media (max-width: 1180px) and (min-width: 901px) { .alloc-stage { grid-template-columns: 1fr; row-gap: 16px; } }
 @media (max-width: 900px) { section { padding: 72px 0; } }
-@media (max-width: 760px) { #entry-02 .onto-viz { display: none; } #entry-02 .onto-mobile { display: block; } section.hero .hero-main { display: flex; flex-direction: column; min-height: calc(100dvh - 216px); }
-  section.hero .hero-figure { position: absolute; left: 50%; right: auto; top: auto; bottom: 96px; transform: translateX(-50%); grid-column: auto; width: 92vw; max-width: min(380px, calc(100dvh - 440px)); margin: 0; z-index: -1; pointer-events: none; animation: none; opacity: 0.8; }
-  section.hero .hero-stack { animation: none; opacity: 1; width: 80%; left: 50%; right: auto; top: auto; bottom: 0; transform: translateX(-50%) !important; }
-  section.hero .hero-cta { margin-top: auto; padding-top: 28px; }
+@media (max-width: 760px) { #entry-02 .onto-viz { display: none; } #entry-02 .onto-mobile { display: block; } section.hero .hero-top { display: flex; flex-direction: column; align-items: stretch; } section.hero .hero-main { display: flex; flex-direction: column; }
+  section.hero .hero-figure { position: static; grid-column: 1 / -1; width: 100%; max-width: none; margin: 40px auto 0; transform: none; z-index: 0; pointer-events: none; animation: none; opacity: 0.9; order: 2; }
+  section.hero .hero-stack { animation: none; opacity: 1; position: static; width: min(86vw, 460px); margin: 0 auto; transform: none !important; }
+  section.hero .hero-cta { margin-top: 28px; padding-top: 0; order: 1; }
   section.hero .hero-eyebrow { margin-bottom: 16px; } section.hero .ht-line { stroke: var(--c-600); opacity: 0.85; } section.hero .ht-eq { stroke: var(--c-200); opacity: 1; } section.hero .hbr { display: inline; } section.hero { padding: 128px 0 88px !important; } section.hero .hero-scroll { bottom: 48px; color: var(--c-400); }
   section.hero .hero-stack-02 { height: auto; width: 80%; aspect-ratio: 424 / 883; left: 50%; right: auto; top: auto; bottom: 0; transform: translateX(-50%); }
   section.hero .hero-toggle { right: var(--frame); left: auto; bottom: 96px; transform: none; } }
