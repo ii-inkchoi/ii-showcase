@@ -241,7 +241,8 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .proj-headline{font-size:clamp(22px,2.6vw,28px);line-height:1.18;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:20px;}
 .proj-deck{font-size:15px;line-height:1.7;color:var(--c-600);margin-top:16px;max-width:calc((100% + var(--gutter)) / 6 * 5 - var(--gutter));}
 @media(max-width:760px){.pf-deck,.proj-deck{max-width:none;}}
-.proj-board{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;align-items:stretch;}
+.proj-board{display:flex;flex-direction:column;gap:16px;align-items:center;}
+.proj-cap{font-family:var(--mono);font-size:12px;color:var(--c-700);letter-spacing:0.04em;}
 .pp{flex:0 0 340px;max-width:340px;border:0.5px solid var(--c-800);border-radius:28px;overflow:hidden;background:var(--c-black);display:flex;flex-direction:column;}
 @media(max-width:760px){.proj-board .pp{flex-basis:100%;max-width:none;}}
 .pp>.pp-screen,.pp>.ppg{flex:1;}
@@ -316,8 +317,9 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 @media(min-width:1200px){
   .proj-section{align-items:center;}
   .proj-section .proj-head{margin-bottom:0;}
-  .proj-section .proj-board{grid-column:7 / 13;display:grid;grid-template-columns:1fr 1fr;column-gap:var(--gutter);align-items:stretch;}
-  .proj-section .proj-board .pp{max-width:none;width:100%;display:flex;flex-direction:column;}
+  .proj-section .proj-board{grid-column:9 / 13;display:grid;grid-template-columns:1fr;row-gap:16px;justify-items:start;}
+  .proj-section .proj-board .pp{max-width:none;width:100%;display:block;height:470px;}
+  .proj-section .proj-board .ppg{margin-top:-230px;}
   .proj-section .proj-board .pp>.pp-screen,.proj-section .proj-board .pp>.ppg{flex:1;}
 }
 @media(max-width:900px){.how-section,.compounds-section,.dont-section,.accounts-section,.portfolios-section,.proj-section,.perf-section,.cta-section{padding:72px 0;}}
@@ -534,49 +536,9 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
     <p class="proj-deck ri" style="--d:0.06s">Each account is a goal with a target. The system funds it weekly and projects the path it is on.</p>
   </div>
   <div class="proj-board">
-    <div class="pp ri" style="--d:0.06s">
-      <div class="pp-screen">
-        <div class="pp-top">
-          <span class="pp-back"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.1"/></svg></span>
-          <span class="pp-exit">Exit</span>
-        </div>
-        <div class="pp-hero">
-          <div class="pp-title">System-Managed Capital</div>
-          <div class="pp-tv-l">Total Value</div>
-          <div class="pp-tv">75,000.00<span class="pp-cur">CAD</span></div>
-          <div class="pp-pj-l">Projection</div>
-          <div class="pp-pj">1.23M</div>
-        </div>
-        <div class="pp-status">
-          <div class="pp-skip">Skipping this cycle</div>
-          <div class="pp-weeks">53 weeks</div>
-        </div>
-        <div class="pp-acct">Account</div>
-        <div class="pp-goal">
-          <div class="pp-goal-l">
-            <div class="pp-goal-name">Millionaire Goal</div>
-            <div class="pp-goal-val">55,000.00</div>
-            <div class="pp-goal-sub">TFSA &middot; Equity Growth</div>
-          </div>
-          <div class="pp-goal-r"><span class="pp-goal-pl">Projection</span><span class="pp-goal-pv">902.00K</span></div>
-        </div>
-        <div class="pp-goal">
-          <div class="pp-goal-l">
-            <div class="pp-goal-name">Property Purchase</div>
-            <div class="pp-goal-val">20,000.00</div>
-            <div class="pp-goal-sub">RRSP &middot; Equity Growth</div>
-          </div>
-          <div class="pp-goal-r"><span class="pp-goal-pl">Projection</span><span class="pp-goal-pv">328.00K</span></div>
-        </div>
-      </div>
-    </div>
+    <div class="proj-cap ri" style="--d:0.06s">Goal Dashboard &middot; Millionaire Goal &middot; TFSA &middot; Equity Growth</div>
     <div class="pp ri" style="--d:0.1s">
       <div class="ppg">
-        <div class="ppg-top">
-          <span class="pp-back"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.1"/></svg></span>
-          <span class="ppg-title"><span class="ppg-t1">MILLIONAIRE GOAL</span><span class="ppg-t2">TFSA &middot; Equity Growth</span></span>
-          <span class="ppg-top-sp"></span>
-        </div>
         <div class="ppg-hero">
           <div class="ppg-val">42,348.35<span class="ppg-cur">CAD</span></div>
         </div>
