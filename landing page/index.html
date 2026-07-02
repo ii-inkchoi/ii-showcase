@@ -7,7 +7,7 @@
 <meta name="description" content="Judgment infrastructure for self-directed investors. One subscription, one operating system: disciplined allocation (Manage), structured decision-making (Self-Directed), and research (Fiscal.ai).">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Intelligent Investing - Judgment Infrastructure">
-<meta property="og:description" content="One subscription, one operating system: Manage, Self-Directed, and Fiscal.ai - organized around allocator development.">
+<meta property="og:description" content="One subscription, one operating system for capital allocation: Managed, Self-Directed, and Fiscal.ai.">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
 {"@type":"Organization","name":"Intelligent Investing","url":"https://intelligentinvesting.ai","parentOrganization":{"@type":"Organization","name":"Orion Digital Corp."}},
@@ -166,9 +166,9 @@ section { padding: 130px 0; position: relative; }
   section.hero .hero-stack-02 { height: auto; width: 80%; aspect-ratio: 424 / 883; left: 50%; right: auto; top: auto; bottom: 0; transform: translateX(-50%); }
   section.hero .hero-toggle { right: var(--frame); left: auto; bottom: 96px; transform: none; } }
 @media (max-width: 760px) {
-  #trust, #layers, #entry-01, #underwriting, #benchmark, #entry-03, #evidence, #entry-06, #entry-04, #journal, #close { position: relative; }
-  #trust::before, #layers::before, #entry-01::before, #underwriting::before, #benchmark::before, #entry-03::before, #evidence::before, #entry-06::before, #entry-04::before, #journal::before, #close::before { content: ''; position: absolute; top: 0; left: 50%; width: 100vw; transform: translateX(-50%); border-top: 0.5px solid var(--c-900); pointer-events: none; }
-  #underwriting, #benchmark, #entry-03, #evidence, #entry-04, #research { border-top: 0; }
+  #trust, #layers, #entry-01, #underwriting, #benchmark, #entry-03, #evidence, #fit, #entry-06, #entry-04, #journal, #close { position: relative; }
+  #trust::before, #layers::before, #entry-01::before, #underwriting::before, #benchmark::before, #entry-03::before, #evidence::before, #fit::before, #entry-06::before, #entry-04::before, #journal::before, #close::before { content: ''; position: absolute; top: 0; left: 50%; width: 100vw; transform: translateX(-50%); border-top: 0.5px solid var(--c-900); pointer-events: none; }
+  #underwriting, #benchmark, #entry-03, #evidence, #fit, #entry-04, #research { border-top: 0; }
   .offer-foot { border-top: 0 !important; padding-top: 0; }
 }
 
@@ -180,7 +180,7 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 .hero-eyebrow { font-family: var(--mono); font-size: 12px; color: var(--c-700); letter-spacing: 0.04em; margin-bottom: 36px; }
 .hero-h { font-size: clamp(30px, 4.4vw, 52px); line-height: 1.25; letter-spacing: -0.03em; color: var(--c-200); font-weight: 400; }
 .hbr { display: none; }
-.hero-sub { font-size: clamp(17px,1.6vw,18px); line-height: 1.55; letter-spacing: -0.015em; color: var(--c-400); max-width: calc((100% + var(--gutter)) / 15 * 10 - var(--gutter)); margin-top: 28px; text-wrap: balance; }
+.hero-sub { font-size: clamp(17px,1.6vw,18px); line-height: 1.55; letter-spacing: -0.015em; color: var(--c-400); max-width: calc((100% + var(--gutter)) / 15 * 10 - var(--gutter)); margin-top: 28px; }
 .hero-cta { margin-top: 40px; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; font-size: 15px; }
 .hero-cta .pri, .hero-cta .sec { display: inline-flex; align-items: center; gap: 8px; }
 .hero-cta .pri { color: var(--c-white); }
@@ -408,7 +408,7 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
 /* aligned / altitude / close */
 .mb-grid { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); align-items: start; margin-top: 0; }
 .mb-left { grid-column: 1 / 7; }
-.mb-right { grid-column: 9 / 13; margin-top: 52px; }
+.mb-right { grid-column: 7 / 13; margin-top: 52px; }
 .mb-meta { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-700); margin-top: 12px; }
 .mb-row { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; padding: 16px 0; border-bottom: 0.5px solid var(--c-800); }
 .mb-k { font-size: 15px; color: var(--c-400); }
@@ -431,8 +431,8 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
 #entry-04 .statement { grid-column: 1 / 7; }
 #entry-04 .tenets { grid-column: 1 / 9; }
 #entry-04 .link { grid-column: 1 / -1; }
-#entry-03, #evidence, #journal { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); align-content: start; }
-#entry-03 > *, #evidence > *, #journal > * { grid-column: 1 / -1; }
+#entry-03, #evidence, #fit, #journal { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); align-content: start; }
+#entry-03 > *, #evidence > *, #fit > *, #journal > * { grid-column: 1 / -1; }
 #entry-03 .statement, #evidence .statement, #journal .statement { grid-column: 1 / 7; }
 .tenets { display: grid; grid-template-columns: 1fr; margin-top: 56px; border-top: 0.5px solid var(--c-900); }
 .tenet { padding: 24px 0; border-bottom: 0.5px solid var(--c-900); font-size: 17px; color: var(--c-400); letter-spacing: -0.01em; }
@@ -593,10 +593,10 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
   /* content uses full width on phone (was 8 of 12 cols) */
   #entry-01 .e01-copy, #entry-01 .ladder,
   #entry-03 .statement, #entry-04 .statement, #entry-04 .tenets,
-  #evidence .statement, #journal .statement { grid-column: 1 / -1; }
+  #evidence .statement, #journal .statement, #fit .statement { grid-column: 1 / -1; }
   #entry-03 .prose { grid-column: 1 / -1 !important; }
   /* headlines: tame size */
-  .statement { font-size: clamp(22px, 6.5vw, 28px); }
+  .statement { font-size: clamp(22px, 6.5vw, 28px); text-wrap: wrap; }
   .close-h { font-size: clamp(20px, 1.8vw, 24px); max-width: none; }
   .hero-sub, #entry-01 .e01-note, #entry-06 .prose { max-width: none; }
   .hero-h { font-size: clamp(24px, 7.4vw, 28px); }
@@ -810,7 +810,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
       <div class="entry-head"><span class="entry-no" data-type>No. 01</span><span class="entry-name" data-type>The Record</span></div>
       <h2 class="statement" style="grid-column:auto; margin:0 0 28px;">Others record transactions.<br>This one records judgment.</h2>
       <p class="e01-note" style="color:var(--c-400);">An investor can execute every trade correctly, yet not explain the portfolio. Most platforms solved execution; the judgment layer, recording decisions and measuring them against a benchmark, was left to the investor. <b style="color:var(--c-200);font-weight:400;">Intelligent Investing exists because it was not.</b></p>
-      <p class="e01-note" style="margin-top:18px;">Every position carries its reasoning, recorded the moment capital is committed and re-underwritten on schedule. <b style="color:var(--c-200);font-weight:400;">The portfolio is the artifact. The record is the product.</b></p>
+      <p class="e01-note" style="margin-top:18px;">Every position carries its reasoning, recorded the moment capital is committed and re-underwritten on schedule. <b style="color:var(--c-200);font-weight:400;">The record is the asset. The system holds every position to it.</b></p>
     </div>
     <div class="rec-img">
       <article class="dr-doc">
@@ -1095,8 +1095,8 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 #entry-03::after{ content:''; position:absolute; top:0; bottom:0; left:50%; width:100vw; transform:translateX(-50%); background:var(--c-surface); z-index:0; }
 #entry-03 > *{ position:relative; z-index:1; }
 #entry-03 .sys-duo{ grid-column:1 / -1; display:grid; grid-template-columns:repeat(12,1fr); column-gap:var(--gutter); align-items:start; margin-top:56px; }
-#entry-03 .sys-duo > :nth-child(1){ grid-column:1 / 7; border-top:0.5px solid var(--c-900); padding-top:28px; }
-#entry-03 .sys-duo > :nth-child(2){ grid-column:7 / 13; border-top:0.5px solid var(--c-900); padding-top:28px; }
+#entry-03 .sys-duo > :nth-child(1){ grid-column:1 / 7; border-left:0.5px solid var(--c-900); padding-left:28px; }
+#entry-03 .sys-duo > :nth-child(2){ grid-column:7 / 13; border-left:0.5px solid var(--c-900); padding-left:28px; }
 #entry-03 .sys-duo .sys-phone{ max-width:none; width:100%; aspect-ratio:1 / 2.6; }
 #entry-03 .sys-cap{ max-width:none; }
 #entry-03 .sys-cap-left{ text-align:left; }
@@ -1159,15 +1159,27 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 }
 @media (max-width:900px){
   #entry-03 .sys-duo{ grid-template-columns:1fr; row-gap:32px; }
+  #entry-03 .sys-title{ max-width:none; }
   #entry-03 .sys-duo > :nth-child(1), #entry-03 .sys-duo > :nth-child(2), #entry-03 .sys-duo > :nth-child(3), #entry-03 .sys-duo > :nth-child(4){ grid-column:1 / -1; }
-  #entry-03 .sys-duo > :nth-child(1){ padding-right:0; }
-  #entry-03 .sys-duo > :nth-child(2){ border-left:none; padding-left:0; }
   #entry-03 .sys-duo .sys-phone{ max-width:380px; margin-left:auto; margin-right:auto; }
   #entry-03 .sys-duo .sys-phone:nth-child(2){ margin-top:0; }
-  #entry-03 .sys-cap{ text-align:center; }
+  #entry-03 .sys-cap{ text-align:left; }
   #entry-03 .sys-duo > :nth-child(4){ order:3; }
   #entry-03 .sys-duo > :nth-child(3){ order:4; }
 }
+</style>
+
+<!-- No. 06 - The Fit -->
+<style>
+#fit .statement { grid-column: 1 / 7; }
+.fit-duo { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); align-items: start; margin-top: 56px; }
+.fit-duo > :nth-child(1) { grid-column: 1 / 7; border-left: 0.5px solid var(--c-900); padding-left: 28px; }
+.fit-duo > :nth-child(2) { grid-column: 7 / 13; border-left: 0.5px solid var(--c-900); padding-left: 28px; }
+.fit-name { font-size: 18px; color: var(--c-200); letter-spacing: -0.01em; margin-bottom: 16px; }
+.fit-list { list-style: none; margin: 0; padding: 0; }
+.fit-list li { font-size: 15px; line-height: 1.7; color: var(--c-600); letter-spacing: -0.01em; padding: 10px 0; }
+.fit-welcome { grid-column: 1 / -1; margin-top: 48px; font-size: 15px; color: var(--c-200); letter-spacing: -0.01em; }
+@media (max-width: 900px) { .fit-duo { grid-template-columns: 1fr; row-gap: 32px; } .fit-duo > :nth-child(1), .fit-duo > :nth-child(2) { grid-column: 1 / -1; } #fit .statement { grid-column: 1 / -1; } }
 </style>
 
 <!-- ENTRY 05 - Research (Fiscal.ai) - the research component of the system -->
@@ -1205,11 +1217,38 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   </div>
 </section></div>
 
+<!-- No. 06 - The Fit -->
+<div class="container"><section id="fit">
+  <div class="entry-head"><span class="entry-no" data-type>No. 06</span><span class="entry-name" data-type>The Fit</span></div>
+  <h2 class="statement">If you are looking for reassurance, this is not the place.</h2>
+  <div class="fit-duo">
+    <div class="fit-col">
+      <div class="fit-name">Who this is for</div>
+      <ul class="fit-list">
+        <li>Think in decades</li>
+        <li>Distrust easy answers</li>
+        <li>Value restraint</li>
+        <li>Prefer being right over being entertained</li>
+      </ul>
+    </div>
+    <div class="fit-col">
+      <div class="fit-name">Who this is not for</div>
+      <ul class="fit-list">
+        <li>Excitement</li>
+        <li>Shortcuts</li>
+        <li>Constant validation</li>
+        <li>Someone to blame</li>
+      </ul>
+    </div>
+  </div>
+  <p class="fit-welcome">If you value clarity, welcome.</p>
+</section></div>
+
 <!-- ENTRY 06 - Membership -->
 <section id="entry-06" class="band"><div class="container">
   <div class="mb-grid">
     <div class="mb-left">
-      <div class="entry-head"><span class="entry-no" data-type>No. 06</span><span class="entry-name" data-type>Membership</span></div>
+      <div class="entry-head"><span class="entry-no" data-type>No. 07</span><span class="entry-name" data-type>Membership</span></div>
       <h2 class="statement">The cost is $20 per month.</h2>
       <p class="prose" style="margin-top:32px;">Membership revenue, not transaction revenue. The structure aligns our incentives with long-term outcomes, not activity.</p>
       <a href="II Site V2 - Pricing.html" class="link mb-cta-d" style="display:inline-flex;align-items:center;gap:6px;margin-top:28px;"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span class="roll"><span class="roll-in"><span>See Pricing</span><span>See Pricing</span></span></span></a>
@@ -1226,7 +1265,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 
 <!-- MANIFESTO (No. 06 - after membership, per brief) -->
 <div class="container"><section id="entry-04">
-  <div class="entry-head"><span class="entry-no" data-type>No. 07</span><span class="entry-name" data-type>On the Record</span></div>
+  <div class="entry-head"><span class="entry-no" data-type>No. 08</span><span class="entry-name" data-type>On the Record</span></div>
   <div class="otr-2col">
     <div class="otr-col">
       <p class="otr-merged">Everything ladders back to claims. A decision must be recorded before it can be measured.</p>
@@ -1320,7 +1359,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 
     function stagger(q, step) { document.querySelectorAll(q).forEach(function (el, i) { el.style.setProperty('--d', (i * step).toFixed(2) + 's'); }); }
     stagger('.rung', 0.08); stagger('#entry-03 .module', 0.08); stagger('#journal .tl-item', 0.08); stagger('footer .footer-legal', 0.08);
-    var sel = '#trust .trust-line, #trust .trust-strip, #entry-01 .statement, .rung, #entry-01 .e01-note, #entry-02 .statement, #entry-02 .alloc-sub, #entry-03 .statement, #entry-03 .offer-item, #entry-03 .offer-foot, #entry-03 .module, #entry-03 .prose, #entry-04 .statement, #entry-04 .link, #entry-04 .tenet, #evidence .statement, #evidence .prose, #evidence .ev-fig, #edge .edge-mark, #edge .edge-desc, #edge .link, #entry-06 .statement, #entry-06 .prose, #entry-06 .link, #journal .statement, #journal .tl-item, #journal .tl-all, #close .close-h, #close .cta-btn, footer .footer-copy, footer .footer-social, footer .footer-legal, footer .footer-reset';
+    var sel = '#trust .trust-line, #trust .trust-strip, #entry-01 .statement, .rung, #entry-01 .e01-note, #entry-02 .statement, #entry-02 .alloc-sub, #entry-03 .statement, #entry-03 .offer-item, #entry-03 .offer-foot, #entry-03 .module, #entry-03 .prose, #entry-04 .statement, #entry-04 .link, #entry-04 .tenet, #evidence .statement, #evidence .prose, #evidence .ev-fig, #fit .statement, #fit .fit-duo, #fit .fit-welcome, #edge .edge-mark, #edge .edge-desc, #edge .link, #entry-06 .statement, #entry-06 .prose, #entry-06 .link, #journal .statement, #journal .tl-item, #journal .tl-all, #close .close-h, #close .cta-btn, footer .footer-copy, footer .footer-social, footer .footer-legal, footer .footer-reset';
     var items = document.querySelectorAll(sel);
     items.forEach(function (el) { el.classList.add('ri'); });
     var rio = new IntersectionObserver(function (entries) { entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); rio.unobserve(e.target); } }); }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' });
@@ -1343,7 +1382,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     var svg = document.getElementById('ontoSvg'); if (!svg) return;
     var NS = 'http://www.w3.org/2000/svg';
     var nodes = [
-      { label: 'ALLOCATOR', sub: 'the product', ann: 'track record · 4y 2m', x: 300, y: 65, anc: 'middle', lab: 'up' },
+      { label: 'THE RECORD', sub: 'the product', ann: 'track record · 4y 2m', x: 300, y: 65, anc: 'middle', lab: 'up' },
       { label: 'THESIS', sub: 'the reasoned case', ann: 'p = 0.70 · kill criteria set', x: 460, y: 157, anc: 'start', lab: 'right' },
       { label: 'POSITION', sub: 'capital committed', ann: 'sizing rationale stated', x: 460, y: 343, anc: 'start', lab: 'right' },
       { label: 'RE-UNDERWRITING', sub: 'what changed?', ann: 'would you initiate today?', x: 300, y: 435, anc: 'middle', lab: 'down' },
