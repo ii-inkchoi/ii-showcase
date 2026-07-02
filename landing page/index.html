@@ -278,6 +278,7 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
 .layers-link:hover { color: var(--c-white); }
 .layers-link .arr-svg { width: 12px; height: 12px; }
 .layers-foot { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-700); margin-top: 36px; }
+.fig-cap { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-700); margin-top: 14px; }
 @media (max-width: 760px) { .layers-row { grid-template-columns: 1fr; gap: 8px; padding: 20px 0; } .layers-link { margin-top: 6px; } }
 @media (max-width: 760px) { .trust-item { grid-column: span 12; border-left: 0; padding-left: 0; border-top: 0.5px solid var(--c-800); padding-top: 16px; } .trust-strip { row-gap: 20px; } .ti-num { font-size: 17px; } }
 
@@ -302,12 +303,6 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
 .systrack .ap-card { aspect-ratio: auto; min-height: 500px; grid-column: 9 / 13; justify-self: stretch; align-self: end; margin-bottom: -44px; border-color: var(--c-800); border-radius: 28px 28px 0 0; padding: 0 26px 30px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05); }
 .systrack .ap-fiscal { padding: 0; }
 .systrack .ap-fiscal .fis-img { top: 46px; height: calc(100% - 46px); }
-.ap-bar { display: flex; justify-content: space-between; align-items: center; margin: 0 -26px 22px; padding: 14px 26px 11px; border-bottom: 0.5px solid var(--c-1000); font-family: var(--mono); }
-.ap-fiscal .ap-bar { position: relative; z-index: 2; margin: 0; padding: 14px 26px 11px; }
-.ap-bar-time { font-size: 12px; letter-spacing: 0.02em; color: var(--c-200); font-variant-numeric: tabular-nums; }
-.ap-bar-ic { display: block; width: 49.8px; height: 12px; color: var(--c-200); }
-.ap-embed { flex: 1 1 auto; display: flex; flex-direction: column; margin: 0 -26px -30px; overflow: hidden; background: var(--c-black); }
-.ap-embed-frame { flex: 1 1 auto; display: block; width: 100%; border: 0; background: var(--c-black); pointer-events: none; }
 @media (max-width: 900px) { .systrack { position: relative; grid-template-columns: 1fr; row-gap: 28px; padding: 40px 0 0; border-top: 0; } .systrack-copy, .systrack .ap-card { grid-column: 1 / -1; } .systrack .ap-card { align-self: auto; margin-bottom: 0; } .systrack::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); border-top: 0.5px solid var(--c-800); } .systrack:last-child { border-bottom: 0; } }
 #edge .container { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); }
 #edge .entry-head, #edge .edge-desc, #edge .link { grid-column: 1 / 5; }
@@ -831,6 +826,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
       </div>
       <footer class="dr-foot"><span class="dr-link">Re-underwrite &rsaquo;</span></footer>
       </article>
+      <div class="fig-cap">Fig. 01 &middot; Investment Memo. Sealed before capital moves.</div>
     </div>
   </div>
   <div class="e01-steps">
@@ -849,9 +845,6 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 #entry-01 .rec-img { grid-column: 9 / 13; margin-top: 0; }
 .dr-cap { margin: 16px 0 0; font-size: 13px; color: var(--c-600); letter-spacing: -0.01em; text-align: right; }
 .dr-doc { border: 0.5px solid var(--c-800); background: var(--c-elev); border-radius: 28px; overflow: hidden; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); position: relative; height: 672px; padding-bottom: 32px; -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent 100%); mask-image: linear-gradient(to bottom, #000 82%, transparent 100%); }
-/* mobile feel - dynamic island (kept severe/monochrome): a black pill centred in the status bar */
-.dev-bar, .ap-bar { position: relative; }
-.dev-bar::after, .ap-bar::after { content: ''; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 62px; height: 16px; background: var(--c-black); border: 0.5px solid var(--c-700); border-radius: 9px; pointer-events: none; }
 .dr-head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; padding: 22px 28px; border-bottom: 0.5px solid var(--c-900); }
 .dr-tk { font-size: 17px; color: var(--c-200); letter-spacing: -0.01em; }
 .dr-co { font-size: 13px; color: var(--c-700); margin-left: 10px; }
@@ -881,7 +874,6 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 #underwriting{ padding-top:130px; }
 /* hairline between sections *//* merge polish - No.01: hug the Decision Record object to the RECORDED/NOT RECORDED rail above */
 #entry-01{ padding-bottom:130px; }
-#decision-record{ padding-top:0; }
 </style>
 <!-- ENTRY - Underwriting Workflow (P2: serious investors follow a process - placed before the product sections) -->
 <style>
@@ -940,6 +932,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
       <div class="cal-diag">Stated confidence exceeds actual accuracy.</div>
       <div class="cal-overtime"><span class="cal-ot-k">Calibration over time</span><span class="cal-ot-v">&darr; 25% gap reduction</span></div>
     </div>
+    <div class="fig-cap">Fig. 02 &middot; Calibration Record. Stated confidence vs. actual accuracy.</div>
   </div>
   </div>
   <p class="uw-bridge" style="grid-column:1 / -1; margin:48px 0 4px; font-size:13px; letter-spacing:-0.01em; color:var(--c-600);">Serious investors follow a process.</p>
@@ -1054,26 +1047,18 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
       <div class="bm-row"><span class="bm-k">S&amp;P 500 Growth</span><span class="bm-v">+211,540.00</span></div>
       <div class="bm-ccy">All monetary values in CAD</div>
     </div>
+    <div class="fig-cap">Fig. 03 &middot; Benchmark. The same capital, held to the S&amp;P 500.</div>
     </div>
   </div>
 </section></div>
 
 <style>
-/* device chrome - present memo / calibration / benchmark as phone screens (same feel as The System section) */
-.dev-bar { display:flex; justify-content:space-between; align-items:center; padding:14px 22px 11px; border-bottom:0.5px solid var(--c-1000); font-family:var(--mono); }
-.dev-bar-time { font-size:12px; letter-spacing:0.02em; color:var(--c-200); font-variant-numeric:tabular-nums; }
-.dev-bar-ic { display:block; width:49.8px; height:12px; color:var(--c-200); }
-#decision-record .dr-wrap { grid-template-columns:minmax(0,380px) minmax(0,1fr); }
-#decision-record .dr-doc { border-color:var(--c-800); border-radius:22px; overflow:hidden; box-shadow:inset 0 1px 0 rgba(255,255,255,0.05); }
-#decision-record .dr-aside { max-width:520px; }
 #underwriting { padding-bottom:130px; }
-#calibration { padding-top:0; }
-#calibration .cal-aside { max-width:520px; }
 #benchmark .bm-aside { max-width:calc((100% + var(--gutter)) / 6 * 5 - var(--gutter)); }
 @media(max-width:640px){#benchmark .bm-aside{max-width:none;}}
 @media (max-width:900px){
-  #decision-record .dr-wrap, #calibration .cal-wrap, #benchmark .bm-wrap { grid-template-columns:1fr; }
-  #decision-record .dr-doc, #calibration .cal-card, #benchmark .bm-card { max-width:380px; }
+  #benchmark .bm-wrap { grid-template-columns:1fr; }
+  #benchmark .bm-card { max-width:380px; }
 }
 </style>
 
@@ -1087,9 +1072,8 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 @media(max-width:640px){#entry-03 .sys-intro{max-width:none;}}
 #entry-03 .sys-item-name { font-size:18px; color:var(--c-200); letter-spacing:-0.01em; margin-bottom:12px; }
 #entry-03 .sys-item-desc { font-size:15px; line-height:1.7; color:var(--c-600); margin:0; }
-#entry-03 .sys-phone { justify-self:center; width:100%; max-width:400px; aspect-ratio:1 / 2.4; background:var(--c-elev); border-radius:32px; overflow:hidden; position:relative; display:flex; flex-direction:column; -webkit-mask-image:linear-gradient(to bottom, #000 68%, rgba(0,0,0,0.55) 88%, transparent 100%); mask-image:linear-gradient(to bottom, #000 68%, rgba(0,0,0,0.55) 88%, transparent 100%); }
-#entry-03 .sys-phone .ap-embed { flex:1 1 auto; display:flex; flex-direction:column; overflow:hidden; background:var(--c-black); margin:0; }
-#entry-03 .sys-phone .ap-embed-frame { flex:1 1 auto; width:100%; border:0; background:var(--c-black); pointer-events:none; }
+#entry-03 .sys-steps { list-style:none; margin:20px 0 24px; padding:0; }
+#entry-03 .sys-steps li { font-size:15px; line-height:1.7; color:var(--c-600); letter-spacing:-0.01em; padding:6px 0; }
 /* Approach 2: 12-col grid - labels 2 cols (outer), phones 3 cols, staggered on a grey panel */
 #entry-03{ position:relative; }
 #entry-03::after{ content:''; position:absolute; top:0; bottom:0; left:50%; width:100vw; transform:translateX(-50%); background:var(--c-surface); z-index:0; }
@@ -1097,14 +1081,10 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 #entry-03 .sys-duo{ grid-column:1 / -1; display:grid; grid-template-columns:repeat(12,1fr); column-gap:var(--gutter); align-items:start; margin-top:56px; }
 #entry-03 .sys-duo > :nth-child(1){ grid-column:1 / 7; border-left:0.5px solid var(--c-900); padding-left:28px; }
 #entry-03 .sys-duo > :nth-child(2){ grid-column:7 / 13; border-left:0.5px solid var(--c-900); padding-left:28px; }
-#entry-03 .sys-duo .sys-phone{ max-width:none; width:100%; aspect-ratio:1 / 2.6; }
 #entry-03 .sys-cap{ max-width:none; }
 #entry-03 .sys-cap-left{ text-align:left; }
 #entry-03 .sys-cap-right{ text-align:left; }
 #entry-03 .sys-cap .link{ font-family:inherit; letter-spacing:-0.01em; }
-#entry-03 .dev-bar::after{ border-color:var(--c-900); }
-#entry-03 .sys-phone .ap-embed{ container-type:inline-size; }
-#entry-03 .md-screen{ flex:1 1 auto; display:flex; flex-direction:column; padding:7.6cqw 7.63cqw 0; font-feature-settings:'lnum' 1,'tnum' 1; }
 #entry-03 .md-title{ font-size:5.6cqw; line-height:1.15; letter-spacing:-0.06em; color:var(--c-white); text-align:right; font-weight:400; margin:0; }
 #entry-03 .md-block{ text-align:right; }
 #entry-03 .md-k{ font-size:3.56cqw; letter-spacing:-0.02em; color:var(--c-700); }
@@ -1124,7 +1104,6 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 #entry-03 .md-goal-r .v{ font-size:2.8cqw; letter-spacing:-0.02em; color:var(--c-white); margin-top:1.3cqw; }
 #entry-03 .md-actions{ display:flex; flex-direction:column; gap:7.1cqw; margin-top:9.67cqw; }
 #entry-03 .md-actions span{ font-size:3.82cqw; letter-spacing:-0.02em; color:var(--c-400); }
-#entry-03 .sd-screen{ flex:1 1 auto; display:flex; flex-direction:column; padding:7.6cqw 7.63cqw 0; font-feature-settings:'lnum' 1,'tnum' 1; }
 #entry-03 .sd-head{ display:flex; justify-content:space-between; align-items:baseline; gap:3cqw; }
 #entry-03 .sd-head .a{ font-size:4.33cqw; color:var(--c-white); letter-spacing:-0.02em; }
 #entry-03 .sd-head .r{ font-size:3.82cqw; color:var(--c-400); letter-spacing:-0.02em; display:inline-flex; align-items:center; gap:1.4cqw; }
@@ -1152,17 +1131,10 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 #entry-03 .sd-crow{ display:flex; justify-content:flex-end; align-items:baseline; gap:3cqw; margin-top:2.4cqw; }
 #entry-03 .sd-crow .k{ font-size:3.3cqw; color:var(--c-700); letter-spacing:-0.02em; }
 #entry-03 .sd-crow .v{ font-size:3.56cqw; color:var(--c-200); letter-spacing:-0.02em; }
-@media (prefers-reduced-motion: no-preference){
-  #entry-03 .sys-duo .sys-phone{ transition:transform 0.6s cubic-bezier(0.2,0.6,0.2,1), opacity 0.6s ease; }
-  #entry-03 .sys-duo:not(.in) .sys-phone:nth-child(2){ transform:translateY(-72px); opacity:0; }
-  #entry-03 .sys-duo:not(.in) .sys-phone:nth-child(3){ transform:translateY(72px); opacity:0; }
-}
 @media (max-width:900px){
   #entry-03 .sys-duo{ grid-template-columns:1fr; row-gap:32px; }
   #entry-03 .sys-title{ max-width:none; }
   #entry-03 .sys-duo > :nth-child(1), #entry-03 .sys-duo > :nth-child(2), #entry-03 .sys-duo > :nth-child(3), #entry-03 .sys-duo > :nth-child(4){ grid-column:1 / -1; }
-  #entry-03 .sys-duo .sys-phone{ max-width:380px; margin-left:auto; margin-right:auto; }
-  #entry-03 .sys-duo .sys-phone:nth-child(2){ margin-top:0; }
   #entry-03 .sys-cap{ text-align:left; }
   #entry-03 .sys-duo > :nth-child(4){ order:3; }
   #entry-03 .sys-duo > :nth-child(3){ order:4; }
@@ -1192,8 +1164,8 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     <h2 class="statement sys-title">One operating system: Managed and Self-Directed.<br>Two surfaces of the same capital allocation system.</h2>
   </div>
   <div class="sys-duo">
-    <div class="sys-cap sys-cap-left"><div class="sys-item-name">Managed</div><p class="sys-item-desc">Broad market exposure on a rules-based weekly schedule. The foundation every allocator starts from; active decisions depart from it by intention.</p><a href="II Site V2 - Managed.html" class="link" style="display:inline-flex;align-items:center;gap:6px;margin-top:20px;"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span class="roll"><span class="roll-in"><span>View Managed</span><span>View Managed</span></span></span></a></div>
-    <div class="sys-cap sys-cap-right"><div class="sys-item-name">Self-Directed</div><p class="sys-item-desc">A structured environment for building and reviewing theses. Thesis, benchmark, kill criteria, review. The process before the position.</p><a href="II Site V2 - Self-Directed.html" class="link" style="display:inline-flex;align-items:center;gap:6px;margin-top:20px;"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span class="roll"><span class="roll-in"><span>View Self-Directed</span><span>View Self-Directed</span></span></span></a></div>
+    <div class="sys-cap sys-cap-left"><div class="sys-item-name">Managed</div><p class="sys-item-desc">Broad market exposure on a rules-based weekly schedule. The foundation every allocator starts from; active decisions depart from it by intention.</p><ul class="sys-steps"><li>Answer a few questions</li><li>Get matched to a portfolio</li><li>Weekly, automatically</li></ul><a href="II Site V2 - Managed.html" class="link" style="display:inline-flex;align-items:center;gap:6px;margin-top:20px;"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span class="roll"><span class="roll-in"><span>View Managed</span><span>View Managed</span></span></span></a></div>
+    <div class="sys-cap sys-cap-right"><div class="sys-item-name">Self-Directed</div><p class="sys-item-desc">A structured environment for building and reviewing theses. Thesis, benchmark, kill criteria, review. The process before the position.</p><ul class="sys-steps"><li>Write</li><li>Re-underwrite</li><li>Capital Decision</li></ul><a href="II Site V2 - Self-Directed.html" class="link" style="display:inline-flex;align-items:center;gap:6px;margin-top:20px;"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span class="roll"><span class="roll-in"><span>View Self-Directed</span><span>View Self-Directed</span></span></span></a></div>
   </div>
 </section></div>
 
@@ -1829,31 +1801,6 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     setTimeout(function next() { if (idx < els.length) { typeOne(els[idx], function () { idx++; next(); }); } }, 500);
   })();
 
-  // System cards: trigger the embedded app's scroll-settle + count-up when the card enters view.
-  // Scroll-based (getBoundingClientRect) - more reliable across devices than IntersectionObserver on iframes.
-  (function () {
-    var frames = [].slice.call(document.querySelectorAll('.ap-embed-frame'));
-    if (!frames.length) return;
-    var seen = [];
-    function check() {
-      var vh = window.innerHeight || document.documentElement.clientHeight;
-      frames.forEach(function (f, i) {
-        var r = f.getBoundingClientRect();
-        var visible = r.top < vh * 0.85 && r.bottom > vh * 0.15 && r.height > 0;
-        if (visible && !seen[i]) {
-          seen[i] = true;
-          try { f.contentWindow.postMessage('iiSettle', '*'); } catch (e) {}  // postMessage works regardless of origin (file:// / cross-host) - direct .iiSettle() call can be blocked
-        } else if (!visible && seen[i]) {
-          seen[i] = false;  // re-arm so it replays next time the card scrolls back into view
-        }
-      });
-    }
-    window.addEventListener('scroll', check, { passive: true });
-    window.addEventListener('resize', check);
-    frames.forEach(function (f, i) { f.addEventListener('load', function () { seen[i] = false; check(); }); });  // re-arm + re-send once the iframe (and its message listener) is ready
-    check();
-  })();
-
   // hero toggle - 01 (headline + torus) / 02 (whole panel: app phone on radar backdrop, lazy-loaded on first switch).
   (function () {
     var hero = document.querySelector('section.hero');
@@ -1874,9 +1821,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 <script src="grid-overlay.js"></script>
 <style>
 /* de-phone (brief P1): drop consumer-app device chrome. status bar, notch, phone corners, screen gloss removed. portrait aspect kept so captures still read as mobile, shown as documented artifacts. */
-.dev-bar, .ap-bar { display: none; }
-#entry-03 .sys-phone { border-radius: 4px; }
-.dr-doc, #decision-record .dr-doc { border-radius: 4px; box-shadow: none; }
+.dr-doc { border-radius: 4px; box-shadow: none; }
 .systrack .ap-card { border-radius: 4px 4px 0 0; box-shadow: none; }
 #underwriting .cal-card { border-radius: 4px; box-shadow: none; }
 #benchmark .bm-card { border-radius: 4px; box-shadow: none; }

@@ -97,10 +97,6 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .memo-body{font-size:15px;line-height:1.7;color:var(--c-600);}
 .memo-body p+p{margin-top:14px;}
 .memo-pull{font-size:15px;line-height:1.7;color:var(--c-400);margin-top:28px;text-wrap:balance;}
-.dev-bar{display:flex;justify-content:space-between;align-items:center;padding:14px 22px 11px;border-bottom:0.5px solid var(--c-1000);font-family:var(--mono);position:relative;}
-.dev-bar::after{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:62px;height:16px;background:var(--c-black);border:0.5px solid var(--c-700);border-radius:9px;pointer-events:none;}
-.dev-bar-time{font-size:12px;letter-spacing:0.02em;color:var(--c-200);font-variant-numeric:tabular-nums;}
-.dev-bar-ic{display:block;width:49.8px;height:12px;color:var(--c-200);}
 .dr-doc{border:0.5px solid var(--c-800);background:var(--c-elev);border-radius:28px;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,0.05);position:relative;height:672px;padding-bottom:32px;-webkit-mask-image:linear-gradient(to bottom,#000 82%,transparent 100%);mask-image:linear-gradient(to bottom,#000 82%,transparent 100%);}
 .dr-head{display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding:22px 28px;border-bottom:0.5px solid var(--c-900);}
 .dr-tk{font-size:17px;color:var(--c-200);letter-spacing:-0.01em;}
@@ -248,6 +244,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   .how-step{grid-template-columns:1fr;gap:16px;}.how-steps::before{display:none;}.how-node{display:none;}
   .memo-section,.acc-section,.docs-section,.how-section,.accounts-section,.cta-section{position:relative;}
   .memo-section::before,.acc-section::before,.docs-section::before,.how-section::before,.accounts-section::before,.cta-section::before{content:'';position:absolute;top:0;left:50%;width:100vw;transform:translateX(-50%);border-top:0.5px solid var(--c-900);pointer-events:none;}}
+@media(max-width:640px){.declarative,.how-headline,.acc-headline,.cal-lead,.memo-lead{text-wrap:wrap;}}
 </style>
 </head>
 <body>
@@ -551,7 +548,6 @@ hamburger.addEventListener('click',e=>{e.stopPropagation();menuOverlay.classList
 <script>if('IntersectionObserver' in window){var rio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');rio.unobserve(e.target);}});},{threshold:0.14,rootMargin:'0px 0px -8% 0px'});document.querySelectorAll('.ri').forEach(function(el){rio.observe(el);});}else{document.querySelectorAll('.ri').forEach(function(el){el.classList.add('in');});}</script><script src="grid-overlay.js"></script>
 <style>
 /* de-phone (brief P1): drop consumer-app device chrome. status bar, notch, phone corners, screen gloss removed. portrait aspect and content fade kept. */
-.dev-bar, .ap-bar { display: none; }
 .dr-doc { border-radius: 4px; box-shadow: none; }
 .acc-shot { border-radius: 4px; box-shadow: none; }
 .cal-card { border-radius: 4px; box-shadow: none; }
