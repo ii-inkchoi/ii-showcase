@@ -1160,13 +1160,12 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 #fit .entry-head { grid-row: 1; grid-column: 1 / 7; }
 #fit .statement { grid-column: 1 / 7; grid-row: 2; }
 #fit .fit-duo { grid-column: 7 / 13; grid-row: 1 / 4; display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--gutter); align-items: start; margin-top: 0; }
-.fit-duo > :nth-child(1) { grid-column: auto; }
-.fit-duo > :nth-child(2) { grid-column: auto; }
+.fit-duo > :nth-child(1) { grid-column: auto; border-left: 0.5px solid var(--c-800); padding-left: 28px; }
+.fit-duo > :nth-child(2) { grid-column: auto; border-left: 0.5px solid var(--c-800); padding-left: 28px; }
 .fit-name { font-size: 18px; color: var(--c-200); letter-spacing: -0.01em; margin-bottom: 16px; }
 .fit-list { list-style: none; margin: 0; padding: 0; }
-.fit-list li { font-size: 15px; line-height: 1.7; color: var(--c-600); letter-spacing: -0.01em; padding: 16px 0; border-bottom: 0.5px solid var(--c-900); }
-#fit .fit-welcome { grid-column: 1 / 7; grid-row: 3; margin-top: 28px; align-self: start; font-size: 15px; color: var(--c-400); letter-spacing: -0.01em; }
-@media (max-width: 1200px) { #fit .statement { grid-row: auto; } #fit .fit-welcome { grid-column: 1 / -1; grid-row: auto; margin-top: 32px; } #fit .fit-duo { grid-column: 1 / -1; grid-row: auto; grid-template-columns: 1fr; row-gap: 32px; margin-top: 48px; } .fit-duo > :nth-child(1), .fit-duo > :nth-child(2) { grid-column: 1 / -1; } }
+.fit-list li { font-size: 15px; line-height: 1.7; color: var(--c-600); letter-spacing: -0.01em; padding: 10px 0; }
+@media (max-width: 1200px) { #fit .statement { grid-row: auto; } #fit .fit-duo { grid-column: 1 / -1; grid-row: auto; grid-template-columns: 1fr; row-gap: 32px; margin-top: 48px; } .fit-duo > :nth-child(1), .fit-duo > :nth-child(2) { grid-column: 1 / -1; } }
 </style>
 
 <!-- ENTRY 05 - Research (Fiscal.ai) - the research component of the system -->
@@ -1208,7 +1207,6 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 <div class="container"><section id="fit">
   <div class="entry-head"><span class="entry-no" data-type>No. 06</span><span class="entry-name" data-type>The Fit</span></div>
   <h2 class="statement">If you are looking for reassurance, this is not the place.</h2>
-  <p class="fit-welcome">If you value clarity, welcome.</p>
   <div class="fit-duo">
     <div class="fit-col">
       <div class="fit-name">Who this is for</div>
@@ -1346,7 +1344,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 
     function stagger(q, step) { document.querySelectorAll(q).forEach(function (el, i) { el.style.setProperty('--d', (i * step).toFixed(2) + 's'); }); }
     stagger('.rung', 0.08); stagger('#entry-03 .module', 0.08); stagger('#journal .tl-item', 0.08); stagger('footer .footer-legal', 0.08);
-    var sel = '#trust .trust-line, #trust .trust-strip, #entry-01 .statement, .rung, #entry-01 .e01-note, #entry-02 .statement, #entry-02 .alloc-sub, #entry-03 .statement, #entry-03 .offer-item, #entry-03 .offer-foot, #entry-03 .module, #entry-03 .prose, #entry-04 .statement, #entry-04 .link, #entry-04 .tenet, #evidence .statement, #evidence .prose, #evidence .ev-fig, #fit .statement, #fit .fit-duo, #fit .fit-welcome, #edge .edge-mark, #edge .edge-desc, #edge .link, #entry-06 .statement, #entry-06 .prose, #entry-06 .link, #journal .statement, #journal .tl-item, #journal .tl-all, #close .close-h, #close .cta-btn, footer .footer-copy, footer .footer-social, footer .footer-legal, footer .footer-reset';
+    var sel = '#trust .trust-line, #trust .trust-strip, #entry-01 .statement, .rung, #entry-01 .e01-note, #entry-02 .statement, #entry-02 .alloc-sub, #entry-03 .statement, #entry-03 .offer-item, #entry-03 .offer-foot, #entry-03 .module, #entry-03 .prose, #entry-04 .statement, #entry-04 .link, #entry-04 .tenet, #evidence .statement, #evidence .prose, #evidence .ev-fig, #fit .statement, #fit .fit-duo, #edge .edge-mark, #edge .edge-desc, #edge .link, #entry-06 .statement, #entry-06 .prose, #entry-06 .link, #journal .statement, #journal .tl-item, #journal .tl-all, #close .close-h, #close .cta-btn, footer .footer-copy, footer .footer-social, footer .footer-legal, footer .footer-reset';
     var items = document.querySelectorAll(sel);
     items.forEach(function (el) { el.classList.add('ri'); });
     var rio = new IntersectionObserver(function (entries) { entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); rio.unobserve(e.target); } }); }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' });
