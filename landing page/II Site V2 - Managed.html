@@ -280,7 +280,11 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   .proj-section .proj-head{grid-column:1 / 7;}
   .proj-section .proj-board{grid-column:1 / 13;}
   .compounds-section>.section-eyebrow,.how-section>.section-eyebrow,.dont-section>.section-eyebrow,.portfolios-section>.section-eyebrow{grid-column:1 / 7;}
-  .how-section .how-steps,.how-section .how-closing,.dont-section .dont-rows,.portfolios-section .pf-right{grid-column:7 / 13;}
+  .how-section .how-steps,.how-section .how-closing,.portfolios-section .pf-right{grid-column:7 / 13;}
+  .dont-section .dont-rows{grid-column:1 / -1;}
+  .dont-row{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}
+  .dont-row .dont-label{grid-column:1 / 5;}
+  .dont-row .dont-desc{grid-column:7 / 13;max-width:none;}
   .portfolios-section .pf-head{grid-column:1 / 7;}
   .portfolios-section .pf-rows{grid-column:7 / 13;}
   .portfolios-section .pf-row{grid-template-columns:repeat(6,1fr);}
