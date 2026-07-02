@@ -542,6 +542,21 @@ section {
 
 .plate.reverse { grid-template-columns: 500px 1fr; }
 
+/* benchmark card - real decision surface (mirrors homepage No. 03) */
+.bm-card { border:0.5px solid var(--c-800); background:var(--c-1000); border-radius:4px; overflow:hidden; position:relative; height:672px; -webkit-mask-image:linear-gradient(to bottom, #000 92%, transparent 100%); mask-image:linear-gradient(to bottom, #000 92%, transparent 100%); }
+.bm-head { display:flex; flex-direction:column; align-items:flex-end; gap:6px; padding:30px 28px 0; }
+.bm-title { font-size:18px; color:var(--c-white); letter-spacing:-0.02em; line-height:1.15; }
+.bm-acct { font-size:18px; color:var(--c-700); letter-spacing:-0.02em; line-height:1.15; }
+.bm-sub { font-size:14px; color:var(--c-400); letter-spacing:-0.02em; margin:64px 0 15px; padding:0 28px; }
+.bm-row { display:flex; align-items:baseline; justify-content:space-between; gap:16px; padding:0 28px 10px; margin:0 0 10px; border-bottom:0.5px solid var(--c-900); }
+.bm-k { font-size:14px; color:var(--c-700); letter-spacing:-0.02em; }
+.bm-v { font-size:15px; color:var(--c-400); letter-spacing:-0.02em; }
+.bm-row.diff .bm-v { color:var(--c-white); }
+.bm-pct { font-size:14px; color:var(--c-700); margin-left:6px; }
+.bm-meth { padding:0 28px; margin:6px 0 0; }
+.bm-meth span { font-size:13px; color:var(--c-700); border-bottom:0.5px dotted var(--c-800); padding-bottom:1px; letter-spacing:-0.02em; }
+.bm-ccy { padding:0 28px; margin-top:64px; font-size:13px; color:var(--c-700); text-align:right; letter-spacing:-0.02em; }
+
 @media (max-width: 1100px) {
   .plate, .plate.reverse {
     grid-template-columns: 1fr;
@@ -940,9 +955,18 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
       <span class="footnote">The system does not restrict action. It makes the consequences of action visible. The difference is the truth.</span>
     </div>
 
-    <div class="plate-screen">
-      <div class="ph-title">Performance Dashboard</div>
-      <div class="ph-detail">Portfolio · S&amp;P 500 · Difference · per-tranche shadow ledger · calibration record</div>
+    <div class="bm-card">
+      <div class="bm-head"><span class="bm-title">S&amp;P 500 Benchmark</span><span class="bm-acct">All Accounts</span></div>
+      <div class="bm-sub" style="margin-top:48px;">Summary</div>
+      <div class="bm-row"><span class="bm-k">Portfolio Value</span><span class="bm-v">842,360.00</span></div>
+      <div class="bm-row"><span class="bm-k">S&amp;P 500 (Same Capital)</span><span class="bm-v">911,540.00</span></div>
+      <div class="bm-row diff"><span class="bm-k">Difference</span><span><span class="bm-v">&minus;69,180.00</span><span class="bm-pct">&minus;7.59%</span></span></div>
+      <div class="bm-meth"><span>Methodology</span></div>
+      <div class="bm-sub">Contributions &amp; Growth</div>
+      <div class="bm-row"><span class="bm-k">Net Contributions</span><span class="bm-v">700,000.00</span></div>
+      <div class="bm-row"><span class="bm-k">Portfolio Growth</span><span class="bm-v">+142,360.00</span></div>
+      <div class="bm-row"><span class="bm-k">S&amp;P 500 Growth</span><span class="bm-v">+211,540.00</span></div>
+      <div class="bm-ccy">All monetary values in CAD</div>
     </div>
   </div>
 </section>

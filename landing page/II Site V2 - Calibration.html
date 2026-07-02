@@ -6,13 +6,13 @@
 <title>Calibration · Intelligent Investing</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
   --c-black: #000000; --c-1000: #1C1C1C; --c-900: #232627; --c-800: #565B5E;
   --c-700: #929292; --c-600: #A7A7A7; --c-400: #C7C7C7; --c-200: #E3E2E2; --c-white: #FFFFFF;
   --c-urgent: #FF3533; --c-warning: #FDAD00; --c-review: #FBC308; --c-live: #30D158; --c-neutral: #565B5E;
- --frame: clamp(24px, 4vw, 48px); --maxw: 1680px; --gutter: clamp(16px, 1.5vw, 24px); --c-elev: #0A0A0A;}
+ --frame: clamp(24px, 4vw, 48px); --maxw: 1680px; --gutter: clamp(16px, 1.5vw, 24px); --c-elev: #0A0A0A; --mono: 'Chakra Petch', ui-monospace, monospace;}
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scrollbar-gutter: stable; }
 html, body { background: var(--c-black); color: var(--c-600); font-family: 'Inter', sans-serif; font-feature-settings: 'tnum' 1, 'lnum' 1, 'ss01' 1; letter-spacing: -0.01em; -webkit-font-smoothing: antialiased; font-weight: 400; }
@@ -94,7 +94,7 @@ section { padding: 120px 0; position: relative; }
 .sec-head { display: grid; grid-template-columns: 80px 1fr; gap: 32px; align-items: baseline; margin-bottom: 64px; padding-bottom: 18px; border-bottom: 0.5px solid var(--c-900); }
 .sec-num { font-size: 13px; color: var(--c-700); letter-spacing: 0.04em; }
 .sec-name { font-size: 22px; color: var(--c-200); letter-spacing: -0.02em; }
-.declarative { font-size: clamp(22px,2.6vw,28px); line-height: 1.18; letter-spacing: -0.025em; color: var(--c-200); font-weight: 400; max-width: 880px; text-wrap: balance; }
+.declarative { font-size: clamp(22px,2.6vw,28px); line-height: 1.3; letter-spacing: -0.025em; color: var(--c-200); font-weight: 400; max-width: 880px; text-wrap: balance; }
 .declarative p + p { margin-top: 28px; }
 .declarative .dim { color: var(--c-700); }
 .prose { font-size: 15px; line-height: 1.7; color: var(--c-600); letter-spacing: -0.01em; max-width: 720px; }
@@ -108,6 +108,27 @@ section { padding: 120px 0; position: relative; }
 @media (max-width: 900px) { .cal-band { grid-template-columns: 1fr; } }
 .plate { display: grid; grid-template-columns: 1fr 500px; gap: 80px; align-items: start; margin-top: 56px; }
 .plate.reverse { grid-template-columns: 500px 1fr; }
+/* calibration card - real decision surface (mirrors homepage No. 02) */
+.cal-card { border:0.5px solid var(--c-800); background:var(--c-elev); border-radius:4px; overflow:hidden; position:relative; height:672px; -webkit-mask-image:linear-gradient(to bottom, #000 90%, transparent 100%); mask-image:linear-gradient(to bottom, #000 90%, transparent 100%); }
+.cal-cardhd { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; padding:18px 28px 4px; }
+.cal-cardhd .l { font-size:15px; color:var(--c-200); letter-spacing:-0.01em; }
+.cal-cardhd .r { font-family:var(--mono); font-size:11px; letter-spacing:0.04em; color:var(--c-700); text-align:right; line-height:1.55; }
+.cal-chart { display:block; width:100%; height:auto; padding:6px 28px 10px; box-sizing:border-box; }
+.cal-stats { display:grid; grid-template-columns:repeat(3,1fr); padding:0 12px; border-top:0.5px solid var(--c-1000); }
+.cal-stat { padding:14px 16px; }
+.cal-stat + .cal-stat { border-left:0.5px solid var(--c-1000); }
+.cal-stat .k { font-size:13px; color:var(--c-700); }
+.cal-stat .v { font-size:24px; color:var(--c-200); letter-spacing:-0.02em; margin-top:6px; }
+.cal-diag { padding:14px 28px 12px; border-top:0.5px solid var(--c-1000); font-size:15px; color:var(--c-400); letter-spacing:-0.01em; }
+.cal-overtime { display:flex; align-items:baseline; justify-content:space-between; gap:16px; padding:0 28px 16px; }
+.cal-ot-k { font-size:13px; color:var(--c-700); letter-spacing:-0.01em; }
+.cal-ot-v { font-family:var(--mono); font-size:12px; letter-spacing:0.02em; color:var(--c-400); }
+.cg-axis { stroke:var(--c-900); stroke-width:1; }
+.cg-cal { stroke:var(--c-700); stroke-width:1; stroke-dasharray:3 3; }
+.cg-dot { fill:var(--c-600); }
+.cg-dot.sel { fill:none; stroke:var(--c-200); stroke-width:1; stroke-dasharray:2 2; }
+.cg-lbl { font-family:var(--mono); fill:var(--c-800); letter-spacing:0.04em; }
+.cg-tick { font-family:var(--mono); fill:var(--c-700); }
 @media (max-width: 1100px) { .plate, .plate.reverse { grid-template-columns: 1fr; gap: 32px; } }
 .plate-caption { font-size: 15px; line-height: 1.7; color: var(--c-600); max-width: 540px; }
 .plate-caption .fig-num { display: block; font-size: 12px; color: var(--c-700); letter-spacing: 0.04em; margin-bottom: 14px; }
@@ -131,7 +152,7 @@ section { padding: 120px 0; position: relative; }
 .related-card:hover .rc-arrow { color: var(--c-400); }
 @media (max-width: 900px) { .related-grid { grid-template-columns: 1fr; } .related-card + .related-card { padding-left: 0; border-left: none; } }
 .cta-section { text-align: center; padding: 160px 0 100px; border-top: 0.5px solid var(--c-900); margin-top: 80px; }
-.cta-canon { font-size: clamp(22px,2.6vw,28px); line-height: 1.2; letter-spacing: -0.025em; color: var(--c-200); margin-bottom: 48px; text-wrap: balance; }
+.cta-canon { font-size: clamp(22px,2.6vw,28px); line-height: 1.3; letter-spacing: -0.025em; color: var(--c-200); margin-bottom: 48px; text-wrap: balance; }
 .cta-button{display:inline-flex;align-items:center;gap:8px;font-size:15px;color:var(--c-white);text-decoration:none;}
 .cta-button .arr{display:inline-flex;align-items:center;line-height:1;}
 .cta-button .arr-svg{width:13px;height:13px;display:block;}
@@ -215,9 +236,34 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 <section>
   <div class="sec-head"><span class="sec-num">/03</span><span class="sec-name">Surface</span></div>
   <div class="plate reverse">
-    <div class="plate-screen">
-      <div class="ph-title">Calibration · Confidence Record</div>
-      <div class="ph-detail">Predictions · Accuracy · Next Judgment · stated confidence vs realized outcome over time</div>
+    <div class="cal-card">
+      <div class="cal-cardhd"><span class="l">Predicted vs actual</span><span class="r">Y &middot; Actual accuracy<br>X &middot; Confidence</span></div>
+      <svg class="cal-chart" viewBox="0 0 380 258" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <line class="cg-axis" x1="44" y1="24" x2="44" y2="230"/>
+        <line class="cg-axis" x1="44" y1="230" x2="356" y2="230"/>
+        <line class="cg-cal" x1="44" y1="230" x2="356" y2="24"/>
+        <text class="cg-tick" x="39" y="27" text-anchor="end" font-size="9">100%</text>
+        <text class="cg-tick" x="39" y="130" text-anchor="end" font-size="9">50%</text>
+        <text class="cg-tick" x="39" y="232" text-anchor="end" font-size="9">0%</text>
+        <text class="cg-tick" x="44" y="245" text-anchor="middle" font-size="9">0%</text>
+        <text class="cg-tick" x="200" y="245" text-anchor="middle" font-size="9">50%</text>
+        <text class="cg-tick" x="356" y="245" text-anchor="middle" font-size="9">100%</text>
+        <text class="cg-lbl" x="68" y="58" font-size="9">Underconfident</text>
+        <text class="cg-lbl" x="350" y="42" text-anchor="end" font-size="9">Calibrated</text>
+        <text class="cg-lbl" x="350" y="210" text-anchor="end" font-size="9">Overconfident</text>
+        <circle class="cg-dot" cx="225" cy="106" r="4"/>
+        <circle class="cg-dot" cx="244" cy="96" r="4"/>
+        <circle class="cg-dot sel" cx="262" cy="90" r="5.5"/>
+        <circle class="cg-dot" cx="275" cy="148" r="4"/>
+        <circle class="cg-dot" cx="284" cy="154" r="4"/>
+      </svg>
+      <div class="cal-stats">
+        <div class="cal-stat"><div class="k">Average confidence</div><div class="v">71%</div></div>
+        <div class="cal-stat"><div class="k">Actual accuracy</div><div class="v">54%</div></div>
+        <div class="cal-stat"><div class="k">Difference</div><div class="v">&minus;17%</div></div>
+      </div>
+      <div class="cal-diag">Stated confidence exceeds actual accuracy.</div>
+      <div class="cal-overtime"><span class="cal-ot-k">Calibration over time</span><span class="cal-ot-v">&darr; 25% gap reduction</span></div>
     </div>
     <div class="plate-caption">
       <span class="fig-num">Fig. 01</span>

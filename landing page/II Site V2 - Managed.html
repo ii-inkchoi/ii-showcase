@@ -100,11 +100,11 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .wm-arrow{font-size:24px;color:var(--c-700);transition:all 0.3s ease;flex-shrink:0;}
 @media(max-width:900px){.wordmark-row{grid-template-columns:1fr;gap:24px;padding:40px 0;}.wm-name-wrap{justify-content:center;}.wm-name{text-align:left;}}
 .intro{padding:96px 0;}
-.declarative{font-size:clamp(22px,2.6vw,28px);line-height:1.18;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;max-width:880px;text-wrap:balance;}
+.declarative{font-size:clamp(22px,2.6vw,28px);line-height:1.3;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;max-width:880px;text-wrap:balance;}
 .prose{font-size:15px;line-height:1.7;color:var(--c-600);max-width:720px;margin-top:32px;}
 .prose p{text-wrap:balance;}.prose p+p{margin-top:14px;}.prose em{font-style:normal;color:var(--c-200);}
 .cta-section{text-align:center;padding:160px 0 100px;border-top:0.5px solid var(--c-900);}
-.cta-canon{font-size:clamp(22px,2.6vw,28px);line-height:1.2;letter-spacing:-0.025em;color:var(--c-200);margin:0 auto 48px;max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));text-wrap:balance;}
+.cta-canon{font-size:clamp(22px,2.6vw,28px);line-height:1.3;letter-spacing:-0.025em;color:var(--c-200);margin:0 auto 48px;max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));text-wrap:balance;}
 @media(max-width:760px){.cta-canon{max-width:none;font-size:clamp(20px,1.8vw,24px);}}
 .cta-button{display:inline-flex;align-items:center;gap:8px;font-size:15px;color:var(--c-white);text-decoration:none;}
 .cta-button .arr{display:inline-flex;align-items:center;line-height:1;}
@@ -146,8 +146,8 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .compounds-section{padding:130px 0;}
 .compounds-prose p{font-size:15px;line-height:1.7;color:var(--c-600);letter-spacing:-0.01em;}
 .compounds-prose p+p{margin-top:24px;}
-.compounds-headline{font-size:clamp(22px,2.6vw,28px);line-height:1.18;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:0;}
-.compounds-section .section-eyebrow{margin-bottom:28px;}
+.compounds-headline{font-size:clamp(22px,2.6vw,28px);line-height:1.3;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:0;text-align:center;margin-left:auto;margin-right:auto;}
+.compounds-section .section-eyebrow{margin-bottom:28px;justify-content:center;}
 
 .dont-section{padding:130px 0;}
 .dont-rows{display:flex;flex-direction:column;}
@@ -219,7 +219,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 @media(max-width:760px){.portfolios-section .pf-steps,.portfolios-section .pf-right{display:none;}.pf-carousel{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;margin:0 -24px;padding:4px 24px 0;scrollbar-width:none;}.pf-carousel::-webkit-scrollbar{display:none;}.pf-card{flex:0 0 84%;scroll-snap-align:center;display:flex;flex-direction:column;}.pf-dots{display:flex;justify-content:center;gap:8px;margin-top:24px;}.pf-dot{width:6px;height:6px;border:0.5px solid var(--c-700);}.pf-dot.is-on{background:var(--c-400);border-color:var(--c-400);}}
 .pf-head{margin-bottom:48px;}
 .pf-head .section-eyebrow{margin-bottom:0;}
-.pf-headline{font-size:clamp(22px,2.6vw,28px);line-height:1.18;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:20px;}
+.pf-headline{font-size:clamp(22px,2.6vw,28px);line-height:1.3;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:20px;}
 .pf-deck{font-size:15px;line-height:1.7;color:var(--c-600);margin-top:16px;max-width:calc((100% + var(--gutter)) / 6 * 5 - var(--gutter));}
 .pf-steps{margin-top:0;display:flex;flex-direction:column;}
 .pf-step{position:relative;display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;padding:18px 0;background:none;border:none;border-top:0.5px solid var(--c-900);text-align:left;cursor:pointer;font-family:inherit;transition:padding-left 0.25s ease;}
@@ -238,13 +238,14 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 
 .proj-head{margin-bottom:48px;}
 .proj-head .section-eyebrow{margin-bottom:0;}
-.proj-headline{font-size:clamp(22px,2.6vw,28px);line-height:1.18;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:20px;}
+.proj-headline{font-size:clamp(22px,2.6vw,28px);line-height:1.3;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:20px;}
 .proj-deck{font-size:15px;line-height:1.7;color:var(--c-600);margin-top:16px;max-width:calc((100% + var(--gutter)) / 6 * 5 - var(--gutter));}
 @media(max-width:760px){.pf-deck,.proj-deck{max-width:none;}}
 .proj-board{display:flex;flex-direction:column;gap:16px;align-items:center;}
 .proj-cap{font-family:var(--mono);font-size:12px;color:var(--c-700);letter-spacing:0.04em;}
 .pp{flex:0 0 340px;max-width:340px;border:0.5px solid var(--c-800);border-radius:28px;overflow:hidden;background:var(--c-black);display:flex;flex-direction:column;}
-@media(max-width:760px){.proj-board .pp{flex-basis:100%;max-width:none;}}
+.proj-board .pp{flex:0 0 auto;max-width:none;width:100%;display:block;height:370px;-webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 80px, #000 calc(100% - 56px), transparent 100%);mask-image:linear-gradient(to bottom, transparent 0, #000 80px, #000 calc(100% - 56px), transparent 100%);}
+.proj-board .ppg{margin-top:-190px;}
 .pp>.pp-screen,.pp>.ppg{flex:1;}
 .pp-screen{display:flex;flex-direction:column;padding:24px 24px 32px;}
 .pp-top{display:flex;justify-content:space-between;align-items:center;padding-bottom:20px;border-bottom:0.5px solid var(--c-900);}
@@ -309,17 +310,17 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   .compounds-section>.section-eyebrow,.how-section>.section-eyebrow,.dont-section>.section-eyebrow,.portfolios-section>.section-eyebrow{grid-column:1 / 7;}
   .how-section .how-steps,.how-section .how-closing,.dont-section .dont-rows,.portfolios-section .pf-right{grid-column:7 / 13;}
   .portfolios-section .pf-head{grid-column:1 / 7;}
-  .portfolios-section .pf-rows{grid-column:1 / 13;}
-  .compounds-section .compounds-prose{grid-column:7 / 13;grid-row:1 / 4;margin-top:0;}
-  .compounds-section .compounds-headline{grid-column:1 / 6;grid-row:2;}
-  .compounds-section>.section-eyebrow{grid-row:1;}
+  .portfolios-section .pf-rows{grid-column:7 / 13;}
+  .portfolios-section .pf-row{grid-template-columns:repeat(6,1fr);}
+  .portfolios-section .pf-row-head{grid-column:1 / 3;}
+  .portfolios-section .pf-row-detail{grid-column:3 / 7;}
+  .compounds-section .compounds-headline{grid-column:1 / -1;grid-row:auto;}
+  .compounds-section>.section-eyebrow{grid-column:1 / -1;grid-row:auto;justify-self:center;}
 }
 @media(min-width:1200px){
   .proj-section{align-items:center;}
   .proj-section .proj-head{margin-bottom:0;}
   .proj-section .proj-board{grid-column:9 / 13;display:grid;grid-template-columns:1fr;row-gap:16px;justify-items:start;}
-  .proj-section .proj-board .pp{max-width:none;width:100%;display:block;height:370px;}
-  .proj-section .proj-board .ppg{margin-top:-190px;}
   .proj-section .proj-board .pp>.pp-screen,.proj-section .proj-board .pp>.ppg{flex:1;}
 }
 @media(max-width:900px){.how-section,.compounds-section,.dont-section,.accounts-section,.portfolios-section,.proj-section,.perf-section,.cta-section{padding:72px 0;}}
@@ -428,14 +429,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 <div class="container">
 <section class="compounds-section">
   <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 01</span><span class="se-name">The Decision Is the Risk</span></div>
-  <h2 class="compounds-headline ri" style="--d:0.04s">Removing the decision removes the moment of failure.</h2>
-  <div class="compounds-prose">
-    <p class="ri" style="--d:0.04s">The most costly investing mistake most people make is not choosing the wrong stock. It is selling during a downturn, pausing contributions when conviction weakens, or waiting for the right moment to start.</p>
-    <p class="ri" style="--d:0.08s">Weekly contributions accumulate through market cycles without requiring the investor to make a correct call at the wrong time.</p>
-    <p class="ri" style="--d:0.12s">Held to a schedule, contributions no longer depend on how an investor feels in a given week. The system keeps funding the goal through rising, falling, and flat markets, which is exactly when most people hesitate.</p>
-    <p class="ri" style="--d:0.16s">Over a long horizon, outcomes are decided less by which assets are chosen than by whether contributions continue without interruption. The system is built to protect that continuity.</p>
-    <p class="ri" style="--d:0.20s">Managed is not passive. It is disciplined. The discipline is in the consistency, not the strategy.</p>
-  </div>
+  <h2 class="compounds-headline ri" style="--d:0.04s">Removing the decision removes the point of failure.<br>Managed is not passive. It is disciplined.<br>The discipline is not in choosing the strategy. It is in maintaining consistency.</h2>
 </section>
 </div>
 
