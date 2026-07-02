@@ -60,10 +60,10 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .menu-bottom .mb-left{display:flex;flex-direction:column;gap:4px;}.menu-bottom .mb-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
 .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--frame); box-sizing: border-box; }
 @media(max-width:900px){.container{padding:0 24px;}}
-.page-header{padding:120px 0;border-bottom:0.5px solid var(--c-800);background:linear-gradient(180deg,var(--c-black) 0%,var(--c-surface) 62%,var(--c-surface) 100%);position:relative;overflow:hidden;min-height:793px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;}
+.page-header{padding:140px 0 0;border-bottom:0.5px solid var(--c-800);background:linear-gradient(180deg,var(--c-black) 0%,var(--c-surface) 62%,var(--c-surface) 100%);position:relative;overflow:hidden;min-height:680px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;}
 .page-header .container{position:relative;z-index:1;}
-.pg-art{position:absolute;top:0;right:calc(max(0px,(100% - var(--maxw))/2) + var(--frame));height:100%;width:clamp(340px,35vw,500px);z-index:0;pointer-events:none;display:flex;align-items:center;justify-content:center;padding-top:0;box-sizing:border-box;}
-.pg-art canvas{width:clamp(340px,35vw,500px);height:clamp(340px,35vw,500px);display:block;}
+.pg-art{position:absolute;top:140px;right:calc(max(0px,(100% - var(--maxw))/2) + var(--frame));height:calc(100% - 140px);width:clamp(340px,35vw,500px);z-index:0;pointer-events:none;display:flex;align-items:center;justify-content:center;padding-top:0;box-sizing:border-box;}
+.pg-art canvas{width:clamp(306px,31.5vw,450px);height:clamp(306px,31.5vw,450px);display:block;}
 @media(max-width:760px){.page-header{padding:128px 0 88px;min-height:auto;display:flex;flex-direction:column;}.page-header .container{order:1;}.page-header .page-title,.page-header .page-deck{max-width:none;}.page-header .page-title{font-size:clamp(24px,7.4vw,28px);}.pg-art{position:static;order:2;width:100%;height:auto;left:auto;right:auto;top:auto;padding-top:0;margin-top:40px;opacity:0.8;}.pg-art canvas{width:clamp(280px,84vw,380px);height:clamp(280px,84vw,380px);}}
 .ph-text{grid-column:1 / 8;}
 .ph-figure{grid-column:8 / 13;position:relative;}
@@ -83,8 +83,8 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .page-breadcrumb{font-size:12px;color:var(--c-700);letter-spacing:0.06em;margin-bottom:36px;display:flex;align-items:center;gap:10px;}
 .page-breadcrumb a{color:var(--c-700);text-decoration:none;}.page-breadcrumb .sep{color:var(--c-800);}.page-breadcrumb .current{color:var(--c-200);}
 .page-masthead{font-size:13px;color:var(--c-700);letter-spacing:0.04em;font-feature-settings:'tnum' 1;margin-bottom:20px;}
-.page-title{font-size:clamp(30px,4.4vw,60px);line-height:1.12;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:28px;max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));}
-.page-deck{font-size:clamp(17px,1.6vw,22px);line-height:1.4;letter-spacing:-0.015em;color:var(--c-400);max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));}
+.page-title{font-size:clamp(30px,4.4vw,40px);line-height:1.25;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:28px;max-width:calc((100% + var(--gutter)) / 12 * 8 - var(--gutter));}
+.page-deck{font-size:clamp(17px,1.6vw,18px);line-height:1.55;letter-spacing:-0.015em;color:var(--c-400);max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));}
 .wordmarks{padding:32px 0;}
 .wordmark-row{display:grid;grid-template-columns:minmax(0,400px) 1fr;gap:80px;align-items:center;padding:56px 0;border-bottom:0.5px solid var(--c-900);text-decoration:none;color:inherit;transition:padding 0.3s ease;}
 .wordmark-row:first-of-type{border-top:0.5px solid var(--c-900);}
@@ -98,13 +98,13 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .wm-name-wrap{display:flex;align-items:center;justify-content:flex-end;gap:24px;}
 .wm-name{font-size:clamp(28px,4vw,56px);line-height:1.05;letter-spacing:-0.03em;color:var(--c-200);text-align:right;transition:color 0.2s ease;white-space:nowrap;}
 .wm-arrow{font-size:24px;color:var(--c-700);transition:all 0.3s ease;flex-shrink:0;}
-@media(max-width:900px){.wordmark-row{grid-template-columns:1fr;gap:24px;padding:40px 0;}.wm-name-wrap{justify-content:flex-start;}.wm-name{text-align:left;}}
+@media(max-width:900px){.wordmark-row{grid-template-columns:1fr;gap:24px;padding:40px 0;}.wm-name-wrap{justify-content:center;}.wm-name{text-align:left;}}
 .intro{padding:96px 0;}
-.declarative{font-size:clamp(28px,3.4vw,34px);line-height:1.18;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;max-width:880px;text-wrap:balance;}
+.declarative{font-size:clamp(22px,2.6vw,28px);line-height:1.18;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;max-width:880px;text-wrap:balance;}
 .prose{font-size:15px;line-height:1.7;color:var(--c-600);max-width:720px;margin-top:32px;}
 .prose p{text-wrap:balance;}.prose p+p{margin-top:14px;}.prose em{font-style:normal;color:var(--c-200);}
 .cta-section{text-align:center;padding:160px 0 100px;border-top:0.5px solid var(--c-900);}
-.cta-canon{font-size:clamp(28px,3.4vw,34px);line-height:1.2;letter-spacing:-0.025em;color:var(--c-200);margin:0 auto 48px;max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));text-wrap:balance;}
+.cta-canon{font-size:clamp(22px,2.6vw,28px);line-height:1.2;letter-spacing:-0.025em;color:var(--c-200);margin:0 auto 48px;max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));text-wrap:balance;}
 @media(max-width:760px){.cta-canon{max-width:none;font-size:clamp(20px,1.8vw,24px);}}
 .cta-button{display:inline-flex;align-items:center;gap:8px;font-size:15px;color:var(--c-white);text-decoration:none;}
 .cta-button .arr{display:inline-flex;align-items:center;line-height:1;}
@@ -123,7 +123,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .footer-legal:first-of-type{margin-top:36px;}
 .footer-legal a{color:var(--c-700);text-decoration:underline;}
 .footer-reset{display:inline-block;font-size:11px;color:var(--c-700);text-decoration:underline;margin-top:32px;}
-@media (prefers-reduced-motion: no-preference){.ri{opacity:0;transform:translateY(24px);transition:opacity 0.7s cubic-bezier(0.2,0.6,0.2,1),transform 0.7s cubic-bezier(0.2,0.6,0.2,1);transition-delay:var(--d,0s);}.ri.in{opacity:1;transform:none;}}
+@media (prefers-reduced-motion: no-preference){.ri{opacity:0;transition:opacity 0.7s cubic-bezier(0.2,0.6,0.2,1);transition-delay:var(--d,0s);}.ri.in{opacity:1;transform:none;}}
 
 /* Managed body sections */
 .page-eyebrow{font-family:var(--mono);font-size:12px;color:var(--c-700);letter-spacing:0.04em;margin-bottom:28px;}
@@ -146,7 +146,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .compounds-section{padding:130px 0;}
 .compounds-prose p{font-size:15px;line-height:1.7;color:var(--c-600);letter-spacing:-0.01em;}
 .compounds-prose p+p{margin-top:24px;}
-.compounds-headline{font-size:clamp(28px,3.4vw,34px);line-height:1.18;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:0;}
+.compounds-headline{font-size:clamp(22px,2.6vw,28px);line-height:1.18;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:0;}
 .compounds-section .section-eyebrow{margin-bottom:28px;}
 
 .dont-section{padding:130px 0;}
@@ -219,7 +219,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 @media(max-width:760px){.portfolios-section .pf-steps,.portfolios-section .pf-right{display:none;}.pf-carousel{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;margin:0 -24px;padding:4px 24px 0;scrollbar-width:none;}.pf-carousel::-webkit-scrollbar{display:none;}.pf-card{flex:0 0 84%;scroll-snap-align:center;display:flex;flex-direction:column;}.pf-dots{display:flex;justify-content:center;gap:8px;margin-top:24px;}.pf-dot{width:6px;height:6px;border:0.5px solid var(--c-700);}.pf-dot.is-on{background:var(--c-400);border-color:var(--c-400);}}
 .pf-head{margin-bottom:48px;}
 .pf-head .section-eyebrow{margin-bottom:0;}
-.pf-headline{font-size:clamp(28px,3.4vw,34px);line-height:1.18;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:20px;}
+.pf-headline{font-size:clamp(22px,2.6vw,28px);line-height:1.18;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:20px;}
 .pf-deck{font-size:15px;line-height:1.7;color:var(--c-600);margin-top:16px;max-width:calc((100% + var(--gutter)) / 6 * 5 - var(--gutter));}
 .pf-steps{margin-top:0;display:flex;flex-direction:column;}
 .pf-step{position:relative;display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;padding:18px 0;background:none;border:none;border-top:0.5px solid var(--c-900);text-align:left;cursor:pointer;font-family:inherit;transition:padding-left 0.25s ease;}
@@ -238,7 +238,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 
 .proj-head{margin-bottom:48px;}
 .proj-head .section-eyebrow{margin-bottom:0;}
-.proj-headline{font-size:clamp(28px,3.4vw,34px);line-height:1.18;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:20px;}
+.proj-headline{font-size:clamp(22px,2.6vw,28px);line-height:1.18;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:20px;}
 .proj-deck{font-size:15px;line-height:1.7;color:var(--c-600);margin-top:16px;max-width:calc((100% + var(--gutter)) / 6 * 5 - var(--gutter));}
 @media(max-width:760px){.pf-deck,.proj-deck{max-width:none;}}
 .proj-board{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;align-items:stretch;}
@@ -358,11 +358,11 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   <div class="nav-links"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html" class="active">Managed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a></div>
   
   
-  <div class="navbar-right"><div class="lang-toggle"><span class="lt active">EN</span><span class="sep">·</span><span class="lt">FR</span></div><a href="II Site V2 - GetTheApp.html" class="navbar-cta">Get Access</a><button class="hamburger" type="button"><span></span><span></span></button></div>
+  <div class="navbar-right"><div class="lang-toggle"><span class="lt active">EN</span><span class="sep">·</span><span class="lt">FR</span></div><a href="II Site V2 - GetTheApp.html" class="navbar-cta">Get the App</a><button class="hamburger" type="button"><span></span><span></span></button></div>
 </div></nav>
 <div class="menu-overlay">
   <div class="menu-top"><a href="index.html" class="ml-logo"><img src="Logo.svg" alt="II"></a><button class="ml-close" type="button">Close ×</button></div>
-  <div class="menu-center"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html" class="active">Managed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a><a href="II Site V2 - GetTheApp.html">Get Access</a></div>
+  <div class="menu-center"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html" class="active">Managed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a><a href="II Site V2 - GetTheApp.html">Get the App</a></div>
   <div class="menu-bottom"><div class="mb-left"><span>Intelligent Investing</span><span>No. 01 · 2026</span></div><div class="mb-right"><span>Mogo Inc.</span><span>Orion Digital · TSX·NASDAQ : ORIO</span></div></div>
 </div>
 
@@ -417,9 +417,9 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   if('IntersectionObserver' in window){new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)start();else stop();});},{threshold:0}).observe(cv);}
   if('ResizeObserver' in window){new ResizeObserver(function(){size();if(reduce)draw();}).observe(cv);}
 })();</script>
-<div class="container">    <h1 class="page-title ri" style="--d:0.08s">The market, every week, without the decision.</h1>
+<div class="container">    <div class="page-eyebrow ri" style="--d:0.04s">Managed</div><h1 class="page-title ri" style="--d:0.08s">The market, every week, without the decision.</h1>
     <div class="page-deck ri" style="--d:0.16s">Answer a few questions. The system matches you to a portfolio and invests a weekly contribution, automatically.</div>
-    <div class="page-actions ri" style="--d:0.24s"><a href="II Site V2 - GetTheApp.html" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Get Access</span><span>Get Access</span></span></span></a></div>
+    <div class="page-actions ri" style="--d:0.24s"><a href="II Site V2 - GetTheApp.html" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Get the App</span><span>Get the App</span></span></span></a></div>
   </div>
 </section>
 
@@ -678,7 +678,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 <div class="container">
 <section class="cta-section">
   <div class="cta-canon">Managed is available as part of the Intelligent Investing subscription.</div>
-  <a href="II Site V2 - GetTheApp.html" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Get Access</span><span>Get Access</span></span></span></a>
+  <a href="II Site V2 - GetTheApp.html" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Get the App</span><span>Get the App</span></span></span></a>
 </section>
 </div>
 
@@ -733,5 +733,10 @@ hamburger.addEventListener('click',e=>{e.stopPropagation();menuOverlay.classList
   if(carousel&&dots.length){carousel.addEventListener('scroll',function(){var i=Math.round(carousel.scrollLeft/(carousel.scrollWidth/dots.length));i=Math.max(0,Math.min(dots.length-1,i));dots.forEach(function(dt,j){dt.classList.toggle('is-on',j===i);});},{passive:true});}
 })();</script>
 <script src="grid-overlay.js"></script>
+<style>
+/* de-phone (brief P1): drop consumer-app phone corners on product mockups. no status bar or screen gloss present on this page. */
+.pf-phone { border-radius: 4px; }
+.pp { border-radius: 4px; }
+</style>
 </body>
 </html>

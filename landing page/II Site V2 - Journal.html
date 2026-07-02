@@ -56,10 +56,10 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .menu-bottom .mb-left{display:flex;flex-direction:column;gap:4px;}.menu-bottom .mb-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
 .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--frame); box-sizing: border-box; }
 @media(max-width:900px){.container{padding:0 24px;}section.articles{padding:72px 0;}}
-.page-header{padding:120px 0;border-bottom:0.5px solid var(--c-800);background:linear-gradient(180deg,var(--c-black) 0%,var(--c-surface) 62%,var(--c-surface) 100%);position:relative;overflow:hidden;min-height:793px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;}
+.page-header{padding:140px 0 0;border-bottom:0.5px solid var(--c-800);background:linear-gradient(180deg,var(--c-black) 0%,var(--c-surface) 62%,var(--c-surface) 100%);position:relative;overflow:hidden;min-height:680px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;}
 .page-header .container{position:relative;z-index:1;}
-.pg-art{position:absolute;top:0;right:calc(max(0px,(100% - var(--maxw))/2) + var(--frame));height:100%;width:clamp(340px,35vw,500px);z-index:0;pointer-events:none;display:flex;align-items:center;justify-content:center;padding-top:0;box-sizing:border-box;}
-.pg-art canvas{width:clamp(340px,35vw,500px);height:clamp(340px,35vw,500px);display:block;}
+.pg-art{position:absolute;top:140px;right:calc(max(0px,(100% - var(--maxw))/2) + var(--frame));height:calc(100% - 140px);width:clamp(340px,35vw,500px);z-index:0;pointer-events:none;display:flex;align-items:center;justify-content:center;padding-top:0;box-sizing:border-box;}
+.pg-art canvas{width:clamp(306px,31.5vw,450px);height:clamp(306px,31.5vw,450px);display:block;}
 @media(max-width:760px){.page-header{padding:128px 0 88px;min-height:auto;display:flex;flex-direction:column;}.page-header .container{order:1;}.page-header .page-title,.page-header .page-deck{max-width:none;}.page-header .page-title{font-size:clamp(24px,7.4vw,28px);}.pg-art{position:static;order:2;width:100%;height:auto;left:auto;right:auto;top:auto;padding-top:0;margin-top:40px;opacity:0.8;}.pg-art canvas{width:clamp(280px,84vw,380px);height:clamp(280px,84vw,380px);}}
 .lang-toggle{display:inline-flex;align-items:center;gap:8px;font-size:13px;letter-spacing:0.02em;font-feature-settings:'tnum' 1;}
 .lang-toggle .lt{color:var(--c-700);text-decoration:none;cursor:pointer;transition:color 0.15s ease;}
@@ -68,8 +68,8 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .lang-toggle .sep{color:var(--c-800);}
 .page-breadcrumb{font-family:var(--mono);font-size:12px;color:var(--c-700);letter-spacing:0.06em;margin-bottom:36px;display:flex;align-items:center;gap:10px;}
 .page-breadcrumb a{color:var(--c-700);text-decoration:none;}.page-breadcrumb .sep{color:var(--c-800);}.page-breadcrumb .current{color:var(--c-200);}
-.page-title{font-size:clamp(30px,4.4vw,60px);line-height:1.12;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:28px;max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));}
-.page-deck{font-size:clamp(17px,1.6vw,22px);line-height:1.4;letter-spacing:-0.015em;color:var(--c-400);max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));}
+.page-title{font-size:clamp(30px,4.4vw,40px);line-height:1.25;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:28px;max-width:calc((100% + var(--gutter)) / 12 * 8 - var(--gutter));}.page-eyebrow{font-family:var(--mono);font-size:12px;color:var(--c-700);letter-spacing:0.04em;margin-bottom:28px;}
+.page-deck{font-size:clamp(17px,1.6vw,18px);line-height:1.55;letter-spacing:-0.015em;color:var(--c-400);max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));}
 .articles{padding:130px 0;}
 .article-row{display:grid;grid-template-columns:120px 1fr 200px;gap:48px;align-items:baseline;padding:40px 0;border-bottom:0.5px solid var(--c-900);text-decoration:none;color:inherit;transition:all 0.3s ease;}
 .article-row:first-of-type{border-top:0.5px solid var(--c-900);}
@@ -114,7 +114,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .ar-arrow{display:inline-block;vertical-align:middle;width:16px;height:16px;margin-left:10px;color:var(--c-700);opacity:0;transform:translateX(-4px);transition:opacity 0.3s ease,transform 0.3s cubic-bezier(0.2,0.6,0.2,1),color 0.15s ease;}
 .article-row:hover .ar-arrow{opacity:1;transform:none;color:var(--c-200);}
 @media (prefers-reduced-motion: no-preference){
-  .ri{opacity:0;transform:translateY(24px);transition:opacity 0.7s cubic-bezier(0.2,0.6,0.2,1),transform 0.7s cubic-bezier(0.2,0.6,0.2,1);transition-delay:var(--d,0s);}
+  .ri{opacity:0;transition:opacity 0.7s cubic-bezier(0.2,0.6,0.2,1);transition-delay:var(--d,0s);}
   .ri.in{opacity:1;transform:none;}
 }
 </style>
@@ -123,11 +123,11 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 <nav class="navbar"><div class="navbar-inner">
   <a href="index.html" class="navbar-brand"><img src="Logo.svg" alt="II"></a>
   <div class="nav-links"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Journal.html" class="active">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a></div>
-  <div class="navbar-right"><div class="lang-toggle"><span class="lt active">EN</span><span class="sep">·</span><span class="lt">FR</span></div><a href="II Site V2 - GetTheApp.html" class="navbar-cta">Get Access</a><button class="hamburger" type="button"><span></span><span></span></button></div>
+  <div class="navbar-right"><div class="lang-toggle"><span class="lt active">EN</span><span class="sep">·</span><span class="lt">FR</span></div><a href="II Site V2 - GetTheApp.html" class="navbar-cta">Get the App</a><button class="hamburger" type="button"><span></span><span></span></button></div>
 </div></nav>
 <div class="menu-overlay">
   <div class="menu-top"><a href="index.html" class="ml-logo"><img src="Logo.svg" alt="II"></a><button class="ml-close" type="button">Close ×</button></div>
-  <div class="menu-center"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Journal.html" class="active">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a><a href="II Site V2 - GetTheApp.html">Get Access</a></div>
+  <div class="menu-center"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Journal.html" class="active">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a><a href="II Site V2 - GetTheApp.html">Get the App</a></div>
   <div class="menu-bottom"><div class="mb-left"><span>Intelligent Investing</span><span>No. 01 · 2026</span></div><div class="mb-right"><span>Mogo Inc.</span><span>Orion Digital · TSX·NASDAQ : ORIO</span></div></div>
 </div>
 
@@ -199,7 +199,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   if('ResizeObserver' in window){new ResizeObserver(function(){size();if(reduce)draw();}).observe(cv);}
 })();</script>
 <div class="container">
-  <h1 class="page-title ri" style="--d:0.08s">Essays on judgment, capital, and discipline.</h1>
+  <div class="page-eyebrow ri" style="--d:0.04s">Journal</div><h1 class="page-title ri" style="--d:0.08s">Essays on judgment, capital, and discipline.</h1>
   <div class="page-deck ri" style="--d:0.16s">Essays, market commentary, and doctrine deep-dives. Published periodically. Read them in any order.</div>
 </div>
 </section>

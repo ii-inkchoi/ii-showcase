@@ -60,14 +60,14 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:var(--c-black);
 .menu-bottom .mb-left{display:flex;flex-direction:column;gap:4px;}.menu-bottom .mb-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
 .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--frame); box-sizing: border-box; }
 @media(max-width:900px){.container{padding:0 24px;}section.memo-section,section.how-section,section.acc-section,section.accounts-section,section.docs-section,section.cta-section{padding:72px 0;}}
-.page-header{padding:120px 0;border-bottom:0.5px solid var(--c-800);background:linear-gradient(180deg,var(--c-black) 0%,var(--c-surface) 62%,var(--c-surface) 100%);position:relative;overflow:hidden;min-height:793px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;}
+.page-header{padding:140px 0 0;border-bottom:0.5px solid var(--c-800);background:linear-gradient(180deg,var(--c-black) 0%,var(--c-surface) 62%,var(--c-surface) 100%);position:relative;overflow:hidden;min-height:680px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;}
 .page-header .container{position:relative;z-index:1;}
-.pg-art{position:absolute;top:0;right:calc(max(0px,(100% - var(--maxw))/2) + var(--frame));height:100%;width:clamp(340px,35vw,500px);z-index:0;pointer-events:none;display:flex;align-items:center;justify-content:center;padding-top:0;box-sizing:border-box;}
-.pg-art canvas{width:clamp(340px,35vw,500px);height:clamp(340px,35vw,500px);display:block;}
+.pg-art{position:absolute;top:140px;right:calc(max(0px,(100% - var(--maxw))/2) + var(--frame));height:calc(100% - 140px);width:clamp(340px,35vw,500px);z-index:0;pointer-events:none;display:flex;align-items:center;justify-content:center;padding-top:0;box-sizing:border-box;}
+.pg-art canvas{width:clamp(306px,31.5vw,450px);height:clamp(306px,31.5vw,450px);display:block;}
 @media(max-width:760px){.page-header{padding:128px 0 88px;min-height:auto;display:flex;flex-direction:column;}.page-header .container{order:1;}.page-header .page-title,.page-header .page-deck{max-width:none;}.page-header .page-title{font-size:clamp(24px,7.4vw,28px);}.pg-art{position:static;order:2;width:100%;height:auto;left:auto;right:auto;top:auto;padding-top:0;margin-top:40px;opacity:0.8;}.pg-art canvas{width:clamp(280px,84vw,380px);height:clamp(280px,84vw,380px);}}
-.page-title{font-size:clamp(30px,4.4vw,60px);line-height:1.12;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:28px;max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));}
-.page-deck{font-size:clamp(17px,1.6vw,22px);line-height:1.4;letter-spacing:-0.015em;color:var(--c-400);max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));}.cta-section{text-align:center;padding:160px 0 100px;border-top:0.5px solid var(--c-900);}
-.cta-canon{font-size:clamp(28px,3.4vw,34px);line-height:1.2;letter-spacing:-0.025em;color:var(--c-200);margin:0 auto 48px;max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));text-wrap:balance;}
+.page-title{font-size:clamp(30px,4.4vw,40px);line-height:1.25;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:28px;max-width:calc((100% + var(--gutter)) / 12 * 8 - var(--gutter));}
+.page-deck{font-size:clamp(17px,1.6vw,18px);line-height:1.55;letter-spacing:-0.015em;color:var(--c-400);max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));}.cta-section{text-align:center;padding:160px 0 100px;border-top:0.5px solid var(--c-900);}
+.cta-canon{font-size:clamp(22px,2.6vw,28px);line-height:1.2;letter-spacing:-0.025em;color:var(--c-200);margin:0 auto 48px;max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));text-wrap:balance;}
 @media(max-width:760px){.cta-canon{max-width:none;font-size:clamp(20px,1.8vw,24px);}}
 .cta-button{display:inline-flex;align-items:center;gap:8px;font-size:15px;color:var(--c-white);text-decoration:none;}
 .cta-button .arr{display:inline-flex;align-items:center;line-height:1;}
@@ -86,14 +86,14 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .footer-legal:first-of-type{margin-top:36px;}
 .footer-legal a{color:var(--c-700);text-decoration:underline;}
 .footer-reset{display:inline-block;font-size:11px;color:var(--c-700);text-decoration:underline;margin-top:32px;}
-@media (prefers-reduced-motion: no-preference){.ri{opacity:0;transform:translateY(24px);transition:opacity 0.6s cubic-bezier(0.2,0.6,0.2,1),transform 0.6s cubic-bezier(0.2,0.6,0.2,1);transition-delay:var(--d,0s);}.ri.in{opacity:1;transform:none;}}
+@media (prefers-reduced-motion: no-preference){.ri{opacity:0;transition:opacity 0.6s cubic-bezier(0.2,0.6,0.2,1);transition-delay:var(--d,0s);}.ri.in{opacity:1;transform:none;}}
 
 /* · Body sections (shared idiom with Managed) · */
 .page-eyebrow{font-family:var(--mono);font-size:12px;color:var(--c-700);letter-spacing:0.04em;margin-bottom:28px;}
 .page-actions{margin-top:40px;}.memo-section{padding:130px 0;}
 .memo-grid{display:grid;grid-template-columns:1fr;gap:48px;align-items:start;}
 @media(min-width:1024px){.memo-grid{grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);row-gap:0;align-items:center;}.memo-text{grid-column:1 / 6;}.memo-grid .dr-doc{grid-column:9 / 13;}}
-.memo-lead{font-size:clamp(28px,3.4vw,34px);line-height:1.18;letter-spacing:-0.03em;color:var(--c-200);margin-bottom:28px;font-weight:400;}
+.memo-lead{font-size:clamp(22px,2.6vw,28px);line-height:1.18;letter-spacing:-0.03em;color:var(--c-200);margin-bottom:28px;font-weight:400;}
 .memo-body{font-size:15px;line-height:1.7;color:var(--c-600);}
 .memo-body p+p{margin-top:14px;}
 .memo-pull{font-size:15px;line-height:1.7;color:var(--c-400);margin-top:28px;text-wrap:balance;}
@@ -121,7 +121,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .acc-section{padding:130px 0;position:relative;}
 .acc-section::after{content:'';position:absolute;top:0;bottom:0;left:50%;width:100vw;transform:translateX(-50%);background:var(--c-surface);z-index:0;}
 .acc-section>*{position:relative;z-index:1;}
-.acc-headline{font-size:clamp(28px,3.4vw,34px);line-height:1.18;letter-spacing:-0.03em;color:var(--c-200);max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));margin-bottom:28px;text-wrap:balance;font-weight:400;}
+.acc-headline{font-size:clamp(22px,2.6vw,28px);line-height:1.18;letter-spacing:-0.03em;color:var(--c-200);max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));margin-bottom:28px;text-wrap:balance;font-weight:400;}
 .acc-rows{margin-top:48px;display:flex;flex-direction:column;}
 .acc-row{padding:44px 0;border-top:0.5px solid var(--c-900);display:grid;grid-template-columns:1fr;gap:32px;align-items:center;}
 .acc-row:last-of-type{border-bottom:0.5px solid var(--c-900);}
@@ -139,7 +139,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .perf-pp{color:var(--c-700);margin-left:6px;font-size:13px;}
 .perf-chev{color:var(--c-700);font-size:14px;font-weight:300;line-height:1;}
 .cal-section{padding:130px 0;}
-.cal-lead{font-size:clamp(28px,3.4vw,34px);line-height:1.18;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;text-wrap:balance;margin:0 0 28px;}
+.cal-lead{font-size:clamp(22px,2.6vw,28px);line-height:1.18;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;text-wrap:balance;margin:0 0 28px;}
 .cal-prose{font-size:15px;line-height:1.7;color:var(--c-600);max-width:calc((100% + var(--gutter)) / 6 * 5 - var(--gutter));}
 .cal-prose + .cal-prose{margin-top:18px;}
 .cal-prose-hi{color:var(--c-200);}
@@ -220,7 +220,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .how-num{font-size:clamp(34px,5vw,40px);line-height:1;color:var(--c-900);letter-spacing:-0.02em;font-weight:300;}
 .how-title{font-size:22px;line-height:1.2;letter-spacing:-0.02em;color:var(--c-white);font-weight:400;margin-bottom:14px;}
 .how-desc{font-size:15px;line-height:1.7;color:var(--c-600);max-width:660px;}
-.how-headline{font-size:clamp(28px,3.4vw,34px);line-height:1.18;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin:28px 0 28px;text-wrap:balance;}
+.how-headline{font-size:clamp(22px,2.6vw,28px);line-height:1.18;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin:28px 0 28px;text-wrap:balance;}
 .how-lead{font-size:15px;line-height:1.7;color:var(--c-600);}
 
 .accounts-section{padding:130px 0;}
@@ -256,11 +256,11 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   <div class="nav-links"><a href="II Site V2 - Self-Directed.html" class="active">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a></div>
   
   
-  <div class="navbar-right"><div class="lang-toggle"><span class="lt active">EN</span><span class="sep">·</span><span class="lt">FR</span></div><a href="II Site V2 - GetTheApp.html" class="navbar-cta">Get Access</a><button class="hamburger" type="button"><span></span><span></span></button></div>
+  <div class="navbar-right"><div class="lang-toggle"><span class="lt active">EN</span><span class="sep">·</span><span class="lt">FR</span></div><a href="II Site V2 - GetTheApp.html" class="navbar-cta">Get the App</a><button class="hamburger" type="button"><span></span><span></span></button></div>
 </div></nav>
 <div class="menu-overlay">
   <div class="menu-top"><a href="index.html" class="ml-logo"><img src="Logo.svg" alt="II"></a><button class="ml-close" type="button">Close ×</button></div>
-  <div class="menu-center"><a href="II Site V2 - Self-Directed.html" class="active">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a><a href="II Site V2 - GetTheApp.html">Get Access</a></div>
+  <div class="menu-center"><a href="II Site V2 - Self-Directed.html" class="active">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a><a href="II Site V2 - GetTheApp.html">Get the App</a></div>
   <div class="menu-bottom"><div class="mb-left"><span>Intelligent Investing</span><span>No. 01 · 2026</span></div><div class="mb-right"><span>Mogo Inc.</span><span>Orion Digital · TSX·NASDAQ : ORIO</span></div></div>
 </div>
 
@@ -317,9 +317,9 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   if('IntersectionObserver' in window){new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)start();else stop();});},{threshold:0}).observe(cv);}
   if('ResizeObserver' in window){new ResizeObserver(function(){size();if(reduce)draw();}).observe(cv);}
 })();</script>
-<div class="container">  <h1 class="page-title ri" style="--d:0.08s">The decision comes before the trade.</h1>
+<div class="container">  <div class="page-eyebrow ri" style="--d:0.04s">Self-Directed</div><h1 class="page-title ri" style="--d:0.08s">The decision comes before the trade.</h1>
   <div class="page-deck ri" style="--d:0.16s">Most investors record outcomes, not the reasoning. Without it, the outcome teaches nothing.</div>
-  <div class="page-actions ri" style="--d:0.24s"><a href="II Site V2 - GetTheApp.html" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Get Access</span><span>Get Access</span></span></span></a></div>
+  <div class="page-actions ri" style="--d:0.24s"><a href="II Site V2 - GetTheApp.html" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Get the App</span><span>Get the App</span></span></span></a></div>
 </div>
 </section>
 
@@ -517,7 +517,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 <div class="container">
 <section class="cta-section">
   <div class="cta-canon">Self-Directed is available as part of the Intelligent Investing subscription.</div>
-  <a href="II Site V2 - GetTheApp.html" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Get Access</span><span>Get Access</span></span></span></a>
+  <a href="II Site V2 - GetTheApp.html" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Get the App</span><span>Get the App</span></span></span></a>
 </section>
 </div>
 
@@ -551,5 +551,12 @@ hamburger.addEventListener('click',e=>{e.stopPropagation();menuOverlay.classList
 </script>
 
 <script>if('IntersectionObserver' in window){var rio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');rio.unobserve(e.target);}});},{threshold:0.14,rootMargin:'0px 0px -8% 0px'});document.querySelectorAll('.ri').forEach(function(el){rio.observe(el);});}else{document.querySelectorAll('.ri').forEach(function(el){el.classList.add('in');});}</script><script src="grid-overlay.js"></script>
+<style>
+/* de-phone (brief P1): drop consumer-app device chrome. status bar, notch, phone corners, screen gloss removed. portrait aspect and content fade kept. */
+.dev-bar, .ap-bar { display: none; }
+.dr-doc { border-radius: 4px; box-shadow: none; }
+.acc-shot { border-radius: 4px; box-shadow: none; }
+.cal-card { border-radius: 4px; box-shadow: none; }
+</style>
 </body>
 </html>

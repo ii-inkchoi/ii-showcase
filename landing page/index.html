@@ -178,9 +178,9 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 .hero-top { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); align-items: center; }
 .hero-main { grid-column: 1 / 9; position: relative; z-index: 1; }
 .hero-eyebrow { font-family: var(--mono); font-size: 12px; color: var(--c-700); letter-spacing: 0.04em; margin-bottom: 36px; }
-.hero-h { font-size: clamp(30px, 4.4vw, 60px); line-height: 1.12; letter-spacing: -0.03em; color: var(--c-200); font-weight: 400; }
+.hero-h { font-size: clamp(30px, 4.4vw, 52px); line-height: 1.25; letter-spacing: -0.03em; color: var(--c-200); font-weight: 400; }
 .hbr { display: none; }
-.hero-sub { font-size: clamp(17px,1.6vw,22px); line-height: 1.4; letter-spacing: -0.015em; color: var(--c-400); max-width: calc((100% + var(--gutter)) / 15 * 10 - var(--gutter)); margin-top: 28px; text-wrap: balance; }
+.hero-sub { font-size: clamp(17px,1.6vw,18px); line-height: 1.55; letter-spacing: -0.015em; color: var(--c-400); max-width: calc((100% + var(--gutter)) / 15 * 10 - var(--gutter)); margin-top: 28px; text-wrap: balance; }
 .hero-cta { margin-top: 40px; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; font-size: 15px; }
 .hero-cta .pri, .hero-cta .sec { display: inline-flex; align-items: center; gap: 8px; }
 .hero-cta .pri { color: var(--c-white); }
@@ -189,6 +189,7 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 .arr-svg { width: 13px; height: 13px; display: block; }
 .arr-trail { display: inline-block; vertical-align: -1px; margin-left: 5px; width: 12px; height: 12px; }
 .hero-figure { grid-column: 9 / 12; position: relative; }
+.hero-figure #heroTorus { transform: scale(0.8); transform-origin: center; }
 .hero-stack { position: absolute; top: 50%; right: -16vw; transform: translateY(-50%); width: min(58vw, 920px); z-index: 0; pointer-events: none; }
 .hero-stack svg { width: 100%; height: auto; display: block; overflow: visible; }
 /* hero - headline + body stay the same on both; the toggle only swaps the figure GRAPHIC (01 torus / 02 app phone on a radar backdrop) */
@@ -282,7 +283,7 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
 
 /* entry sections */
 .entry-head { display: flex; align-items: baseline; gap: 20px; margin-bottom: 28px; }
-.statement { grid-column: 1 / 7; font-size: clamp(28px, 3.4vw, 34px); line-height: 1.12; letter-spacing: -0.025em; color: var(--c-200); font-weight: 400; text-wrap: balance; }
+.statement { grid-column: 1 / 7; font-size: clamp(22px, 2.6vw, 28px); line-height: 1.12; letter-spacing: -0.025em; color: var(--c-200); font-weight: 400; text-wrap: balance; }
 .offering { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: var(--gutter); margin-top: 80px; border-top: 0.5px solid var(--c-900); }
 .offer-item { padding-top: 28px; padding-right: 24px; }
 .offer-name { font-size: 18px; color: var(--c-200); letter-spacing: -0.01em; margin-bottom: 12px; }
@@ -311,11 +312,11 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
 #edge .container { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); }
 #edge .entry-head, #edge .edge-desc, #edge .link { grid-column: 1 / 5; }
 #edge .edge-mark { grid-column: 1 / 6; }
-.edge-mark { font-size: clamp(28px, 3.4vw, 34px); line-height: 1.12; color: var(--c-200); letter-spacing: -0.025em; }
+.edge-mark { font-size: clamp(22px, 2.6vw, 28px); line-height: 1.12; color: var(--c-200); letter-spacing: -0.025em; }
 .edge-desc { font-size: 15px; line-height: 1.7; color: var(--c-600); max-width: none; margin-top: 32px; }
 #entry-04 .otr-2col { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr; column-gap: clamp(16px, 1.6vw, 24px); margin-top: 16px; }
 .otr-col { background: transparent; border: 0; padding: 0; }
-#entry-04 .otr-col .statement { grid-column: auto; font-size: clamp(24px, 2.4vw, 32px); }
+#entry-04 .otr-col .statement { grid-column: auto; font-size: clamp(22px, 2.6vw, 28px); }
 .otr-label { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-700); margin-bottom: 20px; }
 .otr-prose { font-size: 15px; line-height: 1.7; color: var(--c-600); margin-top: 24px; max-width: none; }
 .otr-merged { font-size: clamp(20px, 1.8vw, 24px); line-height: 1.45; color: var(--c-200); letter-spacing: -0.015em; }
@@ -380,7 +381,7 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
 /* module grid */
 .modules { display: flex; flex-direction: column; margin-top: 120px; border-bottom: 0.5px solid var(--c-900); }
 .module { position: relative; display: grid; grid-template-columns: minmax(200px, 1fr) minmax(0, 1.1fr) 72px 18px; align-items: center; gap: 32px; padding: 20px 0; border-top: 0.5px solid var(--c-900); text-decoration: none; color: inherit; }
-.module .m-name { font-size: clamp(26px, 2.6vw, 36px); color: var(--c-700); font-weight: 400; letter-spacing: -0.03em; line-height: 1; transition: color 0.15s ease; }
+.module .m-name { font-size: clamp(22px, 2.6vw, 28px); color: var(--c-700); font-weight: 400; letter-spacing: -0.03em; line-height: 1; transition: color 0.15s ease; }
 .module:hover .m-name { color: var(--c-white); }
 .module .m-fig { height: 180px; border: 0.5px solid var(--c-900); overflow: hidden; transition: border-color 0.3s ease; }
 .module .m-fig img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.08); filter: brightness(0.45); transition: transform 0.5s cubic-bezier(0.2,0.6,0.2,1), filter 0.45s ease; }
@@ -416,7 +417,7 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
 @media (max-width: 900px) { .mb-left, .mb-right { grid-column: 1 / -1; } .mb-right { margin-top: 32px; } .mb-cta-d { display: none !important; } .mb-cta-m { display: inline-flex; grid-column: 1 / -1; margin-top: 24px; } }
 .altitude { font-size: clamp(22px, 2.4vw, 30px); line-height: 1.45; letter-spacing: -0.02em; color: var(--c-400); max-width: 760px; }
 .close-wrap { text-align: center; }
-.close-h { font-size: clamp(28px, 3.4vw, 34px); line-height: 1.12; letter-spacing: -0.025em; color: var(--c-200); font-weight: 400; max-width: calc((100% + var(--gutter)) / 12 * 6 - var(--gutter)); margin-left: auto; margin-right: auto; }
+.close-h { font-size: clamp(22px, 2.6vw, 28px); line-height: 1.12; letter-spacing: -0.025em; color: var(--c-200); font-weight: 400; max-width: calc((100% + var(--gutter)) / 12 * 6 - var(--gutter)); margin-left: auto; margin-right: auto; }
 .cta-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: 44px; font-size: 15px; color: var(--c-white); text-decoration: none; }
 .cta-btn:hover { color: var(--c-200); }
 
@@ -564,7 +565,7 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
 @media (max-width: 760px) { .track { grid-column: 1 / -1; padding-left: 0; border-left: none; } .track + .track { margin-top: 36px; } }
 
 /* journal - changelog-style horizontal timeline */
-.journal-title { font-size: clamp(24px, 3vw, 34px); color: var(--c-200); font-weight: 400; letter-spacing: -0.025em; }
+.journal-title { font-size: clamp(22px, 2.6vw, 28px); color: var(--c-200); font-weight: 400; letter-spacing: -0.025em; }
 .timeline { position: relative; display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); row-gap: 36px; margin-top: 56px; }
 .timeline::before { content: ''; position: absolute; top: 4px; left: 0; right: 0; border-top: 0.5px solid var(--c-800); }
 .tl-item { position: relative; grid-column: span 4; text-decoration: none; color: inherit; }
@@ -668,8 +669,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   .memo-fig .mf-card > *:nth-child(11) { animation-delay: 1.15s; }
   .memo-fig .mf-card > *:nth-child(12) { animation-delay: 1.22s; }
   .memo-fig .mf-dot { animation: memo-pulse 2.4s ease-in-out infinite; }
-  .hero-scroll .sa { animation: scroll-bob 1.8s ease-in-out infinite; }
-  section.hero::before { animation: iceberg-float 7s ease-in-out infinite; }
+  /* scroll-bob + iceberg-float removed. motion kept measured (brief) */
   /* reality ladder - the recording signal: pulse runs the spine, stamps three rows, dies in the dashed gap */
 }
 .rung .node { transition: border-color 0.45s ease, box-shadow 0.45s ease; }
@@ -677,7 +677,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 .rung:not(.gap) .node.lit { border-color: var(--c-white); }
 @media (prefers-reduced-motion: no-preference) {
   /* per-element scroll reveal - rises individually as you scroll */
-  .ri { opacity: 0; transform: translateY(24px); transition: opacity 0.6s cubic-bezier(0.2,0.6,0.2,1), transform 0.6s cubic-bezier(0.2,0.6,0.2,1); transition-delay: var(--d, 0s); }
+  .ri { opacity: 0; transition: opacity 0.6s cubic-bezier(0.2,0.6,0.2,1); transition-delay: var(--d, 0s); }
   .rung.ri { transform: none; }
   .ri.in { opacity: 1; transform: none; }
   /* product placeholders - outline wipes open (0 -> fill) */
@@ -739,7 +739,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     </div>
     <div class="navbar-right">
       <div class="lang-toggle"><span class="lt active">EN</span><span class="sep">·</span><span class="lt">FR</span></div>
-      <a href="II Site V2 - GetTheApp.html" class="navbar-cta">Get Access</a>
+      <a href="II Site V2 - GetTheApp.html" class="navbar-cta">Get the App</a>
       <button class="hamburger" type="button" aria-label="Menu"><span></span><span></span></button>
     </div>
   </div>
@@ -753,7 +753,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     <a href="II Site V2 - Journal.html">Journal</a>
     <a href="II Site V2 - Pricing.html">Pricing</a>
     <a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a>
-    <a href="II Site V2 - GetTheApp.html">Get Access</a>
+    <a href="II Site V2 - GetTheApp.html">Get the App</a>
   </div>
 </div>
 
@@ -766,7 +766,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
         <h1 class="hero-h">The investing industry <br class="hbr">built access.<br>It never built judgment infrastructure.</h1>
         <p class="hero-sub">Access was solved. The decision layer was not.</p>
         <div class="hero-cta">
-          <a href="II Site V2 - GetTheApp.html" class="pri"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Get Access</span><span>Get Access</span></span></span></a>
+          <a href="II Site V2 - GetTheApp.html" class="pri"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Get the App</span><span>Get the App</span></span></span></a>
           <a href="#entry-03" class="sec"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>See the System</span><span>See the System</span></span></span></a>
         </div>
       </div>
@@ -994,7 +994,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   #underwriting .cal-card.in .cg-dot:nth-of-type(3){ transition-delay:0.45s; }
   #underwriting .cal-card.in .cg-dot:nth-of-type(4){ transition-delay:0.6s; }
   #underwriting .cal-card.in .cg-dot:nth-of-type(5){ transition-delay:0.75s; }
-  #underwriting .cal-card.in .cg-dot.sel{ animation:cal-pulse 2.2s ease-in-out 1.1s infinite; }
+  /* cal-pulse removed. selected dot stays static (brief: no attention-only motion) */
   @keyframes cal-pulse{ 0%,100%{ opacity:1; } 50%{ opacity:0.35; } }
 }
 #underwriting .cg-lbl { font-family:var(--mono); fill:var(--c-800); letter-spacing:0.04em; }
@@ -1309,7 +1309,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 <div class="container"><section id="close">
   <div class="close-wrap">
     <h2 class="close-h">The objective was never more decisions.<br>It is a capital allocation system that holds every one to the record.</h2>
-    <a href="II Site V2 - GetTheApp.html" class="cta-btn"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Get Access</span><span>Get Access</span></span></span></a>
+    <a href="II Site V2 - GetTheApp.html" class="cta-btn"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Get the App</span><span>Get the App</span></span></span></a>
   </div>
 </section></div>
 
@@ -1355,12 +1355,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   // motion - per-element scroll reveal + label typing. honors reduced-motion.
   (function () {
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    document.querySelectorAll('[data-type]').forEach(function (el) { el.setAttribute('data-type-text', el.textContent); el.textContent = ''; });
-    function typeEl(el, done) { var full = el.getAttribute('data-type-text') || ''; el.textContent = ''; el.classList.add('type-caret'); var i = 0; (function tick() { if (i <= full.length) { el.textContent = full.slice(0, i); i++; setTimeout(tick, 40); } else { el.classList.remove('type-caret'); if (done) done(); } })(); }
-    function typeSection(sec) { var els = sec.querySelectorAll('[data-type]'); var idx = 0; (function next() { if (idx < els.length) { typeEl(els[idx], function () { idx++; next(); }); } })(); }
-    var tio = new IntersectionObserver(function (entries) { entries.forEach(function (e) { if (e.isIntersecting) { typeSection(e.target); tio.unobserve(e.target); } }); }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
-    document.querySelectorAll('section').forEach(function (s) { tio.observe(s); });
-    var hero = document.querySelector('section.hero'); if (hero) typeSection(hero);
+    // typewriter removed (brief: institutional register, no playful motion). labels render statically.
 
     function stagger(q, step) { document.querySelectorAll(q).forEach(function (el, i) { el.style.setProperty('--d', (i * step).toFixed(2) + 's'); }); }
     stagger('.rung', 0.08); stagger('#entry-03 .module', 0.08); stagger('#journal .tl-item', 0.08); stagger('footer .footer-legal', 0.08);
@@ -1877,5 +1872,14 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 
 </script>
 <script src="grid-overlay.js"></script>
+<style>
+/* de-phone (brief P1): drop consumer-app device chrome. status bar, notch, phone corners, screen gloss removed. portrait aspect kept so captures still read as mobile, shown as documented artifacts. */
+.dev-bar, .ap-bar { display: none; }
+#entry-03 .sys-phone { border-radius: 4px; }
+.dr-doc, #decision-record .dr-doc { border-radius: 4px; box-shadow: none; }
+.systrack .ap-card { border-radius: 4px 4px 0 0; box-shadow: none; }
+#underwriting .cal-card { border-radius: 4px; box-shadow: none; }
+#benchmark .bm-card { border-radius: 4px; box-shadow: none; }
+</style>
 </body>
 </html>
