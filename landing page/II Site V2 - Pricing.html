@@ -125,6 +125,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .section-eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:0.04em;margin-bottom:28px;display:flex;gap:20px;}.se-no{color:var(--c-700);}.se-name{color:var(--c-400);}
 
 .price-section{padding:130px 0 56px;}
+.price-box{display:inline-block;border:0.5px solid var(--c-800);padding:36px 40px;}
 .price-line{display:flex;align-items:baseline;gap:14px;}
 .price-display{font-size:clamp(40px,4.4vw,56px);line-height:0.95;letter-spacing:-0.045em;color:var(--c-200);font-weight:300;}
 .price-period{font-size:12px;color:var(--c-700);letter-spacing:0.04em;}
@@ -253,8 +254,10 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 <section class="included-section">
   <div class="included-head">
   <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 01</span><span class="se-name">The Membership</span></div>
-  <div class="price-line ri" style="--d:0.04s"><span class="price-display">$20</span><span class="price-period">Per Month</span></div>
-  <p class="price-note ri" style="--d:0.12s">Everything is included.</p>
+  <div class="price-box ri" style="--d:0.04s">
+    <div class="price-line"><span class="price-display">$20</span><span class="price-period">Per Month</span></div>
+    <p class="price-note">Everything is included.</p>
+  </div>
   </div>
   <div class="included-main">
   <div class="included-rows">
