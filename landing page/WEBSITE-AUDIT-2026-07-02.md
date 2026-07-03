@@ -3,14 +3,20 @@
 
 ---
 
-## 1. Scope for July 15 (per the 07-02 team call)
+## 1. Build order for July 15 (per the 07-02 team call)
 
-**The priority pages are: Home + Self-Directed + Managed** (+ whatever compliance requires). These three must ship on the 15th.
+**Priority, most important → least important:**
 
-**Our recommendation: Journal and Knowledge Hub go in AFTER launch.**
-The base templates/frames for both are already built (by Inkyung) — but they are not simple static pages: article system, content + image migration from Edge, and the KH content direction is still changing. **Miguel — if wiring these up needs meaningful extra work on your side, tell us; that settles it as post-launch.** If you can genuinely fit everything including compliance review by the 15th, your call.
+> **Home** → **Self-Directed · Managed** → Pricing → About · Manifesto · GetTheApp → Benchmark · Calibration · Memo → Journal → **Knowledge Hub**
 
-Everything else (Pricing, About, Manifesto, GetTheApp, Benchmark/Calibration/Memo) ships if time allows, otherwise right after launch. We would rather de-scope than miss the date.
+- **Most important: Home** — and with it Self-Directed + Managed as a set. These three must ship July 15 (+ whatever compliance requires). Start here; get them solid before anything else.
+- Pricing leads the second wave (visitors always look for price).
+- Benchmark/Calibration/Memo currently have no entry links from Home — genuinely deferrable.
+- **Least important: Knowledge Hub** (+ its TFSA article) — heaviest build, and its content direction is changing, so building it now risks building it twice.
+
+**Journal and Knowledge Hub — we recommend post-launch.** The base templates/frames are already built (by Inkyung), but they are not simple static pages: article system, content + image migration from Edge, and the KH content direction is still changing. **If wiring these up needs meaningful extra work on your side, tell us — that settles it as post-launch.** If you can genuinely fit everything including compliance review by the 15th, your call.
+
+Either way: after you've scoped it, **tell us what you're cutting.** We would rather de-scope than miss the date.
 
 ---
 
@@ -70,3 +76,9 @@ Everything else (Pricing, About, Manifesto, GetTheApp, Benchmark/Calibration/Mem
 | "Sizing → Role / Core Position" label on site memo cards | Inkyung (after wording confirm) |
 | Benchmark/Calibration/Memo entry links | Inkyung (when pages ship) |
 | KH content reprioritization | Post-V1 |
+| Closing CTA missing on Journal (×7) and KH (×2) pages | Post-V1 (add when those pages ship) |
+| Reveal animations sparse on Benchmark/Calibration/Memo | Post-V1 polish |
+| Manifesto closing uses custom `.bottom-canon` (looks identical, non-standard class) | Post-V1 hygiene |
+| Footer: Home is 4-column rich, subpages 2-column minimal | Confirm intentional |
+
+**Design audit — final verdict (2026-07-02, full sweep):** all 18 pages pass all 9 design rules (tokens/validator, file integrity, line-color tiers, type scale, section spacing 160/88, mobile text-wrap, no em-dashes, banner mobile sizing, zero deleted-file refs). Also verified rendered: zero mobile horizontal overflow, navbar identical on every page, no duplicate IDs. Known intentional exceptions: tiny font sizes (8–10px) inside product-UI replica cards on Managed/Self-Directed mirror the real app screens; Manifesto header and Managed No. 01 use deliberate one-off treatments. "Broken images" flagged in tooling were a preview-environment artifact — files verified valid and render in real browsers.
