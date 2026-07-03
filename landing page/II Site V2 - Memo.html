@@ -129,24 +129,33 @@ section { padding: 160px 0; position: relative; }
 
 .plate { display: grid; grid-template-columns: 1fr 500px; gap: 80px; align-items: start; margin-top: 56px; }
 /* memo card - real decision surface (mirrors homepage No. 01) */
-.dr-doc { border: 0.5px solid var(--c-800); background: var(--c-elev); border-radius: 4px; overflow: hidden; position: relative; height: 672px; max-width: 500px; padding-bottom: 32px; -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent 100%); mask-image: linear-gradient(to bottom, #000 82%, transparent 100%); }
-.dr-head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; padding: 22px 28px; border-bottom: 0.5px solid var(--c-900); }
-.dr-tk { font-size: 17px; color: var(--c-200); letter-spacing: -0.01em; }
-.dr-co { font-size: 13px; color: var(--c-700); margin-left: 10px; }
-.dr-link { font-size: 13px; color: var(--c-600); letter-spacing: -0.01em; white-space: nowrap; }
-.dr-fields { margin: 0; }
-.dr-row { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; padding: 20px 28px; border-bottom: 0.5px solid var(--c-1000); }
-.dr-row dt { font-size: 15px; color: var(--c-600); letter-spacing: -0.01em; text-decoration: underline; text-decoration-color: var(--c-900); text-underline-offset: 4px; }
-.dr-row dd { margin: 0; font-size: 15px; color: var(--c-200); letter-spacing: -0.01em; text-align: right; }
-.dr-sub { color: var(--c-700); }
-.dr-case { padding: 18px 28px 20px; border-bottom: 0.5px solid var(--c-1000); }
-.dr-case-label { font-size: 15px; color: var(--c-600); text-decoration: underline; text-decoration-color: var(--c-900); text-underline-offset: 4px; margin-bottom: 12px; }
-.dr-thesis { margin: 0 0 14px; font-size: 15px; line-height: 1.6; color: var(--c-400); max-height: 200px; overflow: hidden; -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 100%); mask-image: linear-gradient(to bottom, #000 55%, transparent 100%); }
-.dr-thesis b { color: var(--c-200); font-weight: 400; }
-.dr-foot { display: flex; justify-content: flex-end; padding: 16px 28px; }
-.dr-foot .dr-link { color: var(--c-200); }
+.dr-doc { border: 0.5px solid var(--c-800); background: var(--c-elev); border-radius: 4px; overflow: hidden; position: relative; height: 800px; padding: 34px 24px 32px; letter-spacing: -0.02em; -webkit-mask-image: linear-gradient(to bottom, #000 90%, transparent 100%); mask-image: linear-gradient(to bottom, #000 90%, transparent 100%); }
+.dr2-id { text-align: right; padding-bottom: 34px; }
+.dr2-name { font-size: 18px; color: var(--c-white); }
+.dr2-price { margin-top: 8px; font-size: 14px; color: var(--c-700); }
+.dr2-chg { font-size: 13px; color: var(--c-800); margin-left: 4px; }
+.dr2-notes { border-top: 0.5px solid var(--c-900); border-bottom: 0.5px solid var(--c-900); padding: 20px 0 24px; margin-bottom: 28px; }
+.dr2-notes-k { font-size: 13px; color: var(--c-white); }
+.dr2-notes-ph { margin-top: 10px; font-size: 13px; color: var(--c-800); }
+.dr2-class { font-size: 14px; color: var(--c-400); }
+.dr2-wt { font-size: 11px; }
+.dr2-h { margin-top: 12px; font-size: 14px; color: var(--c-700); }
+.dr2-pred-k { margin-top: 30px; font-size: 13px; color: var(--c-700); }
+.dr2-pred { margin-top: 8px; font-size: 13px; line-height: 1.65; color: var(--c-400); }
+.dr2-vs { display: flex; justify-content: space-between; align-items: baseline; margin-top: 30px; font-size: 14px; color: var(--c-700); }
+.dr2-vs-p { font-size: 13px; margin-left: 6px; }
+.dr2-case { margin-top: 34px; }
+.dr2-case-k { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--c-700); }
+.dr2-copy { width: 12px; height: 12px; color: var(--c-700); flex: none; }
+.dr2-thesis { margin: 12px 0 0; font-size: 13px; line-height: 1.65; color: var(--c-400); max-height: 107px; overflow: hidden; -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent 100%); mask-image: linear-gradient(to bottom, #000 45%, transparent 100%); }
+.dr2-uw { display: flex; justify-content: space-between; align-items: baseline; border-top: 0.5px solid var(--c-900); margin-top: 24px; padding-top: 18px; font-size: 13px; color: var(--c-700); }
+.dr2-chev { font-size: 16px; font-weight: 300; }
+.dr2-cta { margin-top: 30px; display: flex; justify-content: flex-end; align-items: center; gap: 10px; font-size: 15px; color: var(--c-white); }
+.dr2-cta-arr { width: 18px; height: 14px; flex: none; }
 .plate.reverse { grid-template-columns: 500px 1fr; }
 @media (max-width: 1100px) { .plate, .plate.reverse { grid-template-columns: 1fr; gap: 32px; } }
+@media (max-width: 900px) { .dr-doc { max-width: 380px; height: auto; padding-bottom: 110px; margin: 0 auto; } }
+@media (max-width: 600px) { .dr-doc { padding-left: 18px; padding-right: 18px; } }
 .plate-caption { font-size: 15px; line-height: 1.7; color: var(--c-600); max-width: 540px; }
 .plate-caption .fig-num { display: block; font-size: 12px; color: var(--c-700); letter-spacing: 0.04em; margin-bottom: 14px; }
 .plate-caption .fig-title { display: block; font-size: 22px; color: var(--c-200); letter-spacing: -0.02em; margin-bottom: 24px; }
@@ -304,22 +313,25 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   <div class="sec-head"><span class="sec-num">/03</span><span class="sec-name">Surface</span></div>
   <div class="plate">
     <article class="dr-doc">
-      <header class="dr-head">
-        <div class="dr-id"><span class="dr-tk">AAPL</span><span class="dr-co">Apple Inc</span></div>
-        <span class="dr-link">Underwriting record &rsaquo;</span>
-      </header>
-      <dl class="dr-fields">
-        <div class="dr-row"><dt>Classification</dt><dd>Compounder</dd></div>
-        <div class="dr-row"><dt>Sizing</dt><dd>Core <span class="dr-sub">&middot; 12.2%</span></dd></div>
-        <div class="dr-row"><dt>Confidence</dt><dd>62% <span class="dr-sub">&middot; 3y</span></dd></div>
-        <div class="dr-row"><dt>Idea Origin</dt><dd>13F</dd></div>
-      </dl>
-      <div class="dr-case">
-        <div class="dr-case-label">Investment Case</div>
-        <p class="dr-thesis"><b>Thesis.</b> Apple is a cash-generative compounder in the middle of a Services transition. An installed base of more than two billion active devices turns one-time hardware buyers into recurring, high-margin Services revenue, while pricing power and steady buybacks compound value per share. The risk is hardware maturity in a saturated smartphone market; the case is that ecosystem lock-in and Services carry the next leg.</p>
-        <span class="dr-link">Read Full Memo &rsaquo;</span>
+      <div class="dr2-id">
+        <div class="dr2-name">Apple Inc &middot; AAPL</div>
+        <div class="dr2-price">Last Price &middot; 87.60 CAD <span class="dr2-chg">+1.45%</span></div>
       </div>
-      <footer class="dr-foot"><span class="dr-link">Re-underwrite &rsaquo;</span></footer>
+      <div class="dr2-notes">
+        <div class="dr2-notes-k">Notes</div>
+        <div class="dr2-notes-ph">Record a thought, a thesis, a question.</div>
+      </div>
+      <div class="dr2-class">Compounder &middot; Core Position &middot; 12.2% <span class="dr2-wt">WT</span></div>
+      <div class="dr2-h">1y 7m / 3y</div>
+      <div class="dr2-pred-k">Prediction</div>
+      <div class="dr2-pred">60% chance of compounding 20%+/yr over 3 years</div>
+      <div class="dr2-vs"><span class="dr2-vs-k">vs S&amp;P 500</span><span class="dr2-vs-v">+3,760 CAD <span class="dr2-vs-p">+28.4%</span></span></div>
+      <div class="dr2-case">
+        <div class="dr2-case-k"><span>Investment case June 25th, 2026</span><svg class="dr2-copy" viewBox="0 0 12 12" fill="none" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1"/><path d="M8 4V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h1" stroke="currentColor" stroke-width="1"/></svg></div>
+        <p class="dr2-thesis">Apple is a US growth story in its middle innings. The US flywheel, flagship-led brand-building, app-driven engagement, and disciplined new-box openings that pay back in under a year, can roughly double the US fleet while e-commerce climbs toward 45% of revenue.</p>
+      </div>
+      <div class="dr2-uw"><span>Underwritten Jun 22, 2026 &middot; 87.60 CAD</span><span class="dr2-chev">&rsaquo;</span></div>
+      <div class="dr2-cta"><svg class="dr2-cta-arr" viewBox="0 0 20 16" fill="none" aria-hidden="true"><path d="M2 8H17" stroke="currentColor" stroke-width="1.1"/><path d="M11.5 2.5L17 8L11.5 13.5" stroke="currentColor" stroke-width="1.1"/></svg><span>Capital Decision</span></div>
     </article>
     <div class="plate-caption">
       <span class="fig-num">Fig. 01</span>

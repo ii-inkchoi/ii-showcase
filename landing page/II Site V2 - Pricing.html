@@ -152,6 +152,16 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .faq-a{font-size:15px;line-height:1.7;color:var(--c-600);}
 @media(min-width:760px){.faq-section{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}.faq-section>.section-eyebrow{grid-column:1 / 7;}.faq-section .faq-rows{grid-column:7 / 13;}}
 
+.struct-section{padding:160px 0;}
+.struct-rows{display:flex;flex-direction:column;}
+.struct-row{display:flex;flex-direction:column;gap:12px;padding:32px 0;border-top:0.5px solid var(--c-900);}
+.struct-row:last-of-type{border-bottom:0.5px solid var(--c-900);}
+.struct-title{font-size:18px;color:var(--c-200);letter-spacing:-0.02em;}
+.struct-sub{font-size:14px;color:var(--c-400);margin-top:4px;}
+.struct-body{font-size:15px;line-height:1.7;color:var(--c-700);max-width:760px;}
+.struct-body p+p{margin-top:14px;}
+@media(min-width:760px){.struct-section{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}.struct-section>.section-eyebrow{grid-column:1 / 7;}.struct-section .struct-rows{grid-column:7 / 13;}}
+
 .reg-section{padding:160px 0;}
 .trust-line{font-size:13px;line-height:1.6;color:var(--c-600);max-width:620px;}
 .trust-line b{color:var(--c-white);font-weight:400;}
@@ -256,13 +266,57 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 </div>
 
 <div class="container">
+<section class="struct-section">
+  <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 02</span><span class="se-name">The Structure</span></div>
+  <div class="struct-rows">
+    <div class="struct-row ri" style="--d:0.04s">
+      <div class="struct-title">Membership Structure</div>
+      <div class="struct-body">
+        <p>Intelligent Investing operates on a flat monthly membership, combined with a minimal management fee on managed portfolios. $20 per month. Cancel anytime.</p>
+        <p>This structure is designed to align incentives with long-term outcomes, not activity.</p>
+      </div>
+    </div>
+    <div class="struct-row ri" style="--d:0.06s">
+      <div class="struct-title">Trading &amp; Foreign Exchange (FX)</div>
+      <div class="struct-sub">Self-Directed Investing</div>
+      <div class="struct-body">
+        <p>Trades involving US securities may incur an FX conversion. Intelligent Investing does not charge an FX fee or apply an FX markup to member transactions. FX is executed at the rate displayed to members by a third-party partner, and in certain circumstances, Intelligent Investing may incur a gain or a loss on FX transactions. This does not increase the FX rate paid by members.</p>
+        <p>FX is not contingent on transaction volume or frequency, and does not incentivize increased trading activity. We do not charge trading commissions.</p>
+      </div>
+    </div>
+    <div class="struct-row ri" style="--d:0.08s">
+      <div class="struct-title">Fiscal.ai Max</div>
+      <div class="struct-sub">Research &amp; Analysis</div>
+      <div class="struct-body">
+        <p>Every membership includes access to Fiscal.ai Max (normally $99/month), a professional-grade research and analysis environment. Most investors trade based on price and headlines. Serious investors analyze businesses. Fiscal.ai provides structured access to: Multi-year income statements, balance sheets, and cash flow data. Return on capital and free cash flow analysis. Margin trends and capital allocation history. Clean company comparisons across time.</p>
+        <p>It also includes AI-assisted tools to summarize filings, surface financial trends, and accelerate research workflows. The AI supports analysis. It does not make decisions.</p>
+        <p>This research layer exists to raise the standard of thinking inside the platform. It is not a stock picker. It is not a signal engine. It is not a shortcut. It is a disciplined research environment designed for investors who intend to do the work.</p>
+      </div>
+    </div>
+    <div class="struct-row ri" style="--d:0.1s">
+      <div class="struct-title">Managed Portfolio Fee</div>
+      <div class="struct-sub">Managed Investing</div>
+      <div class="struct-body">
+        <p>Access to Intelligent Investing's core portfolios includes a 0.10% annual management fee on assets held in managed strategies. Applied only to managed portfolios. Calculated transparently. No performance fees.</p>
+        <p>This fee exists to cover portfolio management, rebalancing, custody and administration, and operational infrastructure. It is a fraction of what traditional wealth managers and funds charge.</p>
+      </div>
+    </div>
+    <div class="struct-row ri" style="--d:0.12s">
+      <div class="struct-title">Legal Structure</div>
+      <div class="struct-body">
+        <p>Intelligent Investing operates through two regulated entities, an investment dealer and a portfolio manager, to provide different services. Each entity is separate and responsible only for the services it provides.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="container">
 <section class="faq-section">
-  <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 02</span><span class="se-name">Questions</span></div>
+  <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 03</span><span class="se-name">Questions</span></div>
   <div class="faq-rows">
-    <div class="faq-row ri" style="--d:0.04s"><h3 class="faq-q">How does billing work?</h3><p class="faq-a">One membership, $20 per month. Managed, Self-Directed, and Fiscal.ai Max are all included.</p></div>
     <div class="faq-row ri" style="--d:0.06s"><h3 class="faq-q">Can I cancel at any time?</h3><p class="faq-a">Yes. Membership is monthly. Cancel anytime.</p></div>
     <div class="faq-row ri" style="--d:0.08s"><h3 class="faq-q">What account types are supported?</h3><p class="faq-a">TFSA and RRSP accounts.</p></div>
-    <div class="faq-row ri" style="--d:0.1s"><h3 class="faq-q">Are there trading commissions?</h3><p class="faq-a">None. No trading commissions and no FX markup. Managed portfolios carry a 0.10% management fee, with no performance fees.</p></div>
   </div>
 </section>
 </div>
