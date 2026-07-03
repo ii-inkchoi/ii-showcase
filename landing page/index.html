@@ -787,11 +787,11 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 
 <!-- ONE MEMBERSHIP / THREE LAYERS - simple product reality after hero (P2) -->
 <section id="layers" class="band"><div class="container">
-  <h2 class="layers-head">One membership. Three layers.</h2>
+  <h2 class="layers-head">One membership. One system.</h2>
   <div class="layers-list">
-    <div class="layers-row"><span class="layers-k">Managed Portfolios</span><p class="layers-d">Discretionary, rules-based market exposure. The foundation every allocator starts from.</p><a href="II Site V2 - Managed.html" class="layers-link"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>View Managed</a></div>
-    <div class="layers-row"><span class="layers-k">Self-Directed Investing</span><p class="layers-d">Your own positions, each opened with a sealed memo.</p><a href="II Site V2 - Self-Directed.html" class="layers-link"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>View Self-Directed</a></div>
-    <div class="layers-row"><span class="layers-k">Fiscal.ai Research</span><p class="layers-d">Institutional research, included. A thinking tool, not a recommendation engine.</p><a href="https://fiscal.ai" target="_blank" rel="noopener" class="layers-link"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>Visit Fiscal.ai</a></div>
+    <div class="layers-row"><span class="layers-k">Managed Portfolios</span><p class="layers-d">Rules-based S&amp;P exposure, matched to your goals and profile. The managed core of the system.</p><a href="II Site V2 - Managed.html" class="layers-link"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>View Managed</a></div>
+    <div class="layers-row"><span class="layers-k">Self-Directed Investing</span><p class="layers-d">Self-directed positions, each opened under a sealed memo.</p><a href="II Site V2 - Self-Directed.html" class="layers-link"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>View Self-Directed</a></div>
+    <div class="layers-row"><span class="layers-k">Fiscal.ai Research</span><p class="layers-d">Institutional research, included. The input beneath every underwriting decision. A thinking tool, not a recommendation engine.</p><a href="https://fiscal.ai" target="_blank" rel="noopener" class="layers-link"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>Visit Fiscal.ai</a></div>
   </div>
   <p class="layers-foot">Connected by a permanent decision record.</p>
 </div></section>
@@ -1833,6 +1833,18 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
       requestAnimationFrame(frame);
     }
     requestAnimationFrame(frame);
+
+    // canonical snapshot for clones (e.g. entry-03 sys-loop): render one front-facing frame
+    // into the hero's own SVG, clone it, then restore the hero's live state so it looks unchanged.
+    window.__iiTorusSnapshot = function () {
+      var savedTiltCur = tiltCur, savedS = S, savedRTcur = RTcur, savedOffX = offX, savedOffY = offY;
+      tiltCur = 0; S = 1; RTcur = RT; offX = 0; offY = 0;
+      draw(0, 0);
+      var snap = svg.cloneNode(true);
+      tiltCur = savedTiltCur; S = savedS; RTcur = savedRTcur; offX = savedOffX; offY = savedOffY;
+      draw(psi, vt);
+      return snap;
+    };
   })();
 
 
@@ -2084,7 +2096,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) {
         if (e.isIntersecting) {
-          var c = src.cloneNode(true);
+          var c = (typeof window.__iiTorusSnapshot === 'function') ? window.__iiTorusSnapshot() : src.cloneNode(true);
           c.removeAttribute('id');
           c.querySelectorAll('[id]').forEach(function (n) { n.removeAttribute('id'); });
           c.querySelectorAll('path, polyline, line').forEach(function (n) { n.setAttribute('pathLength', '100'); });
