@@ -133,12 +133,14 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 
 .included-section{padding:160px 0 160px;}
 .included-rows{display:flex;flex-direction:column;margin-top:48px;}
-.included-row{display:grid;grid-template-columns:minmax(0,260px) 1fr auto;column-gap:40px;align-items:baseline;padding:24px 0;border-top:0.5px solid var(--c-900);transition:padding-left 0.3s ease;}
+.included-row{display:grid;grid-template-columns:minmax(0,260px) 1fr;gap:14px 40px;align-items:baseline;padding:24px 0;border-top:0.5px solid var(--c-900);transition:padding-left 0.3s ease;}
+.included-row .included-k{grid-row:1 / 3;}
+.included-row .included-link{grid-column:2;justify-self:start;}
 .included-row:hover{padding-left:8px;}
 .included-row:hover .included-k{color:var(--c-white);}
 .included-row:last-of-type{border-bottom:0.5px solid var(--c-900);}
 .included-k{font-size:17px;color:var(--c-200);letter-spacing:-0.01em;transition:color 0.15s ease;}
-.included-text{font-size:15px;line-height:1.6;color:var(--c-700);}
+.included-text{font-size:15px;line-height:1.7;color:var(--c-700);}
 .included-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;letter-spacing:0.04em;color:var(--c-400);text-decoration:none;white-space:nowrap;transition:color 0.15s ease;}
 .included-link:hover{color:var(--c-white);}
 .included-link .arr-svg{width:12px;height:12px;}
@@ -157,6 +159,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .struct-rows{display:flex;flex-direction:column;}
 .struct-row{display:flex;flex-direction:column;gap:12px;padding:32px 0;border-top:0.5px solid var(--c-900);}
 .struct-row:last-of-type{border-bottom:0.5px solid var(--c-900);}
+
 .struct-title{font-size:18px;color:var(--c-200);letter-spacing:-0.02em;}
 .struct-sub{font-size:14px;color:var(--c-400);margin-top:4px;}
 .struct-body{font-size:15px;line-height:1.7;color:var(--c-700);max-width:760px;}
@@ -262,8 +265,8 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   <div class="included-main">
   <div class="included-rows">
     <div class="included-row ri" style="--d:0.04s"><span class="included-k">Managed Portfolios</span><p class="included-text">Rules-based S&amp;P exposure, matched to your goals. The managed core of the system.</p><a href="II Site V2 - Managed.html" class="included-link"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>View Managed</a></div>
-    <div class="included-row ri" style="--d:0.06s"><span class="included-k">Self-Directed Investing</span><p class="included-text">Self-directed positions, each opened under a sealed memo.</p><a href="II Site V2 - Self-Directed.html" class="included-link"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>View Self-Directed</a></div>
-    <div class="included-row ri" style="--d:0.08s"><span class="included-k">Fiscal.ai Research</span><p class="included-text">Institutional research, included. Normally $99/month.</p><a href="https://fiscal.ai" target="_blank" rel="noopener" class="included-link"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>Visit Fiscal.ai</a></div>
+    <div class="included-row ri" style="--d:0.06s"><span class="included-k">Self-Directed Investing</span><p class="included-text">Self-directed positions, each opened under a sealed memo. The active layer of the system.</p><a href="II Site V2 - Self-Directed.html" class="included-link"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>View Self-Directed</a></div>
+    <div class="included-row ri" style="--d:0.08s"><span class="included-k">Fiscal.ai Research</span><p class="included-text">Institutional research, included. Normally $99/month. The research layer of the system.</p><a href="https://fiscal.ai" target="_blank" rel="noopener" class="included-link"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>Visit Fiscal.ai</a></div>
   </div>
   <p class="included-foot">Connected by a permanent decision record.</p>
   </div>

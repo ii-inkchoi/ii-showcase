@@ -47,6 +47,8 @@ body.menu-open { overflow: hidden; }
 @media (prefers-reduced-motion: no-preference) {
   .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.9s cubic-bezier(0.4,0,0.2,1), transform 0.9s cubic-bezier(0.4,0,0.2,1); }
   .reveal.in { opacity: 1; transform: none; }
+  .ri { opacity: 0; transition: opacity 0.7s cubic-bezier(0.2,0.6,0.2,1); transition-delay: var(--d,0s); }
+  .ri.in { opacity: 1; }
   .type-caret::after { content: '_'; color: var(--c-700); margin-left: 1px; animation: type-caret 0.9s step-end infinite; }
 }
 @keyframes type-caret { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
@@ -194,9 +196,9 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 <div class="container">
 <section class="page-header">
   
-  <h1 class="page-title">Calibration</h1>
-  <div class="page-deck">What did you think would happen. What actually did. The measurable form of judgment, over decades.</div>
-  <div class="page-meta">
+  <h1 class="page-title ri" style="--d:0.08s">Calibration</h1>
+  <div class="page-deck ri" style="--d:0.16s">What did you think would happen. What actually did. The measurable form of judgment, over decades.</div>
+  <div class="page-meta ri" style="--d:0.2s">
     <div class="meta-col"><span class="meta-lbl">Module</span><span class="meta-val">/04</span></div>
     <div class="meta-col"><span class="meta-lbl">Resolution</span><span class="meta-val">Per-memo · per-prediction</span></div>
     <div class="meta-col"><span class="meta-lbl">Surface</span><span class="meta-val">Calibration Record · Dashboard</span></div>
@@ -364,7 +366,8 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   function typeEl(el, done) { var full = el.getAttribute('data-type-text') || ''; el.textContent = ''; el.classList.add('type-caret'); var i = 0; (function tick() { if (i <= full.length) { el.textContent = full.slice(0, i); i++; setTimeout(tick, 40); } else { el.classList.remove('type-caret'); if (done) done(); } })(); }
   function typeSection(sec) { var els = sec.querySelectorAll('[data-type]'); var idx = 0; (function next() { if (idx < els.length) { typeEl(els[idx], function () { idx++; next(); }); } })(); }
   var io = new IntersectionObserver(function (entries) { entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); typeSection(e.target); io.unobserve(e.target); } }); }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-  document.querySelectorAll('section').forEach(function (s) { s.classList.add('reveal'); io.observe(s); });
+  document.querySelectorAll('section:not(.page-header)').forEach(function (s) { s.classList.add('reveal'); io.observe(s); });
+  document.querySelectorAll('.ri').forEach(function (el) { io.observe(el); });
 })();
 </script>
 <script src="grid-overlay.js"></script>
