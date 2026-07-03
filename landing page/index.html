@@ -165,9 +165,11 @@ section { padding: 160px 0; position: relative; }
 @media (max-width: 900px) { section { padding: 88px 0; } }
 @media (max-width: 760px) { #entry-02 .onto-viz { display: none; } #entry-02 .onto-mobile { display: block; } section.hero .hero-top { display: flex; flex-direction: column; align-items: stretch; } section.hero .hero-main { display: flex; flex-direction: column; }
   section.hero .hero-figure { position: static; grid-column: 1 / -1; width: 100%; max-width: none; margin: 40px auto 0; transform: none; z-index: 0; pointer-events: none; animation: none; opacity: 0.9; order: 2; }
-  section.hero .hero-stack { animation: none; opacity: 1; position: relative; width: min(86vw, 460px); margin: 0 auto; transform: none !important; }
+  section.hero .hero-stack { animation: none; opacity: 1; position: relative; inset: auto; width: min(94.6vw, 506px); margin: 0 calc((100% - min(94.6vw, 506px)) / 2); transform: none !important; }
   section.hero .hero-cta { margin-top: 28px; padding-top: 0; order: 1; }
   section.hero .hero-eyebrow { margin-bottom: 16px; } section.hero .ht-line { stroke: var(--c-600); opacity: 0.85; } section.hero .ht-eq { stroke: var(--c-200); opacity: 1; } section.hero .hbr { display: inline; } section.hero { padding: 128px 0 88px !important; } section.hero .hero-scroll { bottom: 48px; color: var(--c-400); }
+  section.hero .hero-figure { margin-top: 16px; }
+  section.hero .hero-figure #heroTorus, section.hero .hero-figure .hero-dots { transform: scale(0.88); transform-origin: center; }
   section.hero .hero-stack-02 { height: auto; width: 80%; aspect-ratio: 424 / 883; left: 50%; right: auto; top: auto; bottom: 0; transform: translateX(-50%); }
   section.hero .hero-toggle { right: var(--frame); left: auto; bottom: 96px; transform: none; } }
 /* hairlines between every section (all widths) - quiet structural tier */
@@ -731,7 +733,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
       <div class="hero-main">
         <div class="hero-eyebrow" data-type>Intelligent Investing</div>
         <h1 class="hero-h">The investing industry <br class="hbr">built access.<br>It never built judgment infrastructure.</h1>
-        <p class="hero-sub">Access was solved. The decision layer was not.</p>
+        <p class="hero-sub">Access was solved. <br class="hbr">The decision layer was not.</p>
         <div class="hero-cta">
           <a href="II Site V2 - GetTheApp.html" class="pri"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Enter the System</span><span>Enter the System</span></span></span></a>
           <a href="#entry-03" class="sec"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>How It Works</span><span>How It Works</span></span></span></a>
