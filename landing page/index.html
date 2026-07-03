@@ -165,7 +165,7 @@ section { padding: 160px 0; position: relative; }
 @media (max-width: 900px) { section { padding: 88px 0; } }
 @media (max-width: 760px) { #entry-02 .onto-viz { display: none; } #entry-02 .onto-mobile { display: block; } section.hero .hero-top { display: flex; flex-direction: column; align-items: stretch; } section.hero .hero-main { display: flex; flex-direction: column; }
   section.hero .hero-figure { position: static; grid-column: 1 / -1; width: 100%; max-width: none; margin: 40px auto 0; transform: none; z-index: 0; pointer-events: none; animation: none; opacity: 0.9; order: 2; }
-  section.hero .hero-stack { animation: none; opacity: 1; position: static; width: min(86vw, 460px); margin: 0 auto; transform: none !important; }
+  section.hero .hero-stack { animation: none; opacity: 1; position: relative; width: min(86vw, 460px); margin: 0 auto; transform: none !important; }
   section.hero .hero-cta { margin-top: 28px; padding-top: 0; order: 1; }
   section.hero .hero-eyebrow { margin-bottom: 16px; } section.hero .ht-line { stroke: var(--c-600); opacity: 0.85; } section.hero .ht-eq { stroke: var(--c-200); opacity: 1; } section.hero .hbr { display: inline; } section.hero { padding: 128px 0 88px !important; } section.hero .hero-scroll { bottom: 48px; color: var(--c-400); }
   section.hero .hero-stack-02 { height: auto; width: 80%; aspect-ratio: 424 / 883; left: 50%; right: auto; top: auto; bottom: 0; transform: translateX(-50%); }
@@ -199,6 +199,8 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 .hero-figure #heroTorus { transform: scale(0.8); transform-origin: center; }
 .hero-stack { position: absolute; top: 50%; right: -16vw; transform: translateY(-50%); width: min(58vw, 920px); z-index: 0; pointer-events: none; }
 .hero-stack svg { width: 100%; height: auto; display: block; overflow: visible; }
+.hero-stack .hero-dots { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.hero-figure .hero-dots { transform: scale(0.8); transform-origin: center; }
 /* hero - headline + body stay the same on both; the toggle only swaps the figure GRAPHIC (01 torus / 02 app phone on a radar backdrop) */
 .hero-stack-02 { position: absolute; top: 50%; right: -4%; transform: translateY(-50%); height: min(74vh, 680px); aspect-ratio: 424 / 883; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 0.6s ease; }
 .hero-stack-02 .hero-radar { position: absolute; left: 50%; top: 50%; width: 150%; height: 124%; transform: translate(-50%, -50%); pointer-events: none; z-index: 0; }
@@ -429,7 +431,7 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
 #research .rs-link { grid-column: 1 / 7; grid-row: 3; align-self: start; justify-self: start; margin-top: 32px; }
 #research .rs-p { margin: 0 0 18px; font-size: 15px; line-height: 1.7; color: var(--c-600); letter-spacing: -0.01em; max-width: 660px; }
 #research .rs-p b { color: var(--c-200); font-weight: 400; }
-@media (max-width: 900px) { #research .statement, #research .rs-body { grid-column: 1 / -1; } #research .rs-body { margin-top: 32px; } }
+@media (max-width: 900px) { #research { grid-template-rows: none; } #research .entry-head, #research .statement, #research .rs-body, #research .rs-link { grid-column: 1 / -1; grid-row: auto; } #research .rs-body { margin-top: 32px; } #research .rs-link { margin-top: 24px; } }
 .tenets { display: grid; grid-template-columns: 1fr; margin-top: 56px; border-top: 0.5px solid var(--c-900); }
 .tenet { padding: 24px 0; border-bottom: 0.5px solid var(--c-900); font-size: 17px; color: var(--c-400); letter-spacing: -0.01em; }
 #evidence .ev-figs { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); margin-top: 56px; align-items: stretch; }
@@ -1069,7 +1071,9 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 }
 #entry-03 .sys-node { position: absolute; font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; color: var(--c-700); white-space: nowrap; z-index: 2; }
 #entry-03 .sys-leaders { position: absolute; inset: 0; pointer-events: none; z-index: 1; overflow: visible; }
-#entry-03 .sys-core-label { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; color: var(--c-700); white-space: nowrap; z-index: 2; }
+#entry-03 .sys-dots { position: absolute; inset: -80px -40px -80px -80px; width: calc(100% + 120px); height: calc(100% + 160px); pointer-events: none; z-index: 1; }
+@media (max-width: 900px) { #entry-03 .sys-dots { inset: 0; width: 100%; height: 100%; } }
+#entry-03 .sys-core-label { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; color: var(--c-white); white-space: nowrap; z-index: 2; }
 #entry-03 .sys-leader-node { fill: var(--c-400); }
 #entry-03 .sys-loop-svg .ht-line { stroke-width: 0.8; }
 #entry-03 .sys-loop-svg .ht-hl { stroke-width: 1; }
@@ -1078,8 +1082,8 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   #entry-03 .sys-loop-svg svg :is(path, polyline, line) { stroke-dasharray: 100; stroke-dashoffset: 100; }
   #entry-03 .sys-loop.is-revealed .sys-loop-svg svg :is(path, polyline, line) { animation: sysDraw 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
   @keyframes sysDraw { to { stroke-dashoffset: 0; } }
-  #entry-03 .sys-node, #entry-03 .sys-leaders, #entry-03 .sys-core-label { opacity: 0; }
-  #entry-03 .sys-loop.is-revealed .sys-leaders, #entry-03 .sys-loop.is-revealed .sys-core-label { animation: sysFadeIn 0.6s ease forwards; animation-delay: 1.35s; }
+  #entry-03 .sys-node, #entry-03 .sys-leaders, #entry-03 .sys-core-label, #entry-03 .sys-dots { opacity: 0; }
+  #entry-03 .sys-loop.is-revealed .sys-leaders, #entry-03 .sys-loop.is-revealed .sys-core-label, #entry-03 .sys-loop.is-revealed .sys-dots { animation: sysFadeIn 0.6s ease forwards; animation-delay: 1.35s; }
   @keyframes sysFadeIn { to { opacity: 1; } }
   @keyframes sysFlashText { 0% { color: var(--c-white); } 5%, 100% { color: var(--c-700); } }
   @keyframes sysFlashNode { 0% { fill: var(--c-white); } 5%, 100% { fill: var(--c-400); } }
@@ -1179,6 +1183,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   </div>
   <div class="sys-loop" aria-hidden="true">
     <div class="sys-loop-svg"></div>
+    <canvas class="sys-dots" aria-hidden="true"></canvas>
     <span class="sys-node sys-node-01">S&amp;P Benchmark</span>
     <span class="sys-node sys-node-02">Core Portfolio</span>
     <span class="sys-node sys-node-03">Underwriting</span>
@@ -1684,6 +1689,80 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
       return [CX + (x1 * cz - y2 * sz) * S, CY + (x1 * sz + y2 * cz) * S];
     }
     function project(u, v, psi) { var P = projXY(u, v, psi); return P[0].toFixed(1) + ',' + P[1].toFixed(1); }
+    // dot ontology, 3D: a point cloud inside the tube, projected with the same math each frame
+    var dotsCv = document.createElement('canvas'); dotsCv.className = 'hero-dots';
+    svg.parentNode.insertBefore(dotsCv, svg);
+    var dctx = dotsCv.getContext('2d');
+    var HDPR = Math.min(window.devicePixelRatio || 1, 2), hdW = 0, hdH = 0;
+    function heroDotsSize() {
+      hdW = dotsCv.clientWidth; hdH = dotsCv.clientHeight;
+      dotsCv.width = Math.round(hdW * HDPR); dotsCv.height = Math.round(hdH * HDPR);
+    }
+    var HDOTS = [], HN = 460;
+    for (var hd = 0; hd < HN; hd++) {
+      // a flat disk on the torus mid-plane: dense cluster at the center, few dots
+      // reaching the ring centerline (matches the 2D ontology field in entry-03)
+      var hrf = Math.pow(Math.random(), 1.5), htp = 1 - 0.4 * hrf;
+      HDOTS.push({
+        a: Math.random() * Math.PI * 2,
+        rf: hrf,
+        zj: (Math.random() - 0.5) * 12,            // slight thickness so the disk shimmers in 3D
+        base: (0.08 + Math.random() * 0.26) * htp,
+        amp: (0.08 + Math.random() * 0.3) * htp,
+        ph: Math.random() * Math.PI * 2,
+        sp: 0.5 + Math.random() * 1.2,
+        r: 0.45 + Math.random() * 0.55
+      });
+    }
+    var hCols = null, hFlares = [], hNextFlare = 1.2;
+    function heroDotCols() {
+      var cs = getComputedStyle(document.documentElement);
+      function rgb(n) {
+        var v = cs.getPropertyValue(n).trim();
+        return parseInt(v.slice(1, 3), 16) + ',' + parseInt(v.slice(3, 5), 16) + ',' + parseInt(v.slice(5, 7), 16);
+      }
+      var w = rgb('--c-white');
+      hCols = { w: w, ev: [w, w, w, rgb('--c-live'), rgb('--c-urgent'), rgb('--c-warning')] };
+    }
+    function projDot(x, y, z, psi) {
+      var cp = Math.cos(psi), sp = Math.sin(psi);
+      var x1 = x * cp + z * sp, z1 = -x * sp + z * cp;
+      var phi = tiltCur + offX, cf = Math.cos(phi), sf = Math.sin(phi);
+      var y2 = y * cf - z1 * sf, z2 = y * sf + z1 * cf;
+      var cz = Math.cos(offY), sz = Math.sin(offY);
+      return [CX + (x1 * cz - y2 * sz) * S, CY + (x1 * sz + y2 * cz) * S, z2];
+    }
+    function drawDots(psi, t, ga) {
+      if (!hdW) return;
+      if (!hCols) heroDotCols();
+      dctx.setTransform(HDPR * hdW / 480, 0, 0, HDPR * hdH / 520, 0, 0);
+      dctx.clearRect(0, 0, 480, 520);
+      if (ga <= 0) return;
+      if (t >= hNextFlare) {
+        if (hFlares.length < 5) hFlares.push({ i: Math.floor(Math.random() * HN), c: hCols.ev[Math.floor(Math.random() * hCols.ev.length)], t0: t, life: 1.1 + Math.random() * 0.8 });
+        hNextFlare = t + 0.6 + Math.random() * 1.6;
+      }
+      var fm = {};
+      for (var f = hFlares.length - 1; f >= 0; f--) {
+        var fl = hFlares[f], q = (t - fl.t0) / fl.life;
+        if (q >= 1) { hFlares.splice(f, 1); continue; }
+        fm[fl.i] = { c: fl.c, e: Math.sin(q * Math.PI) };
+      }
+      var zr = R + RTcur;
+      for (var i = 0; i < HN; i++) {
+        var d = HDOTS[i], drr = d.rf * R;
+        var P = projDot(drr * Math.cos(d.a), drr * Math.sin(d.a), d.zj, psi);
+        var dn = (P[2] / zr + 1) / 2; dn = dn < 0 ? 0 : dn > 1 ? 1 : dn;
+        var a = (d.base + d.amp * Math.sin(t * d.sp + d.ph)) * (0.3 + 0.7 * dn) * ga;
+        var rr = d.r * (0.55 + 0.85 * dn), col = hCols.w, fe = fm[i];
+        if (fe) { col = fe.c; a = Math.max(a, fe.e * 0.9 * ga); rr *= 1 + fe.e * 0.7; }
+        if (a <= 0.01) continue;
+        dctx.fillStyle = 'rgba(' + col + ',' + a.toFixed(3) + ')';
+        dctx.beginPath(); dctx.arc(P[0], P[1], rr, 0, 6.2832); dctx.fill();
+      }
+    }
+    heroDotsSize();
+    window.addEventListener('resize', heroDotsSize);
     function draw(psi, vt) {
       var li = 0, pts, k;
       for (var i = 0; i < U; i++) {
@@ -1723,7 +1802,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     }
     draw(0.5, 0);
     drawPulse(0, 0.5);
-    if (reduced) { nodeEls.forEach(function (n) { n.classList.add('on'); }); return; }
+    if (reduced) { nodeEls.forEach(function (n) { n.classList.add('on'); }); drawDots(0.5, 0, 1); return; }
     var hero = document.querySelector('section.hero');
     hero.addEventListener('mousemove', function (e) {
       var b = hero.getBoundingClientRect();
@@ -1736,7 +1815,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     //  phase 2: the system sweeps on (rings draw with the reference's partial/faint variation - RT stays
     //           constant so the line-draw IS the appearance) and it naturally tilts into the 3D donut.
     var INTRO = 3.0;
-    var psi = 0, pu = 0, vt = 0, last = null, introT = 0;
+    var psi = 0, pu = 0, vt = 0, last = null, introT = 0, dotA = 0;
     function ez(x) { x = x < 0 ? 0 : x > 1 ? 1 : x; return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; }
     var eq = lines[U]; eq.style.transition = 'none'; eq.style.opacity = '0.12';  // center line: starts faint
     tiltCur = 0; S = 1; RTcur = RT; draw(0, 0); drawPulse(0, 0);   // face-on; tube constant (reference ring engine)
@@ -1751,17 +1830,20 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
         var e = ez(p);
         tiltCur = TILT * e;        // face-on 2D loop -> tilted 3D donut, natural single direction
         psi = 0.5 * e;
+        dotA = e;                  // dots emerge as the loop gains a 3D body
         S = 1;                     // current (big) size
         for (var k = 0; k < nodeEls.length; k++) nodeEls[k].classList.toggle('on', introT > 1.5 + k * 0.12);
       } else {
         psi += dt * 0.16; eq.style.opacity = '';
         nodeEls.forEach(function (n) { n.classList.add('on'); });
+        dotA = 1;
       }
       pu += dt * 0.4027;
       vt += dt * 0.7;
       offX += (tgtX - offX) * 0.14; offY += (tgtY - offY) * 0.14;
       draw(psi, vt);
       drawPulse(pu, psi);
+      drawDots(psi, now / 1000, dotA);
       requestAnimationFrame(frame);
     }
     requestAnimationFrame(frame);
@@ -2041,6 +2123,108 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
       });
     }
 
+    // ontology dot field inside the donut hole - thousands of quiet system nodes, occasional
+    // colored events (win/loss/warning), phase-locked to nothing: irregular, alive
+    var dotsCv = loop.querySelector('.sys-dots');
+    var dotsCtx = dotsCv ? dotsCv.getContext('2d') : null;
+    var DOTS = null, dotsGeo = null, dotsRunning = false, dotsRaf = null, dotsLast = 0, evAcc = 0, evColors = null;
+    function cssRGB(name, fallback) {
+      var h = (getComputedStyle(document.documentElement).getPropertyValue(name) || fallback).trim().replace('#', '');
+      if (h.length === 3) h = h.replace(/(.)/g, '$1$1');
+      return parseInt(h.slice(0, 2), 16) + ',' + parseInt(h.slice(2, 4), 16) + ',' + parseInt(h.slice(4, 6), 16);
+    }
+    function dotsSize() {
+      var kr = dotsCv.getBoundingClientRect(), sr = slot.getBoundingClientRect();
+      if (!kr.width || !sr.width) return null;
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dotsCv.width = Math.round(kr.width * dpr); dotsCv.height = Math.round(kr.height * dpr);
+      dotsCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var scale = Math.min(sr.width / 480, sr.height / 520);
+      dotsGeo = {
+        w: kr.width, h: kr.height,
+        cx: (sr.left - kr.left) + sr.width / 2,
+        cy: (sr.top - kr.top) + sr.height / 2,
+        holeR: 140 * scale,
+        outR: 204 * scale,
+        haloMax: Math.min(Math.min((sr.left - kr.left) + sr.width / 2, kr.width - ((sr.left - kr.left) + sr.width / 2)) / (204 * scale) - 0.02, 1.55)
+      };
+      return dotsGeo;
+    }
+    function dotsInit() {
+      if (!dotsCtx || !dotsSize()) return;
+      evColors = ['255,255,255', '255,255,255', '255,255,255', cssRGB('--c-live', '30D158'), cssRGB('--c-urgent', 'FF3533'), cssRGB('--c-warning', 'FF7A00')];
+      var N = dotsGeo.w < 420 ? 450 : 1000;
+      var NH = dotsGeo.w < 420 ? 60 : 130;            // loose halo just outside the ring
+      DOTS = [];
+      for (var i = 0; i < N + NH; i++) {
+        var halo = i >= N;
+        // field dots: densest at the center, thinning toward the edge (density ~ r^-1.2);
+        // halo dots: loose scatter outside the ring, biased toward it
+        var rf = halo ? 1.02 + Math.max(0.1, dotsGeo.haloMax - 1.02) * Math.pow(Math.random(), 1.6) : Math.pow(Math.random(), 1.2);
+        var taper = halo ? 1 : (1 - 0.4 * rf);   // edges also dim, not just sparse
+        DOTS.push({
+          halo: halo,
+          rf: rf,
+          a: Math.random() * Math.PI * 2,
+          base: (halo ? 0.03 + Math.random() * 0.12 : 0.05 + Math.random() * 0.3) * taper,
+          amp: (halo ? 0.06 + Math.random() * 0.16 : 0.1 + Math.random() * 0.35) * taper,
+          spd: 0.3 + Math.random() * 1.2,
+          ph: Math.random() * Math.PI * 2,
+          sz: halo ? 0.4 + Math.random() * 0.5 : (Math.random() < 0.9 ? 0.5 + Math.random() * 0.5 : 1 + Math.random() * 0.6),
+          drift: (Math.random() - 0.5) * (halo ? 0.0004 : 0.00024),
+          ev: 0, evT: 0, evC: null
+        });
+      }
+    }
+    function dotsFire(t) {
+      var d = DOTS[(Math.random() * DOTS.length) | 0];
+      if (d.halo) return;   // colored events live inside the system, not the halo
+      if (d.ev > 0) return;
+      d.ev = 1; d.evT = t;
+      d.evC = evColors[(Math.random() * evColors.length) | 0];
+    }
+    function dotsFrame(t) {
+      t = t / 1000;
+      var dt = Math.min(t - dotsLast, 0.05); dotsLast = t;
+      dotsCtx.clearRect(0, 0, dotsGeo.w, dotsGeo.h);
+      evAcc += dt;
+      if (evAcc > 0.5 + Math.random() * 0.9) { dotsFire(t); evAcc = 0; }
+      for (var i = 0; i < DOTS.length; i++) {
+        var d = DOTS[i];
+        d.a += d.drift;
+        var r = d.rf * (d.halo ? dotsGeo.outR : dotsGeo.holeR);
+        var x = dotsGeo.cx + r * Math.cos(d.a);
+        var y = dotsGeo.cy + r * Math.sin(d.a);
+        var alpha = d.base + d.amp * (0.5 + 0.5 * Math.sin(d.ph + t * d.spd));
+        var col = '255,255,255', size = d.sz;
+        if (d.ev > 0) {
+          var e = (t - d.evT) / 1.4;
+          if (e >= 1) { d.ev = 0; }
+          else {
+            var env = e < 0.15 ? e / 0.15 : 1 - (e - 0.15) / 0.85;
+            col = d.evC;
+            alpha = Math.max(alpha, env * (d.evC === '255,255,255' ? 0.9 : 0.85));
+            size = d.sz + env * 1.1;
+          }
+        }
+        dotsCtx.beginPath();
+        dotsCtx.arc(x, y, size, 0, 6.2831853);
+        dotsCtx.fillStyle = 'rgba(' + col + ',' + alpha.toFixed(3) + ')';
+        dotsCtx.fill();
+      }
+      if (dotsRunning) dotsRaf = requestAnimationFrame(dotsFrame);
+    }
+    function dotsStart() {
+      if (!DOTS || reduceMotion || dotsRunning) return;
+      dotsRunning = true;
+      dotsRaf = requestAnimationFrame(function (t) { dotsLast = t / 1000; dotsRaf = requestAnimationFrame(dotsFrame); });
+    }
+    function dotsStop() {
+      dotsRunning = false;
+      if (dotsRaf) cancelAnimationFrame(dotsRaf);
+      dotsRaf = null;
+    }
+
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) {
         if (e.isIntersecting) {
@@ -2052,6 +2236,9 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
           ring = findRing(c);
           if (!reduceMotion && ring) buildWake(c);
           drawLeaders();
+          dotsInit();
+          dotsFrame(0);   // static first frame (also the only frame under reduced motion)
+          if (loop.classList.contains('is-live')) dotsStart();
           io.disconnect();
         }
       });
@@ -2062,6 +2249,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
       es.forEach(function (e) {
         loop.classList.toggle('is-live', e.isIntersecting);
         if (e.isIntersecting) loop.classList.add('is-revealed');
+        if (e.isIntersecting) dotsStart(); else dotsStop();
       });
     }, { threshold: 0.1 });
     liveIo.observe(loop);
@@ -2069,7 +2257,10 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     var resizeTimer;
     window.addEventListener('resize', function () {
       clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(drawLeaders, 150);
+      resizeTimer = setTimeout(function () {
+        drawLeaders();
+        if (DOTS) { dotsSize(); if (!dotsRunning) dotsFrame(dotsLast * 1000); }
+      }, 150);
     });
   })();
 
