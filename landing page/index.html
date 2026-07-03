@@ -182,6 +182,7 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 .hbr { display: none; }
 .hero-sub { font-size: clamp(17px,1.6vw,18px); line-height: 1.55; letter-spacing: -0.015em; color: var(--c-400); max-width: calc((100% + var(--gutter)) / 15 * 10 - var(--gutter)); margin-top: 28px; }
 .hero-cta { margin-top: 40px; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; font-size: 15px; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 .hero-cta .pri, .hero-cta .sec { display: inline-flex; align-items: center; gap: 8px; }
 .hero-cta .pri { color: var(--c-white); }
 .hero-cta .sec { color: var(--c-700); }
@@ -771,6 +772,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
         <p class="hero-sub">Access was solved. The decision layer was not.</p>
         <div class="hero-cta">
           <a href="II Site V2 - GetTheApp.html" class="pri"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Get Access</span><span>Get Access</span></span></span></a>
+          <a href="#entry-03" class="sec"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>See the System</span><span>See the System</span></span></span></a>
         </div>
       </div>
       <div class="hero-figure" aria-hidden="true">
@@ -1086,8 +1088,8 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 #entry-03 .sys-lead { font-size: 15px; line-height: 1.7; letter-spacing: -0.015em; color: var(--c-400); margin-top: 24px; max-width: 660px; }
 #entry-03 { grid-template-rows: auto auto auto auto auto 1fr; }
 #entry-03 .sys-comp { grid-column: 1 / 7; grid-row: 3; margin-top: 56px; }
-#entry-03 .sc-row { display: grid; grid-template-columns: 56px calc((100% + var(--gutter)) / 6 * 2 - 56px) 1fr; column-gap: 0; align-items: baseline; padding: 28px 0; border-top: 0.5px solid var(--c-900); position: relative; }
-#entry-03 .sc-row:last-of-type { border-bottom: 0.5px solid var(--c-900); }
+#entry-03 .sc-row { display: grid; grid-template-columns: 56px calc((100% + var(--gutter)) / 6 * 2 - 56px) 1fr; column-gap: 0; align-items: baseline; padding: 28px 0; border-top: 0.5px solid color-mix(in srgb, var(--c-900) 65%, var(--c-800)); position: relative; }
+#entry-03 .sc-row:last-of-type { border-bottom: 0.5px solid color-mix(in srgb, var(--c-900) 65%, var(--c-800)); }
 #entry-03 .sc-row::after { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 0.5px; background: var(--c-800); }
 #entry-03 .sc-row:first-of-type::after { top: 42px; }
 #entry-03 .sc-row:last-of-type::after { bottom: calc(100% - 42px); }
@@ -1111,6 +1113,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 #entry-03 .sys-leader-node { fill: var(--c-400); }
 #entry-03 .sys-loop-svg .ht-line { stroke-width: 0.8; }
 #entry-03 .sys-loop-svg .ht-hl { stroke-width: 1; }
+#entry-03 .sys-loop-svg .sys-wake { opacity: 0; }
 @media (prefers-reduced-motion: no-preference) {
   #entry-03 .sys-loop-svg svg :is(path, polyline, line) { stroke-dasharray: 100; stroke-dashoffset: 100; }
   #entry-03 .sys-loop.is-revealed .sys-loop-svg svg :is(path, polyline, line) { animation: sysDraw 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
@@ -1122,6 +1125,9 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   @keyframes sysFlashNode { 0% { fill: var(--c-white); } 5%, 100% { fill: var(--c-400); } }
   #entry-03 .sys-node, #entry-03 .sys-leader-node { animation-play-state: paused; }
   #entry-03 .sys-loop.is-live .sys-node, #entry-03 .sys-loop.is-live .sys-leader-node { animation-play-state: running; }
+  #entry-03 .sys-loop-svg .sys-wake { opacity: 0; stroke: var(--c-200); stroke-width: 0.8; animation-play-state: paused; }
+  #entry-03 .sys-loop.is-live .sys-wake { animation-play-state: running; }
+  @keyframes sysWake { 0% { opacity: 0; } 4% { opacity: 0.32; } 16% { opacity: 0; } 100% { opacity: 0; } }
 }
 #entry-03 .sys-operate { grid-column: 1 / 7; grid-row: 5; margin-top: 48px; display: flex; align-items: baseline; gap: 32px; flex-wrap: wrap; }
 #entry-03 .sys-operate a:first-of-type { margin-left: auto; }
@@ -1201,11 +1207,11 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   <div class="entry-head"><span class="entry-no" data-type>No. 04</span><span class="entry-name" data-type>The System</span></div>
   <div class="sys-hero">
     <h2 class="statement sys-title">One operating system for capital allocation.</h2>
-    <p class="sys-lead">The S&amp;P is the benchmark.<br>Core is the anchor.<br>Active investing is the test.<br>Every decision is recorded, measured, and re-underwritten.</p>
+    <p class="sys-lead">The S&amp;P is the benchmark.<br>The core is the anchor.<br>Active investing is the test.<br>Every decision is recorded, measured, and re-underwritten.</p>
   </div>
   <div class="sys-comp">
     <div class="sc-row ri"><span class="sc-no">01</span><span class="sc-name">Benchmark</span><p class="sc-desc">The S&amp;P 500 is the standard most fail to beat.</p></div>
-    <div class="sc-row ri"><span class="sc-no">02</span><span class="sc-name">Core</span><p class="sc-desc">The S&amp;P is your core until you outperform it.</p></div>
+    <div class="sc-row ri"><span class="sc-no">02</span><span class="sc-name">Core</span><p class="sc-desc">Discipline begins at the S&amp;P. Leaving is earned, not assumed.</p></div>
     <div class="sc-row ri"><span class="sc-no">03</span><span class="sc-name">Active</span><p class="sc-desc">Every active position is measured against it.</p></div>
     <div class="sc-row ri"><span class="sc-no">04</span><span class="sc-name">Underwriting</span><p class="sc-desc">Research, sizing, and memo before the position.</p></div>
     <div class="sc-row ri"><span class="sc-no">05</span><span class="sc-name">Calibration</span><p class="sc-desc">Conviction is scored against outcomes over time.</p></div>
@@ -1216,7 +1222,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     <span class="sys-node sys-node-01">S&amp;P Benchmark</span>
     <span class="sys-node sys-node-02">Core Portfolio</span>
     <span class="sys-node sys-node-03">Active Positions</span>
-    <span class="sys-node sys-node-04">Investment Memo</span>
+    <span class="sys-node sys-node-04">Underwriting</span>
     <span class="sys-node sys-node-05">Calibration</span>
     <span class="sys-node sys-node-06">Re-underwriting</span>
     <span class="sys-core-label">Capital Allocation System</span>
@@ -1871,6 +1877,93 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     var labels = Array.prototype.slice.call(document.querySelectorAll('#entry-03 .sys-node'));
     var leadersEl = null;
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var CX = 240, CY = 256;               // torus viewBox center (matches hero build's CX/CY)
+    var ring = null;                       // { pts:[{x,y}], cum:[len...], total } in viewBox units, parsed once
+
+    // find the outer ring among the cloned torus's mesh polylines (.ht-line only, not .ht-hl/.ht-pulse):
+    // a closed loop (first/last points coincide) with the largest mean radius about (CX,CY)
+    function findRing(root) {
+      var polys = root.querySelectorAll('polyline.ht-line');
+      var best = null;
+      for (var i = 0; i < polys.length; i++) {
+        var raw = (polys[i].getAttribute('points') || '').trim();
+        if (!raw) continue;
+        var parts = raw.split(/\s+/);
+        if (parts.length < 30) continue;   // require enough points to trust it as a full ring
+        var pts = [];
+        for (var j = 0; j < parts.length; j++) {
+          var xy = parts[j].split(',');
+          if (xy.length < 2) continue;
+          pts.push({ x: parseFloat(xy[0]), y: parseFloat(xy[1]) });
+        }
+        if (pts.length < 30) continue;
+        var first = pts[0], last = pts[pts.length - 1];
+        var closed = Math.hypot(last.x - first.x, last.y - first.y) < 3;
+        if (!closed) continue;
+        var sum = 0;
+        for (var k = 0; k < pts.length; k++) sum += Math.hypot(pts[k].x - CX, pts[k].y - CY);
+        var meanR = sum / pts.length;
+        if (!best || meanR > best.meanR) best = { pts: pts, meanR: meanR };
+      }
+      if (!best) return null;
+      var cum = [0];
+      for (var m = 1; m < best.pts.length; m++) {
+        cum.push(cum[m - 1] + Math.hypot(best.pts[m].x - best.pts[m - 1].x, best.pts[m].y - best.pts[m - 1].y));
+      }
+      return { pts: best.pts, cum: cum, total: cum[cum.length - 1], meanR: best.meanR };
+    }
+
+    // "dash wake": duplicates each radial spoke polyline as a wake layer, phase-locked to the orbit dash
+    // so the mesh briefly lights up as the dash sweeps past it. spokes are found geometrically: for each
+    // .ht-line polyline, small angular spread about (CX,CY) = a radial spoke; large (360deg) = a ring.
+    function buildWake(root) {
+      var polys = root.querySelectorAll('polyline.ht-line');
+      for (var i = 0; i < polys.length; i++) {
+        var raw = (polys[i].getAttribute('points') || '').trim();
+        if (!raw) continue;
+        var parts = raw.split(/\s+/);
+        var pts = [];
+        for (var j = 0; j < parts.length; j++) {
+          var xy = parts[j].split(',');
+          if (xy.length < 2) continue;
+          pts.push({ x: parseFloat(xy[0]), y: parseFloat(xy[1]) });
+        }
+        if (pts.length < 2) continue;
+        var angs = [];
+        for (var k = 0; k < pts.length; k++) angs.push(Math.atan2(pts[k].y - CY, pts[k].x - CX));
+        for (var u2 = 1; u2 < angs.length; u2++) {   // unwrap so a spoke straddling the +-pi seam isn't misread as 360deg
+          while (angs[u2] - angs[u2 - 1] > Math.PI) angs[u2] -= 2 * Math.PI;
+          while (angs[u2] - angs[u2 - 1] < -Math.PI) angs[u2] += 2 * Math.PI;
+        }
+        var minA = Math.min.apply(null, angs), maxA = Math.max.apply(null, angs);
+        var spread = (maxA - minA) * 180 / Math.PI;
+        if (spread >= 90) continue;   // ring, not a spoke
+
+        // mean angle of the spoke, then nearest ring point to that angle (same nearest-angle approach as drawLeaders)
+        var sx = 0, sy = 0;
+        for (var m = 0; m < pts.length; m++) { sx += pts[m].x; sy += pts[m].y; }
+        var meanAng = Math.atan2(sy / pts.length - CY, sx / pts.length - CX);
+        var bestIdx = 0, bestDiff = Infinity;
+        for (var n = 0; n < ring.pts.length; n++) {
+          var a2 = Math.atan2(ring.pts[n].y - CY, ring.pts[n].x - CX);
+          var diff = Math.abs(Math.atan2(Math.sin(a2 - meanAng), Math.cos(a2 - meanAng)));
+          if (diff < bestDiff) { bestDiff = diff; bestIdx = n; }
+        }
+        var p = ring.total > 0 ? ring.cum[bestIdx] / ring.total : 0;
+        var wakeDelay = 9 * (p - 0.035) - 0.36; while (wakeDelay < 0) wakeDelay += 9;
+
+        var dup = polys[i].cloneNode(true);
+        dup.setAttribute('class', 'sys-wake');
+        dup.style.strokeDasharray = 'none';
+        dup.style.strokeDashoffset = '0';
+        dup.style.animationName = 'sysWake';
+        dup.style.animationDuration = '9s';
+        dup.style.animationTimingFunction = 'linear';
+        dup.style.animationDelay = wakeDelay + 's';
+        dup.style.animationIterationCount = 'infinite';
+        root.appendChild(dup);
+      }
+    }
 
     // draws 6 leader lines from the torus outer ring to each .sys-node label, in px coords of .sys-loop
     function drawLeaders() {
@@ -1891,15 +1984,29 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
       // torus center C, in px of the .sys-loop box (svgRect is .sys-loop-svg, offset within loop)
       var svgOffX = svgRect.left - loopRect.left;
       var svgOffY = svgRect.top - loopRect.top;
-      var cx = svgOffX + svgRect.width / 2;
-      var cy = svgOffY + svgRect.height / 2;
       var scale = Math.min(svgRect.width / 480, svgRect.height / 520);
-      var orbitR = 204 * scale;
-      var r = 146 * scale;
+      var offX = svgOffX + (svgRect.width - 480 * scale) / 2;
+      var offY = svgOffY + (svgRect.height - 520 * scale) / 2;
+      var orbitR = 204 * scale;   // kept for label anchor distance (Rlab) regardless of ring fallback
+      function toPx(pt) { return { x: offX + pt.x * scale, y: offY + pt.y * scale }; }
+      var cx = offX + CX * scale, cy = offY + CY * scale;   // true mapped torus center, used for label angles too
 
-      var orbitEl = document.createElementNS(NS, 'circle');
+      var orbitEl;
+      if (ring) {
+        var d = '';
+        for (var i = 0; i < ring.pts.length; i++) {
+          var pp = toPx(ring.pts[i]);
+          d += (i === 0 ? 'M ' : 'L ') + pp.x.toFixed(2) + ' ' + pp.y.toFixed(2) + ' ';
+        }
+        d += 'Z';
+        orbitEl = document.createElementNS(NS, 'path');
+        orbitEl.setAttribute('d', d);
+      } else {
+        // fallback: geometric circle, so the section never breaks if the ring parse failed
+        orbitEl = document.createElementNS(NS, 'circle');
+        orbitEl.setAttribute('cx', cx); orbitEl.setAttribute('cy', cy); orbitEl.setAttribute('r', orbitR);
+      }
       orbitEl.setAttribute('class', 'sys-orbit');
-      orbitEl.setAttribute('cx', cx); orbitEl.setAttribute('cy', cy); orbitEl.setAttribute('r', orbitR);
       orbitEl.setAttribute('pathLength', '100');
       leadersEl.appendChild(orbitEl);
 
@@ -1925,13 +2032,24 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
         label.style.bottom = 'auto';
         label.style.transform = 'none';
 
-        // no leader lines: just the node square, sitting exactly on the outer ring (the orbit circle)
-        // at the same pure 60-degree radial point the label is anchored to
-        var ux = Math.cos(ang), uy = Math.sin(ang);
-        var px = cx + orbitR * ux;
-        var py = cy + orbitR * uy;
-        var qx = px;
-        var qy = py;
+        // node square: sits on the actual mesh outer ring (nearest ring point to this label's 60° angle),
+        // falling back to the geometric orbit circle point if no ring was found
+        var qx, qy, flashP;
+        if (ring) {
+          var bestIdx = 0, bestDiff = Infinity;
+          for (var k = 0; k < ring.pts.length; k++) {
+            var a2 = Math.atan2(ring.pts[k].y - CY, ring.pts[k].x - CX);
+            var diff = Math.abs(Math.atan2(Math.sin(a2 - ang), Math.cos(a2 - ang)));
+            if (diff < bestDiff) { bestDiff = diff; bestIdx = k; }
+          }
+          var qp = toPx(ring.pts[bestIdx]);
+          qx = qp.x; qy = qp.y;
+          flashP = ring.total > 0 ? ring.cum[bestIdx] / ring.total : 0;
+        } else {
+          qx = cx + orbitR * Math.cos(ang);
+          qy = cy + orbitR * Math.sin(ang);
+          flashP = ((ang % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI) / (2 * Math.PI);
+        }
 
         var nodeEl = document.createElementNS(NS, 'rect');
         nodeEl.setAttribute('class', 'sys-leader-node');
@@ -1941,9 +2059,8 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 
         if (!reduceMotion) {
           // phase-sync the flash to when the orbit dash's center passes this label's ring point
-          var a = Math.atan2(py - cy, px - cx);
-          var p = ((a % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI) / (2 * Math.PI);
-          var flashDelay = 9 * (p - 0.035); if (flashDelay < 0) flashDelay += 9;
+          // (dash travels the path in point order via stroke-dashoffset, so cumulative length matches it directly)
+          var flashDelay = 9 * (flashP - 0.035); if (flashDelay < 0) flashDelay += 9;
 
           label.style.animation = 'none';
           void label.offsetWidth;
@@ -1972,6 +2089,8 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
           c.querySelectorAll('[id]').forEach(function (n) { n.removeAttribute('id'); });
           c.querySelectorAll('path, polyline, line').forEach(function (n) { n.setAttribute('pathLength', '100'); });
           slot.appendChild(c);
+          ring = findRing(c);
+          if (!reduceMotion && ring) buildWake(c);
           drawLeaders();
           io.disconnect();
         }
