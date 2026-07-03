@@ -65,7 +65,8 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 @media(max-width:760px){.page-header{padding:104px 0 88px;min-height:auto;display:flex;flex-direction:column;}.page-header .container{order:1;}.page-header .page-title,.page-header .page-deck{max-width:none;}.page-header .page-title{font-size:clamp(24px,7.4vw,28px);}.pg-art{position:static;order:2;width:100%;height:auto;left:auto;right:auto;top:auto;padding-top:0;margin-top:40px;opacity:0.8;}.pg-art canvas{width:min(84vw, 36vh);height:min(84vw, 36vh);}}
 .page-breadcrumb{font-size:12px;color:var(--c-700);letter-spacing:0.06em;margin-bottom:36px;display:flex;align-items:center;gap:10px;}
 .page-breadcrumb a{color:var(--c-700);text-decoration:none;}.page-breadcrumb .sep{color:var(--c-800);}.page-breadcrumb .current{color:var(--c-200);}
-.page-title{font-size:clamp(30px,4.4vw,40px);line-height:1.25;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:28px;}
+.page-eyebrow{font-size:12px;color:var(--c-700);letter-spacing:0.04em;margin-bottom:28px;}
+.page-title{font-size:clamp(30px,4.4vw,40px);line-height:1.25;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:28px;max-width:calc((100% + var(--gutter)) / 12 * 8 - var(--gutter));}
 .page-deck{font-size:clamp(17px,1.6vw,18px);line-height:1.55;letter-spacing:-0.015em;color:var(--c-400);max-width:760px;text-wrap:balance;}
 .mani-section{padding:64px 0;border-top:0.5px solid var(--c-900);}
 @media(min-width:760px){.mani-section{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}.mani-head{grid-column:1/5;}.mani-body{grid-column:7/13;}}
@@ -163,7 +164,8 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   if('ResizeObserver' in window){new ResizeObserver(function(){size();if(reduce)draw();}).observe(cv);}
 })();</script>
 <div class="container">
-  <h1 class="page-title ri" style="--d:0.08s">Manifesto</h1>
+  <div class="page-eyebrow ri" style="--d:0.04s">Manifesto</div>
+  <h1 class="page-title ri" style="--d:0.08s">We are not here to make investing feel easy.</h1>
   <div class="page-deck ri" style="--d:0.16s">Fourteen entries. The doctrine of Intelligent Investing in full. Read in sequence, or by entry number.</div>
 </div>
 </section>
