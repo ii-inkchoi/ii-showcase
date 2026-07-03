@@ -332,6 +332,10 @@ section {
   border-bottom: 0.5px solid var(--c-900);
 }
 
+/* hairlines between sections (all widths) - quiet structural tier */
+.mod-section { position: relative; }
+.mod-section::before { content: ''; position: absolute; top: 0; left: 50%; width: 100vw; transform: translateX(-50%); border-top: 0.5px solid var(--c-900); pointer-events: none; }
+
 .page-breadcrumb {
   font-size: 12px;
   color: var(--c-700);
@@ -884,7 +888,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
      SECTION 02 · Mechanism
      ============================================================ -->
 <div class="container">
-<section>
+<section class="mod-section">
   <div class="sec-head">
     <span class="sec-num">/02</span>
     <span class="sec-name">Mechanism</span>
@@ -934,7 +938,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
      SECTION 03 · Surface (Performance Dashboard plate)
      ============================================================ -->
 <div class="container">
-<section>
+<section class="mod-section">
   <div class="sec-head">
     <span class="sec-num">/03</span>
     <span class="sec-name">Surface</span>
@@ -976,7 +980,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
      SECTION 04 · Doctrine
      ============================================================ -->
 <div class="container">
-<section>
+<section class="mod-section">
   <div class="sec-head">
     <span class="sec-num">/04</span>
     <span class="sec-name">Doctrine</span>
@@ -999,7 +1003,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
      SECTION 05 · Related
      ============================================================ -->
 <div class="container">
-<section>
+<section class="mod-section">
   <div class="sec-head">
     <span class="sec-num">/05</span>
     <span class="sec-name">Connected surfaces</span>

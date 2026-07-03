@@ -161,6 +161,8 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .struct-body{font-size:15px;line-height:1.7;color:var(--c-700);max-width:760px;}
 .struct-body p+p{margin-top:14px;}
 @media(min-width:760px){.struct-section{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}.struct-section>.section-eyebrow{grid-column:1 / 7;}.struct-section .struct-rows{grid-column:7 / 13;}}
+.included-section,.struct-section,.faq-section{position:relative;}
+.included-section::before,.struct-section::before,.faq-section::before{content:'';position:absolute;top:0;left:50%;width:100vw;transform:translateX(-50%);border-top:0.5px solid var(--c-900);pointer-events:none;}
 
 .reg-section{padding:160px 0;}
 .trust-line{font-size:13px;line-height:1.6;color:var(--c-600);max-width:620px;}
@@ -256,9 +258,9 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   </div>
   <div class="included-main">
   <div class="included-rows">
-    <div class="included-row ri" style="--d:0.04s"><span class="included-k">Managed Portfolios</span><p class="included-text">Rules-based S&amp;P 500 allocation on a weekly schedule.</p><a href="II Site V2 - Managed.html" class="included-link"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>View Managed</a></div>
-    <div class="included-row ri" style="--d:0.06s"><span class="included-k">Self-Directed Investing</span><p class="included-text">A decision system for building and reviewing investment theses.</p><a href="II Site V2 - Self-Directed.html" class="included-link"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>View Self-Directed</a></div>
-    <div class="included-row ri" style="--d:0.08s"><span class="included-k">Fiscal.ai Research</span><p class="included-text">Third-party research platform, included as a membership benefit.</p><a href="https://fiscal.ai" target="_blank" rel="noopener" class="included-link"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>Visit Fiscal.ai</a></div>
+    <div class="included-row ri" style="--d:0.04s"><span class="included-k">Managed Portfolios</span><p class="included-text">Rules-based S&amp;P exposure, matched to your goals. The managed core of the system.</p><a href="II Site V2 - Managed.html" class="included-link"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>View Managed</a></div>
+    <div class="included-row ri" style="--d:0.06s"><span class="included-k">Self-Directed Investing</span><p class="included-text">Self-directed positions, each opened under a sealed memo.</p><a href="II Site V2 - Self-Directed.html" class="included-link"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>View Self-Directed</a></div>
+    <div class="included-row ri" style="--d:0.08s"><span class="included-k">Fiscal.ai Research</span><p class="included-text">Institutional research, included. Normally $99/month.</p><a href="https://fiscal.ai" target="_blank" rel="noopener" class="included-link"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>Visit Fiscal.ai</a></div>
   </div>
   <p class="included-foot">Connected by a permanent decision record.</p>
   </div>

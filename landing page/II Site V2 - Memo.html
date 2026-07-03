@@ -82,6 +82,9 @@ section { padding: 160px 0; position: relative; }
 @media (max-width: 900px) { .container { padding: 0 24px; } section { padding: 88px 0; } }
 
 .page-header { padding: 315px 0 144px; border-bottom: 0.5px solid var(--c-800); }
+/* hairlines between sections (all widths) - quiet structural tier */
+.mod-section { position: relative; }
+.mod-section::before { content: ''; position: absolute; top: 0; left: 50%; width: 100vw; transform: translateX(-50%); border-top: 0.5px solid var(--c-900); pointer-events: none; }
 .page-breadcrumb { font-size: 12px; color: var(--c-700); letter-spacing: 0.06em; margin-bottom: 36px; display: flex; align-items: center; gap: 10px; }
 .page-breadcrumb a { color: var(--c-700); text-decoration: none; }
 .page-breadcrumb a:hover { color: var(--c-200); }
@@ -270,7 +273,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 </div>
 
 <div class="container">
-<section>
+<section class="mod-section">
   <div class="sec-head"><span class="sec-num">/02</span><span class="sec-name">Anatomy</span></div>
   <div class="declarative"><p>Five components.<br>One sealed document.</p></div>
   <div class="prose" style="margin-top: 32px;">
@@ -309,7 +312,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 </div>
 
 <div class="container">
-<section>
+<section class="mod-section">
   <div class="sec-head"><span class="sec-num">/03</span><span class="sec-name">Surface</span></div>
   <div class="plate">
     <article class="dr-doc">
@@ -351,7 +354,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 </div>
 
 <div class="container">
-<section>
+<section class="mod-section">
   <div class="sec-head"><span class="sec-num">/04</span><span class="sec-name">Lifecycle</span></div>
   <div class="declarative"><p>A memo lives. It doesn&rsquo;t sit still.</p></div>
   <div class="prose" style="margin-top: 32px;">
@@ -393,7 +396,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 </div>
 
 <div class="container">
-<section>
+<section class="mod-section">
   <div class="sec-head"><span class="sec-num">/05</span><span class="sec-name">Open Questions</span></div>
   <div class="declarative"><p>A thesis doesn&rsquo;t get to sit still.</p></div>
   <div class="prose" style="margin-top: 56px;">
@@ -411,7 +414,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 </div>
 
 <div class="container">
-<section>
+<section class="mod-section">
   <div class="sec-head"><span class="sec-num">/06</span><span class="sec-name">Doctrine</span></div>
   <div class="declarative"><p>The memo is the receipt.<br>The portfolio is the consequence.</p></div>
   <div class="prose" style="margin-top: 48px;">
@@ -423,7 +426,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 </div>
 
 <div class="container">
-<section>
+<section class="mod-section">
   <div class="sec-head"><span class="sec-num">/07</span><span class="sec-name">Connected surfaces</span></div>
   <div class="prose"><p>The memo is the thesis. The benchmark tests whether the thesis worked. Calibration tests whether your confidence was accurate.</p></div>
   <div class="related-grid">

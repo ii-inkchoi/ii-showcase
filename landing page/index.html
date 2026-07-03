@@ -167,12 +167,10 @@ section { padding: 160px 0; position: relative; }
   section.hero .hero-eyebrow { margin-bottom: 16px; } section.hero .ht-line { stroke: var(--c-600); opacity: 0.85; } section.hero .ht-eq { stroke: var(--c-200); opacity: 1; } section.hero .hbr { display: inline; } section.hero { padding: 128px 0 88px !important; } section.hero .hero-scroll { bottom: 48px; color: var(--c-400); }
   section.hero .hero-stack-02 { height: auto; width: 80%; aspect-ratio: 424 / 883; left: 50%; right: auto; top: auto; bottom: 0; transform: translateX(-50%); }
   section.hero .hero-toggle { right: var(--frame); left: auto; bottom: 96px; transform: none; } }
-/* desktop hairlines between the three proof sections (01|02, 02|03) - quiet structural tier */
-#underwriting, #benchmark { position: relative; }
-#underwriting::before, #benchmark::before { content: ''; position: absolute; top: 0; left: 50%; width: 100vw; transform: translateX(-50%); border-top: 0.5px solid var(--c-900); pointer-events: none; }
+/* hairlines between every section (all widths) - quiet structural tier */
+#trust, #entry-01, #underwriting, #benchmark, #entry-03, #research, #evidence, #fit, #entry-06, #close { position: relative; }
+#trust::before, #entry-01::before, #underwriting::before, #benchmark::before, #entry-03::before, #research::before, #evidence::before, #fit::before, #entry-06::before, #close::before { content: ''; position: absolute; top: 0; left: 50%; width: 100vw; transform: translateX(-50%); border-top: 0.5px solid var(--c-900); pointer-events: none; }
 @media (max-width: 760px) {
-  #trust, #entry-01, #underwriting, #benchmark, #entry-03, #evidence, #fit, #entry-06, #close { position: relative; }
-  #trust::before, #entry-01::before, #underwriting::before, #benchmark::before, #entry-03::before, #research::before, #evidence::before, #fit::before, #entry-06::before, #close::before { content: ''; position: absolute; top: 0; left: 50%; width: 100vw; transform: translateX(-50%); border-top: 0.5px solid var(--c-900); pointer-events: none; }
   #underwriting, #benchmark, #entry-03, #evidence, #fit, #research { border-top: 0; }
   .offer-foot { border-top: 0 !important; padding-top: 0; }
 }
@@ -421,8 +419,10 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
 #entry-03, #evidence, #fit, #research { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); align-content: start; }
 #entry-03 > *, #evidence > *, #fit > *, #research > * { grid-column: 1 / -1; }
 #entry-03 .statement, #evidence .statement { grid-column: 1 / 7; }
+#research { grid-template-rows: auto max-content 1fr; }
+#research .entry-head { grid-column: 1 / 7; grid-row: 1; }
 #research .statement { grid-column: 1 / 7; grid-row: 2; }
-#research .rs-body { grid-column: 7 / 13; grid-row: 2; }
+#research .rs-body { grid-column: 7 / 13; grid-row: 1 / 4; align-self: start; }
 #research .rs-p { margin: 0 0 18px; font-size: 15px; line-height: 1.7; color: var(--c-600); letter-spacing: -0.01em; max-width: 660px; }
 #research .rs-p b { color: var(--c-200); font-weight: 400; }
 @media (max-width: 900px) { #research .statement, #research .rs-body { grid-column: 1 / -1; } #research .rs-body { margin-top: 32px; } }
@@ -1193,7 +1193,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   <div class="rs-body">
     <p class="rs-p">Every membership includes Fiscal.ai Max, normally $99 per month, a professional-grade research and analysis environment. <b>Multi-year financials, return on capital, margin trends, clean comparisons across time.</b></p>
     <p class="rs-p">The AI supports analysis. It does not make decisions. <b>It is not a stock picker. It is not a signal engine.</b> It is a disciplined research environment for investors who intend to do the work.</p>
-    <a href="II Site V2 - Self-Directed.html" class="link" style="display:inline-flex;align-items:center;gap:6px;margin-top:10px;"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span class="roll"><span class="roll-in"><span>See Self-Directed</span><span>See Self-Directed</span></span></span></a>
+    <a href="II Site V2 - Self-Directed.html#research" class="link" style="display:inline-flex;align-items:center;gap:6px;margin-top:10px;"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span class="roll"><span class="roll-in"><span>See the Research Layer</span><span>See the Research Layer</span></span></span></a>
   </div>
 </section></div>
 
@@ -1270,7 +1270,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 <div class="container"><section id="close">
   <div class="close-wrap">
     <h2 class="close-h">The objective was never more decisions.<br>It is a capital allocation system that holds every one to the record.</h2>
-    <a href="II Site V2 - GetTheApp.html" class="cta-btn"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Get Access</span><span>Get Access</span></span></span></a>
+    <a href="II Site V2 - GetTheApp.html" class="cta-btn"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Enter the System</span><span>Enter the System</span></span></span></a>
   </div>
 </section></div>
 

@@ -193,13 +193,14 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .badge.notable{background:rgba(255,255,255,0.10);color:var(--c-white);}
 .badge.ambient{background:rgba(255,255,255,0.10);color:var(--c-700);}
 .h-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;text-align:right;}
-.h-line{display:flex;align-items:baseline;justify-content:flex-end;gap:12px;white-space:nowrap;}
-.h-line .amt{color:var(--c-white);font-weight:300;letter-spacing:-0.01em;font-size:13px;}
-.h-line .chg{color:var(--c-700);font-size:13px;letter-spacing:-0.02em;}
+.h-line{display:grid;grid-template-columns:1fr 2.6em 4em;align-items:baseline;column-gap:8px;white-space:nowrap;}
+.h-line .amt{color:var(--c-white);font-weight:300;letter-spacing:-0.01em;font-size:13px;text-align:right;}
+.h-line .ccy{color:var(--c-white);font-weight:300;letter-spacing:-0.01em;font-size:13px;text-align:left;}
+.h-line .chg{color:var(--c-700);font-size:13px;letter-spacing:-0.02em;text-align:right;}
 .acc-pt-k{font-size:22px;color:var(--c-200);letter-spacing:-0.02em;margin-bottom:12px;}
 .acc-pt-d{font-size:15px;line-height:1.7;color:var(--c-600);}
-.acc-sysnote{font-size:15px;line-height:1.7;color:var(--c-700);margin-top:32px;max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));}
-@media(max-width:760px){.cal-prose,.acc-sysnote,.acc-headline{max-width:none;}}
+.acc-sysnote{font-size:15px;line-height:1.7;color:var(--c-600);margin-top:20px;max-width:none;}
+@media(max-width:760px){.cal-prose,.acc-headline{max-width:none;}}
 .docs-section{padding:160px 0;}
 .doc-list{display:flex;flex-direction:column;margin-top:0;}
 .doc-row{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 0;border-top:0.5px solid var(--c-900);text-decoration:none;color:inherit;transition:padding 0.3s ease;}
@@ -261,10 +262,10 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .acct-detail{padding:4px 0 30px;display:flex;flex-direction:column;gap:22px;max-width:660px;}
 .acct-dgrp-h{font-family:var(--mono);font-size:12px;letter-spacing:0.06em;color:var(--c-400);display:block;margin-bottom:8px;}
 .acct-dgrp p{font-size:15px;line-height:1.7;color:var(--c-600);}
+.memo-section,.how-section,.acc-section,.cal-section,.accounts-section,.docs-section,.research-section{position:relative;}
+.memo-section::before,.how-section::before,.acc-section::before,.cal-section::before,.accounts-section::before,.docs-section::before,.research-section::before{content:'';position:absolute;top:0;left:50%;width:100vw;transform:translateX(-50%);border-top:0.5px solid var(--c-900);pointer-events:none;}
 @media(max-width:760px){
-  .how-step{grid-template-columns:1fr;gap:16px;}.how-steps::before{display:none;}.how-node{display:none;}
-  .memo-section,.acc-section,.docs-section,.how-section,.accounts-section,.cta-section{position:relative;}
-  .memo-section::before,.acc-section::before,.docs-section::before,.how-section::before,.accounts-section::before,.cta-section::before{content:'';position:absolute;top:0;left:50%;width:100vw;transform:translateX(-50%);border-top:0.5px solid var(--c-900);pointer-events:none;}}
+  .how-step{grid-template-columns:1fr;gap:16px;}.how-steps::before{display:none;}.how-node{display:none;}}
 @media(max-width:640px){.declarative,.how-headline,.acc-headline,.cal-lead,.memo-lead{text-wrap:wrap;}}
 </style>
 </head>
@@ -405,6 +406,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 <section class="acc-section">
   <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 03</span><span class="se-name">Accountability</span></div>
   <h2 class="acc-headline ri" style="--d:0.04s">Every dollar is benchmarked. Every forecast is scored.</h2>
+  <p class="acc-sysnote ri" style="--d:0.06s">Every holding has a Position Page with alerts, notes, performance, research, news, market data, and full history. Names under review are staged before capital is committed.</p>
   <div class="acc-rows">
     <div class="acc-row ri" style="--d:0.06s">
       <div class="acc-row-text"><div class="acc-pt-k">Benchmark</div><p class="acc-pt-d">Every position, measured against the S&amp;P 500, dollar for dollar. The gap is shown plainly, including when negative.</p></div>
@@ -424,23 +426,22 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
         <div class="holdings">
           <div class="holding">
             <div class="holding-top">
-              <div class="h-name"><div class="h-ticker">ORIO.TO<span class="h-wt">25% WT</span></div><div class="h-cat">Emerging Compounder</div></div>
-              <div class="h-right"><div class="h-line overall"><span class="amt">18,950.00 CAD</span><span class="chg">+42.6%</span></div><div class="h-line today"><span class="amt">87.60 CAD</span><span class="chg">+0.8%</span></div></div>
+              <div class="h-name"><div class="h-ticker">NVDA<span class="h-wt">25% WT</span></div><div class="h-cat">Compounder</div></div>
+              <div class="h-right"><div class="h-line overall"><span class="amt">18,950.00</span><span class="ccy">CAD</span><span class="chg">+42.6%</span></div><div class="h-line today"><span class="amt">187.60</span><span class="ccy">USD</span><span class="chg">+0.8%</span></div></div>
             </div>
-            <div class="h-badges"><span class="badge ambient">52 Week High</span><span class="badge soon">Earnings</span><span class="badge notable">Reverse Split</span></div>
+            <div class="h-badges"><span class="badge soon">Earnings</span><span class="badge ambient">Re-underwrite due</span></div>
           </div>
           <div class="holding">
             <div class="holding-top">
-              <div class="h-name"><div class="h-ticker">BWEN<span class="h-wt">20% WT</span></div><div class="h-cat">Speculative</div></div>
-              <div class="h-right"><div class="h-line overall"><span class="amt">12,950.00 CAD</span><span class="chg">+22.6%</span></div><div class="h-line today"><span class="amt">82.40 USD</span><span class="chg">&minus;2.8%</span></div></div>
+              <div class="h-name"><div class="h-ticker">RKLB<span class="h-wt">20% WT</span></div><div class="h-cat">Speculative</div></div>
+              <div class="h-right"><div class="h-line overall"><span class="amt">12,950.00</span><span class="ccy">CAD</span><span class="chg">+22.6%</span></div><div class="h-line today"><span class="amt">82.40</span><span class="ccy">USD</span><span class="chg">&minus;2.8%</span></div></div>
             </div>
-            <div class="h-badges"><span class="badge ambient">Stock Split</span></div>
+            <div class="h-badges"><span class="badge ambient">Under review</span></div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <p class="acc-sysnote ri" style="--d:0.14s">Every holding has a Position Page with alerts, notes, performance, research, news, market data, and full history. Names under review are staged before capital is committed, and Fiscal.ai research is included with membership.</p>
 </section>
 </div>
 
@@ -534,7 +535,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 </div>
 
 <div class="container">
-<section class="research-section">
+<section id="research" class="research-section">
   <div class="research-head">
     <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 07</span><span class="se-name">Research</span></div>
     <h2 class="research-statement ri" style="--d:0.04s">Research comes before the memo.</h2>
