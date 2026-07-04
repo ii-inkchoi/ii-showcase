@@ -200,7 +200,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .h-line .chg{color:var(--c-700);font-size:13px;letter-spacing:-0.02em;text-align:right;}
 .acc-pt-k{font-size:22px;color:var(--c-200);letter-spacing:-0.02em;margin-bottom:12px;}
 .acc-pt-d{font-size:15px;line-height:1.7;color:var(--c-600);}
-.acc-sysnote{font-size:15px;line-height:1.7;color:var(--c-600);margin-top:20px;max-width:none;}
+.acc-sysnote{font-size:15px;line-height:1.7;color:var(--c-600);margin-top:20px;max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));}
 @media(max-width:760px){.cal-prose,.acc-headline{max-width:none;}}
 .docs-section{padding:160px 0;}
 .doc-list{display:flex;flex-direction:column;margin-top:0;}
@@ -227,7 +227,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .research-price{font-size:18px;color:var(--c-200);letter-spacing:-0.02em;margin-top:48px;}
 .research-foot{font-size:15px;line-height:1.7;color:var(--c-700);margin-top:32px;max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));}
 @media(min-width:760px){.research-section{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}.research-section .research-head{grid-column:1 / 7;}.research-section .research-rows{grid-column:1 / -1;margin-top:64px;}.research-row{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}.research-row .research-label{grid-column:1 / 5;}.research-row .research-desc{grid-column:7 / 13;max-width:none;}.research-price,.research-foot{grid-column:1 / -1;}}
-@media(max-width:760px){.research-lead,.research-foot{max-width:none;}.research-row{grid-template-columns:1fr;gap:14px;}}
+@media(max-width:760px){.research-lead,.research-foot,.acc-sysnote{max-width:none;}.research-row{grid-template-columns:1fr;gap:14px;}}
 
 .how-section{padding:160px 0;}
 @media(min-width:760px){.how-section{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:center;}.how-section>.how-intro{grid-column:1 / 6;}.how-section .how-steps{grid-column:9 / 13;}}

@@ -169,7 +169,7 @@ section { padding: 160px 0; position: relative; }
   section.hero .hero-cta { margin-top: 28px; padding-top: 0; order: 1; }
   section.hero .hero-eyebrow { margin-bottom: 16px; } section.hero .ht-line { stroke: var(--c-600); opacity: 0.85; } section.hero .ht-eq { stroke: var(--c-200); opacity: 1; } section.hero .hbr { display: inline; } section.hero { padding: 128px 0 88px !important; } section.hero .hero-scroll { bottom: 48px; color: var(--c-400); }
   section.hero .hero-figure { margin-top: 16px; }
-  section.hero .hero-figure #heroTorus, section.hero .hero-figure .hero-dots { transform: scale(0.88); transform-origin: center; }
+  section.hero .hero-figure #heroTorus { transform: scale(0.88); transform-origin: center; }
   section.hero .hero-stack-02 { height: auto; width: 80%; aspect-ratio: 424 / 883; left: 50%; right: auto; top: auto; bottom: 0; transform: translateX(-50%); }
   section.hero .hero-toggle { right: var(--frame); left: auto; bottom: 96px; transform: none; } }
 /* hairlines between every section (all widths) - quiet structural tier */
@@ -201,8 +201,7 @@ section.hero::after { content: ''; position: absolute; inset: 0; z-index: 0; poi
 .hero-figure #heroTorus { transform: scale(0.8); transform-origin: center; }
 .hero-stack { position: absolute; top: 50%; right: -16vw; transform: translateY(-50%); width: min(58vw, 920px); z-index: 0; pointer-events: none; }
 .hero-stack svg { width: 100%; height: auto; display: block; overflow: visible; }
-.hero-stack .hero-dots { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-.hero-figure .hero-dots { transform: scale(0.8); transform-origin: center; }
+.hero-stack .hero-dots { position: absolute; left: -30%; top: -25%; width: 160%; height: 150%; pointer-events: none; }
 /* hero - headline + body stay the same on both; the toggle only swaps the figure GRAPHIC (01 torus / 02 app phone on a radar backdrop) */
 .hero-stack-02 { position: absolute; top: 50%; right: -4%; transform: translateY(-50%); height: min(74vh, 680px); aspect-ratio: 424 / 883; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 0.6s ease; }
 .hero-stack-02 .hero-radar { position: absolute; left: 50%; top: 50%; width: 150%; height: 124%; transform: translate(-50%, -50%); pointer-events: none; z-index: 0; }
@@ -1694,16 +1693,21 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     var dotsCv = document.createElement('canvas'); dotsCv.className = 'hero-dots';
     svg.parentNode.insertBefore(dotsCv, svg);
     var dctx = dotsCv.getContext('2d');
-    var HDPR = Math.min(window.devicePixelRatio || 1, 2), hdW = 0, hdH = 0;
+    var HDPR = Math.min(window.devicePixelRatio || 1, 2), hdW = 0, hdH = 0, hdSc = 1, hdOx = 0, hdOy = 0;
     function heroDotsSize() {
-      hdW = dotsCv.clientWidth; hdH = dotsCv.clientHeight;
+      // map torus viewBox coords onto the (larger) canvas via the rendered svg box,
+      // so the scaled svg and the dot field stay registered
+      var cr = dotsCv.getBoundingClientRect(), sr = svg.getBoundingClientRect();
+      hdW = cr.width; hdH = cr.height;
       dotsCv.width = Math.round(hdW * HDPR); dotsCv.height = Math.round(hdH * HDPR);
+      hdSc = sr.width / 480;
+      hdOx = sr.x - cr.x; hdOy = sr.y - cr.y;
     }
-    var HDOTS = [], HN = 460;
+    var HDOTS = [], HN = 680;
     for (var hd = 0; hd < HN; hd++) {
       // a flat disk on the torus mid-plane: dense cluster at the center, few dots
       // reaching the ring centerline (matches the 2D ontology field in entry-03)
-      var hrf = Math.pow(Math.random(), 1.5), htp = 1 - 0.4 * hrf;
+      var hrf = Math.pow(Math.random(), 1.8), htp = 1 - 0.4 * hrf;
       HDOTS.push({
         a: Math.random() * Math.PI * 2,
         rf: hrf,
@@ -1716,7 +1720,14 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
         wr: 1 + Math.random() * 2,                 // slow positional wander so the field never sits still
         ws: 0.4 + Math.random() * 0.8,
         wp: Math.random() * 6.2831853,
-        wp2: Math.random() * 6.2831853
+        wp2: Math.random() * 6.2831853,
+        // intro: born far out, converging into the disk as the loop gains its 3D body
+        // (staggered starts, per-dot speed profiles, wide spiral approach angles)
+        srr: R * (1.5 + Math.random() * 1.2),
+        sao: (Math.random() - 0.5) * 3.5,
+        szj: (Math.random() - 0.5) * 180,
+        cd: Math.random() * 0.55,
+        pw: 0.6 + Math.random() * 1.8
       });
     }
     var hCols = null, hFlares = [], hNextFlare = 1.2;
@@ -1729,19 +1740,21 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
       var w = rgb('--c-white');
       hCols = { w: w, ev: [w, w, rgb('--c-live'), rgb('--c-urgent'), rgb('--c-warning')] };
     }
-    function projDot(x, y, z, psi) {
+    function projDot(x, y, z, psi, zo) {
       var cp = Math.cos(psi), sp = Math.sin(psi);
-      var x1 = x * cp + z * sp, z1 = -x * sp + z * cp;
+      var x1 = x * cp + z * sp, z1 = -x * sp + z * cp + (zo || 0);
       var phi = tiltCur + offX, cf = Math.cos(phi), sf = Math.sin(phi);
       var y2 = y * cf - z1 * sf, z2 = y * sf + z1 * cf;
       var cz = Math.cos(offY), sz = Math.sin(offY);
       return [CX + (x1 * cz - y2 * sz) * S, CY + (x1 * sz + y2 * cz) * S, z2];
     }
-    function drawDots(psi, t, ga) {
+    function drawDots(psi, t, ga, cq) {
+      if (cq === undefined) cq = 1;
       if (!hdW) return;
       if (!hCols) heroDotCols();
-      dctx.setTransform(HDPR * hdW / 480, 0, 0, HDPR * hdH / 520, 0, 0);
-      dctx.clearRect(0, 0, 480, 520);
+      dctx.setTransform(1, 0, 0, 1, 0, 0);
+      dctx.clearRect(0, 0, dotsCv.width, dotsCv.height);
+      dctx.setTransform(HDPR * hdSc, 0, 0, HDPR * hdSc, HDPR * hdOx, HDPR * hdOy);
       if (ga <= 0) return;
       if (t >= hNextFlare) {
         if (hFlares.length < 5) hFlares.push({ i: Math.floor(Math.random() * HN), c: hCols.ev[Math.floor(Math.random() * hCols.ev.length)], t0: t, life: 1.1 + Math.random() * 0.8 });
@@ -1756,6 +1769,10 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
       var zr = R + RTcur;
       for (var i = 0; i < HN; i++) {
         var d = HDOTS[i], drr = d.rf * R;
+        var ci = cq >= 1 ? 1 : (cq - d.cd) / (1 - d.cd);
+        if (ci < 0) ci = 0; else if (ci > 1) ci = 1;
+        ci = ci * ci * (3 - 2 * ci);                     // gentle per-dot dissolve
+        ci = Math.pow(ci, d.pw);
         var P = projDot(
           drr * Math.cos(d.a) + Math.sin(t * d.ws + d.wp) * d.wr,
           drr * Math.sin(d.a) + Math.cos(t * d.ws * 0.87 + d.wp2) * d.wr,
@@ -1763,10 +1780,21 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
         var dn = (P[2] / zr + 1) / 2; dn = dn < 0 ? 0 : dn > 1 ? 1 : dn;
         var a = (d.base + d.amp * Math.sin(t * d.sp + d.ph)) * (0.3 + 0.7 * dn) * ga;
         var rr = d.r * (0.55 + 0.85 * dn), col = hCols.w, fe = fm[i];
-        if (fe) { col = fe.c; a = Math.max(a, fe.e * 0.9 * ga); rr *= 1 + fe.e * 0.7; }
-        if (a <= 0.01) continue;
-        dctx.fillStyle = 'rgba(' + col + ',' + a.toFixed(3) + ')';
-        dctx.beginPath(); dctx.arc(P[0], P[1], rr, 0, 6.2832); dctx.fill();
+        var af = a * ci;
+        if (fe && ci >= 1) { col = fe.c; af = Math.max(af, fe.e * 0.9 * ga); rr *= 1 + fe.e * 0.7; }
+        if (af > 0.01) {
+          dctx.fillStyle = 'rgba(' + col + ',' + af.toFixed(3) + ')';
+          dctx.beginPath(); dctx.arc(P[0], P[1], rr, 0, 6.2832); dctx.fill();
+        }
+        if (ci < 1) {
+          // the scattered field it condenses from: fades out in place, no travel
+          var G = projDot(d.srr * Math.cos(d.a + d.sao), d.srr * Math.sin(d.a + d.sao), d.szj, psi);
+          var ag = a * (1 - ci) * 0.85;
+          if (ag > 0.01) {
+            dctx.fillStyle = 'rgba(' + hCols.w + ',' + ag.toFixed(3) + ')';
+            dctx.beginPath(); dctx.arc(G[0], G[1], rr * 0.9, 0, 6.2832); dctx.fill();
+          }
+        }
       }
     }
     heroDotsSize();
@@ -1823,7 +1851,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     //  phase 2: the system sweeps on (rings draw with the reference's partial/faint variation - RT stays
     //           constant so the line-draw IS the appearance) and it naturally tilts into the 3D donut.
     var INTRO = 3.0;
-    var psi = 0, pu = 0, vt = 0, last = null, introT = 0, dotA = 0;
+    var psi = 0, pu = 0, vt = 0, last = null, introT = 0, dotA = 0, dotCq = 0;
     function ez(x) { x = x < 0 ? 0 : x > 1 ? 1 : x; return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; }
     var eq = lines[U]; eq.style.transition = 'none'; eq.style.opacity = '0.12';  // center line: starts faint
     tiltCur = 0; S = 1; RTcur = RT; draw(0, 0); drawPulse(0, 0);   // face-on; tube constant (reference ring engine)
@@ -1838,20 +1866,21 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
         var e = ez(p);
         tiltCur = TILT * e;        // face-on 2D loop -> tilted 3D donut, natural single direction
         psi = 0.5 * e;
-        dotA = e;                  // dots emerge as the loop gains a 3D body
+        dotA = ez(Math.min(p / 0.35, 1));   // dots visible early so the gather reads
+        if (p > 0) dotCq = Math.min(1, dotCq + dt / 3.5);   // slow dissolve: scatter fades, core fills
         S = 1;                     // current (big) size
         for (var k = 0; k < nodeEls.length; k++) nodeEls[k].classList.toggle('on', introT > 1.5 + k * 0.12);
       } else {
         psi += dt * 0.16; eq.style.opacity = '';
         nodeEls.forEach(function (n) { n.classList.add('on'); });
-        dotA = 1;
+        dotA = 1; dotCq = Math.min(1, dotCq + dt / 3.5);
       }
       pu += dt * 0.4027;
       vt += dt * 0.7;
       offX += (tgtX - offX) * 0.14; offY += (tgtY - offY) * 0.14;
       draw(psi, vt);
       drawPulse(pu, psi);
-      drawDots(psi, now / 1000, dotA);
+      drawDots(psi, now / 1000, dotA, dotCq);
       requestAnimationFrame(frame);
     }
     requestAnimationFrame(frame);
