@@ -125,11 +125,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .section-eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:0.04em;margin-bottom:28px;display:flex;gap:20px;}.se-no{color:var(--c-700);}.se-name{color:var(--c-400);}
 
 .price-section{padding:130px 0 56px;}
-.price-box{display:inline-block;border:0.5px solid var(--c-800);padding:36px 40px;}
-.price-line{display:flex;align-items:baseline;gap:14px;}
-.price-display{font-size:clamp(40px,4.4vw,56px);line-height:0.95;letter-spacing:-0.045em;color:var(--c-200);font-weight:300;}
-.price-period{font-size:12px;color:var(--c-700);letter-spacing:0.04em;}
-.price-note{font-size:15px;line-height:1.65;color:var(--c-600);margin-top:28px;max-width:560px;}
+.price-plain{font-size:22px;color:var(--c-200);letter-spacing:-0.02em;margin-bottom:32px;}
 
 .included-section{padding:160px 0 160px;}
 .included-rows{display:flex;flex-direction:column;margin-top:48px;}
@@ -139,7 +135,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .included-row:hover{padding-left:8px;}
 .included-row:hover .included-k{color:var(--c-white);}
 .included-row:last-of-type{border-bottom:0.5px solid var(--c-900);}
-.included-k{font-size:17px;color:var(--c-200);letter-spacing:-0.01em;transition:color 0.15s ease;}
+.included-k{font-size:15px;color:var(--c-200);letter-spacing:-0.01em;transition:color 0.15s ease;}
 .included-text{font-size:15px;line-height:1.7;color:var(--c-700);}
 .included-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;letter-spacing:0.04em;color:var(--c-400);text-decoration:none;white-space:nowrap;transition:color 0.15s ease;}
 .included-link:hover{color:var(--c-white);}
@@ -257,12 +253,9 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 <section class="included-section">
   <div class="included-head">
   <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 01</span><span class="se-name">The Membership</span></div>
-  <div class="price-box ri" style="--d:0.04s">
-    <div class="price-line"><span class="price-display">$20</span><span class="price-period">Per Month</span></div>
-    <p class="price-note">Everything is included.</p>
-  </div>
   </div>
   <div class="included-main">
+  <div class="price-plain ri" style="--d:0.02s">$20/month, everything included.</div>
   <div class="included-rows">
     <div class="included-row ri" style="--d:0.04s"><span class="included-k">Managed Portfolios</span><p class="included-text">Rules-based S&amp;P exposure, matched to your goals. The managed core of the system.</p><a href="II Site V2 - Managed.html" class="included-link"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>View Managed</a></div>
     <div class="included-row ri" style="--d:0.06s"><span class="included-k">Self-Directed Investing</span><p class="included-text">Self-directed positions, each opened under a sealed memo. The active layer of the system.</p><a href="II Site V2 - Self-Directed.html" class="included-link"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>View Self-Directed</a></div>
