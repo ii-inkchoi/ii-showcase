@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Get the App · Intelligent Investing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-800:#565B5E;--c-700:#929292;--c-600:#A7A7A7;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFF; --frame: clamp(24px, 4vw, 48px); --maxw: 1680px; --gutter: clamp(16px, 1.5vw, 24px); --c-elev: #0A0A0A; --mono:'Chakra Petch',ui-monospace,monospace;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{background:var(--c-black);color:var(--c-600);font-family:'Inter',sans-serif;font-feature-settings:'tnum' 1,'lnum' 1,'ss01' 1;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased;font-weight:400;}
+body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient(180deg,var(--c-elev) 0,var(--c-black) 560px);}body.menu-open{overflow:hidden;}
+.navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:transparent;transition:background 0.3s ease,backdrop-filter 0.3s ease;}
+.navbar.scrolled{background:rgba(0,0,0,0.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
+.navbar-inner{display:flex;align-items:center;justify-content:space-between;padding:var(--frame);gap:32px;position:relative;}
+
+.navbar-brand img{height:14px;width:auto;display:block;}
+.nav-links{display:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);align-items:center;gap:24px;}
+.nav-links a{color:var(--c-700);font-size:13px;letter-spacing:0.02em;text-decoration:none;transition:color 0.15s ease;}
+.nav-links a:hover{color:var(--c-white);}
+.nav-links a.active{color:var(--c-white);}
+@media(min-width:1024px){.nav-links{display:inline-flex;}.hamburger{display:none;}}
+
+.navbar-right{display:flex;align-items:center;gap:24px;}
+.navbar-cta{display:none;color:var(--c-200);text-decoration:none;font-size:13px;border:0.5px solid var(--c-800);padding:8px 16px;}
+@media(min-width:1024px){.navbar-cta{display:inline-block;}}
+.hamburger{position:relative;width:40px;height:18px;background:none;border:none;cursor:pointer;}
+.hamburger span{position:absolute;left:0;width:40px;height:1px;background:var(--c-200);transition:all 0.35s cubic-bezier(0.4,0,0.2,1);}
+.hamburger span:nth-child(1){top:4px;}.hamburger span:nth-child(2){top:13px;}
+.hamburger.open span{width:44px;left:-2px;top:8.5px;}
+.hamburger.open span:nth-child(1){transform:rotate(24deg);}
+.hamburger.open span:nth-child(2){transform:rotate(-24deg);}
+.menu-overlay{position:fixed;inset:0;background:var(--c-black);z-index:200;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity 0.4s cubic-bezier(0.4,0,0.2,1);}
+.menu-overlay.open{opacity:1;pointer-events:auto;}
+.menu-top{display:flex;align-items:center;justify-content:space-between;padding:clamp(28px,4vw,56px) clamp(40px,6vw,80px);}
+.menu-top .ml-logo img{height:13px;}
+.menu-top .ml-close{background:none;border:none;color:var(--c-400);font-size:13px;letter-spacing:0.04em;cursor:pointer;padding:8px;}
+.menu-top .ml-close:hover{color:var(--c-white);}
+.menu-center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(20px,2vw,32px);}
+.menu-center a{color:var(--c-400);text-decoration:none;font-size:clamp(32px,5vw,56px);letter-spacing:-0.03em;line-height:1;opacity:0;transform:translateY(20px);transition:all 0.4s ease;}
+.menu-overlay.open .menu-center a{opacity:1;transform:translateY(0);}
+.menu-overlay.open .menu-center a:nth-child(1){transition-delay:0.15s;}.menu-overlay.open .menu-center a:nth-child(2){transition-delay:0.20s;}.menu-overlay.open .menu-center a:nth-child(3){transition-delay:0.25s;}.menu-overlay.open .menu-center a:nth-child(4){transition-delay:0.30s;}.menu-overlay.open .menu-center a:nth-child(5){transition-delay:0.35s;}.menu-overlay.open .menu-center a:nth-child(6){transition-delay:0.40s;}
+.menu-center a:hover{color:var(--c-white);}
+.menu-bottom{display:grid;grid-template-columns:1fr 1fr;align-items:end;padding:clamp(28px,4vw,56px) clamp(40px,6vw,80px);gap:24px;font-size:11px;color:var(--c-700);}
+.menu-bottom .mb-left{display:flex;flex-direction:column;gap:4px;}.menu-bottom .mb-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
+.container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--frame); box-sizing: border-box; }
+@media(max-width:900px){.container{padding:0 24px;}}
+.lang-toggle{display:inline-flex;align-items:center;gap:8px;font-size:13px;letter-spacing:0.02em;font-feature-settings:'tnum' 1;}
+.lang-toggle .lt{color:var(--c-700);text-decoration:none;cursor:pointer;transition:color 0.15s ease;}
+.lang-toggle .lt.active{color:var(--c-200);}
+.lang-toggle .lt:hover{color:var(--c-white);}
+.lang-toggle .sep{color:var(--c-800);}
+.gta-section{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:140px var(--frame) 80px;max-width:var(--maxw);margin:0 auto;text-align:center;}
+.gta-eyebrow{font-family:var(--mono);font-size:12px;color:var(--c-700);letter-spacing:0.04em;margin-bottom:36px;}
+.gta-title{font-size:clamp(30px,4.4vw,40px);line-height:1.12;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:32px;text-wrap:balance;}
+.gta-deck{font-size:clamp(17px,1.6vw,18px);line-height:1.5;color:var(--c-400);max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));margin-bottom:24px;text-wrap:pretty;}
+@media(max-width:760px){.gta-deck{max-width:none;}}
+@media(max-width:640px){.gta-title{text-wrap:wrap;}}
+.gta-actions{display:flex;gap:32px;align-items:stretch;flex-wrap:wrap;justify-content:center;margin-bottom:64px;}
+.gta-store{display:inline-flex;align-items:center;text-decoration:none;transition:opacity 0.15s ease;border:0.5px solid var(--c-800);padding:14px 22px;}
+.gta-store:hover{opacity:0.85;}
+.gta-badge{height:53px;width:auto;display:block;}
+.gta-sign-in{margin-top:48px;padding-top:48px;border-top:0.5px solid var(--c-900);max-width:480px;width:100%;}
+.gta-sign-in-lbl{font-size:13px;color:var(--c-700);margin-bottom:16px;}
+.cta-button{display:inline-flex;align-items:center;gap:8px;font-size:15px;color:var(--c-white);text-decoration:none;}
+.cta-button .arr{display:inline-flex;align-items:center;line-height:1;}
+.cta-button .arr-svg{width:13px;height:13px;display:block;}
+.cta-button .roll{display:inline-block;overflow:hidden;vertical-align:bottom;height:1lh;}
+.cta-button .roll-in{display:block;}
+.cta-button .roll-in>span{display:block;}
+@media (prefers-reduced-motion: no-preference){.cta-button .roll-in{transition:transform 0.55s cubic-bezier(0.16,1,0.3,1);}.cta-button:hover .roll-in{transform:translateY(-50%);}}
+.gta-note{margin-bottom:64px;font-size:13px;color:var(--c-700);max-width:500px;line-height:1.6;}
+footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;line-height:1.7;color:var(--c-800);}.footer-copy{font-size:13px;color:var(--c-600);}
+.footer-copy a{color:var(--c-600);text-decoration:underline;}
+.footer-social{display:flex;gap:18px;margin-top:22px;}
+.footer-social a{color:var(--c-700);display:inline-flex;transition:color 0.15s ease;}
+.footer-social a:hover{color:var(--c-200);}
+.footer-social svg{width:18px;height:18px;}
+.footer-legal{font-size:11px;color:var(--c-800);line-height:1.75;margin-top:18px;}
+.footer-legal:first-of-type{margin-top:36px;}
+.footer-legal a{color:var(--c-700);text-decoration:underline;}
+.footer-reset{display:inline-block;font-size:11px;color:var(--c-700);text-decoration:underline;margin-top:32px;}
+@media (prefers-reduced-motion: no-preference){.ri{opacity:0;transform:translateY(24px);transition:opacity 0.7s cubic-bezier(0.2,0.6,0.2,1),transform 0.7s cubic-bezier(0.2,0.6,0.2,1);transition-delay:var(--d,0s);}.ri.in{opacity:1;transform:none;}}
+</style>
+</head>
+<body>
+<nav class="navbar"><div class="navbar-inner">
+  <a href="index.html" class="navbar-brand"><img src="Logo.svg" alt="II"></a>
+  <div class="nav-links"><a href="index.html">Home</a><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - Manifesto.html">Manifesto</a></div>
+  <div class="navbar-right"><div class="lang-toggle"><span class="lt active">EN</span><span class="sep">·</span><span class="lt">FR</span></div><button class="hamburger" type="button"><span></span><span></span></button></div>
+</div></nav>
+<div class="menu-overlay">
+  <div class="menu-top"><a href="index.html" class="ml-logo"><img src="Logo.svg" alt="II"></a><button class="ml-close" type="button">Close ×</button></div>
+  <div class="menu-center"><a href="index.html">Home</a><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - Manifesto.html">Manifesto</a><a href="II Site V2 - GetTheApp.html">Enter the System</a></div>
+  <div class="menu-bottom"><div class="mb-left"><span>Intelligent Investing</span><span>No. 01 · 2026</span></div><div class="mb-right"><span>Mogo Inc.</span><span>Orion Digital · TSX·NASDAQ : ORIO</span></div></div>
+</div>
+
+<section class="gta-section">
+  <div class="gta-eyebrow">Intelligent Investing</div>
+  <h1 class="gta-title ri" style="--d:0.06s">Built for iOS.</h1>
+  <div class="gta-deck ri" style="--d:0.14s">Access begins with Calibration, a five-minute screen that determines whether Intelligent Investing is appropriate for you.</div>
+  <div class="gta-note ri" style="--d:0.2s">Android support will follow.</div>
+
+  <div class="gta-actions">
+    <a href="https://apps.apple.com" class="gta-store"><img class="gta-badge" src="appstore-badge.png" alt="Download on the App Store" width="159" height="53"></a>
+  </div>
+
+  <div class="gta-sign-in">
+    <div class="gta-sign-in-lbl">Already have an account?</div>
+    <a href="#" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Open the app to sign in</span><span>Open the app to sign in</span></span></span></a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-copy">&copy;2026 <a href="#">Orion Digital Corp.</a> All rights reserved.</div>
+    <div class="footer-social">
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+      <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 3c.3 2.3 1.8 3.9 4 4.2v3c-1.5 0-2.9-.4-4-1.2v6.3c0 3.2-2.6 5.7-5.8 5.7S4.4 18.5 4.4 15.3 7 9.6 10.2 9.6c.3 0 .6 0 .9.1v3.1c-.3-.1-.6-.2-.9-.2-1.5 0-2.7 1.2-2.7 2.7s1.2 2.7 2.7 2.7 2.8-1.2 2.8-2.7V3H16z"/></svg></a>
+      <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2H22l-7.6 8.7L23 22h-7l-5.5-7.2L4.2 22H1l8.1-9.3L1 2h7.2l5 6.6L18.9 2zm-1.2 18h1.9L7.4 4H5.5l12.2 16z"/></svg></a>
+      <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 7.5c-.3-1-1-1.8-2-2C19 5 12 5 12 5s-7 0-9 .5c-1 .3-1.8 1-2 2C.5 9.3.5 12 .5 12s0 2.7.5 4.5c.3 1 1 1.8 2 2C5 19 12 19 12 19s7 0 9-.5c1-.3 1.8-1 2-2 .5-1.8.5-4.5.5-4.5s0-2.7-.5-4.5zM9.8 15.3V8.7l5.7 3.3-5.7 3.3z"/></svg></a>
+    </div>
+    <p class="footer-legal">Past returns are no guarantee of future performance.</p>
+    <p class="footer-legal">Managed investing accounts are opened with IntelligentInvesting Wealth Management Inc., a registered portfolio manager. IntelligentInvesting Wealth Management Inc. accounts that are held with CI Investment Services Inc., a custodian, are protected by CIPF in accordance with its coverage policy. CI Investment Services Inc. is a CIRO member. Self-directed investing accounts are opened by IntelligentInvesting Securities Inc., an investment dealer regulated by the Canadian Investment Regulatory Organization (CIRO). IntelligentInvesting Securities Inc. is a CIPF member. IntelligentInvesting Securities Inc. accounts are covered by CIPF. A brochure describing the scope and nature of coverage, as well as the limitations and exclusions of coverage, is available upon request or at <a href="https://www.cipf.ca">www.cipf.ca</a>.</p>
+    <p class="footer-legal">IntelligentInvesting Wealth Management Inc. and IntelligentInvesting Securities Inc. are subsidiaries of Orion Digital Corp. Orion Digital Corp. is not an investment adviser or dealer and does not provide investment advice or deal in securities.</p>
+    <p class="footer-legal">Nothing herein should be considered an offer, solicitation of an offer, or advice to buy or sell securities. Account holdings are for illustrative purposes only. Actual products may differ from those depicted and images contained herein. The Intelligent Investing app incorporates the investing principles of Warren Buffett in its features, design, and content. Neither Orion Digital Corp. nor its affiliates are endorsed by or affiliated with Warren Buffett. All images, names, logos, and brands are the property of their respective owners.</p>
+    <p class="footer-legal">The information contained on this website is provided for informational purposes only and does not constitute a promise of specific results or future performance. Certain statements may contain opinions, assumptions, or forward-looking information that are subject to change and may not reflect actual outcomes. No representation or warranty, express or implied, is made as to the accuracy, completeness, or timeliness of the information presented. Statistics, examples, and projections, where provided, are for illustrative purposes only and should not be relied upon as guarantees of future results.</p>
+    <p class="footer-legal">Investing involves risk, including the potential loss of capital. The risks associated with any investment strategy, product, or service should be carefully considered before making any investment decision.</p>
+    <p class="footer-legal">Fiscal.ai, an AI investment research tool powered by Fiscal.ai, is a third-party product provided &ldquo;as is&rdquo; without warranties on accuracy, completeness, quality, or timeliness. Verify information independently. Fiscal.ai outputs are not investment advice or recommendations and should not be used for investment decisions. By using Fiscal.ai, you agree to our <a href="#">Privacy Policy</a> and <a href="#">Terms of Use</a>.</p>
+    <a href="#" class="footer-reset">Reset Cookie Preferences</a>
+  </div>
+</footer>
+<script>
+const hamburger=document.querySelector('.hamburger');const menuOverlay=document.querySelector('.menu-overlay');const menuClose=document.querySelector('.ml-close');const body=document.body;
+function openMenu(){menuOverlay.classList.add('open');hamburger.classList.add('open');body.classList.add('menu-open');}
+function closeMenu(){menuOverlay.classList.remove('open');hamburger.classList.remove('open');body.classList.remove('menu-open');}
+hamburger.addEventListener('click',e=>{e.stopPropagation();menuOverlay.classList.contains('open')?closeMenu():openMenu();});
+  menuClose.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menuOverlay.classList.contains('open')) closeMenu(); });
+</script>
+
+<script>if('IntersectionObserver' in window){var rio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');rio.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -6% 0px'});document.querySelectorAll('.ri').forEach(function(el){rio.observe(el);});}else{document.querySelectorAll('.ri').forEach(function(el){el.classList.add('in');});}</script>
+<script>(function(){var nb=document.querySelector(".navbar");if(nb)window.addEventListener("scroll",function(){nb.classList.toggle("scrolled",window.scrollY>40);},{passive:true});})();</script>
+<script src="grid-overlay.js"></script>
+</body>
+</html>

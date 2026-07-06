@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Benchmark · Intelligent Investing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   II Product · Benchmark
+   Direction A inside (severe institutional, Palantir/Bloomberg tone).
+   Direction B outer (edition framing · masthead, entry numbers).
+   ============================================================ */
+
+:root {
+  --c-black: #000000;
+  --c-1000: #1C1C1C;
+  --c-900:  #232627;
+  --c-800:  #565B5E;
+  --c-700:  #929292;
+  --c-600:  #A7A7A7;
+  --c-400:  #C7C7C7;
+  --c-200:  #E3E2E2;
+  --c-white: #FFFFFF;
+
+  --c-urgent:  #FF3533;
+  --c-warning: #FDAD00;
+  --c-review:  #FBC308;
+  --c-live:    #30D158;
+  --c-neutral: #565B5E;
+ --frame: clamp(24px, 4vw, 48px); --maxw: 1680px; --gutter: clamp(16px, 1.5vw, 24px); --c-elev: #0A0A0A;}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--c-black);
+  color: var(--c-600);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-feature-settings: 'tnum' 1, 'lnum' 1, 'ss01' 1;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+}
+
+body {
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.55;background:linear-gradient(180deg,var(--c-elev) 0,var(--c-black) 560px);
+}
+
+body.menu-open { overflow: hidden; }
+
+/* ============================================================
+   NAVBAR (shared with Home)
+   ============================================================ */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.navbar-inner {position:relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding:var(--frame);
+  gap: 32px;
+}
+
+.navbar-brand {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.navbar-brand img{height:14px;width:auto;display:block;}
+
+.nav-links-desktop {
+  display: none;
+  align-items: center;
+  gap: 32px;
+  flex: 1;
+  justify-content: center;
+}
+
+
+
+.nav-item { position: relative; }
+
+.nav-link {
+  color: var(--c-400);
+  text-decoration: none;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  padding: 8px 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.nav-link:hover { color: var(--c-white); }
+.nav-link.active { color: var(--c-white); }
+
+.nav-caret { display: inline-block; width: 0; height: 0; border-left: 3px solid transparent; border-right: 3px solid transparent; border-top: 4px solid var(--c-700); margin-left: 6px; transition: transform 0.2s ease, border-top-color 0.15s ease; vertical-align: middle; }
+
+.nav-item:hover .nav-caret { transform: rotate(180deg); color: var(--c-400); }
+
+.nav-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  background: var(--c-1000);
+  border: 0.5px solid var(--c-900);
+  padding: 18px 24px;
+  min-width: 220px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.nav-item:hover .nav-dropdown {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.nav-dropdown a {
+  display: block;
+  color: var(--c-600);
+  text-decoration: none;
+  font-size: 13px;
+  padding: 8px 0;
+  letter-spacing: -0.005em;
+  transition: color 0.15s ease;
+  white-space: nowrap;
+}
+
+.nav-dropdown a:hover, .nav-dropdown a.active { color: var(--c-white); }
+
+.nav-links{display:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);align-items:center;gap:24px;}.nav-links a{color:var(--c-700);font-size:13px;letter-spacing:0.02em;text-decoration:none;transition:color 0.15s ease;}.nav-links a:hover{color:var(--c-white);}@media(min-width:1024px){.nav-links{display:inline-flex;}.hamburger{display:none;}}.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-shrink: 0;
+}
+
+.navbar-cta {
+  display: none;
+  color: var(--c-200);
+  text-decoration: none;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  border: 0.5px solid var(--c-800);
+  padding: 8px 16px;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.navbar-cta:hover { color: var(--c-white); border-color: var(--c-400); }
+
+@media (min-width: 1024px) { .navbar-cta { display: inline-block; } }
+.lang-toggle { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; letter-spacing: 0.02em; font-feature-settings: 'tnum' 1; }
+.lang-toggle .lt { color: var(--c-700); text-decoration: none; cursor: pointer; transition: color 0.15s ease; }
+.lang-toggle .lt.active { color: var(--c-200); }
+.lang-toggle .lt:hover { color: var(--c-white); }
+.lang-toggle .sep { color: var(--c-800); }
+.page-masthead { font-size: 13px; color: var(--c-700); letter-spacing: 0.04em; font-feature-settings: 'tnum' 1; margin-bottom: 20px; }
+@media (prefers-reduced-motion: no-preference) {
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.9s cubic-bezier(0.4,0,0.2,1), transform 0.9s cubic-bezier(0.4,0,0.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+  .ri { opacity: 0; transition: opacity 0.7s cubic-bezier(0.2,0.6,0.2,1); transition-delay: var(--d,0s); }
+  .ri.in { opacity: 1; }
+  .type-caret::after { content: '_'; color: var(--c-700); margin-left: 1px; animation: type-caret 0.9s step-end infinite; }
+}
+@keyframes type-caret { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+.hamburger {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 18px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.hamburger span {
+  position: absolute;
+  display: block;
+  left: 0;
+  width: 40px;
+  height: 1px;
+  background: var(--c-200);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              top 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hamburger span:nth-child(1) { top: 4px; }
+.hamburger span:nth-child(2) { top: 13px; }
+
+.hamburger.open span { width: 44px; left: -2px; top: 8.5px; }
+.hamburger.open span:nth-child(1) { transform: rotate(24deg); }
+.hamburger.open span:nth-child(2) { transform: rotate(-24deg); }
+
+/* ============================================================
+   FULL-SCREEN MENU OVERLAY (shared)
+   ============================================================ */
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--c-black);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.menu-overlay.open { opacity: 1; pointer-events: auto; }
+
+.menu-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(28px, 4vw, 56px) clamp(40px, 6vw, 80px);
+}
+
+.menu-top .ml-logo img { height: 13px; width: auto; display: block; }
+
+.menu-top .ml-close {
+  background: none;
+  border: none;
+  color: var(--c-400);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  padding: 8px;
+  transition: color 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.menu-top .ml-close:hover { color: var(--c-white); }
+
+.menu-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(20px, 2vw, 32px);
+}
+
+.menu-center a {
+  color: var(--c-400);
+  text-decoration: none;
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease, color 0.15s ease;
+}
+
+.menu-overlay.open .menu-center a {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.menu-overlay.open .menu-center a:nth-child(1) { transition-delay: 0.15s; }
+.menu-overlay.open .menu-center a:nth-child(2) { transition-delay: 0.20s; }
+.menu-overlay.open .menu-center a:nth-child(3) { transition-delay: 0.25s; }
+.menu-overlay.open .menu-center a:nth-child(4) { transition-delay: 0.30s; }
+.menu-overlay.open .menu-center a:nth-child(5) { transition-delay: 0.35s; }
+.menu-overlay.open .menu-center a:nth-child(6) { transition-delay: 0.40s; }
+
+.menu-center a:hover { color: var(--c-white); }
+
+.menu-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: end;
+  padding: clamp(28px, 4vw, 56px) clamp(40px, 6vw, 80px);
+  gap: 24px;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--c-700);
+  font-feature-settings: 'tnum' 1;
+}
+
+.menu-bottom .mb-left { display: flex; flex-direction: column; gap: 4px; }
+.menu-bottom .mb-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+
+@media (max-width: 600px) {
+  .menu-bottom { grid-template-columns: 1fr; gap: 16px; }
+  .menu-bottom .mb-right { align-items: flex-start; }
+}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--frame); box-sizing: border-box; }
+
+section {
+  padding: 160px 0;
+  position: relative;
+}
+
+@media (max-width: 900px) {
+  .container { padding: 0 24px; }
+  section { padding: 88px 0; }
+}
+
+/* ============================================================
+   PAGE HEADER (replaces hero on product pages)
+   ============================================================ */
+.page-header {
+  padding: 180px 0 80px;
+  border-bottom: 0.5px solid var(--c-900);
+}
+
+/* hairlines between sections (all widths) - quiet structural tier */
+.mod-section { position: relative; }
+.mod-section::before { content: ''; position: absolute; top: 0; left: 50%; width: 100vw; transform: translateX(-50%); border-top: 0.5px solid var(--c-900); pointer-events: none; }
+
+.page-breadcrumb {
+  font-size: 12px;
+  color: var(--c-700);
+  letter-spacing: 0.06em;
+  font-feature-settings: 'tnum' 1;
+  margin-bottom: 36px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.page-breadcrumb a {
+  color: var(--c-700);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.page-breadcrumb a:hover { color: var(--c-200); }
+.page-breadcrumb .sep { color: var(--c-800); }
+.page-breadcrumb .current { color: var(--c-200); }
+
+.page-title {
+  font-size: clamp(34px, 5vw, 64px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: var(--c-200);
+  font-weight: 400;
+  margin-bottom: 48px;
+}
+
+.page-deck {
+  font-size: clamp(20px, 1.8vw, 24px);
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+  color: var(--c-400);
+  max-width: 760px;
+  text-wrap: balance;
+}
+
+.page-meta {
+  display: flex;
+  gap: 56px;
+  margin-top: 64px;
+  font-size: 13px;
+  color: var(--c-700);
+  letter-spacing: 0.02em;
+  font-feature-settings: 'tnum' 1;
+}
+
+.page-meta .meta-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.page-meta .meta-lbl { color: var(--c-800); font-size: 11px; letter-spacing: 0.06em; }
+.page-meta .meta-val { color: var(--c-400); font-size: 14px; }
+
+/* ============================================================
+   SECTION HEAD
+   ============================================================ */
+.sec-head {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 32px;
+  align-items: baseline;
+  margin-bottom: 64px;
+  padding-bottom: 18px;
+  border-bottom: 0.5px solid var(--c-900);
+}
+
+.sec-num {
+  font-size: 13px;
+  color: var(--c-700);
+  letter-spacing: 0.04em;
+  font-feature-settings: 'tnum' 1;
+}
+
+.sec-name {
+  font-size: 22px;
+  color: var(--c-200);
+  letter-spacing: -0.02em;
+}
+
+/* ============================================================
+   DECLARATIVE + PROSE
+   ============================================================ */
+.declarative {
+  font-size: clamp(22px, 2.6vw, 28px);
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+  color: var(--c-200);
+  font-weight: 400;
+  max-width: 880px;
+  text-wrap: balance;
+}
+
+.declarative p + p { margin-top: 28px; }
+.declarative .dim { color: var(--c-700); }
+
+.prose {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--c-600);
+  letter-spacing: -0.01em;
+  max-width: 720px;
+}
+
+
+.prose p + p { margin-top: 14px; }
+.prose em { font-style: normal; color: var(--c-200); }
+
+/* ============================================================
+   STAT BLOCK · institutional / Bloomberg-style numeric anchor
+   ============================================================ */
+.stat-block {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  margin-top: 48px;
+  background: var(--c-900);
+  border: 0.5px solid var(--c-900);
+}
+
+.stat-cell {
+  background: var(--c-black);
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stat-num {
+  font-size: clamp(40px, 5vw, 72px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--c-200);
+  font-feature-settings: 'tnum' 1;
+}
+
+.stat-lbl {
+  font-size: 13px;
+  color: var(--c-700);
+  letter-spacing: -0.005em;
+  margin-top: 16px;
+}
+
+@media (max-width: 900px) {
+  .stat-block { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   DATA ROW LIST · institutional tabular
+   ============================================================ */
+.data-list {
+  margin-top: 48px;
+  border-top: 0.5px solid var(--c-900);
+}
+
+.data-row {
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  gap: 32px;
+  align-items: baseline;
+  padding: 24px 0;
+  border-bottom: 0.5px solid var(--c-900);
+}
+
+.data-lbl {
+  font-size: 13px;
+  color: var(--c-700);
+  letter-spacing: 0.02em;
+}
+
+.data-detail {
+  font-size: 15px;
+  color: var(--c-400);
+  letter-spacing: -0.005em;
+  max-width: 540px;
+}
+
+.data-val {
+  font-size: 15px;
+  color: var(--c-200);
+  text-align: right;
+  font-feature-settings: 'tnum' 1;
+  letter-spacing: -0.01em;
+}
+
+@media (max-width: 900px) {
+  .data-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .data-val { text-align: left; }
+}
+
+/* ============================================================
+   PLATE · product surface placeholder
+   ============================================================ */
+.plate {
+  display: grid;
+  grid-template-columns: 1fr 500px;
+  gap: 80px;
+  align-items: start;
+  margin-top: 56px;
+}
+
+.plate.reverse { grid-template-columns: 500px 1fr; }
+
+/* benchmark card - real decision surface (mirrors homepage No. 03) */
+.bm-card { border:0.5px solid var(--c-800); background:var(--c-1000); border-radius:4px; overflow:hidden; position:relative; height:730px; -webkit-mask-image:linear-gradient(to bottom, #000 92%, transparent 100%); mask-image:linear-gradient(to bottom, #000 92%, transparent 100%); }
+.bm-head { display:flex; flex-direction:column; align-items:flex-end; gap:6px; padding:30px 28px 0; }
+.bm-title { font-size:18px; color:var(--c-white); letter-spacing:-0.02em; line-height:1.15; }
+.bm-acct { font-size:18px; color:var(--c-700); letter-spacing:-0.02em; line-height:1.15; }
+.bm-tracked { font-size:13px; color:var(--c-700); letter-spacing:-0.02em; margin-top:40px; padding:0 28px; }
+.bm-sub { font-size:14px; color:var(--c-400); letter-spacing:-0.02em; margin:64px 0 15px; padding:0 28px; }
+.bm-row { display:flex; align-items:baseline; justify-content:space-between; gap:16px; padding:0 28px 10px; margin:0 0 10px; border-bottom:0.5px solid var(--c-900); }
+.bm-k { font-size:14px; color:var(--c-700); letter-spacing:-0.02em; }
+.bm-v { font-size:15px; color:var(--c-400); letter-spacing:-0.02em; }
+.bm-row.diff .bm-v { color:var(--c-white); }
+.bm-pct { font-size:14px; color:var(--c-700); margin-left:6px; }
+.bm-meth { padding:0 28px; margin:6px 0 0; }
+.bm-meth span { font-size:13px; color:var(--c-700); border-bottom:0.5px dotted var(--c-800); padding-bottom:1px; letter-spacing:-0.02em; }
+.bm-ccy { padding:0 28px; margin-top:64px; font-size:13px; color:var(--c-700); text-align:right; letter-spacing:-0.02em; }
+
+@media (max-width: 1100px) {
+  .plate, .plate.reverse {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+.plate-caption {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--c-600);
+  letter-spacing: -0.01em;
+  max-width: 540px;
+}
+
+.plate-caption .fig-num {
+  display: block;
+  font-size: 12px;
+  color: var(--c-700);
+  letter-spacing: 0.04em;
+  font-feature-settings: 'tnum' 1;
+  margin-bottom: 14px;
+}
+
+.plate-caption .fig-title {
+  display: block;
+  font-size: 22px;
+  color: var(--c-200);
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+}
+
+
+.plate-caption p + p { margin-top: 14px; }
+
+.plate-caption ul {
+  list-style: none;
+  margin-top: 8px;
+}
+
+.plate-caption li {
+  padding-left: 14px;
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.plate-caption li::before {
+  content: "·";
+  position: absolute;
+  left: 0;
+  color: var(--c-700);
+}
+
+.plate-caption .footnote {
+  display: block;
+  margin-top: 28px;
+  font-size: 14px;
+  color: var(--c-700);
+  line-height: 1.6;
+}
+
+.plate-screen {
+  aspect-ratio: 9 / 18;
+  border: 0.5px solid var(--c-800);
+  background: var(--c-1000);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 28px;
+}
+
+.plate-screen .ph-title {
+  font-size: 14px;
+  color: var(--c-700);
+  letter-spacing: -0.01em;
+  margin-bottom: 12px;
+}
+
+.plate-screen .ph-detail {
+  font-size: 13px;
+  color: var(--c-800);
+  line-height: 1.55;
+  letter-spacing: -0.005em;
+  max-width: 240px;
+}
+
+/* ============================================================
+   RELATED SURFACES
+   ============================================================ */
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin-top: 56px;
+  border-top: 0.5px solid var(--c-900);
+}
+
+.related-card {
+  padding: 40px 0;
+  padding-right: 32px;
+  border-bottom: 0.5px solid var(--c-900);
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: padding 0.3s ease;
+}
+
+.related-card + .related-card { padding-left: 32px; border-left: 0.5px solid var(--c-900); }
+
+.related-card .rc-num {
+  font-size: 12px;
+  color: var(--c-700);
+  letter-spacing: 0.04em;
+  font-feature-settings: 'tnum' 1;
+}
+
+.related-card .rc-name {
+  font-size: 28px;
+  color: var(--c-200);
+  letter-spacing: -0.025em;
+  transition: color 0.15s ease;
+}
+
+.related-card .rc-desc {
+  font-size: 14px;
+  color: var(--c-600);
+  line-height: 1.55;
+  margin-top: 4px;
+}
+
+.related-card .rc-arrow {
+  margin-top: auto;
+  padding-top: 24px;
+  font-size: 14px;
+  color: var(--c-700);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.15s ease;
+}
+
+.related-card:hover .rc-name { color: var(--c-200); }
+.related-card:hover .rc-arrow { color: var(--c-400); }
+
+@media (max-width: 900px) {
+  .related-grid { grid-template-columns: 1fr; }
+  .related-card + .related-card { padding-left: 0; border-left: none; }
+}
+
+/* ============================================================
+   CTA SECTION
+   ============================================================ */
+.cta-section {
+  text-align: center;
+  padding: 160px 0 100px;
+  border-top: 0.5px solid var(--c-900);
+  margin-top: 80px;
+}
+
+.cta-canon {
+  font-size: clamp(22px, 2.6vw, 28px);
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+  color: var(--c-200);
+  font-weight: 400;
+  margin-bottom: 48px;
+  text-wrap: balance;
+}
+
+.cta-button{display:inline-flex;align-items:center;gap:8px;font-size:15px;color:var(--c-white);text-decoration:none;}
+.cta-button .arr{display:inline-flex;align-items:center;line-height:1;}
+.cta-button .arr-svg{width:13px;height:13px;display:block;}
+.cta-button .roll{display:inline-block;overflow:hidden;vertical-align:bottom;height:1lh;}
+.cta-button .roll-in{display:block;}
+.cta-button .roll-in>span{display:block;}
+@media (prefers-reduced-motion: no-preference){.cta-button .roll-in{transition:transform 0.55s cubic-bezier(0.16,1,0.3,1);}.cta-button:hover .roll-in{transform:translateY(-50%);}}
+
+/* ============================================================
+   FOOTER (shared with Home)
+   ============================================================ */
+footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;line-height:1.7;color:var(--c-800);}.footer-copy{font-size:13px;color:var(--c-600);}
+.footer-copy a{color:var(--c-600);text-decoration:underline;}
+.footer-social{display:flex;gap:18px;margin-top:22px;}
+.footer-social a{color:var(--c-700);display:inline-flex;transition:color 0.15s ease;}
+.footer-social a:hover{color:var(--c-200);}
+.footer-social svg{width:18px;height:18px;}
+.footer-legal{font-size:11px;color:var(--c-800);line-height:1.75;margin-top:18px;}
+.footer-legal:first-of-type{margin-top:36px;}
+.footer-legal a{color:var(--c-700);text-decoration:underline;}
+.footer-reset{display:inline-block;font-size:11px;color:var(--c-700);text-decoration:underline;margin-top:32px;}
+@media(max-width:640px){.declarative,.cta-canon{text-wrap:wrap;}}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAVBAR
+     ============================================================ -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-brand">
+      <img src="Logo.svg" alt="Intelligent Investing">
+    </a>
+    <div class="nav-links"><a href="index.html">Home</a><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - Manifesto.html">Manifesto</a></div>
+
+
+    <div class="navbar-right">
+      <div class="lang-toggle"><span class="lt active">EN</span><span class="sep">·</span><span class="lt">FR</span></div>
+      <a href="II Site V2 - GetTheApp.html" class="navbar-cta">Enter the System</a>
+      <button class="hamburger" type="button" aria-label="Menu">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================================
+     MENU OVERLAY
+     ============================================================ -->
+<div class="menu-overlay">
+  <div class="menu-top">
+    <a href="index.html" class="ml-logo">
+      <img src="Logo.svg" alt="Intelligent Investing">
+    </a>
+    <button class="ml-close" type="button">Close ×</button>
+  </div>
+
+  <div class="menu-center">
+    <a href="index.html">Home</a>
+    <a href="II Site V2 - Self-Directed.html">Self-Directed</a>
+    <a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - Manifesto.html">Manifesto</a>
+    <a href="II Site V2 - GetTheApp.html">Enter the System</a>
+  </div>
+
+  <div class="menu-bottom">
+    <div class="mb-left">
+      <span>Intelligent Investing</span>
+      <span>No. 01 · 2026</span>
+    </div>
+    <div class="mb-right">
+      <span>Mogo Inc.</span>
+      <span>Orion Digital · TSX·NASDAQ : ORIO</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     PAGE HEADER
+     ============================================================ -->
+<div class="container">
+<section class="page-header">
+  
+
+  <h1 class="page-title ri" style="--d:0.08s">Benchmark</h1>
+
+  <div class="page-deck ri" style="--d:0.16s">
+    You either beat the index you could&rsquo;ve just bought, or you didn&rsquo;t. Every dollar carries its shadow. The difference is not hidden.
+  </div>
+
+  <div class="page-meta ri" style="--d:0.2s">
+    <div class="meta-col">
+      <span class="meta-lbl">Module</span>
+      <span class="meta-val">/02</span>
+    </div>
+    <div class="meta-col">
+      <span class="meta-lbl">Index</span>
+      <span class="meta-val">S&amp;P 500 · SPY</span>
+    </div>
+    <div class="meta-col">
+      <span class="meta-lbl">Surface</span>
+      <span class="meta-val">Performance Dashboard</span>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ============================================================
+     SECTION 01 · Premise
+     ============================================================ -->
+<div class="container">
+<section>
+  <div class="sec-head">
+    <span class="sec-num">/01</span>
+    <span class="sec-name">Premise</span>
+  </div>
+
+  <div class="declarative">
+    <p>Most investors lose to the market they could have just bought.</p>
+  </div>
+
+  <div class="prose" style="margin-top: 48px;">
+    <p>The S&amp;P 500 is the floor. Buying it requires no skill, no research, no system. It is the most boring outcome available to a long-term investor.</p>
+    <p>The data on professionals attempting to beat it is consistent across decades.</p>
+  </div>
+
+  <div class="stat-block">
+    <div class="stat-cell">
+      <div class="stat-num">~85%</div>
+      <div class="stat-lbl">Of active managers underperform the S&amp;P 500 over 10 years</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">~95%</div>
+      <div class="stat-lbl">Over 20 years</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">$20M+</div>
+      <div class="stat-lbl">Typical research team budget for institutional managers attempting the same</div>
+    </div>
+  </div>
+
+  <div class="prose" style="margin-top: 56px;">
+    <p>Outperformance is possible. But extremely difficult.</p>
+    <p>A system that pretends otherwise is selling something. <em>This one doesn&rsquo;t.</em></p>
+  </div>
+</section>
+</div>
+
+<!-- ============================================================
+     SECTION 02 · Mechanism
+     ============================================================ -->
+<div class="container">
+<section class="mod-section">
+  <div class="sec-head">
+    <span class="sec-num">/02</span>
+    <span class="sec-name">Mechanism</span>
+  </div>
+
+  <div class="declarative">
+    <p>Every dollar carries its shadow.</p>
+  </div>
+
+  <div class="prose" style="margin-top: 48px;">
+    <p>For every deposit you make, every dollar that enters Self-Directed positions, the system holds a parallel ledger.</p>
+    <p>Same dollars. Same timestamps. Held in SPY.</p>
+    <p>No selection bias. No survivorship. No hindsight. Just <em>what would have happened</em> if you had bought the index instead.</p>
+  </div>
+
+  <div class="data-list">
+    <div class="data-row">
+      <span class="data-lbl">Per-tranche shadow</span>
+      <span class="data-detail">Each deposit and trade is mirrored in SPY at the same time, with the same dollars.</span>
+      <span class="data-val">Continuous</span>
+    </div>
+    <div class="data-row">
+      <span class="data-lbl">Selection bias</span>
+      <span class="data-detail">No cherry-picking of start dates or comparison periods. The shadow exists for the full life of every dollar.</span>
+      <span class="data-val">None</span>
+    </div>
+    <div class="data-row">
+      <span class="data-lbl">Survivorship</span>
+      <span class="data-detail">Closed positions remain in the calibration record. Past losses are not hidden by current winners.</span>
+      <span class="data-val">None</span>
+    </div>
+    <div class="data-row">
+      <span class="data-lbl">Fees &amp; FX</span>
+      <span class="data-detail">Net of all commissions (zero), FX (no added fee; conversion spread applies), and management fees (zero for Self-Directed).</span>
+      <span class="data-val">Net</span>
+    </div>
+    <div class="data-row">
+      <span class="data-lbl">Reporting</span>
+      <span class="data-detail">Three numbers visible at all times: Portfolio · S&amp;P 500 · Difference.</span>
+      <span class="data-val">Live</span>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ============================================================
+     SECTION 03 · Surface (Performance Dashboard plate)
+     ============================================================ -->
+<div class="container">
+<section class="mod-section">
+  <div class="sec-head">
+    <span class="sec-num">/03</span>
+    <span class="sec-name">Surface</span>
+  </div>
+
+  <div class="plate">
+    <div class="plate-caption">
+      <span class="fig-num">Fig. 01</span>
+      <span class="fig-title">Performance Dashboard.</span>
+      <p>The dashboard shows three numbers. Nothing else.</p>
+      <ul>
+        <li>Portfolio return: what you actually earned</li>
+        <li>S&amp;P 500 return: what holding the index would have earned</li>
+        <li>Difference: alpha or shortfall, not hidden</li>
+      </ul>
+      <p style="margin-top: 24px;">Drill in for per-tranche detail: every deposit, every trade, against its shadow. Closed positions kept on the record.</p>
+      <span class="footnote">The system does not restrict action. It makes the consequences of action visible. The difference is the truth.</span>
+    </div>
+
+    <div class="bm-card">
+      <div class="bm-head"><span class="bm-title">S&amp;P 500 Benchmark</span><span class="bm-acct">All Accounts</span></div>
+      <div class="bm-tracked">Tracked for 18 months &middot; since Nov 12, 2024</div>
+      <div class="bm-sub" style="margin-top:48px;">Summary</div>
+      <div class="bm-row"><span class="bm-k">Portfolio Value</span><span class="bm-v">842,360.00</span></div>
+      <div class="bm-row"><span class="bm-k">S&amp;P 500 Value</span><span class="bm-v">911,540.00</span></div>
+      <div class="bm-row diff"><span class="bm-k">Difference</span><span><span class="bm-v">&minus;69,180.00</span><span class="bm-pct">&minus;7.59%</span></span></div>
+      <div class="bm-meth"><span>Methodology</span></div>
+      <div class="bm-sub">Contributions &amp; Growth</div>
+      <div class="bm-row"><span class="bm-k">Net Contributions</span><span class="bm-v">700,000.00</span></div>
+      <div class="bm-row"><span class="bm-k">Portfolio Growth</span><span class="bm-v">+142,360.00</span></div>
+      <div class="bm-row"><span class="bm-k">S&amp;P 500 Growth</span><span class="bm-v">+211,540.00</span></div>
+      <div class="bm-ccy">All monetary values in CAD</div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ============================================================
+     SECTION 04 · Doctrine
+     ============================================================ -->
+<div class="container">
+<section class="mod-section">
+  <div class="sec-head">
+    <span class="sec-num">/04</span>
+    <span class="sec-name">Doctrine</span>
+  </div>
+
+  <div class="declarative">
+    <p>The benchmark is not a competitor.<br>It is the test.</p>
+  </div>
+
+  <div class="prose" style="margin-top: 48px;">
+    <p>In most platforms, performance is celebrated when up and hidden when down. The number you see is the friendlier one.</p>
+    <p>Here, the comparison is constant. The honest gap to passive is visible at every moment.</p>
+    <p>Most users will not beat the index over a decade. That is not a failure of the system. It is the system <em>working as designed</em>, surfacing reality rather than narrative.</p>
+    <p>The benchmark turns activity into evidence. Whether the evidence supports continuing or reverting to a disciplined core is up to the operator.</p>
+  </div>
+</section>
+</div>
+
+<!-- ============================================================
+     SECTION 05 · Related
+     ============================================================ -->
+<div class="container">
+<section class="mod-section">
+  <div class="sec-head">
+    <span class="sec-num">/05</span>
+    <span class="sec-name">Connected surfaces</span>
+  </div>
+
+  <div class="prose" style="margin-bottom: 8px;">
+    <p>The benchmark is one half of accountability. The other half is the sealed thesis that justified each position, and the calibration record that tracks judgment over time.</p>
+  </div>
+
+  <div class="related-grid">
+    <a href="II Site V2 - Memo.html" class="related-card">
+      <div class="rc-num">/01</div>
+      <div>
+        <div class="rc-name">The Memo</div>
+        <div class="rc-desc">The sealed thesis behind every position. Read why each dollar moved before you check if it was right.</div>
+      </div>
+      <span class="rc-arrow">→ Read</span>
+    </a>
+
+    <a href="II Site V2 - Calibration.html" class="related-card">
+      <div class="rc-num">/04</div>
+      <div>
+        <div class="rc-name">Calibration</div>
+        <div class="rc-desc">Confidence stated, then tested. Your judgment quality, measurable over decades.</div>
+      </div>
+      <span class="rc-arrow">→ Read</span>
+    </a>
+
+    <a href="II Site V2 - Manifesto.html" class="related-card">
+      <div class="rc-num">/06</div>
+      <div>
+        <div class="rc-name">Manifesto</div>
+        <div class="rc-desc">Why the system was built this way. NO. 005 &middot; NO. 010 reference benchmark thinking directly.</div>
+      </div>
+      <span class="rc-arrow">→ Read</span>
+    </a>
+  </div>
+</section>
+</div>
+
+<!-- ============================================================
+     CTA
+     ============================================================ -->
+<div class="container">
+<section class="cta-section">
+  <div class="cta-canon">
+    Open an account.<br>
+    The shadow ledger starts the moment your first dollar arrives.
+  </div>
+  <a href="II Site V2 - GetTheApp.html" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Open Account</span><span>Open Account</span></span></span></a>
+</section>
+</div>
+
+<!-- ============================================================
+     FOOTER (shared)
+     ============================================================ -->
+<footer>
+  <div class="container">
+    <div class="footer-copy">&copy;2026 <a href="#">Orion Digital Corp.</a> All rights reserved.</div>
+    <div class="footer-social">
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+      <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 3c.3 2.3 1.8 3.9 4 4.2v3c-1.5 0-2.9-.4-4-1.2v6.3c0 3.2-2.6 5.7-5.8 5.7S4.4 18.5 4.4 15.3 7 9.6 10.2 9.6c.3 0 .6 0 .9.1v3.1c-.3-.1-.6-.2-.9-.2-1.5 0-2.7 1.2-2.7 2.7s1.2 2.7 2.7 2.7 2.8-1.2 2.8-2.7V3H16z"/></svg></a>
+      <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2H22l-7.6 8.7L23 22h-7l-5.5-7.2L4.2 22H1l8.1-9.3L1 2h7.2l5 6.6L18.9 2zm-1.2 18h1.9L7.4 4H5.5l12.2 16z"/></svg></a>
+      <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 7.5c-.3-1-1-1.8-2-2C19 5 12 5 12 5s-7 0-9 .5c-1 .3-1.8 1-2 2C.5 9.3.5 12 .5 12s0 2.7.5 4.5c.3 1 1 1.8 2 2C5 19 12 19 12 19s7 0 9-.5c1-.3 1.8-1 2-2 .5-1.8.5-4.5.5-4.5s0-2.7-.5-4.5zM9.8 15.3V8.7l5.7 3.3-5.7 3.3z"/></svg></a>
+    </div>
+    <p class="footer-legal">Past returns are no guarantee of future performance.</p>
+    <p class="footer-legal">Managed investing accounts are opened with IntelligentInvesting Wealth Management Inc., a registered portfolio manager. IntelligentInvesting Wealth Management Inc. accounts that are held with CI Investment Services Inc., a custodian, are protected by CIPF in accordance with its coverage policy. CI Investment Services Inc. is a CIRO member. Self-directed investing accounts are opened by IntelligentInvesting Securities Inc., an investment dealer regulated by the Canadian Investment Regulatory Organization (CIRO). IntelligentInvesting Securities Inc. is a CIPF member. IntelligentInvesting Securities Inc. accounts are covered by CIPF. A brochure describing the scope and nature of coverage, as well as the limitations and exclusions of coverage, is available upon request or at <a href="https://www.cipf.ca">www.cipf.ca</a>.</p>
+    <p class="footer-legal">IntelligentInvesting Wealth Management Inc. and IntelligentInvesting Securities Inc. are subsidiaries of Orion Digital Corp. Orion Digital Corp. is not an investment adviser or dealer and does not provide investment advice or deal in securities.</p>
+    <p class="footer-legal">Nothing herein should be considered an offer, solicitation of an offer, or advice to buy or sell securities. Account holdings are for illustrative purposes only. Actual products may differ from those depicted and images contained herein. The Intelligent Investing app incorporates the investing principles of Warren Buffett in its features, design, and content. Neither Orion Digital Corp. nor its affiliates are endorsed by or affiliated with Warren Buffett. All images, names, logos, and brands are the property of their respective owners.</p>
+    <p class="footer-legal">The information contained on this website is provided for informational purposes only and does not constitute a promise of specific results or future performance. Certain statements may contain opinions, assumptions, or forward-looking information that are subject to change and may not reflect actual outcomes. No representation or warranty, express or implied, is made as to the accuracy, completeness, or timeliness of the information presented. Statistics, examples, and projections, where provided, are for illustrative purposes only and should not be relied upon as guarantees of future results.</p>
+    <p class="footer-legal">Investing involves risk, including the potential loss of capital. The risks associated with any investment strategy, product, or service should be carefully considered before making any investment decision.</p>
+    <p class="footer-legal">Fiscal.ai, an AI investment research tool powered by Fiscal.ai, is a third-party product provided &ldquo;as is&rdquo; without warranties on accuracy, completeness, quality, or timeliness. Verify information independently. Fiscal.ai outputs are not investment advice or recommendations and should not be used for investment decisions. By using Fiscal.ai, you agree to our <a href="#">Privacy Policy</a> and <a href="#">Terms of Use</a>.</p>
+    <a href="#" class="footer-reset">Reset Cookie Preferences</a>
+  </div>
+</footer>
+
+<script>
+  // Hamburger / Menu overlay
+  const hamburger = document.querySelector('.hamburger');
+  const menuOverlay = document.querySelector('.menu-overlay');
+  const menuClose = document.querySelector('.ml-close');
+  const body = document.body;
+
+  function openMenu() {
+    menuOverlay.classList.add('open');
+    hamburger.classList.add('open');
+    body.classList.add('menu-open');
+  }
+
+  function closeMenu() {
+    menuOverlay.classList.remove('open');
+    hamburger.classList.remove('open');
+    body.classList.remove('menu-open');
+  }
+
+  hamburger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (menuOverlay.classList.contains('open')) closeMenu();
+    else openMenu();
+  });
+  menuClose.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menuOverlay.classList.contains('open')) closeMenu(); });
+</script>
+
+<script>
+(function () {
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.querySelectorAll('[data-type]').forEach(function (el) { el.setAttribute('data-type-text', el.textContent); el.textContent = ''; });
+  function typeEl(el, done) { var full = el.getAttribute('data-type-text') || ''; el.textContent = ''; el.classList.add('type-caret'); var i = 0; (function tick() { if (i <= full.length) { el.textContent = full.slice(0, i); i++; setTimeout(tick, 40); } else { el.classList.remove('type-caret'); if (done) done(); } })(); }
+  function typeSection(sec) { var els = sec.querySelectorAll('[data-type]'); var idx = 0; (function next() { if (idx < els.length) { typeEl(els[idx], function () { idx++; next(); }); } })(); }
+  var io = new IntersectionObserver(function (entries) { entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); typeSection(e.target); io.unobserve(e.target); } }); }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('section:not(.page-header)').forEach(function (s) { s.classList.add('reveal'); io.observe(s); });
+  document.querySelectorAll('.ri').forEach(function (el) { io.observe(el); });
+})();
+</script>
+<script src="grid-overlay.js"></script>
+</body>
+</html>
