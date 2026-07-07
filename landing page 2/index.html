@@ -185,7 +185,7 @@ section { padding: 160px 0; position: relative; }
 section.hero { position: relative; height: 100vh; height: 100dvh; display: flex; align-items: center; padding: 0; overflow: hidden; }
 /* hero bottom fade removed (no gradient on bg image) */
 /* documentary photo behind the hero (placeholder image; digital overlay lives above it) */
-.hero-photo { position: absolute; top: 50%; left: 50%; width: 116vh; height: 100vw; transform: translate(-50%, -50%) rotate(90deg) scaleY(-1); z-index: 0; background: url('images/contentteammogo_httpss.mj.runH09j-QC0YSc_httpss.mj.runfzxTbG0rO_69ad9892-2949-43a3-89a0-3c918a6df1a1.png') center/cover no-repeat; filter: brightness(0.19) contrast(1.08) saturate(0.85); animation: hero-drift 46s ease-in-out infinite alternate, hero-flick 7s steps(1, end) infinite; will-change: transform, opacity; }
+.hero-photo { position: absolute; top: 50%; left: 46%; width: 116vh; height: 116vw; transform: translate(-50%, -50%) rotate(90deg) scaleY(-1); z-index: 0; background: url('images/contentteammogo_httpss.mj.runH09j-QC0YSc_httpss.mj.runfzxTbG0rO_69ad9892-2949-43a3-89a0-3c918a6df1a1.png') center/cover no-repeat; filter: brightness(0.19) contrast(1.08) saturate(0.85); animation: hero-drift 46s ease-in-out infinite alternate, hero-flick 7s steps(1, end) infinite; will-change: transform, opacity; }
 @keyframes hero-drift { from { transform: translate(-50%, -50%) rotate(90deg) scaleY(-1) scale(1); } to { transform: translate(-50%, -50%) rotate(90deg) scaleY(-1) scale(1.05); } }
 @keyframes hero-flick { 0%, 100% { opacity: 1; } 5% { opacity: 0.95; } 8% { opacity: 1; } 53% { opacity: 1; } 55% { opacity: 0.97; } 57% { opacity: 1; } 81% { opacity: 0.95; } 83% { opacity: 1; } }
 .hero-book { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; pointer-events: none; opacity: 1; }
@@ -434,7 +434,7 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
 .altitude { font-size: clamp(22px, 2.4vw, 30px); line-height: 1.45; letter-spacing: -0.02em; color: var(--c-400); max-width: 760px; }
 .close-wrap { text-align: center; }
 #close .close-wrap { position: relative; z-index: 2; }
-#close .close-bg { position: absolute; top: 0; bottom: 0; left: 50%; transform: translateX(-50%) scaleX(-1); width: 100vw; z-index: 1; pointer-events: none; background: var(--c-black) center / cover no-repeat; background-image: url('images/retrox_ams_top-down_view_of_a_busy_crowd_crossing_at_a_geomet_1b2b333e-8c75-4109-b6e4-dc1b48592b63_0.png'); filter: grayscale(0.82) brightness(0.22) contrast(1.06); }
+#close .close-bg { position: absolute; top: 0; bottom: 0; left: 50%; transform: translateX(-50%) scaleX(-1); width: 100vw; z-index: 1; pointer-events: none; background: var(--c-black) center / cover no-repeat; background-image: url('images/retrox_ams_top-down_view_of_a_busy_crowd_crossing_at_a_geomet_1b2b333e-8c75-4109-b6e4-dc1b48592b63_0.png'); filter: grayscale(0.68) brightness(0.22) contrast(1.06); }
 #close .close-dim { color: var(--c-700); }
 #close .close-mark { margin: 0 0 28px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; color: var(--c-700); }
 .close-h { font-size: clamp(22px, 2.6vw, 28px); line-height: 1.3; letter-spacing: -0.025em; color: var(--c-200); font-weight: 400; max-width: calc((100% + var(--gutter)) / 12 * 9 - var(--gutter)); margin-left: auto; margin-right: auto; }
@@ -818,7 +818,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     <div class="hero-top">
       <div class="hero-main">
         <div class="hero-eyebrow" data-type>Intelligent Investing</div>
-        <h1 class="hero-h">The investing industry <br class="hbr">built access. It never built<br class="hbr">judgment infrastructure.</h1>
+        <h1 class="hero-h">The investing industry<br>built access. It never built<br>judgment infrastructure.</h1>
         <p class="hero-sub">Access was solved. <br class="hbr">The decision layer was not.</p>
         <div class="hero-cta">
           <a href="II Site V2 - GetTheApp.html" class="pri"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Enter the System</span><span>Enter the System</span></span></span></a>
@@ -2465,7 +2465,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   function frame(now){var T=now/1000, dt=Math.min(40,now-t0)/1000;t0=now;
     yaw=RM?0:0.28*Math.sin(now*0.00013);   /* gentle turn, stays near a true circle */
     ctx.clearRect(0,0,W,H);
-    ctx.shadowColor='rgba(0,0,0,0.85)';ctx.shadowBlur=6;   /* dark halo so lines read over bright + dark photo areas */
+    ctx.shadowColor='rgba(0,0,0,0.95)';ctx.shadowBlur=10;   /* dark halo so lines read over bright + dark photo areas */
     /* outline: dim base + a bright arc sweeping around (animated gradient) */
     var sweep=(now*0.00016)%1;
     ctx.lineWidth=1.7;
