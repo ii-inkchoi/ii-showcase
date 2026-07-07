@@ -189,12 +189,14 @@ section.hero { position: relative; height: 100vh; height: 100dvh; display: flex;
 /* hero bottom fade removed (no gradient on bg image) */
 /* top scrim for nav/hero-title legibility — dark at top, fades to transparent downward */
 section.hero::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 42%; z-index: 2; pointer-events: none; background: linear-gradient(to bottom, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.34) 42%, rgba(0,0,0,0) 100%); }
+/* lens vignette for photographic/documentary feel */
+section.hero::before { content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: radial-gradient(ellipse at center, rgba(0,0,0,0) 48%, rgba(0,0,0,0.5) 100%); }
 /* documentary photo behind the hero (placeholder image; digital overlay lives above it) */
-.hero-photo { position: absolute; top: 50%; left: 50%; width: 116vw; height: 116vh; transform: translate(-50%, -50%); z-index: 0; background: url('images/contentteammogo_wide_interior_of_a_working_institutional_resear_f24c0325-9f15-4312-9f69-996f54b14f77.png') center/cover no-repeat; filter: brightness(0.42) contrast(1.05) saturate(0.75); animation: hero-drift 46s ease-in-out infinite alternate, hero-flick 7s steps(1, end) infinite; will-change: transform, opacity; }
+.hero-photo { position: absolute; top: 50%; left: 50%; width: 116vw; height: 116vh; transform: translate(-50%, -50%); z-index: 0; background: url('images/contentteammogo_wide_interior_of_a_working_institutional_resear_7b9a8146-2a9a-4ca5-9aad-8494b06c8c1f.png') center/cover no-repeat; filter: brightness(0.42) contrast(1.05) saturate(0.8); animation: hero-drift 46s ease-in-out infinite alternate, hero-flick 7s steps(1, end) infinite; will-change: transform, opacity; }
 @keyframes hero-drift { from { transform: translate(-50%, -50%) scale(1); } to { transform: translate(-50%, -50%) scale(1.05); } }
 @keyframes hero-flick { 0%, 100% { opacity: 1; } 5% { opacity: 0.95; } 8% { opacity: 1; } 53% { opacity: 1; } 55% { opacity: 0.97; } 57% { opacity: 1; } 81% { opacity: 0.95; } 83% { opacity: 1; } }
 .hero-book { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; pointer-events: none; opacity: 1; }
-.hero-veil { position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: 0.32; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='hn'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23hn)'/%3E%3C/svg%3E"); background-size: 200px 200px; }
+.hero-veil { position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: 0.26; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='hn'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23hn)'/%3E%3C/svg%3E"); background-size: 200px 200px; }
 @media (prefers-reduced-motion: no-preference) { .hero-veil { animation: hero-grain 0.55s steps(3) infinite; } }
 @media (prefers-reduced-motion: reduce) { .hero-photo { animation: none; } }
 @keyframes hero-grain { 0% { background-position: 0 0; } 33% { background-position: -80px 40px; } 66% { background-position: 60px -70px; } 100% { background-position: 0 0; } }
@@ -823,7 +825,6 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     <button type="button" data-devbg="5">6</button>
     <button type="button" data-devbg="6">7</button>
     <button type="button" data-devbg="7">8</button>
-    <button type="button" data-devbg="8">9</button>
     <span class="dbs-sep"></span>
     <span class="dbs-label">Graph</span>
     <button type="button" class="dbs-wide" data-devgraph="3d">3D</button>
@@ -2592,15 +2593,14 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 /* Dev hero background switcher. Swaps .hero-photo image + orientation; does not alter default page state until clicked. */
 (function(){
   var HERO_BGS=[
-    {file:'contentteammogo_wide_interior_of_a_working_institutional_resear_f24c0325-9f15-4312-9f69-996f54b14f77.png', rotate:false, bright:0.42, sat:0.75, grain:0.18, contrast:1.05},
+    {file:'contentteammogo_wide_interior_of_a_working_institutional_resear_7b9a8146-2a9a-4ca5-9aad-8494b06c8c1f.png', rotate:false, bright:0.42, sat:0.8, grain:0.26, contrast:1.05},
+    {file:'contentteammogo_wide_interior_of_a_working_institutional_resear_f24c0325-9f15-4312-9f69-996f54b14f77.png', rotate:false, bright:0.42, sat:0.75, grain:0.32, contrast:1.05},
     {file:'contentteammogo_httpss.mj.runRLyJ5JmDDnQ_full_colored_archive_h_349cf108-abfd-42d7-bc6d-66fe7accde9c.png', rotate:false, bright:0.3, pos:'100%', sat:1.0, grain:0.4, contrast:1.2, blur:0.4},
-    {file:'contentteammogo_vast_modernist_archive_hall_endless_rows_of_ste_6ab8ee4c-1621-4471-a58f-4dade73b45ff.png', rotate:false, grain:0.4, contrast:1.2, blur:0.4},
-    {file:'contentteammogo_vast_modernist_archive_hall_endless_rows_of_ste_a8f5ed09-b101-4405-ab1c-b2d881a18781.png', rotate:false, grain:0.4, contrast:1.2, blur:0.4},
-    {file:'contentteammogo_httpss.mj.runH09j-QC0YSc_httpss.mj.runfzxTbG0rO_69ad9892-2949-43a3-89a0-3c918a6df1a1.png', rotate:true, bright:0.4, grain:0.4, contrast:1.2, blur:0.4},
-    {file:'hero-bg-6.png', rotate:false, grain:0.4, contrast:1.2, blur:0.4},
-    {file:'hero-bg-7.png', rotate:false, grain:0.4, contrast:1.2, blur:0.4},
     {file:'contentteammogo_wide_interior_of_a_working_institutional_resear_3fd0a1fe-38f5-4cbd-99fb-153f1ac1745a.png', rotate:false, bright:0.42, sat:0.75, grain:0.18, contrast:1.05},
-    {file:'contentteammogo_institutional_archive_reading_room_long_tables__ab1d1fe4-112d-45ff-984b-7b5162fb2c7f.png', rotate:false, bright:0.5, sat:0.7, grain:0.18, contrast:1.05}
+    {file:'contentteammogo_institutional_archive_reading_room_long_tables__ab1d1fe4-112d-45ff-984b-7b5162fb2c7f.png', rotate:false, bright:0.5, sat:0.7, grain:0.18, contrast:1.05},
+    {file:'contentteammogo_vast_modernist_archive_hall_endless_rows_of_ste_6ab8ee4c-1621-4471-a58f-4dade73b45ff.png', rotate:false, grain:0.4, contrast:1.2, blur:0.4},
+    {file:'hero-bg-6.png', rotate:false, grain:0.4, contrast:1.2, blur:0.4},
+    {file:'hero-bg-7.png', rotate:false, grain:0.4, contrast:1.2, blur:0.4}
   ];
   var photo=document.querySelector('.hero-photo');
   var bgBtns=[].slice.call(document.querySelectorAll('.dev-bg-switch button[data-devbg]'));
