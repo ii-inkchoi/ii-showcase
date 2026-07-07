@@ -189,7 +189,7 @@ section.hero { position: relative; height: 100vh; height: 100dvh; display: flex;
 /* top scrim for nav/hero-title legibility — dark at top, fades to transparent downward */
 section.hero::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 42%; z-index: 2; pointer-events: none; background: linear-gradient(to bottom, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.34) 42%, rgba(0,0,0,0) 100%); }
 /* documentary photo behind the hero (placeholder image; digital overlay lives above it) */
-.hero-photo { position: absolute; top: 50%; left: 50%; width: 116vw; height: 116vh; transform: translate(-50%, -50%); z-index: 0; background: url('images/hero-doc-main.jpeg') center 84%/cover no-repeat; filter: brightness(0.36) contrast(1.08) saturate(0.85); animation: hero-drift 46s ease-in-out infinite alternate, hero-flick 7s steps(1, end) infinite; will-change: transform, opacity; }
+.hero-photo { position: absolute; top: 50%; left: 50%; width: 116vw; height: 116vh; transform: translate(-50%, -50%); z-index: 0; background: url('images/contentteammogo_httpss.mj.runRLyJ5JmDDnQ_full_colored_archive_h_349cf108-abfd-42d7-bc6d-66fe7accde9c.png') center 100%/cover no-repeat; filter: brightness(0.3) contrast(1.2) saturate(1) blur(0.4px); animation: hero-drift 46s ease-in-out infinite alternate, hero-flick 7s steps(1, end) infinite; will-change: transform, opacity; }
 @keyframes hero-drift { from { transform: translate(-50%, -50%) scale(1); } to { transform: translate(-50%, -50%) scale(1.05); } }
 @keyframes hero-flick { 0%, 100% { opacity: 1; } 5% { opacity: 0.95; } 8% { opacity: 1; } 53% { opacity: 1; } 55% { opacity: 0.97; } 57% { opacity: 1; } 81% { opacity: 0.95; } 83% { opacity: 1; } }
 .hero-book { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; pointer-events: none; opacity: 1; }
@@ -466,15 +466,10 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
 .ev-placeholder { font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; line-height: 1.6; color: var(--c-800); margin-top: 22px; }
 /* evidence - full-bleed documentary background + 3-column stats (David content, our tokens) */
 #evidence .ev-bg { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100vw; height: 100%; overflow: hidden; z-index: 0; pointer-events: none; }
-#evidence .ev-bg-vid { position: absolute; top: 50%; left: 50%; height: 100vw; width: auto; transform: translate(-50%, -50%) rotate(90deg); filter: brightness(0.18) contrast(1.05) saturate(0.6) blur(0.4px); animation: ev-flicker 4.2s steps(1, end) infinite; }
-@media (prefers-reduced-motion: reduce) { #evidence .ev-bg-vid { display: none; } }
-#evidence .ev-bg::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; z-index: 1; pointer-events: none; opacity: 0.24; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='evn'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23evn)'/%3E%3C/svg%3E"); background-size: 170px 170px; }
+#evidence .ev-bg-img { position: absolute; inset: 0; width: 100%; height: 100%; background: url('images/matthew-kirk-kyXC7SQa9-4-unsplash.jpg') center / cover no-repeat; filter: brightness(0.18) contrast(1) saturate(0.6) blur(0.4px); }
+#evidence .ev-bg::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0.1; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='evn'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23evn)'/%3E%3C/svg%3E"); background-size: 170px 170px; }
 #evidence .ev-bg::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0.35; background-image: repeating-linear-gradient(90deg, transparent 0 94px, rgba(232,232,230,0.05) 94px 94.7px, transparent 94.7px 214px); }
-#evidence .ev-grid { position: absolute; inset: 0; z-index: 1; pointer-events: none; background-image: repeating-linear-gradient(0deg, transparent 0 5.6px, rgba(232,232,230,0.04) 5.6px 7px), repeating-linear-gradient(90deg, transparent 0 5.6px, rgba(232,232,230,0.04) 5.6px 7px); background-position: center; }
-@media (prefers-reduced-motion: no-preference) { #evidence .ev-bg::after { animation: ev-grain 0.5s steps(2) infinite; } #evidence .ev-bg::before { animation: ev-scratch 5.5s steps(1) infinite; } }
-@media (prefers-reduced-motion: reduce) { #evidence .ev-bg-vid { animation: none; } }
-@keyframes ev-grain { 0%, 100% { transform: translate(0, 0); } 20% { transform: translate(-8%, 4%); } 40% { transform: translate(6%, -8%); } 60% { transform: translate(-6%, 10%); } 80% { transform: translate(9%, -4%); } }
-@keyframes ev-flicker { 0%, 100% { opacity: 1; } 4% { opacity: 0.85; } 7% { opacity: 1; } 47% { opacity: 1; } 49% { opacity: 0.9; } 51% { opacity: 1; } 70% { opacity: 0.95; } 72% { opacity: 1; } 88% { opacity: 0.87; } 90% { opacity: 1; } }
+@media (prefers-reduced-motion: no-preference) { #evidence .ev-bg::before { animation: ev-scratch 5.5s steps(1) infinite; } }
 @keyframes ev-scratch { 0% { transform: translateX(0); opacity: 0.35; } 30% { transform: translateX(-30%); opacity: 0.12; } 55% { transform: translateX(24%); opacity: 0.4; } 100% { transform: translateX(-8%); opacity: 0.22; } }
 #evidence > *:not(.ev-bg) { position: relative; z-index: 1; }
 #evidence .ev-intro { grid-column: 1 / -1; max-width: calc((100% + var(--gutter)) / 12 * 5 - var(--gutter)); font-size: 17px; line-height: 1.6; color: var(--c-400); margin-top: 28px; }
@@ -841,7 +836,6 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
         <p class="hero-sub">Access was solved. <br class="hbr">The decision layer was not.</p>
         <div class="hero-cta">
           <a href="II Site V2 - GetTheApp.html" class="pri"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Enter the System</span><span>Enter the System</span></span></span></a>
-          <a href="#entry-03" class="sec"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>How It Works</span><span>How It Works</span></span></span></a>
         </div>
       </div>
       <div class="hero-figure" aria-hidden="true">
@@ -861,7 +855,6 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     <button type="button" data-devbg="3">4</button>
     <button type="button" data-devbg="4">5</button>
     <button type="button" data-devbg="5">6</button>
-    <button type="button" data-devbg="6">7</button>
     <span class="dbs-sep"></span>
     <span class="dbs-label">Graph</span>
     <button type="button" class="dbs-wide" data-devgraph="3d">3D</button>
@@ -903,13 +896,6 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
       </article>
       <div class="fig-cap">Fig. 01 &middot; Investment Memo. Sealed before capital moves.</div>
     </div>
-  </div>
-  <div class="e01-steps">
-    <i class="rail-flow" aria-hidden="true"></i>
-    <div class="step" style="--d:0s"><span class="step-no">01</span><i class="rail-node"></i><span class="step-name">Transactions</span><span class="step-tag">RECORDED</span></div>
-    <div class="step" style="--d:0.14s"><span class="step-no">02</span><i class="rail-node"></i><span class="step-name">Activity</span><span class="step-tag">RECORDED</span></div>
-    <div class="step seg-break" style="--d:0.28s"><span class="step-no">03</span><i class="rail-node"></i><span class="step-name">Outcomes</span><span class="step-tag">RECORDED</span></div>
-    <div class="step gap" style="--d:0.42s"><span class="step-no">04</span><i class="rail-node gap"></i><span class="step-name">Judgment</span><span class="step-tag">NOT RECORDED</span></div>
   </div>
 </section></div>
 
@@ -988,7 +974,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 .dr2-copy { width: 12px; height: 12px; color: var(--c-700); flex: none; }
 .dr2-thesis { margin: 12px 0 0; font-size: 13px; line-height: 1.65; color: var(--c-400); max-height: 107px; overflow: hidden; -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent 100%); mask-image: linear-gradient(to bottom, #000 45%, transparent 100%); }
 .dr2-uw { display: flex; justify-content: space-between; align-items: baseline; border-top: 0.5px solid var(--c-900); margin-top: 24px; padding-top: 18px; font-size: 13px; color: var(--c-700); }
-.dr2-chev { font-size: 16px; font-weight: 300; }
+.dr2-chev { font-size: 17px; font-weight: 300; }
 .dr2-cta { margin-top: 30px; display: flex; justify-content: flex-end; align-items: center; font-size: 15px; color: var(--c-white); }
 @media (max-width: 900px) { #entry-01 .rec-body { grid-template-columns: 1fr; gap: 36px; } #entry-01 .rec-text, #entry-01 .rec-img { grid-column: 1 / -1; } #entry-01 .rec-img { margin-top: 0; } .dr-doc { max-width: 380px; height: auto; padding-bottom: 110px; } }
 @media (max-width: 600px) { .dr-doc { padding-left: 18px; padding-right: 18px; } }
@@ -1159,7 +1145,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 <!-- No. 04 - Evidence -->
 <div class="container"><section id="evidence">
   <div class="entry-head"><span class="entry-no" data-type>No. 04</span><span class="entry-name" data-type>Evidence</span></div>
-  <div class="ev-bg" aria-hidden="true"><video class="ev-bg-vid" src="images/evidence-bg.mp4" autoplay muted loop playsinline></video><div class="ev-grid"></div></div>
+  <div class="ev-bg" aria-hidden="true"><div class="ev-bg-img"></div></div>
   <h2 class="statement">The gap was never information.</h2>
   <p class="ev-intro">The scarce resource was never data. It is the discipline to measure against a standard and to act on what it shows. On this, the record is not ambiguous.</p>
   <div class="ev-cols">
@@ -2644,13 +2630,12 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 /* Dev hero background switcher. Swaps .hero-photo image + orientation; does not alter default page state until clicked. */
 (function(){
   var HERO_BGS=[
-    {file:'hero-doc-main.jpeg', rotate:false, bright:0.36},
-    {file:'contentteammogo_httpss.mj.runRLyJ5JmDDnQ_full_colored_archive_h_349cf108-abfd-42d7-bc6d-66fe7accde9c.png', rotate:false, bright:0.22, pos:'100%', sat:1.3, grain:0.4, contrast:1.12, blur:0.4},
-    {file:'contentteammogo_vast_modernist_archive_hall_endless_rows_of_ste_6ab8ee4c-1621-4471-a58f-4dade73b45ff.png', rotate:false, grain:0.4, contrast:1.12, blur:0.4},
-    {file:'contentteammogo_vast_modernist_archive_hall_endless_rows_of_ste_a8f5ed09-b101-4405-ab1c-b2d881a18781.png', rotate:false, grain:0.4, contrast:1.12, blur:0.4},
-    {file:'contentteammogo_httpss.mj.runH09j-QC0YSc_httpss.mj.runfzxTbG0rO_69ad9892-2949-43a3-89a0-3c918a6df1a1.png', rotate:true, bright:0.32, grain:0.4, contrast:1.12, blur:0.4},
-    {file:'hero-bg-6.png', rotate:false, grain:0.4, contrast:1.12, blur:0.4},
-    {file:'hero-bg-7.png', rotate:false, grain:0.4, contrast:1.12, blur:0.4}
+    {file:'contentteammogo_httpss.mj.runRLyJ5JmDDnQ_full_colored_archive_h_349cf108-abfd-42d7-bc6d-66fe7accde9c.png', rotate:false, bright:0.3, pos:'100%', sat:1.0, grain:0.4, contrast:1.2, blur:0.4},
+    {file:'contentteammogo_vast_modernist_archive_hall_endless_rows_of_ste_6ab8ee4c-1621-4471-a58f-4dade73b45ff.png', rotate:false, grain:0.4, contrast:1.2, blur:0.4},
+    {file:'contentteammogo_vast_modernist_archive_hall_endless_rows_of_ste_a8f5ed09-b101-4405-ab1c-b2d881a18781.png', rotate:false, grain:0.4, contrast:1.2, blur:0.4},
+    {file:'contentteammogo_httpss.mj.runH09j-QC0YSc_httpss.mj.runfzxTbG0rO_69ad9892-2949-43a3-89a0-3c918a6df1a1.png', rotate:true, bright:0.4, grain:0.4, contrast:1.2, blur:0.4},
+    {file:'hero-bg-6.png', rotate:false, grain:0.4, contrast:1.2, blur:0.4},
+    {file:'hero-bg-7.png', rotate:false, grain:0.4, contrast:1.2, blur:0.4}
   ];
   var photo=document.querySelector('.hero-photo');
   var bgBtns=[].slice.call(document.querySelectorAll('.dev-bg-switch button[data-devbg]'));
@@ -2660,7 +2645,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     photo.style.animation='none';
     photo.style.backgroundImage="url('images/"+opt.file+"')";
     photo.style.backgroundPosition='center '+(opt.pos||'84%');
-    photo.style.filter='brightness('+(opt.bright||0.32)+') contrast('+(opt.contrast!=null?opt.contrast:1.08)+') saturate('+(opt.sat!=null?opt.sat:0.85)+') blur('+(opt.blur||0)+'px)';
+    photo.style.filter='brightness('+(opt.bright||0.4)+') contrast('+(opt.contrast!=null?opt.contrast:1.08)+') saturate('+(opt.sat!=null?opt.sat:0.85)+') blur('+(opt.blur||0)+'px)';
     var veil=document.querySelector('.hero-veil'); if(veil) veil.style.opacity = (opt.grain!=null ? opt.grain : '');
     if(opt.rotate){ photo.style.width='116vh'; photo.style.height='116vw'; photo.style.transform='translate(-50%,-50%) rotate(90deg) scaleY(-1)'; }
     else { photo.style.width='116vw'; photo.style.height='116vh'; photo.style.transform='translate(-50%,-50%)'; }
