@@ -22,6 +22,7 @@
   --c-black: #000000; --c-1000: #1C1C1C; --c-900: #232627; --c-800: #565B5E;
   --c-700: #929292; --c-600: #A7A7A7; --c-400: #C7C7C7; --c-200: #E3E2E2; --c-white: #FFFFFF;
   --c-urgent: #FF3533; --c-warning: #FF7A00; --c-live: #30D158; --c-elev: #0A0A0A; --c-surface: #101010;
+  --c-paper: #ECEAE5;
   --card-outline: var(--c-900);   /* card border — unified to c-900 */
   --frame: clamp(24px, 4vw, 48px); --maxw: 1680px; --gutter: clamp(16px, 1.5vw, 24px);
   --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -491,6 +492,19 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
 #research .rck { font-size: 13px; color: var(--c-400); letter-spacing: -0.01em; }
 #research .rcv { font-size: 13px; color: var(--c-700); text-align: right; }
 #research .rcfoot { margin-top: 16px; padding-top: 14px; border-top: 0.5px solid var(--c-900); font-size: 12px; line-height: 1.5; color: var(--c-700); letter-spacing: -0.01em; }
+/* reveal: rows populate one by one (AI surfaces data -> you write the case) */
+@media (prefers-reduced-motion: no-preference) {
+  #research .rtab tbody tr { opacity: 0; transition: opacity 0.5s cubic-bezier(0.2,0.6,0.2,1); }
+  #research .rcase .rcrow { opacity: 0; transform: translateY(8px); transition: opacity 0.5s cubic-bezier(0.2,0.6,0.2,1), transform 0.55s cubic-bezier(0.2,0.6,0.2,1); }
+  #research .rpanel.in .rtab tbody tr, #research .rcase.in .rcrow { opacity: 1; transform: none; }
+  #research .rpanel.in .rtab tbody tr:nth-child(1) { transition-delay: 0.16s; }
+  #research .rpanel.in .rtab tbody tr:nth-child(2) { transition-delay: 0.28s; }
+  #research .rpanel.in .rtab tbody tr:nth-child(3) { transition-delay: 0.40s; }
+  #research .rpanel.in .rtab tbody tr:nth-child(4) { transition-delay: 0.52s; }
+  #research .rcase.in .rcrow:nth-child(2) { transition-delay: 0.16s; }
+  #research .rcase.in .rcrow:nth-child(3) { transition-delay: 0.28s; }
+  #research .rcase.in .rcrow:nth-child(4) { transition-delay: 0.40s; }
+}
 #research .rcfoot .you { color: var(--c-200); }
 @media (max-width: 900px) {
   #research .rs-left, #research .rs-viz { grid-column: 1 / -1; }
@@ -835,6 +849,18 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   <!-- END DEV HERO SWITCHER (HTML: floating control) -->
 </section>
 
+<!-- TRUST - broker clarity (credentials, right below the hero) -->
+<section id="trust" class="band"><div class="container">
+  <p class="trust-line">A licensed brokerage with the decision layer built in. <b>Not a tool bolted onto your broker.</b></p>
+  <div class="trust-strip">
+    <div class="trust-item"><span class="ti-num" style="color:var(--c-white);">~$500M</span><span class="ti-lbl">Assets Custodied</span></div>
+    <div class="trust-item"><span class="ti-num">Regulatory Standing</span><span class="ti-lbl">CIRO registration</span></div>
+    <div class="trust-item"><span class="ti-num">Investor Protection</span><span class="ti-lbl">CIPF membership</span></div>
+    <div class="trust-item"><span class="ti-num">Asset Custody</span><span class="ti-lbl">Custodian &amp; segregation</span></div>
+    <div class="trust-item"><span class="ti-num">Institutional Backing</span><span class="ti-lbl">Orion Digital / Mogo</span></div>
+  </div>
+</div></section>
+
 <!-- No. 01 - Evidence (moved up: proof of the problem, right after hero) -->
 <div class="container"><section id="evidence">
   <div class="entry-head"><span class="entry-no" data-type>No. 01</span><span class="entry-name" data-type>Evidence</span></div>
@@ -895,18 +921,6 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     </div>
   </div>
 </section></div>
-
-<!-- TRUST - broker clarity (credentials, after The Record) -->
-<section id="trust" class="band"><div class="container">
-  <p class="trust-line">A licensed brokerage with the decision layer built in. <b>Not a tool bolted onto your broker.</b></p>
-  <div class="trust-strip">
-    <div class="trust-item"><span class="ti-num" style="color:var(--c-white);">~$500M</span><span class="ti-lbl">Assets Custodied</span></div>
-    <div class="trust-item"><span class="ti-num">Regulatory Standing</span><span class="ti-lbl">CIRO registration</span></div>
-    <div class="trust-item"><span class="ti-num">Investor Protection</span><span class="ti-lbl">CIPF membership</span></div>
-    <div class="trust-item"><span class="ti-num">Asset Custody</span><span class="ti-lbl">Custodian &amp; segregation</span></div>
-    <div class="trust-item"><span class="ti-num">Institutional Backing</span><span class="ti-lbl">Orion Digital / Mogo</span></div>
-  </div>
-</div></section>
 
 <!-- ENTRY 02 - The Core (managed S&P core; opportunity-cost card) -->
 <style>
@@ -1184,21 +1198,24 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 
 <!-- ENTRY 03 - The System (one operating system: centered device, components on both sides) -->
 <style>
-#entry-03::after { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); background: var(--c-surface); z-index: 0; }
+#entry-03::before { border-top-color: var(--c-400); }
+#entry-03::after { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); background: var(--c-paper); z-index: 0; }
 #entry-03 { align-items: center; }
-#entry-03 .sys-left { grid-column: 1 / 6; align-self: center; }
-#entry-03 .sys-right { grid-column: 6 / 13; align-self: center; }
-#entry-03 .sys-loopwrap { position: relative; width: 100%; height: clamp(480px, 46vw, 600px); }
+#entry-03 .sys-left { grid-column: 1 / 7; align-self: center; }
+#entry-03 .sys-right { grid-column: 7 / 13; align-self: center; }
+#entry-03 .sys-loopwrap { position: relative; width: 100%; height: clamp(480px, 46vw, 600px); background: var(--c-black); border-radius: 8px; }
 #entry-03 .sys-loopwrap canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-#entry-03 .sys-h2 { max-width: none; }
-#entry-03 .sys-intro { max-width: none; font-size: 17px; line-height: 1.55; color: var(--c-600); margin-top: 28px; }
-#entry-03 .sys-intro b { color: var(--c-white); font-weight: 400; }
-#entry-03 .sys-capline { max-width: none; font-size: 17px; line-height: 1.55; color: var(--c-600); margin-top: 44px; }
-#entry-03 .sys-capline b { color: var(--c-white); font-weight: 400; }
-#entry-03 .sys-legend { font-family: var(--mono); font-size: 11px; color: var(--c-700); margin-top: 24px; width: fit-content; max-width: 100%; border: 0.5px solid var(--c-900); border-radius: 4px; padding: 15px 18px; }
+#entry-03 .sys-h2 { max-width: none; color: var(--c-1000); }
+#entry-03 .entry-name { color: var(--c-1000); }
+#entry-03 .entry-no { color: var(--c-800); }
+#entry-03 .sys-intro { max-width: none; font-size: 17px; line-height: 1.55; color: var(--c-800); margin-top: 28px; }
+#entry-03 .sys-intro b { color: var(--c-1000); font-weight: 400; }
+#entry-03 .sys-capline { max-width: none; font-size: 17px; line-height: 1.55; color: var(--c-800); margin-top: 44px; }
+#entry-03 .sys-capline b { color: var(--c-1000); font-weight: 400; }
+#entry-03 .sys-legend { font-family: var(--mono); font-size: 11px; color: var(--c-800); margin-top: 24px; width: fit-content; max-width: 100%; border: 0.5px solid var(--c-400); border-radius: 4px; padding: 15px 18px; }
 #entry-03 .leg-group { display: flex; flex-direction: column; gap: 9px; }
 #entry-03 .leg-cap { font-size: 11px; letter-spacing: 0.1em; color: var(--c-800); }
-#entry-03 .leg-div { height: 0.5px; background: var(--c-900); margin: 13px 0; }
+#entry-03 .leg-div { height: 0.5px; background: var(--c-400); margin: 13px 0; }
 #entry-03 .leg-status { display: flex; flex-wrap: wrap; align-items: center; gap: 9px 16px; }
 #entry-03 .leg-status .leg-cap { margin-right: 3px; }
 #entry-03 .sys-legend .k { display: inline-flex; align-items: center; gap: 7px; }
@@ -1206,16 +1223,16 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 #entry-03 .cd-g { background: rgb(88,150,112); }
 #entry-03 .cd-a { background: rgb(156,118,40); }
 #entry-03 .cd-r { background: rgb(176,84,74); }
-#entry-03 .cd-bench { background: transparent; border: 1.4px dashed var(--c-700); }
+#entry-03 .cd-bench { background: transparent; border: 1.4px dashed var(--c-800); }
 #entry-03 .cd-research { background: rgb(110,146,178); border-radius: 1px; }
 #entry-03 .cd-bias { background: rgb(178,138,64); }
 #entry-03 .sys-illus { font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; color: var(--c-800); margin-top: 26px; }
-#entry-03 .sys-products { grid-column: 1 / -1; margin-top: 48px; border-top: 0.5px solid var(--c-900); padding-top: 40px; }
-#entry-03 .sys-prodhd { font-size: 22px; letter-spacing: -0.02em; color: var(--c-200); max-width: calc((100% + var(--gutter)) / 12 * 6 - var(--gutter)); }
+#entry-03 .sys-products { grid-column: 1 / -1; margin-top: 48px; border-top: 0.5px solid var(--c-400); padding-top: 40px; }
+#entry-03 .sys-prodhd { font-size: 22px; letter-spacing: -0.02em; color: var(--c-1000); max-width: calc((100% + var(--gutter)) / 12 * 6 - var(--gutter)); }
 #entry-03 .sys-prodgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--gutter); margin-top: 40px; }
-#entry-03 .sys-prod { border-top: 0.5px solid var(--c-800); padding-top: 20px; }
-#entry-03 .sys-prodk { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-400); }
-#entry-03 .sys-prod p { font-size: 15px; line-height: 1.6; color: var(--c-600); margin-top: 14px; }
+#entry-03 .sys-prod { border-top: 0.5px solid var(--c-400); padding-top: 20px; }
+#entry-03 .sys-prodk { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-1000); }
+#entry-03 .sys-prod p { font-size: 15px; line-height: 1.6; color: var(--c-800); margin-top: 14px; }
 @media (max-width: 900px) { #entry-03 .sys-left, #entry-03 .sys-right { grid-column: 1 / -1; } #entry-03 .sys-right { margin-top: 40px; } #entry-03 .sys-loopwrap { height: clamp(360px, 62vw, 480px); } }
 @media (max-width: 760px) { #entry-03 .sys-prodgrid { grid-template-columns: 1fr; } #entry-03 .sys-prod { padding: 20px 0; } #entry-03 .sys-prodhd { max-width: none; } }
 #entry-03 > * { position: relative; z-index: 1; }
@@ -1354,15 +1371,15 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 <div class="container"><section id="entry-03">
   <div class="sys-left">
     <div class="entry-head"><span class="entry-no" data-type>No. 06</span><span class="entry-name" data-type>The System</span></div>
-    <h2 class="statement sys-h2">Every bad decision begins as a behavior.</h2>
-    <p class="sys-intro">Overconfidence, confirmation, anchoring, the reflex to react, these, not the market, do the real damage. The operating system moves every position through one loop, and <b>every station is built to surface one of them.</b></p>
-    <p class="sys-capline">A bias surfaces at the station built to see it, overconfidence at Calibration, confirmation at the Case, anchoring at Re-underwriting, where it is named and held to the record before it quietly sets the decision. <b>The system does not erase these; nothing does. It makes them visible, so they can be accounted for.</b> Research feeds the case but never decides it; every station is held against the S&amp;P at the center.</p>
+    <h2 class="statement sys-h2">The S&amp;P 500 is the smart core, until your record proves otherwise.</h2>
+    <p class="sys-intro">The core is the index, the smart place to sit until your own record proves you can do better. Everything active runs as one loop: research, underwriting, re-underwriting, calibration. You run it, from day one. <b>The software does not research, decide, or trade for you. It holds the structure, and holds you to it.</b></p>
+    <p class="sys-capline"><b>Behavior follows the environment it runs in, not the information poured into it.</b> The loop is that environment: it slows the decision where judgment tends to fail, and holds every position against the index at its center.</p>
     <div class="sys-legend">
       <div class="leg-group">
         <span class="leg-cap">Nodes</span>
-        <span class="k"><span class="cd cd-bias"></span>Behavioral bias &middot; surfaced, named, accounted for</span>
-        <span class="k"><span class="cd cd-research"></span>Research &middot; feeds the case</span>
-        <span class="k"><span class="cd cd-bench"></span>Benchmark &middot; S&amp;P 500</span>
+        <span class="k"><span class="cd cd-bias"></span>Behavioral bias &middot; what the loop guards against</span>
+        <span class="k"><span class="cd cd-research"></span>Research &middot; Fiscal.ai + your AI tools</span>
+        <span class="k"><span class="cd cd-bench"></span>Benchmark &middot; S&amp;P 500 core</span>
       </div>
       <div class="leg-div"></div>
       <div class="leg-status">
@@ -1382,9 +1399,9 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   <div class="sys-products">
     <div class="sys-prodhd">One membership. Operate it Managed, Self-Directed, or both.</div>
     <div class="sys-prodgrid">
-      <div class="sys-prod"><div class="sys-prodk">Managed</div><p>The disciplined core, rules-based S&amp;P 500 exposure, accumulated weekly, held for decades. The standard everything answers to.</p></div>
-      <div class="sys-prod"><div class="sys-prodk">Self-Directed</div><p>The decision system, every active position underwritten before capital moves, then re-underwritten on schedule and held to the record.</p></div>
-      <div class="sys-prod"><div class="sys-prodk">Fiscal.ai</div><p>The research layer, included, professional-grade financials and analysis. It informs the case. It does not make it.</p></div>
+      <div class="sys-prod"><div class="sys-prodk">Managed</div><p>The core, run to the rule: S&amp;P 500 exposure, accumulated and held. The standard everything else answers to.</p></div>
+      <div class="sys-prod"><div class="sys-prodk">Self-Directed</div><p>The active book, every position underwritten before capital moves, and held to the record.</p></div>
+      <div class="sys-prod"><div class="sys-prodk">Fiscal.ai</div><p>The research, in the room. It informs the work. It does not make the call.</p></div>
     </div>
   </div>
 </section></div>
@@ -1403,6 +1420,16 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 #development .dev-m { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; color: var(--c-700); }
 #development .dev-s { font-size: 15px; line-height: 1.4; color: var(--c-200); letter-spacing: -0.01em; }
 #development .dev-row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 13px 0; border-top: 0.5px solid var(--c-900); }
+/* reveal: card fades in, then its rows populate one by one (judgment accumulating) */
+@media (prefers-reduced-motion: no-preference) {
+  #development .dev-col .dev-rows .dev-row { opacity: 0; transform: translateY(8px); transition: opacity 0.5s cubic-bezier(0.2,0.6,0.2,1), transform 0.55s cubic-bezier(0.2,0.6,0.2,1); }
+  #development .dev-col.in .dev-rows .dev-row { opacity: 1; transform: none; }
+  #development .dev-col.in .dev-rows .dev-row:nth-child(1) { transition-delay: 0.16s; }
+  #development .dev-col.in .dev-rows .dev-row:nth-child(2) { transition-delay: 0.28s; }
+  #development .dev-col.in .dev-rows .dev-row:nth-child(3) { transition-delay: 0.40s; }
+  #development .dev-col.in .dev-rows .dev-row:nth-child(4) { transition-delay: 0.52s; }
+  #development .dev-col.in .dev-rows .dev-row:nth-child(5) { transition-delay: 0.64s; }
+}
 #development .dvk { font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; color: var(--c-700); }
 #development .dvv { font-size: 14px; color: var(--c-400); letter-spacing: -0.01em; text-align: right; font-variant-numeric: tabular-nums; }
 #development .dev-col .dvv.none { color: var(--c-800); }
@@ -1580,7 +1607,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 
     function stagger(q, step) { document.querySelectorAll(q).forEach(function (el, i) { el.style.setProperty('--d', (i * step).toFixed(2) + 's'); }); }
     stagger('.rung', 0.08); stagger('#entry-03 .module', 0.08); stagger('footer .footer-legal', 0.08);
-    var sel = '#trust .trust-line, #trust .trust-strip, #entry-01 .statement, .rung, #entry-01 .e01-note, #entry-02 .statement, #entry-02 .alloc-sub, #entry-03 .statement, #entry-03 .offer-item, #entry-03 .offer-foot, #entry-03 .module, #entry-03 .prose, #entry-03 .sc-row, #entry-03 .sys-operate, #fit .fit-otr, #research .statement, #research .rs-p, #research .link, #evidence .statement, #evidence .prose, #evidence .ev-fig, #fit .statement, #fit .fit-duo, #edge .edge-mark, #edge .edge-desc, #edge .link, #entry-06 .statement, #entry-06 .prose, #entry-06 .link, #close .close-h, #close .cta-btn, footer .footer-copy, footer .footer-social, footer .footer-legal, footer .footer-reset';
+    var sel = '#trust .trust-line, #trust .trust-strip, #entry-01 .statement, .rung, #entry-01 .e01-note, #entry-02 .statement, #entry-02 .alloc-sub, #entry-03 .statement, #entry-03 .offer-item, #entry-03 .offer-foot, #entry-03 .module, #entry-03 .prose, #entry-03 .sc-row, #entry-03 .sys-operate, #development .dev-col, #fit .fit-otr, #research .statement, #research .rs-p, #research .link, #research .rpanel, #research .rcase, #evidence .statement, #evidence .prose, #evidence .ev-fig, #fit .statement, #fit .fit-duo, #edge .edge-mark, #edge .edge-desc, #edge .link, #entry-06 .statement, #entry-06 .prose, #entry-06 .link, #close .close-h, #close .cta-btn, footer .footer-copy, footer .footer-social, footer .footer-legal, footer .footer-reset';
     var items = document.querySelectorAll(sel);
     items.forEach(function (el) { el.classList.add('ri'); });
     var rio = new IntersectionObserver(function (entries) { entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); rio.unobserve(e.target); } }); }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' });
@@ -2326,15 +2353,15 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     opts.forEach(function (o) { o.addEventListener('click', function () { show(o.getAttribute('data-toggle')); }); });   // slide changes on click only
   })();
 
-  // entry-03 sys-loop - operating loop (ported from Judgment Infrastructure, our tokens; canvas transparent over the section surface)
+  // entry-03 sys-loop - operating loop (v6, 4-station; ported from Judgment Infrastructure, our tokens; canvas transparent over the section surface)
   (function(){
     const cv=document.getElementById('sysLoopCanvas'); if(!cv)return; const ctx=cv.getContext('2d');let W,H,DPR,cx,cy;
     const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
-    function resize(){const box=cv.parentElement.getBoundingClientRect();DPR=Math.min(devicePixelRatio||1,2);W=box.width;H=box.height;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);cx=W*0.522;cy=H/2;}
+    function resize(){const box=cv.parentElement.getBoundingClientRect();DPR=Math.min(devicePixelRatio||1,2);W=box.width;H=box.height;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);cx=W/2;cy=H/2;}
     addEventListener('resize',resize);resize();
-    const ST=['Classification','Sizing','Investment Case','Decision Record','Re-underwriting','Calibration'];
-    const CASE=2,REUND=4,CAL=5,SEG=6.28/6,th0=-Math.PI/2,stT=i=>th0+i*SEG;
-    const sc=()=>Math.min(W,H),R=()=>W*0.207,rt=()=>sc()*0.052;const TILT=0.95;let yaw=0;
+    const ST=['Research & Analysis','Underwriting','Re-underwriting','Calibration'];
+    const RESRCH=0,UW=1,REUND=2,CAL=3,SEG=6.28/ST.length,th0=-Math.PI/2,stT=i=>th0+i*SEG;
+    const sc=()=>Math.min(W,H),R=()=>sc()*0.26,rt=()=>sc()*0.052;const TILT=0.95;let yaw=0;
     function rot(p){let{x,y,z}=p,c1=Math.cos(TILT),s1=Math.sin(TILT),y1=y*c1-z*s1,z1=y*s1+z*c1,c2=Math.cos(yaw),s2=Math.sin(yaw);return{x:x*c2+z1*s2,y:y1,z:-x*s2+z1*c2}}
     function prj(p){const cz=sc()*1.05,f=cz/(cz-p.z);return{sx:cx+p.x*f,sy:cy+p.y*f,d:p.z,f}}
     function tor(t,ph,rr){const r=rr===undefined?rt():rr,rad=R()+r*Math.cos(ph);return{x:rad*Math.cos(t),y:rad*Math.sin(t),z:r*Math.sin(ph)}}
@@ -2342,74 +2369,84 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     const N=RM?500:1400,nodes=[];
     for(let i=0;i<N;i++)nodes.push({t:Math.random()*6.28,ph:Math.random()*6.28,rj:.55+Math.random()*.75,sp:.08+Math.random()*.1,sz:.7+Math.random()*1.1,tw:Math.random()*6.28,health:.5+Math.random()*.5,isSig:Math.random()<.14,pc:0,pr:0,flash:null});
     const pulses=[0,.33,.66];let t0=performance.now();
-    const BIAS=['Narrative','Overconfidence','Confirmation','Hindsight','Anchoring','Self-deception'];
+    // one behavioral bias stands at each station, what the discipline of that step guards against (defense, not detection)
+    const BIAS=['Confirmation','Overconfidence','Anchoring','Hindsight'];
     let biasIdx=0, biasClock=0; const BIAS_DUR=3.4;
+    const scored=[]; // decisions resolved at Calibration: {hit, over(0..1 overconfidence), x(jitter), l(age)}
     function frame(now){const dt=Math.min(40,now-t0)/1000;t0=now;yaw=RM?0.14:0.10+0.22*Math.sin(now*0.00017);
       ctx.clearRect(0,0,W,H);
       ctx.lineWidth=1;ctx.strokeStyle='rgba(150,150,156,0.28)';ctx.beginPath();
       for(let a=0;a<=110;a++){const t=(a/110)*6.28,p=prj(rot(tor(t,0,0)));a===0?ctx.moveTo(p.sx,p.sy):ctx.lineTo(p.sx,p.sy)}ctx.stroke();
+      // benchmark baseline: the S&P reference the whole loop is measured against (inner dashed ring, present at every station)
       ctx.lineWidth=1;ctx.strokeStyle='rgba(244,243,240,0.5)';ctx.setLineDash([4,5]);ctx.beginPath();
       for(let a=0;a<=110;a++){const t=(a/110)*6.28,p=prj(rot({x:R()*0.60*Math.cos(t),y:R()*0.60*Math.sin(t),z:0}));a===0?ctx.moveTo(p.sx,p.sy):ctx.lineTo(p.sx,p.sy)}ctx.stroke();ctx.setLineDash([]);
       const sp=ST.map((s,i)=>prj(rot(tor(stT(i),0,0))));
+      // accountability ticks: each station measured inward against the benchmark baseline
       ctx.strokeStyle='rgba(244,243,240,0.22)';ctx.lineWidth=1;
-      for(let i=0;i<6;i++){const t=stT(i),outer=prj(rot(tor(t,0,0))),inner=prj(rot({x:R()*0.60*Math.cos(t),y:R()*0.60*Math.sin(t),z:0}));
+      for(let i=0;i<ST.length;i++){const t=stT(i),outer=prj(rot(tor(t,0,0))),inner=prj(rot({x:R()*0.60*Math.cos(t),y:R()*0.60*Math.sin(t),z:0}));
         ctx.beginPath();ctx.moveTo(outer.sx,outer.sy);ctx.lineTo(inner.sx,inner.sy);ctx.stroke();}
+      // center label: the S&P plays two roles at once, the core you hold and the benchmark you're measured against
       ctx.save();ctx.shadowColor='rgba(5,4,3,0.95)';ctx.shadowBlur=8;ctx.textAlign='center';ctx.textBaseline='middle';
-      ctx.font='10.5px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.fillStyle='rgba(244,243,240,0.9)';
-      ctx.fillText('S&P 500', cx, cy-7); ctx.fillStyle='rgba(150,150,154,0.8)'; ctx.fillText('the benchmark', cx, cy+7);ctx.restore();
+      ctx.font='10px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.fillStyle='rgba(244,243,240,0.9)';
+      ctx.fillText('S&P 500', cx, cy-7);
+      ctx.font='9px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.fillStyle='rgba(150,150,154,0.82)';
+      ctx.fillText('core, benchmark', cx, cy+7);ctx.restore();
       for(const n of nodes){n.t+=n.sp*dt;n.health+=(Math.random()-.52)*.02*dt*10;if(n.health>1)n.health=1;if(n.health<.06)n.health=.06;
-        if(n.isSig){const pc=ph2(n.t,CAL);if(n.pc>5.5&&pc<.8){const hit=Math.random()<(.45+.5*n.health);n.flash=hit?{rgb:SIG.green,l:0,d:1.6}:{rgb:SIG.red,l:0,d:1.6};n.health=hit?Math.min(1,n.health+.12):Math.max(.06,n.health-.28)}n.pc=pc;
+        if(n.isSig){const pc=ph2(n.t,CAL);if(n.pc>5.5&&pc<.8){const hit=Math.random()<(.45+.5*n.health);n.flash=hit?{rgb:SIG.green,l:0,d:1.6}:{rgb:SIG.red,l:0,d:1.6};n.health=hit?Math.min(1,n.health+.12):Math.max(.06,n.health-.28);if(scored.length>11)scored.shift();scored.push({hit,over:hit?Math.random()*0.22:0.30+Math.random()*0.5,x:Math.random(),l:0});}n.pc=pc;
           const pr=ph2(n.t,REUND);if(n.pr>5.5&&pr<.8&&n.health<.62)n.flash={rgb:SIG.amber,l:0,d:1.4};n.pr=pr}
         const p=prj(rot(tor(n.t,n.ph,rt()*n.rj))),dn=p.d/(sc()*.42),dA=.18+.4*((dn+1)/2);
-        let fire=0;for(let i=0;i<6;i++){let d=Math.abs((n.t-stT(i))%6.28);d=Math.min(d,6.28-d);if(d<.09)fire=Math.max(fire,1-d/.09)}
+        let fire=0;for(let i=0;i<ST.length;i++){let d=Math.abs((n.t-stT(i))%6.28);d=Math.min(d,6.28-d);if(d<.09)fire=Math.max(fire,1-d/.09)}
         const tw=.84+.16*Math.sin(now*.004+n.tw),hK=.32+.68*n.health,a=Math.min(1,dA*tw*hK+fire*.45),s=(n.sz*p.f*.9)*(1+fire*1.1),g=206+Math.round(28*n.health);
         ctx.fillStyle=fire>.15?`rgba(244,243,240,${a})`:`rgba(${g},${g+2},${g+6},${a*.92})`;ctx.fillRect(p.sx-s/2,p.sy-s/2,s,s);
         if(n.flash){n.flash.l+=dt;const k=n.flash.l/n.flash.d;if(k>=1)n.flash=null;else{const fl=Math.sin(Math.min(1,k*1.1)*Math.PI);ctx.fillStyle=`rgba(${n.flash.rgb},${fl*.95})`;ctx.beginPath();ctx.arc(p.sx,p.sy,(s+1.4+fl*1.8)*.6,0,6.28);ctx.fill()}}}
-      const A=sp[CAL],B=sp[CASE],ctrl={sx:(A.sx+B.sx)/2*.62+cx*.38,sy:(A.sy+B.sy)/2*.62+cy*.38};
-      ctx.lineWidth=1.8;ctx.strokeStyle='rgba(244,243,240,0.6)';ctx.beginPath();ctx.moveTo(A.sx,A.sy);ctx.quadraticCurveTo(ctrl.sx,ctrl.sy,B.sx,B.sy);ctx.stroke();
-      for(let i=0;i<pulses.length;i++){pulses[i]+=dt*.16;if(pulses[i]>1)pulses[i]-=1;const t=pulses[i],it=1-t,px=it*it*A.sx+2*it*t*ctrl.sx+t*t*B.sx,py=it*it*A.sy+2*it*t*ctrl.sy+t*t*B.sy,gl=Math.sin(t*Math.PI);ctx.fillStyle=`rgba(244,243,240,${.85*gl})`;ctx.beginPath();ctx.arc(px,py,2.4,0,6.28);ctx.fill()}
+      // the ring itself closes Calibration to Research; no center thread needed
       ctx.textBaseline='middle';
-      {
-        const C=sp[CASE], rdx=C.sx-cx, rdy=C.sy-cy, rl=Math.hypot(rdx,rdy)||1;
-        const rx=C.sx+(rdx/rl)*74, ry=C.sy+(rdy/rl)*74;
-        ctx.strokeStyle='rgba(96,124,152,0.45)';ctx.lineWidth=1.4;ctx.setLineDash([1,3]);
-        ctx.beginPath();ctx.moveTo(rx,ry);ctx.lineTo(C.sx,C.sy);ctx.stroke();ctx.setLineDash([]);
-        for(let k=0;k<2;k++){let fp=(now*0.00028+k*0.5)%1;const fx=rx+(C.sx-rx)*fp,fy=ry+(C.sy-ry)*fp,gl=Math.sin(fp*Math.PI);
-          ctx.fillStyle=`rgba(110,146,178,${0.9*gl})`;ctx.beginPath();ctx.arc(fx,fy,2,0,6.28);ctx.fill();}
-        ctx.fillStyle='rgba(110,146,178,0.95)';ctx.fillRect(rx-3,ry-3,6,6);
-        ctx.save();ctx.shadowColor='rgba(5,4,3,0.95)';ctx.shadowBlur=8;
-        const rRight=rx>=cx;ctx.textAlign=rRight?'left':'right';const rlx=rx+(rRight?9:-9);
-        ctx.font='9.5px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.fillStyle='rgba(110,146,178,0.9)';ctx.fillText('UPSTREAM',rlx,ry-9);
-        ctx.font='400 12.5px "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif';ctx.fillStyle='rgba(150,180,205,1)';ctx.fillText('Research',rlx,ry+4);
-        ctx.font='9.5px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.fillStyle='rgba(108,120,132,0.9)';ctx.fillText('Fiscal.ai + AI · feeds the case',rlx,ry+16);
-        ctx.restore();
-      }
-      for(let i=0;i<6;i++){const p=sp[i],isR=(i===CAL||i===CASE);ctx.beginPath();ctx.arc(p.sx,p.sy,3.4,0,6.28);ctx.fillStyle=isR?'rgba(244,243,240,0.95)':'rgba(242,241,238,0.9)';ctx.fill();ctx.strokeStyle='rgba(5,4,3,0.9)';ctx.lineWidth=1.5;ctx.stroke();
+      for(let i=0;i<ST.length;i++){const p=sp[i],isR=(i===RESRCH||i===UW);ctx.beginPath();ctx.arc(p.sx,p.sy,isR?4.2:3.4,0,6.28);ctx.fillStyle=isR?'rgba(244,243,240,0.98)':'rgba(242,241,238,0.9)';ctx.fill();ctx.strokeStyle='rgba(5,4,3,0.9)';ctx.lineWidth=1.5;ctx.stroke();
         const dx=p.sx-cx,dy=p.sy-cy,len=Math.hypot(dx,dy)||1,ox2=p.sx+dx/len*24,oy2=p.sy+dy/len*24,right=ox2>=cx;ctx.textAlign=right?'left':'right';const lx=ox2+(right?4:-4);
-        ctx.save();ctx.shadowColor='rgba(5,4,3,0.95)';ctx.shadowBlur=8;ctx.font='10.5px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.fillStyle='rgba(150,150,154,0.95)';ctx.fillText(String(i+1).padStart(2,'0'),lx,oy2-8);
-        ctx.font='500 13.5px "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif';ctx.fillStyle=isR?'rgba(244,243,240,1)':'rgba(244,243,240,0.96)';ctx.fillText(ST[i],lx,oy2+7);ctx.restore()}
-      biasClock+=dt; if(biasClock>BIAS_DUR){biasClock-=BIAS_DUR; biasIdx=(biasIdx+1)%6;}
-      const bp=biasClock/BIAS_DUR, bt=stT(biasIdx);
-      const bIn=prj(rot({x:R()*0.80*Math.cos(bt),y:R()*0.80*Math.sin(bt),z:0}));
-      const stp=sp[biasIdx];
-      const emph=bp<0.62?Math.min(1,bp/0.18):Math.max(0,1-(bp-0.62)/0.38);
-      ctx.strokeStyle=`rgba(158,120,44,${0.5*emph})`;ctx.lineWidth=1.4;
-      ctx.beginPath();ctx.arc(stp.sx,stp.sy,7+1.6*Math.sin(now*0.006),0,6.28);ctx.stroke();
-      let bAlpha=1,jit=0,settled=0;
-      if(bp<0.30){bAlpha=bp/0.30; jit=(1-bAlpha)*2.2;}
-      else if(bp<0.62){bAlpha=1;}
-      else {const k=(bp-0.62)/0.38; settled=k; bAlpha=1-k*0.55;}
+        ctx.save();ctx.shadowColor='rgba(5,4,3,0.95)';ctx.shadowBlur=8;ctx.font='10px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.fillStyle='rgba(150,150,154,0.95)';ctx.fillText(String(i+1).padStart(2,'0'),lx,oy2-8);
+        ctx.font='500 13px "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif';ctx.fillStyle=isR?'rgba(244,243,240,1)':'rgba(244,243,240,0.96)';ctx.fillText(ST[i],lx,oy2+7);
+        if(i===RESRCH){ctx.font='9px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.fillStyle='rgba(150,180,205,0.95)';ctx.fillText('Fiscal.ai + your AI tools',lx,oy2+20);}
+        if(i===UW){ctx.font='9px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.fillStyle='rgba(150,150,156,0.9)';ctx.fillText('classify, size, conviction, record',lx,oy2+20);}
+        if(i===REUND){ctx.font='9px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.fillStyle='rgba(150,150,156,0.9)';ctx.fillText('the research, run again',lx,oy2+20);}
+        if(i===CAL){ctx.font='9px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.fillStyle='rgba(150,150,156,0.9)';ctx.fillText('conviction, scored against outcome',lx,oy2+20);}
+
+        ctx.restore()}
+      // ---- one bias stands at each station: what that step's discipline guards against ----
+      biasClock+=dt; if(biasClock>BIAS_DUR){biasClock-=BIAS_DUR; biasIdx=(biasIdx+1)%ST.length;}
+      const bp=biasClock/BIAS_DUR;
       ctx.save();ctx.shadowColor='rgba(5,4,3,0.95)';ctx.shadowBlur=8;ctx.textAlign='center';ctx.textBaseline='middle';
-      ctx.font='11.5px "Chakra Petch",ui-monospace,Menlo,monospace';
-      const jy=bIn.sy+(jit?Math.sin(now*0.022)*jit:0);
-      const wr=198-settled*48, wg=158-settled*8, wbl=84+settled*72;
-      ctx.fillStyle=`rgba(${wr},${wg},${wbl},${bAlpha})`;
-      ctx.fillText(BIAS[biasIdx], bIn.sx, jy);
-      if(settled>0.15){
-        ctx.font='8.5px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.fillStyle=`rgba(150,150,156,${bAlpha*0.9})`;
-        ctx.fillText('· checked ·', bIn.sx, jy+12);
+      // all four biases stand at their station (dim); a gentle emphasis travels the loop
+      for(let i=0;i<ST.length;i++){
+        const bt=stT(i),bIn=prj(rot({x:R()*0.78*Math.cos(bt),y:R()*0.78*Math.sin(bt),z:0}));
+        const active=(i===biasIdx);
+        const emph=active?(bp<0.30?bp/0.30:(bp<0.66?1:Math.max(0,1-(bp-0.66)/0.34))):0;
+        const a=0.32+0.58*emph, wr=168+emph*30, wg=138+emph*20, wbl=98-emph*14;
+        ctx.font='11px "Chakra Petch",ui-monospace,Menlo,monospace';
+        ctx.fillStyle=`rgba(${wr},${wg},${wbl},${a})`;
+        ctx.fillText(BIAS[i], bIn.sx, bIn.sy);
+        if(active&&emph>0.5){ // travels with emphasis, the guard, never a detection
+          ctx.font='7.5px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.fillStyle=`rgba(150,150,156,${(emph-0.5)*1.4})`;
+          ctx.fillText('guarded by the loop', bIn.sx, bIn.sy+11);
+        }
       }
       ctx.restore();
+      // emphasis ring on the active station node, the loop turning through it, not an alert
+      const stp=sp[biasIdx],ring=(bp<0.66?Math.min(1,bp/0.18):Math.max(0,1-(bp-0.66)/0.34));
+      ctx.strokeStyle=`rgba(158,120,44,${0.42*ring})`;ctx.lineWidth=1.4;
+      ctx.beginPath();ctx.arc(stp.sx,stp.sy,7+1.6*Math.sin(now*0.006),0,6.28);ctx.stroke();
+      // ---- Calibration inset: decisions scored, confidence met by outcome (the mirror, in miniature) ----
+      for(let i=scored.length-1;i>=0;i--){scored[i].l+=dt; if(scored[i].l>3.6)scored.splice(i,1);}
+      { const gx=sp[CAL].sx, gy=sp[CAL].sy+46, gw=54;
+        ctx.save();ctx.shadowColor='rgba(5,4,3,0.92)';ctx.shadowBlur=6;ctx.textAlign='center';
+        ctx.strokeStyle='rgba(244,243,240,0.30)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(gx-gw/2,gy);ctx.lineTo(gx+gw/2,gy);ctx.stroke();
+        ctx.font='7px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.textBaseline='bottom';ctx.fillStyle='rgba(150,150,156,0.8)';ctx.fillText('CALIBRATED',gx,gy-3);
+        ctx.textBaseline='top';ctx.fillStyle='rgba(150,150,156,0.42)';ctx.fillText('overconfident',gx,gy+16);
+        for(const d of scored){const fade=Math.min(1,d.l/0.28)*Math.max(0,1-(d.l-2.6)/1.0);
+          const dxx=gx+(d.x-0.5)*gw, dyy=gy+d.over*15;
+          ctx.fillStyle=d.hit?`rgba(${SIG.green},${0.92*fade})`:`rgba(${SIG.red},${0.92*fade})`;
+          ctx.beginPath();ctx.arc(dxx,dyy,2.1,0,6.28);ctx.fill();}
+        ctx.restore();
+      }
       requestAnimationFrame(frame)}
     requestAnimationFrame(frame);
   })();
@@ -2430,7 +2467,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   var cv=document.getElementById('heroBook'); if(!cv) return; var ctx=cv.getContext('2d');
   var W,H,DPR,cx,cy,scale;
   var RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var WHITE='244,243,240', GREEN='88,150,112', RED='176,84,74';
+  var WHITE='252,252,250', GREEN='48,209,88', RED='255,53,51';
   var MONO='ui-monospace,Menlo,Consolas,monospace';
   var TICKERS=['AAPL','MSFT','POWL','CELH','V','TSM','IESC','ODD','HRMY','NVDA','ASML','SHOP','BRK','GOOG','AXON','MELI','CSU','NVO','FICO','ISRG','WM','CP','TDG','KNSL','CPRT','APP','DHR','GEV','COST','LLY'];
   var RES=[{c:GREEN,w:0.62},{c:RED,w:0.38}];
@@ -2513,7 +2550,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 (function(){
   var cv=document.getElementById('heroTorus3D'); if(!cv) return; var ctx=cv.getContext('2d');
   var RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var WHITE='244,243,240', GREEN='88,150,112', RED='176,84,74', MONO='ui-monospace,Menlo,Consolas,monospace';
+  var WHITE='252,252,250', GREEN='48,209,88', RED='255,53,51', MONO='ui-monospace,Menlo,Consolas,monospace';
   var W,H,DPR,cx,cy,S;
   var R=146, RT=58, TILT=-1.0, U=26, V=16;
   function resize(){DPR=Math.min(devicePixelRatio||1,2);var b=cv.getBoundingClientRect();W=b.width;H=b.height;

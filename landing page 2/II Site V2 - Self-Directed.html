@@ -6,9 +6,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-800:#565B5E;--c-700:#929292;--c-600:#A7A7A7;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFF;--c-warning:#FF7A00;--c-amber:#FDAD00; --frame: clamp(24px, 4vw, 48px); --maxw: 1680px; --gutter: clamp(16px, 1.5vw, 24px); --c-elev: #0A0A0A; --c-surface:#151515; --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; --mono: 'Chakra Petch', ui-monospace, monospace;}
+:root{--c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-800:#565B5E;--c-700:#929292;--c-600:#A7A7A7;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFF;--c-urgent:#FF3533;--c-warning:#FF7A00;--c-live:#30D158; --frame: clamp(24px, 4vw, 48px); --maxw: 1680px; --gutter: clamp(16px, 1.5vw, 24px); --c-elev: #0A0A0A; --c-surface:#101010; --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; --mono: 'Chakra Petch', ui-monospace, monospace;}
 *{box-sizing:border-box;margin:0;padding:0;}
-html,body{background:var(--c-black);color:var(--c-600);font-family:'Inter',sans-serif;font-feature-settings:'tnum' 1,'lnum' 1,'ss01' 1;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased;font-weight:400;}
+html,body{background:var(--c-black);color:var(--c-600);font-family:'Inter',sans-serif;font-feature-settings:'tnum' 1,'lnum' 1;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased;font-weight:400;}
 body{min-height:100vh;font-size:15px;line-height:1.55;background:var(--c-black);}body.menu-open{overflow:hidden;}
 .navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:transparent;transition:background 0.3s ease,backdrop-filter 0.3s ease;}
 .navbar.scrolled{background:rgba(0,0,0,0.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
@@ -60,13 +60,23 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:var(--c-black);
 .menu-bottom .mb-left{display:flex;flex-direction:column;gap:4px;}.menu-bottom .mb-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
 .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--frame); box-sizing: border-box; }
 @media(max-width:900px){.container{padding:0 24px;}section.memo-section,section.how-section,section.acc-section,section.accounts-section,section.docs-section,section.research-section{padding:88px 0;}section.cta-section{padding:72px 0;}}
-.page-header{padding:140px 0 0;border-bottom:0.5px solid var(--c-800);background:linear-gradient(180deg,var(--c-black) 0%,var(--c-surface) 62%,var(--c-surface) 100%);position:relative;overflow:hidden;min-height:680px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;}
-.page-header .container{position:relative;z-index:1;}
-.pg-art{position:absolute;top:140px;right:calc(max(0px,(100% - var(--maxw))/2) + var(--frame));height:calc(100% - 140px);width:clamp(340px,35vw,500px);z-index:0;pointer-events:none;display:flex;align-items:center;justify-content:center;padding-top:0;box-sizing:border-box;}
+.page-header{padding:140px 0 0;border-bottom:0.5px solid var(--c-800);background:var(--c-black);position:relative;overflow:hidden;min-height:680px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;}
+.page-header .container{position:relative;z-index:3;}
+.pg-photo{position:absolute;inset:0;z-index:0;background:url('images/contentteammogo_wide_interior_of_a_working_institutional_resear_f24c0325-9f15-4312-9f69-996f54b14f77.png') center 35%/cover no-repeat;filter:brightness(0.42) contrast(1.05) saturate(0.8);}
+.page-header::after{content:'';position:absolute;top:0;left:0;right:0;height:42%;z-index:1;pointer-events:none;background:linear-gradient(to bottom,rgba(0,0,0,0.78) 0%,rgba(0,0,0,0.34) 42%,rgba(0,0,0,0) 100%);}
+.page-header::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse at center,rgba(0,0,0,0) 48%,rgba(0,0,0,0.5) 100%);}
+.pg-veil{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0.22;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='pn'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23pn)'/%3E%3C/svg%3E");background-size:200px 200px;}
+@media (prefers-reduced-motion: no-preference){.pg-veil{animation:pg-grain 0.55s steps(3) infinite;}}
+@keyframes pg-grain{0%{background-position:0 0;}33%{background-position:-80px 40px;}66%{background-position:60px -70px;}100%{background-position:0 0;}}
+.pg-art{position:absolute;top:140px;right:calc(max(0px,(100% - var(--maxw))/2) + var(--frame));height:calc(100% - 140px);width:clamp(340px,35vw,500px);z-index:3;pointer-events:none;display:flex;align-items:center;justify-content:center;padding-top:0;box-sizing:border-box;}
 .pg-art canvas{width:clamp(306px,31.5vw,450px);height:clamp(306px,31.5vw,450px);display:block;}
 @media(max-width:760px){.page-header{padding:104px 0 88px;min-height:auto;display:flex;flex-direction:column;}.page-header .container{order:1;}.page-header .page-title,.page-header .page-deck{max-width:none;}.page-header .page-title{font-size:clamp(24px,7.4vw,28px);}.pg-art{position:static;order:2;width:100%;height:auto;left:auto;right:auto;top:auto;padding-top:0;margin-top:40px;opacity:0.8;}.pg-art canvas{width:min(84vw, 36vh);height:min(84vw, 36vh);}}
 .page-title{font-size:clamp(30px,4.4vw,40px);line-height:1.25;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:28px;max-width:calc((100% + var(--gutter)) / 12 * 8 - var(--gutter));}
-.page-deck{font-size:clamp(17px,1.6vw,18px);line-height:1.55;letter-spacing:-0.015em;color:var(--c-400);max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));}.cta-section{text-align:center;padding:160px 0 100px;border-top:0.5px solid var(--c-900);}
+.page-deck{font-size:clamp(17px,1.6vw,18px);line-height:1.55;letter-spacing:-0.015em;color:var(--c-400);max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));}.cta-section{text-align:center;padding:160px 0 100px;border-top:0.5px solid var(--c-900);position:relative;overflow:hidden;}
+.cta-section .cta-bg{position:absolute;inset:0;z-index:0;pointer-events:none;background:var(--c-black) center/cover no-repeat;background-image:url('images/retrox_ams_top-down_view_of_a_busy_crowd_crossing_at_a_geomet_1b2b333e-8c75-4109-b6e4-dc1b48592b63_0.png');filter:grayscale(0.68) brightness(0.30) contrast(1.06);}
+.cta-section .cta-veil{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0.12;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='cn2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23cn2)'/%3E%3C/svg%3E");background-size:200px 200px;}
+@media (prefers-reduced-motion: no-preference){.cta-section .cta-veil{animation:pg-grain 0.55s steps(3) infinite;}}
+.cta-section .cta-canon,.cta-section .cta-button{position:relative;z-index:2;}
 .cta-canon{font-size:clamp(22px,2.6vw,28px);line-height:1.3;letter-spacing:-0.025em;color:var(--c-200);margin:0 auto 48px;}
 @media(max-width:760px){.cta-canon{max-width:none;font-size:clamp(20px,1.8vw,24px);}}
 .cta-button{display:inline-flex;align-items:center;gap:8px;font-size:15px;color:var(--c-white);text-decoration:none;}
@@ -118,7 +128,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .dr2-copy{width:12px;height:12px;color:var(--c-700);flex:none;}
 .dr2-thesis{margin:12px 0 0;font-size:13px;line-height:1.65;color:var(--c-400);max-height:107px;overflow:hidden;-webkit-mask-image:linear-gradient(to bottom,#000 45%,transparent 100%);mask-image:linear-gradient(to bottom,#000 45%,transparent 100%);}
 .dr2-uw{display:flex;justify-content:space-between;align-items:baseline;border-top:0.5px solid var(--c-900);margin-top:24px;padding-top:18px;font-size:13px;color:var(--c-700);}
-.dr2-chev{font-size:16px;font-weight:300;}
+.dr2-chev{font-size:17px;font-weight:300;}
 .dr2-cta{margin-top:30px;display:flex;justify-content:flex-end;align-items:center;font-size:15px;color:var(--c-white);}
 .fig-cap{font-family:var(--mono);font-size:12px;letter-spacing:0.04em;color:var(--c-700);margin-top:14px;}
 @media(max-width:900px){.dr-doc{max-width:380px;height:auto;padding-bottom:110px;margin:0 auto;}}
@@ -189,8 +199,8 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .h-name{display:flex;flex-direction:column;align-items:flex-start;gap:5px;}
 .h-cat{font-size:11px;color:var(--c-700);line-height:1;}
 .h-badges{display:flex;flex-wrap:nowrap;gap:6px;}
-.badge{font-size:9px;font-weight:500;line-height:1.3;padding:5px 6px;border-radius:3px;white-space:nowrap;}
-.badge.soon{background:rgba(253,173,0,0.14);color:var(--c-amber);}
+.badge{font-size:11px;font-weight:500;line-height:1.3;padding:5px 6px;border-radius:3px;white-space:nowrap;}
+.badge.soon{background:rgba(255,122,0,0.14);color:var(--c-warning);}
 .badge.notable{background:rgba(255,255,255,0.10);color:var(--c-white);}
 .badge.ambient{background:rgba(255,255,255,0.10);color:var(--c-700);}
 .h-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;text-align:right;}
@@ -268,6 +278,17 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 @media(max-width:760px){
   .how-step{grid-template-columns:1fr;gap:16px;}.how-steps::before{display:none;}.how-node{display:none;}}
 @media(max-width:640px){.declarative,.how-headline,.acc-headline,.cal-lead,.memo-lead{text-wrap:wrap;}}
+/* Trust band (credentials) - ported from homepage, placed below the hero */
+#trust{position:relative;background:var(--c-elev);padding:80px 0;}
+#trust::before{content:'';position:absolute;top:0;left:50%;width:100vw;transform:translateX(-50%);border-top:0.5px solid var(--c-900);pointer-events:none;}
+#trust::after{content:'';position:absolute;top:0;bottom:0;left:50%;width:100vw;transform:translateX(-50%);background:color-mix(in srgb, var(--c-elev) 50%, var(--c-surface));z-index:0;pointer-events:none;}
+#trust>*{position:relative;z-index:1;}
+.trust-line{font-size:13px;line-height:1.6;color:var(--c-600);max-width:620px;}
+.trust-strip{display:grid;grid-template-columns:repeat(5,1fr);column-gap:var(--gutter);margin-top:48px;}
+.trust-item{display:flex;flex-direction:column;gap:7px;border-left:0.5px solid var(--c-800);padding-left:20px;}
+.ti-num{font-size:17px;color:var(--c-200);letter-spacing:-0.02em;line-height:1;}
+.ti-lbl{font-family:var(--mono);font-size:12px;letter-spacing:0.04em;color:var(--c-700);}
+@media(max-width:760px){.trust-strip{grid-template-columns:1fr;row-gap:20px;margin-top:30px;}.trust-item{border-left:0;padding-left:0;border-top:0.5px solid var(--c-800);padding-top:16px;}}
 </style>
 </head>
 <body>
@@ -285,6 +306,8 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 </div>
 
 <section class="page-header">
+<div class="pg-photo" aria-hidden="true"></div>
+<div class="pg-veil" aria-hidden="true"></div>
 <div class="pg-art" aria-hidden="true">
   <canvas class="pg-net"></canvas>
 </div>
@@ -342,6 +365,18 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   <div class="page-actions ri" style="--d:0.24s"><a href="II Site V2 - GetTheApp.html" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Enter the System</span><span>Enter the System</span></span></span></a></div>
 </div>
 </section>
+
+<!-- TRUST - broker clarity (credentials, below the hero) -->
+<section id="trust" class="band"><div class="container">
+  <p class="trust-line">A licensed brokerage with the decision layer built in. <b>Not a tool bolted onto your broker.</b></p>
+  <div class="trust-strip">
+    <div class="trust-item"><span class="ti-num" style="color:var(--c-white);">~$500M</span><span class="ti-lbl">Assets Custodied</span></div>
+    <div class="trust-item"><span class="ti-num">Regulatory Standing</span><span class="ti-lbl">CIRO registration</span></div>
+    <div class="trust-item"><span class="ti-num">Investor Protection</span><span class="ti-lbl">CIPF membership</span></div>
+    <div class="trust-item"><span class="ti-num">Asset Custody</span><span class="ti-lbl">Custodian &amp; segregation</span></div>
+    <div class="trust-item"><span class="ti-num">Institutional Backing</span><span class="ti-lbl">Orion Digital / Mogo</span></div>
+  </div>
+</div></section>
 
 <div class="container">
 <section class="memo-section">
@@ -560,6 +595,8 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 
 <div class="container">
 <section class="cta-section">
+  <div class="cta-bg" aria-hidden="true"></div>
+  <div class="cta-veil" aria-hidden="true"></div>
   <div class="cta-canon">Self-Directed is available as part of the Intelligent Investing subscription.</div>
   <a href="II Site V2 - GetTheApp.html" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Enter the System</span><span>Enter the System</span></span></span></a>
 </section>
