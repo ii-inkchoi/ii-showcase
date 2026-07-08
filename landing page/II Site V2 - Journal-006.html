@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The silent genius who outperformed: Will Danoff · Journal · Intelligent Investing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-800:#565B5E;--c-700:#929292;--c-600:#A7A7A7;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFF; --frame: clamp(24px, 4vw, 48px); --maxw: 1680px; --gutter: clamp(16px, 1.5vw, 24px); --c-elev: #0A0A0A;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{background:var(--c-black);color:var(--c-600);font-family:'Inter',sans-serif;font-feature-settings:'tnum' 1,'lnum' 1,'ss01' 1;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased;font-weight:400;}
+body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient(180deg,var(--c-elev) 0,var(--c-black) 560px);}body.menu-open{overflow:hidden;}
+.navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(0,0,0,0.7);backdrop-filter:blur(10px);}
+.navbar-inner{display:flex;align-items:center;justify-content:space-between;padding:var(--frame);gap:32px;position:relative;}
+
+.navbar-brand img{height:14px;width:auto;display:block;}
+.nav-links{display:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);align-items:center;gap:24px;}
+.nav-links a{color:var(--c-700);font-size:13px;letter-spacing:0.02em;text-decoration:none;transition:color 0.15s ease;}
+.nav-links a:hover{color:var(--c-white);}
+@media(min-width:1024px){.nav-links{display:inline-flex;}.hamburger{display:none;}}
+
+.nav-item{position:relative;}
+.nav-link{color:var(--c-400);text-decoration:none;font-size:13px;letter-spacing:0.02em;padding:8px 0;display:inline-flex;align-items:center;gap:6px;transition:color 0.15s ease;}
+.nav-link:hover,.nav-link.active{color:var(--c-white);}
+.nav-caret{display:inline-block;width:0;height:0;border-left:3px solid transparent;border-right:3px solid transparent;border-top:4px solid var(--c-700);margin-left:6px;transition:transform 0.2s ease,border-top-color 0.15s ease;vertical-align:middle;}
+.nav-item:hover .nav-caret{transform:rotate(180deg);color:var(--c-400);}
+.nav-dropdown{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-6px);background:var(--c-1000);border:0.5px solid var(--c-900);padding:18px 24px;min-width:220px;opacity:0;pointer-events:none;transition:all 0.2s ease;}
+.nav-item:hover .nav-dropdown{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);}
+.nav-dropdown a{display:block;color:var(--c-600);text-decoration:none;font-size:13px;padding:8px 0;white-space:nowrap;transition:color 0.15s ease;}
+.nav-dropdown a:hover{color:var(--c-white);}
+.navbar-right{display:flex;align-items:center;gap:24px;}
+.navbar-cta{display:none;color:var(--c-200);text-decoration:none;font-size:13px;border:0.5px solid var(--c-800);padding:8px 16px;}
+@media(min-width:1024px){.navbar-cta{display:inline-block;}}
+.hamburger{position:relative;width:40px;height:18px;background:none;border:none;cursor:pointer;}
+.hamburger span{position:absolute;left:0;width:40px;height:1px;background:var(--c-200);transition:all 0.35s cubic-bezier(0.4,0,0.2,1);}
+.hamburger span:nth-child(1){top:4px;}.hamburger span:nth-child(2){top:13px;}
+.hamburger.open span{width:44px;left:-2px;top:8.5px;}
+.hamburger.open span:nth-child(1){transform:rotate(24deg);}
+.hamburger.open span:nth-child(2){transform:rotate(-24deg);}
+.menu-overlay{position:fixed;inset:0;background:var(--c-black);z-index:200;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity 0.4s cubic-bezier(0.4,0,0.2,1);}
+.menu-overlay.open{opacity:1;pointer-events:auto;}
+.menu-top{display:flex;align-items:center;justify-content:space-between;padding:clamp(28px,4vw,56px) clamp(40px,6vw,80px);}
+.menu-top .ml-logo img{height:13px;}
+.menu-top .ml-close{background:none;border:none;color:var(--c-400);font-size:13px;letter-spacing:0.04em;cursor:pointer;padding:8px;}
+.menu-top .ml-close:hover{color:var(--c-white);}
+.menu-center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(20px,2vw,32px);}
+.menu-center a{color:var(--c-400);text-decoration:none;font-size:clamp(32px,5vw,56px);letter-spacing:-0.03em;line-height:1;opacity:0;transform:translateY(20px);transition:all 0.4s ease;}
+.menu-overlay.open .menu-center a{opacity:1;transform:translateY(0);}
+.menu-overlay.open .menu-center a:nth-child(1){transition-delay:0.15s;}.menu-overlay.open .menu-center a:nth-child(2){transition-delay:0.20s;}.menu-overlay.open .menu-center a:nth-child(3){transition-delay:0.25s;}.menu-overlay.open .menu-center a:nth-child(4){transition-delay:0.30s;}.menu-overlay.open .menu-center a:nth-child(5){transition-delay:0.35s;}.menu-overlay.open .menu-center a:nth-child(6){transition-delay:0.40s;}
+.menu-center a:hover{color:var(--c-white);}
+.menu-bottom{display:grid;grid-template-columns:1fr 1fr;align-items:end;padding:clamp(28px,4vw,56px) clamp(40px,6vw,80px);gap:24px;font-size:11px;color:var(--c-700);}
+.menu-bottom .mb-left{display:flex;flex-direction:column;gap:4px;}.menu-bottom .mb-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
+.container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--frame); box-sizing: border-box; }
+@media(max-width:900px){.container{padding:0 24px;}}
+.article-header{padding:180px 0 80px;border-bottom:0.5px solid var(--c-900);max-width:680px;margin:0 auto;}
+.article-breadcrumb{font-size:12px;color:var(--c-700);letter-spacing:0.06em;padding-bottom:28px;border-bottom:0.5px solid var(--c-900);margin-bottom:36px;display:flex;align-items:center;gap:10px;}
+.article-breadcrumb a{color:var(--c-700);text-decoration:none;}.article-breadcrumb .sep{color:var(--c-800);}.article-breadcrumb .current{color:var(--c-200);}
+.article-num{font-size:12px;color:var(--c-700);letter-spacing:0.04em;font-feature-settings:'tnum' 1;margin-bottom:24px;}
+.article-title{font-size:clamp(30px,3.8vw,44px);line-height:1.08;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:32px;text-wrap:balance;}
+.article-deck{font-size:18px;line-height:1.5;letter-spacing:-0.015em;color:var(--c-400);max-width:680px;text-wrap:balance;margin-bottom:48px;}
+.article-meta{display:flex;gap:32px;font-size:13px;color:var(--c-700);}
+.article-meta .am-col{display:flex;flex-direction:column;gap:4px;}
+.article-meta .am-lbl{color:var(--c-800);font-size:11px;letter-spacing:0.06em;}
+.article-meta .am-val{color:var(--c-400);font-size:14px;}
+.article-body{padding:80px 0;max-width:680px;margin:0 auto;}
+.article-body p{font-size:18px;line-height:1.7;color:var(--c-600);letter-spacing:-0.005em;margin-bottom:24px;}
+.article-fig{margin:48px 0;}
+.article-fig img{width:100%;height:auto;display:block;border:0.5px solid var(--c-900);}
+.article-fig figcaption{font-size:13px;color:var(--c-700);letter-spacing:-0.01em;margin-top:12px;}
+.article-body h2{font-size:clamp(22px,2.2vw,24px);line-height:1.2;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;margin-top:96px;margin-bottom:24px;}
+.article-body h3{font-size:18px;color:var(--c-200);letter-spacing:-0.02em;font-weight:400;margin-top:48px;margin-bottom:16px;}
+.article-body blockquote{margin:48px 0;padding-left:24px;border-left:0.5px solid var(--c-700);font-size:18px;line-height:1.5;color:var(--c-400);letter-spacing:-0.015em;}
+.article-body em{font-style:normal;color:var(--c-200);}
+.article-body ul,.article-body ol{margin:24px 0;padding-left:24px;color:var(--c-600);font-size:18px;line-height:1.7;}
+.article-body li{margin-bottom:8px;}
+.article-end{padding:40px 0 0;margin:48px 0 0;border-top:0.5px solid var(--c-900);text-align:center;font-size:13px;color:var(--c-700);letter-spacing:0.04em;}
+.article-end .ae-sym{font-size:13px;color:var(--c-700);margin-bottom:6px;}
+.related-section{padding:80px 0;max-width:680px;margin:0 auto;}
+.related-head{font-size:13px;color:var(--c-700);letter-spacing:0.06em;margin-bottom:32px;}
+.related-list{display:grid;grid-template-columns:1fr;gap:40px;}
+.related-item{padding:32px 0;border-top:0.5px solid var(--c-900);text-decoration:none;color:inherit;transition:padding 0.3s ease;display:flex;flex-direction:column;gap:8px;}
+.related-item:hover{padding-left:8px;}
+.related-item:hover .ri-title{color:var(--c-200);}
+.ri-num{font-size:11px;color:var(--c-700);letter-spacing:0.04em;}
+.ri-title{font-size:18px;color:var(--c-200);letter-spacing:-0.02em;line-height:1.2;font-weight:400;transition:color 0.15s ease;}
+.ri-date{font-size:12px;color:var(--c-700);}
+.ri-cat{font-family:var(--mono);font-size:11px;letter-spacing:0.04em;color:var(--c-700);}
+@media(max-width:900px){.related-list{grid-template-columns:1fr;}}
+footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;line-height:1.7;color:var(--c-800);}.footer-copy{font-size:13px;color:var(--c-600);}
+.footer-copy a{color:var(--c-600);text-decoration:underline;}
+.footer-social{display:flex;gap:18px;margin-top:22px;}
+.footer-social a{color:var(--c-700);display:inline-flex;transition:color 0.15s ease;}
+.footer-social a:hover{color:var(--c-200);}
+.footer-social svg{width:18px;height:18px;}
+.footer-legal{font-size:11px;color:var(--c-800);line-height:1.75;margin-top:18px;}
+.footer-legal:first-of-type{margin-top:36px;}
+.footer-legal a{color:var(--c-700);text-decoration:underline;}
+.footer-reset{display:inline-block;font-size:11px;color:var(--c-700);text-decoration:underline;margin-top:32px;}
+@media (prefers-reduced-motion: no-preference){.ri{opacity:0;transform:translateY(24px);transition:opacity 0.7s cubic-bezier(0.2,0.6,0.2,1),transform 0.7s cubic-bezier(0.2,0.6,0.2,1);transition-delay:var(--d,0s);}.ri.in{opacity:1;transform:none;}}
+.lang-toggle{display:inline-flex;align-items:center;gap:8px;font-size:13px;letter-spacing:0.02em;font-feature-settings:'tnum' 1;}
+.lang-toggle .lt{color:var(--c-700);text-decoration:none;cursor:pointer;transition:color 0.15s ease;}
+.lang-toggle .lt.active{color:var(--c-200);}
+.lang-toggle .lt:hover{color:var(--c-white);}
+.lang-toggle .sep{color:var(--c-800);}
+</style>
+</head>
+<body>
+<nav class="navbar"><div class="navbar-inner">
+  <a href="index.html" class="navbar-brand"><img src="Logo.svg" alt="II"></a>
+  <div class="nav-links"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Journal.html" class="active">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a></div>
+  <div class="navbar-right"><div class="lang-toggle"><span class="lt active">EN</span><span class="sep">·</span><span class="lt">FR</span></div><a href="II Site V2 - GetTheApp.html" class="navbar-cta">Get the App</a><button class="hamburger" type="button"><span></span><span></span></button></div>
+</div></nav>
+<div class="menu-overlay">
+  <div class="menu-top"><a href="index.html" class="ml-logo"><img src="Logo.svg" alt="II"></a><button class="ml-close" type="button">Close ×</button></div>
+  <div class="menu-center"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Journal.html" class="active">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html">Knowledge Hub</a><a href="II Site V2 - GetTheApp.html">Get the App</a></div>
+  <div class="menu-bottom"><div class="mb-left"><span>Intelligent Investing</span><span>No. 01 · 2026</span></div><div class="mb-right"><span>Mogo Inc.</span><span>Orion Digital · TSX·NASDAQ : ORIO</span></div></div>
+</div>
+
+<div class="container">
+<section class="article-header">
+  <div class="article-breadcrumb ri" style="--d:0s"><a href="index.html">Intelligent Investing</a><span class="sep">/</span><a href="II Site V2 - Journal.html">Journal</a><span class="sep">/</span><span class="current">No. 006</span></div>
+  <h1 class="article-title ri" style="--d:0.12s">The silent genius who outperformed: Will Danoff</h1>
+  <div class="article-deck ri" style="--d:0.18s">Lessons from one of the most successful investors in history.</div>
+  <div class="article-meta">
+    <div class="am-col"><span class="am-lbl">Published</span><span class="am-val">June 3, 2026</span></div>
+    <div class="am-col"><span class="am-lbl">Reading time</span><span class="am-val">6 min</span></div>
+    <div class="am-col"><span class="am-lbl">Section</span><span class="am-val">Doctrine</span></div>
+  </div>
+</section>
+</div>
+
+<div class="container">
+<article class="article-body">
+  <figure class="article-fig"><img src="images/jr2-judgment.png" alt="" loading="lazy"></figure>
+
+  <p>In an industry obsessed with noise, few investors embody clarity and discipline like Will Danoff. For over three decades, he has managed Fidelity's Contrafund, one of the world's largest and most consistently outperforming mutual funds.</p>
+
+  <p>Since taking over in 1990, Danoff has compounded at over 13% annual returns. That track record puts him in the top 0.1% of all active fund managers, managing over $100 billion at peak, and doing it quietly, without celebrity, hype, or headlines.</p>
+
+  <p>His edge isn't algorithms or luck. It's intellectual humility, conviction, and patience, qualities increasingly rare in modern investing. Below are the ten principles that define Will Danoff's philosophy, and what they teach us about intelligent investing.</p>
+
+  <h2>1. Outthink, don't outtrade</h2>
+  <p>Danoff's edge is mental, not mechanical. He wins by thinking independently, not reacting emotionally. His focus is on finding insights others underappreciate and holding them for years, long after the crowd has moved on. Intelligence in investing begins with curiosity, not activity.</p>
+  <blockquote>You have to outthink the crowd, not out-trade it.</blockquote>
+
+  <h2>2. Bet on people, not just prices</h2>
+  <p>Danoff spends his time meeting CEOs, not chasing charts. He studies leadership, culture, and vision, the human edge that algorithms can't model. He looks for founders who wake up obsessed with improvement. You're not investing in tickers. You're investing in human excellence.</p>
+  <blockquote>Great management separates good companies from great investments.</blockquote>
+
+  <h2>3. Hold against chaos</h2>
+  <p>Danoff's biggest wins, Apple, Amazon, Google, Meta, came from conviction during chaos. He doesn't mistake volatility for risk. He knows temporary pain is the price of permanent returns. Clarity compounds when you don't flinch.</p>
+  <blockquote>If a company keeps executing, I hold it, and let compounding work.</blockquote>
+
+  <h2>4. Depth beats speed</h2>
+  <p>He's relentless about research, reading annual reports, visiting plants, talking to suppliers and competitors. Danoff calls it scuttlebutt. It's old-school, and it works. Information is cheap. Insight is rare.</p>
+  <blockquote>You can't know everything, but you can know more than most.</blockquote>
+
+  <h2>5. Stay adaptive</h2>
+  <p>Danoff reinvents himself constantly. In the 1990s, he owned Coca-Cola and Nike. In the 2010s, Amazon and Salesforce. He evolves with the world, and leaves ego behind. Intelligence isn't rigidity. It's adaptive conviction.</p>
+  <blockquote>Don't fall in love with your ideas. Fall in love with learning.</blockquote>
+
+  <h2>6. Size with conviction, not comfort</h2>
+  <p>Danoff's top positions often exceed 5-10% of his portfolio. He doesn't diversify for optics; he concentrates for outcome. Conviction is uncomfortable. That's why it works.</p>
+  <blockquote>If you believe in a company, own enough to matter.</blockquote>
+
+  <h2>7. Respect the market but trust your edge</h2>
+  <p>Danoff respects macro cycles but doesn't worship them. He focuses on businesses that gain share, even in bad times. Macro is noise. Advantage is signal.</p>
+  <blockquote>You can't beat the market if you are the market.</blockquote>
+
+  <h2>8. Temperament is alpha</h2>
+  <p>He doesn't react. He reflects. His composure through crises, bubbles, and headlines, is his ultimate edge.</p>
+  <blockquote>I try to stay optimistic and patient. The world rewards the calm.</blockquote>
+
+  <h2>9. Build a culture of curiosity</h2>
+  <p>At Fidelity, Danoff built a culture of collective intelligence. Analysts debate, challenge, and share insights. He knows that ideas grow stronger in dialogue, not in echo chambers. Curiosity compounds faster than capital.</p>
+  <blockquote>Surround yourself with people who love learning more than being right.</blockquote>
+
+  <h2>10. Think smart. Stand apart.</h2>
+  <p>Danoff isn't contrarian for ego. He's contrarian when logic demands it. He buys when others panic and sells when they celebrate, not because it's rebellious, but because it's rational. True intelligence is conviction without arrogance.</p>
+  <blockquote>The crowd gets emotional. The intelligent investor stays rational.</blockquote>
+
+  <h2>The meta lesson: intelligence is quiet</h2>
+  <p>Will Danoff has no media brand, no podcast, no quotes about "crushing the market." His success is built on depth, discipline, and the refusal to be loud. He's the embodiment of what we call Intelligent Investing, where performance comes from clarity over chaos, conviction over comfort, and patience over popularity.</p>
+  <p>In a world of reaction, Danoff proves that calm still compounds.</p>
+
+  <div class="article-end">
+    <div class="ae-sym">·</div>
+    <div>End of No. 006</div>
+  </div>
+</article>
+</div>
+
+<div class="container">
+<section class="related-section">
+  <div class="related-head">Related entries</div>
+  <div class="related-list">
+    <a href="II Site V2 - Journal-003.html" class="related-item">
+      <span class="ri-num">No. 003</span>
+      <h3 class="ri-title">Disagreeing with your past self</h3>
+      <span class="ri-date">May 14, 2026</span>
+    </a>
+    <a href="II Site V2 - Journal-005.html" class="related-item">
+      <span class="ri-num">No. 005</span>
+      <h3 class="ri-title">The 1% Club</h3>
+      <span class="ri-date">May 27, 2026</span>
+    </a>
+  </div>
+</section>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-copy">&copy;2026 <a href="#">Orion Digital Corp.</a> All rights reserved.</div>
+    <div class="footer-social">
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+      <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 3c.3 2.3 1.8 3.9 4 4.2v3c-1.5 0-2.9-.4-4-1.2v6.3c0 3.2-2.6 5.7-5.8 5.7S4.4 18.5 4.4 15.3 7 9.6 10.2 9.6c.3 0 .6 0 .9.1v3.1c-.3-.1-.6-.2-.9-.2-1.5 0-2.7 1.2-2.7 2.7s1.2 2.7 2.7 2.7 2.8-1.2 2.8-2.7V3H16z"/></svg></a>
+      <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2H22l-7.6 8.7L23 22h-7l-5.5-7.2L4.2 22H1l8.1-9.3L1 2h7.2l5 6.6L18.9 2zm-1.2 18h1.9L7.4 4H5.5l12.2 16z"/></svg></a>
+      <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 7.5c-.3-1-1-1.8-2-2C19 5 12 5 12 5s-7 0-9 .5c-1 .3-1.8 1-2 2C.5 9.3.5 12 .5 12s0 2.7.5 4.5c.3 1 1 1.8 2 2C5 19 12 19 12 19s7 0 9-.5c1-.3 1.8-1 2-2 .5-1.8.5-4.5.5-4.5s0-2.7-.5-4.5zM9.8 15.3V8.7l5.7 3.3-5.7 3.3z"/></svg></a>
+    </div>
+    <p class="footer-legal">Past returns are no guarantee of future performance.</p>
+    <p class="footer-legal">Managed investing accounts are opened with IntelligentInvesting Wealth Management Inc., a registered portfolio manager. IntelligentInvesting Wealth Management Inc. accounts that are held with CI Investment Services Inc., a custodian, are protected by CIPF in accordance with its coverage policy. CI Investment Services Inc. is a CIRO member. Self-directed investing accounts are opened by IntelligentInvesting Securities Inc., an investment dealer regulated by the Canadian Investment Regulatory Organization (CIRO). IntelligentInvesting Securities Inc. is a CIPF member. IntelligentInvesting Securities Inc. accounts are covered by CIPF. A brochure describing the scope and nature of coverage, as well as the limitations and exclusions of coverage, is available upon request or at <a href="https://www.cipf.ca">www.cipf.ca</a>.</p>
+    <p class="footer-legal">IntelligentInvesting Wealth Management Inc. and IntelligentInvesting Securities Inc. are subsidiaries of Orion Digital Corp. Orion Digital Corp. is not an investment adviser or dealer and does not provide investment advice or deal in securities.</p>
+    <p class="footer-legal">Nothing herein should be considered an offer, solicitation of an offer, or advice to buy or sell securities. Account holdings are for illustrative purposes only. Actual products may differ from those depicted and images contained herein. The Intelligent Investing app incorporates the investing principles of Warren Buffett in its features, design, and content. Neither Orion Digital Corp. nor its affiliates are endorsed by or affiliated with Warren Buffett. All images, names, logos, and brands are the property of their respective owners.</p>
+    <p class="footer-legal">The information contained on this website is provided for informational purposes only and does not constitute a promise of specific results or future performance. Certain statements may contain opinions, assumptions, or forward-looking information that are subject to change and may not reflect actual outcomes. No representation or warranty, express or implied, is made as to the accuracy, completeness, or timeliness of the information presented. Statistics, examples, and projections, where provided, are for illustrative purposes only and should not be relied upon as guarantees of future results.</p>
+    <p class="footer-legal">Investing involves risk, including the potential loss of capital. The risks associated with any investment strategy, product, or service should be carefully considered before making any investment decision.</p>
+    <p class="footer-legal">Fiscal.ai, an AI investment research tool powered by Fiscal.ai, is a third-party product provided &ldquo;as is&rdquo; without warranties on accuracy, completeness, quality, or timeliness. Verify information independently. Fiscal.ai outputs are not investment advice or recommendations and should not be used for investment decisions. By using Fiscal.ai, you agree to our <a href="#">Privacy Policy</a> and <a href="#">Terms of Use</a>.</p>
+    <a href="#" class="footer-reset">Reset Cookie Preferences</a>
+  </div>
+</footer>
+<script>
+const hamburger=document.querySelector('.hamburger');const menuOverlay=document.querySelector('.menu-overlay');const menuClose=document.querySelector('.ml-close');const body=document.body;
+function openMenu(){menuOverlay.classList.add('open');hamburger.classList.add('open');body.classList.add('menu-open');}
+function closeMenu(){menuOverlay.classList.remove('open');hamburger.classList.remove('open');body.classList.remove('menu-open');}
+hamburger.addEventListener('click',e=>{e.stopPropagation();menuOverlay.classList.contains('open')?closeMenu():openMenu();});
+  menuClose.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menuOverlay.classList.contains('open')) closeMenu(); });
+</script>
+
+<script>if('IntersectionObserver' in window){var rio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');rio.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -6% 0px'});document.querySelectorAll('.ri').forEach(function(el){rio.observe(el);});}else{document.querySelectorAll('.ri').forEach(function(el){el.classList.add('in');});}</script>
+<script src="grid-overlay.js"></script>
+</body>
+</html>

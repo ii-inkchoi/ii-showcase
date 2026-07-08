@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Knowledge Hub · Intelligent Investing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-surface:#151515;--c-800:#565B5E;--c-700:#929292;--c-600:#A7A7A7;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFF; --frame: clamp(24px, 4vw, 48px); --maxw: 1680px; --gutter: clamp(16px, 1.5vw, 24px); --c-elev: #0A0A0A; --mono: 'Chakra Petch', ui-monospace, monospace;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{background:var(--c-black);color:var(--c-600);font-family:'Inter',sans-serif;font-feature-settings:'tnum' 1,'lnum' 1,'ss01' 1;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased;font-weight:400;}
+body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient(180deg,var(--c-elev) 0,var(--c-black) 560px);}body.menu-open{overflow:hidden;}
+.navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:transparent;transition:background 0.3s ease,backdrop-filter 0.3s ease;}
+.navbar.scrolled{background:rgba(0,0,0,0.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
+.navbar-inner{display:flex;align-items:center;justify-content:space-between;padding:var(--frame);gap:32px;position:relative;}
+
+.navbar-brand img{height:14px;width:auto;display:block;}
+.nav-links{display:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);align-items:center;gap:24px;}
+.nav-links a{color:var(--c-700);font-size:13px;letter-spacing:0.02em;text-decoration:none;transition:color 0.15s ease;}
+.nav-links a:hover{color:var(--c-white);}
+.nav-links a.active{color:var(--c-white);}
+@media(min-width:1024px){.nav-links{display:inline-flex;}.hamburger{display:none;}}
+.navbar-right{display:flex;align-items:center;gap:24px;}
+.navbar-cta{display:none;color:var(--c-200);text-decoration:none;font-size:13px;border:0.5px solid var(--c-800);padding:8px 16px;}
+@media(min-width:1024px){.navbar-cta{display:inline-block;}}
+.hamburger{position:relative;width:40px;height:18px;background:none;border:none;cursor:pointer;}
+.hamburger span{position:absolute;left:0;width:40px;height:1px;background:var(--c-200);transition:all 0.35s cubic-bezier(0.4,0,0.2,1);}
+.hamburger span:nth-child(1){top:4px;}.hamburger span:nth-child(2){top:13px;}
+.hamburger.open span{width:44px;left:-2px;top:8.5px;}
+.hamburger.open span:nth-child(1){transform:rotate(24deg);}
+.hamburger.open span:nth-child(2){transform:rotate(-24deg);}
+.menu-overlay{position:fixed;inset:0;background:var(--c-black);z-index:200;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity 0.4s cubic-bezier(0.4,0,0.2,1);}
+.menu-overlay.open{opacity:1;pointer-events:auto;}
+.menu-top{display:flex;align-items:center;justify-content:space-between;padding:clamp(28px,4vw,56px) clamp(40px,6vw,80px);}
+.menu-top .ml-logo img{height:13px;}
+.menu-top .ml-close{background:none;border:none;color:var(--c-400);font-size:13px;letter-spacing:0.04em;cursor:pointer;padding:8px;}
+.menu-top .ml-close:hover{color:var(--c-white);}
+.menu-center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(20px,2vw,32px);}
+.menu-center a{color:var(--c-400);text-decoration:none;font-size:clamp(32px,5vw,56px);letter-spacing:-0.03em;line-height:1;opacity:0;transform:translateY(20px);transition:all 0.4s ease;}
+.menu-overlay.open .menu-center a{opacity:1;transform:translateY(0);}
+.menu-overlay.open .menu-center a:nth-child(1){transition-delay:0.15s;}.menu-overlay.open .menu-center a:nth-child(2){transition-delay:0.20s;}.menu-overlay.open .menu-center a:nth-child(3){transition-delay:0.25s;}.menu-overlay.open .menu-center a:nth-child(4){transition-delay:0.30s;}.menu-overlay.open .menu-center a:nth-child(5){transition-delay:0.35s;}.menu-overlay.open .menu-center a:nth-child(6){transition-delay:0.40s;}.menu-overlay.open .menu-center a:nth-child(7){transition-delay:0.45s;}
+.menu-center a:hover{color:var(--c-white);}
+.menu-center a.active{color:var(--c-white);position:relative;}
+.menu-center a.active::before{content:'';position:absolute;left:-26px;top:50%;width:6px;height:6px;border-radius:50%;background:var(--c-white);transform:translateY(-50%);}
+.menu-bottom{display:grid;grid-template-columns:1fr 1fr;align-items:end;padding:clamp(28px,4vw,56px) clamp(40px,6vw,80px);gap:24px;font-size:11px;color:var(--c-700);}
+.menu-bottom .mb-left{display:flex;flex-direction:column;gap:4px;}.menu-bottom .mb-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
+.container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--frame); box-sizing: border-box; }
+@media(max-width:900px){.container{padding:0 24px;}section.hub{padding:72px 0;}}
+.page-header{padding:140px 0 0;border-bottom:0.5px solid var(--c-800);background:linear-gradient(180deg,var(--c-black) 0%,var(--c-surface) 62%,var(--c-surface) 100%);position:relative;overflow:hidden;min-height:680px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;}
+.page-header .container{position:relative;z-index:1;}
+.pg-art{position:absolute;top:140px;right:calc(max(0px,(100% - var(--maxw))/2) + var(--frame));height:calc(100% - 140px);width:clamp(340px,35vw,500px);z-index:0;pointer-events:none;display:flex;align-items:center;justify-content:center;padding-top:0;box-sizing:border-box;}
+.pg-art canvas{width:clamp(306px,31.5vw,450px);height:clamp(306px,31.5vw,450px);display:block;}
+@media(max-width:760px){.page-header{padding:104px 0 88px;min-height:auto;display:flex;flex-direction:column;}.page-header .container{order:1;}.page-header .page-title,.page-header .page-deck{max-width:none;}.page-header .page-title{font-size:clamp(24px,7.4vw,28px);}.pg-art{position:static;order:2;width:100%;height:auto;left:auto;right:auto;top:auto;padding-top:0;margin-top:40px;opacity:0.8;}.pg-art canvas{width:min(84vw, 36vh);height:min(84vw, 36vh);}}
+.lang-toggle{display:inline-flex;align-items:center;gap:8px;font-size:13px;letter-spacing:0.02em;font-feature-settings:'tnum' 1;}
+.lang-toggle .lt{color:var(--c-700);text-decoration:none;cursor:pointer;transition:color 0.15s ease;}
+.lang-toggle .lt.active{color:var(--c-200);}
+.lang-toggle .lt:hover{color:var(--c-white);}
+.lang-toggle .sep{color:var(--c-800);}
+.page-breadcrumb{font-family:var(--mono);font-size:12px;color:var(--c-700);letter-spacing:0.06em;margin-bottom:36px;display:flex;align-items:center;gap:10px;}
+.page-breadcrumb a{color:var(--c-700);text-decoration:none;}.page-breadcrumb .sep{color:var(--c-800);}.page-breadcrumb .current{color:var(--c-200);}
+.page-title{font-size:clamp(30px,4.4vw,40px);line-height:1.25;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:28px;max-width:calc((100% + var(--gutter)) / 12 * 8 - var(--gutter));}
+.page-eyebrow{font-family:var(--mono);font-size:12px;color:var(--c-700);letter-spacing:0.04em;margin-bottom:28px;}
+.page-deck{font-size:clamp(17px,1.6vw,18px);line-height:1.55;letter-spacing:-0.015em;color:var(--c-400);max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));}
+.hub{padding:40px 0 80px;}
+.hub-group{margin-top:120px;}
+.hub-group:first-of-type{margin-top:40px;}
+.hub-glabel{font-family:var(--mono);font-size:12px;letter-spacing:0.04em;display:flex;gap:20px;}
+.hub-glabel .se-no{color:var(--c-700);}.hub-glabel .se-name{color:var(--c-400);}
+.hub-gdesc{font-size:17px;line-height:1.4;letter-spacing:-0.01em;color:var(--c-700);margin-top:14px;}
+.hub-grid{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);margin-top:40px;}
+.hub-card{display:flex;flex-direction:column;grid-column:span 4;padding:32px 32px 34px;border-left:0.5px solid var(--c-900);text-decoration:none;color:inherit;transition:background 0.3s ease;}
+.hub-card:hover{background:var(--c-elev);}
+.hc-q{font-size:18px;line-height:1.3;letter-spacing:-0.02em;color:var(--c-200);font-weight:400;transition:color 0.15s ease;}
+.hub-card:hover .hc-q{color:var(--c-white);}
+.hc-desc{font-size:14px;line-height:1.55;color:var(--c-600);margin-top:14px;}
+.hc-read{margin-top:auto;padding-top:24px;font-size:13px;letter-spacing:0.01em;color:var(--c-700);display:inline-flex;align-items:center;gap:6px;transition:color 0.15s ease;}
+.hc-read .arr-svg{width:12px;height:12px;display:block;}
+.hub-card:hover .hc-read{color:var(--c-200);}
+@media(max-width:900px){.hub-grid{grid-template-columns:1fr;}.hub-card{grid-column:auto;border-left:none;min-height:0;}.hub-card + .hub-card{border-top:0.5px solid var(--c-900);}}
+footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;line-height:1.7;color:var(--c-800);}.footer-copy{font-size:13px;color:var(--c-600);}
+.footer-copy a{color:var(--c-600);text-decoration:underline;}
+.footer-social{display:flex;gap:18px;margin-top:22px;}
+.footer-social a{color:var(--c-700);display:inline-flex;transition:color 0.15s ease;}
+.footer-social a:hover{color:var(--c-200);}
+.footer-social svg{width:18px;height:18px;}
+.footer-legal{font-size:11px;color:var(--c-800);line-height:1.75;margin-top:18px;}
+.footer-legal:first-of-type{margin-top:36px;}
+.footer-legal a{color:var(--c-700);text-decoration:underline;}
+.footer-reset{display:inline-block;font-size:11px;color:var(--c-700);text-decoration:underline;margin-top:32px;}
+@media (prefers-reduced-motion: no-preference){
+  .ri{opacity:0;transition:opacity 0.7s cubic-bezier(0.2,0.6,0.2,1);transition-delay:var(--d,0s);}
+  .ri.in{opacity:1;transform:none;}
+}
+</style>
+</head>
+<body>
+<nav class="navbar"><div class="navbar-inner">
+  <a href="index.html" class="navbar-brand"><img src="Logo.svg" alt="II"></a>
+  <div class="nav-links"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html" class="active">Knowledge Hub</a></div>
+  <div class="navbar-right"><div class="lang-toggle"><span class="lt active">EN</span><span class="sep">·</span><span class="lt">FR</span></div><a href="II Site V2 - GetTheApp.html" class="navbar-cta">Get the App</a><button class="hamburger" type="button"><span></span><span></span></button></div>
+</div></nav>
+<div class="menu-overlay">
+  <div class="menu-top"><a href="index.html" class="ml-logo"><img src="Logo.svg" alt="II"></a><button class="ml-close" type="button">Close ×</button></div>
+  <div class="menu-center"><a href="II Site V2 - Self-Directed.html">Self-Directed</a><a href="II Site V2 - Managed.html">Managed</a><a href="II Site V2 - Journal.html">Journal</a><a href="II Site V2 - Pricing.html">Pricing</a><a href="II Site V2 - About.html">About</a><a href="II Site V2 - Knowledge Hub.html" class="active">Knowledge Hub</a><a href="II Site V2 - GetTheApp.html">Get the App</a></div>
+  <div class="menu-bottom"><div class="mb-left"><span>Intelligent Investing</span><span>No. 01 · 2026</span></div><div class="mb-right"><span>Mogo Inc.</span><span>Orion Digital · TSX·NASDAQ : ORIO</span></div></div>
+</div>
+
+<section class="page-header">
+<div class="pg-art" aria-hidden="true">
+  <canvas class="pg-net"></canvas>
+</div>
+<script>(function(){
+  var cv=document.querySelector('.pg-art .pg-net'); if(!cv||!cv.getContext) return;
+  var ctx=cv.getContext('2d');
+  var cs=getComputedStyle(document.documentElement);
+  function rgb(n,f){var h=((cs.getPropertyValue(n)||f)+'').trim().replace('#','');if(h.length===3)h=h.replace(/(.)/g,'$1$1');return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];}
+  var L=rgb('--c-400','C7C7C7'), Hb=rgb('--c-200','E3E2E2');
+  var DPR=Math.min(window.devicePixelRatio||1,2);
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W=0,H=0,raf=null,running=false,t=0;
+  var K=16, SEG=66, TAU=6.2831853, PI=Math.PI;
+  function size(){var r=cv.getBoundingClientRect();W=r.width;H=r.height;cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);ctx.setTransform(DPR,0,0,DPR,0,0);}
+  var CUBE4=null, CUBE1=null;
+  function makeCube(G, tri){
+    var segs=[], a, i, jj, s, h=0.5, step=1/G, b, c, bv, p, q;
+    for(a=0;a<3;a++){ b=(a+1)%3; c=(a+2)%3;
+      for(s=-h;s<=h;s+=1){
+        for(i=0;i<=G;i++){ bv=-h+i*step;
+          p=[0,0,0];q=[0,0,0];p[a]=s;p[b]=bv;p[c]=-h;q[a]=s;q[b]=bv;q[c]=h;segs.push([p,q]);
+          p=[0,0,0];q=[0,0,0];p[a]=s;p[b]=-h;p[c]=bv;q[a]=s;q[b]=h;q[c]=bv;segs.push([p,q]);
+        }
+        if(tri){for(i=0;i<G;i++)for(jj=0;jj<G;jj++){
+          p=[0,0,0];q=[0,0,0];p[a]=s;p[b]=-h+i*step;p[c]=-h+jj*step;q[a]=s;q[b]=-h+(i+1)*step;q[c]=-h+(jj+1)*step;segs.push([p,q]);
+        }}
+      }
+    }
+    return segs;
+  }
+  function draw(){
+    if(!CUBE4){CUBE4=makeCube(3);CUBE1=makeCube(1);}
+    ctx.clearRect(0,0,W,H);
+    var S=Math.min(W,H), cx=W*0.5, cy=H*0.5;
+    var So=S*0.50;
+    var p=t*0.0002, fr=p-Math.floor(p), n=Math.floor(p);
+    var env=(1-Math.cos(6.2831853*fr))/2;
+    var aYb=0.7853982+env*2.4*Math.sin(n*2.39+1.0), aXb=0.6154797+env*1.9*Math.cos(n*1.73);
+    var aYs=0.7853982+env*2.1*Math.cos(n*1.61+2.0), aXs=0.6154797+env*2.3*Math.sin(n*2.11+0.5);
+    var cYb=Math.cos(aYb),sYb=Math.sin(aYb),cXb=Math.cos(aXb),sXb=Math.sin(aXb);
+    var Vx=-sYb*cXb, Vy=sXb, Vz=cYb*cXb;
+    var faceA=Math.max(Math.abs(Vx),Math.abs(Vy),Math.abs(Vz));
+    var diagA=Math.max(Math.abs(Vx+Vy+Vz),Math.abs(Vx+Vy-Vz),Math.abs(Vx-Vy+Vz),Math.abs(-Vx+Vy+Vz))/1.7320508;
+    var flat=Math.max(faceA,diagA), flash=flat<0.90?0:(flat-0.90)/0.10;
+    var albig=0.18+0.62*flash;
+    function proj(v,sc,cY,sY,cX,sX){var x1=v[0]*cY+v[2]*sY, z1=-v[0]*sY+v[2]*cY, y2=v[1]*cX-z1*sX, z2=v[1]*sX+z1*cX;return [cx+x1*sc, cy-y2*sc, z2];}
+    function dcol(z2,base){var dep=(z2+0.7)/1.4;if(dep<0)dep=0;if(dep>1)dep=1;return 'rgba('+Hb[0]+','+Hb[1]+','+Hb[2]+','+(base*(0.30+0.70*dep)).toFixed(3)+')';}
+    function drawCube(segs, sc, aY, aX, base, lw){
+      var cY=Math.cos(aY),sY=Math.sin(aY),cX=Math.cos(aX),sX=Math.sin(aX),k,A,B,gr;
+      ctx.lineWidth=lw;
+      for(k=0;k<segs.length;k++){A=proj(segs[k][0],sc,cY,sY,cX,sX);B=proj(segs[k][1],sc,cY,sY,cX,sX);
+        gr=ctx.createLinearGradient(A[0],A[1],B[0],B[1]);gr.addColorStop(0,dcol(A[2],base));gr.addColorStop(1,dcol(B[2],base));
+        ctx.strokeStyle=gr;ctx.beginPath();ctx.moveTo(A[0],A[1]);ctx.lineTo(B[0],B[1]);ctx.stroke();}
+    }
+    drawCube(CUBE4, So, aYb, aXb, albig, 0.5);
+    drawCube(CUBE1, So/3, aYs, aXs, 0.85, 0.5);
+    var cYs=Math.cos(aYs),sYs=Math.sin(aYs),cXs=Math.cos(aXs),sXs=Math.sin(aXs),gx,gy,gz,vv,nd;
+    for(gx=-1;gx<=1;gx+=2)for(gy=-1;gy<=1;gy+=2)for(gz=-1;gz<=1;gz+=2){
+      vv=proj([gx*0.5,gy*0.5,gz*0.5],So/3,cYs,sYs,cXs,sXs);nd=(vv[2]+0.7)/1.4;if(nd<0)nd=0;if(nd>1)nd=1;
+      ctx.fillStyle='rgba('+Hb[0]+','+Hb[1]+','+Hb[2]+','+(0.45+0.5*nd).toFixed(3)+')';
+      ctx.beginPath();ctx.arc(vv[0],vv[1],1.3+0.9*nd,0,TAU);ctx.fill();}
+    ctx.strokeStyle='rgba('+L[0]+','+L[1]+','+L[2]+',0.42)';ctx.lineWidth=0.7;
+    var mk=S*0.013,mxs=[S*0.085,W-S*0.085],mys=[S*0.085,H-S*0.085],ma,mb,Mx,My;
+    for(ma=0;ma<2;ma++)for(mb=0;mb<2;mb++){Mx=mxs[ma];My=mys[mb];
+      ctx.beginPath();ctx.moveTo(Mx-mk,My);ctx.lineTo(Mx+mk,My);ctx.moveTo(Mx,My-mk);ctx.lineTo(Mx,My+mk);ctx.stroke();}
+    if(!reduce)t+=16;
+  }
+  function loop(){draw();if(running)raf=requestAnimationFrame(loop);}
+  function start(){if(reduce){draw();return;}if(!running){running=true;loop();}}
+  function stop(){running=false;if(raf)cancelAnimationFrame(raf);raf=null;}
+  size();start();
+  var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){var was=running||reduce;stop();size();if(was)start();},200);});
+  if('IntersectionObserver' in window){new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)start();else stop();});},{threshold:0}).observe(cv);}
+  if('ResizeObserver' in window){new ResizeObserver(function(){size();if(reduce)draw();}).observe(cv);}
+})();</script>
+<div class="container">
+  <div class="page-eyebrow ri" style="--d:0.04s">Knowledge Hub</div><h1 class="page-title ri" style="--d:0.08s">Investing explained without the noise.</h1>
+  <div class="page-deck ri" style="--d:0.16s">Clear, straightforward answers to what Canadians actually ask before, during, and after investing.</div>
+</div>
+</section>
+
+<div class="container">
+<section class="hub">
+
+  <div class="hub-group">
+    <div class="hub-glabel ri" style="--d:0s"><span class="se-no">No. 01</span><span class="se-name">Account Infrastructure</span></div>
+    <div class="hub-gdesc ri" style="--d:0.06s">The accounts available to Canadian investors and how each one works within the tax system.</div>
+    <div class="hub-grid">
+      <a href="II Site V2 - KH-TFSA.html" class="hub-card ri"><h2 class="hc-q">What is a TFSA?</h2><p class="hc-desc">How a Tax-Free Savings Account works, what you can hold in it, and why it is usually the right place to start.</p><span class="hc-read">Read <svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+      <a href="#" class="hub-card ri"><h2 class="hc-q">What is an RRSP?</h2><p class="hc-desc">How a Registered Retirement Savings Plan reduces your taxable income and compounds over time.</p><span class="hc-read">Read <svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+      <a href="#" class="hub-card ri"><h2 class="hc-q">TFSA vs RRSP: Which to use first?</h2><p class="hc-desc">The decision framework most Canadians need before they start investing.</p><span class="hc-read">Read <svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+    </div>
+  </div>
+
+  <div class="hub-group">
+    <div class="hub-glabel ri" style="--d:0s"><span class="se-no">No. 02</span><span class="se-name">Managed Investing</span></div>
+    <div class="hub-gdesc ri" style="--d:0.06s">How automated, portfolio-managed investing works and why consistency beats conviction for most investors.</div>
+    <div class="hub-grid">
+      <a href="#" class="hub-card ri"><h2 class="hc-q">What is dollar-cost averaging?</h2><p class="hc-desc">Why investing a fixed amount on a fixed schedule removes the most damaging variable from investing: timing.</p><span class="hc-read">Read <svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+      <a href="#" class="hub-card ri"><h2 class="hc-q">What is a portfolio manager?</h2><p class="hc-desc">What registered portfolio managers are, what they are regulated to do, and why the distinction matters.</p><span class="hc-read">Read <svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+      <a href="#" class="hub-card ri"><h2 class="hc-q">How automated investing works</h2><p class="hc-desc">What happens between setting a weekly contribution and watching your portfolio grow over time.</p><span class="hc-read">Read <svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+    </div>
+  </div>
+
+  <div class="hub-group">
+    <div class="hub-glabel ri" style="--d:0s"><span class="se-no">No. 03</span><span class="se-name">Self-Directed Investing</span></div>
+    <div class="hub-gdesc ri" style="--d:0.06s">The regulatory framework, tools, and habits behind making your own investment decisions.</div>
+    <div class="hub-grid">
+      <a href="#" class="hub-card ri"><h2 class="hc-q">What is Order Execution Only?</h2><p class="hc-desc">What OEO account services mean for you as an investor and what your dealer is and is not responsible for.</p><span class="hc-read">Read <svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+      <a href="#" class="hub-card ri"><h2 class="hc-q">What is an ETF?</h2><p class="hc-desc">How exchange-traded funds work, why they are the most common building block for self-directed portfolios.</p><span class="hc-read">Read <svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+      <a href="#" class="hub-card ri"><h2 class="hc-q">How to build a thesis before you buy</h2><p class="hc-desc">The questions to ask before entering a position and how to define your exit conditions in advance.</p><span class="hc-read">Read <svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+    </div>
+  </div>
+
+  <div class="hub-group">
+    <div class="hub-glabel ri" style="--d:0s"><span class="se-no">No. 04</span><span class="se-name">Investing Judgment</span></div>
+    <div class="hub-gdesc ri" style="--d:0.06s">The behavioural and cognitive patterns that separate investors who build wealth from those who don't.</div>
+    <div class="hub-grid">
+      <a href="#" class="hub-card ri"><h2 class="hc-q">Why most investors underperform the market</h2><p class="hc-desc">The gap between market returns and investor returns is not about stock selection. It is about behaviour.</p><span class="hc-read">Read <svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+      <a href="#" class="hub-card ri"><h2 class="hc-q">The case for consistency over conviction</h2><p class="hc-desc">Why a mechanical, repeatable process outperforms high-confidence decisions over long enough time horizons.</p><span class="hc-read">Read <svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+      <a href="#" class="hub-card ri"><h2 class="hc-q">What is behavioural finance?</h2><p class="hc-desc">The biases that systematically distort investment decisions and how to design a system that works around them.</p><span class="hc-read">Read <svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
+    </div>
+  </div>
+
+</section>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-copy">&copy;2026 <a href="#">Orion Digital Corp.</a> All rights reserved.</div>
+    <div class="footer-social">
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+      <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 3c.3 2.3 1.8 3.9 4 4.2v3c-1.5 0-2.9-.4-4-1.2v6.3c0 3.2-2.6 5.7-5.8 5.7S4.4 18.5 4.4 15.3 7 9.6 10.2 9.6c.3 0 .6 0 .9.1v3.1c-.3-.1-.6-.2-.9-.2-1.5 0-2.7 1.2-2.7 2.7s1.2 2.7 2.7 2.7 2.8-1.2 2.8-2.7V3H16z"/></svg></a>
+      <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2H22l-7.6 8.7L23 22h-7l-5.5-7.2L4.2 22H1l8.1-9.3L1 2h7.2l5 6.6L18.9 2zm-1.2 18h1.9L7.4 4H5.5l12.2 16z"/></svg></a>
+      <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 7.5c-.3-1-1-1.8-2-2C19 5 12 5 12 5s-7 0-9 .5c-1 .3-1.8 1-2 2C.5 9.3.5 12 .5 12s0 2.7.5 4.5c.3 1 1 1.8 2 2C5 19 12 19 12 19s7 0 9-.5c1-.3 1.8-1 2-2 .5-1.8.5-4.5.5-4.5s0-2.7-.5-4.5zM9.8 15.3V8.7l5.7 3.3-5.7 3.3z"/></svg></a>
+    </div>
+    <p class="footer-legal">Educational content. Not investment advice. Past returns are no guarantee of future performance.</p>
+    <p class="footer-legal">Managed investing accounts are opened with IntelligentInvesting Wealth Management Inc., a registered portfolio manager. IntelligentInvesting Wealth Management Inc. accounts that are held with CI Investment Services Inc., a custodian, are protected by CIPF in accordance with its coverage policy. CI Investment Services Inc. is a CIRO member. Self-directed investing accounts are opened by IntelligentInvesting Securities Inc., an investment dealer regulated by the Canadian Investment Regulatory Organization (CIRO). IntelligentInvesting Securities Inc. is a CIPF member. IntelligentInvesting Securities Inc. accounts are covered by CIPF. A brochure describing the scope and nature of coverage, as well as the limitations and exclusions of coverage, is available upon request or at <a href="https://www.cipf.ca">www.cipf.ca</a>.</p>
+    <p class="footer-legal">IntelligentInvesting Wealth Management Inc. and IntelligentInvesting Securities Inc. are subsidiaries of Orion Digital Corp. Orion Digital Corp. is not an investment adviser or dealer and does not provide investment advice or deal in securities.</p>
+    <p class="footer-legal">Nothing herein should be considered an offer, solicitation of an offer, or advice to buy or sell securities. Account holdings are for illustrative purposes only. Actual products may differ from those depicted and images contained herein. The Intelligent Investing app incorporates the investing principles of Warren Buffett in its features, design, and content. Neither Orion Digital Corp. nor its affiliates are endorsed by or affiliated with Warren Buffett. All images, names, logos, and brands are the property of their respective owners.</p>
+    <p class="footer-legal">The information contained on this website is provided for informational purposes only and does not constitute a promise of specific results or future performance. Certain statements may contain opinions, assumptions, or forward-looking information that are subject to change and may not reflect actual outcomes. No representation or warranty, express or implied, is made as to the accuracy, completeness, or timeliness of the information presented. Statistics, examples, and projections, where provided, are for illustrative purposes only and should not be relied upon as guarantees of future results.</p>
+    <p class="footer-legal">Investing involves risk, including the potential loss of capital. The risks associated with any investment strategy, product, or service should be carefully considered before making any investment decision.</p>
+    <p class="footer-legal">Fiscal.ai, an AI investment research tool powered by Fiscal.ai, is a third-party product provided &ldquo;as is&rdquo; without warranties on accuracy, completeness, quality, or timeliness. Verify information independently. Fiscal.ai outputs are not investment advice or recommendations and should not be used for investment decisions. By using Fiscal.ai, you agree to our <a href="#">Privacy Policy</a> and <a href="#">Terms of Use</a>.</p>
+    <a href="#" class="footer-reset">Reset Cookie Preferences</a>
+  </div>
+</footer>
+<script>
+const hamburger=document.querySelector('.hamburger');const menuOverlay=document.querySelector('.menu-overlay');const menuClose=document.querySelector('.ml-close');const body=document.body;
+function openMenu(){menuOverlay.classList.add('open');hamburger.classList.add('open');body.classList.add('menu-open');}
+function closeMenu(){menuOverlay.classList.remove('open');hamburger.classList.remove('open');body.classList.remove('menu-open');}
+hamburger.addEventListener('click',e=>{e.stopPropagation();menuOverlay.classList.contains('open')?closeMenu():openMenu();});
+  menuClose.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menuOverlay.classList.contains('open')) closeMenu(); });
+  if ('IntersectionObserver' in window) {
+    var rio = new IntersectionObserver(function (entries) { entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); rio.unobserve(e.target); } }); }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('.ri').forEach(function (el) { rio.observe(el); });
+  } else {
+    document.querySelectorAll('.ri').forEach(function (el) { el.classList.add('in'); });
+  }
+</script>
+
+<script>(function(){var nb=document.querySelector(".navbar");if(nb)window.addEventListener("scroll",function(){nb.classList.toggle("scrolled",window.scrollY>40);},{passive:true});})();</script>
+<script src="grid-overlay.js"></script>
+</body>
+</html>
