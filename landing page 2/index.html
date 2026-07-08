@@ -192,7 +192,7 @@ section.hero::after { content: ''; position: absolute; top: 0; left: 0; right: 0
 /* lens vignette for photographic/documentary feel */
 section.hero::before { content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: radial-gradient(ellipse at center, rgba(0,0,0,0) 48%, rgba(0,0,0,0.5) 100%); }
 /* documentary photo behind the hero (placeholder image; digital overlay lives above it) */
-.hero-photo { position: absolute; top: 50%; left: 50%; width: 116vw; height: 116vh; transform: translate(-50%, -50%); z-index: 0; background: url('images/contentteammogo_wide_interior_of_a_working_institutional_resear_7b9a8146-2a9a-4ca5-9aad-8494b06c8c1f.png') center/cover no-repeat; filter: brightness(0.42) contrast(1.05) saturate(0.8); animation: hero-drift 46s ease-in-out infinite alternate, hero-flick 7s steps(1, end) infinite; will-change: transform, opacity; }
+.hero-photo { position: absolute; top: 50%; left: 50%; width: 116vw; height: 116vh; transform: translate(-50%, -50%); z-index: 0; background: url('images/contentteammogo_wide_interior_of_a_working_institutional_resear_7b9a8146-2a9a-4ca5-9aad-8494b06c8c1f.png') center 35%/cover no-repeat; filter: brightness(0.42) contrast(1.05) saturate(0.8); animation: hero-drift 46s ease-in-out infinite alternate, hero-flick 7s steps(1, end) infinite; will-change: transform, opacity; }
 @keyframes hero-drift { from { transform: translate(-50%, -50%) scale(1); } to { transform: translate(-50%, -50%) scale(1.05); } }
 @keyframes hero-flick { 0%, 100% { opacity: 1; } 5% { opacity: 0.95; } 8% { opacity: 1; } 53% { opacity: 1; } 55% { opacity: 0.97; } 57% { opacity: 1; } 81% { opacity: 0.95; } 83% { opacity: 1; } }
 .hero-book { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; pointer-events: none; opacity: 1; }
@@ -825,6 +825,8 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     <button type="button" data-devbg="5">6</button>
     <button type="button" data-devbg="6">7</button>
     <button type="button" data-devbg="7">8</button>
+    <button type="button" data-devbg="8">9</button>
+    <button type="button" data-devbg="9">10</button>
     <span class="dbs-sep"></span>
     <span class="dbs-label">Graph</span>
     <button type="button" class="dbs-wide" data-devgraph="3d">3D</button>
@@ -2593,8 +2595,10 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 /* Dev hero background switcher. Swaps .hero-photo image + orientation; does not alter default page state until clicked. */
 (function(){
   var HERO_BGS=[
-    {file:'contentteammogo_wide_interior_of_a_working_institutional_resear_7b9a8146-2a9a-4ca5-9aad-8494b06c8c1f.png', rotate:false, bright:0.42, sat:0.8, grain:0.26, contrast:1.05},
-    {file:'contentteammogo_wide_interior_of_a_working_institutional_resear_f24c0325-9f15-4312-9f69-996f54b14f77.png', rotate:false, bright:0.42, sat:0.75, grain:0.32, contrast:1.05},
+    {file:'contentteammogo_wide_interior_of_a_working_institutional_resear_7b9a8146-2a9a-4ca5-9aad-8494b06c8c1f.png', rotate:false, bright:0.42, sat:0.8, grain:0.26, contrast:1.05, pos:'35%'},
+    {file:'contentteammogo_wide_interior_of_a_working_institutional_resear_83536f06-3038-4766-a71a-b2e93df69ad1.png', rotate:false, bright:0.42, sat:0.8, grain:0.26, contrast:1.05, pos:'35%'},
+    {file:'contentteammogo__________________.__35mm_______________._--chao_6aadbf99-4417-451e-8e00-25e9e5ce26b9.png', rotate:false, bright:0.42, sat:0.75, grain:0.26, contrast:1.05},
+    {file:'contentteammogo_wide_interior_of_a_working_institutional_resear_f24c0325-9f15-4312-9f69-996f54b14f77.png', rotate:false, bright:0.42, sat:0.75, grain:0.32, contrast:1.05, pos:'35%'},
     {file:'contentteammogo_httpss.mj.runRLyJ5JmDDnQ_full_colored_archive_h_349cf108-abfd-42d7-bc6d-66fe7accde9c.png', rotate:false, bright:0.3, pos:'100%', sat:1.0, grain:0.4, contrast:1.2, blur:0.4},
     {file:'contentteammogo_wide_interior_of_a_working_institutional_resear_3fd0a1fe-38f5-4cbd-99fb-153f1ac1745a.png', rotate:false, bright:0.42, sat:0.75, grain:0.18, contrast:1.05},
     {file:'contentteammogo_institutional_archive_reading_room_long_tables__ab1d1fe4-112d-45ff-984b-7b5162fb2c7f.png', rotate:false, bright:0.5, sat:0.7, grain:0.18, contrast:1.05},
