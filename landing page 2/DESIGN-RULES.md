@@ -29,6 +29,8 @@
 
 Allowed font sizes only: **11 / 12 / 13 / 14 / 15 / 17 / 18 / 22 / 24 / 28 / 34 / 40**. Never invent 16 / 20 / 30, etc.
 
+> **Exception — figure/graphic-internal labels.** A data-viz figure (e.g. the System operating-loop canvas + its overlay legend) is an *image*, not UI chrome; its micro-labels may go below 11px (9/10px) like canvas axis/key text. Mark the CSS rule with a trailing `/* dg-allow-font */` comment so the validator treats it as a deliberate exemption, not drift. Do **not** use this on ordinary UI text.
+
 ## Cards
 - Background `var(--c-surface)` (#101010), border `0.5px solid var(--c-900)`, `border-radius: 4px`, **no box-shadow** (de-phoned, P1 brief — no rounded phone corners, no gloss).
 

@@ -6,7 +6,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-800:#565B5E;--c-700:#929292;--c-600:#A7A7A7;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFF;--c-urgent:#FF3533;--c-warning:#FF7A00;--c-live:#30D158; --frame: clamp(24px, 4vw, 48px); --maxw: 1680px; --gutter: clamp(16px, 1.5vw, 24px); --c-elev: #0A0A0A; --c-surface:#101010; --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; --mono: 'Chakra Petch', ui-monospace, monospace;}
+:root{--c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-800:#565B5E;--c-700:#929292;--c-600:#A7A7A7;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFF;--c-urgent:#FF3533;--c-warning:#FF7A00;--c-live:#30D158; --frame: clamp(24px, 4vw, 48px); --maxw: 1680px; --gutter: clamp(16px, 1.5vw, 24px); --c-elev: #0A0A0A; --c-surface:#101010; --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; --mono: 'Chakra Petch', ui-monospace, monospace; --c-paper: #ECEAE5;}
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{background:var(--c-black);color:var(--c-600);font-family:'Inter',sans-serif;font-feature-settings:'tnum' 1,'lnum' 1;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased;font-weight:400;}
 body{min-height:100vh;font-size:15px;line-height:1.55;background:var(--c-black);}body.menu-open{overflow:hidden;}
@@ -68,11 +68,9 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:var(--c-black);
 .pg-veil{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0.38;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='pn'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23pn)'/%3E%3C/svg%3E");background-size:200px 200px;}
 @media (prefers-reduced-motion: no-preference){.pg-veil{animation:pg-grain 0.55s steps(3) infinite;}}
 @keyframes pg-grain{0%{background-position:0 0;}33%{background-position:-80px 40px;}66%{background-position:60px -70px;}100%{background-position:0 0;}}
-.pg-art{position:absolute;top:140px;right:calc(max(0px,(100% - var(--maxw))/2) + var(--frame));height:calc(100% - 140px);width:clamp(340px,35vw,500px);z-index:3;pointer-events:none;display:flex;align-items:center;justify-content:center;padding-top:0;box-sizing:border-box;}
-.pg-art canvas{width:clamp(306px,31.5vw,450px);height:clamp(306px,31.5vw,450px);display:block;}
-@media(max-width:760px){.page-header{padding:104px 0 88px;min-height:auto;display:flex;flex-direction:column;}.page-header .container{order:1;}.page-header .page-title,.page-header .page-deck{max-width:none;}.page-header .page-title{font-size:clamp(24px,7.4vw,28px);}.pg-art{position:static;order:2;width:100%;height:auto;left:auto;right:auto;top:auto;padding-top:0;margin-top:40px;opacity:0.8;}.pg-art canvas{width:min(84vw, 36vh);height:min(84vw, 36vh);}}
-.page-title{font-size:clamp(30px,4.4vw,52px);line-height:1.25;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:28px;max-width:calc((100% + var(--gutter)) / 12 * 8 - var(--gutter));}
-.page-deck{font-size:clamp(17px,1.6vw,18px);line-height:1.55;letter-spacing:-0.015em;color:var(--c-400);max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));}.cta-section{text-align:center;padding:160px 0;border-top:0.5px solid var(--c-900);position:relative;}
+@media(max-width:760px){.page-header{padding:104px 0 88px;min-height:auto;display:flex;flex-direction:column;}.page-header .container{order:1;}.page-header .page-title,.page-header .page-deck{max-width:none;}.page-header .page-title{font-size:clamp(24px,7.4vw,28px);white-space:normal;}}
+.page-title{font-size:clamp(30px,4.4vw,52px);line-height:1.25;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:28px;max-width:none;white-space:nowrap;}  /* one-line title (graphic removed, full width free) */
+.page-deck{font-size:clamp(17px,1.6vw,18px);line-height:1.55;letter-spacing:-0.015em;color:var(--c-400);max-width:none;}.cta-section{text-align:center;padding:160px 0;border-top:0.5px solid var(--c-900);position:relative;}
 .cta-section .cta-net{position:absolute;top:0;height:100%;left:50%;transform:translateX(-50%);width:100vw;z-index:0;pointer-events:none;}
 .cta-section .cta-veil{position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:100vw;z-index:1;pointer-events:none;opacity:0.12;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='cn2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23cn2)'/%3E%3C/svg%3E");background-size:200px 200px;}
 @media (prefers-reduced-motion: no-preference){.cta-section .cta-veil{animation:pg-grain 0.55s steps(3) infinite;}}
@@ -105,9 +103,34 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 @media(min-width:1024px){.memo-grid{grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);row-gap:0;align-items:center;}.memo-text{grid-column:1 / 6;}.memo-grid .dr-doc{grid-column:9 / 13;}
 .memo-grid .fig-cap{grid-column:9 / 13;}}
 .memo-lead{font-size:clamp(24px,2.5vw,32px);line-height:1.3;letter-spacing:-0.025em;color:var(--c-200);margin-bottom:28px;font-weight:400;}
-.memo-body{font-size:17px;line-height:1.7;color:var(--c-600);}
+.memo-body{font-size:17px;line-height:1.7;color:var(--c-600);}  /* width bounded by .memo-text grid column (1/6) at desktop */
 .memo-body p+p{margin-top:14px;}
-.memo-pull{font-size:17px;line-height:1.7;color:var(--c-400);margin-top:28px;}
+.memo-pull{font-size:17px;line-height:1.7;color:var(--c-400);margin-top:28px;}  /* width bounded by .memo-text grid column (1/6) at desktop */
+/* No. 00 - The System (light warm-grey island on the dark page, ported verbatim from index.html #entry-03) */
+#sd-system { padding: 160px 0; position: relative; }
+#sd-system > * { position: relative; z-index: 1; }
+#sd-system::after { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); background: color-mix(in srgb, var(--c-white) 45%, var(--c-200)); z-index: 0; }
+#sd-system .memo-lead { color: var(--c-1000); max-width: calc((100% + var(--gutter)) / 12 * 5 - var(--gutter)); }  /* title = 5 cols (DESIGN-RULES) */
+#sd-system .memo-body { color: var(--c-800); max-width: calc((100% + var(--gutter)) / 12 * 5 - var(--gutter)); }  /* body = 5 cols (DESIGN-RULES) */
+#sd-system .se-no { color: var(--c-800); }
+#sd-system .se-name { color: var(--c-1000); }
+#sd-system .sys-loopwrap { position: relative; width: 100%; height: clamp(620px, 56vw, 720px); background-color: color-mix(in srgb, var(--c-paper) 85%, var(--c-400)); border: 0.5px solid var(--c-200); border-radius: 4px; overflow: hidden; margin-top: 48px; }  /* graphic box: base tone + light-grey hairline; telemetry dot/grid drawn on canvas (computed square cells, even box divisions) */
+#sd-system .sys-loopwrap canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+#sd-system .sys-legend { position: absolute; left: 16px; top: 14px; z-index: 3; font-family: var(--mono); font-size: 10px; color: var(--c-800); margin: 0; width: fit-content; max-width: calc(100% - 32px); border: 0; border-radius: 0; padding: 0; background: none; } /* dg-allow-font: figure legend, exempt from UI type scale */
+#sd-system .leg-title { font-size: 10px; letter-spacing: 0.04em; color: var(--c-1000); margin-bottom: 6px; } /* dg-allow-font: figure legend */
+#sd-system .leg-group { display: flex; flex-direction: column; gap: 3px; }
+#sd-system .leg-cap { font-size: 10px; letter-spacing: 0.1em; color: var(--c-800); } /* dg-allow-font: figure legend */
+#sd-system .leg-div { height: 0.5px; background: var(--c-400); margin: 6px 0; }
+#sd-system .leg-status { display: flex; flex-direction: column; gap: 3px; }
+#sd-system .sys-legend .k { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
+#sd-system .sys-legend .cd { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+#sd-system .cd-g { background: rgb(88,150,112); }
+#sd-system .cd-a { background: rgb(156,118,40); }
+#sd-system .cd-r { background: rgb(176,84,74); }
+#sd-system .cd-bench { background: transparent; border: 1.4px dashed var(--c-800); }
+#sd-system .cd-research { background: rgb(110,146,178); border-radius: 1px; }
+#sd-system .cd-bias { background: rgb(178,138,64); }
+#sd-system .sys-note { position: absolute; right: 16px; bottom: 14px; z-index: 3; font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em; color: var(--c-700); } /* dg-allow-font: figure caption */
 .dr-doc{border:0.5px solid var(--c-900);background:var(--c-surface);border-radius:4px;overflow:hidden;position:relative;height:800px;padding:34px 28px 32px;letter-spacing:-0.02em;-webkit-mask-image:linear-gradient(to bottom,#000 90%,transparent 100%);mask-image:linear-gradient(to bottom,#000 90%,transparent 100%);}
 .dr2-id{text-align:right;padding-bottom:34px;}
 .dr2-name{font-size:18px;color:var(--c-white);}
@@ -210,7 +233,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .h-line .chg{color:var(--c-700);font-size:13px;letter-spacing:-0.02em;text-align:right;}
 .h-line .chg.up{color:var(--c-live);}.h-line .chg.down{color:var(--c-urgent);}.perf-pp.down{color:var(--c-urgent);}
 .acc-pt-k{font-size:18px;color:var(--c-200);letter-spacing:-0.02em;margin-bottom:12px;}
-.acc-pt-d{font-size:17px;line-height:1.7;color:var(--c-600);}
+.acc-pt-d{font-size:17px;line-height:1.7;color:var(--c-600);}  /* width bounded by .acc-row-text grid column (1/6) at desktop */
 .acc-sysnote{font-size:17px;line-height:1.7;color:var(--c-600);margin-top:20px;max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));}
 @media(max-width:760px){.cal-prose,.acc-headline{max-width:none;}}
 .docs-section{padding:160px 0;}
@@ -237,7 +260,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .research-desc{font-size:17px;line-height:1.7;color:var(--c-600);max-width:560px;}
 .research-price{font-size:18px;color:var(--c-200);letter-spacing:-0.02em;margin-top:48px;}
 .research-foot{font-size:17px;line-height:1.7;color:var(--c-700);margin-top:32px;}
-@media(min-width:760px){.research-section{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}.research-section .research-left{grid-column:1 / 6;}.research-section .research-rows{grid-column:7 / 13;margin-top:0;}}
+@media(min-width:760px){.research-section{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}.research-section .research-left{grid-column:1 / 6;}.research-section .research-rows{grid-column:9 / 13;margin-top:0;}}
 @media(max-width:760px){.research-lead,.research-foot,.acc-sysnote{max-width:none;}.research-row{grid-template-columns:1fr;gap:14px;}}
 
 .how-section{padding:160px 0;}
@@ -309,65 +332,41 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 <section class="page-header">
 <div class="pg-photo" aria-hidden="true"></div>
 <div class="pg-veil" aria-hidden="true"></div>
-<div class="pg-art" aria-hidden="true">
-  <canvas class="pg-net"></canvas>
-</div>
-<script>(function(){
-  var cv=document.querySelector('.pg-art .pg-net'); if(!cv||!cv.getContext) return;
-  var ctx=cv.getContext('2d');
-  var cs=getComputedStyle(document.documentElement);
-  function rgb(n,f){var h=((cs.getPropertyValue(n)||f)+'').trim().replace('#','');if(h.length===3)h=h.replace(/(.)/g,'$1$1');return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];}
-  var L=rgb('--c-400','C7C7C7'), Hb=rgb('--c-200','E3E2E2'), GRN=rgb('--c-live','30D158'), RED=rgb('--c-urgent','FF3533');
-  var DOTPAT='RRGRGGGRGRRGGRGG';   // irregular red/green clusters, not strict alternation
-  var DPR=Math.min(window.devicePixelRatio||1,2);
-  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var W=0,H=0,raf=null,running=false,t=0;
-  var K=16, SEG=66, TAU=6.2831853, PI=Math.PI;
-  function size(){var r=cv.getBoundingClientRect();W=r.width;H=r.height;cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);ctx.setTransform(DPR,0,0,DPR,0,0);}
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    var S=Math.min(W,H)*0.42, cx=W*0.5, cy=H*0.5;
-    var tau=1.15+1.05*Math.sin(t*0.00009), thb=t*0.0007;
-    var cTa=Math.cos(tau),sTa=Math.sin(tau);
-    function proj(x,y,z){var y2=y*cTa-z*sTa, z2=y*sTa+z*cTa;return [cx+x*S, cy-y2*S, z2];}
-    ctx.globalCompositeOperation='lighter';
-    for(var k=0;k<K;k++){
-      var g=PI*(k+0.5)/K, sg=Math.sin(g), cg=Math.cos(g), p0=null;
-      for(var s=0;s<=SEG;s++){var th=s/SEG*TAU, P=proj(sg*Math.cos(th), cg, sg*Math.sin(th));
-        if(p0){var dn=((p0[2]+P[2])/2+1)/2;if(dn<0)dn=0;if(dn>1)dn=1;
-          ctx.strokeStyle='rgba('+L[0]+','+L[1]+','+L[2]+','+(0.12+0.34*dn).toFixed(3)+')';ctx.lineWidth=1.0;
-          ctx.beginPath();ctx.moveTo(p0[0],p0[1]);ctx.lineTo(P[0],P[1]);ctx.stroke();}
-        p0=P;}
-    }
-    ctx.globalCompositeOperation='source-over';
-    var gate=Math.sin(t*0.00024);if(gate<0)gate=0;
-    var off=(Math.sin(t*0.00110)*0.7+Math.sin(t*0.00059+1.3)*0.45)*gate*PI*0.92;
-    for(var k2=0;k2<K;k2++){
-      var g2=PI*(k2+0.5)/K, sg2=Math.sin(g2), cg2=Math.cos(g2);
-      var angs=[thb,thb+off];
-      for(var a=0;a<angs.length;a++){
-        var Pb=proj(sg2*Math.cos(angs[a]), cg2, sg2*Math.sin(angs[a])), dn2=(Pb[2]+1)/2;if(dn2<0)dn2=0;if(dn2>1)dn2=1;
-        var sz=0.9+1.6*dn2;
-        var col=(a===1)?(DOTPAT.charAt(k2%16)==='R'?RED:GRN):Hb;
-        ctx.fillStyle='rgba('+col[0]+','+col[1]+','+col[2]+','+(0.30+0.66*dn2).toFixed(3)+')';
-        ctx.beginPath();ctx.arc(Pb[0],Pb[1],sz,0,TAU);ctx.fill();
-      }
-    }
-    if(!reduce)t+=16;
-  }
-  function loop(){draw();if(running)raf=requestAnimationFrame(loop);}
-  function start(){if(reduce){draw();return;}if(!running){running=true;loop();}}
-  function stop(){running=false;if(raf)cancelAnimationFrame(raf);raf=null;}
-  size();start();
-  var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){var was=running||reduce;stop();size();if(was)start();},200);});
-  if('IntersectionObserver' in window){new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)start();else stop();});},{threshold:0}).observe(cv);}
-  if('ResizeObserver' in window){new ResizeObserver(function(){size();if(reduce)draw();}).observe(cv);}
-})();</script>
-<div class="container">  <div class="page-eyebrow ri" style="--d:0.04s">Self-Directed</div><h1 class="page-title ri" style="--d:0.08s">The decision comes<br>before the trade.</h1>
+<div class="container">  <div class="page-eyebrow ri" style="--d:0.04s">Self-Directed</div><h1 class="page-title ri" style="--d:0.08s">The decision comes before the trade.</h1>
   <div class="page-deck ri" style="--d:0.16s">Most investors record outcomes, not the reasoning. Without it, the outcome teaches nothing.</div>
   <div class="page-actions ri" style="--d:0.24s"><a href="II Site V2 - GetTheApp.html" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Enter the System</span><span>Enter the System</span></span></span></a></div>
 </div>
 </section>
+
+<div class="container">
+<section id="sd-system">
+  <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 01</span><span class="se-name">The System</span></div>
+  <h2 class="memo-lead ri" style="--d:0.04s">One loop. You run it, from the first decision.</h2>
+  <div class="memo-body ri" style="--d:0.08s">
+    <p>Every active position runs the same loop: research, underwriting, re-underwriting, calibration. You run it, from day one. The software does not decide or trade for you. It holds the structure, and holds you to it.</p>
+  </div>
+  <div class="sys-loopwrap">
+    <canvas id="sysLoopCanvas" aria-hidden="true"></canvas>
+    <div class="sys-legend">
+      <div class="leg-title">FIG.01 &middot; Operating Loop</div>
+      <div class="leg-group">
+        <span class="leg-cap">Nodes</span>
+        <span class="k"><span class="cd cd-bias"></span>Behavioral bias &middot; what the loop guards against</span>
+        <span class="k"><span class="cd cd-research"></span>Research &middot; Fiscal.ai + your AI tools</span>
+        <span class="k"><span class="cd cd-bench"></span>Benchmark &middot; S&amp;P 500 core</span>
+      </div>
+      <div class="leg-div"></div>
+      <div class="leg-status">
+        <span class="leg-cap">Status</span>
+        <span class="k"><span class="cd cd-g"></span>Validated</span>
+        <span class="k"><span class="cd cd-a"></span>Under review</span>
+        <span class="k"><span class="cd cd-r"></span>Broken</span>
+      </div>
+    </div>
+    <div class="sys-note">Illustrative &middot; not live data</div>
+  </div>
+</section>
+</div>
 
 <!-- TRUST - broker clarity (credentials, below the hero) -->
 <section id="trust" class="band"><div class="container">
@@ -382,10 +381,34 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 </div></section>
 
 <div class="container">
+<section id="research" class="research-section">
+  <div class="research-left">
+    <div class="research-head">
+      <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 02</span><span class="se-name">Research</span></div>
+      <h2 class="research-statement ri" style="--d:0.04s">Research comes before the memo.</h2>
+      <p class="research-lead ri" style="--d:0.06s">Every membership includes access to Fiscal.ai Max, a professional-grade research and analysis environment. Most investors trade based on price and headlines. Serious investors analyze businesses.</p>
+    </div>
+    <p class="research-foot ri" style="--d:0.18s">The AI supports analysis. It does not make decisions. This research layer exists to raise the standard of thinking inside the platform. It is not a stock picker, a signal engine, or a shortcut. It is a disciplined research environment designed for investors who intend to do the work.</p>
+    <div class="research-price ri" style="--d:0.2s">Normally $99/month, included.</div>
+    <p class="research-foot ri" style="--d:0.22s">No trading commissions. FX carries no added fee; a conversion spread applies.</p>
+  </div>
+  <div class="research-rows">
+    <div class="research-row ri" style="--d:0.04s"><div class="research-label">Multi-Year Financials</div><p class="research-desc">Income statement, balance sheet, cash flow.</p></div>
+    <div class="research-row ri" style="--d:0.06s"><div class="research-label">Capital Allocation</div><p class="research-desc">Return on capital and free cash flow analysis.</p></div>
+    <div class="research-row ri" style="--d:0.08s"><div class="research-label">Margin Trends</div><p class="research-desc">Margin trends and capital allocation history.</p></div>
+    <div class="research-row ri" style="--d:0.1s"><div class="research-label">Company Comparisons</div><p class="research-desc">Clean company comparisons across time.</p></div>
+    <div class="research-row ri" style="--d:0.12s"><div class="research-label">Filing Summaries</div><p class="research-desc">AI-assisted tools to summarize filings.</p></div>
+    <div class="research-row ri" style="--d:0.14s"><div class="research-label">Segment &amp; KPI Data</div><p class="research-desc">Business-line revenue, 2,500+ companies.</p></div>
+    <div class="research-row ri" style="--d:0.16s"><div class="research-label">Earnings Call Transcripts</div><p class="research-desc">Full transcripts, with sourced AI summaries.</p></div>
+  </div>
+</section>
+</div>
+
+<div class="container">
 <section class="memo-section">
   <div class="memo-grid">
     <div class="memo-text">
-      <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 01</span><span class="se-name">The Memo</span></div>
+      <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 03</span><span class="se-name">The Memo</span></div>
       <h2 class="memo-lead ri" style="--d:0.04s">Every position begins with a memo.</h2>
       <div class="memo-body ri" style="--d:0.08s">
         <p>A sealed record of the reasoning behind a position: classification, sizing, the prediction it must answer to, and the case for it. Once sealed, it locks. Editing it creates a new version. The original is never overwritten.</p>
@@ -421,7 +444,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 <div class="container">
 <section class="how-section">
   <div class="how-intro">
-    <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 02</span><span class="se-name">The Process</span></div>
+    <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 04</span><span class="se-name">The Process</span></div>
     <h2 class="how-headline ri" style="--d:0.04s">A memo is not written once.</h2>
     <p class="how-lead ri" style="--d:0.08s">Writing it is the first pass. As the thesis is tested it is re-underwritten, version by version, and every capital decision answers to the record, not the other way around.</p>
   </div>
@@ -444,7 +467,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 
 <div class="container">
 <section class="acc-section">
-  <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 03</span><span class="se-name">Accountability</span></div>
+  <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 05</span><span class="se-name">Accountability</span></div>
   <h2 class="acc-headline ri" style="--d:0.04s">Every dollar is benchmarked. Every forecast is scored.</h2>
   <p class="acc-sysnote ri" style="--d:0.06s">Every holding has a Position Page with alerts, notes, performance, research, news, market data, and full history. Names under review are staged before capital is committed.</p>
   <div class="acc-rows">
@@ -488,8 +511,8 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 <div class="container">
 <section class="cal-section">
   <div class="cal-text">
-    <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 04</span><span class="se-name">The Allocator</span></div>
-    <h2 class="cal-lead ri" style="--d:0.04s">Most people own positions.<br>Allocators own decisions.</h2>
+    <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 06</span><span class="se-name">Calibration</span></div>
+    <h2 class="cal-lead ri" style="--d:0.04s">Confidence, scored against outcome.</h2>
     <p class="cal-prose ri" style="--d:0.08s">An allocator owns the reasoning behind every position and stays accountable to it. The objective is decision quality, not activity.</p>
     <p class="cal-prose cal-prose-hi ri" style="--d:0.12s">Each decision is recorded as a probability and a time horizon, then scored against what happened. Confidence, made measurable.</p>
   </div>
@@ -529,7 +552,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 
 <div class="container">
 <section class="accounts-section">
-  <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 05</span><span class="se-name">Account Types</span></div>
+  <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 07</span><span class="se-name">Account Types</span></div>
   <div class="acct-list">
     <details class="acct-item ri" style="--d:0.04s">
       <summary class="acct-sum"><span class="acct-main"><span class="acct-k">TFSA</span><span class="acct-d">Growth and withdrawals are completely tax-free, within an annual contribution limit that carries forward when unused. The most flexible registered account, with no tax on what compounds inside it.</span></span><span class="acct-sum-r"><span class="acct-v">Tax-free</span><span class="acct-chev"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6L8 10.5L12 6" stroke="currentColor" stroke-width="1.1"/></svg></span></span></summary>
@@ -560,7 +583,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 
 <div class="container">
 <section class="docs-section">
-  <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 06</span><span class="se-name">Documents &amp; Resources</span></div>
+  <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 08</span><span class="se-name">Documents &amp; Resources</span></div>
   <div class="doc-list">
     <a href="#" class="doc-row ri" style="--d:0.04s"><span class="doc-name">FAQ</span><span class="doc-arrow"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
     <a href="#" class="doc-row ri" style="--d:0.06s"><span class="doc-name">Privacy Policy &amp; Security Practices</span><span class="doc-arrow"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
@@ -570,30 +593,6 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
     <a href="#" class="doc-row ri" style="--d:0.14s"><span class="doc-name">Best Execution Policy</span><span class="doc-arrow"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
     <a href="#" class="doc-row ri" style="--d:0.16s"><span class="doc-name">Relationship Disclosure</span><span class="doc-arrow"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
     <a href="#" class="doc-row ri" style="--d:0.18s"><span class="doc-name">Mogo Terms &amp; Conditions</span><span class="doc-arrow"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span></a>
-  </div>
-</section>
-</div>
-
-<div class="container">
-<section id="research" class="research-section">
-  <div class="research-left">
-    <div class="research-head">
-      <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 07</span><span class="se-name">Research</span></div>
-      <h2 class="research-statement ri" style="--d:0.04s">Research comes before the memo.</h2>
-      <p class="research-lead ri" style="--d:0.06s">Every membership includes access to Fiscal.ai Max, a professional-grade research and analysis environment. Most investors trade based on price and headlines. Serious investors analyze businesses.</p>
-    </div>
-    <p class="research-foot ri" style="--d:0.18s">The AI supports analysis. It does not make decisions. This research layer exists to raise the standard of thinking inside the platform. It is not a stock picker, a signal engine, or a shortcut. It is a disciplined research environment designed for investors who intend to do the work.</p>
-    <div class="research-price ri" style="--d:0.2s">Normally $99/month, included.</div>
-    <p class="research-foot ri" style="--d:0.22s">No trading commissions. FX carries no added fee; a conversion spread applies.</p>
-  </div>
-  <div class="research-rows">
-    <div class="research-row ri" style="--d:0.04s"><div class="research-label">Multi-Year Financials</div><p class="research-desc">Income statement, balance sheet, cash flow.</p></div>
-    <div class="research-row ri" style="--d:0.06s"><div class="research-label">Capital Allocation</div><p class="research-desc">Return on capital and free cash flow analysis.</p></div>
-    <div class="research-row ri" style="--d:0.08s"><div class="research-label">Margin Trends</div><p class="research-desc">Margin trends and capital allocation history.</p></div>
-    <div class="research-row ri" style="--d:0.1s"><div class="research-label">Company Comparisons</div><p class="research-desc">Clean company comparisons across time.</p></div>
-    <div class="research-row ri" style="--d:0.12s"><div class="research-label">Filing Summaries</div><p class="research-desc">AI-assisted tools to summarize filings.</p></div>
-    <div class="research-row ri" style="--d:0.14s"><div class="research-label">Segment &amp; KPI Data</div><p class="research-desc">Business-line revenue, 2,500+ companies.</p></div>
-    <div class="research-row ri" style="--d:0.16s"><div class="research-label">Earnings Call Transcripts</div><p class="research-desc">Full transcripts, with sourced AI summaries.</p></div>
   </div>
 </section>
 </div>
@@ -675,6 +674,106 @@ hamburger.addEventListener('click',e=>{e.stopPropagation();menuOverlay.classList
   if(RM){ drawFrame(0); return; }
   if('IntersectionObserver' in window){ new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting) start(); else stop(); }); },{threshold:0}).observe(cv); } else { start(); }
 })();
+</script>
+
+<script>
+  // entry-03 sys-loop - operating loop (v6, 4-station; ported from Judgment Infrastructure, our tokens; canvas transparent over the section surface)
+  (function(){
+    const cv=document.getElementById('sysLoopCanvas'); if(!cv)return; const ctx=cv.getContext('2d');let W,H,DPR,cx,cy;
+    const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const gridCv=document.createElement('canvas'),gctx=gridCv.getContext('2d');
+    function buildGrid(){gridCv.width=W*DPR;gridCv.height=H*DPR;gctx.setTransform(DPR,0,0,DPR,0,0);gctx.clearRect(0,0,W,H);
+      const cell=18,cols=Math.max(2,Math.round(W/cell)),rows=Math.max(2,Math.round(H/cell)),cw=W/cols,ch=H/rows;
+      gctx.fillStyle='rgba(112,104,92,0.09)';
+      for(let gx=0;gx<=cols*3;gx++){const x=Math.round(gx*cw/3);for(let gy=0;gy<=rows*3;gy++){gctx.fillRect(x,Math.round(gy*ch/3),1,1);}}
+      gctx.strokeStyle='rgba(112,104,92,0.05)';gctx.lineWidth=1;
+      for(let gx=0;gx<=cols;gx++){const x=Math.round(gx*cw)+0.5;gctx.beginPath();gctx.moveTo(x,0);gctx.lineTo(x,H);gctx.stroke();}
+      for(let gy=0;gy<=rows;gy++){const y=Math.round(gy*ch)+0.5;gctx.beginPath();gctx.moveTo(0,y);gctx.lineTo(W,y);gctx.stroke();}}
+    function resize(){const box=cv.parentElement.getBoundingClientRect();DPR=Math.min(devicePixelRatio||1,2);W=box.width;H=box.height;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);cx=W/2;cy=H*0.5;buildGrid();}
+    addEventListener('resize',resize);resize();
+    const ST=['Research & Analysis','Underwriting','Re-underwriting','Calibration'];
+    const RESRCH=0,UW=1,REUND=2,CAL=3,SEG=6.28/ST.length,th0=-Math.PI/2,stT=i=>th0+i*SEG;
+    const sc=()=>Math.min(W,H)*1.27,R=()=>sc()*0.23,rt=()=>sc()*0.052;const TILT=0.95;let yaw=0;  /* SD: 1.06*1.2, wider box gives the room */
+    function rot(p){let{x,y,z}=p,c1=Math.cos(TILT),s1=Math.sin(TILT),y1=y*c1-z*s1,z1=y*s1+z*c1,c2=Math.cos(yaw),s2=Math.sin(yaw);return{x:x*c2+z1*s2,y:y1,z:-x*s2+z1*c2}}
+    function prj(p){const cz=sc()*1.05,f=cz/(cz-p.z);return{sx:cx+p.x*f,sy:cy+p.y*f,d:p.z,f}}
+    function tor(t,ph,rr){const r=rr===undefined?rt():rr,rad=R()+r*Math.cos(ph);return{x:rad*Math.cos(t),y:rad*Math.sin(t),z:r*Math.sin(ph)}}
+    const SIG={green:'40,135,82',amber:'150,110,38',red:'190,60,54'};function ph2(t,i){let d=(t-stT(i))%6.28;if(d<0)d+=6.28;return d}
+    const N=RM?800:2400,nodes=[];
+    for(let i=0;i<N;i++)nodes.push({t:Math.random()*6.28,ph:Math.random()*6.28,rj:.55+Math.random()*.75,sp:.15+Math.random()*.14,sz:.7+Math.random()*1.1,tw:Math.random()*6.28,health:.5+Math.random()*.5,isSig:Math.random()<.14,pc:0,pr:0,flash:null});
+    const pulses=[0,.33,.66];let t0=performance.now();
+    // one behavioral bias stands at each station, what the discipline of that step guards against (defense, not detection)
+    const BIAS=['Confirmation','Overconfidence','Anchoring','Hindsight'];
+    let biasIdx=0, biasClock=0; const BIAS_DUR=3.4;
+    const scored=[]; // decisions resolved at Calibration: {hit, over(0..1 overconfidence), x(jitter), l(age)}
+    function frame(now){const dt=Math.min(40,now-t0)/1000;t0=now;yaw=RM?0:0.16*Math.sin(now*0.00017);
+      ctx.clearRect(0,0,W,H);
+      // --- telemetry grid (dense 3x mesh, cached offscreen so it costs one blit per frame) ---
+      ctx.drawImage(gridCv,0,0,W,H);
+      // corner brackets + crosses removed per direction; caption lives in the HTML legend title
+      ctx.lineWidth=1.3;ctx.strokeStyle='rgba(84,80,74,0.6)';ctx.beginPath();
+      for(let a=0;a<=110;a++){const t=(a/110)*6.28,p=prj(rot(tor(t,0,0)));a===0?ctx.moveTo(p.sx,p.sy):ctx.lineTo(p.sx,p.sy)}ctx.stroke();
+      // benchmark baseline: the S&P reference the whole loop is measured against (inner dashed ring, present at every station)
+      ctx.lineWidth=1.1;ctx.strokeStyle='rgba(28,26,22,0.64)';ctx.setLineDash([4,5]);ctx.beginPath();
+      for(let a=0;a<=110;a++){const t=(a/110)*6.28,p=prj(rot({x:R()*0.60*Math.cos(t),y:R()*0.60*Math.sin(t),z:0}));a===0?ctx.moveTo(p.sx,p.sy):ctx.lineTo(p.sx,p.sy)}ctx.stroke();ctx.setLineDash([]);
+      const sp=ST.map((s,i)=>prj(rot(tor(stT(i),0,0))));
+      // accountability ticks: each station measured inward against the benchmark baseline
+      ctx.strokeStyle='rgba(24,24,24,0.22)';ctx.lineWidth=1;
+      for(let i=0;i<ST.length;i++){const t=stT(i),outer=prj(rot(tor(t,0,0))),inner=prj(rot({x:R()*0.60*Math.cos(t),y:R()*0.60*Math.sin(t),z:0}));
+        ctx.beginPath();ctx.moveTo(outer.sx,outer.sy);ctx.lineTo(inner.sx,inner.sy);ctx.stroke();}
+      // center label: the S&P plays two roles at once, the core you hold and the benchmark you're measured against
+      ctx.save();ctx.shadowColor='rgba(236,234,229,0.95)';ctx.shadowBlur=8;ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.letterSpacing='0.02em';
+      ctx.font='12px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.fillStyle='rgba(26,23,20,0.95)';
+      ctx.fillText('S&P 500', cx, cy-8);
+      ctx.font='11px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.fillStyle='rgba(80,75,68,0.9)';
+      ctx.fillText('core, benchmark', cx, cy+9);ctx.letterSpacing='0px';ctx.restore();
+      for(const n of nodes){n.t+=n.sp*dt;n.health+=(Math.random()-.52)*.02*dt*10;if(n.health>1)n.health=1;if(n.health<.06)n.health=.06;
+        if(n.isSig){const pc=ph2(n.t,CAL);if(n.pc>5.5&&pc<.8){const hit=Math.random()<(.45+.5*n.health);n.flash=hit?{rgb:SIG.green,l:0,d:1.6}:{rgb:SIG.red,l:0,d:1.6};n.health=hit?Math.min(1,n.health+.12):Math.max(.06,n.health-.28);if(scored.length>11)scored.shift();scored.push({hit,over:hit?Math.random()*0.22:0.30+Math.random()*0.5,x:Math.random(),l:0});}n.pc=pc;
+          const pr=ph2(n.t,REUND);if(n.pr>5.5&&pr<.8&&n.health<.62)n.flash={rgb:SIG.amber,l:0,d:1.4};n.pr=pr}
+        const p=prj(rot(tor(n.t,n.ph,rt()*n.rj))),dn=p.d/(sc()*.42),dA=.34+.42*((dn+1)/2);
+        let fire=0;for(let i=0;i<ST.length;i++){let d=Math.abs((n.t-stT(i))%6.28);d=Math.min(d,6.28-d);if(d<.09)fire=Math.max(fire,1-d/.09)}
+        const tw=.84+.16*Math.sin(now*.004+n.tw),hK=.5+.5*n.health,a=Math.min(1,dA*tw*hK+fire*.45),s=(n.sz*p.f*.9)*(1+fire*1.1),g=248+Math.round(7*n.health);
+        ctx.fillStyle=fire>.15?`rgba(255,255,255,${a})`:`rgba(${g},${g},${g},${Math.min(1,a*1.15)})`;ctx.fillRect(p.sx-s/2,p.sy-s/2,s,s);
+        if(n.flash){n.flash.l+=dt;const k=n.flash.l/n.flash.d;if(k>=1)n.flash=null;else{const fl=Math.sin(Math.min(1,k*1.1)*Math.PI);ctx.fillStyle=`rgba(${n.flash.rgb},${fl*.95})`;ctx.beginPath();ctx.arc(p.sx,p.sy,(s+1.4+fl*1.8)*.6,0,6.28);ctx.fill()}}}
+      // the ring itself closes Calibration to Research; no center thread needed
+      ctx.textBaseline='middle';
+      // one behavioral bias stands at the active station; emphasis travels the loop, label lives on the clean pulled-out callout (ref: La Lettura)
+      biasClock+=dt; if(biasClock>BIAS_DUR){biasClock-=BIAS_DUR; biasIdx=(biasIdx+1)%ST.length;}
+      const bp=biasClock/BIAS_DUR, bEmph=(bp<0.28?bp/0.28:(bp<0.72?1:Math.max(0,1-(bp-0.72)/0.28)));
+      for(let i=0;i<ST.length;i++){const p=sp[i],isR=(i===RESRCH||i===UW);ctx.beginPath();ctx.arc(p.sx,p.sy,isR?4.2:3.4,0,6.28);ctx.fillStyle=isR?'rgba(24,24,24,0.98)':'rgba(24,24,24,0.9)';ctx.fill();ctx.strokeStyle='rgba(236,234,229,0.9)';ctx.lineWidth=1.5;ctx.stroke();
+        const dx=p.sx-cx,dy=p.sy-cy,len=Math.hypot(dx,dy)||1,ox2=p.sx+dx/len*24,oy2=p.sy+dy/len*24,right=ox2>=cx;ctx.textAlign=right?'left':'right';const lx=ox2+(right?4:-4);
+        ctx.strokeStyle='rgba(24,24,24,0.32)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(p.sx+dx/len*6,p.sy+dy/len*6);ctx.lineTo(ox2,oy2);ctx.stroke();  // leader from node to label
+        ctx.save();ctx.shadowColor='rgba(236,234,229,0.95)';ctx.shadowBlur=8;
+        ctx.letterSpacing='0.1em';ctx.font='10px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.fillStyle='rgba(92,86,76,0.95)';ctx.fillText(String(i+1).padStart(2,'0'),lx,oy2-8);ctx.letterSpacing='0px';
+        ctx.font='500 15px "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif';ctx.fillStyle=isR?'rgba(26,23,20,1)':'rgba(30,27,24,0.97)';ctx.fillText(ST[i],lx,oy2+9);
+        ctx.letterSpacing='0.02em';
+        const SUB=[['Fiscal.ai + your AI tools'],['classify, size, conviction, record'],['the research, run again'],['conviction, scored against outcome']][i];
+        ctx.font='11px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.fillStyle=(i===RESRCH)?'rgba(56,86,126,0.98)':'rgba(76,71,64,0.95)';
+        SUB.forEach((ln,li)=>ctx.fillText(ln,lx,oy2+29+li*13));
+        ctx.letterSpacing='0px';
+        const _by=oy2+29+SUB.length*13+2;  // bias callout sits below the subtitle block (1 or 2 lines)
+        if(i===biasIdx&&bEmph>0.02){ctx.letterSpacing='0.04em';ctx.font='10px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.fillStyle=`rgba(150,110,38,${(0.62*bEmph).toFixed(3)})`;ctx.fillText('Guards Against',lx,_by);ctx.letterSpacing='0px';ctx.font='500 13px "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif';ctx.fillStyle=`rgba(150,110,38,${(0.68+0.32*bEmph).toFixed(3)})`;ctx.fillText(BIAS[i],lx,_by+14);}
+        ctx.restore()}
+      // emphasis ring on the active station node, the loop turning through it, not an alert
+      const stp=sp[biasIdx],ring=(bp<0.66?Math.min(1,bp/0.18):Math.max(0,1-(bp-0.66)/0.34));
+      ctx.strokeStyle=`rgba(150,110,38,${0.42*ring})`;ctx.lineWidth=1.4;
+      ctx.beginPath();ctx.arc(stp.sx,stp.sy,7+1.6*Math.sin(now*0.006),0,6.28);ctx.stroke();
+      // ---- Calibration inset: decisions scored, confidence met by outcome (the mirror, in miniature) ----
+      for(let i=scored.length-1;i>=0;i--){scored[i].l+=dt; if(scored[i].l>3.6)scored.splice(i,1);}
+      { const gx=sp[CAL].sx, gy=sp[CAL].sy+46, gw=54;
+        ctx.save();ctx.shadowColor='rgba(236,234,229,0.92)';ctx.shadowBlur=6;ctx.textAlign='center';
+        ctx.strokeStyle='rgba(24,24,24,0.30)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(gx-gw/2,gy);ctx.lineTo(gx+gw/2,gy);ctx.stroke();
+        ctx.letterSpacing='0.04em';ctx.font='10px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.textBaseline='bottom';ctx.fillStyle='rgba(80,75,68,0.85)';ctx.fillText('Calibrated',gx,gy-3);
+        ctx.textBaseline='top';ctx.fillStyle='rgba(98,92,84,0.7)';ctx.fillText('Overconfident',gx,gy+18);ctx.letterSpacing='0px';
+        for(const d of scored){const fade=Math.min(1,d.l/0.28)*Math.max(0,1-(d.l-2.6)/1.0);
+          const dxx=gx+(d.x-0.5)*gw, dyy=gy+d.over*15;
+          ctx.fillStyle=d.hit?`rgba(${SIG.green},${0.92*fade})`:`rgba(${SIG.red},${0.92*fade})`;
+          ctx.beginPath();ctx.arc(dxx,dyy,2.1,0,6.28);ctx.fill();}
+        ctx.restore();
+      }
+      requestAnimationFrame(frame)}
+    requestAnimationFrame(frame);
+  })();
 </script>
 
 <script>if('IntersectionObserver' in window){var rio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');rio.unobserve(e.target);}});},{threshold:0.14,rootMargin:'0px 0px -8% 0px'});document.querySelectorAll('.ri').forEach(function(el){rio.observe(el);});}else{document.querySelectorAll('.ri').forEach(function(el){el.classList.add('in');});}</script><script src="grid-overlay.js"></script>

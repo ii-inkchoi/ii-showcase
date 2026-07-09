@@ -1203,7 +1203,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 #entry-03 { align-items: center; }
 #entry-03 .sys-left { grid-column: 1 / 6; align-self: center; }
 #entry-03 .sys-right { grid-column: 7 / 13; align-self: center; }
-#entry-03 .sys-loopwrap { position: relative; width: 100%; height: clamp(620px, 56vw, 720px); background-color: color-mix(in srgb, var(--c-paper) 55%, var(--c-400)); border: 0.5px solid var(--c-200); border-radius: 4px; overflow: hidden; }  /* graphic box: base tone + light-grey hairline; telemetry dot/grid drawn on canvas (computed square cells, even box divisions) */
+#entry-03 .sys-loopwrap { position: relative; width: 100%; height: clamp(620px, 56vw, 720px); background-color: color-mix(in srgb, var(--c-paper) 85%, var(--c-400)); border: 0.5px solid var(--c-200); border-radius: 4px; overflow: hidden; }  /* graphic box: base tone + light-grey hairline; telemetry dot/grid drawn on canvas (computed square cells, even box divisions) */
 #entry-03 .sys-loopwrap canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 #entry-03 .sys-h2 { max-width: none; color: var(--c-1000); }
 #entry-03 .entry-name { color: var(--c-1000); }
@@ -2410,10 +2410,10 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
       for(const n of nodes){n.t+=n.sp*dt;n.health+=(Math.random()-.52)*.02*dt*10;if(n.health>1)n.health=1;if(n.health<.06)n.health=.06;
         if(n.isSig){const pc=ph2(n.t,CAL);if(n.pc>5.5&&pc<.8){const hit=Math.random()<(.45+.5*n.health);n.flash=hit?{rgb:SIG.green,l:0,d:1.6}:{rgb:SIG.red,l:0,d:1.6};n.health=hit?Math.min(1,n.health+.12):Math.max(.06,n.health-.28);if(scored.length>11)scored.shift();scored.push({hit,over:hit?Math.random()*0.22:0.30+Math.random()*0.5,x:Math.random(),l:0});}n.pc=pc;
           const pr=ph2(n.t,REUND);if(n.pr>5.5&&pr<.8&&n.health<.62)n.flash={rgb:SIG.amber,l:0,d:1.4};n.pr=pr}
-        const p=prj(rot(tor(n.t,n.ph,rt()*n.rj))),dn=p.d/(sc()*.42),dA=.18+.4*((dn+1)/2);
+        const p=prj(rot(tor(n.t,n.ph,rt()*n.rj))),dn=p.d/(sc()*.42),dA=.34+.42*((dn+1)/2);
         let fire=0;for(let i=0;i<ST.length;i++){let d=Math.abs((n.t-stT(i))%6.28);d=Math.min(d,6.28-d);if(d<.09)fire=Math.max(fire,1-d/.09)}
-        const tw=.84+.16*Math.sin(now*.004+n.tw),hK=.32+.68*n.health,a=Math.min(1,dA*tw*hK+fire*.45),s=(n.sz*p.f*.9)*(1+fire*1.1),g=236+Math.round(19*n.health);
-        ctx.fillStyle=fire>.15?`rgba(255,255,255,${a})`:`rgba(${g},${g},${Math.min(255,g+2)},${a*.92})`;ctx.fillRect(p.sx-s/2,p.sy-s/2,s,s);
+        const tw=.84+.16*Math.sin(now*.004+n.tw),hK=.5+.5*n.health,a=Math.min(1,dA*tw*hK+fire*.45),s=(n.sz*p.f*.9)*(1+fire*1.1),g=248+Math.round(7*n.health);
+        ctx.fillStyle=fire>.15?`rgba(255,255,255,${a})`:`rgba(${g},${g},${g},${Math.min(1,a*1.15)})`;ctx.fillRect(p.sx-s/2,p.sy-s/2,s,s);
         if(n.flash){n.flash.l+=dt;const k=n.flash.l/n.flash.d;if(k>=1)n.flash=null;else{const fl=Math.sin(Math.min(1,k*1.1)*Math.PI);ctx.fillStyle=`rgba(${n.flash.rgb},${fl*.95})`;ctx.beginPath();ctx.arc(p.sx,p.sy,(s+1.4+fl*1.8)*.6,0,6.28);ctx.fill()}}}
       // the ring itself closes Calibration to Research; no center thread needed
       ctx.textBaseline='middle';
