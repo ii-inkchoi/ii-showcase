@@ -1212,10 +1212,11 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 #entry-03 .sys-intro b { color: var(--c-1000); font-weight: 400; }
 #entry-03 .sys-capline { max-width: none; font-size: 17px; line-height: 1.55; color: var(--c-800); margin-top: 44px; }
 #entry-03 .sys-capline b { color: var(--c-1000); font-weight: 400; }
-#entry-03 .sys-legend { position: absolute; left: 16px; top: 14px; z-index: 3; font-family: var(--mono); font-size: 10px; color: var(--c-800); margin: 0; width: fit-content; max-width: calc(100% - 32px); border: 0; border-radius: 0; padding: 0; background: none; }
-#entry-03 .leg-title { font-size: 10px; letter-spacing: 0.04em; color: var(--c-1000); margin-bottom: 6px; }
+#entry-03 .sys-legend { position: absolute; left: 16px; top: 14px; z-index: 3; font-family: var(--mono); font-size: 10px; color: var(--c-800); margin: 0; width: fit-content; max-width: calc(100% - 32px); border: 0; border-radius: 0; padding: 0; background: none; } /* dg-allow-font: figure legend, exempt from UI type scale */
+#entry-03 .leg-title { font-size: 10px; letter-spacing: 0.04em; color: var(--c-1000); margin-bottom: 6px; } /* dg-allow-font: figure legend */
+#entry-03 .sys-note { position: absolute; right: 16px; bottom: 14px; z-index: 3; font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em; color: var(--c-700); } /* dg-allow-font: figure caption */
 #entry-03 .leg-group { display: flex; flex-direction: column; gap: 3px; }
-#entry-03 .leg-cap { font-size: 10px; letter-spacing: 0.1em; color: var(--c-800); }
+#entry-03 .leg-cap { font-size: 10px; letter-spacing: 0.1em; color: var(--c-800); } /* dg-allow-font: figure legend */
 #entry-03 .leg-div { height: 0.5px; background: var(--c-400); margin: 6px 0; }
 #entry-03 .leg-status { display: flex; flex-direction: column; gap: 3px; }
 #entry-03 .leg-status .leg-cap { margin-right: 3px; }
@@ -1375,7 +1376,6 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     <h2 class="statement sys-h2">The S&amp;P 500 is the smart core, until your record proves otherwise.</h2>
     <p class="sys-intro">The core is the index, the smart place to sit until your own record proves you can do better. Everything active runs as one loop: research, underwriting, re-underwriting, calibration. You run it, from day one. <b>The software does not research, decide, or trade for you. It holds the structure, and holds you to it.</b></p>
     <p class="sys-capline"><b>Behavior follows the environment it runs in, not the information poured into it.</b> The loop is that environment: it slows the decision where judgment tends to fail, and holds every position against the index at its center.</p>
-    <div class="sys-illus">Illustrative, a representation of the operating loop, not live data.</div>
   </div>
   <div class="sys-right">
     <div class="sys-loopwrap">
@@ -1396,6 +1396,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
           <span class="k"><span class="cd cd-r"></span>Broken</span>
         </div>
       </div>
+      <div class="sys-note">Illustrative &middot; not live data</div>
     </div>
   </div>
   <div class="sys-products">
@@ -2360,7 +2361,15 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   (function(){
     const cv=document.getElementById('sysLoopCanvas'); if(!cv)return; const ctx=cv.getContext('2d');let W,H,DPR,cx,cy;
     const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
-    function resize(){const box=cv.parentElement.getBoundingClientRect();DPR=Math.min(devicePixelRatio||1,2);W=box.width;H=box.height;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);cx=W/2;cy=H*0.5;}
+    const gridCv=document.createElement('canvas'),gctx=gridCv.getContext('2d');
+    function buildGrid(){gridCv.width=W*DPR;gridCv.height=H*DPR;gctx.setTransform(DPR,0,0,DPR,0,0);gctx.clearRect(0,0,W,H);
+      const cell=18,cols=Math.max(2,Math.round(W/cell)),rows=Math.max(2,Math.round(H/cell)),cw=W/cols,ch=H/rows;
+      gctx.fillStyle='rgba(112,104,92,0.09)';
+      for(let gx=0;gx<=cols*3;gx++){const x=Math.round(gx*cw/3);for(let gy=0;gy<=rows*3;gy++){gctx.fillRect(x,Math.round(gy*ch/3),1,1);}}
+      gctx.strokeStyle='rgba(112,104,92,0.05)';gctx.lineWidth=1;
+      for(let gx=0;gx<=cols;gx++){const x=Math.round(gx*cw)+0.5;gctx.beginPath();gctx.moveTo(x,0);gctx.lineTo(x,H);gctx.stroke();}
+      for(let gy=0;gy<=rows;gy++){const y=Math.round(gy*ch)+0.5;gctx.beginPath();gctx.moveTo(0,y);gctx.lineTo(W,y);gctx.stroke();}}
+    function resize(){const box=cv.parentElement.getBoundingClientRect();DPR=Math.min(devicePixelRatio||1,2);W=box.width;H=box.height;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);cx=W/2;cy=H*0.5;buildGrid();}
     addEventListener('resize',resize);resize();
     const ST=['Research & Analysis','Underwriting','Re-underwriting','Calibration'];
     const RESRCH=0,UW=1,REUND=2,CAL=3,SEG=6.28/ST.length,th0=-Math.PI/2,stT=i=>th0+i*SEG;
@@ -2378,15 +2387,8 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     const scored=[]; // decisions resolved at Calibration: {hit, over(0..1 overconfidence), x(jitter), l(age)}
     function frame(now){const dt=Math.min(40,now-t0)/1000;t0=now;yaw=RM?0:0.16*Math.sin(now*0.00017);
       ctx.clearRect(0,0,W,H);
-      // --- telemetry grid: computed square cells that divide the box evenly (ref: HUD dashboards) ---
-      ctx.save();
-      const _cell=54,_cols=Math.max(2,Math.round(W/_cell)),_rows=Math.max(2,Math.round(H/_cell)),_cw=W/_cols,_ch=H/_rows;
-      ctx.fillStyle='rgba(112,104,92,0.09)';
-      for(let gx=0;gx<=_cols*3;gx++){const x=Math.round(gx*_cw/3);for(let gy=0;gy<=_rows*3;gy++){ctx.fillRect(x,Math.round(gy*_ch/3),1,1);}}
-      ctx.strokeStyle='rgba(112,104,92,0.05)';ctx.lineWidth=1;
-      for(let gx=0;gx<=_cols;gx++){const x=Math.round(gx*_cw)+0.5;ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
-      for(let gy=0;gy<=_rows;gy++){const y=Math.round(gy*_ch)+0.5;ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
-      ctx.restore();
+      // --- telemetry grid (dense 3x mesh, cached offscreen so it costs one blit per frame) ---
+      ctx.drawImage(gridCv,0,0,W,H);
       // corner brackets + crosses removed per direction; caption lives in the HTML legend title
       ctx.lineWidth=1;ctx.strokeStyle='rgba(90,90,96,0.28)';ctx.beginPath();
       for(let a=0;a<=110;a++){const t=(a/110)*6.28,p=prj(rot(tor(t,0,0)));a===0?ctx.moveTo(p.sx,p.sy):ctx.lineTo(p.sx,p.sy)}ctx.stroke();
