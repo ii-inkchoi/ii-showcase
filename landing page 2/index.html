@@ -2390,10 +2390,10 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
       // --- telemetry grid (dense 3x mesh, cached offscreen so it costs one blit per frame) ---
       ctx.drawImage(gridCv,0,0,W,H);
       // corner brackets + crosses removed per direction; caption lives in the HTML legend title
-      ctx.lineWidth=1;ctx.strokeStyle='rgba(90,90,96,0.28)';ctx.beginPath();
+      ctx.lineWidth=1.3;ctx.strokeStyle='rgba(84,80,74,0.6)';ctx.beginPath();
       for(let a=0;a<=110;a++){const t=(a/110)*6.28,p=prj(rot(tor(t,0,0)));a===0?ctx.moveTo(p.sx,p.sy):ctx.lineTo(p.sx,p.sy)}ctx.stroke();
       // benchmark baseline: the S&P reference the whole loop is measured against (inner dashed ring, present at every station)
-      ctx.lineWidth=1;ctx.strokeStyle='rgba(24,24,24,0.5)';ctx.setLineDash([4,5]);ctx.beginPath();
+      ctx.lineWidth=1.1;ctx.strokeStyle='rgba(28,26,22,0.64)';ctx.setLineDash([4,5]);ctx.beginPath();
       for(let a=0;a<=110;a++){const t=(a/110)*6.28,p=prj(rot({x:R()*0.60*Math.cos(t),y:R()*0.60*Math.sin(t),z:0}));a===0?ctx.moveTo(p.sx,p.sy):ctx.lineTo(p.sx,p.sy)}ctx.stroke();ctx.setLineDash([]);
       const sp=ST.map((s,i)=>prj(rot(tor(stT(i),0,0))));
       // accountability ticks: each station measured inward against the benchmark baseline
