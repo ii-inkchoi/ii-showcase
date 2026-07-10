@@ -60,10 +60,17 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .menu-bottom .mb-left{display:flex;flex-direction:column;gap:4px;}.menu-bottom .mb-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
 .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--frame); box-sizing: border-box; }
 @media(max-width:900px){.container{padding:0 24px;}}
-.page-header{padding:140px 0 0;border-bottom:0.5px solid var(--c-800);background:linear-gradient(180deg,var(--c-black) 0%,var(--c-surface) 62%,var(--c-surface) 100%);position:relative;overflow:hidden;min-height:680px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;}
-.page-header .container{position:relative;z-index:1;}
-.pg-art{position:absolute;top:140px;right:calc(max(0px,(100% - var(--maxw))/2) + var(--frame));height:calc(100% - 140px);width:clamp(340px,35vw,500px);z-index:0;pointer-events:none;display:flex;align-items:center;justify-content:center;padding-top:0;box-sizing:border-box;}
-.pg-art canvas{width:clamp(306px,31.5vw,450px);height:clamp(306px,31.5vw,450px);display:block;}
+.page-header{padding:140px 0 0;border-bottom:0.5px solid var(--c-800);background:var(--c-black);position:relative;overflow:hidden;min-height:820px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;}
+.page-header .container{position:relative;z-index:3;}
+.pg-art{position:absolute;top:140px;right:calc(max(0px,(100% - var(--maxw))/2) + var(--frame));height:calc(100% - 140px);width:clamp(380px,42vw,640px);z-index:3;pointer-events:none;display:flex;align-items:center;justify-content:center;padding-top:0;box-sizing:border-box;}
+.pg-art canvas{width:100%;height:clamp(360px,40vw,520px);display:block;}
+/* banner photo (SD BG1 moved here, 2026-07-09) - same layer stack as the SD banner */
+.pg-photo{position:absolute;inset:0;z-index:0;background:url('images/contentteammogo_wide_interior_of_a_disciplined_institutional_re_5a27f42c-8982-46ee-9907-423456e5132a.png') center 45%/cover no-repeat;filter:brightness(0.36) contrast(1.05) saturate(0.75);}
+.page-header::after{content:'';position:absolute;top:0;left:0;right:0;height:42%;z-index:1;pointer-events:none;background:linear-gradient(to bottom,rgba(0,0,0,0.78) 0%,rgba(0,0,0,0.34) 42%,rgba(0,0,0,0) 100%);}
+.page-header::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse at center,rgba(0,0,0,0) 55%,rgba(0,0,0,0.3) 100%);}
+.pg-veil{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0.38;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='pn'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23pn)'/%3E%3C/svg%3E");background-size:200px 200px;}
+@media (prefers-reduced-motion: no-preference){.pg-veil{animation:pg-grain 0.55s steps(3) infinite;}}
+@keyframes pg-grain{0%{background-position:0 0;}33%{background-position:-80px 40px;}66%{background-position:60px -70px;}100%{background-position:0 0;}}
 @media(max-width:760px){.page-header{padding:104px 0 88px;min-height:auto;display:flex;flex-direction:column;}.page-header .container{order:1;}.page-header .page-title,.page-header .page-deck{max-width:none;}.page-header .page-title{font-size:clamp(24px,7.4vw,28px);}.pg-art{position:static;order:2;width:100%;height:auto;left:auto;right:auto;top:auto;padding-top:0;margin-top:40px;opacity:0.8;}.pg-art canvas{width:min(84vw, 36vh);height:min(84vw, 36vh);}}
 .ph-text{grid-column:1 / 8;}
 .ph-figure{grid-column:8 / 13;position:relative;}
@@ -83,7 +90,7 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .page-breadcrumb{font-size:12px;color:var(--c-700);letter-spacing:0.06em;margin-bottom:36px;display:flex;align-items:center;gap:10px;}
 .page-breadcrumb a{color:var(--c-700);text-decoration:none;}.page-breadcrumb .sep{color:var(--c-800);}.page-breadcrumb .current{color:var(--c-200);}
 .page-masthead{font-size:13px;color:var(--c-700);letter-spacing:0.04em;font-feature-settings:'tnum' 1;margin-bottom:20px;}
-.page-title{font-size:clamp(30px,4.4vw,40px);line-height:1.25;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:28px;max-width:calc((100% + var(--gutter)) / 12 * 8 - var(--gutter));}
+.page-title{font-size:clamp(30px,4.4vw,52px);line-height:1.25;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-bottom:28px;max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));}
 .page-deck{font-size:clamp(17px,1.6vw,18px);line-height:1.55;letter-spacing:-0.015em;color:var(--c-400);max-width:calc((100% + var(--gutter)) / 12 * 5 - var(--gutter));}
 .wordmarks{padding:32px 0;}
 .wordmark-row{display:grid;grid-template-columns:minmax(0,400px) 1fr;gap:80px;align-items:center;padding:56px 0;border-bottom:0.5px solid var(--c-900);text-decoration:none;color:inherit;transition:padding 0.3s ease;}
@@ -348,55 +355,74 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 </div>
 
 <section class="page-header">
+<div class="pg-photo" aria-hidden="true"></div>
+<div class="pg-veil" aria-hidden="true"></div>
 <div class="pg-art" aria-hidden="true"><canvas class="pg-net"></canvas></div>
 <script>(function(){
+  // the core, accumulating: a weekly contribution lands, the rule holds it (Managed's own figure)
   var cv=document.querySelector('.pg-art .pg-net'); if(!cv||!cv.getContext) return;
   var ctx=cv.getContext('2d');
-  var cs=getComputedStyle(document.documentElement);
-  function rgb(n,f){var h=((cs.getPropertyValue(n)||f)+'').trim().replace('#','');if(h.length===3)h=h.replace(/(.)/g,'$1$1');return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];}
-  var L=rgb('--c-400','C7C7C7'), Hb=rgb('--c-200','E3E2E2');
   var DPR=Math.min(window.devicePixelRatio||1,2);
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var W=0,H=0,raf=null,running=false,t=0;
-  var K=16, SEG=66, TAU=6.2831853, PI=Math.PI;
+  var W=0,H=0,raf=null,running=false,T0=0;
+  var N=52,R=0.018;                                   // one year of weekly deposits, compounding
+  var seeds=[];for(var i=0;i<26;i++)seeds.push({a:Math.random(),b:Math.random(),tw:Math.random()*6.28,sz:1.4+Math.random()*1.2});
+  var V=[],acc=0;for(var i2=0;i2<=N;i2++){acc=acc*(1+R)+1;V.push(acc);}
+  var VM=V[N];
   function size(){var r=cv.getBoundingClientRect();W=r.width;H=r.height;cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);ctx.setTransform(DPR,0,0,DPR,0,0);}
-  function draw(){
+  function draw(now){
+    if(!T0)T0=now;var rev=reduce?1:Math.min(1,(now-T0)/2000);var e=1-Math.pow(1-rev,3);
     ctx.clearRect(0,0,W,H);
-    var S=Math.min(W,H)*0.42, cx=W*0.5, cy=H*0.5;
-    var tau=1.15+1.05*Math.sin(t*0.00009), thb=t*0.0007;
-    var cTa=Math.cos(tau),sTa=Math.sin(tau);
-    function proj(x,y,z){var y2=y*cTa-z*sTa, z2=y*sTa+z*cTa;return [cx+x*S, cy-y2*S, z2];}
-    ctx.globalCompositeOperation='lighter';
-    for(var k=0;k<K;k++){
-      var g=PI*(k+0.5)/K, sg=Math.sin(g), cg=Math.cos(g), p0=null;
-      for(var s=0;s<=SEG;s++){var th=s/SEG*TAU, P=proj(sg*Math.cos(th), cg, sg*Math.sin(th));
-        if(p0){var dn=((p0[2]+P[2])/2+1)/2;if(dn<0)dn=0;if(dn>1)dn=1;
-          ctx.strokeStyle='rgba('+L[0]+','+L[1]+','+L[2]+','+(0.12+0.34*dn).toFixed(3)+')';ctx.lineWidth=0.8;
-          ctx.beginPath();ctx.moveTo(p0[0],p0[1]);ctx.lineTo(P[0],P[1]);ctx.stroke();}
-        p0=P;}
-    }
-    ctx.globalCompositeOperation='source-over';
-    var gate=Math.sin(t*0.00024);if(gate<0)gate=0;
-    var off=(Math.sin(t*0.00110)*0.7+Math.sin(t*0.00059+1.3)*0.45)*gate*PI*0.92;
-    for(var k2=0;k2<K;k2++){
-      var g2=PI*(k2+0.5)/K, sg2=Math.sin(g2), cg2=Math.cos(g2);
-      var angs=[thb,thb+off];
-      for(var a=0;a<angs.length;a++){
-        var Pb=proj(sg2*Math.cos(angs[a]), cg2, sg2*Math.sin(angs[a])), dn2=(Pb[2]+1)/2;if(dn2<0)dn2=0;if(dn2>1)dn2=1;
-        var sz=0.9+1.6*dn2;
-        ctx.fillStyle='rgba('+Hb[0]+','+Hb[1]+','+Hb[2]+','+(0.30+0.66*dn2).toFixed(3)+')';
-        ctx.beginPath();ctx.arc(Pb[0],Pb[1],sz,0,TAU);ctx.fill();
-      }
-    }
-    if(!reduce)t+=16;
+    var padL=W*0.05,padR=W*0.30,padT=H*0.14,padB=H*0.20;
+    var X=function(i){return padL+(W-padL-padR)*i/N;};
+    var Y=function(v){return H-padB-(H-padT-padB)*v/VM;};
+    var IN=function(a){return 'rgba(236,234,229,'+a+')';};
+    var DIM=function(a){return 'rgba(168,162,155,'+a+')';};
+    var upto=Math.max(1,Math.floor(N*e));
+    // contributions alone: the straight dashed floor
+    ctx.setLineDash([4,5]);ctx.strokeStyle=DIM(0.45);ctx.lineWidth=1;ctx.beginPath();
+    for(var i=0;i<=upto;i++){var x=X(i),y=Y(i+1);i?ctx.lineTo(x,y):ctx.moveTo(x,y);}ctx.stroke();ctx.setLineDash([]);
+    // the staircase: one small step per week, held
+    ctx.strokeStyle=IN(0.78);ctx.lineWidth=1.4;ctx.beginPath();
+    ctx.moveTo(X(0),Y(V[0]));
+    for(var i=1;i<=upto;i++){ctx.lineTo(X(i),Y(V[i-1]));ctx.lineTo(X(i),Y(V[i]));}
+    ctx.stroke();
+    var tipX=X(upto),tipY=Y(V[upto]);
+    // weekly arrival: a deposit falls onto the tip, settles
+    if(rev>=1&&!reduce){var ph=(now%2200)/2200;
+      if(ph<0.32){var k=ph/0.32,dy=(1-k*k)*48;
+        ctx.fillStyle=IN(0.9);ctx.fillRect(tipX-2.5,tipY-13-dy,5,5);}
+      else if(ph<0.6){var fl=1-(ph-0.32)/0.28;
+        ctx.strokeStyle=IN((0.6*fl).toFixed(3));ctx.lineWidth=1;ctx.beginPath();ctx.arc(tipX,tipY,5+(1-fl)*11,0,6.28);ctx.stroke();}}
+    // the tip: the core itself
+    ctx.beginPath();ctx.arc(tipX,tipY,4.2,0,6.28);ctx.fillStyle=IN(0.98);ctx.fill();
+    ctx.strokeStyle='rgba(0,0,0,0.85)';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.save();ctx.shadowColor='rgba(0,0,0,0.85)';ctx.shadowBlur=8;
+    ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.font='500 15px "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif';ctx.fillStyle=IN(0.98);
+    ctx.fillText('S&P 500 \u00b7 the core',tipX+14,tipY-9);
+    ctx.letterSpacing='0.04em';ctx.font='11px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.fillStyle=DIM(0.92);
+    ctx.fillText('accumulated weekly \u00b7 held',tipX+14,tipY+11);ctx.letterSpacing='0px';
+    // captions
+    ctx.font='10px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.fillStyle=DIM(0.75);
+    var mi=Math.floor(N*0.62);if(upto>mi)ctx.fillText('contributions alone',X(mi)+8,Y(mi+1)+18);
+    ctx.letterSpacing='0.06em';ctx.fillStyle=DIM(0.7);
+    ctx.textAlign='left';ctx.fillText('Week 01',X(0),H-padB+20);
+    ctx.textAlign='right';ctx.fillText('Week 52',X(N),H-padB+20);ctx.letterSpacing='0px';
+    ctx.restore();
+    // drifting specks along the climb (family: the SD strips)
+    for(var s2=0;s2<seeds.length;s2++){var sd=seeds[s2];var u=(sd.a+now*0.000012)%1;var i3=u*upto;
+      var x2=X(i3),y2=Y(V[Math.floor(i3)]||1)+(sd.b-0.5)*40;
+      var al=0.12+0.2*Math.pow(Math.sin(now*0.002+sd.tw),2);
+      ctx.fillStyle=IN(al.toFixed(3));ctx.fillRect(x2,y2,sd.sz,sd.sz);}
   }
-  function loop(){draw();if(running)raf=requestAnimationFrame(loop);}
-  function start(){if(reduce){draw();return;}if(!running){running=true;loop();}}
+  function loop(now){draw(now||performance.now());if(running)raf=requestAnimationFrame(loop);}
+  function start(){if(reduce){draw(performance.now());return;}if(!running){running=true;raf=requestAnimationFrame(loop);}}
   function stop(){running=false;if(raf)cancelAnimationFrame(raf);raf=null;}
   size();start();
   var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){var was=running||reduce;stop();size();if(was)start();},200);});
   if('IntersectionObserver' in window){new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)start();else stop();});},{threshold:0}).observe(cv);}
-  if('ResizeObserver' in window){new ResizeObserver(function(){size();if(reduce)draw();}).observe(cv);}
+  if('ResizeObserver' in window){new ResizeObserver(function(){size();if(reduce)draw(performance.now());}).observe(cv);}
 })();</script>
 <div class="container">    <div class="page-eyebrow ri" style="--d:0.04s">Managed</div><h1 class="page-title ri" style="--d:0.08s">The market, every week, without the decision.</h1>
     <div class="page-deck ri" style="--d:0.16s">Answer a few questions. The system matches you to a portfolio and invests a weekly contribution, automatically.</div>

@@ -463,8 +463,8 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
 #entry-03 .statement { grid-column: 1 / 7; }
 #evidence .statement { grid-column: 1 / 10; }
 #research { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); align-items: start; }
-#research .rs-left { grid-column: 1 / 6; }
-#research .rs-viz { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); align-items: stretch; margin-top: 56px; }
+#research .rs-left { grid-column: 1 / 6; align-self: center; }
+#research .rs-viz { grid-column: 7 / 13; display: flex; flex-direction: column; gap: 12px; margin-top: 0; }  /* readout feeds the case, stacked on the right */
 #research .rs-h2 { max-width: none; }
 #research .rs-incl { margin-top: 26px; font-size: 13px; letter-spacing: -0.01em; color: var(--c-600); }
 #research .rs-incl b { color: var(--c-200); font-weight: 400; }
@@ -473,8 +473,7 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
 #research .rs-link { margin-top: 26px; }
 /* right: research readout */
 #research .rpanel, #research .rcase { background: var(--c-surface); border: 0.5px solid var(--card-outline); border-radius: 4px; padding: 22px 24px; display: flex; flex-direction: column; }
-#research .rpanel { grid-column: 1 / 7; }
-#research .rcase { grid-column: 7 / 13; }
+
 #research .rphead, #research .rchead { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; color: var(--c-400); letter-spacing: -0.01em; padding-bottom: 16px; }
 #research .rmono { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--c-700); }
 #research .rtab { width: 100%; border-collapse: collapse; }
@@ -487,7 +486,7 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
 #research .rspark circle { fill: var(--c-400); }
 #research .rpfoot { margin-top: auto; padding-top: 14px; border-top: 0.5px solid var(--c-900); font-size: 12px; line-height: 1.5; color: var(--c-700); letter-spacing: -0.01em; }
 #research .rpfoot .ai { color: var(--c-400); }
-#research .rflow { display: none; }
+#research .rflow { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 2px 0; }
 #research .rarrow { color: var(--c-700); font-size: 18px; line-height: 1; }
 #research .rflow .rlab { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--c-800); }
 #research .rcrow { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 11px 0; border-top: 0.5px solid var(--c-900); }
@@ -508,6 +507,38 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
   #research .rcase.in .rcrow:nth-child(4) { transition-delay: 0.40s; }
 }
 #research .rcfoot .you { color: var(--c-200); }
+@media (max-width: 900px) { #research .rs-viz { grid-column: 1 / -1; margin-top: 48px; } }
+/* the research sheet: printed by the machine above the perforation, written by you below it */
+#research .rsheet { background: color-mix(in srgb, var(--c-paper) 85%, var(--c-400)); border: 0.5px solid var(--c-200); border-radius: 4px; padding: 26px 30px 24px; }  /* FIG.06 loopwrap ground, matched */
+#research .rsh-head, #research .rsh-formhead { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-1000); padding-bottom: 14px; }
+#research .rsh-formhead { padding-top: 24px; }
+#research .rsh-meta { font-size: 11px; letter-spacing: 0.06em; color: var(--c-800); }
+#research .rsh-row { display: flex; align-items: center; gap: 18px; padding: 12px 0; border-top: 0.5px solid var(--c-400); }
+#research .rsh-k { font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; color: var(--c-800); }
+#research .rsh-row .rsh-k { flex: 1; }
+#research .rsh-v { font-size: 14px; color: var(--c-1000); letter-spacing: -0.01em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+#research .rsh-spark svg { display: block; }
+#research .rsh-spark path { fill: none; stroke: var(--c-800); stroke-width: 1.3; }
+#research .rsh-spark circle { fill: var(--c-1000); }
+#research .rsh-note { padding: 14px 0 0; border-top: 0.5px solid var(--c-400); font-size: 12px; line-height: 1.5; color: var(--c-800); }
+#research .rsh-note b { font-weight: 500; color: var(--c-1000); }
+#research .rsh-tear { margin: 24px -30px 0; border-top: 1px dashed var(--c-600); }
+#research .rsh-frow { display: flex; align-items: baseline; gap: 18px; padding: 18px 0 6px; }
+#research .rsh-frow .rsh-k { white-space: nowrap; }
+#research .rsh-blank { flex: 1; border-bottom: 0.5px solid var(--c-600); text-align: right; padding-bottom: 4px; }
+#research .rsh-blank i { font-style: normal; font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--c-600); }
+#research .rsh-final { margin-top: 20px; }
+/* No. 09 Research - second light island (paper interlude; the dark readout cards sit on it) */
+#research::after { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); background: color-mix(in srgb, var(--c-white) 45%, var(--c-200)); z-index: 0; }
+#research > * { position: relative; z-index: 1; }
+#research .entry-no { color: var(--c-800); }
+#research .entry-name { color: var(--c-1000); }
+#research .rs-h2 { color: var(--c-1000); }
+#research .rs-incl { color: var(--c-800); }
+#research .rs-incl b { color: var(--c-1000); }
+#research .rs-p { color: var(--c-800); }
+#research .rs-p .hl { color: var(--c-1000); }
+#research .rs-link { color: var(--c-1000); }
 @media (max-width: 900px) {
   #research .rs-left, #research .rs-viz { grid-column: 1 / -1; }
   #research .rs-viz { margin-top: 32px; grid-template-columns: 1fr; row-gap: 16px; }
@@ -1203,7 +1234,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 #entry-03 { align-items: center; }
 #entry-03 .sys-left { grid-column: 1 / 6; align-self: center; }
 #entry-03 .sys-right { grid-column: 7 / 13; align-self: center; }
-#entry-03 .sys-loopwrap { position: relative; width: 100%; height: clamp(620px, 56vw, 720px); background-color: color-mix(in srgb, var(--c-paper) 85%, var(--c-400)); border: 0.5px solid var(--c-200); border-radius: 4px; overflow: hidden; }  /* graphic box: base tone + light-grey hairline; telemetry dot/grid drawn on canvas (computed square cells, even box divisions) */
+#entry-03 .sys-loopwrap { position: relative; width: 100%; height: clamp(620px, 56vw, 720px); background-color: color-mix(in srgb, var(--c-paper) 85%, var(--c-400)); background-image: radial-gradient(ellipse 85% 70% at 50% 48%, color-mix(in srgb, var(--c-white) 32%, transparent) 0%, transparent 62%), radial-gradient(ellipse 130% 115% at 50% 50%, transparent 55%, color-mix(in srgb, var(--c-800) 15%, transparent) 100%);  /* depth pilot: light pool at center (kept below dot brightness), edges fall away (grid off) */ border: 0.5px solid var(--c-200); border-radius: 4px; overflow: hidden; }  /* graphic box: base tone + light-grey hairline; telemetry dot/grid drawn on canvas (computed square cells, even box divisions) */
 #entry-03 .sys-loopwrap canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 #entry-03 .sys-h2 { max-width: none; color: var(--c-1000); }
 #entry-03 .entry-name { color: var(--c-1000); }
@@ -1235,6 +1266,8 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 #entry-03 .sys-prod { border-top: 0.5px solid var(--c-400); padding-top: 20px; }
 #entry-03 .sys-prodk { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-1000); }
 #entry-03 .sys-prod p { font-size: 15px; line-height: 1.6; color: var(--c-800); margin-top: 14px; }
+#entry-03 .sys-prodlink { margin-top: 18px; color: var(--c-1000); }
+#entry-03 .sys-prodlink:hover { color: var(--c-black); }
 @media (max-width: 900px) { #entry-03 .sys-left, #entry-03 .sys-right { grid-column: 1 / -1; } #entry-03 .sys-right { margin-top: 40px; } #entry-03 .sys-loopwrap { height: clamp(480px, 76vw, 600px); } }
 @media (max-width: 760px) { #entry-03 .sys-prodgrid { grid-template-columns: 1fr; } #entry-03 .sys-prod { padding: 20px 0; } #entry-03 .sys-prodhd { max-width: none; } }
 #entry-03 > * { position: relative; z-index: 1; }
@@ -1402,9 +1435,9 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   <div class="sys-products">
     <div class="sys-prodhd">One membership. Operate it Managed, Self-Directed, or both.</div>
     <div class="sys-prodgrid">
-      <div class="sys-prod"><div class="sys-prodk">Managed</div><p>The core, run to the rule: S&amp;P 500 exposure, accumulated and held. The standard everything else answers to.</p></div>
-      <div class="sys-prod"><div class="sys-prodk">Self-Directed</div><p>The active book, every position underwritten before capital moves, and held to the record.</p></div>
-      <div class="sys-prod"><div class="sys-prodk">Fiscal.ai</div><p>The research, in the room. It informs the work. It does not make the call.</p></div>
+      <div class="sys-prod"><div class="sys-prodk">Managed</div><p>The core, run to the rule: S&amp;P 500 exposure, accumulated and held. The standard everything else answers to.</p><a href="II Site V2 - Managed.html" class="link sys-prodlink" style="display:inline-flex;align-items:center;gap:6px;"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span class="roll"><span class="roll-in"><span>Managed</span><span>Managed</span></span></span></a></div>
+      <div class="sys-prod"><div class="sys-prodk">Self-Directed</div><p>The active book, every position underwritten before capital moves, and held to the record.</p><a href="II Site V2 - Self-Directed.html" class="link sys-prodlink" style="display:inline-flex;align-items:center;gap:6px;"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span class="roll"><span class="roll-in"><span>Self-Directed</span><span>Self-Directed</span></span></span></a></div>
+      <div class="sys-prod"><div class="sys-prodk">Fiscal.ai</div><p>The research, in the room: Fiscal.ai Max, included. It informs the work. It does not make the call.</p><a href="#research" class="link sys-prodlink" style="display:inline-flex;align-items:center;gap:6px;"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span class="roll"><span class="roll-in"><span>Research</span><span>Research</span></span></span></a></div>
     </div>
   </div>
 </section></div>
@@ -1412,13 +1445,13 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 <!-- No. 07 - Development -->
 <style>
 #development { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); align-items: start; }
-#development .dev-left { grid-column: 1 / 6; }
-#development .dev-diff { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); align-items: stretch; margin-top: 56px; }
+#development .dev-left { grid-column: 1 / 6; align-self: center; }
+#development .dev-diff { grid-column: 7 / 13; display: flex; flex-direction: column; gap: 12px; margin-top: 0; }  /* month 01 falls to month 18: time runs downward */
 #development .dev-h2 { max-width: none; }
 #development .dev-lede { font-size: 17px; line-height: 1.55; color: var(--c-600); margin-top: 28px; }
-#development .dev-arrow { display: none; }
-#development .dev-col { grid-column: 1 / 7; background: var(--c-surface); border: 0.5px solid var(--card-outline); border-radius: 4px; padding: 24px 26px; }
-#development .dev-col.on { grid-column: 7 / 13; border-color: var(--c-700); }
+#development .dev-arrow { display: flex; align-items: center; justify-content: center; padding: 2px 0; color: var(--c-700); font-size: 18px; line-height: 1; }
+#development .dev-col { background: var(--c-surface); border: 0.5px solid var(--card-outline); border-radius: 4px; padding: 24px 26px; }
+#development .dev-col.on { border-color: var(--c-700); }
 #development .dev-hd { display: flex; flex-direction: column; gap: 8px; padding-bottom: 22px; }
 #development .dev-m { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; color: var(--c-700); }
 #development .dev-s { font-size: 15px; line-height: 1.4; color: var(--c-200); letter-spacing: -0.01em; }
@@ -1442,7 +1475,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 @media (max-width: 900px) {
   #development .dev-left, #development .dev-diff { grid-column: 1 / -1; }
   #development .dev-diff { margin-top: 32px; grid-template-columns: 1fr; row-gap: 16px; }
-  #development .dev-col, #development .dev-col.on { grid-column: 1 / -1; }
+
 }
 </style>
 <div class="container"><section id="development">
@@ -1504,26 +1537,22 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     <div class="rs-incl">Fiscal.ai Max <b>Included</b> &middot; normally $99/mo</div>
     <p class="rs-p">A professional-grade research environment. Multi-year financials, return on capital, margin trends, clean comparison across time.</p>
     <p class="rs-p">It supports analysis. It does not decide. It is not a stock picker and not a signal engine. <span class="hl">Deciding what to believe remains the investor's work.</span></p>
-    <a href="II Site V2 - Self-Directed.html#research" class="link rs-link" style="display:inline-flex;align-items:center;gap:6px;"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span class="roll"><span class="roll-in"><span>The Research Layer</span><span>The Research Layer</span></span></span></a>
+    <a href="II Site V2 - Self-Directed.html#research" class="link rs-link" style="display:inline-flex;align-items:center;gap:6px;"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span class="roll"><span class="roll-in"><span>The Research Layer</span><span>The Research Layer</span></span></span></a><a href="https://fiscal.ai" target="_blank" rel="noopener" class="link rs-link" style="display:inline-flex;align-items:center;gap:6px;margin-left:28px;"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span class="roll"><span class="roll-in"><span>Fiscal.ai</span><span>Fiscal.ai</span></span></span></a>
   </div>
   <div class="rs-viz">
-    <div class="rpanel">
-      <div class="rphead"><span>Fiscal.ai &middot; POWL</span><span class="rmono">10-yr</span></div>
-      <table class="rtab"><tbody>
-        <tr><td class="rk">Revenue CAGR</td><td class="rv">14.2%</td><td class="rspark"><svg width="76" height="20" viewBox="0 0 76 20" aria-hidden="true"><path d="M0.0 18.0 L8.4 15.7 L16.9 15.7 L25.3 13.4 L33.8 11.1 L42.2 8.9 L50.7 8.9 L59.1 6.6 L67.6 4.3 L76.0 2.0"/><circle cx="75.5" cy="2" r="1.6"/></svg></td></tr>
-        <tr><td class="rk">Return on capital</td><td class="rv">21.8%</td><td class="rspark"><svg width="76" height="20" viewBox="0 0 76 20" aria-hidden="true"><path d="M0.0 14.8 L8.4 18.0 L16.9 11.6 L25.3 8.4 L33.8 11.6 L42.2 5.2 L50.7 5.2 L59.1 2.0 L67.6 5.2 L76.0 2.0"/><circle cx="75.5" cy="2" r="1.6"/></svg></td></tr>
-        <tr><td class="rk">Gross margin</td><td class="rv">24.6%</td><td class="rspark"><svg width="76" height="20" viewBox="0 0 76 20" aria-hidden="true"><path d="M0.0 18.0 L8.4 18.0 L16.9 12.7 L25.3 12.7 L33.8 12.7 L42.2 7.3 L50.7 7.3 L59.1 7.3 L67.6 2.0 L76.0 2.0"/><circle cx="75.5" cy="2" r="1.6"/></svg></td></tr>
-        <tr><td class="rk">Net debt / EBITDA</td><td class="rv">0.3&times;</td><td class="rspark"><svg width="76" height="20" viewBox="0 0 76 20" aria-hidden="true"><path d="M0.0 2.0 L8.4 4.7 L16.9 7.3 L25.3 7.3 L33.8 10.0 L42.2 12.7 L50.7 12.7 L59.1 15.3 L67.6 15.3 L76.0 18.0"/><circle cx="75.5" cy="18" r="1.6"/></svg></td></tr>
-      </tbody></table>
-      <div class="rpfoot"><span class="ai">AI computes and surfaces</span> data, ratios, comparables, trends.</div>
-    </div>
-    <div class="rflow" aria-hidden="true"><span class="rarrow">&darr;</span><span class="rlab">feeds</span></div>
-    <div class="rcase">
-      <div class="rchead">Investment Case <span class="rmono">you write</span></div>
-      <div class="rcrow"><span class="rck">Thesis</span><span class="rcv">your reasoning</span></div>
-      <div class="rcrow"><span class="rck">Intrinsic Value</span><span class="rcv">your estimate</span></div>
-      <div class="rcrow"><span class="rck">Confidence</span><span class="rcv">your call</span></div>
-      <div class="rcfoot"><span class="you">You decide.</span> The machine informs, it does not commit.</div>
+    <div class="rsheet" style="--d:0.1s">
+      <div class="rsh-head"><span>Research Dossier &middot; POWL</span><span class="rsh-meta">Fiscal.ai &middot; 10-yr</span></div>
+      <div class="rsh-row"><span class="rsh-k">Revenue CAGR</span><span class="rsh-v">14.2%</span><span class="rsh-spark"><svg width="76" height="20" viewBox="0 0 76 20" aria-hidden="true"><path d="M0.0 18.0 L8.4 15.7 L16.9 15.7 L25.3 13.4 L33.8 11.1 L42.2 8.9 L50.7 8.9 L59.1 6.6 L67.6 4.3 L76.0 2.0"/><circle cx="75.5" cy="2" r="1.6"/></svg></span></div>
+      <div class="rsh-row"><span class="rsh-k">Return on capital</span><span class="rsh-v">21.8%</span><span class="rsh-spark"><svg width="76" height="20" viewBox="0 0 76 20" aria-hidden="true"><path d="M0.0 14.8 L8.4 18.0 L16.9 11.6 L25.3 8.4 L33.8 11.6 L42.2 5.2 L50.7 5.2 L59.1 2.0 L67.6 5.2 L76.0 2.0"/><circle cx="75.5" cy="2" r="1.6"/></svg></span></div>
+      <div class="rsh-row"><span class="rsh-k">Gross margin</span><span class="rsh-v">24.6%</span><span class="rsh-spark"><svg width="76" height="20" viewBox="0 0 76 20" aria-hidden="true"><path d="M0.0 18.0 L8.4 18.0 L16.9 12.7 L25.3 12.7 L33.8 12.7 L42.2 7.3 L50.7 7.3 L59.1 7.3 L67.6 2.0 L76.0 2.0"/><circle cx="75.5" cy="2" r="1.6"/></svg></span></div>
+      <div class="rsh-row"><span class="rsh-k">Net debt / EBITDA</span><span class="rsh-v">0.3&times;</span><span class="rsh-spark"><svg width="76" height="20" viewBox="0 0 76 20" aria-hidden="true"><path d="M0.0 2.0 L8.4 4.7 L16.9 7.3 L25.3 7.3 L33.8 10.0 L42.2 12.7 L50.7 12.7 L59.1 15.3 L67.6 15.3 L76.0 18.0"/><circle cx="75.5" cy="18" r="1.6"/></svg></span></div>
+      <div class="rsh-note"><b>AI computes and surfaces</b> data, ratios, comparables, trends.</div>
+      <div class="rsh-tear" aria-hidden="true"></div>
+      <div class="rsh-formhead"><span>Investment Case</span><span class="rsh-meta">you write</span></div>
+      <div class="rsh-frow"><span class="rsh-k">Thesis</span><span class="rsh-blank"><i>your reasoning</i></span></div>
+      <div class="rsh-frow"><span class="rsh-k">Intrinsic Value</span><span class="rsh-blank"><i>your estimate</i></span></div>
+      <div class="rsh-frow"><span class="rsh-k">Confidence</span><span class="rsh-blank"><i>your call</i></span></div>
+      <div class="rsh-note rsh-final"><b>You decide.</b> The machine informs, it does not commit.</div>
     </div>
   </div>
 </section></div>
@@ -1611,7 +1640,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 
     function stagger(q, step) { document.querySelectorAll(q).forEach(function (el, i) { el.style.setProperty('--d', (i * step).toFixed(2) + 's'); }); }
     stagger('.rung', 0.08); stagger('#entry-03 .module', 0.08); stagger('footer .footer-legal', 0.08);
-    var sel = '#trust .trust-line, #trust .trust-strip, #entry-01 .statement, .rung, #entry-01 .e01-note, #entry-02 .statement, #entry-02 .alloc-sub, #entry-03 .statement, #entry-03 .offer-item, #entry-03 .offer-foot, #entry-03 .module, #entry-03 .prose, #entry-03 .sc-row, #entry-03 .sys-operate, #development .dev-col, #fit .fit-otr, #research .statement, #research .rs-p, #research .link, #research .rpanel, #research .rcase, #evidence .statement, #evidence .prose, #evidence .ev-fig, #fit .statement, #fit .fit-duo, #edge .edge-mark, #edge .edge-desc, #edge .link, #entry-06 .statement, #entry-06 .prose, #entry-06 .link, #close .close-h, #close .cta-btn, footer .footer-copy, footer .footer-social, footer .footer-legal, footer .footer-reset';
+    var sel = '#trust .trust-line, #trust .trust-strip, #entry-01 .statement, .rung, #entry-01 .e01-note, #entry-02 .statement, #entry-02 .alloc-sub, #entry-03 .statement, #entry-03 .offer-item, #entry-03 .offer-foot, #entry-03 .module, #entry-03 .prose, #entry-03 .sc-row, #entry-03 .sys-operate, #development .dev-col, #fit .fit-otr, #research .statement, #research .rs-p, #research .link, #research .rsheet, #evidence .statement, #evidence .prose, #evidence .ev-fig, #fit .statement, #fit .fit-duo, #edge .edge-mark, #edge .edge-desc, #edge .link, #entry-06 .statement, #entry-06 .prose, #entry-06 .link, #close .close-h, #close .cta-btn, footer .footer-copy, footer .footer-social, footer .footer-legal, footer .footer-reset';
     var items = document.querySelectorAll(sel);
     items.forEach(function (el) { el.classList.add('ri'); });
     var rio = new IntersectionObserver(function (entries) { entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); rio.unobserve(e.target); } }); }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' });
@@ -2364,11 +2393,8 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     const gridCv=document.createElement('canvas'),gctx=gridCv.getContext('2d');
     function buildGrid(){gridCv.width=W*DPR;gridCv.height=H*DPR;gctx.setTransform(DPR,0,0,DPR,0,0);gctx.clearRect(0,0,W,H);
       const cell=18,cols=Math.max(2,Math.round(W/cell)),rows=Math.max(2,Math.round(H/cell)),cw=W/cols,ch=H/rows;
-      gctx.fillStyle='rgba(112,104,92,0.09)';
-      for(let gx=0;gx<=cols*3;gx++){const x=Math.round(gx*cw/3);for(let gy=0;gy<=rows*3;gy++){gctx.fillRect(x,Math.round(gy*ch/3),1,1);}}
-      gctx.strokeStyle='rgba(112,104,92,0.05)';gctx.lineWidth=1;
-      for(let gx=0;gx<=cols;gx++){const x=Math.round(gx*cw)+0.5;gctx.beginPath();gctx.moveTo(x,0);gctx.lineTo(x,H);gctx.stroke();}
-      for(let gy=0;gy<=rows;gy++){const y=Math.round(gy*ch)+0.5;gctx.beginPath();gctx.moveTo(0,y);gctx.lineTo(W,y);gctx.stroke();}}
+      gctx.fillStyle='rgba(112,104,92,0.11)';
+      for(let gx=0;gx<=cols*3;gx++){const x=Math.round(gx*cw/3);for(let gy=0;gy<=rows*3;gy++){gctx.fillRect(x,Math.round(gy*ch/3),1,1);}}}  // dots only - grid lines retired (too loud); texture over the depth gradient
     function resize(){const box=cv.parentElement.getBoundingClientRect();DPR=Math.min(devicePixelRatio||1,2);W=box.width;H=box.height;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);cx=W/2;cy=H*0.5;buildGrid();}
     addEventListener('resize',resize);resize();
     const ST=['Research & Analysis','Underwriting','Re-underwriting','Calibration'];
@@ -2387,7 +2413,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     const scored=[]; // decisions resolved at Calibration: {hit, over(0..1 overconfidence), x(jitter), l(age)}
     function frame(now){const dt=Math.min(40,now-t0)/1000;t0=now;yaw=RM?0:0.16*Math.sin(now*0.00017);
       ctx.clearRect(0,0,W,H);
-      // --- telemetry grid (dense 3x mesh, cached offscreen so it costs one blit per frame) ---
+      // --- telemetry dot texture (cached offscreen, dots only) over the depth gradient ---
       ctx.drawImage(gridCv,0,0,W,H);
       // corner brackets + crosses removed per direction; caption lives in the HTML legend title
       ctx.lineWidth=1.3;ctx.strokeStyle='rgba(84,80,74,0.6)';ctx.beginPath();
@@ -2412,8 +2438,8 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
           const pr=ph2(n.t,REUND);if(n.pr>5.5&&pr<.8&&n.health<.62)n.flash={rgb:SIG.amber,l:0,d:1.4};n.pr=pr}
         const p=prj(rot(tor(n.t,n.ph,rt()*n.rj))),dn=p.d/(sc()*.42),dA=.34+.42*((dn+1)/2);
         let fire=0;for(let i=0;i<ST.length;i++){let d=Math.abs((n.t-stT(i))%6.28);d=Math.min(d,6.28-d);if(d<.09)fire=Math.max(fire,1-d/.09)}
-        const tw=.84+.16*Math.sin(now*.004+n.tw),hK=.5+.5*n.health,a=Math.min(1,dA*tw*hK+fire*.45),s=(n.sz*p.f*.9)*(1+fire*1.1),g=248+Math.round(7*n.health);
-        ctx.fillStyle=fire>.15?`rgba(255,255,255,${a})`:`rgba(${g},${g},${g},${Math.min(1,a*1.15)})`;ctx.fillRect(p.sx-s/2,p.sy-s/2,s,s);
+        const tw=.84+.16*Math.sin(now*.004+n.tw),hK=.5+.5*n.health,a=Math.min(1,dA*tw*hK+fire*.45),s=(n.sz*p.f)*(1+fire*1.1),g=250+Math.round(5*n.health);
+        ctx.fillStyle=fire>.15?`rgba(255,255,255,${a})`:`rgba(${g},${g},${g},${Math.min(1,a*1.5)})`;ctx.fillRect(p.sx-s/2,p.sy-s/2,s,s);
         if(n.flash){n.flash.l+=dt;const k=n.flash.l/n.flash.d;if(k>=1)n.flash=null;else{const fl=Math.sin(Math.min(1,k*1.1)*Math.PI);ctx.fillStyle=`rgba(${n.flash.rgb},${fl*.95})`;ctx.beginPath();ctx.arc(p.sx,p.sy,(s+1.4+fl*1.8)*.6,0,6.28);ctx.fill()}}}
       // the ring itself closes Calibration to Research; no center thread needed
       ctx.textBaseline='middle';
