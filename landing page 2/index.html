@@ -404,21 +404,35 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
 
 /* aligned / altitude / close */
 #entry-06 > .container { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); align-items: center; }
+/* No. 10 Membership - light interlude; the dark rate card carries the product */
+#entry-06.band { background: color-mix(in srgb, var(--c-white) 45%, var(--c-200)); }
+#entry-06 .entry-no { color: var(--c-800); }
+#entry-06 .entry-name { color: var(--c-1000); }
+#entry-06 .statement { color: var(--c-1000); }
+#entry-06 .prose { color: var(--c-800); }
+#entry-06 .link { color: var(--c-1000); }
+#entry-06 .link:hover { color: var(--c-black); }
 .mb-grid { display: contents; }
 .mb-left { grid-column: 1 / 6; }
-.mb-right { grid-column: 7 / 13; margin-top: 0; background: var(--c-surface); border: 0.5px solid var(--card-outline); border-radius: 4px; }
-.mb-plan { padding: 22px 26px 18px; border-bottom: 0.5px solid var(--c-900); }
-.mb-plan-lbl { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; color: var(--c-700); }
+.mb-right { grid-column: 7 / 13; margin-top: 0; }  /* an open rate sheet on the island, not an app replica */
+.mb-plan { padding: 0 0 20px; border-bottom: 0.5px solid var(--c-400); }
+.mb-plan-lbl { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; color: var(--c-800); }
 .mb-price { display: flex; align-items: baseline; gap: 10px; margin-top: 10px; }
-.mb-price .amt { font-size: clamp(24px, 2.5vw, 32px); color: var(--c-white); letter-spacing: -0.02em; }
-.mb-price .per { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-700); }
-.mb-rows { padding: 2px 26px 0; }
+.mb-price .amt { font-size: clamp(32px, 3vw, 40px); color: var(--c-1000); letter-spacing: -0.02em; }
+.mb-price .per { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-800); }
+.mb-rows { padding: 2px 0 0; }
 .mb-rows .mb-row:last-child { border-bottom: 0; }
-.mb-foot { padding: 12px 26px 20px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-800); }
+.mb-foot { padding: 14px 0 0; font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-800); }
+.mb-v s { color: var(--c-600); text-decoration-color: var(--c-600); margin-right: 8px; }
+.mb-total { position: relative; display: flex; align-items: baseline; justify-content: space-between; gap: 20px; padding: 18px 0 0; margin-top: 2px; border-top: 0.5px solid var(--c-800); }
+.mb-total::before { content: ''; position: absolute; top: 3px; left: 0; right: 0; border-top: 0.5px solid var(--c-800); }  /* the accountant's double rule */
+.mb-total-k { font-size: 15px; color: var(--c-1000); letter-spacing: -0.01em; }
+.mb-amt { font-size: 40px; color: var(--c-1000); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.mb-per2 { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-800); margin-left: 8px; }
 .mb-meta { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-700); margin-top: 12px; }
-.mb-row { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; padding: 16px 0; border-bottom: 0.5px solid var(--c-900); }
-.mb-k { font-family: var(--mono); font-size: 12px; color: var(--c-700); letter-spacing: 0.06em; }
-.mb-v { font-size: 14px; color: var(--c-400); letter-spacing: -0.01em; text-align: right; font-variant-numeric: tabular-nums; }
+.mb-row { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; padding: 16px 0; border-bottom: 0.5px solid var(--c-400); }
+.mb-k { font-family: var(--mono); font-size: 12px; color: var(--c-800); letter-spacing: 0.06em; }
+.mb-v { font-size: 14px; color: var(--c-1000); letter-spacing: -0.01em; text-align: right; font-variant-numeric: tabular-nums; }
 .mb-cta-m { display: none; }
 @media (max-width: 640px) { .mb-k { white-space: nowrap; flex: none; } }
 @media (max-width: 900px) { #entry-06 .entry-head { grid-column: 1 / -1; } .mb-left, .mb-right { grid-column: 1 / -1; grid-row: auto; } .mb-right { margin-top: 32px; } .mb-cta-d { display: none !important; } .mb-cta-m { display: inline-flex; grid-column: 1 / -1; margin-top: 24px; } }
@@ -486,7 +500,6 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
 #research .rspark circle { fill: var(--c-400); }
 #research .rpfoot { margin-top: auto; padding-top: 14px; border-top: 0.5px solid var(--c-900); font-size: 12px; line-height: 1.5; color: var(--c-700); letter-spacing: -0.01em; }
 #research .rpfoot .ai { color: var(--c-400); }
-#research .rflow { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 2px 0; }
 #research .rarrow { color: var(--c-700); font-size: 18px; line-height: 1; }
 #research .rflow .rlab { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--c-800); }
 #research .rcrow { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 11px 0; border-top: 0.5px solid var(--c-900); }
@@ -505,29 +518,19 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
   #research .rcase.in .rcrow:nth-child(2) { transition-delay: 0.16s; }
   #research .rcase.in .rcrow:nth-child(3) { transition-delay: 0.28s; }
   #research .rcase.in .rcrow:nth-child(4) { transition-delay: 0.40s; }
+  #research .rspark path { stroke-dasharray: 130; stroke-dashoffset: 130; transition: stroke-dashoffset 0.9s cubic-bezier(0.2,0.6,0.2,1); }
+  #research .rpanel.in .rspark path { stroke-dashoffset: 0; }
+  #research .rpanel.in .rtab tbody tr:nth-child(1) .rspark path { transition-delay: 0.30s; }
+  #research .rpanel.in .rtab tbody tr:nth-child(2) .rspark path { transition-delay: 0.42s; }
+  #research .rpanel.in .rtab tbody tr:nth-child(3) .rspark path { transition-delay: 0.54s; }
+  #research .rpanel.in .rtab tbody tr:nth-child(4) .rspark path { transition-delay: 0.66s; }
 }
 #research .rcfoot .you { color: var(--c-200); }
 @media (max-width: 900px) { #research .rs-viz { grid-column: 1 / -1; margin-top: 48px; } }
-/* the research sheet: printed by the machine above the perforation, written by you below it */
-#research .rsheet { background: color-mix(in srgb, var(--c-200) 70%, var(--c-paper) 30%); border: 0.5px solid var(--c-200); border-radius: 4px; padding: 26px 30px 24px; display: flex; flex-direction: column; }  /* FIG.06 ground; a document plate */
-#research .rsh-head, #research .rsh-formhead { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--font); font-size: 15px; font-weight: 500; letter-spacing: -0.01em; color: var(--c-1000); padding-bottom: 14px; }
-#research .rsh-formhead { padding-top: 24px; }
-#research .rsh-meta { font-size: 11px; letter-spacing: 0.06em; color: var(--c-800); }
-#research .rsh-row { display: flex; align-items: center; gap: 18px; padding: 12px 0; border-top: 0.5px solid var(--c-400); }
-#research .rsh-k { font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; color: var(--c-800); }
-#research .rsh-row .rsh-k { flex: 1; }
-#research .rsh-v { font-size: 17px; color: var(--c-1000); letter-spacing: -0.01em; font-variant-numeric: tabular-nums; white-space: nowrap; }
-#research .rsh-spark svg { display: block; }
-#research .rsh-spark path { fill: none; stroke: var(--c-1000); stroke-width: 1.5; }
-#research .rsh-spark circle { fill: var(--c-1000); }
-#research .rsh-note { padding: 14px 0 0; border-top: 0.5px solid var(--c-400); font-size: 12px; line-height: 1.5; color: var(--c-800); }
-#research .rsh-note b { font-weight: 500; color: var(--c-1000); }
-#research .rsh-tear { margin: 24px -30px 0; border-top: 1px dashed var(--c-600); }
-#research .rsh-frow { display: flex; align-items: baseline; gap: 18px; padding: 18px 0 6px; }
-#research .rsh-frow .rsh-k { white-space: nowrap; font-family: var(--font); font-size: 15px; letter-spacing: -0.01em; color: var(--c-1000); }
-#research .rsh-blank { flex: 1; border-bottom: 0.5px solid var(--c-600); text-align: right; padding-bottom: 4px; }
-#research .rsh-blank i { font-style: normal; font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--c-600); }
-#research .rsh-final { margin-top: 56px; }  /* a quiet foot, no dead air */
+/* two papers, offset on the grid: the readout (7-10), feeds, the case you write (9-12) */
+#research .rs-stack { position: relative; display: grid; grid-template-columns: repeat(6, 1fr); column-gap: var(--gutter); row-gap: var(--gutter); }
+#research .rs-stack .rpanel { grid-column: 1 / 5; grid-row: 1; }
+#research .rs-stack .rcase { grid-column: 3 / 7; grid-row: 2; min-height: 310px; }
 /* No. 09 Research - dark, on the page ground; the paper dossier carries the light */
 @media (max-width: 900px) {
   #research .rs-left, #research .rs-viz { grid-column: 1 / -1; }
@@ -1533,19 +1536,24 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     <a href="II Site V2 - Self-Directed.html#research" class="link rs-link" style="display:inline-flex;align-items:center;gap:6px;"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span class="roll"><span class="roll-in"><span>The Research Layer</span><span>The Research Layer</span></span></span></a><a href="https://fiscal.ai" target="_blank" rel="noopener" class="link rs-link" style="display:inline-flex;align-items:center;gap:6px;margin-left:28px;"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span class="roll"><span class="roll-in"><span>Fiscal.ai</span><span>Fiscal.ai</span></span></span></a>
   </div>
   <div class="rs-viz">
-    <div class="rsheet" style="--d:0.1s">
-      <div class="rsh-head"><span>Research Dossier &middot; POWL</span><span class="rsh-meta">Fiscal.ai &middot; 10-yr</span></div>
-      <div class="rsh-row"><span class="rsh-k">Revenue CAGR</span><span class="rsh-v">14.2%</span><span class="rsh-spark"><svg width="76" height="20" viewBox="0 0 76 20" aria-hidden="true"><path d="M0.0 18.0 L8.4 15.7 L16.9 15.7 L25.3 13.4 L33.8 11.1 L42.2 8.9 L50.7 8.9 L59.1 6.6 L67.6 4.3 L76.0 2.0"/><circle cx="75.5" cy="2" r="1.6"/></svg></span></div>
-      <div class="rsh-row"><span class="rsh-k">Return on Capital</span><span class="rsh-v">21.8%</span><span class="rsh-spark"><svg width="76" height="20" viewBox="0 0 76 20" aria-hidden="true"><path d="M0.0 14.8 L8.4 18.0 L16.9 11.6 L25.3 8.4 L33.8 11.6 L42.2 5.2 L50.7 5.2 L59.1 2.0 L67.6 5.2 L76.0 2.0"/><circle cx="75.5" cy="2" r="1.6"/></svg></span></div>
-      <div class="rsh-row"><span class="rsh-k">Gross Margin</span><span class="rsh-v">24.6%</span><span class="rsh-spark"><svg width="76" height="20" viewBox="0 0 76 20" aria-hidden="true"><path d="M0.0 18.0 L8.4 18.0 L16.9 12.7 L25.3 12.7 L33.8 12.7 L42.2 7.3 L50.7 7.3 L59.1 7.3 L67.6 2.0 L76.0 2.0"/><circle cx="75.5" cy="2" r="1.6"/></svg></span></div>
-      <div class="rsh-row"><span class="rsh-k">Net Debt / EBITDA</span><span class="rsh-v">0.3&times;</span><span class="rsh-spark"><svg width="76" height="20" viewBox="0 0 76 20" aria-hidden="true"><path d="M0.0 2.0 L8.4 4.7 L16.9 7.3 L25.3 7.3 L33.8 10.0 L42.2 12.7 L50.7 12.7 L59.1 15.3 L67.6 15.3 L76.0 18.0"/><circle cx="75.5" cy="18" r="1.6"/></svg></span></div>
-      <div class="rsh-note"><b>AI computes and surfaces</b> data, ratios, comparables, trends.</div>
-      <div class="rsh-tear" aria-hidden="true"></div>
-      <div class="rsh-formhead"><span>Investment Case</span><span class="rsh-meta">You Write</span></div>
-      <div class="rsh-frow"><span class="rsh-k">Thesis</span><span class="rsh-blank"><i>Your Reasoning</i></span></div>
-      <div class="rsh-frow"><span class="rsh-k">Intrinsic Value</span><span class="rsh-blank"><i>Your Estimate</i></span></div>
-      <div class="rsh-frow"><span class="rsh-k">Confidence</span><span class="rsh-blank"><i>Your Call</i></span></div>
-      <div class="rsh-note rsh-final"><b>You decide.</b> The machine informs, it does not commit.</div>
+    <div class="rs-stack">
+      <div class="rpanel">
+        <div class="rphead"><span>Fiscal.ai &middot; POWL</span><span class="rmono">10-yr</span></div>
+        <table class="rtab"><tbody>
+          <tr><td class="rk">Revenue CAGR</td><td class="rv">14.2%</td><td class="rspark"><svg width="76" height="20" viewBox="0 0 76 20" aria-hidden="true"><path d="M0.0 18.0 L8.4 15.7 L16.9 15.7 L25.3 13.4 L33.8 11.1 L42.2 8.9 L50.7 8.9 L59.1 6.6 L67.6 4.3 L76.0 2.0"/><circle cx="75.5" cy="2" r="1.6"/></svg></td></tr>
+          <tr><td class="rk">Return on Capital</td><td class="rv">21.8%</td><td class="rspark"><svg width="76" height="20" viewBox="0 0 76 20" aria-hidden="true"><path d="M0.0 14.8 L8.4 18.0 L16.9 11.6 L25.3 8.4 L33.8 11.6 L42.2 5.2 L50.7 5.2 L59.1 2.0 L67.6 5.2 L76.0 2.0"/><circle cx="75.5" cy="2" r="1.6"/></svg></td></tr>
+          <tr><td class="rk">Gross Margin</td><td class="rv">24.6%</td><td class="rspark"><svg width="76" height="20" viewBox="0 0 76 20" aria-hidden="true"><path d="M0.0 18.0 L8.4 18.0 L16.9 12.7 L25.3 12.7 L33.8 12.7 L42.2 7.3 L50.7 7.3 L59.1 7.3 L67.6 2.0 L76.0 2.0"/><circle cx="75.5" cy="2" r="1.6"/></svg></td></tr>
+          <tr><td class="rk">Net Debt / EBITDA</td><td class="rv">0.3&times;</td><td class="rspark"><svg width="76" height="20" viewBox="0 0 76 20" aria-hidden="true"><path d="M0.0 2.0 L8.4 4.7 L16.9 7.3 L25.3 7.3 L33.8 10.0 L42.2 12.7 L50.7 12.7 L59.1 15.3 L67.6 15.3 L76.0 18.0"/><circle cx="75.5" cy="18" r="1.6"/></svg></td></tr>
+        </tbody></table>
+        <div class="rpfoot"><span class="ai">AI computes and surfaces</span> data, ratios, comparables, trends.</div>
+      </div>
+      <div class="rcase">
+        <div class="rchead">Investment Case <span class="rmono">You Write</span></div>
+        <div class="rcrow"><span class="rck">Thesis</span><span class="rcv">Your Reasoning</span></div>
+        <div class="rcrow"><span class="rck">Intrinsic Value</span><span class="rcv">Your Estimate</span></div>
+        <div class="rcrow"><span class="rck">Confidence</span><span class="rcv">Your Call</span></div>
+        <div class="rcfoot"><span class="you">You decide.</span> The machine informs, it does not commit.</div>
+      </div>
     </div>
   </div>
 </section></div>
@@ -1561,16 +1569,17 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     </div>
     <div class="mb-right">
       <div class="mb-plan">
-        <div class="mb-plan-lbl">Membership</div>
-        <div class="mb-price"><span class="amt">$20</span><span class="per">/ month &middot; everything included</span></div>
+        <div class="mb-plan-lbl">Statement of Charges &middot; Monthly</div>
       </div>
       <div class="mb-rows">
-        <div class="mb-row"><span class="mb-k">Fiscal.ai Max research</span><span class="mb-v">Included &middot; normally $99</span></div>
-        <div class="mb-row"><span class="mb-k">Trading commissions</span><span class="mb-v">None</span></div>
-        <div class="mb-row"><span class="mb-k">FX</span><span class="mb-v">No added fee &middot; conversion spread applies</span></div>
-        <div class="mb-row"><span class="mb-k">Managed portfolios</span><span class="mb-v">0.10% &middot; no performance fees</span></div>
+        <div class="mb-row"><span class="mb-k">Trading Commissions</span><span class="mb-v">$0</span></div>
+        <div class="mb-row"><span class="mb-k">FX Added Fee</span><span class="mb-v">$0</span></div>
+        <div class="mb-row"><span class="mb-k">Performance Fees</span><span class="mb-v">$0</span></div>
+        <div class="mb-row"><span class="mb-k">Payment for Order Flow</span><span class="mb-v">$0</span></div>
+        <div class="mb-row"><span class="mb-k">Fiscal.ai Max Research</span><span class="mb-v"><s>$99</s> Included</span></div>
       </div>
-      <div class="mb-foot">No payment for order flow.</div>
+      <div class="mb-total"><span class="mb-total-k">Membership, everything included</span><span class="mb-amt">$20<span class="mb-per2">/ mo</span></span></div>
+      <div class="mb-foot">A conversion spread applies on FX. Managed portfolios 0.10%, no performance fees.</div>
     </div>
     <a href="II Site V2 - Pricing.html" class="link mb-cta-m" style="align-items:center;gap:6px;"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span class="roll"><span class="roll-in"><span>Pricing &amp; Terms</span><span>Pricing &amp; Terms</span></span></span></a>
   </div>
@@ -1633,7 +1642,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 
     function stagger(q, step) { document.querySelectorAll(q).forEach(function (el, i) { el.style.setProperty('--d', (i * step).toFixed(2) + 's'); }); }
     stagger('.rung', 0.08); stagger('#entry-03 .module', 0.08); stagger('footer .footer-legal', 0.08);
-    var sel = '#trust .trust-line, #trust .trust-strip, #entry-01 .statement, .rung, #entry-01 .e01-note, #entry-02 .statement, #entry-02 .alloc-sub, #entry-03 .statement, #entry-03 .offer-item, #entry-03 .offer-foot, #entry-03 .module, #entry-03 .prose, #entry-03 .sc-row, #entry-03 .sys-operate, #development .dev-col, #fit .fit-otr, #research .statement, #research .rs-p, #research .link, #research .rsheet, #evidence .statement, #evidence .prose, #evidence .ev-fig, #fit .statement, #fit .fit-duo, #edge .edge-mark, #edge .edge-desc, #edge .link, #entry-06 .statement, #entry-06 .prose, #entry-06 .link, #close .close-h, #close .cta-btn, footer .footer-copy, footer .footer-social, footer .footer-legal, footer .footer-reset';
+    var sel = '#trust .trust-line, #trust .trust-strip, #entry-01 .statement, .rung, #entry-01 .e01-note, #entry-02 .statement, #entry-02 .alloc-sub, #entry-03 .statement, #entry-03 .offer-item, #entry-03 .offer-foot, #entry-03 .module, #entry-03 .prose, #entry-03 .sc-row, #entry-03 .sys-operate, #development .dev-col, #fit .fit-otr, #research .statement, #research .rs-p, #research .link, #research .rpanel, #research .rcase, #evidence .statement, #evidence .prose, #evidence .ev-fig, #fit .statement, #fit .fit-duo, #edge .edge-mark, #edge .edge-desc, #edge .link, #entry-06 .statement, #entry-06 .prose, #entry-06 .link, #close .close-h, #close .cta-btn, footer .footer-copy, footer .footer-social, footer .footer-legal, footer .footer-reset';
     var items = document.querySelectorAll(sel);
     items.forEach(function (el) { el.classList.add('ri'); });
     var rio = new IntersectionObserver(function (entries) { entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); rio.unobserve(e.target); } }); }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' });
