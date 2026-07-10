@@ -464,7 +464,7 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
 #evidence .statement { grid-column: 1 / 10; }
 #research { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); align-items: start; }
 #research .rs-left { grid-column: 1 / 6; align-self: center; }
-#research .rs-viz { grid-column: 7 / 13; display: flex; flex-direction: column; gap: 12px; margin-top: 0; }  /* readout feeds the case, stacked on the right */
+#research .rs-viz { grid-column: 7 / 13; display: flex; flex-direction: column; margin-top: 0; align-self: center; }  /* the dossier, centred with the text */
 #research .rs-h2 { max-width: none; }
 #research .rs-incl { margin-top: 26px; font-size: 13px; letter-spacing: -0.01em; color: var(--c-600); }
 #research .rs-incl b { color: var(--c-200); font-weight: 400; }
@@ -509,36 +509,26 @@ section.hero.view-02 .hero-stack-02 { opacity: 1; }
 #research .rcfoot .you { color: var(--c-200); }
 @media (max-width: 900px) { #research .rs-viz { grid-column: 1 / -1; margin-top: 48px; } }
 /* the research sheet: printed by the machine above the perforation, written by you below it */
-#research .rsheet { background: color-mix(in srgb, var(--c-paper) 85%, var(--c-400)); border: 0.5px solid var(--c-200); border-radius: 4px; padding: 26px 30px 24px; }  /* FIG.06 loopwrap ground, matched */
-#research .rsh-head, #research .rsh-formhead { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-1000); padding-bottom: 14px; }
+#research .rsheet { background: color-mix(in srgb, var(--c-200) 70%, var(--c-paper) 30%); border: 0.5px solid var(--c-200); border-radius: 4px; padding: 26px 30px 24px; display: flex; flex-direction: column; }  /* FIG.06 ground; a document plate */
+#research .rsh-head, #research .rsh-formhead { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--font); font-size: 15px; font-weight: 500; letter-spacing: -0.01em; color: var(--c-1000); padding-bottom: 14px; }
 #research .rsh-formhead { padding-top: 24px; }
 #research .rsh-meta { font-size: 11px; letter-spacing: 0.06em; color: var(--c-800); }
 #research .rsh-row { display: flex; align-items: center; gap: 18px; padding: 12px 0; border-top: 0.5px solid var(--c-400); }
 #research .rsh-k { font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; color: var(--c-800); }
 #research .rsh-row .rsh-k { flex: 1; }
-#research .rsh-v { font-size: 14px; color: var(--c-1000); letter-spacing: -0.01em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+#research .rsh-v { font-size: 17px; color: var(--c-1000); letter-spacing: -0.01em; font-variant-numeric: tabular-nums; white-space: nowrap; }
 #research .rsh-spark svg { display: block; }
-#research .rsh-spark path { fill: none; stroke: var(--c-800); stroke-width: 1.3; }
+#research .rsh-spark path { fill: none; stroke: var(--c-1000); stroke-width: 1.5; }
 #research .rsh-spark circle { fill: var(--c-1000); }
 #research .rsh-note { padding: 14px 0 0; border-top: 0.5px solid var(--c-400); font-size: 12px; line-height: 1.5; color: var(--c-800); }
 #research .rsh-note b { font-weight: 500; color: var(--c-1000); }
 #research .rsh-tear { margin: 24px -30px 0; border-top: 1px dashed var(--c-600); }
 #research .rsh-frow { display: flex; align-items: baseline; gap: 18px; padding: 18px 0 6px; }
-#research .rsh-frow .rsh-k { white-space: nowrap; }
+#research .rsh-frow .rsh-k { white-space: nowrap; font-family: var(--font); font-size: 15px; letter-spacing: -0.01em; color: var(--c-1000); }
 #research .rsh-blank { flex: 1; border-bottom: 0.5px solid var(--c-600); text-align: right; padding-bottom: 4px; }
 #research .rsh-blank i { font-style: normal; font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--c-600); }
-#research .rsh-final { margin-top: 20px; }
-/* No. 09 Research - second light island (paper interlude; the dark readout cards sit on it) */
-#research::after { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); background: color-mix(in srgb, var(--c-white) 45%, var(--c-200)); z-index: 0; }
-#research > * { position: relative; z-index: 1; }
-#research .entry-no { color: var(--c-800); }
-#research .entry-name { color: var(--c-1000); }
-#research .rs-h2 { color: var(--c-1000); }
-#research .rs-incl { color: var(--c-800); }
-#research .rs-incl b { color: var(--c-1000); }
-#research .rs-p { color: var(--c-800); }
-#research .rs-p .hl { color: var(--c-1000); }
-#research .rs-link { color: var(--c-1000); }
+#research .rsh-final { margin-top: 56px; }  /* a quiet foot, no dead air */
+/* No. 09 Research - dark, on the page ground; the paper dossier carries the light */
 @media (max-width: 900px) {
   #research .rs-left, #research .rs-viz { grid-column: 1 / -1; }
   #research .rs-viz { margin-top: 32px; grid-template-columns: 1fr; row-gap: 16px; }
@@ -1234,7 +1224,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 #entry-03 { align-items: center; }
 #entry-03 .sys-left { grid-column: 1 / 6; align-self: center; }
 #entry-03 .sys-right { grid-column: 7 / 13; align-self: center; }
-#entry-03 .sys-loopwrap { position: relative; width: 100%; height: clamp(620px, 56vw, 720px); background-color: color-mix(in srgb, var(--c-paper) 85%, var(--c-400)); background-image: radial-gradient(ellipse 85% 70% at 50% 48%, color-mix(in srgb, var(--c-white) 32%, transparent) 0%, transparent 62%), radial-gradient(ellipse 130% 115% at 50% 50%, transparent 55%, color-mix(in srgb, var(--c-800) 15%, transparent) 100%);  /* depth pilot: light pool at center (kept below dot brightness), edges fall away (grid off) */ border: 0.5px solid var(--c-200); border-radius: 4px; overflow: hidden; }  /* graphic box: base tone + light-grey hairline; telemetry dot/grid drawn on canvas (computed square cells, even box divisions) */
+#entry-03 .sys-loopwrap { position: relative; width: 100%; height: clamp(620px, 56vw, 720px); background-color: color-mix(in srgb, var(--c-200) 70%, var(--c-paper) 30%); background-image: radial-gradient(ellipse 85% 70% at 50% 48%, color-mix(in srgb, var(--c-white) 32%, transparent) 0%, transparent 62%), radial-gradient(ellipse 130% 115% at 50% 50%, transparent 55%, color-mix(in srgb, var(--c-800) 15%, transparent) 100%);  /* depth pilot: light pool at center (kept below dot brightness), edges fall away (grid off) */ border: 0.5px solid var(--c-200); border-radius: 4px; overflow: hidden; }  /* graphic box: base tone + light-grey hairline; telemetry dot/grid drawn on canvas (computed square cells, even box divisions) */
 #entry-03 .sys-loopwrap canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 #entry-03 .sys-h2 { max-width: none; color: var(--c-1000); }
 #entry-03 .entry-name { color: var(--c-1000); }
@@ -1446,16 +1436,18 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 <style>
 #development { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); align-items: start; }
 #development .dev-left { grid-column: 1 / 6; align-self: center; }
-#development .dev-diff { grid-column: 7 / 13; display: flex; flex-direction: column; gap: 12px; margin-top: 0; }  /* month 01 falls to month 18: time runs downward */
+#development .dev-diff { grid-column: 7 / 13; display: grid; grid-template-columns: repeat(6, 1fr); column-gap: var(--gutter); align-items: start; margin-top: 0; }  /* the staircase: month 18 sits one step below month 01 */
+#development .dev-col { grid-column: 1 / 4; }
+#development .dev-col.on { grid-column: 4 / 7; margin-top: 140px; }
 #development .dev-h2 { max-width: none; }
 #development .dev-lede { font-size: 17px; line-height: 1.55; color: var(--c-600); margin-top: 28px; }
-#development .dev-arrow { display: flex; align-items: center; justify-content: center; padding: 2px 0; color: var(--c-700); font-size: 18px; line-height: 1; }
-#development .dev-col { background: var(--c-surface); border: 0.5px solid var(--card-outline); border-radius: 4px; padding: 24px 26px; }
+#development .dev-arrow { display: none; }
+#development .dev-col { background: var(--c-surface); border: 0.5px solid var(--card-outline); border-radius: 4px; padding: 30px 26px 38px; }
 #development .dev-col.on { border-color: var(--c-700); }
 #development .dev-hd { display: flex; flex-direction: column; gap: 8px; padding-bottom: 22px; }
 #development .dev-m { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; color: var(--c-700); }
 #development .dev-s { font-size: 15px; line-height: 1.4; color: var(--c-200); letter-spacing: -0.01em; }
-#development .dev-row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 13px 0; border-top: 0.5px solid var(--c-900); }
+#development .dev-row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 16px 0; border-top: 0.5px solid var(--c-900); }
 /* reveal: card fades in, then its rows populate one by one (judgment accumulating) */
 @media (prefers-reduced-motion: no-preference) {
   #development .dev-col .dev-rows .dev-row { opacity: 0; transform: translateY(8px); transition: opacity 0.5s cubic-bezier(0.2,0.6,0.2,1), transform 0.55s cubic-bezier(0.2,0.6,0.2,1); }
@@ -1475,6 +1467,7 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 @media (max-width: 900px) {
   #development .dev-left, #development .dev-diff { grid-column: 1 / -1; }
   #development .dev-diff { margin-top: 32px; grid-template-columns: 1fr; row-gap: 16px; }
+  #development .dev-col, #development .dev-col.on { grid-column: 1 / -1; margin-top: 0; }
 
 }
 </style>
@@ -1543,15 +1536,15 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
     <div class="rsheet" style="--d:0.1s">
       <div class="rsh-head"><span>Research Dossier &middot; POWL</span><span class="rsh-meta">Fiscal.ai &middot; 10-yr</span></div>
       <div class="rsh-row"><span class="rsh-k">Revenue CAGR</span><span class="rsh-v">14.2%</span><span class="rsh-spark"><svg width="76" height="20" viewBox="0 0 76 20" aria-hidden="true"><path d="M0.0 18.0 L8.4 15.7 L16.9 15.7 L25.3 13.4 L33.8 11.1 L42.2 8.9 L50.7 8.9 L59.1 6.6 L67.6 4.3 L76.0 2.0"/><circle cx="75.5" cy="2" r="1.6"/></svg></span></div>
-      <div class="rsh-row"><span class="rsh-k">Return on capital</span><span class="rsh-v">21.8%</span><span class="rsh-spark"><svg width="76" height="20" viewBox="0 0 76 20" aria-hidden="true"><path d="M0.0 14.8 L8.4 18.0 L16.9 11.6 L25.3 8.4 L33.8 11.6 L42.2 5.2 L50.7 5.2 L59.1 2.0 L67.6 5.2 L76.0 2.0"/><circle cx="75.5" cy="2" r="1.6"/></svg></span></div>
-      <div class="rsh-row"><span class="rsh-k">Gross margin</span><span class="rsh-v">24.6%</span><span class="rsh-spark"><svg width="76" height="20" viewBox="0 0 76 20" aria-hidden="true"><path d="M0.0 18.0 L8.4 18.0 L16.9 12.7 L25.3 12.7 L33.8 12.7 L42.2 7.3 L50.7 7.3 L59.1 7.3 L67.6 2.0 L76.0 2.0"/><circle cx="75.5" cy="2" r="1.6"/></svg></span></div>
-      <div class="rsh-row"><span class="rsh-k">Net debt / EBITDA</span><span class="rsh-v">0.3&times;</span><span class="rsh-spark"><svg width="76" height="20" viewBox="0 0 76 20" aria-hidden="true"><path d="M0.0 2.0 L8.4 4.7 L16.9 7.3 L25.3 7.3 L33.8 10.0 L42.2 12.7 L50.7 12.7 L59.1 15.3 L67.6 15.3 L76.0 18.0"/><circle cx="75.5" cy="18" r="1.6"/></svg></span></div>
+      <div class="rsh-row"><span class="rsh-k">Return on Capital</span><span class="rsh-v">21.8%</span><span class="rsh-spark"><svg width="76" height="20" viewBox="0 0 76 20" aria-hidden="true"><path d="M0.0 14.8 L8.4 18.0 L16.9 11.6 L25.3 8.4 L33.8 11.6 L42.2 5.2 L50.7 5.2 L59.1 2.0 L67.6 5.2 L76.0 2.0"/><circle cx="75.5" cy="2" r="1.6"/></svg></span></div>
+      <div class="rsh-row"><span class="rsh-k">Gross Margin</span><span class="rsh-v">24.6%</span><span class="rsh-spark"><svg width="76" height="20" viewBox="0 0 76 20" aria-hidden="true"><path d="M0.0 18.0 L8.4 18.0 L16.9 12.7 L25.3 12.7 L33.8 12.7 L42.2 7.3 L50.7 7.3 L59.1 7.3 L67.6 2.0 L76.0 2.0"/><circle cx="75.5" cy="2" r="1.6"/></svg></span></div>
+      <div class="rsh-row"><span class="rsh-k">Net Debt / EBITDA</span><span class="rsh-v">0.3&times;</span><span class="rsh-spark"><svg width="76" height="20" viewBox="0 0 76 20" aria-hidden="true"><path d="M0.0 2.0 L8.4 4.7 L16.9 7.3 L25.3 7.3 L33.8 10.0 L42.2 12.7 L50.7 12.7 L59.1 15.3 L67.6 15.3 L76.0 18.0"/><circle cx="75.5" cy="18" r="1.6"/></svg></span></div>
       <div class="rsh-note"><b>AI computes and surfaces</b> data, ratios, comparables, trends.</div>
       <div class="rsh-tear" aria-hidden="true"></div>
-      <div class="rsh-formhead"><span>Investment Case</span><span class="rsh-meta">you write</span></div>
-      <div class="rsh-frow"><span class="rsh-k">Thesis</span><span class="rsh-blank"><i>your reasoning</i></span></div>
-      <div class="rsh-frow"><span class="rsh-k">Intrinsic Value</span><span class="rsh-blank"><i>your estimate</i></span></div>
-      <div class="rsh-frow"><span class="rsh-k">Confidence</span><span class="rsh-blank"><i>your call</i></span></div>
+      <div class="rsh-formhead"><span>Investment Case</span><span class="rsh-meta">You Write</span></div>
+      <div class="rsh-frow"><span class="rsh-k">Thesis</span><span class="rsh-blank"><i>Your Reasoning</i></span></div>
+      <div class="rsh-frow"><span class="rsh-k">Intrinsic Value</span><span class="rsh-blank"><i>Your Estimate</i></span></div>
+      <div class="rsh-frow"><span class="rsh-k">Confidence</span><span class="rsh-blank"><i>Your Call</i></span></div>
       <div class="rsh-note rsh-final"><b>You decide.</b> The machine informs, it does not commit.</div>
     </div>
   </div>
