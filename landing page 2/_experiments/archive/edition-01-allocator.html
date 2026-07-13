@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>II Editions, No. 01 The Allocator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EEEBE4; --ink:#191917;
+  --ink-dim:rgba(25,25,23,.56); --ink-faint:rgba(25,25,23,.34);
+  --hair:rgba(25,25,23,.16); --hair-strong:rgba(25,25,23,.30);
+  --signal:#BE3A1E; --stage:#0C0C0D;
+  --sans:'IBM Plex Sans',-apple-system,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--stage);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  padding:40px 24px;display:flex;justify-content:center;}
+
+.poster{position:relative;width:100%;max-width:780px;aspect-ratio:4/5;overflow:hidden;
+  background:var(--paper);box-shadow:0 30px 80px rgba(0,0,0,.55);}
+.grain{position:absolute;inset:0;width:100%;height:100%;z-index:5;pointer-events:none;mix-blend-mode:multiply;opacity:.6;}
+
+.frame{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;
+  padding:clamp(26px,5%,48px);color:var(--ink);}
+
+/* masthead */
+.masthead{display:flex;justify-content:space-between;align-items:baseline;
+  font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.2em;color:var(--ink);}
+.masthead .mark{color:var(--ink-dim);}
+.masthead .no{color:var(--signal);font-weight:500;letter-spacing:.14em;}
+
+/* plate: a landscape print, matted on the paper */
+.plate{margin-top:clamp(20px,4.4%,40px);}
+.plate img{display:block;width:100%;aspect-ratio:2400/1027;object-fit:cover;
+  border:1px solid var(--hair-strong);}
+.platecap{margin-top:10px;display:flex;justify-content:space-between;
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--ink-dim);}
+
+/* catalogue label block */
+.label{margin-top:auto;padding-top:clamp(18px,4%,34px);}
+.title{font-family:var(--sans);font-weight:700;letter-spacing:-.02em;line-height:.98;
+  font-size:clamp(40px,9.2vw,80px);color:var(--ink);}
+.caption{margin-top:14px;font-family:var(--sans);font-weight:400;
+  font-size:clamp(15px,2.1vw,18px);line-height:1.42;color:var(--ink-dim);max-width:30em;}
+
+.entry{margin-top:clamp(18px,3.4%,30px);}
+.entry .row{display:flex;justify-content:space-between;align-items:baseline;
+  padding:11px 0;border-top:1px solid var(--hair);
+  font-family:var(--mono);font-size:12px;letter-spacing:.06em;}
+.entry .row .k{color:var(--ink-faint);}
+.entry .row .v{color:var(--ink);}
+
+.footer{margin-top:clamp(16px,3%,26px);padding-top:14px;border-top:1px solid var(--hair-strong);
+  display:flex;justify-content:space-between;align-items:baseline;
+  font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--ink-dim);}
+.footer .brand{color:var(--ink);}
+</style>
+</head>
+<body>
+  <div class="poster">
+    <div class="frame">
+      <header class="masthead">
+        <div><span class="mark">//</span>&nbsp;&nbsp;II EDITIONS</div>
+        <div class="no">N°01</div>
+      </header>
+
+      <figure class="plate">
+        <img src="assets/edition-01-allocator.jpg" alt="A single figure standing in a vast modernist hall">
+        <figcaption class="platecap">
+          <span>Pl. 01 &middot; Interior, Unnamed Institution</span>
+          <span>Archival Pigment</span>
+        </figcaption>
+      </figure>
+
+      <div class="label">
+        <h1 class="title">The Allocator</h1>
+        <p class="caption">Observed in a vast institution. Unmoved by the room, waiting on the evidence rather than the noise.</p>
+
+        <div class="entry">
+          <div class="row"><span class="k">Subject</span><span class="v">Conviction, Held Indefinitely</span></div>
+          <div class="row"><span class="k">Edition</span><span class="v">01 / 52</span></div>
+          <div class="row"><span class="k">Year</span><span class="v">2026</span></div>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <div class="brand">// INTELLIGENT INVESTING</div>
+        <div>Less Noise. More Clarity.</div>
+      </footer>
+    </div>
+    <svg class="grain" preserveAspectRatio="none" aria-hidden="true">
+      <filter id="paper"><feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.09"/></feComponentTransfer></filter>
+      <rect width="100%" height="100%" filter="url(#paper)"/>
+    </svg>
+  </div>
+</body>
+</html>

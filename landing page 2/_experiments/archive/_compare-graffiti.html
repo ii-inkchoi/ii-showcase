@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Graffiti - Black vs Red</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--g-paper:#D9D8D4;--g-ink:#0E0E0E;--c-black:#000;--c-400:#C7C7C7;--c-700:#929292;--c-600:#A7A7A7;--c-200:#E3E2E2;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--c-black);color:var(--c-400);font-family:'IBM Plex Mono',ui-monospace,monospace;padding:32px;}
+h1{font-size:13px;font-weight:500;letter-spacing:0.1em;color:var(--c-700);margin:0 0 24px;}
+.row{display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap;justify-content:center;}
+.col{flex:1 1 420px;max-width:520px;}
+.tag{font-size:11px;letter-spacing:0.1em;color:var(--c-600);margin:0 0 10px;}
+.tag b{color:var(--c-200);font-weight:500;}
+/* --- ii-graffiti component (copied from managed-core-variants-editions.html) --- */
+.ii-graffiti{position:relative;container-type:inline-size;aspect-ratio:1/1.414;width:100%;overflow:hidden;background:var(--g-paper);border:0.5px solid rgba(16,16,16,0.18);}
+.ii-graffiti .g-type{position:absolute;inset:0;z-index:1;font-family:'IBM Plex Sans',-apple-system,sans-serif;font-weight:700;letter-spacing:-0.03em;line-height:0.9;color:var(--g-ink);}
+.ii-graffiti .g-type span{position:absolute;display:block;font-size:12cqw;}
+.ii-graffiti .g-type .w1{top:6%;left:5%;}
+.ii-graffiti .g-type .w2{top:71%;right:5%;}
+.ii-graffiti .g-type .w3{bottom:6%;left:5%;}
+.ii-graffiti .g-spray{position:absolute;inset:0;z-index:2;width:100%;height:100%;object-fit:cover;pointer-events:none;}
+.ii-graffiti .g-foot{position:absolute;bottom:14px;right:14px;z-index:3;padding:0;font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:11px;letter-spacing:0.1em;color:var(--g-ink);}
+</style>
+</head>
+<body>
+<h1>M4 GRAFFITI · SPRAY COLOUR COMPARISON</h1>
+<div class="row">
+  <div class="col">
+    <div class="tag"><b>Option A</b> · Black</div>
+    <div class="ii-graffiti">
+      <div class="g-type"><span class="w1">INVESTING</span><span class="w2">MADE</span><span class="w3">EASY</span></div>
+      <img class="g-spray" src="assets/graffiti-strokes.png" alt="">
+      <div class="g-foot">INTELLIGENT INVESTING</div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="tag"><b>Option B</b> · Red</div>
+    <div class="ii-graffiti">
+      <div class="g-type"><span class="w1">INVESTING</span><span class="w2">MADE</span><span class="w3">EASY</span></div>
+      <img class="g-spray" src="assets/graffiti-strokes-red.png" alt="">
+      <div class="g-foot">INTELLIGENT INVESTING</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

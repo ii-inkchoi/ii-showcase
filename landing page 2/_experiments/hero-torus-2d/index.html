@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hero experiment - 3D torus + tickers (compare vs book)</title>
+<style>
+  :root{
+    --bg:#050403; --ink:#F2F0EB; --dim:#B4B2AB; --muted:#83817A; --faint:#55534C; --white:#F4F3F0;
+    --c-black:#000000; --c-white:#FFFFFF; --c-200:#E3E2E2; --c-400:#C7C7C7; --c-700:#929292; --c-800:#565B5E;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --sans:'Inter',-apple-system,"Helvetica Neue",Arial,sans-serif;
+    --frame:clamp(24px,5vw,72px);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{background:var(--c-black);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+  .hero{position:relative;height:100vh;min-height:640px;overflow:hidden}
+  .hero-photo{position:absolute;top:-9%;left:-4%;right:-4%;height:118%;z-index:0;background:var(--c-black) center 42%/cover no-repeat;filter:brightness(0.4) contrast(1.06) saturate(0.85);}
+  .hero-torus{position:absolute;inset:0;z-index:1;width:100%;height:100%;pointer-events:none;}
+  .hero-veil{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(90deg,rgba(0,0,0,0.94),rgba(0,0,0,0.62) 46%,rgba(0,0,0,0.2) 78%,rgba(0,0,0,0) 92%),linear-gradient(0deg,rgba(0,0,0,0.85),rgba(0,0,0,0) 30%);}
+  .navbar{position:absolute;z-index:10;top:0;left:0;right:0}
+  .navbar a,.navbar button{pointer-events:none;cursor:default}
+  .navbar-inner{position:relative;display:flex;align-items:center;justify-content:space-between;padding:var(--frame);gap:32px}
+  .navbar-brand{display:inline-flex;align-items:center;text-decoration:none}
+  .navbar-brand img{height:14px;width:auto;display:block}
+  .navbar-right{display:flex;align-items:center;gap:24px;flex-shrink:0}
+  .navbar-cta{display:none;color:var(--c-200);text-decoration:none;font-size:13px;letter-spacing:.02em;border:.5px solid var(--c-800);padding:8px 16px}
+  .navbar-cta:hover{color:var(--c-white);border-color:var(--c-400)}
+  @media(min-width:1024px){.navbar-cta{display:inline-block}}
+  .nav-links{display:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);align-items:center;gap:24px}
+  .nav-links a{color:var(--c-700);font-size:13px;letter-spacing:.02em;text-decoration:none}
+  .nav-links a:hover{color:var(--c-white)}
+  .nav-links a.active{color:var(--c-white)}
+  @media(min-width:1024px){.nav-links{display:inline-flex}.hamburger{display:none}}
+  .lang-toggle{font-family:var(--mono);font-size:12px;color:var(--muted);display:flex;gap:6px;align-items:center}
+  .lang-toggle .lt.active{color:var(--c-white)}
+  .lang-toggle .sep{color:var(--c-800)}
+  .hamburger{display:inline-flex;flex-direction:column;justify-content:center;gap:4px;width:24px;height:24px;background:none;border:none;cursor:pointer;padding:0}
+  .hamburger span{display:block;height:1px;width:18px;background:var(--c-400)}
+  .bg-switch{position:absolute;z-index:10;bottom:28px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;padding:9px 14px;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:.5px solid var(--c-800);border-radius:2px;font-family:var(--mono)}
+  .bg-switch .bgs-label{font-size:11px;letter-spacing:.14em;color:var(--muted);margin-right:4px}
+  .bg-switch .bgs-sep{width:1px;height:18px;background:var(--c-800);margin:0 6px}
+  .bg-switch button{width:26px;height:26px;border:.5px solid var(--c-800);background:transparent;color:var(--muted);font-family:var(--mono);font-size:12px;cursor:pointer;border-radius:2px;transition:color .15s ease,border-color .15s ease,background .15s ease}
+  .bg-switch button:hover{color:var(--c-white);border-color:var(--c-400)}
+  .bg-switch button.active{color:var(--c-black);background:var(--c-white);border-color:var(--c-white)}
+  .wrap{position:absolute;z-index:3;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 var(--frame);max-width:1680px;margin:0 auto}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--muted);margin-bottom:24px}
+  h1{font-size:clamp(30px,4.4vw,52px);line-height:1.25;letter-spacing:-.03em;font-weight:400;color:var(--c-200);max-width:18ch;margin-bottom:22px}
+  .sub{font-size:clamp(17px,1.6vw,18px);line-height:1.55;color:var(--c-400);margin-bottom:36px}
+  .sub b{display:block;color:var(--muted);font-weight:400}
+  .cta a{display:inline-flex;gap:9px;align-items:center;text-decoration:none;font-size:15px;color:var(--c-white);margin-right:28px}
+  .cta a.sec{color:var(--muted)}
+  .tag{position:absolute;z-index:5;right:var(--frame);top:22px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--faint)}
+</style>
+</head>
+<body>
+<section class="hero">
+  <div class="hero-photo" aria-hidden="true"></div>
+  <canvas class="hero-torus" id="heroTorusExp" aria-hidden="true"></canvas>
+  <div class="hero-veil" aria-hidden="true"></div>
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="../../index.html" class="navbar-brand"><img src="../../Logo.svg" alt="Intelligent Investing"></a>
+      <div class="nav-links">
+        <a href="../../index.html" class="active">Home</a>
+        <a href="../../II Site V2 - Self-Directed.html">Self-Directed</a>
+        <a href="../../II Site V2 - Managed.html">Managed</a><a href="../../II Site V2 - Pricing.html">Pricing</a><a href="../../II Site V2 - Manifesto.html">Manifesto</a>
+      </div>
+      <div class="navbar-right">
+        <div class="lang-toggle"><span class="lt active">EN</span><span class="sep">·</span><span class="lt">FR</span></div>
+        <a href="../../II Site V2 - GetTheApp.html" class="navbar-cta">Enter the System</a>
+        <button class="hamburger" type="button" aria-label="Menu"><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="tag">Hero · background options</div>
+  <div class="wrap">
+    <div class="eyebrow">Intelligent Investing</div>
+    <h1>The investing industry built access. It never built judgment infrastructure.</h1>
+    <p class="sub">Access was solved. <b>The decision layer was not.</b></p>
+    <div class="cta"><a href="#">↗ Enter the System</a><a class="sec" href="#">↗ How It Works</a></div>
+  </div>
+  <div class="bg-switch" role="group" aria-label="Hero background options">
+    <span class="bgs-label">Background</span>
+    <button type="button" data-bg="0" class="active">1</button>
+    <button type="button" data-bg="1">2</button>
+    <button type="button" data-bg="2">3</button>
+    <button type="button" data-bg="3">4</button>
+    <button type="button" data-bg="4">5</button>
+    <button type="button" data-bg="5">6</button>
+    <button type="button" data-bg="6">7</button>
+    <span class="bgs-sep"></span>
+    <span class="bgs-label">Graph</span>
+    <button type="button" data-torus="3d" class="active">3D</button>
+    <button type="button" data-torus="2d">2D</button>
+  </div>
+</section>
+
+<script>
+/* 3D wireframe torus as a genuine form (visible mesh skeleton). Ticker decisions are scattered
+   across the tube SURFACE (not glued to a single ring). S&P benchmark is a quiet equator. */
+(function(){
+  var cv=document.getElementById('heroTorusExp'); if(!cv) return; var ctx=cv.getContext('2d');
+  var RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var WHITE='244,243,240', GREEN='88,150,112', RED='176,84,74', MONO='ui-monospace,Menlo,Consolas,monospace';
+  var W,H,DPR,cx,cy,S;
+  var R=146, RT=58, TILT=-1.0, U=26, V=16;
+  function resize(){DPR=Math.min(devicePixelRatio||1,2);var b=cv.getBoundingClientRect();W=b.width;H=b.height;
+    cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);
+    cx=W*0.64;cy=H*0.5;S=Math.min(W,H)*0.72/(2.15*(R+RT));}   /* 90% of the previous (80%) size */
+  addEventListener('resize',resize);resize();
+  var psi=0, psi2=0, MODE='3d';
+  function proj(u,v){
+    var cu=Math.cos(u),su=Math.sin(u),cvv=Math.cos(v),sv=Math.sin(v);
+    var x=(R+RT*cvv)*cu, y=(R+RT*cvv)*su, z=RT*sv;
+    var cp=Math.cos(psi),sp=Math.sin(psi);
+    var x1=x*cp+z*sp, z1=-x*sp+z*cp;
+    var cf=Math.cos(TILT),sf=Math.sin(TILT);
+    var y2=y*cf-z1*sf, z2=y*sf+z1*cf;
+    return {x:cx+x1*S, y:cy+y2*S, z:z2};
+  }
+  var zr=(R+RT);
+  function shade(z,base,span){var dn=(z/zr+1)/2;if(dn<0)dn=0;if(dn>1)dn=1;return base+span*dn;}
+  var TK=['AAPL','MSFT','NVDA','V','SHOP','POWL','TSM','COST','BRK','GOOG','ASML','CELH','ISRG','FICO','ODD','APP','HRMY','MELI'];
+  var N=RM?12:24, decs=[];
+  function rnd(a,b){return a+Math.random()*(b-a);}
+  function mk(prog){var h=rnd(9,15);return {h:h, born:performance.now()/1000-(prog||0)*h, state:'open', c:null, flash:0, ph:Math.random()*6.28};}
+  for(var i=0;i<N;i++){ var roll=Math.random();
+    var d=roll<0.4 ? {h:0,state:'resolved',c:Math.random()<0.62?GREEN:RED,flash:0,ph:Math.random()*6.28} : mk(rnd(0.1,0.9));
+    decs.push({u:Math.random()*6.283, v:Math.random()*6.283, rf:0.42+Math.random()*0.66, tk:TK[i%TK.length], d:d}); }   /* scattered over the surface */
+  var t0=performance.now(), nextEvt=0;
+  /* 2D mode = production hero "book": near face-on circle, decision dots resolving vs the S&P benchmark diameter */
+  var PITCH2=1.5, yaw2=0, nextEvtB=0, RESB=[{c:GREEN,w:0.62},{c:RED,w:0.38}];
+  function pickRes(){var r=Math.random(),a=0;for(var i=0;i<RESB.length;i++){a+=RESB[i].w;if(r<=a)return RESB[i].c;}return WHITE;}
+  function mkB(state,prog){var horizon=rnd(9,15);return {state:state,horizon:horizon,born:performance.now()/1000-(state==='open'?(prog||0)*horizon:0),enter:state==='enter'?0:1,c:state==='resolved'?pickRes():WHITE,pulse:0,ph:Math.random()*6.28};}
+  var NB=RM?16:30, book=[];
+  for(var bi=0;bi<NB;bi++){var br=Math.sqrt(Math.random())*0.92, ba=Math.random()*6.28, broll=Math.random();
+    var bst=broll<0.42?mkB('resolved'):(broll<0.9?mkB('open',rnd(0.1,0.92)):mkB('enter'));
+    book.push({px:Math.cos(ba)*br, pz:Math.sin(ba)*br, tk:TK[bi%TK.length], d:bst});}
+  function draw2D(T,dt,now){
+    var cx2=W*0.66, cy2=H*0.52, scale2=Math.min(W,H)*0.33;
+    yaw2=RM?0:0.28*Math.sin(now*0.00013);
+    function proj2(px,pz){var x1=px*Math.cos(yaw2)-pz*Math.sin(yaw2), z1=px*Math.sin(yaw2)+pz*Math.cos(yaw2);
+      var y2=-z1*Math.sin(PITCH2), z2=z1*Math.cos(PITCH2), d=3.4, s=d/(d+z2);
+      return {x:cx2+x1*s*scale2, y:cy2+y2*s*scale2, s:s, depth:z2};}
+    ctx.shadowColor='rgba(0,0,0,0.85)';ctx.shadowBlur=6;
+    var sweep=(now*0.00016)%1;ctx.lineWidth=1.7;
+    for(var c1=0;c1<72;c1++){var f=c1/72,a0=f*6.28,ae=(c1+1)/72*6.28;
+      var q0=proj2(Math.cos(a0),Math.sin(a0)),q1=proj2(Math.cos(ae),Math.sin(ae));
+      var dd=Math.abs(f-sweep);dd=Math.min(dd,1-dd);var hot=Math.max(0,1-dd/0.18);
+      ctx.strokeStyle='rgba('+WHITE+','+(0.3+0.62*hot*hot).toFixed(3)+')';
+      ctx.beginPath();ctx.moveTo(q0.x,q0.y);ctx.lineTo(q1.x,q1.y);ctx.stroke();}
+    ctx.strokeStyle='rgba('+WHITE+',0.3)';ctx.lineWidth=1;ctx.beginPath();
+    for(var c2=0;c2<=96;c2++){var a2=c2/96*6.28,p2=proj2(Math.cos(a2)*0.6,Math.sin(a2)*0.6);c2?ctx.lineTo(p2.x,p2.y):ctx.moveTo(p2.x,p2.y);}ctx.stroke();
+    var bb0=proj2(-1,0), bb1=proj2(1,0);
+    ctx.strokeStyle='rgba('+WHITE+',0.52)';ctx.lineWidth=1.3;ctx.setLineDash([2,7]);ctx.lineDashOffset=-(now*0.02)%9;
+    ctx.beginPath();ctx.moveTo(bb0.x,bb0.y);ctx.lineTo(bb1.x,bb1.y);ctx.stroke();ctx.setLineDash([]);ctx.lineDashOffset=0;
+    ctx.fillStyle='rgba('+WHITE+',0.98)';ctx.beginPath();ctx.arc(bb1.x,bb1.y,3.2,0,6.28);ctx.fill();
+    ctx.strokeStyle='rgba('+WHITE+',0.5)';ctx.lineWidth=1;ctx.beginPath();ctx.arc(bb1.x,bb1.y,6.5,0,6.28);ctx.stroke();
+    ctx.textAlign='right';
+    ctx.font='14px '+MONO;ctx.fillStyle='rgba('+WHITE+',0.98)';ctx.fillText('S&P 500', bb1.x-13, bb1.y+1);
+    ctx.font='11.5px '+MONO;ctx.fillStyle='rgba('+WHITE+',0.55)';ctx.fillText('BENCHMARK', bb1.x-13, bb1.y+16);
+    if(!RM && now>nextEvtB){var ne=book[Math.floor(Math.random()*book.length)];if(ne && ne.d.state==='resolved') ne.d=mkB('enter');nextEvtB=now+(680+Math.random()*780);}
+    book.forEach(function(n){var p=proj2(n.px,n.pz);n.__z=p.depth;n.__p=p;});
+    var order=book.map(function(n,i){return i;}).sort(function(a,b){return book[a].__z-book[b].__z;});
+    ctx.textAlign='center';
+    for(var oi=0;oi<order.length;oi++){var n=book[order[oi]], d=n.d, p=n.__p, S2=p.s; d.ph+=dt*0.7;
+      if(d.state==='enter'){d.enter=Math.min(1,d.enter+dt*1.6);if(d.enter>=1){d.state='open';d.born=T;}}
+      var A=d.enter, nr=2.6*S2, ring=8*S2;
+      if(d.state==='open'){var prog=Math.min(1,(T-d.born)/d.horizon), pulse=0.55+0.45*Math.sin(d.ph*2);
+        ctx.strokeStyle='rgba('+WHITE+','+((0.45+0.4*pulse)*A)+')';ctx.lineWidth=1.3;
+        ctx.beginPath();ctx.arc(p.x,p.y,nr+1,0,6.28);ctx.stroke();
+        ctx.strokeStyle='rgba('+WHITE+','+(0.13*A)+')';ctx.lineWidth=1.6;ctx.beginPath();ctx.arc(p.x,p.y,ring,0,6.28);ctx.stroke();
+        ctx.strokeStyle='rgba('+WHITE+','+(0.9*A)+')';ctx.lineWidth=1.6;
+        ctx.beginPath();ctx.arc(p.x,p.y,ring,-Math.PI/2,-Math.PI/2+prog*6.28);ctx.stroke();
+        if(prog>=1){d.state='resolved';d.c=pickRes();d.pulse=1;}
+      }else if(d.state==='resolved'){
+        if(d.pulse>0){d.pulse=Math.max(0,d.pulse-dt*1.2);
+          ctx.strokeStyle='rgba('+d.c+','+(d.pulse*0.6)+')';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(p.x,p.y,nr+2+(1-d.pulse)*10,0,6.28);ctx.stroke();}
+        var breathe=0.6+0.4*Math.sin(d.ph);
+        ctx.fillStyle='rgba('+d.c+','+(0.62+0.38*breathe)+')';ctx.beginPath();ctx.arc(p.x,p.y,nr,0,6.28);ctx.fill();
+        ctx.strokeStyle='rgba('+d.c+',0.5)';ctx.lineWidth=1;ctx.beginPath();ctx.arc(p.x,p.y,ring*0.72,0,6.28);ctx.stroke();
+      }
+      ctx.font=Math.round(11.5*S2)+'px '+MONO;ctx.fillStyle='rgba('+WHITE+','+(0.55*Math.max(0.3,A)*Math.min(1,S2))+')';
+      ctx.fillText(n.tk, p.x, p.y+ring+11*S2);
+    }
+  }
+  function frame(now){var T=now/1000, dt=Math.min(40,now-t0)/1000;t0=now;
+    psi += (RM?0:dt*0.1);
+    ctx.clearRect(0,0,W,H);
+    ctx.shadowColor='rgba(0,0,0,0.8)';ctx.shadowBlur=5;
+    if(MODE==='2d'){ draw2D(T,dt,now); requestAnimationFrame(frame); return; }
+    var k;
+    /* mesh skeleton - the visible 3D form */
+    for(var j=0;j<V;j++){ var v=j*2*Math.PI/V; ctx.beginPath();
+      for(k=0;k<=44;k++){var p=proj(k*2*Math.PI/44, v); k?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y);}
+      ctx.strokeStyle='rgba('+WHITE+',0.2)';ctx.lineWidth=0.7;ctx.stroke(); }
+    for(var i2=0;i2<U;i2++){ var u=i2*2*Math.PI/U; ctx.beginPath();
+      for(k=0;k<=26;k++){var q=proj(u, k*2*Math.PI/26); k?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y);}
+      ctx.strokeStyle='rgba('+WHITE+',0.23)';ctx.lineWidth=0.7;ctx.stroke(); }
+    /* S&P benchmark equator - quiet reference (no longer a dominant bright line) */
+    ctx.beginPath(); var pts=[];
+    for(k=0;k<=90;k++){var e=proj(k*2*Math.PI/90, 0); pts.push(e); k?ctx.lineTo(e.x,e.y):ctx.moveTo(e.x,e.y);}
+    ctx.strokeStyle='rgba('+WHITE+',0.62)';ctx.lineWidth=1.3;ctx.stroke();
+    var front=pts[0], fz=pts[0].z; for(k=0;k<pts.length;k++){if(pts[k].z>fz){fz=pts[k].z;front=pts[k];}}
+    ctx.fillStyle='rgba('+WHITE+',1)';ctx.beginPath();ctx.arc(front.x,front.y,3.2,0,6.28);ctx.fill();
+    ctx.strokeStyle='rgba('+WHITE+',0.6)';ctx.lineWidth=1;ctx.beginPath();ctx.arc(front.x,front.y,6.5,0,6.28);ctx.stroke();
+    ctx.textAlign='left';ctx.font='13px '+MONO;ctx.fillStyle='rgba('+WHITE+',1)';ctx.fillText('S&P 500', front.x+11, front.y+1);
+    ctx.font='9px '+MONO;ctx.fillStyle='rgba('+WHITE+',0.7)';ctx.fillText('BENCHMARK', front.x+11, front.y+14);
+    /* ticker decision nodes scattered on the surface */
+    if(!RM && now>nextEvt){var ne=decs[Math.floor(Math.random()*decs.length)]; if(ne.d.state==='resolved'){ne.d=mk(0);} nextEvt=now+(700+Math.random()*800);}
+    var order=decs.map(function(o,i){return i;});
+    order.forEach(function(idx){var o=decs[idx]; o.__p=proj(o.u,o.v); o.__z=o.__p.z;});
+    order.sort(function(a,b){return decs[a].__z-decs[b].__z;});
+    for(var oi=0;oi<order.length;oi++){ var o=decs[order[oi]], d=o.d, p=o.__p, dep=shade(p.z,0.4,0.6);
+      d.ph+=dt*0.7; var nr=2.2, ring=7.5;
+      if(d.state==='open'){ var prog=Math.min(1,(T-d.born)/d.h), pulse=0.55+0.45*Math.sin(d.ph*2);
+        ctx.strokeStyle='rgba('+WHITE+','+((0.4+0.4*pulse)*dep)+')';ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(p.x,p.y,nr+1,0,6.28);ctx.stroke();
+        ctx.strokeStyle='rgba('+WHITE+','+(0.12*dep)+')';ctx.lineWidth=1.6;ctx.beginPath();ctx.arc(p.x,p.y,ring,0,6.28);ctx.stroke();
+        ctx.strokeStyle='rgba('+WHITE+','+(0.85*dep)+')';ctx.lineWidth=1.6;ctx.beginPath();ctx.arc(p.x,p.y,ring,-Math.PI/2,-Math.PI/2+prog*6.28);ctx.stroke();
+        if(prog>=1){d.state='resolved';d.c=Math.random()<0.62?GREEN:RED;d.flash=1;}
+      } else {
+        if(d.flash>0){d.flash=Math.max(0,d.flash-dt*1.2);ctx.strokeStyle='rgba('+d.c+','+(d.flash*0.6)+')';ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(p.x,p.y,nr+2+(1-d.flash)*8,0,6.28);ctx.stroke();}
+        var br=0.6+0.4*Math.sin(d.ph);ctx.fillStyle='rgba('+d.c+','+((0.6+0.36*br)*dep)+')';ctx.beginPath();ctx.arc(p.x,p.y,nr,0,6.28);ctx.fill();
+        ctx.strokeStyle='rgba('+d.c+','+(0.5*dep)+')';ctx.lineWidth=1;ctx.beginPath();ctx.arc(p.x,p.y,ring*0.72,0,6.28);ctx.stroke();
+      }
+      var dx=p.x-cx, dy=p.y-cy, len=Math.hypot(dx,dy)||1, lx=p.x+dx/len*14, ly=p.y+dy/len*14;
+      ctx.textAlign=lx>=cx?'left':'right';
+      ctx.font='10.5px '+MONO;ctx.fillStyle='rgba('+WHITE+','+(0.9*dep)+')';ctx.fillText(o.tk, lx, ly+3);
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+  window.__setTorusMode=function(m){ MODE=(m==='2d')?'2d':'3d'; };
+})();
+
+/* Hero background switcher - compare 5 options. Drop images at images/hero-bg-2..5.png (#1 = current hero-doc.png). */
+(function(){
+  var BGS=[
+    '../../images/hero-bg-1.png',  /* 1 - data center */
+    '../../images/hero-bg-2.png',  /* 2 - person in vast modern space */
+    '../../images/hero-bg-3.png',  /* 3 - contemporary archive interior */
+    '../../images/hero-bg-4.png',  /* 4 - modernist archive hall */
+    '../../images/hero-bg-6.png',  /* 5 - dense urban aerial + data column */
+    '../../images/hero-bg-7.png',  /* 6 - brutalist curve + lone figure */
+    '../../images/hero-bg-8.png'   /* 7 - steel bridge structure */
+  ];
+  var photo=document.querySelector('.hero-photo');
+  var btns=[].slice.call(document.querySelectorAll('.bg-switch button[data-bg]'));
+  if(!photo||!btns.length) return;
+  function set(i){ photo.style.backgroundImage="url('"+BGS[i]+"')"; btns.forEach(function(b,j){b.classList.toggle('active',j===i);}); }
+  btns.forEach(function(b){ b.addEventListener('click',function(){ set(parseInt(b.getAttribute('data-bg'),10)); }); });
+  addEventListener('keydown',function(e){
+    var cur=0; btns.forEach(function(b,j){ if(b.classList.contains('active')) cur=j; });
+    if(e.key==='ArrowRight'){ set((cur+1)%BGS.length); }
+    else if(e.key==='ArrowLeft'){ set((cur-1+BGS.length)%BGS.length); }
+  });
+  set(0);
+})();
+
+/* Torus style toggle - 3D mesh <-> 2D flat hoop */
+(function(){
+  var btns=[].slice.call(document.querySelectorAll('.bg-switch button[data-torus]'));
+  if(!btns.length) return;
+  btns.forEach(function(b){ b.addEventListener('click',function(){
+    if(window.__setTorusMode) window.__setTorusMode(b.getAttribute('data-torus'));
+    btns.forEach(function(x){x.classList.toggle('active',x===b);});
+  }); });
+})();
+</script>
+</body>
+</html>

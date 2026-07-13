@@ -1,0 +1,1850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Managed Core - Visual Variants</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500&family=IBM+Plex+Mono:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--c-black:#000;--c-1000:#1C1C1C;--c-900:#232627;--c-800:#565B5E;--c-700:#929292;--c-600:#A7A7A7;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFF;--c-surface:#101010;--c-paper:#ECEAE5;--pf-eg:#FF451C;--pf-bg:#ECFD21;--pf-b:#2C8042;--pf-bi:#BEEDFD;--pf-mm:#BEFDCF;--font:'Inter',-apple-system,sans-serif;--mono:'Chakra Petch',ui-monospace,monospace;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--c-black);color:var(--c-200);font-family:var(--font);padding:64px 24px 160px;}
+.wrap{max-width:980px;margin:0 auto;}
+h1{font-size:22px;font-weight:400;letter-spacing:-0.02em;color:var(--c-200);}
+.intro{font-size:15px;line-height:1.7;color:var(--c-600);margin-top:12px;max-width:640px;}
+#langToggle{position:fixed;top:20px;right:24px;z-index:9;background:var(--c-surface);color:var(--c-400);border:0.5px solid var(--c-800);font:12px var(--mono);letter-spacing:0.04em;padding:7px 14px;cursor:pointer;}
+.var{margin-top:110px;}
+.var-k{font-family:var(--mono);font-size:12px;letter-spacing:0.08em;color:var(--c-700);}
+.var h2{font-size:22px;font-weight:400;letter-spacing:-0.02em;color:var(--c-200);margin-top:10px;}
+.var p{font-size:15px;line-height:1.7;color:var(--c-600);margin-top:10px;max-width:640px;}
+.box{position:relative;height:auto;aspect-ratio:1/1;max-width:760px;margin:24px auto 0;background:var(--c-surface);border:0.5px solid rgba(236,234,229,0.13);overflow:hidden;}
+.box.tall{aspect-ratio:9/13;max-width:720px;}
+.box.lite{background:color-mix(in srgb,var(--c-200) 70%,var(--c-paper) 30%);border-color:rgba(16,16,16,0.2);}
+.box.lite .cap{color:var(--c-800);}
+.reelwrap{position:absolute;inset:7%;overflow:hidden;background:var(--c-black);border:0.5px solid rgba(236,234,229,0.14);}
+.reelwrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;}
+.reelwrap img.on{opacity:1;}
+.box canvas{position:absolute;inset:0;width:100%;height:100%;z-index:2;}
+.box img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.2) contrast(1.05) saturate(0.4);}
+.box img.bg.life{filter:brightness(0.5) contrast(1.03) saturate(0.95);}
+.leg{position:absolute;left:16px;top:14px;z-index:3;font-family:var(--mono);font-size:10px;color:var(--c-600);letter-spacing:0.04em;} /* dg-allow-font: figure legend */
+.leg b{font-weight:500;color:var(--c-200);}
+.cap{position:absolute;right:16px;bottom:14px;z-index:3;font-family:var(--mono);font-size:10px;color:var(--c-700);letter-spacing:0.04em;} /* dg-allow-font: figure caption */
+.cap-out{max-width:720px;margin:10px auto 0;text-align:right;font-family:var(--mono);font-size:10px;color:var(--c-700);letter-spacing:0.04em;} /* dg-allow-font: figure caption, outside */
+.cap-out.sq{max-width:760px;}
+</style>
+</head>
+<body>
+<button id="langToggle" type="button">한국어</button>
+<div class="wrap">
+  <h1 data-en="Managed Core - Visual Variants" data-ko="Managed 코어 - 비주얼 변주">Managed Core - Visual Variants</h1>
+  <p class="intro" data-en="The Managed grammar: no decisions, no signals to score. A rule, a weekly deposit, the S&amp;P core accumulating. Everything here is about cadence and accretion, not judgment." data-ko="Managed의 문법: 결정도 없고 채점할 신호도 없음. 규칙 하나, 매주의 적립, 쌓여가는 S&amp;P 코어. 여기 있는 모든 그림은 판단이 아니라 리듬과 축적에 관한 것.">The Managed grammar: no decisions, no signals to score. A rule, a weekly deposit, the S&amp;P core accumulating. Everything here is about cadence and accretion, not judgment.</p>
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M1 - calendar / consistency" data-ko="변주 M1 - 캘린더 / 일관성">Variant M1 - calendar / consistency</div>
+    <h2 data-en="The Year Poster, and then the year rolls over" data-ko="더 이어 포스터, 그리고 해가 넘어간다">The Year Poster, and then the year rolls over</h2>
+    <p data-en="Twelve month columns of Fridays fill one by one. When the last week lands, the big numeral rolls to the next year and the sheet starts again. Consistency measured in whole years." data-ko="금요일들로 된 12개의 월 컬럼이 하나씩 채워짐. 마지막 주가 착지하면 큰 연도 숫자가 다음 해로 넘어가고 시트가 다시 시작됨. 일관성을 해 단위로 측정.">Twelve month columns of Fridays fill one by one. When the last week lands, the big numeral rolls to the next year and the sheet starts again. Consistency measured in whole years.</p>
+    <div class="box tall lite">
+      <canvas id="cvM16"></canvas>
+    </div>
+  </div>
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M2 - calendar / consistency" data-ko="변주 M2 - 캘린더 / 일관성">Variant M2 - calendar / consistency</div>
+    <h2 data-en="The Ledger Texture, one line, printed until it becomes mass" data-ko="더 레저 텍스처, 한 줄이 질량이 될 때까지 찍는다">The Ledger Texture, one line, printed until it becomes mass</h2>
+    <p data-en="A dated ledger line for every Monday of the year, printed into one even texture. Over it, a single line graph: the only thing that changed while the ledger repeated." data-ko="1년의 모든 월요일마다 날짜가 찍힌 원장 한 줄, 고른 텍스처로 인쇄. 그 위에 라인 그래프 하나: 원장이 반복되는 동안 유일하게 변한 것.">A dated ledger line for every Monday of the year, printed into one even texture. Over it, a single line graph: the only thing that changed while the ledger repeated.</p>
+    <div class="box tall">
+      <img class="bg" src="../images/contentteammogo_interior_of_the_research_floor_of_a_major_inves_48fe8a2a-6b43-46aa-beda-57304ff4bc31.png" alt="">
+      <canvas id="cvM18"></canvas>
+    </div>
+    <div class="cap-out">Illustrative &middot; not live data</div>
+  </div>
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M3 - calendar / consistency" data-ko="변주 M3 - 캘린더 / 일관성">Variant M3 - calendar / consistency</div>
+    <h2 data-en="The Year Ring, twelve orbits of one habit" data-ko="더 이어 링, 한 습관의 열두 궤도">The Year Ring, twelve orbits of one habit</h2>
+    <p data-en="The wheel, redrawn in ink: January on the outer orbit, December at the core, every day a faint tick sweeping clockwise. Only the Mondays print bright, and the centre keeps the running total." data-ko="휠을 잉크로 다시 그림: 1월이 가장 바깥 궤도, 12월이 중심, 모든 날이 시계방향으로 도는 옅은 눈금. 월요일만 밝게 찍히고, 중앙에서 누적 합계가 올라감.">The wheel, redrawn in ink: January on the outer orbit, December at the core, every day a faint tick sweeping clockwise. Only the Mondays print bright, and the centre keeps the running total.</p>
+    <div class="box">
+      <canvas id="cvM20"></canvas>
+      <div class="leg"><b>The Year Ring</b></div>
+    </div>
+    <div class="cap-out sq">Illustrative &middot; not live data</div>
+  </div>
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M4 (lifestyle)" data-ko="변주 M4 (라이프스타일)">Variant M4 (lifestyle)</div>
+    <h2 data-en="The Absence, a deposit lands while you cross the street" data-ko="디 앱센스, 길을 건너는 동안 적립이 도착한다">The Absence, a deposit lands while you cross the street</h2>
+    <p data-en="A living city in colour, seen from above. One walker is marked. The annotation says only that a deposit executed this morning. The rule does not need anyone at a desk." data-ko="위에서 내려다본 컬러의 살아있는 도시. 보행자 한 명이 표시됨. 주석은 오늘 아침 적립이 실행됐다는 것만 말함. 규칙은 누구도 책상 앞에 붙잡아 두지 않음.">A living city in colour, seen from above. One walker is marked. The annotation says only that a deposit executed this morning. The rule does not need anyone at a desk.</p>
+    <div class="box">
+      <img class="bg life" src="../images/retrox_ams_top-down_view_of_a_busy_crowd_crossing_at_a_geomet_1b2b333e-8c75-4109-b6e4-dc1b48592b63_0.png" alt="">
+      <canvas id="cvM6"></canvas>
+      <div class="leg"><b>The Absence</b></div>
+      <div class="cap">Illustrative &middot; not live data</div>
+    </div>
+  </div>
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M5 (lifestyle)" data-ko="변주 M5 (라이프스타일)">Variant M5 (lifestyle)</div>
+    <h2 data-en="The Timetable, it departs with or without you" data-ko="더 타임테이블, 당신이 없어도 출발한다">The Timetable, it departs with or without you</h2>
+    <p data-en="Trains weaving through a city, and a departure board of Fridays: executed, executed, executed, next. Managed as public infrastructure - punctual, indifferent, reliable." data-ko="도시를 누비는 열차들, 그리고 금요일들의 출발 전광판: 실행, 실행, 실행, 다음. 대중 인프라로서의 Managed - 정시에, 무심하게, 어김없이.">Trains weaving through a city, and a departure board of Fridays: executed, executed, executed, next. Managed as public infrastructure - punctual, indifferent, reliable.</p>
+    <div class="box tall">
+      <img class="bg life" style="filter:brightness(0.3) contrast(1.05) saturate(0.85)" src="../images/mrrobot777._city_photo_many_trains_weaving_in_anout_out_betwe_dc791fd6-990c-4c80-9640-d0990ca8b9f1_0.png" alt="">
+      <canvas id="cvM7"></canvas>
+      <div class="leg"><b>The Timetable</b></div>
+      <div class="cap">Illustrative &middot; not live data</div>
+    </div>
+  </div>
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M6 (lifestyle)" data-ko="변주 M6 (라이프스타일)">Variant M6 (lifestyle)</div>
+    <h2 data-en="The Horizon, the only date that matters is far away" data-ko="더 허라이즌, 중요한 날짜는 멀리 있다">The Horizon, the only date that matters is far away</h2>
+    <p data-en="An aerial city at dusk, in colour. One thin line runs from now to 2041, a tick per year, a slow dot climbing it. Patience drawn over a city that never stops moving." data-ko="해질녘의 도시 항공뷰, 컬러. 지금에서 2041년까지 가는 가는 선 하나, 해마다 눈금 하나, 그 위를 천천히 오르는 점. 멈추지 않는 도시 위에 그려진 인내.">An aerial city at dusk, in colour. One thin line runs from now to 2041, a tick per year, a slow dot climbing it. Patience drawn over a city that never stops moving.</p>
+    <div class="box tall">
+      <img class="bg life" src="../images/sirhand_oblique_aerial_view_of_a_modern_city_intersection_dur_a5347d6c-b4b2-4237-b015-30b623a49564_0.png" alt="">
+      <canvas id="cvM10"></canvas>
+      <div class="leg"><b>The Horizon</b></div>
+      <div class="cap">Illustrative &middot; not live data</div>
+    </div>
+  </div>
+
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M7" data-ko="변주 M7">Variant M7</div>
+    <h2 data-en="The Climb, the rule walking uphill" data-ko="더 클라임, 오르막을 걷는 규칙">The Climb, the rule walking uphill</h2>
+    <p data-en="The Flow's cousin: one staircase climbs the frame, one small step per week, compounding as it goes. The dashed line beneath is what deposits alone would have been." data-ko="Flow의 사촌: 계단 하나가 프레임을 오름. 매주 한 칸, 갈수록 복리로 가팔라짐. 아래 점선은 기여금만 넣었을 때의 자리.">The Flow's cousin: one staircase climbs the frame, one small step per week, compounding as it goes. The dashed line beneath is what deposits alone would have been.</p>
+    <div class="box tall">
+      <img class="bg" src="../images/contentteammogo_institutional_archive_reading_room_long_tables__ab1d1fe4-112d-45ff-984b-7b5162fb2c7f.png" alt="">
+      <canvas id="cvM2"></canvas>
+      <div class="leg"><b>The Climb</b></div>
+      <div class="cap">Illustrative &middot; not live data</div>
+    </div>
+  </div>
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M8" data-ko="변주 M8">Variant M8</div>
+    <h2 data-en="The Rings, a core grown like a tree" data-ko="더 링즈, 나무처럼 자라는 코어">The Rings, a core grown like a tree</h2>
+    <p data-en="Tree rings: every month of holding adds one thin ring around the core. Nothing is traded away, so nothing is ever removed. Age becomes visible mass." data-ko="나이테: 보유한 한 달마다 코어 둘레에 얇은 링이 하나 더해짐. 팔지 않으니 지워지는 것도 없음. 시간이 눈에 보이는 질량이 됨.">Tree rings: every month of holding adds one thin ring around the core. Nothing is traded away, so nothing is ever removed. Age becomes visible mass.</p>
+    <div class="box">
+      <canvas id="cvM3"></canvas>
+      <div class="leg"><b>The Rings</b></div>
+      <div class="cap">Illustrative &middot; not live data</div>
+    </div>
+  </div>
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M9" data-ko="변주 M9">Variant M9</div>
+    <h2 data-en="The Rule, one line that holds" data-ko="더 룰, 붙잡아 주는 선 하나">The Rule, one line that holds</h2>
+    <p data-en="Over a quiet room, a single horizontal rule with 52 week-ticks. Deposits fall onto it and slide right into the pile. The line never moves. That is the whole product." data-ko="조용한 방 위에 주간 눈금 52개가 찍힌 수평선 하나. 적립금이 그 위로 떨어져 오른쪽 더미로 미끄러짐. 선은 절대 움직이지 않음. 그게 이 상품의 전부.">Over a quiet room, a single horizontal rule with 52 week-ticks. Deposits fall onto it and slide right into the pile. The line never moves. That is the whole product.</p>
+    <div class="box">
+      <img class="bg" src="../images/contentteammogo_grand_institutional_research_reading_room_long__694ab151-f1a2-4930-8f39-7554cad01c61.png" alt="">
+      <canvas id="cvM4"></canvas>
+      <div class="leg"><b>The Rule</b></div>
+      <div class="cap">Illustrative &middot; not live data</div>
+    </div>
+  </div>
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M10" data-ko="변주 M10">Variant M10</div>
+    <h2 data-en="The Match, a few questions become a mandate" data-ko="더 매치, 몇 개의 질문이 위임장이 된다">The Match, a few questions become a mandate</h2>
+    <p data-en="The onboarding as a figure: a short column of answered questions funnels to one node, and one of five portfolio bands takes the weight. You answer once; the rule runs weekly." data-ko="온보딩을 도판으로: 답해진 질문 몇 줄이 한 점으로 모이고, 다섯 개의 포트폴리오 밴드 중 하나가 무게를 받음. 답은 한 번, 규칙은 매주.">The onboarding as a figure: a short column of answered questions funnels to one node, and one of five portfolio bands takes the weight. You answer once; the rule runs weekly.</p>
+    <div class="box tall">
+      <canvas id="cvM5"></canvas>
+      <div class="leg"><b>The Match</b></div>
+      <div class="cap">Illustrative &middot; not live data</div>
+    </div>
+  </div>
+
+
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M11" data-ko="변주 M11">Variant M11</div>
+    <h2 data-en="Zero Decisions, the flattest line on the page" data-ko="제로 디시전, 페이지에서 가장 평평한 선">Zero Decisions, the flattest line on the page</h2>
+    <p data-en="Two charts share one frame. Decisions required: a dead-flat zero line, five years long. The core: a staircase that never stopped. The punchline is the emptiness of the first chart." data-ko="한 프레임에 차트 두 개. 필요했던 결정: 5년 내내 죽은 듯 평평한 0의 선. 코어: 멈춘 적 없는 계단. 펀치라인은 첫 번째 차트의 텅 빔.">Two charts share one frame. Decisions required: a dead-flat zero line, five years long. The core: a staircase that never stopped. The punchline is the emptiness of the first chart.</p>
+    <div class="box">
+      <canvas id="cvM8"></canvas>
+      <div class="leg"><b>Zero Decisions</b></div>
+      <div class="cap">Illustrative &middot; not live data</div>
+    </div>
+  </div>
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M12" data-ko="변주 M12">Variant M12</div>
+    <h2 data-en="The Standing Order, one instruction, honoured weekly" data-ko="더 스탠딩 오더, 한 번의 지시, 매주의 이행">The Standing Order, one instruction, honoured weekly</h2>
+    <p data-en="The product as a legal instrument: pay the core, this amount, every Friday, until further notice. Signed once. The counter of executions keeps climbing on its own." data-ko="법률 문서로서의 상품: 코어에, 이 금액을, 매주 금요일, 별도 지시가 있을 때까지 지급하라. 서명은 한 번. 이행 횟수 카운터는 스스로 계속 오름.">The product as a legal instrument: pay the core, this amount, every Friday, until further notice. Signed once. The counter of executions keeps climbing on its own.</p>
+    <div class="box">
+      <canvas id="cvM9"></canvas>
+      <div class="leg"><b>The Standing Order</b></div>
+      <div class="cap">Illustrative &middot; not live data</div>
+    </div>
+  </div>
+
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M13 - for No. 01 The Decision Is the Risk" data-ko="변주 M13 - No. 01 The Decision Is the Risk 용">Variant M13 - for No. 01 The Decision Is the Risk</div>
+    <h2 data-en="The Gap, the same market minus the decisions" data-ko="더 갭, 같은 시장에서 결정만 뺀 것">The Gap, the same market minus the decisions</h2>
+    <p data-en="Two lines ride the same market. The index climbs. The investor who kept deciding falls a little further behind at every marked decision. The gap is not the market." data-ko="두 선이 같은 시장을 탄다. 인덱스는 오른다. 계속 결정했던 투자자는 표시된 결정 지점마다 조금씩 더 뒤처진다. 그 격차는 시장이 만든 게 아니다.">Two lines ride the same market. The index climbs. The investor who kept deciding falls a little further behind at every marked decision. The gap is not the market.</p>
+    <div class="box">
+      <canvas id="cvM11"></canvas>
+      <div class="leg"><b>The Gap</b></div>
+      <div class="cap">Illustrative &middot; not live data</div>
+    </div>
+  </div>
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M14 - for No. 02 How It Works" data-ko="변주 M14 - No. 02 How It Works 용">Variant M14 - for No. 02 How It Works</div>
+    <h2 data-en="The Conveyor, a straight line, not a loop" data-ko="더 컨베이어, 루프가 아니라 직선">The Conveyor, a straight line, not a loop</h2>
+    <p data-en="Self-Directed is a loop you run. Managed is a conveyor: answer once, get matched, and the belt moves weekly on its own. One line, three stations, one direction." data-ko="Self-Directed는 당신이 돌리는 루프. Managed는 컨베이어: 한 번 답하고, 매칭되면, 벨트가 매주 스스로 움직임. 선 하나, 정거장 셋, 방향 하나.">Self-Directed is a loop you run. Managed is a conveyor: answer once, get matched, and the belt moves weekly on its own. One line, three stations, one direction.</p>
+    <div class="box">
+      <canvas id="cvM12"></canvas>
+      <div class="leg"><b>The Conveyor</b></div>
+      <div class="cap">Illustrative &middot; not live data</div>
+    </div>
+  </div>
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M15 - for No. 03 What They Don't Do" data-ko="변주 M15 - No. 03 What They Don't Do 용">Variant M15 - for No. 03 What They Don't Do</div>
+    <h2 data-en="The Empty Frames, everything this product refuses" data-ko="빈 액자들, 이 상품이 거절하는 모든 것">The Empty Frames, everything this product refuses</h2>
+    <p data-en="Four dashed frames stand empty: stock picking, market timing, forecasts, performance fees. One solid frame holds the only thing inside the product - a rule, held." data-ko="점선 액자 넷이 비어 있음: 종목 선정, 마켓 타이밍, 예측, 성과보수. 실선 액자 하나에만 이 상품의 유일한 내용물이 들어 있음 - 지켜지는 규칙.">Four dashed frames stand empty: stock picking, market timing, forecasts, performance fees. One solid frame holds the only thing inside the product - a rule, held.</p>
+    <div class="box">
+      <canvas id="cvM13"></canvas>
+      <div class="leg"><b>The Empty Frames</b></div>
+      <div class="cap">Illustrative &middot; not live data</div>
+    </div>
+  </div>
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M16 - for No. 04 The Portfolios" data-ko="변주 M16 - No. 04 The Portfolios 용">Variant M16 - for No. 04 The Portfolios</div>
+    <h2 data-en="The Strata, five mandates as sediment" data-ko="더 스트라타, 지층으로 쌓인 다섯 개의 위임">The Strata, five mandates as sediment</h2>
+    <p data-en="The five portfolios as full-width strata, risk settling downward - the one place the portfolio palette is allowed to speak at full size. A bracket marks the layer you were matched to." data-ko="다섯 포트폴리오를 전폭의 지층으로, 위험이 아래로 가라앉는 순서로 - 포트폴리오 팔레트가 큰 면적으로 말해도 되는 유일한 자리. 브래킷이 매칭된 층을 가리킴.">The five portfolios as full-width strata, risk settling downward - the one place the portfolio palette is allowed to speak at full size. A bracket marks the layer you were matched to.</p>
+    <div class="box">
+      <canvas id="cvM14"></canvas>
+      <div class="leg"><b>The Strata</b></div>
+      <div class="cap">Illustrative &middot; not live data</div>
+    </div>
+  </div>
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M17 - for No. 05 The Projection" data-ko="변주 M17 - No. 05 The Projection 용">Variant M17 - for No. 05 The Projection</div>
+    <h2 data-en="The Cone, every contribution has a destination" data-ko="더 콘, 모든 기여금에는 목적지가 있다">The Cone, every contribution has a destination</h2>
+    <p data-en="From today's balance a quiet cone widens toward the horizon, the median line running to one number: the projection. Weekly ticks keep arriving along the floor." data-ko="오늘의 잔고에서 조용한 콘이 지평선을 향해 벌어지고, 중앙선은 하나의 숫자로 달려감: 프로젝션. 바닥을 따라 주간 눈금이 계속 도착함.">From today's balance a quiet cone widens toward the horizon, the median line running to one number: the projection. Weekly ticks keep arriving along the floor.</p>
+    <div class="box">
+      <canvas id="cvM15"></canvas>
+      <div class="leg"><b>The Cone</b></div>
+      <div class="cap">Illustrative &middot; not live data</div>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M18 - neo-modernism" data-ko="변주 M18 - 네오모더니즘">Variant M18 - neo-modernism</div>
+    <h2 data-en="The Statement, a huge claim and tiny evidence" data-ko="더 스테이트먼트, 거대한 주장과 아주 작은 증거">The Statement, a huge claim and tiny evidence</h2>
+    <p data-en="The 70: an almost empty frame and a four-line evidence block in the corner. The one gesture: a zero so large it leaves the frame. Decisions made this year." data-ko="70: 거의 빈 프레임과 구석의 4줄짜리 증거 블록. 파격 하나: 프레임을 뚫고 나가는 거대한 0. 올해 내린 결정의 수.">The 70: an almost empty frame and a four-line evidence block in the corner. The one gesture: a zero so large it leaves the frame. Decisions made this year.</p>
+    <div class="box">
+      <canvas id="cvN1"></canvas>
+    </div>
+  </div>
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M19 - neo-modernism" data-ko="변주 M19 - 네오모더니즘">Variant M19 - neo-modernism</div>
+    <h2 data-en="The Record Card, a mandate filed like an archive entry" data-ko="더 레코드 카드, 아카이브 문서처럼 등록된 위임">The Record Card, a mandate filed like an archive entry</h2>
+    <p data-en="Information treated as evidence: labels, values, hairlines, a running status. The one gesture: the serial number blown up into a watermark behind the record." data-ko="증거로서의 정보: 라벨, 값, 헤어라인, 진행 상태. 파격 하나: 기록 뒤에 워터마크로 확대된 일련번호.">Information treated as evidence: labels, values, hairlines, a running status. The one gesture: the serial number blown up into a watermark behind the record.</p>
+    <div class="box">
+      <canvas id="cvN2"></canvas>
+    </div>
+  </div>
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M20 - neo-modernism" data-ko="변주 M20 - 네오모더니즘">Variant M20 - neo-modernism</div>
+    <h2 data-en="The Still, an execution observed, not performed" data-ko="더 스틸, 수행이 아니라 관찰되는 실행">The Still, an execution observed, not performed</h2>
+    <p data-en="Cinematic abstraction: a dark frame, a reticle, a timestamp. The system executed at nine. Nobody was in the room. The one gesture: the crosshair spanning the whole frame." data-ko="시네마틱 추상: 어두운 프레임, 조준선, 타임스탬프. 시스템은 9시에 실행됨. 방에는 아무도 없었음. 파격 하나: 프레임 전체를 가로지르는 크로스헤어.">Cinematic abstraction: a dark frame, a reticle, a timestamp. The system executed at nine. Nobody was in the room. The one gesture: the crosshair spanning the whole frame.</p>
+    <div class="box tall">
+      <img class="bg" src="../images/gorobot.co_Cinematic_35mm_photograph_low-angle_perspective_sh_f908f2a8-c732-4774-870f-070dddf61f88_0.png" alt="">
+      <canvas id="cvN3"></canvas>
+    </div>
+  </div>
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M21 - neo-modernism" data-ko="변주 M21 - 네오모더니즘">Variant M21 - neo-modernism</div>
+    <h2 data-en="The Empty Room, whitespace as the product" data-ko="더 엠티 룸, 여백이 곧 상품">The Empty Room, whitespace as the product</h2>
+    <p data-en="Active whitespace taken to its logical end. Ninety percent of the frame is deliberately empty, because nothing is exactly what happened. The deposit went through anyway." data-ko="능동적 여백의 논리적 끝. 프레임의 90%가 의도적으로 비어 있음. 실제로 일어난 일이 정확히 아무것도 아니었기 때문. 적립은 그래도 들어감.">Active whitespace taken to its logical end. Ninety percent of the frame is deliberately empty, because nothing is exactly what happened. The deposit went through anyway.</p>
+    <div class="box">
+      <canvas id="cvN4"></canvas>
+    </div>
+  </div>
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M22 - neo-modernism" data-ko="변주 M22 - 네오모더니즘">Variant M22 - neo-modernism</div>
+    <h2 data-en="The Spec Sheet, the product drawn as a machine" data-ko="더 스펙 시트, 기계 도면으로 그린 상품">The Spec Sheet, the product drawn as a machine</h2>
+    <p data-en="An architectural monograph diagram: thin leader lines label a small core. Input, process, output. The operator line points at empty space, because there is none." data-ko="건축 모노그래프 도면: 가는 지시선이 작은 코어에 라벨을 붙임. 입력, 처리, 출력. 오퍼레이터 지시선은 빈 공간을 가리킴. 없으니까.">An architectural monograph diagram: thin leader lines label a small core. Input, process, output. The operator line points at empty space, because there is none.</p>
+    <div class="box">
+      <canvas id="cvN5"></canvas>
+    </div>
+  </div>
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M23 - neo-modernism" data-ko="변주 M23 - 네오모더니즘">Variant M23 - neo-modernism</div>
+    <h2 data-en="The Vertical Year, one numeral holds the spine" data-ko="더 버티컬 이어, 숫자 하나가 척추를 잡는다">The Vertical Year, one numeral holds the spine</h2>
+    <p data-en="The 70: a quiet deposit log, set small and right. The one gesture: the year rotated vertical, running the full height of the frame and past it." data-ko="70: 작고 오른쪽에 앉힌 조용한 적립 로그. 파격 하나: 세로로 눕혀 프레임 전체 높이를 관통해 넘어가는 연도.">The 70: a quiet deposit log, set small and right. The one gesture: the year rotated vertical, running the full height of the frame and past it.</p>
+    <div class="box tall">
+      <canvas id="cvN6"></canvas>
+    </div>
+  </div>
+
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M24 - borrowed: contour scan" data-ko="변주 M24 - 차용: 컨투어 스캔">Variant M24 - borrowed: contour scan</div>
+    <h2 data-en="The Contour Core, 52 layers make a mass" data-ko="더 컨투어 코어, 52겹이 질량이 된다">The Contour Core, 52 layers make a mass</h2>
+    <p data-en="The moodboard's scanned heads, translated: every week of holding adds one contour line, and the lines stack into a body. Repetition rendered as topography." data-ko="무드보드의 스캔된 두상을 번역: 보유한 매주가 등고선 하나를 더하고, 선들이 쌓여 몸체가 됨. 반복을 지형으로 렌더링.">The moodboard's scanned heads, translated: every week of holding adds one contour line, and the lines stack into a body. Repetition rendered as topography.</p>
+    <div class="box">
+      <canvas id="cvN7"></canvas>
+    </div>
+  </div>
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M25 - borrowed: interference" data-ko="변주 M25 - 차용: 간섭">Variant M25 - borrowed: interference</div>
+    <h2 data-en="The Interference, the market bends, the rule does not" data-ko="더 인터피어런스, 시장은 휘고 규칙은 휘지 않는다">The Interference, the market bends, the rule does not</h2>
+    <p data-en="A uniform field of grey lines warps wherever the market passes through it. One line stays perfectly straight, and it is the only one in colour: the weekly rule." data-ko="균일한 회색 선의 장이 시장이 지나가는 자리마다 일그러짐. 단 한 줄만 완벽한 직선이고, 유일하게 색을 가짐: 주간 규칙.">A uniform field of grey lines warps wherever the market passes through it. One line stays perfectly straight, and it is the only one in colour: the weekly rule.</p>
+    <div class="box">
+      <canvas id="cvN8"></canvas>
+    </div>
+  </div>
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M26 - borrowed: line screen" data-ko="변주 M26 - 차용: 라인 스크린">Variant M26 - borrowed: line screen</div>
+    <h2 data-en="The Scan, the crowd measured, one order placed" data-ko="더 스캔, 측정된 군중, 실행된 주문 하나">The Scan, the crowd measured, one order placed</h2>
+    <p data-en="The crossing photographed, then rebuilt as a line screen: people become signal density. Inside the noise, one clean ring marks the walker whose deposit just executed." data-ko="횡단보도를 찍고 라인 스크린으로 재구성: 사람들이 신호 밀도가 됨. 그 노이즈 속에서 깨끗한 링 하나가 방금 적립이 실행된 보행자를 표시.">The crossing photographed, then rebuilt as a line screen: people become signal density. Inside the noise, one clean ring marks the walker whose deposit just executed.</p>
+    <div class="box">
+      <canvas id="cvN9"></canvas>
+    </div>
+  </div>
+
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M27 - the archive reel" data-ko="변주 M27 - 아카이브 릴">Variant M27 - the archive reel</div>
+    <h2 data-en="The Archive Reel, the world changes, the stamp does not" data-ko="더 아카이브 릴, 세상은 바뀌고 도장은 안 바뀐다">The Archive Reel, the world changes, the stamp does not</h2>
+    <p data-en="Archival plates cycle like flashcards: crowds, trains, rooms, cities. The image never repeats on schedule, but the stamp underneath does. One week, one execution, whatever the world looked like." data-ko="아카이브 도판이 플래시카드처럼 넘어감: 군중, 열차, 방, 도시. 이미지는 제멋대로 바뀌지만 그 아래 도장은 규칙적으로 찍힘. 한 주, 한 번의 실행, 세상이 어떤 모습이었든.">Archival plates cycle like flashcards: crowds, trains, rooms, cities. The image never repeats on schedule, but the stamp underneath does. One week, one execution, whatever the world looked like.</p>
+    <div class="box tall">
+      <div class="reelwrap">
+        <img src="assets/reel-1.jpg" class="on" alt="">
+        <img src="assets/reel-2.jpg" alt="">
+        <img src="assets/reel-3.jpg" alt="">
+        <img src="assets/reel-4.jpg" alt="">
+        <img src="assets/reel-5.jpg" alt="">
+        <img src="assets/reel-6.jpg" alt="">
+        <img src="assets/reel-7.jpg" alt="">
+        <img src="assets/reel-8.jpg" alt="">
+        <img src="assets/reel-9.jpg" alt="">
+        <img src="assets/reel-10.jpg" alt="">
+        <img src="assets/reel-11.jpg" alt="">
+        <img src="assets/reel-12.jpg" alt="">
+        <img src="assets/reel-13.jpg" alt="">
+        <img src="assets/reel-14.jpg" alt="">
+        <img src="assets/reel-15.jpg" alt="">
+        <img src="assets/reel-16.jpg" alt="">
+        <img src="assets/reel-17.jpg" alt="">
+        <img src="assets/reel-18.jpg" alt="">
+      </div>
+      <canvas id="cvN10" style="mix-blend-mode:difference"></canvas>
+      <canvas id="cvN10num" style="z-index:3"></canvas>
+    </div>
+  </div>
+
+
+  <div class="var">
+    <div class="var-k" data-en="Variant M28 - the constant (reel v2)" data-ko="변주 M28 - 더 컨스턴트 (릴 v2)">Variant M28 - the constant (reel v2)</div>
+    <h2 data-en="The Constant, the patterns flash, the line holds" data-ko="더 컨스턴트, 패턴은 번쩍여도 선은 자리를 지킨다">The Constant, the patterns flash, the line holds</h2>
+    <p data-en="Halftone cards cut like a film reel: circles, rings, stripes, a giant week numeral. Through every one of them a single held line stays fixed at the same place, growing a little wider each week. The market changes its picture; the rule does not move." data-ko="하프톤 카드가 필름 릴처럼 컷됨: 원, 링, 스트라이프, 거대한 주차 숫자. 그 모든 카드를 관통해 고정된 선 하나가 늘 같은 자리를 지키고, 매주 조금씩 넓어짐. 시장은 그림을 바꾸지만 규칙은 움직이지 않음.">Halftone cards cut like a film reel: circles, rings, stripes, a giant week numeral. Through every one of them a single held line stays fixed at the same place, growing a little wider each week. The market changes its picture; the rule does not move.</p>
+    <div class="box tall">
+      <canvas id="cvN11"></canvas>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// EN/KO toggle (figure ink stays EN - it is the artwork)
+(function(){const btn=document.getElementById('langToggle');let ko=false;
+  btn.addEventListener('click',function(){ko=!ko;btn.textContent=ko?'EN':'한국어';
+    document.querySelectorAll('[data-en]').forEach(function(el){el.textContent=ko?el.getAttribute('data-ko'):el.getAttribute('data-en');});});
+})();
+
+function setup(id){const cv=document.getElementById(id);const ctx=cv.getContext('2d');
+  const s={cv,ctx,W:0,H:0};
+  function size(){const b=cv.parentElement.getBoundingClientRect();const DPR=Math.min(devicePixelRatio||1,2);
+    s.W=b.width;s.H=b.height;cv.width=b.width*DPR;cv.height=b.height*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);}
+  addEventListener('resize',size);size();return s;}
+
+function grainTile(alpha){const gr=document.createElement('canvas');gr.width=gr.height=160;
+  const gc=gr.getContext('2d'),id=gc.createImageData(160,160),d=id.data;
+  for(let i=0;i<d.length;i+=4){const w2=Math.random()<0.5?255:0;d[i]=d[i+1]=d[i+2]=w2;d[i+3]=Math.random()*alpha;}
+  gc.putImageData(id,0,0);return gr;}
+
+// M2. the climb - a weekly staircase up a tall frame ---------------------------
+(function(){const s=setup('cvM2');
+  const N=140,R=0.012;const gr=grainTile(22);let pat=null,T0=0;
+  const V=[];let acc=0;for(let i=0;i<=N;i++){acc=acc*(1+R)+1;V.push(acc);}
+  const VM=V[N];
+  const seeds=[...Array(30)].map(()=>({a:Math.random(),b:Math.random(),tw:Math.random()*6.28,sz:1.3+Math.random()*1.3}));
+  function frame(now){const{ctx,W,H}=s;if(!T0)T0=now;const rev=Math.min(1,(now-T0)/2600),e=1-Math.pow(1-rev,3);
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(168,162,155,'+a+')';
+    const padL=W*0.12,padR=W*0.14,padT=H*0.10,padB=H*0.10;
+    const X=i=>padL+(W-padL-padR)*i/N;
+    const Y=v=>H-padB-(H-padT-padB)*v/VM;
+    const upto=Math.max(1,Math.floor(N*e));
+    // contributions alone
+    ctx.setLineDash([4,5]);ctx.strokeStyle=DIM(0.45);ctx.lineWidth=1;ctx.beginPath();
+    for(let i=0;i<=upto;i++){const x=X(i),y=Y((i+1)*(VM/ (N+1) /  (V[N]/(N+1)) ));i?ctx.lineTo(x,Y(i+1)):ctx.moveTo(x,Y(i+1));}ctx.stroke();ctx.setLineDash([]);
+    // the staircase
+    ctx.strokeStyle=IN(0.8);ctx.lineWidth=1.3;ctx.beginPath();
+    ctx.moveTo(X(0),Y(V[0]));
+    for(let i=1;i<=upto;i++){ctx.lineTo(X(i),Y(V[i-1]));ctx.lineTo(X(i),Y(V[i]));}
+    ctx.stroke();
+    // specks along the climb
+    for(const sd of seeds){const u=(sd.a+now*0.00001)%1*e;const i2=u*upto;
+      const x=X(i2),y=Y(V[Math.floor(i2)]||1)+(sd.b-0.5)*36;
+      ctx.fillStyle=IN((0.12+0.2*Math.pow(Math.sin(now*0.002+sd.tw),2)).toFixed(3));ctx.fillRect(x,y,sd.sz,sd.sz);}
+    // grain under the type
+    if(!pat)pat=s.ctx.createPattern(gr,'repeat');
+    ctx.save();ctx.translate((Math.random()*160)|0,(Math.random()*160)|0);ctx.fillStyle=pat;ctx.fillRect(-160,-160,W+320,H+320);ctx.restore();
+    // tip + labels
+    const tx=X(upto),ty=Y(V[upto]);
+    ctx.beginPath();ctx.arc(tx,ty,4.2,0,6.28);ctx.fillStyle=IN(0.98);ctx.fill();
+    ctx.strokeStyle='rgba(0,0,0,0.85)';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.save();ctx.shadowColor='rgba(0,0,0,0.85)';ctx.shadowBlur=8;
+    ctx.textAlign='right';ctx.textBaseline='middle';
+    ctx.font='500 15px "Inter",-apple-system,sans-serif';ctx.fillStyle=IN(0.98);
+    ctx.fillText('S&P 500 · the core',tx-14,ty-9);
+    ctx.letterSpacing='0.04em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.92);
+    ctx.fillText('accumulated weekly · held',tx-14,ty+11);
+    ctx.textAlign='left';ctx.fillStyle=DIM(0.75);
+    ctx.fillText('contributions alone',X(Math.floor(N*0.5))+10,Y(Math.floor(N*0.5)+1)+20);
+    ctx.fillStyle=DIM(0.8);ctx.fillText('Week 01',X(0),H-padB+22);
+    ctx.letterSpacing='0px';ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// M3. the rings - a core aging like a tree -------------------------------------
+(function(){const s=setup('cvM3');
+  const MONTHS=72;let T0=0;
+  const wob=[...Array(MONTHS)].map(()=>({ph:Math.random()*6.28,amp:0.5+Math.random()*2.2}));
+  function frame(now){const{ctx,W,H}=s;if(!T0)T0=now;const rev=Math.min(1,(now-T0)/3600),e=1-Math.pow(1-rev,3);
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(168,162,155,'+a+')';
+    const cx=W/2,cy=H/2,R0=Math.min(W,H)*0.09,R1=Math.min(W,H)*0.40;
+    const upto=Math.max(3,Math.floor(MONTHS*e));
+    // the heartwood
+    ctx.beginPath();ctx.arc(cx,cy,R0*0.72,0,6.28);ctx.fillStyle='rgba(22,21,20,1)';ctx.fill();
+    ctx.strokeStyle=IN(0.5);ctx.lineWidth=1;ctx.stroke();
+    // rings, slightly organic
+    for(let m=0;m<upto;m++){const t2=m/(MONTHS-1);
+      const r=R0+(R1-R0)*t2;
+      const isYear=(m%12===11);
+      const al=isYear?0.42:0.12+0.10*Math.pow(Math.sin(m*1.7),2);
+      ctx.strokeStyle=IN(al.toFixed(3));ctx.lineWidth=isYear?1.1:0.7;
+      ctx.beginPath();
+      for(let a2=0;a2<=90;a2++){const th=a2/90*6.28;
+        const wo=wob[m];const rr=r+Math.sin(th*3+wo.ph+now*0.00004)*wo.amp;
+        const x=cx+Math.cos(th)*rr,y=cy+Math.sin(th)*rr*0.98;
+        a2?ctx.lineTo(x,y):ctx.moveTo(x,y);}
+      ctx.closePath();ctx.stroke();
+      if(isYear){const yr=2026+Math.floor(m/12);
+        ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';
+        ctx.letterSpacing='0.06em';ctx.font='10px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.85);
+        ctx.fillText(String(yr),cx,cy-r-9);ctx.letterSpacing='0px';ctx.restore();}}
+    // the newest ring breathes in
+    if(upto<MONTHS){const r=R0+(R1-R0)*(upto/(MONTHS-1));
+      const pu=0.5+0.5*Math.sin(now*0.004);
+      ctx.strokeStyle=IN((0.2+0.3*pu).toFixed(3));ctx.lineWidth=0.8;
+      ctx.beginPath();ctx.arc(cx,cy,r+2,0,6.28);ctx.stroke();}
+    // centre + caption
+    ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.font='300 18px "Inter",-apple-system,sans-serif';ctx.fillStyle=IN(0.96);
+    ctx.fillText('The Core',cx,cy-6);
+    ctx.letterSpacing='0.05em';ctx.font='9px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.9);
+    ctx.fillText('held, not traded',cx,cy+12);ctx.letterSpacing='0px';
+    ctx.letterSpacing='0.04em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.85);
+    ctx.fillText('one ring, one month · nothing is ever removed',cx,H-Math.min(W,H)*0.045-14);ctx.letterSpacing='0px';ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// M4. the rule - one line that holds, deposits settle onto it ------------------
+(function(){const s=setup('cvM4');
+  const gr=grainTile(24);let pat=null,T0=0;
+  const settled=[];let nextDrop=0;
+  function frame(now){const{ctx,W,H}=s;if(!T0){T0=now;nextDrop=now+400;}
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(168,162,155,'+a+')';
+    const y=H*0.52,x0=W*0.10,x1=W*0.90;
+    if(!pat)pat=ctx.createPattern(gr,'repeat');
+    ctx.save();ctx.translate((Math.random()*160)|0,(Math.random()*160)|0);ctx.fillStyle=pat;ctx.fillRect(-160,-160,W+320,H+320);ctx.restore();
+    // the rule
+    ctx.strokeStyle=IN(0.7);ctx.lineWidth=1.2;
+    ctx.beginPath();ctx.moveTo(x0,y);ctx.lineTo(x1,y);ctx.stroke();
+    for(let i=0;i<=52;i++){const x=x0+(x1-x0)*i/52;const big=(i%13===0);
+      ctx.strokeStyle=IN(big?0.6:0.3);ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x,y+(big?9:5));ctx.stroke();}
+    // deposits fall and settle rightward into the pile
+    if(now>nextDrop){nextDrop=now+1700;settled.push({t0:now,slot:settled.length});}
+    const pileX=x1-14;
+    for(const d of settled){const k=Math.min(1,(now-d.t0)/900);
+      const col=Math.floor(d.slot/6),row=d.slot%6;
+      const tx2=pileX-col*9,ty2=y-5-row*7;
+      let x,yy;
+      if(k<0.45){const kk=k/0.45;const sx=x0+(x1-x0)*0.35;yy=y-140*(1-kk*kk)-5;x=sx;}
+      else{const kk=(k-0.45)/0.55;const sx=x0+(x1-x0)*0.35;
+        x=sx+(tx2-sx)*(kk*kk*(3-2*kk));yy=y-5;}
+      if(k>=1){x=tx2;yy=ty2;}
+      ctx.fillStyle=IN(k>=1?0.85:0.95);
+      ctx.fillRect(x-2.5,yy-2.5,5,5);}
+    if(settled.length>60)settled.splice(0,settled.length-60);
+    // labels
+    ctx.save();ctx.shadowColor='rgba(0,0,0,0.85)';ctx.shadowBlur=8;
+    ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.font='500 15px "Inter",-apple-system,sans-serif';ctx.fillStyle=IN(0.96);
+    ctx.fillText('the rule',x0,y-26);
+    ctx.letterSpacing='0.04em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.9);
+    ctx.fillText('52 weeks, one line · it never moves',x0,y+32);
+    ctx.textAlign='right';ctx.fillStyle=IN(0.9);
+    ctx.fillText('the core, held',x1,y-64);ctx.letterSpacing='0px';ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// M5. the match - a few answers become one mandate -----------------------------
+(function(){const s=setup('cvM5');
+  const QS=[['Horizon','15 years'],['Drawdown comfort','moderate'],['Income need','none'],['Experience','some']];
+  const BANDS=['Equity Growth','Balanced Growth','Balanced','Balanced Income','Money Market'];
+  const PICK=1;let T0=0;
+  function frame(now){const{ctx,W,H}=s;if(!T0)T0=now;const rev=Math.min(1,(now-T0)/2400),e=1-Math.pow(1-rev,3);
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(168,162,155,'+a+')';
+    const nx=W*0.5,ny=H*0.46;
+    // questions, answered
+    ctx.save();ctx.textBaseline='middle';
+    for(let i=0;i<QS.length;i++){const qy=H*(0.10+i*0.075);
+      const k=Math.max(0,Math.min(1,(e-i*0.12)/0.3));if(!k)continue;
+      ctx.globalAlpha=k;
+      ctx.textAlign='left';ctx.letterSpacing='0.05em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.9);
+      ctx.fillText(QS[i][0],W*0.14,qy);ctx.letterSpacing='0px';
+      ctx.textAlign='right';ctx.font='500 13px "Inter",-apple-system,sans-serif';ctx.fillStyle=IN(0.95);
+      ctx.fillText(QS[i][1],W*0.86,qy);
+      // thread to the node
+      ctx.strokeStyle=DIM(0.3);ctx.lineWidth=0.8;ctx.beginPath();
+      ctx.moveTo(W*0.5,qy+12);ctx.lineTo(nx,ny-14);ctx.stroke();
+      ctx.globalAlpha=1;}
+    ctx.restore();
+    // the node
+    ctx.beginPath();ctx.arc(nx,ny,4.4,0,6.28);ctx.fillStyle=IN(0.98);ctx.fill();
+    ctx.strokeStyle='rgba(0,0,0,0.85)';ctx.lineWidth=1.5;ctx.stroke();
+    const pr=10+1.6*Math.sin(now*0.0018);
+    ctx.beginPath();ctx.arc(nx,ny,pr,0,6.28);ctx.strokeStyle=IN(0.28);ctx.lineWidth=1;ctx.stroke();
+    ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.letterSpacing='0.04em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.95);
+    ctx.fillText('matched once · run weekly',nx,ny+26);ctx.letterSpacing='0px';ctx.restore();
+    // five bands, one takes the weight
+    const bw=W*0.62,bx=W*0.19;
+    for(let i=0;i<BANDS.length;i++){const by=H*(0.62+i*0.062);
+      const k=Math.max(0,Math.min(1,(e-0.5-i*0.06)/0.3));if(k<=0)continue;
+      const on=(i===PICK);
+      ctx.globalAlpha=k;
+      ctx.strokeStyle=on?IN(0.9):DIM(0.3);ctx.lineWidth=on?1.4:0.8;
+      ctx.strokeRect(bx,by,bw,H*0.042);
+      if(on){ctx.strokeStyle=DIM(0.5);ctx.lineWidth=0.8;
+        ctx.beginPath();ctx.moveTo(nx,ny+40);ctx.lineTo(nx,by);ctx.stroke();}
+      ctx.save();ctx.textAlign='left';ctx.textBaseline='middle';
+      ctx.font=(on?'500 13px "Inter",-apple-system,sans-serif':'12px "Chakra Petch",ui-monospace,monospace');
+      ctx.fillStyle=on?IN(0.97):DIM(0.7);
+      ctx.fillText(BANDS[i],bx+14,by+H*0.021);
+      if(on){ctx.textAlign='right';ctx.letterSpacing='0.05em';ctx.font='10px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.95);
+        ctx.fillText('matched',bx+bw-14,by+H*0.021);ctx.letterSpacing='0px';}
+      ctx.restore();ctx.globalAlpha=1;}
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// M6. the absence - one walker marked, the deposit already landed --------------
+(function(){const s=setup('cvM6');let T0=0;
+  const bgImg=s.cv.parentElement.querySelector('img.bg');
+  function frame(now){const{ctx,W,H}=s;if(!T0)T0=now;
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(210,205,198,'+a+')';
+    // the walker's spot in the source photo, mapped through the cover crop
+    let mx=W*0.5,my=H*0.45;
+    if(bgImg&&bgImg.naturalWidth){const iw=bgImg.naturalWidth,ih=bgImg.naturalHeight;
+      const sc2=Math.max(W/iw,H/ih);
+      mx=(W-iw*sc2)/2+0.500*iw*sc2;
+      my=(H-ih*sc2)/2+0.428*ih*sc2;}
+    // the walker's ring
+    const pu=0.5+0.5*Math.sin(now*0.0022);
+    ctx.strokeStyle=IN((0.55+0.35*pu).toFixed(3));ctx.lineWidth=1.2;
+    ctx.beginPath();ctx.arc(mx,my,19+2.5*pu,0,6.28);ctx.stroke();
+    ctx.strokeStyle=IN(0.25);ctx.lineWidth=1;
+    ctx.beginPath();ctx.arc(mx,my,31,0,6.28);ctx.stroke();
+    // leader to the annotation
+    ctx.strokeStyle=IN(0.4);ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(mx+24,my-24);ctx.lineTo(mx+72,my-72);ctx.lineTo(mx+92,my-72);ctx.stroke();
+    ctx.save();ctx.shadowColor='rgba(0,0,0,0.9)';ctx.shadowBlur=8;
+    ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.letterSpacing='0.05em';ctx.font='10px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.9);
+    ctx.fillText('Friday 09:00',mx+100,my-88);ctx.letterSpacing='0px';
+    ctx.font='500 15px "Inter",-apple-system,sans-serif';ctx.fillStyle=IN(0.97);
+    ctx.fillText('a deposit landed',mx+100,my-68);
+    ctx.letterSpacing='0.04em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.85);
+    ctx.fillText('you were crossing the street',mx+100,my-50);
+    // bottom line
+    ctx.textAlign='left';ctx.fillStyle=DIM(0.9);
+    ctx.fillText('the rule does not need you at a desk',W*0.06,H*0.92);ctx.letterSpacing='0px';
+    ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// M7. the timetable - a departure board of Fridays -----------------------------
+(function(){const s=setup('cvM7');let T0=0;
+  const ROWS=[['May 29','$150','executed'],['Jun 05','$150','executed'],['Jun 12','$150','executed'],['Jun 19','$150','executed'],['Jun 26','$150','executed'],['Jul 03','$150','executed'],['Jul 10','$150','next']];
+  function frame(now){const{ctx,W,H}=s;if(!T0)T0=now;const rev=Math.min(1,(now-T0)/2200),e=1-Math.pow(1-rev,3);
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(210,205,198,'+a+')';
+    const x0=W*0.10,x1=W*0.90,y0=H*0.16;
+    ctx.save();ctx.shadowColor='rgba(0,0,0,0.9)';ctx.shadowBlur=8;
+    ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.letterSpacing='0.08em';ctx.font='10px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.9);
+    ctx.fillText('Departures \u00b7 Fridays',x0,y0-26);ctx.letterSpacing='0px';
+    for(let i=0;i<ROWS.length;i++){const k=Math.max(0,Math.min(1,(e-i*0.09)/0.25));if(!k)continue;
+      const y=y0+i*H*0.062;const nx2=ROWS[i][2]==='next';
+      ctx.globalAlpha=k;
+      ctx.strokeStyle=IN(0.38);ctx.lineWidth=0.7;
+      ctx.beginPath();ctx.moveTo(x0,y+H*0.028);ctx.lineTo(x1,y+H*0.028);ctx.stroke();
+      ctx.letterSpacing='0.05em';ctx.font='13px "Chakra Petch",ui-monospace,monospace';
+      ctx.textAlign='left';ctx.fillStyle=nx2?IN(0.97):IN(0.88);ctx.fillText(ROWS[i][0],x0,y);
+      ctx.textAlign='center';ctx.fillStyle=nx2?IN(0.97):IN(0.88);ctx.fillText(ROWS[i][1],(x0+x1)/2,y);
+      ctx.textAlign='right';ctx.fillStyle=nx2?IN(0.97):IN(0.72);
+      if(nx2){const bl=0.55+0.45*Math.sin(now*0.004);ctx.fillStyle=IN((0.5+0.5*bl).toFixed(3));}
+      ctx.fillText(ROWS[i][2],x1,y);ctx.letterSpacing='0px';
+      ctx.globalAlpha=1;}
+    ctx.textAlign='left';ctx.letterSpacing='0.04em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.9);
+    ctx.fillText('departs weekly, with or without you',x0,H*0.92);ctx.letterSpacing='0px';
+    ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// M8. zero decisions - the flattest line on the page ---------------------------
+(function(){const s=setup('cvM8');let T0=0;
+  const N=120,R=0.014;const V=[];let acc=0;for(let i=0;i<=N;i++){acc=acc*(1+R)+1;V.push(acc);}
+  function frame(now){const{ctx,W,H}=s;if(!T0)T0=now;const rev=Math.min(1,(now-T0)/2600),e=1-Math.pow(1-rev,3);
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(168,162,155,'+a+')';
+    const x0=W*0.12,x1=W*0.88;
+    const upto=Math.max(1,Math.floor(N*e));
+    // chart 1: decisions required (flat zero)
+    const y1=H*0.30;
+    ctx.save();ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.letterSpacing='0.05em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.9);
+    ctx.fillText('Decisions Required',x0,y1-40);ctx.letterSpacing='0px';
+    ctx.restore();
+    ctx.strokeStyle=IN(0.85);ctx.lineWidth=1.3;
+    ctx.beginPath();ctx.moveTo(x0,y1);ctx.lineTo(x0+(x1-x0)*e,y1);ctx.stroke();
+    ctx.save();ctx.textAlign='right';ctx.textBaseline='middle';
+    ctx.font='500 17px "Inter",-apple-system,sans-serif';ctx.fillStyle=IN(0.96);
+    ctx.fillText('0',x1+0,y1-22);
+    ctx.restore();
+    // chart 2: the core (staircase)
+    const yb=H*0.78,yt=H*0.46;
+    ctx.save();ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.letterSpacing='0.05em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.9);
+    ctx.fillText('The Core',x0,yt-24);ctx.letterSpacing='0px';ctx.restore();
+    const X=i=>x0+(x1-x0)*i/N, Y=v=>yb-(yb-yt)*v/V[N];
+    ctx.strokeStyle=IN(0.8);ctx.lineWidth=1.2;ctx.beginPath();
+    ctx.moveTo(X(0),Y(V[0]));
+    for(let i=1;i<=upto;i++){ctx.lineTo(X(i),Y(V[i-1]));ctx.lineTo(X(i),Y(V[i]));}
+    ctx.stroke();
+    const tx=X(upto),ty=Y(V[upto]);
+    ctx.beginPath();ctx.arc(tx,ty,3.6,0,6.28);ctx.fillStyle=IN(0.95);ctx.fill();
+    // the tally
+    ctx.save();ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.letterSpacing='0.04em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.9);
+    ctx.fillText('five years \u00b7 260 deposits \u00b7 decisions made: none',x0,H*0.90);ctx.letterSpacing='0px';
+    ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// M9. the standing order - one instruction, honoured weekly --------------------
+(function(){const s=setup('cvM9');let T0=0;
+  function frame(now){const{ctx,W,H}=s;if(!T0)T0=now;const rev=Math.min(1,(now-T0)/1800),e=1-Math.pow(1-rev,3);
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(168,162,155,'+a+')';
+    const x0=W*0.16,x1=W*0.84,y0=H*0.20;
+    ctx.save();ctx.textBaseline='middle';
+    // title
+    ctx.textAlign='left';ctx.letterSpacing='0.1em';ctx.font='10px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.9);
+    ctx.globalAlpha=Math.min(1,e*2);
+    ctx.fillText('Standing Order \u00b7 No. 001',x0,y0-34);ctx.letterSpacing='0px';
+    ctx.font='300 22px "Inter",-apple-system,sans-serif';ctx.fillStyle=IN(0.97);
+    ctx.fillText('Pay the core, weekly.',x0,y0);
+    ctx.globalAlpha=1;
+    // clauses
+    const ROWS=[['Pay to','S&P 500 Core'],['Amount','$150'],['Every','Friday, 09:00'],['Until','further notice']];
+    for(let i=0;i<ROWS.length;i++){const k=Math.max(0,Math.min(1,(e-0.2-i*0.12)/0.3));if(k<=0)continue;
+      const y=y0+H*0.11+i*H*0.085;
+      ctx.globalAlpha=k;
+      ctx.strokeStyle=IN(0.16);ctx.lineWidth=0.5;
+      ctx.beginPath();ctx.moveTo(x0,y+H*0.038);ctx.lineTo(x1,y+H*0.038);ctx.stroke();
+      ctx.textAlign='left';ctx.letterSpacing='0.05em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.85);
+      ctx.fillText(ROWS[i][0],x0,y);ctx.letterSpacing='0px';
+      ctx.textAlign='right';ctx.font='500 15px "Inter",-apple-system,sans-serif';ctx.fillStyle=IN(0.95);
+      ctx.fillText(ROWS[i][1],x1,y);
+      ctx.globalAlpha=1;}
+    // the execution stamp
+    if(e>0.85){const cx2=x1-52,cy2=H*0.76;
+      const n=260+Math.floor((now-T0)/6000)%3;
+      ctx.strokeStyle=IN(0.7);ctx.lineWidth=1;
+      ctx.beginPath();ctx.arc(cx2,cy2,34,0,6.28);ctx.stroke();
+      ctx.strokeStyle=IN(0.3);ctx.beginPath();ctx.arc(cx2,cy2,28,0,6.28);ctx.stroke();
+      ctx.textAlign='center';
+      ctx.font='500 15px "Inter",-apple-system,sans-serif';ctx.fillStyle=IN(0.96);
+      ctx.fillText(String(n),cx2,cy2-5);
+      ctx.letterSpacing='0.05em';ctx.font='9px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.9);
+      ctx.fillText('times honoured',cx2,cy2+11);ctx.letterSpacing='0px';
+      ctx.textAlign='left';ctx.letterSpacing='0.04em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.9);
+      ctx.fillText('signed once, 2026',x0,cy2);ctx.letterSpacing='0px';}
+    ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// M10. the horizon - a thin line to 2041 over a living city --------------------
+(function(){const s=setup('cvM10');let T0=0;
+  function frame(now){const{ctx,W,H}=s;if(!T0)T0=now;const rev=Math.min(1,(now-T0)/3000),e=1-Math.pow(1-rev,3);
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(210,205,198,'+a+')';
+    const x=W*0.18,yb=H*0.88,yt=H*0.10;
+    const YEARS=15;
+    // the line, drawn upward
+    ctx.strokeStyle=IN(0.6);ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(x,yb);ctx.lineTo(x,yb-(yb-yt)*e);ctx.stroke();
+    for(let i=0;i<=YEARS;i++){const yy=yb-(yb-yt)*i/YEARS;if(yy<yb-(yb-yt)*e-1)continue;
+      const big=(i%5===0);
+      ctx.strokeStyle=IN(big?0.6:0.3);ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(x,yy);ctx.lineTo(x+(big?12:7),yy);ctx.stroke();
+      if(big&&i>0){ctx.save();ctx.shadowColor='rgba(0,0,0,0.9)';ctx.shadowBlur=8;
+        ctx.textAlign='left';ctx.textBaseline='middle';
+        ctx.letterSpacing='0.06em';ctx.font='10px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.85);
+        ctx.fillText(String(2026+i),x+20,yy);ctx.letterSpacing='0px';ctx.restore();}}
+    // the slow dot
+    if(e>=1){const u=((now-T0)%24000)/24000;
+      const yy=yb-(yb-yt)*u;
+      ctx.beginPath();ctx.arc(x,yy,3.4,0,6.28);ctx.fillStyle=IN(0.95);ctx.fill();}
+    // labels
+    ctx.save();ctx.shadowColor='rgba(0,0,0,0.9)';ctx.shadowBlur=8;
+    ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.letterSpacing='0.05em';ctx.font='10px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.9);
+    ctx.fillText('2026 \u00b7 now',x+20,yb);ctx.letterSpacing='0px';
+    ctx.font='500 15px "Inter",-apple-system,sans-serif';ctx.fillStyle=IN(0.97);
+    ctx.fillText('2041 \u00b7 the horizon',x+20,yt);
+    ctx.letterSpacing='0.04em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.9);
+    ctx.fillText('the only date that matters is far away',x,H*0.955);ctx.letterSpacing='0px';
+    ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// M11. the gap - the index, and the index plus decisions ------------------------
+(function(){const s=setup('cvM11');let T0=0;
+  const N=90;const DEC=[14,27,41,55,68,80];
+  function frame(now){const{ctx,W,H}=s;if(!T0)T0=now;const rev=Math.min(1,(now-T0)/2600),e=1-Math.pow(1-rev,3);
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(168,162,155,'+a+')';
+    const x0=W*0.10,x1=W*0.88,yb=H*0.78,yt=H*0.20;
+    const upto=Math.max(2,Math.floor(N*e));
+    const X=i=>x0+(x1-x0)*i/N;
+    const idx=i=>yb-(yb-yt)*(Math.pow(1.018,i)-1)/(Math.pow(1.018,N)-1);
+    const inv=i=>{let drag=0;for(const d of DEC){if(i>=d)drag+=0.055;}return idx(i)+(yb-yt)*drag*0.45*(i/N+0.4);};
+    // the gap, shaded faintly
+    ctx.beginPath();ctx.moveTo(X(0),idx(0));
+    for(let i=1;i<=upto;i++)ctx.lineTo(X(i),idx(i));
+    for(let i=upto;i>=0;i--)ctx.lineTo(X(i),inv(i));
+    ctx.closePath();ctx.fillStyle=IN(0.05);ctx.fill();
+    // the index
+    ctx.strokeStyle=IN(0.85);ctx.lineWidth=1.4;ctx.beginPath();
+    for(let i=0;i<=upto;i++){i?ctx.lineTo(X(i),idx(i)):ctx.moveTo(X(i),idx(i));}ctx.stroke();
+    // the investor who kept deciding
+    ctx.strokeStyle=DIM(0.75);ctx.lineWidth=1.1;ctx.beginPath();
+    for(let i=0;i<=upto;i++){i?ctx.lineTo(X(i),inv(i)):ctx.moveTo(X(i),inv(i));}ctx.stroke();
+    // decision marks
+    for(const d of DEC){if(d>upto)continue;
+      ctx.strokeStyle=DIM(0.8);ctx.lineWidth=1;
+      ctx.beginPath();ctx.arc(X(d),inv(d),4,0,6.28);ctx.stroke();}
+    // labels
+    ctx.save();ctx.shadowColor='rgba(0,0,0,0.85)';ctx.shadowBlur=8;
+    ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.font='500 14px "Inter",-apple-system,sans-serif';ctx.fillStyle=IN(0.96);
+    ctx.fillText('the index, held',X(upto)+12,idx(upto));
+    ctx.fillStyle=DIM(0.9);
+    ctx.fillText('the index, plus decisions',X(upto)+12,inv(upto));
+    ctx.letterSpacing='0.04em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.9);
+    ctx.fillText('\u25cb = a decision \u00b7 the gap is not the market',x0,H*0.90);ctx.letterSpacing='0px';
+    ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// M12. the conveyor - one line, three stations, one direction -------------------
+(function(){const s=setup('cvM12');let T0=0;
+  const seeds=[...Array(16)].map((_,i)=>({u:i/16,tw:Math.random()*6.28}));
+  function frame(now){const{ctx,W,H}=s;if(!T0)T0=now;
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(168,162,155,'+a+')';
+    const y=H*0.5,x0=W*0.10,x1=W*0.90;
+    const ST2=[[0.16,'01','Answer Once','a few questions'],[0.5,'02','Matched','one of five mandates'],[0.84,'03','Runs Weekly','the belt moves itself']];
+    // the belt
+    ctx.strokeStyle=IN(0.55);ctx.lineWidth=1.2;
+    ctx.beginPath();ctx.moveTo(x0,y);ctx.lineTo(x1,y);ctx.stroke();
+    // one-way particles
+    for(const sd of seeds){const u=(sd.u+now*0.00003)%1;
+      const x=x0+(x1-x0)*u;
+      const al=0.2+0.3*Math.pow(Math.sin(now*0.002+sd.tw),2);
+      ctx.fillStyle=IN(al.toFixed(3));ctx.fillRect(x,y-1,3,2);}
+    // stations
+    for(let i=0;i<3;i++){const st=ST2[i],x=x0+(x1-x0)*st[0];
+      ctx.beginPath();ctx.arc(x,y,4.4,0,6.28);ctx.fillStyle=IN(0.98);ctx.fill();
+      ctx.strokeStyle='rgba(0,0,0,0.85)';ctx.lineWidth=1.5;ctx.stroke();
+      const up=(i%2===0);
+      ctx.save();ctx.shadowColor='rgba(0,0,0,0.85)';ctx.shadowBlur=8;
+      ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.letterSpacing='0.1em';ctx.font='10px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.95);
+      ctx.fillText(st[1],x,up?y-58:y+38);ctx.letterSpacing='0px';
+      ctx.font='500 15px "Inter",-apple-system,sans-serif';ctx.fillStyle=IN(0.98);
+      ctx.fillText(st[2],x,up?y-40:y+56);
+      ctx.letterSpacing='0.04em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.9);
+      ctx.fillText(st[3],x,up?y-22:y+74);ctx.letterSpacing='0px';
+      ctx.restore();}
+    // weekly tick at the last station
+    const ph=(now%2000)/2000;
+    if(ph<0.3){const fl=Math.sin(ph/0.3*Math.PI);const x=x0+(x1-x0)*0.84;
+      ctx.strokeStyle=IN((0.6*fl).toFixed(3));ctx.lineWidth=1;
+      ctx.beginPath();ctx.arc(x,y,7+9*ph/0.3,0,6.28);ctx.stroke();}
+    ctx.save();ctx.shadowColor='rgba(0,0,0,0.85)';ctx.shadowBlur=8;
+    ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.letterSpacing='0.04em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.9);
+    ctx.fillText('a conveyor, not a loop \u00b7 nothing returns for review',x0,H*0.88);ctx.letterSpacing='0px';ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// M13. the empty frames - what the product refuses ------------------------------
+(function(){const s=setup('cvM13');let T0=0;
+  const NOPE=['Stock Picking','Market Timing','Forecasts','Performance Fees'];
+  function frame(now){const{ctx,W,H}=s;if(!T0)T0=now;const rev=Math.min(1,(now-T0)/2000),e=1-Math.pow(1-rev,3);
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(168,162,155,'+a+')';
+    const gx=W*0.10,gw=W*0.80,cw=(gw-W*0.04)/2,ch=H*0.20,gy=H*0.12;
+    for(let i=0;i<4;i++){const col=i%2,row=Math.floor(i/2);
+      const k=Math.max(0,Math.min(1,(e-i*0.1)/0.3));if(!k)continue;
+      const x=gx+col*(cw+W*0.04),y=gy+row*(ch+H*0.045);
+      ctx.globalAlpha=k;
+      ctx.setLineDash([4,5]);ctx.strokeStyle=DIM(0.45);ctx.lineWidth=1;
+      ctx.strokeRect(x,y,cw,ch);ctx.setLineDash([]);
+      ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.letterSpacing='0.05em';ctx.font='12px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.7);
+      ctx.fillText(NOPE[i],x+cw/2,y+ch/2);ctx.letterSpacing='0px';
+      // the strike
+      const tw2=ctx.measureText(NOPE[i]).width;
+      ctx.strokeStyle=DIM(0.7);ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(x+cw/2-tw2/2-6,y+ch/2);ctx.lineTo(x+cw/2+tw2/2+6,y+ch/2);ctx.stroke();
+      ctx.restore();ctx.globalAlpha=1;}
+    // the one solid frame
+    const k2=Math.max(0,Math.min(1,(e-0.5)/0.4));
+    if(k2>0){const y=gy+2*(ch+H*0.045);
+      ctx.globalAlpha=k2;
+      ctx.strokeStyle=IN(0.8);ctx.lineWidth=1.2;
+      ctx.strokeRect(gx,y,gw,ch*1.06);
+      const pu=0.5+0.5*Math.sin(now*0.0018);
+      ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.font='500 16px "Inter",-apple-system,sans-serif';ctx.fillStyle=IN((0.85+0.13*pu).toFixed(3));
+      ctx.fillText('A Rule, Held',gx+gw/2,y+ch*0.44);
+      ctx.letterSpacing='0.05em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.9);
+      ctx.fillText('S&P 500 core \u00b7 weekly \u00b7 until further notice',gx+gw/2,y+ch*0.68);ctx.letterSpacing='0px';
+      ctx.restore();ctx.globalAlpha=1;}
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// M14. the strata - five mandates as sediment (pf palette, large areas only) ----
+(function(){const s=setup('cvM14');let T0=0;
+  const cs=getComputedStyle(document.documentElement);
+  const BANDS=[['Equity Growth',cs.getPropertyValue('--pf-eg').trim(),'rgba(255,255,255,0.95)'],
+               ['Balanced Growth',cs.getPropertyValue('--pf-bg').trim(),'rgba(20,20,18,0.9)'],
+               ['Balanced',cs.getPropertyValue('--pf-b').trim(),'rgba(255,255,255,0.95)'],
+               ['Balanced Income',cs.getPropertyValue('--pf-bi').trim(),'rgba(20,20,18,0.9)'],
+               ['Money Market',cs.getPropertyValue('--pf-mm').trim(),'rgba(20,20,18,0.9)']];
+  const PICK=1;
+  function frame(now){const{ctx,W,H}=s;if(!T0)T0=now;const rev=Math.min(1,(now-T0)/2200),e=1-Math.pow(1-rev,3);
+    ctx.clearRect(0,0,W,H);
+    const DIM=a=>'rgba(168,162,155,'+a+')',IN=a=>'rgba(236,234,229,'+a+')';
+    const gy=H*0.14,gh=H*0.66,bh=gh/5,x0=W*0.08,x1=W*0.80;
+    for(let i=0;i<5;i++){const k=Math.max(0,Math.min(1,(e-i*0.1)/0.3));if(!k)continue;
+      const y=gy+i*bh;
+      ctx.globalAlpha=k;
+      ctx.fillStyle=BANDS[i][1];
+      ctx.fillRect(x0,y,(x1-x0)*k,bh-3);
+      ctx.save();ctx.textAlign='left';ctx.textBaseline='middle';
+      ctx.letterSpacing='0.04em';ctx.font='500 13px "Inter",-apple-system,sans-serif';ctx.fillStyle=BANDS[i][2];
+      ctx.fillText(BANDS[i][0],x0+16,y+bh/2-2);ctx.letterSpacing='0px';ctx.restore();
+      ctx.globalAlpha=1;}
+    // the bracket on the matched layer
+    if(e>0.8){const y=gy+PICK*bh;
+      ctx.strokeStyle=IN(0.9);ctx.lineWidth=1.2;
+      ctx.beginPath();ctx.moveTo(x1+14,y+2);ctx.lineTo(x1+24,y+2);ctx.lineTo(x1+24,y+bh-5);ctx.lineTo(x1+14,y+bh-5);ctx.stroke();
+      ctx.save();ctx.shadowColor='rgba(0,0,0,0.85)';ctx.shadowBlur=8;
+      ctx.textAlign='left';ctx.textBaseline='middle';
+      ctx.letterSpacing='0.05em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=IN(0.95);
+      ctx.save();ctx.translate(x1+38,y+bh/2);ctx.rotate(-Math.PI/2);ctx.textAlign='center';
+      ctx.fillText('matched',0,0);ctx.restore();ctx.letterSpacing='0px';ctx.restore();}
+    ctx.save();ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.letterSpacing='0.04em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.9);
+    ctx.fillText('risk settles downward \u00b7 one layer takes your weight',x0,H*0.90);ctx.letterSpacing='0px';ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// M15. the cone - every contribution has a destination --------------------------
+(function(){const s=setup('cvM15');let T0=0;
+  function frame(now){const{ctx,W,H}=s;if(!T0)T0=now;const rev=Math.min(1,(now-T0)/2800),e=1-Math.pow(1-rev,3);
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(168,162,155,'+a+')';
+    const x0=W*0.12,x1=W*0.84,y0=H*0.62,yTopHi=H*0.16,yTopLo=H*0.44;
+    const X=u=>x0+(x1-x0)*u;
+    const med=u=>y0-(y0-(yTopHi+yTopLo)/2)*Math.pow(u,1.25);
+    const hi=u=>y0-(y0-yTopHi)*Math.pow(u,1.15);
+    const lo=u=>y0-(y0-yTopLo)*Math.pow(u,1.35);
+    const ue=e;
+    // the cone
+    ctx.beginPath();ctx.moveTo(X(0),y0);
+    for(let a2=0;a2<=60;a2++){const u=a2/60*ue;ctx.lineTo(X(u),hi(u));}
+    for(let a2=60;a2>=0;a2--){const u=a2/60*ue;ctx.lineTo(X(u),lo(u));}
+    ctx.closePath();ctx.fillStyle=IN(0.06);ctx.fill();
+    ctx.strokeStyle=DIM(0.4);ctx.lineWidth=0.8;
+    ctx.beginPath();for(let a2=0;a2<=60;a2++){const u=a2/60*ue;a2?ctx.lineTo(X(u),hi(u)):ctx.moveTo(X(u),hi(u));}ctx.stroke();
+    ctx.beginPath();for(let a2=0;a2<=60;a2++){const u=a2/60*ue;a2?ctx.lineTo(X(u),lo(u)):ctx.moveTo(X(u),lo(u));}ctx.stroke();
+    // the median
+    ctx.strokeStyle=IN(0.85);ctx.lineWidth=1.3;
+    ctx.beginPath();for(let a2=0;a2<=60;a2++){const u=a2/60*ue;a2?ctx.lineTo(X(u),med(u)):ctx.moveTo(X(u),med(u));}ctx.stroke();
+    // weekly ticks along the floor
+    const nT=26;
+    for(let i=0;i<nT;i++){const u=i/(nT-1);if(u>ue)break;
+      const on=((now*0.0006)%nT)>i;
+      ctx.strokeStyle=DIM(on?0.6:0.3);ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(X(u),H*0.74);ctx.lineTo(X(u),H*0.74+6);ctx.stroke();}
+    // labels
+    ctx.save();ctx.shadowColor='rgba(0,0,0,0.85)';ctx.shadowBlur=8;
+    ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.letterSpacing='0.05em';ctx.font='10px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.9);
+    ctx.fillText('today \u00b7 75,000',x0,y0+22);ctx.letterSpacing='0px';
+    if(e>0.95){const tx=X(ue),ty=med(ue);
+      ctx.beginPath();ctx.arc(tx,ty,3.8,0,6.28);ctx.fillStyle=IN(0.96);ctx.fill();
+      ctx.font='500 15px "Inter",-apple-system,sans-serif';ctx.fillStyle=IN(0.97);
+      ctx.fillText('2041 \u00b7 1.23M projected',tx+12,ty-4);
+      ctx.letterSpacing='0.04em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.9);
+      ctx.fillText('a range, not a promise',tx+12,ty+15);ctx.letterSpacing='0px';}
+    ctx.font='11px "Chakra Petch",ui-monospace,monospace';ctx.letterSpacing='0.04em';ctx.fillStyle=DIM(0.9);
+    ctx.fillText('weekly contributions keep arriving along the floor',x0,H*0.88);ctx.letterSpacing='0px';
+    ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// shared: fridays of a year, grouped by month -----------------------------------
+function fridaysByMonth(year){const out=[...Array(12)].map(()=>[]);
+  for(let m=0;m<12;m++){const dim=new Date(year,m+1,0).getDate();
+    for(let d=1;d<=dim;d++){if(new Date(year,m,d).getDay()===5)out[m].push(d);}}
+  return out;}
+const MON3=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+// M16. the year poster - the 20.thirteen sheet, mondays carry the deposits ------
+(function(){const s=setup('cvM16');let T0=0;
+  const Y=2026,DIM_M=[...Array(12)].map((_,m)=>new Date(Y,m+1,0).getDate());
+  const WK={},DOW={};let TOT=0;
+  for(let m=0;m<12;m++)for(let d=1;d<=DIM_M[m];d++){const dw2=new Date(Y,m,d).getDay();DOW[m*100+d]=dw2;
+    if(dw2===1){TOT++;WK[m*100+d]=TOT;}}
+  const MISS=new Set([9,18,31,44]);   // four skipped weeks, life happened
+  function frame(now){const{ctx,W,H}=s;if(!T0)T0=now;
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(24,24,24,'+a+')',DIM=a=>'rgba(86,91,94,'+a+')';
+    const CYC=48000,ph=((now-T0)%CYC)/CYC;
+    const fillPh=Math.min(1,ph/0.84);
+    const roll=Math.max(0,(ph-0.9)/0.1);
+    const fFill=TOT*fillPh,filled=Math.max(1,Math.floor(fFill));
+    // heading, top right, last digit rolls at year end
+    const fs=Math.round(W*0.15);
+    ctx.save();ctx.textBaseline='middle';ctx.textAlign='left';
+    ctx.font=fs+'px "Chakra Petch",ui-monospace,monospace';
+    const mY=ctx.measureText('2026'),hw=ctx.measureText('202').width,dw=ctx.measureText('6').width;
+    const metaBot=H*0.06+26+5*17+6;
+    const yx=W*0.075,yy=metaBot-mY.actualBoundingBoxDescent;
+    ctx.fillStyle=IN(0.34);ctx.fillText('202',yx,yy);
+    ctx.save();ctx.beginPath();ctx.rect(yx+hw-2,yy-mY.actualBoundingBoxAscent-2,dw*1.15,mY.actualBoundingBoxAscent+mY.actualBoundingBoxDescent+4);ctx.clip();
+    const sh=roll*fs*1.1;
+    ctx.fillText('6',yx+hw,yy-sh);
+    if(roll>0)ctx.fillText('7',yx+hw,yy-sh+fs*1.1);
+    ctx.restore();
+    // meta block, top left
+    ctx.font='500 13px "Inter",-apple-system,sans-serif';ctx.fillStyle=IN(0.95);
+    ctx.fillText('52 Mondays',W*0.70,H*0.06);
+    ctx.letterSpacing='0.05em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';
+    const missedSoFar=[...MISS].filter(w2=>w2<=filled).length,dep2=filled-missedSoFar;
+    const meta=['Deposit '+dep2+' of '+TOT,'Skipped '+missedSoFar,
+      (150*dep2).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+' CAD \u00b7 accumulated',
+      '$150 Weekly \u00b7 Mondays','Equity Growth \u00b7 S&P 500','No Decisions'];
+    const mCol=['rgba(27,138,58,0.95)','rgba(206,106,4,0.95)',IN(0.95),DIM(0.7),DIM(0.7),DIM(0.7)];
+    for(let i=0;i<meta.length;i++){ctx.fillStyle=mCol[i];
+      ctx.fillText(meta[i],W*0.70,H*0.06+26+i*17);}
+    ctx.letterSpacing='0px';ctx.restore();
+    // month header row + rule under each letter
+    const gx0=W*0.075,gx1=W*0.925,colw=(gx1-gx0)/12,hy=H*0.27;
+    for(let m=0;m<12;m++){const x=gx0+m*colw+colw/2;
+      ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.font='500 15px "Inter",-apple-system,sans-serif';ctx.fillStyle=IN(0.95);
+      ctx.fillText(MON3[m][0],x,hy);ctx.restore();
+      ctx.strokeStyle=DIM(0.45);ctx.lineWidth=0.8;
+      ctx.beginPath();ctx.moveTo(x-colw*0.30,hy+13);ctx.lineTo(x+colw*0.30,hy+13);ctx.stroke();}
+    // 31 shared day rows; mondays large, week number small beside
+    const gy0=H*0.31,gy1=H*0.94,rh=(gy1-gy0)/31;
+    for(let d=1;d<=31;d++){const y=gy0+(d-1)*rh+rh/2;
+      for(let m=0;m<12;m++){if(d>DIM_M[m])continue;
+        const x=gx0+m*colw+colw/2;
+        const wkn=WK[m*100+d];
+        ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';ctx.letterSpacing='0.03em';
+        if(wkn){const u=Math.max(0,Math.min(1,(fFill-(wkn-1))/3));
+          ctx.font='500 14px "Chakra Petch",ui-monospace,monospace';
+          if(u>0){const e2=1-Math.pow(1-u,2);
+            const col=MISS.has(wkn)?'rgba(206,106,4,':'rgba(27,138,58,';
+            ctx.fillStyle=col+(0.5+0.45*e2).toFixed(3)+')';
+            ctx.fillText((d<10?'0':'')+d,x,y);
+          }else{
+            ctx.fillStyle=DIM(0.55);
+            ctx.fillText((d<10?'0':'')+d,x,y);}
+        }else{const dw2=DOW[m*100+d],wke=(dw2===0||dw2===6);
+          ctx.font=(wke?'11px':'9px')+' "Chakra Petch",ui-monospace,monospace';
+          ctx.fillStyle=DIM(wke?0.6:0.38);
+          ctx.fillText((d<10?'0':'')+d,x,y);}
+        ctx.letterSpacing='0px';ctx.restore();}}
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// M18. the ledger texture - repetition until it becomes mass --------------------
+(function(){const s=setup('cvM18');let T0=0;
+  const LINE='Deposited 150.00 \u00b7 S&P 500 Core \u00b7 No Action Required \u00b7 ';
+  const DATES=[];
+  for(let m=0;m<12;m++){const dm=new Date(2026,m+1,0).getDate();
+    for(let d=1;d<=dm;d++){if(new Date(2026,m,d).getDay()===1)DATES.push(MON3[m]+' '+(d<10?'0':'')+d);}}
+  function frame(now){const{ctx,W,H}=s;if(!T0)T0=now;const rev=Math.min(1,(now-T0)/2600),e=1-Math.pow(1-rev,2);
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(168,162,155,'+a+')';
+    // the big word, ink spanning the full frame width
+    let wkBottom=0;
+    ctx.save();ctx.textAlign='left';ctx.textBaseline='alphabetic';
+    ctx.font='500 100px "Inter",-apple-system,sans-serif';
+    const mw=ctx.measureText('WEEKLY');
+    const inkW=mw.actualBoundingBoxRight+mw.actualBoundingBoxLeft;
+    const fsW=Math.round(100*W*1.06/(inkW||mw.width));
+    ctx.font='500 '+fsW+'px "Inter",-apple-system,sans-serif';
+    const mw2=ctx.measureText('WEEKLY');
+    ctx.fillStyle=IN(0.96);
+    ctx.fillText('WEEKLY',mw2.actualBoundingBoxLeft-W*0.03,mw2.actualBoundingBoxAscent-fsW*0.10);
+    wkBottom=mw2.actualBoundingBoxAscent+mw2.actualBoundingBoxDescent-fsW*0.10;
+    ctx.restore();
+    // the mass: even ledger texture, one dated column per week
+    const x0=W*0.075,x1=W*0.925,step=(x1-x0)/52,yBase=H*0.92;
+    const eCols=Math.min(1,(now-T0)/14000)*52;
+    for(let i=0;i<52;i++){const u=Math.max(0,Math.min(1,(eCols-i)/2));if(!u)continue;
+      const eu=1-Math.pow(1-u,3);
+      const top=H*0.52;
+      const x=x0+i*step+step/2;
+      ctx.save();ctx.translate(x,yBase);ctx.rotate(-Math.PI/2);
+      ctx.textAlign='left';ctx.textBaseline='middle';
+      ctx.letterSpacing='0.06em';ctx.font='10px "Chakra Petch",ui-monospace,monospace';
+      const aBase=(0.42+(i%3)*0.09)*(0.3+0.7*eu);
+      ctx.fillStyle=DIM(aBase.toFixed(2));
+      const len=yBase-top;
+      const dStr=DATES[i],dw2=ctx.measureText(dStr).width;
+      const bodyLen=len-dw2-26;
+      let txt='';
+      while(ctx.measureText(txt).width<bodyLen)txt+=LINE;
+      const g2=ctx.createLinearGradient(0,0,bodyLen,0);
+      g2.addColorStop(0,'rgba(168,162,155,'+aBase.toFixed(2)+')');
+      g2.addColorStop(0.72,'rgba(168,162,155,'+aBase.toFixed(2)+')');
+      g2.addColorStop(1,'rgba(168,162,155,0)');
+      ctx.fillStyle=g2;
+      ctx.save();ctx.beginPath();ctx.rect(0,-step*0.45,bodyLen,step*0.9);ctx.clip();
+      ctx.fillText(txt,0,0);ctx.restore();
+      ctx.fillStyle=DIM(Math.min(0.85,aBase+0.25).toFixed(2));
+      ctx.fillText(dStr,len-dw2,0);
+      ctx.letterSpacing='0px';ctx.restore();}
+    // the line graph, overlaid on the texture
+    const V=[];let acc=0;for(let i=0;i<52;i++){acc=acc*1.02+1;V.push(acc);}
+    const yB2=H*0.87,yT2=H*0.30;
+    const f2=Math.max(1,Math.min(52,eCols));
+    const fl=Math.floor(f2),fr=f2-fl;
+    const PX=i2=>x0+i2*step+step/2;
+    const PY=v=>yB2-(yB2-yT2)*(v-V[0])/(V[51]-V[0]);
+    ctx.strokeStyle=IN(0.88);ctx.lineWidth=1.4;ctx.beginPath();
+    const nPts=Math.min(fl,52);
+    for(let i=0;i<nPts;i++){i?ctx.lineTo(PX(i),PY(V[i])):ctx.moveTo(PX(i),PY(V[i]));}
+    let lx=PX(nPts-1),ly=PY(V[nPts-1]);
+    if(fl>=1&&fl<52&&fr>0){lx=PX(fl-1)+(PX(fl)-PX(fl-1))*fr;ly=PY(V[fl-1])+(PY(V[fl])-PY(V[fl-1]))*fr;ctx.lineTo(lx,ly);}
+    ctx.stroke();
+    ctx.beginPath();ctx.arc(lx,ly,3.2,0,6.28);ctx.fillStyle=IN(0.95);ctx.fill();
+    if(f2>=52){ctx.save();ctx.textAlign='right';ctx.textBaseline='middle';
+      ctx.letterSpacing='0.05em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=IN(0.92);
+      ctx.fillText('week 52 \u00b7 7,800.00 CAD in',lx-8,ly-14);ctx.letterSpacing='0px';ctx.restore();}
+    // footnote
+    ctx.save();ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.letterSpacing='0.04em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.5);
+    ctx.save();ctx.translate(W-22,H*0.955);ctx.rotate(-Math.PI/2);ctx.textAlign='left';ctx.fillText('the ledger repeats \u00b7 the value compounds',0,0);ctx.restore();
+    ctx.letterSpacing='0px';ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+
+// M3. the year ring - a heatmap of days: green deposits, orange skips -----------
+(function(){const s=setup('cvM20');
+  const Y=2026,DIM_M=[...Array(12)].map((_,m)=>new Date(Y,m+1,0).getDate());
+  const DOW={},WKN={};let tot=0;
+  for(let m=0;m<12;m++)for(let d=1;d<=DIM_M[m];d++){const dw=new Date(Y,m,d).getDay();DOW[m*100+d]=dw;
+    if(dw===1){tot++;WKN[m*100+d]=tot;}}
+  const MISS=new Set([9,18,31,44]);
+  const GRN_D='rgba(48,168,84,0.95)',GRN_L='rgba(236,234,229,0.10)',ORG='rgba(226,140,40,0.95)';
+  function frame(){const{ctx,W,H}=s;
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(168,162,155,'+a+')';
+    const mn=Math.min(W,H),cx=W*0.52,cy=H*0.52;
+    const Rout=mn*0.38,Rin=mn*0.115,stepR=(Rout-Rin)/11;
+    const dayAng=Math.PI*1.5/31,bandH=stepR*0.74,gap=dayAng*0.07;
+    for(let m=0;m<12;m++){const r=Rout-m*stepR;
+      ctx.save();ctx.textAlign='right';ctx.textBaseline='middle';
+      ctx.letterSpacing='0.08em';ctx.font='500 10px "Chakra Petch",ui-monospace,monospace';
+      ctx.fillStyle=IN(0.9);
+      ctx.fillText(MON3[m],cx-24,cy-r);ctx.letterSpacing='0px';ctx.restore();
+      // the white band, full month
+      const endA=DIM_M[m]*dayAng;
+      ctx.beginPath();ctx.arc(cx,cy,r,-Math.PI/2,-Math.PI/2+endA);
+      ctx.strokeStyle=IN(0.92);ctx.lineWidth=bandH;ctx.stroke();
+      for(let d=1;d<=DIM_M[m];d++){
+        const wkn=WKN[m*100+d];
+        const a2=-Math.PI/2+(d-0.5)*dayAng;
+        const x=cx+r*Math.cos(a2),y=cy+r*Math.sin(a2);
+        if(wkn){
+          // mondays: numerals ride the band like the reference, growing clockwise
+          ctx.save();ctx.translate(x,y);ctx.rotate(a2+Math.PI/2);
+          ctx.textAlign='center';ctx.textBaseline='middle';
+          const fs2=(6+r/mn*6)*(0.75+0.9*(d-1)/30);
+          ctx.font='500 '+fs2.toFixed(1)+'px "Chakra Petch",ui-monospace,monospace';
+          ctx.fillStyle=MISS.has(wkn)?'rgba(196,110,10,0.98)':'rgba(27,138,58,0.98)';
+          ctx.fillText(String(d),0,0);ctx.restore();
+        }else{
+          // ordinary days: a quiet dot
+          ctx.beginPath();ctx.arc(x,y,1.2,0,6.28);
+          ctx.fillStyle='rgba(16,16,16,0.4)';ctx.fill();}}}
+    // centre counter
+    ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.letterSpacing='0.05em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';
+    ctx.fillStyle=GRN_D;ctx.fillText('Deposit 48 of 52',cx,cy-16);
+    ctx.fillStyle=ORG;ctx.fillText('Skipped 4',cx,cy+1);
+    ctx.fillStyle=DIM(0.85);ctx.fillText('7,200.00 CAD',cx,cy+18);
+    ctx.letterSpacing='0px';ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// N1. the statement - a zero that leaves the frame ------------------------------
+(function(){const s=setup('cvN1');
+  function frame(){const{ctx,W,H}=s;
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(168,162,155,'+a+')';
+    // the claim: a zero taller than the frame
+    ctx.save();ctx.textAlign='left';ctx.textBaseline='alphabetic';
+    ctx.font='300 100px "Inter",-apple-system,sans-serif';
+    const m0=ctx.measureText('0');
+    const inkH=m0.actualBoundingBoxAscent+m0.actualBoundingBoxDescent;
+    const fs0=Math.round(100*(H*1.12)/inkH);
+    ctx.font='300 '+fs0+'px "Inter",-apple-system,sans-serif';
+    const m1=ctx.measureText('0');
+    ctx.fillStyle=IN(0.9);
+    ctx.fillText('0',W*0.07,H*0.5+ (m1.actualBoundingBoxAscent-m1.actualBoundingBoxDescent)/2);
+    ctx.restore();
+    // the claim label
+    ctx.save();ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.letterSpacing='0.06em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.85);
+    ctx.fillText('Decisions Made \u00b7 2026',W*0.07+ctx.measureText(' ').width,H*0.945);ctx.letterSpacing='0px';
+    ctx.restore();
+    // the evidence, tiny, bottom right
+    ctx.save();ctx.textAlign='right';ctx.textBaseline='middle';
+    ctx.letterSpacing='0.05em';ctx.font='10px "Chakra Petch",ui-monospace,monospace';
+    const ev=['52 Deposits','7,800.00 CAD \u00b7 Accumulated','Equity Growth \u00b7 S&P 500','Jan 05 - Dec 28 \u00b7 Weekly'];
+    for(let i=0;i<ev.length;i++){ctx.fillStyle=DIM(i?0.6:0.9);
+      ctx.fillText(ev[i],W-24,H*0.885+i*15);}
+    ctx.letterSpacing='0px';ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// N2. the record card - a mandate filed like an archive entry -------------------
+(function(){const s=setup('cvN2');
+  const ROWS=[['Record','No. 001'],['Mandate','Equity Growth \u00b7 S&P 500'],['Opened','Jan 05, 2026'],
+    ['Cadence','150.00 CAD \u00b7 Weekly \u00b7 Mondays'],['Executions','52'],['Interventions','0'],
+    ['Standing','Until Further Notice'],['Status','Running']];
+  function frame(now){const{ctx,W,H}=s;
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(168,162,155,'+a+')';
+    // the gesture: the serial as a watermark, bleeding right
+    ctx.save();ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.font='300 '+Math.round(W*0.42)+'px "Inter",-apple-system,sans-serif';
+    ctx.fillStyle=IN(0.07);
+    ctx.fillText('001',W*0.42,H*0.32);
+    ctx.restore();
+    // the record
+    const x0=W*0.09,x1=W*0.91,y0=H*0.20,rh=H*0.082;
+    ctx.save();ctx.textBaseline='middle';
+    ctx.textAlign='left';ctx.letterSpacing='0.08em';ctx.font='10px "Chakra Petch",ui-monospace,monospace';
+    ctx.fillStyle=DIM(0.9);
+    ctx.fillText('Intelligent Investing \u00b7 Managed \u00b7 Client Record',x0,H*0.10);ctx.letterSpacing='0px';
+    for(let i=0;i<ROWS.length;i++){const y=y0+i*rh;
+      ctx.strokeStyle=IN(0.14);ctx.lineWidth=0.6;
+      ctx.beginPath();ctx.moveTo(x0,y+rh*0.42);ctx.lineTo(x1,y+rh*0.42);ctx.stroke();
+      ctx.textAlign='left';ctx.letterSpacing='0.06em';ctx.font='10px "Chakra Petch",ui-monospace,monospace';
+      ctx.fillStyle=DIM(0.7);ctx.fillText(ROWS[i][0],x0,y);ctx.letterSpacing='0px';
+      ctx.textAlign='right';ctx.font='500 14px "Inter",-apple-system,sans-serif';
+      ctx.fillStyle=IN(0.93);
+      if(ROWS[i][0]==='Status'){
+        const pu=0.5+0.5*Math.sin(now*0.0016);
+        ctx.fillStyle='rgba(48,209,88,'+(0.75+0.2*pu).toFixed(2)+')';
+        ctx.fillText(ROWS[i][1],x1,y);
+      }else ctx.fillText(ROWS[i][1],x1,y);}
+    ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// N3. the still - an execution observed, not performed --------------------------
+(function(){const s=setup('cvN3');
+  function frame(now){const{ctx,W,H}=s;
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(210,205,198,'+a+')';
+    const mx=W*0.56,my=H*0.46;
+    const br=0.5+0.5*Math.sin(now*0.0012);
+    // the crosshair, full frame
+    ctx.strokeStyle=IN((0.22+0.1*br).toFixed(3));ctx.lineWidth=0.7;
+    ctx.beginPath();ctx.moveTo(0,my);ctx.lineTo(W,my);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(mx,0);ctx.lineTo(mx,H);ctx.stroke();
+    // the reticle
+    ctx.strokeStyle=IN(0.55);ctx.lineWidth=1;
+    ctx.beginPath();ctx.arc(mx,my,26,0,6.28);ctx.stroke();
+    ctx.beginPath();ctx.arc(mx,my,2,0,6.28);ctx.fillStyle=IN(0.9);ctx.fill();
+    // corner brackets
+    const b=18,o=26;
+    ctx.strokeStyle=IN(0.5);ctx.lineWidth=1;
+    [[o,o,1,1],[W-o,o,-1,1],[o,H-o,1,-1],[W-o,H-o,-1,-1]].forEach(function(c){
+      ctx.beginPath();ctx.moveTo(c[0]+c[2]*b,c[1]);ctx.lineTo(c[0],c[1]);ctx.lineTo(c[0],c[1]+c[3]*b);ctx.stroke();});
+    // the meta
+    ctx.save();ctx.shadowColor='rgba(0,0,0,0.9)';ctx.shadowBlur=8;
+    ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.letterSpacing='0.06em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';
+    ctx.fillStyle=DIM(0.9);ctx.fillText('Mon 09:00:00 \u00b7 2026',o+2,H*0.09);
+    ctx.fillStyle=IN(0.95);ctx.fillText('Order Executed \u00b7 150.00 CAD',o+2,H*0.09+17);
+    ctx.fillStyle=DIM(0.75);ctx.fillText('Attendance \u00b7 Not Required',o+2,H*0.09+34);
+    ctx.textAlign='right';ctx.fillStyle=DIM(0.7);
+    ctx.fillText('S&P 500 Core \u00b7 Held',W-o-2,H*0.935);ctx.letterSpacing='0px';
+    ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// N4. the empty room - whitespace as the product ---------------------------------
+(function(){const s=setup('cvN4');
+  function frame(){const{ctx,W,H}=s;
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(168,162,155,'+a+')';
+    ctx.save();ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.font='300 22px "Inter",-apple-system,sans-serif';ctx.fillStyle=IN(0.95);
+    ctx.fillText('Nothing happened here this week.',W*0.08,H*0.855);
+    ctx.letterSpacing='0.05em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.7);
+    ctx.fillText('The deposit went through anyway. \u00b7 150.00 CAD \u00b7 Mon 09:00',W*0.08,H*0.855+28);
+    ctx.letterSpacing='0px';ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// N5. the spec sheet - the product drawn as a machine ----------------------------
+(function(){const s=setup('cvN5');
+  function frame(now){const{ctx,W,H}=s;
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(168,162,155,'+a+')';
+    const cx=W*0.63,cy=H*0.52,R=W*0.055;
+    // the core
+    ctx.strokeStyle=IN(0.85);ctx.lineWidth=1.2;
+    ctx.beginPath();ctx.arc(cx,cy,R,0,6.28);ctx.stroke();
+    ctx.beginPath();ctx.arc(cx,cy,R*0.45,0,6.28);ctx.fillStyle=IN(0.9);ctx.fill();
+    // a slow dashed service ring
+    ctx.save();ctx.translate(cx,cy);ctx.rotate(now*0.00008);
+    ctx.setLineDash([3,7]);ctx.strokeStyle=DIM(0.4);ctx.lineWidth=0.7;
+    ctx.beginPath();ctx.arc(0,0,R*1.9,0,6.28);ctx.stroke();ctx.setLineDash([]);ctx.restore();
+    // leader lines + labels
+    function label(t1,t2,lx,ly,tx,ty,toEmpty){
+      ctx.strokeStyle=IN(toEmpty?0.25:0.4);ctx.lineWidth=0.7;
+      ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(tx,ty);ctx.stroke();
+      ctx.beginPath();ctx.arc(tx,ty,1.6,0,6.28);ctx.fillStyle=IN(toEmpty?0.35:0.7);ctx.fill();
+      ctx.save();ctx.textAlign='left';ctx.textBaseline='middle';
+      ctx.letterSpacing='0.06em';ctx.font='10px "Chakra Petch",ui-monospace,monospace';
+      ctx.fillStyle=DIM(0.9);ctx.fillText(t1,lx-150,ly-8);
+      ctx.fillStyle=IN(0.92);ctx.font='500 12px "Inter",-apple-system,sans-serif';
+      ctx.fillText(t2,lx-150,ly+8);ctx.letterSpacing='0px';ctx.restore();}
+    label('Input','150.00 CAD \u00b7 Weekly',W*0.30,H*0.28,cx-R*0.8,cy-R*0.9,false);
+    label('Process','Buy, Hold',W*0.30,H*0.52,cx-R,cy,false);
+    label('Output','Ownership, Accruing',W*0.30,H*0.76,cx-R*0.6,cy+R*1.55,false);
+    label('Operator','None',W*0.30,H*0.14,cx+R*2.6,cy-R*3.1,true);
+    // title
+    ctx.save();ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.letterSpacing='0.08em';ctx.font='10px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.9);
+    ctx.fillText('Managed \u00b7 Mechanical Specification \u00b7 Fig. 01',W*0.08,H*0.93);ctx.letterSpacing='0px';ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// N6. the vertical year - one numeral holds the spine ----------------------------
+(function(){const s=setup('cvN6');
+  const LOG=[];
+  (function(){const Y=2026;for(let m=0;m<12;m++){const dm=new Date(Y,m+1,0).getDate();
+    for(let d=1;d<=dm;d++){if(new Date(Y,m,d).getDay()===1)LOG.push(MON3[m]+' '+(d<10?'0':'')+d);}}})();
+  function frame(){const{ctx,W,H}=s;
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(168,162,155,'+a+')';
+    // the spine: the year rotated vertical, taller than the frame
+    ctx.save();ctx.translate(W*0.30,H*0.5);ctx.rotate(-Math.PI/2);
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.font='300 100px "Inter",-apple-system,sans-serif';
+    const mw=ctx.measureText('2026');
+    const fsV=Math.round(100*(H*1.06)/mw.width);
+    ctx.font='300 '+fsV+'px "Inter",-apple-system,sans-serif';
+    ctx.fillStyle=IN(0.88);
+    ctx.fillText('2026',0,0);
+    ctx.restore();
+    // the log, small and right
+    const x0=W*0.66,y0=H*0.09,lh=(H*0.76)/26;
+    ctx.save();ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.letterSpacing='0.05em';ctx.font='10px "Chakra Petch",ui-monospace,monospace';
+    for(let i=0;i<26;i++){
+      ctx.fillStyle=DIM(0.55);
+      ctx.fillText(LOG[i*2],x0,y0+i*lh);
+      ctx.fillStyle=DIM(0.35);
+      ctx.fillText('150.00',x0+70,y0+i*lh);}
+    ctx.fillStyle=IN(0.95);ctx.font='500 12px "Inter",-apple-system,sans-serif';
+    ctx.fillText('52 Executions \u00b7 7,800.00 CAD',x0,H*0.915);
+    ctx.letterSpacing='0px';ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// N1. the statement - a zero that leaves the frame ------------------------------
+(function(){const s=setup('cvN1');
+  function frame(){const{ctx,W,H}=s;
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(168,162,155,'+a+')';
+    // the claim: a zero taller than the frame
+    ctx.save();ctx.textAlign='left';ctx.textBaseline='alphabetic';
+    ctx.font='300 100px "Inter",-apple-system,sans-serif';
+    const m0=ctx.measureText('0');
+    const inkH=m0.actualBoundingBoxAscent+m0.actualBoundingBoxDescent;
+    const fs0=Math.round(100*(H*1.12)/inkH);
+    ctx.font='300 '+fs0+'px "Inter",-apple-system,sans-serif';
+    const m1=ctx.measureText('0');
+    ctx.fillStyle=IN(0.9);
+    ctx.fillText('0',W*0.07,H*0.5+ (m1.actualBoundingBoxAscent-m1.actualBoundingBoxDescent)/2);
+    ctx.restore();
+    // the claim label
+    ctx.save();ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.letterSpacing='0.06em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.85);
+    ctx.fillText('Decisions Made \u00b7 2026',W*0.07+ctx.measureText(' ').width,H*0.945);ctx.letterSpacing='0px';
+    ctx.restore();
+    // the evidence, tiny, bottom right
+    ctx.save();ctx.textAlign='right';ctx.textBaseline='middle';
+    ctx.letterSpacing='0.05em';ctx.font='10px "Chakra Petch",ui-monospace,monospace';
+    const ev=['52 Deposits','7,800.00 CAD \u00b7 Accumulated','Equity Growth \u00b7 S&P 500','Jan 05 - Dec 28 \u00b7 Weekly'];
+    for(let i=0;i<ev.length;i++){ctx.fillStyle=DIM(i?0.6:0.9);
+      ctx.fillText(ev[i],W-24,H*0.885+i*15);}
+    ctx.letterSpacing='0px';ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// N2. the record card - a mandate filed like an archive entry -------------------
+(function(){const s=setup('cvN2');
+  const ROWS=[['Record','No. 001'],['Mandate','Equity Growth \u00b7 S&P 500'],['Opened','Jan 05, 2026'],
+    ['Cadence','150.00 CAD \u00b7 Weekly \u00b7 Mondays'],['Executions','52'],['Interventions','0'],
+    ['Standing','Until Further Notice'],['Status','Running']];
+  function frame(now){const{ctx,W,H}=s;
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(168,162,155,'+a+')';
+    // the gesture: the serial as a watermark, bleeding right
+    ctx.save();ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.font='300 '+Math.round(W*0.42)+'px "Inter",-apple-system,sans-serif';
+    ctx.fillStyle=IN(0.07);
+    ctx.fillText('001',W*0.42,H*0.32);
+    ctx.restore();
+    // the record
+    const x0=W*0.09,x1=W*0.91,y0=H*0.20,rh=H*0.082;
+    ctx.save();ctx.textBaseline='middle';
+    ctx.textAlign='left';ctx.letterSpacing='0.08em';ctx.font='10px "Chakra Petch",ui-monospace,monospace';
+    ctx.fillStyle=DIM(0.9);
+    ctx.fillText('Intelligent Investing \u00b7 Managed \u00b7 Client Record',x0,H*0.10);ctx.letterSpacing='0px';
+    for(let i=0;i<ROWS.length;i++){const y=y0+i*rh;
+      ctx.strokeStyle=IN(0.14);ctx.lineWidth=0.6;
+      ctx.beginPath();ctx.moveTo(x0,y+rh*0.42);ctx.lineTo(x1,y+rh*0.42);ctx.stroke();
+      ctx.textAlign='left';ctx.letterSpacing='0.06em';ctx.font='10px "Chakra Petch",ui-monospace,monospace';
+      ctx.fillStyle=DIM(0.7);ctx.fillText(ROWS[i][0],x0,y);ctx.letterSpacing='0px';
+      ctx.textAlign='right';ctx.font='500 14px "Inter",-apple-system,sans-serif';
+      ctx.fillStyle=IN(0.93);
+      if(ROWS[i][0]==='Status'){
+        const pu=0.5+0.5*Math.sin(now*0.0016);
+        ctx.fillStyle='rgba(48,209,88,'+(0.75+0.2*pu).toFixed(2)+')';
+        ctx.fillText(ROWS[i][1],x1,y);
+      }else ctx.fillText(ROWS[i][1],x1,y);}
+    ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// N3. the still - an execution observed, not performed --------------------------
+(function(){const s=setup('cvN3');
+  function frame(now){const{ctx,W,H}=s;
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(210,205,198,'+a+')';
+    const mx=W*0.56,my=H*0.46;
+    const br=0.5+0.5*Math.sin(now*0.0012);
+    // the crosshair, full frame
+    ctx.strokeStyle=IN((0.22+0.1*br).toFixed(3));ctx.lineWidth=0.7;
+    ctx.beginPath();ctx.moveTo(0,my);ctx.lineTo(W,my);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(mx,0);ctx.lineTo(mx,H);ctx.stroke();
+    // the reticle
+    ctx.strokeStyle=IN(0.55);ctx.lineWidth=1;
+    ctx.beginPath();ctx.arc(mx,my,26,0,6.28);ctx.stroke();
+    ctx.beginPath();ctx.arc(mx,my,2,0,6.28);ctx.fillStyle=IN(0.9);ctx.fill();
+    // corner brackets
+    const b=18,o=26;
+    ctx.strokeStyle=IN(0.5);ctx.lineWidth=1;
+    [[o,o,1,1],[W-o,o,-1,1],[o,H-o,1,-1],[W-o,H-o,-1,-1]].forEach(function(c){
+      ctx.beginPath();ctx.moveTo(c[0]+c[2]*b,c[1]);ctx.lineTo(c[0],c[1]);ctx.lineTo(c[0],c[1]+c[3]*b);ctx.stroke();});
+    // the meta
+    ctx.save();ctx.shadowColor='rgba(0,0,0,0.9)';ctx.shadowBlur=8;
+    ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.letterSpacing='0.06em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';
+    ctx.fillStyle=DIM(0.9);ctx.fillText('Mon 09:00:00 \u00b7 2026',o+2,H*0.09);
+    ctx.fillStyle=IN(0.95);ctx.fillText('Order Executed \u00b7 150.00 CAD',o+2,H*0.09+17);
+    ctx.fillStyle=DIM(0.75);ctx.fillText('Attendance \u00b7 Not Required',o+2,H*0.09+34);
+    ctx.textAlign='right';ctx.fillStyle=DIM(0.7);
+    ctx.fillText('S&P 500 Core \u00b7 Held',W-o-2,H*0.935);ctx.letterSpacing='0px';
+    ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// N4. the empty room - whitespace as the product ---------------------------------
+(function(){const s=setup('cvN4');
+  function frame(){const{ctx,W,H}=s;
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(168,162,155,'+a+')';
+    ctx.save();ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.font='300 22px "Inter",-apple-system,sans-serif';ctx.fillStyle=IN(0.95);
+    ctx.fillText('Nothing happened here this week.',W*0.08,H*0.855);
+    ctx.letterSpacing='0.05em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.7);
+    ctx.fillText('The deposit went through anyway. \u00b7 150.00 CAD \u00b7 Mon 09:00',W*0.08,H*0.855+28);
+    ctx.letterSpacing='0px';ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// N5. the spec sheet - the product drawn as a machine ----------------------------
+(function(){const s=setup('cvN5');
+  function frame(now){const{ctx,W,H}=s;
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(168,162,155,'+a+')';
+    const cx=W*0.63,cy=H*0.52,R=W*0.055;
+    // the core
+    ctx.strokeStyle=IN(0.85);ctx.lineWidth=1.2;
+    ctx.beginPath();ctx.arc(cx,cy,R,0,6.28);ctx.stroke();
+    ctx.beginPath();ctx.arc(cx,cy,R*0.45,0,6.28);ctx.fillStyle=IN(0.9);ctx.fill();
+    // a slow dashed service ring
+    ctx.save();ctx.translate(cx,cy);ctx.rotate(now*0.00008);
+    ctx.setLineDash([3,7]);ctx.strokeStyle=DIM(0.4);ctx.lineWidth=0.7;
+    ctx.beginPath();ctx.arc(0,0,R*1.9,0,6.28);ctx.stroke();ctx.setLineDash([]);ctx.restore();
+    // leader lines + labels
+    function label(t1,t2,lx,ly,tx,ty,toEmpty){
+      ctx.strokeStyle=IN(toEmpty?0.25:0.4);ctx.lineWidth=0.7;
+      ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(tx,ty);ctx.stroke();
+      ctx.beginPath();ctx.arc(tx,ty,1.6,0,6.28);ctx.fillStyle=IN(toEmpty?0.35:0.7);ctx.fill();
+      ctx.save();ctx.textAlign='left';ctx.textBaseline='middle';
+      ctx.letterSpacing='0.06em';ctx.font='10px "Chakra Petch",ui-monospace,monospace';
+      ctx.fillStyle=DIM(0.9);ctx.fillText(t1,lx-150,ly-8);
+      ctx.fillStyle=IN(0.92);ctx.font='500 12px "Inter",-apple-system,sans-serif';
+      ctx.fillText(t2,lx-150,ly+8);ctx.letterSpacing='0px';ctx.restore();}
+    label('Input','150.00 CAD \u00b7 Weekly',W*0.30,H*0.28,cx-R*0.8,cy-R*0.9,false);
+    label('Process','Buy, Hold',W*0.30,H*0.52,cx-R,cy,false);
+    label('Output','Ownership, Accruing',W*0.30,H*0.76,cx-R*0.6,cy+R*1.55,false);
+    label('Operator','None',W*0.30,H*0.14,cx+R*2.6,cy-R*3.1,true);
+    // title
+    ctx.save();ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.letterSpacing='0.08em';ctx.font='10px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=DIM(0.9);
+    ctx.fillText('Managed \u00b7 Mechanical Specification \u00b7 Fig. 01',W*0.08,H*0.93);ctx.letterSpacing='0px';ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// N6. the vertical year - one numeral holds the spine ----------------------------
+(function(){const s=setup('cvN6');
+  const LOG=[];
+  (function(){const Y=2026;for(let m=0;m<12;m++){const dm=new Date(Y,m+1,0).getDate();
+    for(let d=1;d<=dm;d++){if(new Date(Y,m,d).getDay()===1)LOG.push(MON3[m]+' '+(d<10?'0':'')+d);}}})();
+  function frame(){const{ctx,W,H}=s;
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(168,162,155,'+a+')';
+    // the spine: the year rotated vertical, taller than the frame
+    ctx.save();ctx.translate(W*0.30,H*0.5);ctx.rotate(-Math.PI/2);
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.font='300 100px "Inter",-apple-system,sans-serif';
+    const mw=ctx.measureText('2026');
+    const fsV=Math.round(100*(H*1.06)/mw.width);
+    ctx.font='300 '+fsV+'px "Inter",-apple-system,sans-serif';
+    ctx.fillStyle=IN(0.88);
+    ctx.fillText('2026',0,0);
+    ctx.restore();
+    // the log, small and right
+    const x0=W*0.66,y0=H*0.09,lh=(H*0.76)/26;
+    ctx.save();ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.letterSpacing='0.05em';ctx.font='10px "Chakra Petch",ui-monospace,monospace';
+    for(let i=0;i<26;i++){
+      ctx.fillStyle=DIM(0.55);
+      ctx.fillText(LOG[i*2],x0,y0+i*lh);
+      ctx.fillStyle=DIM(0.35);
+      ctx.fillText('150.00',x0+70,y0+i*lh);}
+    ctx.fillStyle=IN(0.95);ctx.font='500 12px "Inter",-apple-system,sans-serif';
+    ctx.fillText('52 Executions \u00b7 7,800.00 CAD',x0,H*0.915);
+    ctx.letterSpacing='0px';ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// N7. the contour core - 52 stacked scan lines make a mass ----------------------
+(function(){const s=setup('cvN7');
+  function frame(now){const{ctx,W,H}=s;
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(168,162,155,'+a+')';
+    const cx=W*0.5,base=H*0.78,R0=W*0.30,domeH=H*0.46;
+    for(let i=0;i<52;i++){const u=i/51;
+      const y=base-domeH*u;
+      const r=R0*Math.sqrt(Math.max(0,1-u*u*0.96));
+      const sq=0.30+0.10*u;
+      ctx.beginPath();
+      for(let a2=0;a2<=64;a2++){const th=a2/64*Math.PI*2;
+        const wob=1+0.045*Math.sin(th*3+i*1.7)+0.025*Math.sin(th*7+i*0.9);
+        const x=cx+r*wob*Math.cos(th);
+        const yy=y+r*wob*sq*Math.sin(th);
+        a2?ctx.lineTo(x,yy):ctx.moveTo(x,yy);}
+      ctx.closePath();
+      const big=(i%13===12);
+      ctx.strokeStyle=IN(big?0.75:0.34);ctx.lineWidth=big?1:0.7;
+      ctx.stroke();}
+    // labels
+    ctx.save();ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.letterSpacing='0.06em';ctx.font='10px "Chakra Petch",ui-monospace,monospace';
+    ctx.fillStyle=DIM(0.9);ctx.fillText('The Core \u00b7 Contour Record \u00b7 2026',W*0.08,H*0.09);
+    ctx.fillStyle=DIM(0.7);ctx.fillText('week 01',cx+R0+14,base-4);
+    ctx.fillText('week 52',cx+R0*0.28+12,base-domeH-2);
+    ctx.textAlign='right';ctx.fillStyle=DIM(0.9);
+    ctx.fillText('52 layers \u00b7 7,800.00 CAD \u00b7 nothing removed',W-24,H*0.93);
+    ctx.letterSpacing='0px';ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// N8. the interference - grey lines bend, one green line does not ---------------
+(function(){const s=setup('cvN8');
+  function frame(now){const{ctx,W,H}=s;
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(168,162,155,'+a+')';
+    const yc=x=>H*0.42+H*0.10*Math.sin(x*0.004+1.3)+H*0.06*Math.sin(x*0.009+0.5);
+    const N=64,y0=H*0.10,y1=H*0.90,sig=H*0.055,A=16;
+    const drift=now*0.00018;
+    for(let k=0;k<N;k++){const yb=y0+(y1-y0)*k/(N-1);
+      ctx.beginPath();
+      for(let x=0;x<=W;x+=6){
+        const dy=yb-yc(x+drift*60);
+        const g=Math.exp(-(dy*dy)/(2*sig*sig));
+        const d=(dy>=0?1:-1)*A*g*(1+0.25*Math.sin(x*0.03+k));
+        const yy=yb+d;
+        x?ctx.lineTo(x,yy):ctx.moveTo(x,yy);}
+      ctx.strokeStyle=IN(0.16+0.10*Math.abs(Math.sin(k*0.6)));ctx.lineWidth=0.7;
+      ctx.stroke();}
+    // the rule: one straight line, the only colour
+    const yr=H*0.68;
+    ctx.strokeStyle='rgba(48,168,84,0.9)';ctx.lineWidth=1.4;
+    ctx.beginPath();ctx.moveTo(0,yr);ctx.lineTo(W,yr);ctx.stroke();
+    // labels
+    ctx.save();ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.letterSpacing='0.06em';ctx.font='10px "Chakra Petch",ui-monospace,monospace';
+    ctx.fillStyle=DIM(0.75);ctx.fillText('the market',W*0.06,yc(W*0.06)-sig-14);
+    ctx.fillStyle='rgba(48,168,84,0.95)';ctx.fillText('the rule \u00b7 150.00 \u00b7 weekly',W*0.06,yr+16);
+    ctx.fillStyle=DIM(0.9);ctx.fillText('the market bends \u00b7 the rule does not',W*0.06,H*0.945);
+    ctx.letterSpacing='0px';ctx.restore();
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+// N9. the scan - the crossing rebuilt as a line screen ---------------------------
+(function(){const s=setup('cvN9');
+  const img=new Image();
+  img.src='../images/retrox_ams_top-down_view_of_a_busy_crowd_crossing_at_a_geomet_1b2b333e-8c75-4109-b6e4-dc1b48592b63_0.png';
+  let lastW=0,lastH=0;
+  function render(){const{ctx,W,H}=s;
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(210,205,198,'+a+')';
+    if(img.complete&&img.naturalWidth){
+      const iw=img.naturalWidth,ih=img.naturalHeight;
+      const sc=Math.max(W/iw,H/ih);
+      const ox=(W-iw*sc)/2,oy=(H-ih*sc)/2;
+      try{
+        const off=document.createElement('canvas');
+        const Wi=Math.max(1,Math.floor(W)),Hi=Math.max(1,Math.floor(H));
+        off.width=Wi;off.height=Hi;
+        const oc=off.getContext('2d',{willReadFrequently:true});
+        oc.drawImage(img,ox,oy,iw*sc,ih*sc);
+        const data=oc.getImageData(0,0,Wi,Hi).data;
+        ctx.fillStyle=IN(0.85);
+        for(let y=2;y<Hi;y+=5){
+          for(let x=0;x<Wi;x+=3){
+            const i=(y*Wi+x)*4;
+            const lum=(data[i]*0.299+data[i+1]*0.587+data[i+2]*0.114)/255;
+            const c1=Math.min(1,Math.max(0,(lum-0.30)/0.45));
+            const h2=Math.pow(c1,1.6)*4.4;
+            if(h2>0.4)ctx.fillRect(x,y-h2/2,3,h2);}}
+      }catch(e){
+        // opened from file:// - pixel read is blocked, fall back to photo + scan stripes
+        ctx.save();ctx.globalAlpha=0.32;ctx.drawImage(img,ox,oy,iw*sc,ih*sc);ctx.restore();
+        ctx.fillStyle='rgba(16,16,16,0.5)';
+        for(let y=0;y<H;y+=4)ctx.fillRect(0,y,W,2);}
+      // the one clean mark: the walker
+      const mx=ox+0.500*iw*sc,my=oy+0.428*ih*sc;
+      ctx.save();
+      ctx.beginPath();ctx.arc(mx,my,26,0,6.28);
+      ctx.fillStyle='rgba(16,16,16,0.55)';ctx.fill();
+      ctx.strokeStyle=IN(0.95);ctx.lineWidth=1.2;
+      ctx.beginPath();ctx.arc(mx,my,26,0,6.28);ctx.stroke();
+      ctx.strokeStyle=IN(0.4);ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(mx+26,my-8);ctx.lineTo(mx+62,my-44);ctx.lineTo(mx+80,my-44);ctx.stroke();
+      ctx.textAlign='left';ctx.textBaseline='middle';
+      ctx.letterSpacing='0.05em';ctx.font='11px "Chakra Petch",ui-monospace,monospace';
+      ctx.fillStyle=IN(0.95);ctx.fillText('Mon 09:00 \u00b7 Executed',mx+88,my-50);
+      ctx.fillStyle=DIM(0.8);ctx.fillText('attendance not required',mx+88,my-34);
+      ctx.letterSpacing='0px';ctx.restore();}
+    // furniture
+    ctx.save();ctx.textAlign='left';ctx.textBaseline='middle';
+    ctx.letterSpacing='0.06em';ctx.font='10px "Chakra Petch",ui-monospace,monospace';
+    ctx.fillStyle='rgba(210,205,198,0.9)';
+    ctx.fillText('Field Study \u00b7 The Crossing \u00b7 Line Screen',W*0.05,H*0.06);
+    ctx.letterSpacing='0px';ctx.restore();}
+  function loop(){const{W,H}=s;
+    if((W!==lastW||H!==lastH)&&img.complete&&img.naturalWidth){lastW=W;lastH=H;render();}
+    requestAnimationFrame(loop);}
+  img.onload=function(){lastW=0;};
+  img.onerror=function(){lastW=-1;render();};
+  requestAnimationFrame(loop);
+})();
+
+// N10. the archive reel - plates cycle, the stamp repeats ------------------------
+(function(){const s=setup('cvN10');
+  const imgs=[...s.cv.parentElement.querySelectorAll('.reelwrap img')];
+  let week=1;
+  function draw(){const{ctx,W,H}=s;
+    ctx.clearRect(0,0,W,H);
+    const IN=a=>'rgba(236,234,229,'+a+')',DIM=a=>'rgba(210,205,198,'+a+')';
+    const px0=W*0.07,px1=W*0.93,py0=H*0.07,py1=H*0.93;
+    // knockout ink: pure white, inverted by the plate behind it
+    const KO=a=>'rgba(255,255,255,'+a+')';
+    // masthead: left-aligned stack, top-left of the plate
+    ctx.save();ctx.textBaseline='middle';ctx.textAlign='left';
+    ctx.letterSpacing='0.1em';ctx.font='500 10px "Chakra Petch",ui-monospace,monospace';
+    ctx.fillStyle=KO(0.95);ctx.fillText('The Archive Reel',px0+18,py0+24);
+    ctx.font='10px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=KO(0.6);
+    ctx.fillText('Field Records \u00b7 2026',px0+18,py0+40);
+    // exhibit: vertical, right edge of the plate
+    ctx.save();ctx.translate(px1-18,py1-20);ctx.rotate(-Math.PI/2);
+    ctx.textAlign='left';ctx.letterSpacing='0.12em';
+    ctx.font='10px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=KO(0.7);
+    ctx.fillText('Exhibit '+String(ORDER[(week-1)%ORDER.length]+1).padStart(2,'0'),0,0);
+    ctx.restore();
+    ctx.restore();
+    // the evidence: bottom-left of the plate
+    const ws=String(week).padStart(2,'0');
+    ctx.save();ctx.textBaseline='middle';ctx.textAlign='left';
+    ctx.letterSpacing='0.06em';ctx.font='500 11px "Chakra Petch",ui-monospace,monospace';
+    ctx.fillStyle=KO(0.95);ctx.fillText('Week '+ws+' \u00b7 Executed',px0+18,py1-40);
+    ctx.font='10px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=KO(0.6);
+    ctx.fillText((150*week).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+' CAD \u00b7 accumulated',px0+18,py1-23);
+    ctx.letterSpacing='0px';ctx.restore();}
+  // the gesture: the week numeral, red editorial accent, bleeding off the right edge
+  const sN=setup('cvN10num');
+  function drawNum(){const{ctx,W,H}=sN;
+    ctx.clearRect(0,0,W,H);
+    const px0=W*0.07,px1=W*0.93,py0=H*0.07,py1=H*0.93;
+    ctx.save();ctx.beginPath();ctx.rect(px0,py0,px1-px0,py1-py0);ctx.clip();
+    ctx.textAlign='right';ctx.textBaseline='alphabetic';
+    const fs=Math.round(H*0.22);
+    ctx.font='300 '+fs+'px "IBM Plex Mono",ui-monospace,monospace';
+    ctx.fillStyle='rgba(255,53,51,0.94)';
+    ctx.fillText(String(week).padStart(2,'0'),px1+fs*0.16,H*0.55);
+    ctx.restore();}
+  const ORDER=[0,7,3,12,5,16,1,9,14,6,11,2,17,4,10,15,8,13];
+  function cut(){
+    const idx=ORDER[(week-1)%ORDER.length];
+    imgs.forEach(function(im,i){im.classList.toggle('on',i===idx);});
+    draw();drawNum();
+    week=week%52+1;}
+  cut();
+  setInterval(cut,240);
+  addEventListener('resize',function(){setTimeout(function(){draw();drawNum();},50);});
+})();
+
+// N11. the constant - halftone cards flash, the held line stays fixed ----------
+(function(){const s=setup('cvN11');
+  const CUT=300;
+  let numCache=null,numWeek=-1;
+  function numeralData(week){
+    if(week===numWeek&&numCache)return numCache;
+    const oc=document.createElement('canvas');oc.width=140;oc.height=180;
+    const o=oc.getContext('2d');
+    o.fillStyle='#000';o.textAlign='center';o.textBaseline='middle';
+    o.font='500 150px "IBM Plex Mono",ui-monospace,monospace';
+    o.fillText(String(week).padStart(2,'0'),70,96);
+    numCache=o.getImageData(0,0,140,180);numWeek=week;
+    return numCache;}
+  // pattern: 1 = ink cell, 0 = paper cell
+  function pat(idx,x,y,w,h,week){
+    const cx2=w/2,cy2=h/2;
+    switch(idx){
+      case 0:{const cs=[[0.3,0.28],[0.7,0.28],[0.3,0.72],[0.7,0.72]];
+        for(const c of cs){const dx=x-c[0]*w,dy=y-c[1]*h;
+          if(dx*dx+dy*dy<w*0.22*w*0.22)return 1;}return 0;}
+      case 1:{const dx=Math.abs(x-cx2),dy=Math.abs(y-cy2);
+        const hd=Math.max(dx*0.866+dy*0.5,dy);
+        return (Math.floor(hd/(w*0.052))%2)?0:1;}
+      case 2:{const g=w*0.2;const mx=((x%g)+g)%g-g/2,my=((y%g)+g)%g-g/2;
+        return (mx*mx+my*my<w*0.075*w*0.075)?1:0;}
+      case 3:return (Math.floor(y/(h*0.11))%2)?0:1;
+      case 4:return (Math.floor((x+y)/(w*0.11))%2)?0:1;
+      case 5:{const dx=x-cx2,dy=y-cy2;const r=Math.sqrt(dx*dx+dy*dy);
+        return (Math.floor(r/(w*0.05))%2)?0:1;}
+      case 6:{const nd=numeralData(week);
+        const nx=Math.floor((x/w)*140),ny=Math.floor((y/h)*180);
+        if(nx<0||ny<0||nx>=140||ny>=180)return 0;
+        return nd.data[(ny*140+nx)*4+3]>120?1:0;}
+      case 7:return 0;          // airy field (near-empty)
+      case 8:return 1;          // solid field (near-full)
+      case 9:{const dx=x-cx2,dy=y-cy2;   // one big disc
+        return (dx*dx+dy*dy<w*0.34*w*0.34)?1:0;}
+    }return 0;}
+  // each card carries its own density -> dramatic contrast swings
+  const CARDS=[
+    {p:8,cell:11,on:3.8,off:3.0},   // near-solid black
+    {p:7,cell:6, on:1.0,off:1.0},   // airy, near-white
+    {p:6,cell:5, on:2.4,off:0.5},   // giant numeral
+    {p:3,cell:6, on:3.2,off:0.0},   // bold horizontal stripes
+    {p:2,cell:9, on:1.5,off:1.5},   // uniform grid, mid-light
+    {p:9,cell:8, on:3.4,off:0.6},   // one big disc, heavy
+    {p:6,cell:5, on:2.4,off:0.5},   // numeral (recurs)
+    {p:0,cell:7, on:2.8,off:0.5},   // four circles
+    {p:7,cell:5, on:0.8,off:0.8},   // very airy
+    {p:1,cell:8, on:3.3,off:0.2},   // hex rings, heavy
+    {p:6,cell:5, on:2.4,off:0.5},   // numeral
+    {p:5,cell:7, on:2.9,off:0.3},   // concentric
+    {p:8,cell:9, on:3.5,off:2.4},   // solid
+    {p:4,cell:6, on:3.0,off:0.0},   // diagonal stripes
+  ];
+  const grain=grainTile(42);
+  const INK=a=>'rgba(26,25,24,'+a+')',PAPER='rgba(236,234,229,0.9)';
+  let lastN=-1;
+  function frame(now){const{ctx,W,H}=s;
+    const cutN=Math.floor(now/CUT);
+    if(cutN===lastN){requestAnimationFrame(frame);return;}
+    lastN=cutN;
+    ctx.clearRect(0,0,W,H);
+    const px0=W*0.07,px1=W*0.93,py0=H*0.07,py1=H*0.93;
+    const pw=px1-px0,ph=py1-py0;
+    const week=cutN%52+1;
+    const card=CARDS[cutN%CARDS.length];
+    const jx=((cutN*7919)%5-2)*0.7,jy=((cutN*104729)%5-2)*0.7;
+    // paper
+    ctx.fillStyle='rgba(236,234,229,0.97)';
+    ctx.fillRect(px0,py0,pw,ph);
+    // halftone, density per card + a slight per-dot tone spread
+    ctx.save();ctx.beginPath();ctx.rect(px0,py0,pw,ph);ctx.clip();
+    ctx.translate(jx,jy);
+    const cell=card.cell;
+    // the held line: a fixed horizontal band, made of the dots themselves, growing rightward
+    const bandCy=ph*0.54,bandH=H*0.032,fillX=pw*(week/52);
+    for(let y=cell/2;y<ph;y+=cell){
+      const inBand=Math.abs(y-bandCy)<=bandH/2;
+      for(let x=cell/2;x<pw;x+=cell){
+        let r,col;
+        if(inBand){
+          if(x<=fillX){r=cell*0.46;col='rgba(22,21,20,0.97)';}   // accumulated: solid, held
+          else{r=cell*0.15;col='rgba(22,21,20,0.30)';}           // pending rule: faint
+        }else{
+          const v=pat(card.p,x,y,pw,ph,week);
+          r=v?card.on:card.off;
+          if(r<=0.05)continue;
+          col='rgba(32,31,30,0.9)';
+        }
+        ctx.fillStyle=col;
+        ctx.beginPath();ctx.arc(px0+x,py0+y,r,0,6.28);ctx.fill();}}
+    // grain wash over the whole card
+    ctx.globalAlpha=0.42;
+    ctx.fillStyle=ctx.createPattern(grain,'repeat');
+    ctx.fillRect(px0-jx-6,py0-jy-6,pw+20,ph+20);
+    ctx.globalAlpha=1;
+    ctx.restore();
+    // ---- meta labels ----
+    ctx.save();ctx.beginPath();ctx.rect(px0,py0,pw,ph);ctx.clip();
+    // meta, solid ink on the light field
+    ctx.textBaseline='middle';ctx.textAlign='left';
+    ctx.letterSpacing='0.1em';ctx.font='500 10px "Chakra Petch",ui-monospace,monospace';
+    ctx.fillStyle=INK(0.9);
+    ctx.fillText('The Constant',px0+18,py0+24);
+    ctx.font='10px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=INK(0.5);
+    ctx.fillText('Reel · 2026',px0+18,py0+40);
+    ctx.letterSpacing='0.06em';ctx.font='500 11px "Chakra Petch",ui-monospace,monospace';
+    ctx.fillStyle=INK(0.9);
+    ctx.fillText('Week '+String(week).padStart(2,'0')+' · Executed',px0+18,py1-40);
+    ctx.font='10px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=INK(0.55);
+    ctx.fillText((150*week).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+' CAD · accumulated',px0+18,py1-23);
+    ctx.save();ctx.translate(px1-18,py1-20);ctx.rotate(-Math.PI/2);
+    ctx.textAlign='left';ctx.letterSpacing='0.12em';
+    ctx.font='10px "Chakra Petch",ui-monospace,monospace';ctx.fillStyle=INK(0.55);
+    ctx.fillText('the rule does not move',0,0);ctx.restore();
+    ctx.letterSpacing='0px';ctx.restore();
+    requestAnimationFrame(frame);}
+  addEventListener('resize',function(){lastN=-1;});
+  setTimeout(function(){frame(performance.now());},50);
+})();
+</script>
+</body>
+</html>
