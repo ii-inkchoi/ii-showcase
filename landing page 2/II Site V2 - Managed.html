@@ -62,16 +62,21 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 @media(max-width:900px){.container{padding:0 24px;}}
 .page-header{padding:140px 0 0;border-bottom:0.5px solid var(--c-800);background:var(--c-black);position:relative;overflow:hidden;min-height:820px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;}
 .page-header .container{position:relative;z-index:3;}
-.pg-art{position:absolute;top:140px;right:calc(max(0px,(100% - var(--maxw))/2) + var(--frame));height:calc(100% - 140px);width:clamp(380px,42vw,640px);z-index:3;pointer-events:none;display:flex;align-items:center;justify-content:center;padding-top:0;box-sizing:border-box;}
-.pg-art canvas{width:100%;height:clamp(360px,40vw,520px);display:block;}
+.pg-art{position:absolute;top:0;bottom:0;z-index:3;pointer-events:none;opacity:0.96;
+  --cw:calc(min(100%, var(--maxw)) - 2*var(--frame));            /* container content width */
+  --cl:calc((100% - min(100%, var(--maxw)))/2 + var(--frame));   /* container content left  */
+  left:calc(var(--cl) + (var(--cw) + var(--gutter))/12*7);       /* col 8 start (same as SD) */
+  right:var(--cl);}
+.pg-art canvas{position:absolute;inset:0;width:100%;height:100%;}
+@media(max-width:900px){.pg-art{display:none;}}
 /* banner photo (SD BG1 moved here, 2026-07-09) - same layer stack as the SD banner */
-.pg-photo{position:absolute;inset:0;z-index:0;background:url('images/contentteammogo_wide_interior_of_a_disciplined_institutional_re_5a27f42c-8982-46ee-9907-423456e5132a.png') center 45%/cover no-repeat;filter:brightness(0.36) contrast(1.05) saturate(0.75);}
+.pg-photo{position:absolute;inset:0;z-index:0;background:url('images/retrox_ams_top-down_view_of_a_busy_crowd_crossing_at_a_geomet_1b2b333e-8c75-4109-b6e4-dc1b48592b63_0.png') center 50%/cover no-repeat;filter:brightness(0.42) contrast(1.03) saturate(0.78) hue-rotate(10deg);}
 .page-header::after{content:'';position:absolute;top:0;left:0;right:0;height:42%;z-index:1;pointer-events:none;background:linear-gradient(to bottom,rgba(0,0,0,0.78) 0%,rgba(0,0,0,0.34) 42%,rgba(0,0,0,0) 100%);}
 .page-header::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse at center,rgba(0,0,0,0) 55%,rgba(0,0,0,0.3) 100%);}
 .pg-veil{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0.38;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='pn'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23pn)'/%3E%3C/svg%3E");background-size:200px 200px;}
 @media (prefers-reduced-motion: no-preference){.pg-veil{animation:pg-grain 0.55s steps(3) infinite;}}
 @keyframes pg-grain{0%{background-position:0 0;}33%{background-position:-80px 40px;}66%{background-position:60px -70px;}100%{background-position:0 0;}}
-@media(max-width:760px){.page-header{padding:104px 0 88px;min-height:auto;display:flex;flex-direction:column;}.page-header .container{order:1;}.page-header .page-title,.page-header .page-deck{max-width:none;}.page-header .page-title{font-size:clamp(24px,7.4vw,28px);}.pg-art{position:static;order:2;width:100%;height:auto;left:auto;right:auto;top:auto;padding-top:0;margin-top:40px;opacity:0.8;}.pg-art canvas{width:min(84vw, 36vh);height:min(84vw, 36vh);}}
+@media(max-width:760px){.page-header{padding:104px 0 88px;min-height:auto;display:flex;flex-direction:column;}.page-header .container{order:1;}.page-header .page-title,.page-header .page-deck{max-width:none;}.page-header .page-title{font-size:clamp(24px,7.4vw,28px);}}
 .ph-text{grid-column:1 / 8;}
 .ph-figure{grid-column:8 / 13;position:relative;}
 .ph-figure svg{width:100%;height:auto;display:block;overflow:visible;}
@@ -107,11 +112,11 @@ body{min-height:100vh;font-size:15px;line-height:1.55;background:linear-gradient
 .wm-arrow{font-size:24px;color:var(--c-700);transition:all 0.3s ease;flex-shrink:0;}
 @media(max-width:900px){.wordmark-row{grid-template-columns:1fr;gap:24px;padding:40px 0;}.wm-name-wrap{justify-content:center;}.wm-name{text-align:left;}}
 .intro{padding:96px 0;}
-.declarative{font-size:clamp(22px,2.6vw,28px);line-height:1.3;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;max-width:880px;text-wrap:balance;}
-.prose{font-size:15px;line-height:1.7;color:var(--c-600);max-width:720px;margin-top:32px;}
+.declarative{font-size:clamp(24px,2.5vw,32px);line-height:1.3;letter-spacing:-0.025em;color:var(--c-200);font-weight:400;max-width:880px;text-wrap:balance;}
+.prose{font-size:17px;line-height:1.7;color:var(--c-600);max-width:720px;margin-top:32px;}
 .prose p{}.prose p+p{margin-top:14px;}.prose em{font-style:normal;color:var(--c-200);}
 .cta-section{text-align:center;padding:160px 0 100px;border-top:0.5px solid var(--c-900);}
-.cta-canon{font-size:clamp(22px,2.6vw,28px);line-height:1.3;letter-spacing:-0.025em;color:var(--c-200);margin:0 auto 48px;}
+.cta-canon{font-size:clamp(24px,2.5vw,32px);line-height:1.3;letter-spacing:-0.025em;color:var(--c-200);margin:0 auto 48px;}
 @media(max-width:760px){.cta-canon{max-width:none;font-size:clamp(20px,1.8vw,24px);}}
 .cta-button{display:inline-flex;align-items:center;gap:8px;font-size:15px;color:var(--c-white);text-decoration:none;}
 .cta-button .arr{display:inline-flex;align-items:center;line-height:1;}
@@ -147,13 +152,13 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .how-node{justify-self:center;width:9px;height:9px;border:0.5px solid var(--c-700);background:var(--c-black);margin-top:6px;position:relative;z-index:1;}
 .how-num{display:block;font-family:var(--mono);font-size:12px;letter-spacing:0.04em;color:var(--c-700);margin-bottom:12px;}
 .how-title{font-size:18px;line-height:1.3;letter-spacing:-0.02em;color:var(--c-white);font-weight:400;margin-bottom:14px;}
-.how-desc{font-size:15px;line-height:1.7;color:var(--c-600);max-width:560px;}
-.how-closing{font-size:15px;line-height:1.7;color:var(--c-600);margin-top:48px;max-width:560px;}
+.how-desc{font-size:17px;line-height:1.7;color:var(--c-600);max-width:560px;}
+.how-closing{font-size:17px;line-height:1.7;color:var(--c-600);margin-top:48px;max-width:560px;}
 
 .compounds-section{padding:160px 0;}
-.compounds-prose p{font-size:15px;line-height:1.7;color:var(--c-600);letter-spacing:-0.01em;}
+.compounds-prose p{font-size:17px;line-height:1.7;color:var(--c-600);letter-spacing:-0.01em;}
 .compounds-prose p+p{margin-top:24px;}
-.compounds-headline{font-size:clamp(22px,2.6vw,28px);line-height:1.3;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:0;text-align:center;margin-left:auto;margin-right:auto;}
+.compounds-headline{font-size:clamp(24px,2.5vw,32px);line-height:1.3;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:0;text-align:center;margin-left:auto;margin-right:auto;}
 .compounds-section .section-eyebrow{margin-bottom:28px;justify-content:center;}
 
 .dont-section{padding:160px 0;}
@@ -161,7 +166,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .dont-row{display:flex;flex-direction:column;gap:10px;padding:32px 0;border-top:0.5px solid var(--c-900);}
 .dont-row:last-of-type{border-bottom:0.5px solid var(--c-900);}
 .dont-label{font-size:18px;color:var(--c-white);letter-spacing:-0.02em;}
-.dont-desc{font-size:15px;line-height:1.7;color:var(--c-600);max-width:560px;}
+.dont-desc{font-size:17px;line-height:1.7;color:var(--c-600);max-width:560px;}
 .pf-equity-growth{background:var(--pf-equity-growth) url("images/01 Equity Growth.png") center/cover no-repeat;}
 .pf-balanced-growth{background:var(--pf-balanced-growth) url("images/02 balanced growth.png") center/cover no-repeat;}
 .pf-balanced{background:var(--pf-balanced) url("images/03 BALANCED.png") center/cover no-repeat;}
@@ -176,7 +181,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .acct-item:last-of-type{border-bottom:0.5px solid var(--c-900);}
 .acct-sum{list-style:none;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;padding:22px 0;cursor:pointer;transition:padding 0.3s ease;}
 .acct-main{display:flex;flex-direction:column;gap:10px;}
-.acct-d{font-size:15px;line-height:1.7;color:var(--c-600);}
+.acct-d{font-size:17px;line-height:1.7;color:var(--c-600);}
 .acct-sum{position:relative;}.acct-main{width:100%;}.acct-sum-r{position:absolute;top:22px;right:0;}
 .acct-sum::-webkit-details-marker{display:none;}
 .acct-sum:hover{padding-left:8px;}
@@ -189,7 +194,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 .acct-item[open] .acct-chev{transform:rotate(180deg);}
 .acct-detail{padding:4px 0 30px;display:flex;flex-direction:column;gap:22px;max-width:660px;}
 .acct-dgrp-h{font-family:var(--mono);font-size:12px;letter-spacing:0.06em;color:var(--c-400);display:block;margin-bottom:8px;}
-.acct-dgrp p{font-size:15px;line-height:1.7;color:var(--c-600);}
+.acct-dgrp p{font-size:17px;line-height:1.7;color:var(--c-600);}
 
 .portfolios-section{padding:160px 0;}
 .pf-rows{display:flex;flex-direction:column;}
@@ -226,8 +231,8 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 @media(max-width:760px){.portfolios-section .pf-steps,.portfolios-section .pf-right{display:none;}.pf-carousel{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;margin:0 -24px;padding:4px 24px 0;scrollbar-width:none;}.pf-carousel::-webkit-scrollbar{display:none;}.pf-card{flex:0 0 84%;scroll-snap-align:center;display:flex;flex-direction:column;}.pf-dots{display:flex;justify-content:center;gap:8px;margin-top:24px;}.pf-dot{width:6px;height:6px;border:0.5px solid var(--c-700);}.pf-dot.is-on{background:var(--c-400);border-color:var(--c-400);}}
 .pf-head{margin-bottom:48px;}
 .pf-head .section-eyebrow{margin-bottom:0;}
-.pf-headline{font-size:clamp(22px,2.6vw,28px);line-height:1.3;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:20px;}
-.pf-deck{font-size:15px;line-height:1.7;color:var(--c-600);margin-top:16px;max-width:calc((100% + var(--gutter)) / 6 * 5 - var(--gutter));}
+.pf-headline{font-size:clamp(24px,2.5vw,32px);line-height:1.3;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:20px;}
+.pf-deck{font-size:17px;line-height:1.7;color:var(--c-600);margin-top:16px;max-width:calc((100% + var(--gutter)) / 6 * 5 - var(--gutter));}
 .pf-steps{margin-top:0;display:flex;flex-direction:column;}
 .pf-step{position:relative;display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;padding:18px 0;background:none;border:none;border-top:0.5px solid var(--c-900);text-align:left;cursor:pointer;font-family:inherit;transition:padding-left 0.25s ease;}
 .pf-step.is-active{padding-left:16px;}
@@ -245,9 +250,18 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 
 .proj-head{margin-bottom:48px;}
 .proj-head .section-eyebrow{margin-bottom:0;}
-.proj-headline{font-size:clamp(22px,2.6vw,28px);line-height:1.3;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:20px;}
-.proj-deck{font-size:15px;line-height:1.7;color:var(--c-600);margin-top:16px;max-width:calc((100% + var(--gutter)) / 6 * 5 - var(--gutter));}
+.proj-headline{font-size:clamp(24px,2.5vw,32px);line-height:1.3;letter-spacing:-0.03em;color:var(--c-200);font-weight:400;margin-top:20px;}
+.proj-deck{font-size:17px;line-height:1.7;color:var(--c-600);margin-top:16px;max-width:calc((100% + var(--gutter)) / 6 * 5 - var(--gutter));}
 @media(max-width:760px){.pf-deck,.proj-deck{max-width:none;}}
+.proj-fig{position:relative;width:100%;}
+.proj-fig canvas{display:block;width:100%;aspect-ratio:16/7;}
+.proj-fig .proj-cap{margin-top:14px;}
+.proj-rows{display:flex;flex-direction:column;}
+.proj-row{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);padding:32px 0;border-top:0.5px solid var(--c-900);}
+.proj-row:last-child{border-bottom:0.5px solid var(--c-900);}
+.proj-row .pr-k{grid-column:1 / 6;font-size:18px;color:var(--c-white);letter-spacing:-0.02em;}
+.proj-row .pr-d{grid-column:7 / 13;font-size:17px;line-height:1.7;color:var(--c-600);}
+@media(max-width:760px){.proj-row{display:flex;flex-direction:column;gap:10px;}}
 .proj-board{display:flex;flex-direction:column;gap:16px;align-items:center;}
 .proj-cap{font-family:var(--mono);font-size:12px;color:var(--c-700);letter-spacing:0.04em;}
 .pp{flex:0 0 340px;max-width:340px;border:0.5px solid var(--c-800);border-radius:28px;overflow:hidden;background:var(--c-black);display:flex;flex-direction:column;}
@@ -285,15 +299,19 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 @media(min-width:760px){
   .compounds-section,.how-section,.dont-section,.portfolios-section,.proj-section{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}
   .proj-section .proj-head{grid-column:1 / 7;}
+  .proj-section .proj-fig{grid-column:1 / 13;margin-top:72px;}
+  .proj-section .proj-rows{grid-column:1 / 13;margin-top:72px;}
   .proj-section .proj-board{grid-column:1 / 13;}
   .compounds-section>.section-eyebrow,.how-section>.section-eyebrow,.dont-section>.section-eyebrow,.portfolios-section>.section-eyebrow{grid-column:1 / 7;}
-  .how-section .how-steps,.how-section .how-closing,.portfolios-section .pf-right{grid-column:7 / 13;}
+  .how-section .how-steps,.how-section .how-closing,.dont-section .how-steps,.portfolios-section .pf-right{grid-column:7 / 13;}
   .dont-section .dont-rows{grid-column:1 / -1;}
   .dont-row{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);align-items:start;}
   .dont-row .dont-label{grid-column:1 / 5;}
   .dont-row .dont-desc{grid-column:7 / 13;max-width:none;}
-  .portfolios-section .pf-head{grid-column:1 / 7;}
-  .portfolios-section .pf-rows{grid-column:7 / 13;}
+  .portfolios-section .pf-head{grid-column:1 / 13;text-align:center;}
+  .portfolios-section .pf-head .section-eyebrow{display:flex;justify-content:center;}
+  .portfolios-section .pf-deck{margin-left:auto;margin-right:auto;}
+  .portfolios-section .pf-rows{grid-column:1 / 13;}
   .portfolios-section .pf-row{grid-template-columns:repeat(6,1fr);}
   .portfolios-section .pf-row-head{grid-column:1 / 3;}
   .portfolios-section .pf-row-detail{grid-column:3 / 7;}
@@ -338,6 +356,36 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   .perf-table td:not(.perf-td-name),.perf-table th:not(.perf-th-name){padding-left:24px;}
 }
 @media(max-width:640px){.declarative,.cta-canon{text-wrap:wrap;}}
+/* Trust band (credentials) - same block as Self-Directed, below the hero */
+#trust{position:relative;background:var(--c-elev);padding:160px 0;}
+#trust::before{content:'';position:absolute;top:0;left:50%;width:100vw;transform:translateX(-50%);border-top:0.5px solid var(--c-900);pointer-events:none;}
+#trust::after{content:'';position:absolute;top:0;bottom:0;left:50%;width:100vw;transform:translateX(-50%);background:color-mix(in srgb, var(--c-elev) 50%, var(--c-surface));z-index:0;pointer-events:none;}
+#trust>*{position:relative;z-index:1;}
+.trust-line{font-size:13px;line-height:1.6;color:var(--c-600);max-width:620px;}
+.trust-strip{display:grid;grid-template-columns:repeat(5,1fr);column-gap:var(--gutter);margin-top:48px;}
+.trust-item{display:flex;flex-direction:column;gap:7px;border-left:0.5px solid var(--c-800);padding-left:20px;}
+.ti-num{font-size:17px;color:var(--c-200);letter-spacing:-0.02em;line-height:1;}
+.ti-lbl{font-family:var(--mono);font-size:12px;letter-spacing:0.04em;color:var(--c-700);}
+@media(max-width:760px){.trust-strip{grid-template-columns:1fr;row-gap:20px;margin-top:30px;}.trust-item{border-left:0;padding-left:0;border-top:0.5px solid var(--c-800);padding-top:16px;}}
+/* No.04 The Portfolios - light paper insert (a document set into the dark site) */
+.portfolios-section{position:relative;}
+.portfolios-section::after{content:'';position:absolute;top:0;bottom:0;left:50%;width:100vw;transform:translateX(-50%);background:color-mix(in srgb, var(--c-white) 45%, var(--c-200));z-index:0;pointer-events:none;border-top:0.5px solid var(--c-900);border-bottom:0.5px solid var(--c-900);}
+.portfolios-section>*{position:relative;z-index:1;}
+.portfolios-section .se-no{color:rgba(22,22,20,0.45);}
+.portfolios-section .se-name{color:rgba(22,22,20,0.85);}
+.portfolios-section .pf-headline{color:rgba(22,21,20,0.95);}
+.portfolios-section .pf-deck{color:rgba(22,21,20,0.62);}
+.portfolios-section .pf-row{border-top:0.5px solid rgba(22,22,20,0.18);}
+.portfolios-section .pf-row:last-child{border-bottom:0.5px solid rgba(22,22,20,0.18);}
+.portfolios-section .pf-row-title{color:rgba(22,21,20,0.92);}
+.portfolios-section .pf-row-alloc{color:rgba(22,21,20,0.5);}
+.portfolios-section .pf-rd{border-top:0.5px solid rgba(22,22,20,0.14);}
+.portfolios-section .pf-rd:first-child{border-top:none;}
+.portfolios-section .pf-rd-k{color:rgba(22,21,20,0.55);}
+.portfolios-section .pf-rd-v{color:rgba(22,21,20,0.82);}
+.pf-strata{position:relative;grid-column:1 / -1;width:min(520px,100%);max-width:520px;margin:56px auto 24px;aspect-ratio:9/13;border:0.5px solid var(--c-200);border-radius:4px;overflow:hidden;}
+@media(max-width:760px){.pf-strata{margin:40px auto 8px;}}
+.pf-strata canvas{position:absolute;inset:0;width:100%;height:100%;display:block;}
 </style>
 </head>
 <body>
@@ -371,50 +419,79 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
   var VM=V[N];
   function size(){var r=cv.getBoundingClientRect();W=r.width;H=r.height;cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);ctx.setTransform(DPR,0,0,DPR,0,0);}
   function draw(now){
-    if(!T0)T0=now;var rev=reduce?1:Math.min(1,(now-T0)/2000);var e=1-Math.pow(1-rev,3);
+    if(!T0)T0=now;var rev=reduce?1:Math.min(1,(now-T0)/2800);var e=1-Math.pow(1-rev,3);
     ctx.clearRect(0,0,W,H);
-    var padL=W*0.05,padR=W*0.30,padT=H*0.14,padB=H*0.20;
-    var X=function(i){return padL+(W-padL-padR)*i/N;};
-    var Y=function(v){return H-padB-(H-padT-padB)*v/VM;};
     var IN=function(a){return 'rgba(236,234,229,'+a+')';};
     var DIM=function(a){return 'rgba(168,162,155,'+a+')';};
-    var upto=Math.max(1,Math.floor(N*e));
-    // contributions alone: the straight dashed floor
-    ctx.setLineDash([4,5]);ctx.strokeStyle=DIM(0.45);ctx.lineWidth=1;ctx.beginPath();
-    for(var i=0;i<=upto;i++){var x=X(i),y=Y(i+1);i?ctx.lineTo(x,y):ctx.moveTo(x,y);}ctx.stroke();ctx.setLineDash([]);
-    // the staircase: one small step per week, held
-    ctx.strokeStyle=IN(0.78);ctx.lineWidth=1.4;ctx.beginPath();
-    ctx.moveTo(X(0),Y(V[0]));
-    for(var i=1;i<=upto;i++){ctx.lineTo(X(i),Y(V[i-1]));ctx.lineTo(X(i),Y(V[i]));}
-    ctx.stroke();
-    var tipX=X(upto),tipY=Y(V[upto]);
-    // weekly arrival: a deposit falls onto the tip, settles
+    // center + scale: same as the SD hero loop (cx=W*0.482, cy=(H+140)/2, R~0.277W)
+    var cx=W*0.482,cy=(H+140)/2,RR=Math.min(W*0.277,H*0.30);
+    var grown=Math.max(1,Math.floor(N*e));
+    var live=reduce?0:Math.max(0,Math.min(1,(now-T0-1600)/2200));   // rotation eases in while the last layers settle
+    // stacked rings forming a dome volume: week 1 small at the top, each week a wider ring settles below
+    var topY=cy-RR*0.92,botY=cy+RR*0.92;
+    ctx.save();ctx.shadowColor='rgba(0,0,0,0.8)';ctx.shadowBlur=6;
+    // thin vertical axis (drafting register)
+    ctx.strokeStyle=DIM(0.28);ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(cx,topY-RR*0.10);ctx.lineTo(cx,cy-34);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(cx,cy+34);ctx.lineTo(cx,botY+RR*0.10);ctx.stroke();
+    for(var i=0;i<N;i++){var f=(i+0.5)/N;
+      var y=topY+(botY-topY)*f;
+      var r=Math.sqrt(Math.max(0.0001,1-Math.pow(2*f-1,2)))*RR;      // sphere profile
+      var settled=i<grown;
+      var month=(i+1)%4===0;
+      var hh=Math.sin((i+1)*12.9898)*43758.5453;hh=hh-Math.floor(hh);
+      var lz=Math.max(0,1-Math.abs(y-cy)/(RR*0.44));                 // label zone: dim the whites near the centre
+      if(settled){
+        var a=0.16+0.30*Math.pow(1-Math.abs(2*f-1),0.7)+(month?0.14:0);
+        if(i===grown-1)a=Math.min(0.85,a+0.62*(1-Math.min(1,live*1.6)));   // the arriving layer, easing back into the stack
+        a*=1-0.88*lz;
+        ctx.strokeStyle=IN(Math.min(0.9,a).toFixed(3));ctx.lineWidth=month?1.3:1;
+        ctx.setLineDash([]);
+      }else{
+        ctx.strokeStyle=DIM(0.16);ctx.lineWidth=1;ctx.setLineDash([3,6]);  // weeks still to come
+      }
+      ctx.beginPath();ctx.ellipse(cx,y,r,r*0.30,0,0,6.28);ctx.stroke();ctx.setLineDash([]);
+      if(settled&&live>0){                                             // a comet of light orbits each layer: the stack reads as turning
+        var th=now*0.00055*(0.7+0.6*hh)+i*0.85;
+        var mid=th+0.30,front=Math.sin(mid)>0;
+        var ha=(front?0.5:0.18)*live*(1-0.88*lz);
+        if(ha>0.02){
+          var SEG=5,LEN=0.60;
+          for(var q=0;q<SEG;q++){var k1=q/SEG,k2=(q+1)/SEG,fall=Math.pow((q+1)/SEG,1.6);
+            ctx.strokeStyle=IN(Math.min(0.92,a+ha*fall).toFixed(3));
+            ctx.lineWidth=(month?1.3:1)+(front?0.5:0.1)*fall;
+            ctx.beginPath();ctx.ellipse(cx,y,r,r*0.30,0,th+LEN*k1,th+LEN*k2+0.012);ctx.stroke();}}}
+      // one dot per settled week, on the axis (the deposit that built this layer)
+      if(settled&&Math.abs(y-cy)>30){ctx.fillStyle=IN((month?0.9:0.55)*(1-0.5*lz));
+        ctx.beginPath();ctx.arc(cx,y,month?1.9:1.3,0,6.28);ctx.fill();}
+    }
+    // the core seed at the top
+    ctx.beginPath();ctx.arc(cx,topY,3.6,0,6.28);ctx.fillStyle=IN(0.98);ctx.fill();
+    ctx.strokeStyle='rgba(0,0,0,0.75)';ctx.lineWidth=1.4;ctx.stroke();
+    // weekly deposit: falls onto the axis, becomes the next layer
     if(rev>=1&&!reduce){var ph=(now%2200)/2200;
-      if(ph<0.32){var k=ph/0.32,dy=(1-k*k)*48;
-        ctx.fillStyle=IN(0.9);ctx.fillRect(tipX-2.5,tipY-13-dy,5,5);}
-      else if(ph<0.6){var fl=1-(ph-0.32)/0.28;
-        ctx.strokeStyle=IN((0.6*fl).toFixed(3));ctx.lineWidth=1;ctx.beginPath();ctx.arc(tipX,tipY,5+(1-fl)*11,0,6.28);ctx.stroke();}}
-    // the tip: the core itself
-    ctx.beginPath();ctx.arc(tipX,tipY,4.2,0,6.28);ctx.fillStyle=IN(0.98);ctx.fill();
-    ctx.strokeStyle='rgba(0,0,0,0.85)';ctx.lineWidth=1.5;ctx.stroke();
-    ctx.save();ctx.shadowColor='rgba(0,0,0,0.85)';ctx.shadowBlur=8;
-    ctx.textAlign='left';ctx.textBaseline='middle';
-    ctx.font='500 15px "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif';ctx.fillStyle=IN(0.98);
-    ctx.fillText('S&P 500 \u00b7 the core',tipX+14,tipY-9);
-    ctx.letterSpacing='0.04em';ctx.font='11px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.fillStyle=DIM(0.92);
-    ctx.fillText('accumulated weekly \u00b7 held',tipX+14,tipY+11);ctx.letterSpacing='0px';
-    // captions
-    ctx.font='10px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.fillStyle=DIM(0.75);
-    var mi=Math.floor(N*0.62);if(upto>mi)ctx.fillText('contributions alone',X(mi)+8,Y(mi+1)+18);
-    ctx.letterSpacing='0.06em';ctx.fillStyle=DIM(0.7);
-    ctx.textAlign='left';ctx.fillText('Week 01',X(0),H-padB+20);
-    ctx.textAlign='right';ctx.fillText('Week 52',X(N),H-padB+20);ctx.letterSpacing='0px';
+      if(ph<0.34){var kk=ph/0.34,dy=(1-kk*kk)*54;
+        ctx.fillStyle=IN(0.9);ctx.fillRect(cx-2.5,topY-16-dy,5,5);}
+      else if(ph<0.62){var fl=1-(ph-0.34)/0.28;
+        ctx.strokeStyle=IN((0.45*fl).toFixed(3));ctx.lineWidth=1;
+        ctx.beginPath();ctx.ellipse(cx,botY,RR*(1+(1-fl)*0.04),RR*0.30*(1+(1-fl)*0.04),0,0,6.28);ctx.stroke();}}
+    // drifting specks (family register with SD)
+    for(var s2=0;s2<seeds.length;s2++){var sd=seeds[s2];
+      var u=(sd.a+now*0.00001)%1;var y2=topY+(botY-topY)*u;
+      var r2=Math.sqrt(Math.max(0.0001,1-Math.pow(2*u-1,2)))*RR*(1.02+sd.b*0.10);
+      var al=0.06+0.12*Math.pow(Math.sin(now*0.0016+sd.tw),2);
+      ctx.fillStyle=IN(al.toFixed(3));ctx.fillRect(cx+(sd.b<0.5?-r2:r2),y2,sd.sz*0.8,sd.sz*0.8);}
     ctx.restore();
-    // drifting specks along the climb (family: the SD strips)
-    for(var s2=0;s2<seeds.length;s2++){var sd=seeds[s2];var u=(sd.a+now*0.000012)%1;var i3=u*upto;
-      var x2=X(i3),y2=Y(V[Math.floor(i3)]||1)+(sd.b-0.5)*40;
-      var al=0.12+0.2*Math.pow(Math.sin(now*0.002+sd.tw),2);
-      ctx.fillStyle=IN(al.toFixed(3));ctx.fillRect(x2,y2,sd.sz,sd.sz);}
+    // labels, under the volume (same voice as before)
+    ctx.save();ctx.shadowColor='rgba(0,0,0,0.85)';ctx.shadowBlur=8;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.letterSpacing='0.02em';
+    ctx.font='12px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.fillStyle='rgba(236,234,229,0.95)';
+    ctx.fillText('S&P 500',cx,cy-8);
+    ctx.font='11px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.fillStyle='rgba(180,174,166,0.9)';
+    ctx.fillText('the core \u00b7 held',cx,cy+9);
+    ctx.letterSpacing='0.04em';ctx.font='10px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.fillStyle=IN(0.92);
+    ctx.fillText('one year \u00b7 52 weekly layers',cx,botY+26);ctx.letterSpacing='0px';
+    ctx.restore();
   }
   function loop(now){draw(now||performance.now());if(running)raf=requestAnimationFrame(loop);}
   function start(){if(reduce){draw(performance.now());return;}if(!running){running=true;raf=requestAnimationFrame(loop);}}
@@ -429,6 +506,18 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
     <div class="page-actions ri" style="--d:0.24s"><a href="II Site V2 - GetTheApp.html" class="cta-button"><span class="arr"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg></span><span class="roll"><span class="roll-in"><span>Enter the System</span><span>Enter the System</span></span></span></a></div>
   </div>
 </section>
+
+<!-- TRUST - broker clarity (credentials, below the hero; same block as Self-Directed) -->
+<section id="trust" class="band"><div class="container">
+  <p class="trust-line">A licensed brokerage with the decision layer built in. <b>Not a tool bolted onto your broker.</b></p>
+  <div class="trust-strip">
+    <div class="trust-item"><span class="ti-num" style="color:var(--c-white);">~$500M</span><span class="ti-lbl">Assets Custodied</span></div>
+    <div class="trust-item"><span class="ti-num">Regulatory Standing</span><span class="ti-lbl">CIRO registration</span></div>
+    <div class="trust-item"><span class="ti-num">Investor Protection</span><span class="ti-lbl">CIPF membership</span></div>
+    <div class="trust-item"><span class="ti-num">Asset Custody</span><span class="ti-lbl">Custodian &amp; segregation</span></div>
+    <div class="trust-item"><span class="ti-num">Institutional Backing</span><span class="ti-lbl">Orion Digital / Mogo</span></div>
+  </div>
+</div></section>
 
 <div class="container">
 <section class="compounds-section">
@@ -461,10 +550,19 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
 <div class="container">
 <section class="dont-section">
   <div class="section-eyebrow ri" style="--d:0s"><span class="se-no">No. 03</span><span class="se-name">What They Don't Do</span></div>
-  <div class="dont-rows">
-    <div class="dont-row ri" style="--d:0.04s"><div class="dont-label">No Market Timing</div><p class="dont-desc">Contributions run on the same schedule regardless of the market, with no attempt to enter at the right moment because no one does it reliably.</p></div>
-    <div class="dont-row ri" style="--d:0.06s"><div class="dont-label">No Stock Selection</div><p class="dont-desc">Capital is allocated across a diversified portfolio matched to your risk profile, not concentrated in individual names chosen to beat the market.</p></div>
-    <div class="dont-row ri" style="--d:0.08s"><div class="dont-label">No Reaction</div><p class="dont-desc">Headlines, volatility, and forecasts do not change the plan. The allocation holds through cycles, which is where most of the long-term return is earned.</p></div>
+  <div class="how-steps">
+    <div class="how-step ri" style="--d:0.04s">
+      <span class="how-node"></span>
+      <div class="how-body"><h3 class="how-title">No Market Timing</h3><p class="how-desc">Contributions run on the same schedule regardless of the market, with no attempt to enter at the right moment because no one does it reliably.</p></div>
+    </div>
+    <div class="how-step ri" style="--d:0.08s">
+      <span class="how-node"></span>
+      <div class="how-body"><h3 class="how-title">No Stock Selection</h3><p class="how-desc">Capital is allocated across a diversified portfolio matched to your risk profile, not concentrated in individual names chosen to beat the market.</p></div>
+    </div>
+    <div class="how-step ri" style="--d:0.12s">
+      <span class="how-node"></span>
+      <div class="how-body"><h3 class="how-title">No Reaction</h3><p class="how-desc">Headlines, volatility, and forecasts do not change the plan. The allocation holds through cycles, where most of the long-term return is earned.</p></div>
+    </div>
   </div>
 </section>
 </div>
@@ -476,6 +574,7 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
     <h2 class="pf-headline ri" style="--d:0.04s">The profile that fits.</h2>
     <p class="pf-deck ri" style="--d:0.06s">Answer a few questions and the system recommends the right profile, from full equity to capital preservation.</p>
   </div>
+  <div class="pf-strata ri" style="--d:0.08s"><canvas id="pfStrata"></canvas></div>
   <div class="pf-rows">
     <div class="pf-row ri" style="--d:0.04s">
       <div class="pf-row-head"><span class="pf-row-title">Equity Growth</span></div>
@@ -557,6 +656,15 @@ footer{border-top:0.5px solid var(--c-900);padding:64px 0 36px;font-size:12px;li
       </div>
     </div>
     <div class="proj-cap ri" style="--d:0.14s">Fig. 01 &middot; Goal Dashboard &middot; Millionaire Goal &middot; TFSA &middot; Equity Growth</div>
+  </div>
+  <div class="proj-fig ri" style="--d:0.08s">
+    <canvas id="projPath"></canvas>
+    <div class="proj-cap">Illustrative &middot; not live data &middot; the bands are a range, not a promise</div>
+  </div>
+  <div class="proj-rows">
+    <div class="proj-row ri" style="--d:0.04s"><div class="pr-k">A Target, Not a Forecast</div><p class="pr-d">The bands are a range of outcomes, not a promise. The system projects the path you are on; it does not predict returns.</p></div>
+    <div class="proj-row ri" style="--d:0.06s"><div class="pr-k">Funded Before Projected</div><p class="pr-d">The first stretch of the line is the record of deposits already executed. The projection is that momentum, extended forward.</p></div>
+    <div class="proj-row ri" style="--d:0.08s"><div class="pr-k">Course Corrections</div><p class="pr-d">If the path drifts from the goal, the system says so, and shows the weekly amount that would bring the plan back on track.</p></div>
   </div>
 </section>
 </div>
@@ -692,6 +800,131 @@ hamburger.addEventListener('click',e=>{e.stopPropagation();menuOverlay.classList
   var carousel=document.querySelector('.pf-carousel'),dots=document.querySelectorAll('.pf-dot');
   if(carousel&&dots.length){carousel.addEventListener('scroll',function(){var i=Math.round(carousel.scrollLeft/(carousel.scrollWidth/dots.length));i=Math.max(0,Math.min(dots.length-1,i));dots.forEach(function(dt,j){dt.classList.toggle('is-on',j===i);});},{passive:true});}
 })();</script>
+<script>
+// No.04 The Strata - five mandates as sediment, a plate on the paper section
+(function(){
+  var cv=document.getElementById('pfStrata'); if(!cv||!cv.getContext) return;
+  var ctx=cv.getContext('2d'),W=0,H=0;
+  function size(){var b=cv.parentElement.getBoundingClientRect();var DPR=Math.min(window.devicePixelRatio||1,2);
+    W=b.width;H=b.height;cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);ctx.setTransform(DPR,0,0,DPR,0,0);}
+  var grain=(function(){var gr=document.createElement('canvas');gr.width=gr.height=160;
+    var gc=gr.getContext('2d'),id=gc.createImageData(160,160),d=id.data;
+    for(var i=0;i<d.length;i+=4){var w2=Math.random()<0.5?255:0;d[i]=d[i+1]=d[i+2]=w2;d[i+3]=Math.random()*36;}
+    gc.putImageData(id,0,0);return gr;})();
+  var cs=getComputedStyle(document.documentElement);
+  var PF=[
+    ['Equity Growth',   cs.getPropertyValue('--pf-equity-growth').trim(), true,  '~11%',  'Long-term Return'],
+    ['Balanced Growth', cs.getPropertyValue('--pf-balanced-growth').trim(), true,  '~9%',   'Long-term Return'],
+    ['Balanced',        cs.getPropertyValue('--pf-balanced').trim(),  false, '~7%',   'Long-term Return'],
+    ['Balanced Income', cs.getPropertyValue('--pf-balanced-income').trim(), true,  '3.06%', 'Yield'],
+    ['Cautious Income', cs.getPropertyValue('--pf-money-market').trim(), true,  '2.63%', 'Yield']];
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='rgba(229,228,226,1)';ctx.fillRect(0,0,W,H);
+    var cx=W*0.5, rx=W*0.5, ry=H*0.09, y0=H*0.15, gap=H*0.15;   // thin layers, wide bands: each colour owns its stratum, overlap is only the seam
+    var RANK=[0.95,0.88,0.80,0.74,0.70];   // colours stay legible as identities; a gentle settle only
+    ctx.globalCompositeOperation='multiply';
+    for(var i=0;i<5;i++){var cy=y0+i*gap;
+      ctx.globalAlpha=RANK[i];ctx.fillStyle=PF[i][1];
+      ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,0,0,6.28);ctx.fill();}
+    ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';
+    ctx.globalAlpha=0.5;ctx.fillStyle=ctx.createPattern(grain,'repeat');ctx.fillRect(0,0,W,H);ctx.globalAlpha=1;
+    ctx.textBaseline='middle';ctx.letterSpacing='0.02em';
+    var LAB=[0.95,0.85,0.75,0.68,0.62];
+    for(var j=0;j<5;j++){var cy2=y0+j*gap;
+      var ink=PF[j][2]?'rgba(22,22,20,'+LAB[j]+')':'rgba(240,238,233,0.96)';
+      ctx.textAlign='left';ctx.font=(j===0?'500':'400')+' 13px "Inter",-apple-system,sans-serif';
+      ctx.fillStyle=ink;ctx.fillText(PF[j][0],W*0.16,cy2);
+      ctx.textAlign='right';ctx.font='500 13px "Inter",-apple-system,sans-serif';
+      ctx.fillStyle=ink;ctx.fillText(PF[j][3],W*0.84,cy2);
+      ctx.letterSpacing='0.04em';ctx.font='10px "Chakra Petch",ui-monospace,Menlo,monospace';
+      ctx.fillStyle=PF[j][2]?'rgba(22,22,20,'+(LAB[j]*0.66).toFixed(2)+')':'rgba(240,238,233,0.7)';
+      ctx.fillText(PF[j][4],W*0.84,cy2+16);ctx.letterSpacing='0px';
+      ctx.textAlign='left';}
+    ctx.letterSpacing='0px';ctx.textBaseline='alphabetic';
+    ctx.letterSpacing='0.04em';ctx.font='10px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.fillStyle='rgba(22,22,20,0.5)';
+    ctx.fillText('risk settles downward \u00b7 one layer takes your weight',W*0.08,H*0.955);ctx.letterSpacing='0px';
+  }
+  function go(){size();draw();}
+  addEventListener('resize',go);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){go();});
+  go();
+})();
+</script>
+<script>
+// No.05 The Projection - the funded path: weekly steps behind, a quiet cone ahead, one destination
+(function(){
+  var cv=document.getElementById('projPath'); if(!cv||!cv.getContext) return;
+  var ctx=cv.getContext('2d'),W=0,H=0;
+  function size(){var b=cv.getBoundingClientRect();var DPR=Math.min(window.devicePixelRatio||1,2);
+    W=b.width;H=b.height;cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);ctx.setTransform(DPR,0,0,DPR,0,0);}
+  var IN=function(a){return 'rgba(236,234,229,'+a+')';};
+  var DIM=function(a){return 'rgba(168,162,155,'+a+')';};
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    var x0=W*0.015,x1=W*0.985,yB=H*0.84,yT=H*0.10;
+    var xm=x0+(x1-x0)*0.30, yNow=yB-(yB-yT)*0.24;
+    // year grid: drafting register
+    var YRS=['now','2031','2036','2041'];
+    for(var gi=0;gi<4;gi++){var gx=x0+(x1-x0)*(gi/3)*0.994;
+      ctx.strokeStyle=DIM(0.14);ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(gx,yT-6);ctx.lineTo(gx,yB);ctx.stroke();
+      ctx.textAlign=gi===0?'left':(gi===3?'right':'center');
+      ctx.letterSpacing='0.06em';ctx.font='10px "Chakra Petch",ui-monospace,Menlo,monospace';
+      ctx.fillStyle=DIM(0.7);ctx.fillText(YRS[gi],gx+(gi===0?0:0),yB+20);ctx.letterSpacing='0px';}
+    ctx.strokeStyle=DIM(0.34);ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x0,yB);ctx.lineTo(x1,yB);ctx.stroke();
+    // funded past: weekly staircase with deposit ticks
+    var steps=30;
+    ctx.strokeStyle=IN(0.9);ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(x0,yB);
+    var px=x0,py=yB;
+    for(var i=1;i<=steps;i++){var fx=x0+(xm-x0)*i/steps,fy=yB-(yB-yNow)*Math.pow(i/steps,0.9);
+      ctx.lineTo(fx,py);ctx.lineTo(fx,fy);px=fx;py=fy;}
+    ctx.stroke();
+    ctx.strokeStyle=IN(0.55);ctx.lineWidth=1;
+    for(var k=1;k<=steps;k+=2){var tx=x0+(xm-x0)*k/steps,ty=yB-(yB-yNow)*Math.pow(k/steps,0.9);
+      ctx.beginPath();ctx.moveTo(tx,ty+5);ctx.lineTo(tx,ty+11);ctx.stroke();}
+    // three paths ahead: conservative / expected / strong
+    var yCon=yT+(yB-yT)*0.44, yExp=yT+(yB-yT)*0.24, yStr=yT+(yB-yT)*0.06;
+    function path(yEnd){ctx.beginPath();ctx.moveTo(xm,yNow);
+      ctx.quadraticCurveTo(xm+(x1-xm)*0.55,yNow-(yNow-yEnd)*0.42,x1,yEnd);}
+    // faint band between conservative and strong
+    ctx.fillStyle='rgba(236,234,229,0.045)';
+    ctx.beginPath();ctx.moveTo(xm,yNow);
+    ctx.quadraticCurveTo(xm+(x1-xm)*0.55,yNow-(yNow-yStr)*0.42,x1,yStr);
+    ctx.lineTo(x1,yCon);
+    ctx.quadraticCurveTo(xm+(x1-xm)*0.55,yNow-(yNow-yCon)*0.42,xm,yNow);
+    ctx.closePath();ctx.fill();
+    ctx.setLineDash([3,5]);ctx.lineWidth=1;
+    ctx.strokeStyle=DIM(0.5);path(yCon);ctx.stroke();
+    ctx.strokeStyle=DIM(0.5);path(yStr);ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.strokeStyle=IN(0.8);ctx.lineWidth=1.4;path(yExp);ctx.stroke();
+    // path labels
+    ctx.textAlign='right';ctx.letterSpacing='0.05em';ctx.font='10px "Chakra Petch",ui-monospace,Menlo,monospace';
+    ctx.fillStyle=DIM(0.75);
+    ctx.fillText('strong',x1-14,yStr-8);
+    ctx.fillText('conservative',x1-14,yCon+18);
+    ctx.fillStyle=IN(0.85);ctx.fillText('expected',x1-14,yExp-9);
+    ctx.letterSpacing='0px';
+    // today marker + state
+    ctx.beginPath();ctx.arc(xm,yNow,3.8,0,6.28);ctx.fillStyle=IN(0.97);ctx.fill();
+    ctx.strokeStyle='rgba(0,0,0,0.8)';ctx.lineWidth=1.4;ctx.stroke();
+    ctx.textAlign='left';ctx.letterSpacing='0.05em';ctx.font='500 11px "Chakra Petch",ui-monospace,Menlo,monospace';
+    ctx.fillStyle=IN(0.92);ctx.fillText('today',xm+10,yNow-10);
+    ctx.font='10px "Chakra Petch",ui-monospace,Menlo,monospace';ctx.fillStyle=DIM(0.8);
+    ctx.fillText('on track \u00b7 funded weekly',xm+10,yNow+8);
+    // the goal
+    ctx.beginPath();ctx.arc(x1,yExp,5,0,6.28);ctx.strokeStyle=IN(0.92);ctx.lineWidth=1.2;ctx.stroke();
+    ctx.beginPath();ctx.arc(x1,yExp,1.7,0,6.28);ctx.fillStyle=IN(0.95);ctx.fill();
+    ctx.textAlign='right';ctx.letterSpacing='0.05em';ctx.font='500 11px "Chakra Petch",ui-monospace,Menlo,monospace';
+    ctx.fillStyle=IN(0.92);ctx.fillText('the goal \u00b7 2041',x1,yExp-24);
+    ctx.letterSpacing='0px';
+  }
+  function go(){size();draw();}
+  addEventListener('resize',go);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){go();});
+  go();
+})();
+</script>
 <script src="grid-overlay.js"></script>
 <style>
 /* de-phone (brief P1): drop consumer-app phone corners on product mockups. no status bar or screen gloss present on this page. */
