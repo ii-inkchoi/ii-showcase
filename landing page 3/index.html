@@ -1441,7 +1441,6 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   if('IntersectionObserver' in window){
     var io=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){ revealSec(e.target); io.unobserve(e.target); } });}, {threshold: 0, rootMargin: '0px 0px -12% 0px'});
     secs.forEach(function(s){ io.observe(s); });
-    setTimeout(function(){ secs.forEach(function(s){ if(!s.classList.contains('rv-on')) revealSec(s); }); }, 2600);
   } else { secs.forEach(revealSec); }
 })();
 </script>
