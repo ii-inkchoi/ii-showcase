@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<!--
+  Hero Torus - standalone loop for marketing video use.
+  Usage: open this file in Chrome, screen record the full window (or the .stage area),
+  then drop the recording into a Reel or social video edit.
+  This is a plain looping animation. All mouse/scroll interactivity from the
+  source site has been removed - the torus rests at its base tilt and rotates
+  continuously on its own, forever.
+  Extracted from: ii site v5/index.html (heroTorus SVG + ht-* CSS + renderer IIFE).
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hero Torus - Loop</title>
+<style>
+:root {
+  --c-black: #000000; --c-1000: #1C1C1C; --c-900: #232627; --c-800: #565B5E;
+  --c-700: #929292; --c-600: #A7A7A7; --c-400: #C7C7C7; --c-200: #E3E2E2; --c-white: #FFFFFF;
+  --c-urgent: #FF3533; --c-warning: #FF7A00; --c-live: #30D158; --c-elev: #0A0A0A;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--c-black); width: 100%; height: 100%; overflow: hidden; }
+
+.stage { position: relative; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; }
+#heroTorus { height: 90vh; width: auto; max-width: 100vw; display: block; overflow: visible; }
+.hero-dots { position: absolute; left: -30%; top: -25%; width: 160%; height: 150%; pointer-events: none; }
+
+.ht-line { fill: none; stroke: var(--c-800); stroke-width: 0.6; opacity: 0.62; }
+.ht-eq { stroke: var(--c-700); opacity: 0.85; }
+.ht-node { fill: var(--c-700); transition: fill 0.4s ease; }
+.ht-node.active { fill: var(--c-white); }
+.ht-pulse { fill: none; stroke: var(--c-white); stroke-width: 1.2; stroke-linecap: round; opacity: 0.8; }
+.ht-hl { fill: none; stroke-width: 0.8; stroke-linecap: round; opacity: 0.55; }
+@media (prefers-reduced-motion: reduce) { .ht-pulse, .ht-hl { display: none; } }
+@media (prefers-reduced-motion: no-preference) {
+  .ht-line { stroke-dasharray: 1; stroke-dashoffset: 1; animation: ht-draw 1.1s cubic-bezier(0.5,0,0.2,1) forwards; }
+  .ht-node { opacity: 0; transition: opacity 0.5s ease; }
+  .ht-node.on { opacity: 1; }
+  .ht-pulse { opacity: 0; animation: ht-fadep 0.7s ease 3.5s forwards; }
+  .ht-hl { opacity: 0; animation: ht-fadeh 0.9s ease 3.4s forwards; }
+  @keyframes ht-draw { to { stroke-dashoffset: 0; } }
+  @keyframes ht-fade { to { opacity: 1; } }
+  @keyframes ht-fadep { to { opacity: 0.8; } }
+  @keyframes ht-fadeh { to { opacity: 0.5; } }
+}
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <svg id="heroTorus" viewBox="0 0 480 520" fill="none"></svg>
+</div>
+
+<script>
+  // hero - the loop: a wireframe torus. one continuous surface, no start and no end.
+  // Standalone edit: all pointer/scroll interactivity removed, tgtX/tgtY locked to 0
+  // so the torus holds its base tilt and only auto-rotates (psi) and pulses.
+  (function () {
+    var svg = document.getElementById('heroTorus'); if (!svg) return;
+    var NS = 'http://www.w3.org/2000/svg';
+    var CX = 240, CY = 256, R = 146, RT = 56;
+    var U = 28, VS = 20, V = 14, US = 40;
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var lines = [];
+    for (var i = 0; i < U + V; i++) {
+      var p = document.createElementNS(NS, 'polyline'); p.setAttribute('class', 'ht-line'); p.setAttribute('pathLength', 1);
+      // center line (ht-eq) strokes on FIRST and alone as the 2D loop; the rest of the system sweeps on later
+      // (reference increments -> the same partial/faint ring variation) as it tilts into the donut
+      var dly = (i === U) ? 0.3 : (i < U ? (1.45 + i * 0.04) : (1.55 + (i - U) * 0.085));
+      if (i === U) p.style.animationDuration = '1.3s';   // draw the center line a touch slower so it's watchable
+      p.style.animationDelay = dly.toFixed(2) + 's';
+      svg.appendChild(p); lines.push(p);
+    }
+    lines[U].setAttribute('class', 'ht-line ht-eq');
+    var nodeEls = [];
+    for (var n = 0; n < 6; n++) { var nr = document.createElementNS(NS, 'rect'); nr.setAttribute('class', 'ht-node'); nr.setAttribute('width', 3.5); nr.setAttribute('height', 3.5); svg.appendChild(nr); nodeEls.push(nr); }
+    var pulseEl = document.createElementNS(NS, 'polyline'); pulseEl.setAttribute('class', 'ht-pulse'); svg.appendChild(pulseEl);
+    var hlEls = [], hlGrads = [];
+    var hdefs = document.createElementNS(NS, 'defs'); svg.appendChild(hdefs);
+    for (var h = 0; h < U; h++) {
+      var hg = document.createElementNS(NS, 'linearGradient');
+      hg.setAttribute('id', 'htg' + h); hg.setAttribute('gradientUnits', 'userSpaceOnUse');
+      [[0, 0], [0.5, 0.85], [1, 0]].forEach(function (st) {
+        var so = document.createElementNS(NS, 'stop');
+        so.setAttribute('offset', st[0]);
+        so.setAttribute('style', 'stop-color:var(--c-600);stop-opacity:' + st[1]);
+        hg.appendChild(so);
+      });
+      hdefs.appendChild(hg); hlGrads.push(hg);
+      var hp = document.createElementNS(NS, 'polyline'); hp.setAttribute('class', 'ht-hl'); hp.setAttribute('stroke', 'url(#htg' + h + ')'); svg.appendChild(hp); hlEls.push(hp);
+    }
+    var TILT = -1.13, tiltCur = TILT, S = 1, offX = 0, offY = 0, tgtX = 0, tgtY = 0, RTcur = RT;
+    function projXY(u, v, psi) {
+      var cu = Math.cos(u), su = Math.sin(u), cv = Math.cos(v), sv = Math.sin(v);
+      var x = (R + RTcur * cv) * cu, y = (R + RTcur * cv) * su, z = RTcur * sv;
+      var cp = Math.cos(psi), sp = Math.sin(psi);
+      var x1 = x * cp + z * sp, z1 = -x * sp + z * cp;
+      var phi = tiltCur + offX, cf = Math.cos(phi), sf = Math.sin(phi);
+      var y2 = y * cf - z1 * sf;
+      var cz = Math.cos(offY), sz = Math.sin(offY);
+      return [CX + (x1 * cz - y2 * sz) * S, CY + (x1 * sz + y2 * cz) * S];
+    }
+    function project(u, v, psi) { var P = projXY(u, v, psi); return P[0].toFixed(1) + ',' + P[1].toFixed(1); }
+    // dot ontology, 3D: a point cloud inside the tube, projected with the same math each frame
+    var dotsCv = document.createElement('canvas'); dotsCv.className = 'hero-dots';
+    svg.parentNode.insertBefore(dotsCv, svg);
+    var dctx = dotsCv.getContext('2d');
+    var HDPR = Math.min(window.devicePixelRatio || 1, 2), hdW = 0, hdH = 0, hdSc = 1, hdOx = 0, hdOy = 0;
+    function heroDotsSize() {
+      // map torus viewBox coords onto the (larger) canvas via the rendered svg box,
+      // so the scaled svg and the dot field stay registered
+      var cr = dotsCv.getBoundingClientRect(), sr = svg.getBoundingClientRect();
+      hdW = cr.width; hdH = cr.height;
+      dotsCv.width = Math.round(hdW * HDPR); dotsCv.height = Math.round(hdH * HDPR);
+      hdSc = sr.width / 480;
+      hdOx = sr.x - cr.x; hdOy = sr.y - cr.y;
+    }
+    var HDOTS = [], HN = 680;
+    for (var hd = 0; hd < HN; hd++) {
+      // a flat disk on the torus mid-plane: dense cluster at the center, few dots
+      // reaching the ring centerline (matches the 2D ontology field in entry-03)
+      var hrf = Math.pow(Math.random(), 1.8), htp = 1 - 0.4 * hrf;
+      HDOTS.push({
+        a: Math.random() * Math.PI * 2,
+        rf: hrf,
+        zj: (Math.random() - 0.5) * 12,            // slight thickness so the disk shimmers in 3D
+        base: (0.08 + Math.random() * 0.26) * htp,
+        amp: (0.08 + Math.random() * 0.3) * htp,
+        ph: Math.random() * Math.PI * 2,
+        sp: 0.5 + Math.random() * 1.2,
+        r: 0.45 + Math.random() * 0.55,
+        wr: 1 + Math.random() * 2,                 // slow positional wander so the field never sits still
+        ws: 0.4 + Math.random() * 0.8,
+        wp: Math.random() * 6.2831853,
+        wp2: Math.random() * 6.2831853,
+        // intro: born far out, converging into the disk as the loop gains its 3D body
+        // (staggered starts, per-dot speed profiles, wide spiral approach angles)
+        srr: R * (1.5 + Math.random() * 1.2),
+        sao: (Math.random() - 0.5) * 3.5,
+        szj: (Math.random() - 0.5) * 180,
+        cd: Math.random() * 0.55,
+        pw: 0.6 + Math.random() * 1.8
+      });
+    }
+    var hCols = null, hFlares = [], hNextFlare = 1.2;
+    function heroDotCols() {
+      var cs = getComputedStyle(document.documentElement);
+      function rgb(n) {
+        var v = cs.getPropertyValue(n).trim();
+        return parseInt(v.slice(1, 3), 16) + ',' + parseInt(v.slice(3, 5), 16) + ',' + parseInt(v.slice(5, 7), 16);
+      }
+      var w = rgb('--c-white');
+      hCols = { w: w, ev: [w, w, rgb('--c-live'), rgb('--c-urgent'), rgb('--c-warning')] };
+    }
+    function projDot(x, y, z, psi, zo) {
+      var cp = Math.cos(psi), sp = Math.sin(psi);
+      var x1 = x * cp + z * sp, z1 = -x * sp + z * cp + (zo || 0);
+      var phi = tiltCur + offX, cf = Math.cos(phi), sf = Math.sin(phi);
+      var y2 = y * cf - z1 * sf, z2 = y * sf + z1 * cf;
+      var cz = Math.cos(offY), sz = Math.sin(offY);
+      return [CX + (x1 * cz - y2 * sz) * S, CY + (x1 * sz + y2 * cz) * S, z2];
+    }
+    function drawDots(psi, t, ga, cq) {
+      if (cq === undefined) cq = 1;
+      if (!hdW) return;
+      if (!hCols) heroDotCols();
+      dctx.setTransform(1, 0, 0, 1, 0, 0);
+      dctx.clearRect(0, 0, dotsCv.width, dotsCv.height);
+      dctx.setTransform(HDPR * hdSc, 0, 0, HDPR * hdSc, HDPR * hdOx, HDPR * hdOy);
+      if (ga <= 0) return;
+      if (t >= hNextFlare) {
+        if (hFlares.length < 5) hFlares.push({ i: Math.floor(Math.random() * HN), c: hCols.ev[Math.floor(Math.random() * hCols.ev.length)], t0: t, life: 1.1 + Math.random() * 0.8 });
+        hNextFlare = t + 0.4 + Math.random() * 1.0;
+      }
+      var fm = {};
+      for (var f = hFlares.length - 1; f >= 0; f--) {
+        var fl = hFlares[f], q = (t - fl.t0) / fl.life;
+        if (q >= 1) { hFlares.splice(f, 1); continue; }
+        fm[fl.i] = { c: fl.c, e: Math.sin(q * Math.PI) };
+      }
+      var zr = R + RTcur;
+      for (var i = 0; i < HN; i++) {
+        var d = HDOTS[i], drr = d.rf * R;
+        var ci = cq >= 1 ? 1 : (cq - d.cd) / (1 - d.cd);
+        if (ci < 0) ci = 0; else if (ci > 1) ci = 1;
+        ci = ci * ci * (3 - 2 * ci);                     // gentle per-dot dissolve
+        ci = Math.pow(ci, d.pw);
+        var P = projDot(
+          drr * Math.cos(d.a) + Math.sin(t * d.ws + d.wp) * d.wr,
+          drr * Math.sin(d.a) + Math.cos(t * d.ws * 0.87 + d.wp2) * d.wr,
+          d.zj, psi);
+        var dn = (P[2] / zr + 1) / 2; dn = dn < 0 ? 0 : dn > 1 ? 1 : dn;
+        var a = (d.base + d.amp * Math.sin(t * d.sp + d.ph)) * (0.3 + 0.7 * dn) * ga;
+        var rr = d.r * (0.55 + 0.85 * dn), col = hCols.w, fe = fm[i];
+        var af = a * ci;
+        if (fe && ci >= 1) { col = fe.c; af = Math.max(af, fe.e * 0.9 * ga); rr *= 1 + fe.e * 0.7; }
+        if (af > 0.01) {
+          dctx.fillStyle = 'rgba(' + col + ',' + af.toFixed(3) + ')';
+          dctx.beginPath(); dctx.arc(P[0], P[1], rr, 0, 6.2832); dctx.fill();
+        }
+        if (ci < 1) {
+          // the scattered field it condenses from: fades out in place, no travel
+          var G = projDot(d.srr * Math.cos(d.a + d.sao), d.srr * Math.sin(d.a + d.sao), d.szj, psi);
+          var ag = a * (1 - ci) * 0.85;
+          if (ag > 0.01) {
+            dctx.fillStyle = 'rgba(' + hCols.w + ',' + ag.toFixed(3) + ')';
+            dctx.beginPath(); dctx.arc(G[0], G[1], rr * 0.9, 0, 6.2832); dctx.fill();
+          }
+        }
+      }
+    }
+    heroDotsSize();
+    window.addEventListener('resize', heroDotsSize);
+    function draw(psi, vt) {
+      var li = 0, pts, k;
+      for (var i = 0; i < U; i++) {
+        var u = i * 2 * Math.PI / U; pts = [];
+        for (k = 0; k <= VS; k++) pts.push(project(u, k * 2 * Math.PI / VS, psi));
+        lines[li++].setAttribute('points', pts.join(' '));
+      }
+      for (var j = 0; j < V; j++) {
+        var v = j * 2 * Math.PI / V; pts = [];
+        for (k = 0; k <= US; k++) pts.push(project(k * 2 * Math.PI / US, v, psi));
+        lines[li++].setAttribute('points', pts.join(' '));
+      }
+      for (var i2 = 0; i2 < U; i2++) {
+        var u2 = i2 * 2 * Math.PI / U, vb = vt + i2 * 0.45; pts = [];
+        var P0 = null, P1 = null;
+        for (k = 0; k <= 6; k++) {
+          var Q = projXY(u2, vb + k * 0.085, psi);
+          if (k === 0) P0 = Q; if (k === 6) P1 = Q;
+          pts.push(Q[0].toFixed(1) + ',' + Q[1].toFixed(1));
+        }
+        hlEls[i2].setAttribute('points', pts.join(' '));
+        hlGrads[i2].setAttribute('x1', P0[0].toFixed(1)); hlGrads[i2].setAttribute('y1', P0[1].toFixed(1));
+        hlGrads[i2].setAttribute('x2', P1[0].toFixed(1)); hlGrads[i2].setAttribute('y2', P1[1].toFixed(1));
+      }
+      for (k = 0; k < nodeEls.length; k++) {
+        var P = projXY(k * Math.PI / 3, 0, psi);
+        nodeEls[k].setAttribute('x', (P[0] - 1.75).toFixed(1));
+        nodeEls[k].setAttribute('y', (P[1] - 1.75).toFixed(1));
+      }
+    }
+    function drawPulse(pu, psi) {
+      var pts = [];
+      for (var k = 0; k <= 8; k++) pts.push(project(pu - 0.20 + k * 0.025, 0, psi));
+      pulseEl.setAttribute('points', pts.join(' '));
+      var ni = Math.floor((((pu % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI)) / (Math.PI / 3)) % 6;
+      nodeEls.forEach(function (el, k2) { el.classList.toggle('active', k2 === ni); });
+    }
+    draw(0.5, 0);
+    drawPulse(0, 0.5);
+    if (reduced) { nodeEls.forEach(function (n) { n.classList.add('on'); }); drawDots(0.5, 0, 1); return; }
+    // standalone: no pointer/scroll listeners. tgtX/tgtY stay locked at 0 so the
+    // torus rests at its base tilt (offX/offY ease toward 0 and hold there).
+    tgtX = 0; tgtY = 0;
+    // intro - concept: a simple 2D loop is actually alive inside a systematized 3D structure.
+    //  phase 1: the center line strokes on alone as a flat face-on 2D loop (faint -> solid).
+    //  phase 2: the system sweeps on (rings draw with the reference's partial/faint variation - RT stays
+    //           constant so the line-draw IS the appearance) and it naturally tilts into the 3D donut.
+    var INTRO = 3.0;
+    var psi = 0, pu = 0, vt = 0, last = null, introT = 0, dotA = 0, dotCq = 0;
+    function ez(x) { x = x < 0 ? 0 : x > 1 ? 1 : x; return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; }
+    var eq = lines[U]; eq.style.transition = 'none'; eq.style.opacity = '0.12';  // center line: starts faint
+    tiltCur = 0; S = 1; RTcur = RT; draw(0, 0); drawPulse(0, 0);   // face-on; tube constant (reference ring engine)
+    function frame(now) {
+      if (last === null) last = now;
+      var dt = Math.min((now - last) / 1000, 0.05); last = now;
+      if (introT < INTRO) {
+        introT += dt;
+        var q = Math.min(introT / INTRO, 1);
+        eq.style.opacity = (0.12 + 0.73 * ez(Math.min(introT / 1.4, 1))).toFixed(3);  // center line: faint -> solid as it draws
+        var p = q < 0.45 ? 0 : (q - 0.45) / 0.55;     // phase 1: 2D loop draws alone; phase 2: system forms + tilts
+        var e = ez(p);
+        tiltCur = TILT * e;        // face-on 2D loop -> tilted 3D donut, natural single direction
+        psi = 0.5 * e;
+        dotA = ez(Math.min(p / 0.35, 1));   // dots visible early so the gather reads
+        if (p > 0) dotCq = Math.min(1, dotCq + dt / 3.5);   // slow dissolve: scatter fades, core fills
+        S = 1;                     // current (big) size
+        for (var k = 0; k < nodeEls.length; k++) nodeEls[k].classList.toggle('on', introT > 1.5 + k * 0.12);
+      } else {
+        psi += dt * 0.16; eq.style.opacity = '';
+        nodeEls.forEach(function (n) { n.classList.add('on'); });
+        dotA = 1; dotCq = Math.min(1, dotCq + dt / 3.5);
+      }
+      pu += dt * 0.4027;
+      vt += dt * 0.7;
+      offX += (tgtX - offX) * 0.14; offY += (tgtY - offY) * 0.14;
+      draw(psi, vt);
+      drawPulse(pu, psi);
+      drawDots(psi, now / 1000, dotA, dotCq);
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  })();
+</script>
+
+</body>
+</html>
