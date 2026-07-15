@@ -1125,9 +1125,9 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   <div class="ef-rule r1" aria-hidden="true"></div>
   <div class="ef-rule r2" aria-hidden="true"></div>
   <div class="ef-rule r3" aria-hidden="true"></div>
-  <div class="ef-n ef-n1">9<br><span class="sub">IN 10</span></div>
-  <div class="ef-n ef-n2">18<br><span class="sub">-11%</span></div>
-  <div class="ef-n ef-n3">4%</div>
+  <div class="ef-n ef-n1"><span class="cnum" data-to="9">9</span><br><span class="sub">IN 10</span></div>
+  <div class="ef-n ef-n2"><span class="cnum" data-to="18">18</span><br><span class="sub">-11%</span></div>
+  <div class="ef-n ef-n3"><span class="cnum" data-to="4" data-suf="%">4%</span></div>
   <div class="ef-desc ef-d1">
     <div class="t">active funds trailed the S&amp;P 500 over the fifteen years to 2024.</div>
     <div class="s"><a href="https://www.spglobal.com/spdji/en/research-insights/spiva/" target="_blank" rel="noopener">S&amp;P SPIVA, 2024</a></div>
@@ -1307,8 +1307,8 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
   </div>
   <div class="cf3-card c1" aria-hidden="true"></div>
   <div class="cf3-card c2" aria-hidden="true"></div>
-  <div class="cf3-stat s1"><div class="v">+11%</div><div class="k">you gained</div></div>
-  <div class="cf3-stat s2"><div class="v">+31%</div><div class="k">the market gained</div></div>
+  <div class="cf3-stat s1"><div class="v cnum" data-pre="+" data-to="11" data-suf="%">+11%</div><div class="k">you gained</div></div>
+  <div class="cf3-stat s2"><div class="v cnum" data-pre="+" data-to="31" data-suf="%">+31%</div><div class="k">the market gained</div></div>
   <div class="cf3-verdict">
     <div class="lead">By the only measure that matters, that was a 20-point loss.</div>
     <div class="note">Opportunity cost is the real result. The index is the alternative that was always available. A gain below it is a loss, whether or not the investor ever learns which one they had.</div>
@@ -1401,17 +1401,48 @@ footer { border-top: 0.5px solid var(--c-900); padding: 64px 0 36px; font-size: 
 })();
 </script>
 <script>
-/* entrance reveals: hero fades/drifts in on load; sections 1-3 fade in when scrolled into view */
+/* entrance reveals: hero on load, sections 1-3 on scroll.
+   Adding .rv-on makes content visible instantly (CSS drops the :not(.rv-on) hide, no transition to stick);
+   the smooth fade is played separately via WAAPI, opacity-only so it never fights the absolute/transform layout. */
 (function(){
+  var RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var canAnim=(typeof Element!=='undefined' && Element.prototype.animate) && !RM;
+  function fade(els){
+    if(!canAnim) return;
+    els.forEach(function(el,i){
+      try{ el.animate([{opacity:0},{opacity:1}], {duration:680, delay:i*70, easing:'cubic-bezier(0.2,0.6,0.2,1)', fill:'none'}); }catch(e){}
+    });
+  }
+  function countUp(el){
+    if(el.__cu) return; el.__cu=1;
+    var to=parseFloat(el.getAttribute('data-to')); if(isNaN(to)) return;
+    var pre=el.getAttribute('data-pre')||'', suf=el.getAttribute('data-suf')||'';
+    if(RM){ el.textContent=pre+to+suf; return; }
+    var dur=900, steps=Math.max(1,Math.round(dur/40)), i=0;
+    el.textContent=pre+'0'+suf;
+    var iv=setInterval(function(){
+      i++; var t=i/steps; if(t>=1){ el.textContent=pre+to+suf; clearInterval(iv); return; }
+      var e=1-Math.pow(1-t,3);                       // easeOutCubic
+      el.textContent=pre+Math.round(to*e)+suf;
+    }, 40);
+  }
+  function reveal(container, els){
+    container.classList.add('rv-on');   // instant visibility, throttle-proof
+    fade(els);
+    var nums=container.querySelectorAll('.cnum'); for(var n=0;n<nums.length;n++) countUp(nums[n]);
+  }
   var hero=document.querySelector('.hero.hero--fig');
-  if(hero) setTimeout(function(){ hero.classList.add('rv-on'); }, 90);
+  if(hero){
+    var heroEls=['#heroBook','.hf-head','.hf-cta','.hf-labels','.hf-ii'].map(function(s){return hero.querySelector(s);}).filter(Boolean);
+    setTimeout(function(){ reveal(hero, heroEls); }, 90);
+  }
   var secs=['#evidence.ev-fig','#entry-01.rec-fig','#core.core-fig'].map(function(s){return document.querySelector(s);}).filter(Boolean);
+  function revealSec(s){ reveal(s, Array.prototype.slice.call(s.children)); }
   if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('rv-on'); io.unobserve(e.target); } });}, {threshold: 0, rootMargin: '0px 0px -12% 0px'});
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){ revealSec(e.target); io.unobserve(e.target); } });}, {threshold: 0, rootMargin: '0px 0px -12% 0px'});
     secs.forEach(function(s){ io.observe(s); });
-    /* safety: if still hidden after 2.5s (observer never fired), reveal anyway */
-    setTimeout(function(){ secs.forEach(function(s){ s.classList.add('rv-on'); }); }, 2500);
-  } else { secs.forEach(function(s){ s.classList.add('rv-on'); }); }
+    setTimeout(function(){ secs.forEach(function(s){ if(!s.classList.contains('rv-on')) revealSec(s); }); }, 2600);
+  } else { secs.forEach(revealSec); }
 })();
 </script>
 
