@@ -53,6 +53,7 @@ img{display:block;max-width:none}
 .nav.scrolled .ncta{border-color:var(--c-black);color:var(--c-1000)}
 /* ---- nav v2: logo left, centered menu, EN/FR + CTA right ---- */
 .nav .logo{position:absolute;left:calc(40 * var(--u));top:50%;transform:translateY(-50%);height:calc(20 * var(--u));min-height:16px;width:auto;display:block}
+.nav .navsec{display:none}   /* mobile only - see the ≤900px block */
 .nav .logo svg{height:100%;width:auto;display:block}
 .nav .logo path{fill:var(--c-white);transition:fill 0.35s ease}
 .nav.scrolled .logo path{fill:var(--c-1000)}
@@ -404,7 +405,7 @@ body.menu-open{overflow:hidden}
   body.menu-open .navright{opacity:0;visibility:hidden;pointer-events:none}
   .nav .burger{display:block;left:auto;right:20px}
   /* current section number, mobile only - uses the existing NO. 0X system */
-  .nav .navsec{position:absolute;left:52px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:12px;letter-spacing:0.04em;color:var(--c-600);opacity:0;transition:opacity .35s ease;pointer-events:none}
+  .nav .navsec{display:block;position:absolute;left:52px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:12px;letter-spacing:0.04em;color:var(--c-600);opacity:0;transition:opacity .35s ease;pointer-events:none}
   .nav.scrolled .navsec{opacity:1;color:var(--c-800)}
   body.menu-open .nav .navsec{opacity:0}
   .nav .logo{left:20px}
@@ -925,11 +926,15 @@ body.menu-open{overflow:hidden}
 /* nav shows the current section number on mobile - reads it off each section's own eyebrow */
 (function(){
   var label=document.querySelector('.nav .navsec');
-  if(!label||!window.matchMedia('(max-width:900px)').matches) return;
+  if(!label) return;   /* runs at every width; CSS hides the label above 900px */
+  /* every band counts: numbered sections set the label, unnumbered ones either keep the
+     parent number (a sub-section like THE QUESTION) or clear it (the closing band) */
   var secs=[].slice.call(document.querySelectorAll('section.band')).map(function(s){
-    var e=s.querySelector('.eyeb,.eyebrow,.eyebrow5,.mast');
+    var e=s.querySelector('.eyeb,.eyebrow,.eyebrow5,.qcap5,.mast');
     var m=e&&e.textContent.match(/NO\.\s*\d+/i);
-    return m?{el:s,no:m[0].toUpperCase()}:null;
+    if(m) return {el:s,no:m[0].toUpperCase()};
+    if(s.classList.contains('close9')) return {el:s,no:''};   /* closing band: no number */
+    return null;                                              /* sub-section: keep the parent's */
   }).filter(Boolean);
   if(!secs.length) return;
   function update(){
