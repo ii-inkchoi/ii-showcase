@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pricing · Intelligent Investing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --c-black:#000000; --c-elev:#0A0A0A; --c-surface:#151515; --c-1000:#1C1C1C; --c-900:#232627; --c-800:#565B5E;
+  --c-700:#929292; --c-600:#A7A7A7; --c-400:#C7C7C7; --c-200:#E3E2E2; --c-white:#FFFFFF;
+  --c-cream:#F4F2EB; --c-accent:#BE3C36; --c-accent-d:#8F1E17;
+  --font:'Inter',-apple-system,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --u: calc(100vw / 2545); --gutter: clamp(16px, 1.5vw, 24px);
+  --t-body: max(15px, calc(22 * var(--u)));
+  --t-lead24: max(17px, calc(24 * var(--u)));
+  --t-read27: max(17px, calc(27 * var(--u)));
+  --t-h34: max(22px, calc(34 * var(--u)));
+  --t-name28: max(15px, calc(27 * var(--u)));
+  --t-small17: max(13px, calc(17 * var(--u)));
+  --t-mono15: max(12px, calc(15 * var(--u)));
+  --t-mono13: max(11px, calc(13 * var(--u)));
+  --t-mono11: max(9px, calc(11 * var(--u)));
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+html,body{background:var(--c-white);color:var(--c-1000);font-family:var(--font);font-feature-settings:'tnum' 1,'lnum' 1;-webkit-font-smoothing:antialiased;font-weight:400;}
+body{min-height:100vh;font-size:15px;line-height:1.55;overflow-x:hidden}
+
+/* nav v2, ink on cream */
+.nav{position:fixed;inset:0 0 auto;z-index:100;height:calc(78 * var(--u));min-height:54px;background:transparent;display:flex;align-items:center;transition:background 0.35s ease}
+.nav a{text-decoration:none}
+.nav .logo{position:absolute;left:calc(40 * var(--u));top:50%;transform:translateY(-50%);height:calc(16 * var(--u));min-height:13px;width:auto;display:block}
+.nav .logo svg{height:100%;width:auto;display:block}
+.nav .logo path{fill:var(--c-1000)}
+.navmenu{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:calc(40 * var(--u))}
+.navmenu a{font-weight:400;font-size:max(14px, calc(15 * var(--u)));color:var(--c-800);transition:color 0.2s ease}
+.navmenu a:hover{color:var(--c-1000)}
+.navmenu a.on{color:var(--c-1000)}
+.navright{position:absolute;right:calc(40 * var(--u));top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:calc(28 * var(--u))}
+.nav .lang{display:flex;gap:calc(14 * var(--u));font-family:var(--mono);font-size:var(--t-mono13);letter-spacing:0.04em}
+.nav .lang a{color:var(--c-700);transition:color 0.2s ease}
+.nav .lang a.on{color:var(--c-1000)}
+.nav .ncta{min-width:max(150px, calc(196 * var(--u)));padding:0 22px;height:calc(48 * var(--u));min-height:36px;border:1px solid var(--c-1000);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-1000);transition:background 0.2s ease,color 0.2s ease}
+.nav .ncta:hover{background:var(--c-1000);color:var(--c-cream)}
+.nav.scrolled{background:var(--c-white);border-bottom:0.667px solid rgba(28,28,28,0.16)}
+
+.container{margin:0 calc(450 * var(--u));}
+
+/* hero */
+.p-hero{padding:calc(300 * var(--u)) 0 calc(220 * var(--u));border-bottom:0.667px solid rgba(28,28,28,0.16);}
+.p-eyb{font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-800);margin-bottom:calc(70 * var(--u));}
+.p-title{font-weight:500;font-size:calc(64 * var(--u));line-height:1.05;letter-spacing:-0.02em;color:var(--c-1000);max-width:calc((100% + var(--gutter)) / 12 * 9 - var(--gutter));}
+.p-deck{margin-top:calc(56 * var(--u));font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-1000);max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));}
+
+/* sections */
+.p-sec{padding:calc(110 * var(--u)) 0;}
+.p-sec.wht{background:var(--c-white);}
+.p-sec:first-of-type{padding-top:calc(220 * var(--u));}
+.sec-eyb{font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-800);margin-bottom:calc(70 * var(--u));}
+.sec-eyb .no{color:var(--c-accent);}
+
+/* No.01 membership */
+.p-lead{font-weight:500;font-size:var(--t-h34);line-height:1.3;letter-spacing:-0.02em;color:var(--c-1000);margin-bottom:calc(80 * var(--u));max-width:calc((100% + var(--gutter)) / 12 * 8 - var(--gutter));}
+.p-item{margin-bottom:calc(56 * var(--u));}
+.p-item .k{font-weight:500;font-size:var(--t-body);letter-spacing:0;color:var(--c-1000);margin-bottom:calc(16 * var(--u));}
+.p-item .d{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-1000);max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));}
+.p-item .lnk{display:inline-flex;align-items:center;gap:calc(6 * var(--u));margin-top:calc(20 * var(--u));font-family:var(--mono);font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-1000);text-decoration:none;}
+.p-item .lnk .arr-svg{width:calc(12 * var(--u));height:calc(12 * var(--u));display:block;}
+.p-item .lnk:hover{color:var(--c-accent);}
+.p-foot{font-family:var(--mono);font-size:var(--t-mono13);letter-spacing:0.04em;color:var(--c-800);margin-top:calc(70 * var(--u));}
+
+/* No.02 structure */
+.p-block{margin-bottom:calc(80 * var(--u));}
+.p-block:last-child{margin-bottom:0;}
+.p-block .t{font-weight:500;font-size:var(--t-read27);line-height:1.15;letter-spacing:0;color:var(--c-1000);}
+.p-block .sub{font-family:var(--mono);font-size:var(--t-mono13);letter-spacing:0.04em;color:var(--c-800);margin-top:calc(12 * var(--u));}
+.p-block .body{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-1000);margin-top:calc(28 * var(--u));max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));}
+.p-block .body p+p{margin-top:calc(24 * var(--u));}
+
+/* No.03 questions */
+.p-qa{margin-bottom:calc(64 * var(--u));}
+.p-qa:last-child{margin-bottom:0;}
+.p-qa .q{font-weight:500;font-size:var(--t-read27);line-height:1.15;letter-spacing:0;color:var(--c-1000);}
+.p-qa .a{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-1000);margin-top:calc(20 * var(--u));max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));}
+
+/* close */
+.bottom-canon{text-align:left;padding:calc(220 * var(--u)) 0;border-top:0.667px solid rgba(28,28,28,0.16);}
+.bottom-canon .cc-line{font-weight:500;font-size:calc(64 * var(--u));line-height:1.05;letter-spacing:-0.02em;color:var(--c-1000);text-wrap:balance;max-width:calc((100% + var(--gutter)) / 12 * 9 - var(--gutter));}
+.bottom-canon .cta-button{display:inline-flex;align-items:center;justify-content:center;margin-top:calc(64 * var(--u));min-width:max(160px, calc(196 * var(--u)));height:calc(48 * var(--u));min-height:38px;padding:0 22px;background:var(--c-accent);font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-cream);text-decoration:none;transition:background 0.2s ease;}
+.bottom-canon .cta-button:hover{background:var(--c-accent-d);}
+.bottom-canon .cta-button .arr{display:inline-flex;align-items:center;line-height:1;}
+.bottom-canon .cta-button .arr-svg{width:13px;height:13px;display:block;}
+.bottom-canon .cta-button .roll{display:inline-block;overflow:hidden;vertical-align:bottom;height:1lh;}
+.bottom-canon .cta-button .roll-in>span{display:block;}
+@media (prefers-reduced-motion: no-preference){.bottom-canon .cta-button .roll-in{transition:transform 0.55s cubic-bezier(0.16,1,0.3,1);}.bottom-canon .cta-button:hover .roll-in{transform:translateY(-50%);}}
+@media(max-width:640px){.bottom-canon .cc-line{text-wrap:wrap;}}
+
+/* footer, dark band */
+footer{background:var(--c-black);color:var(--c-800);border-top:0.667px solid var(--c-900);padding:64px 0 36px;font-size:12px;line-height:1.7;margin-top:calc(120 * var(--u));}
+.footer-copy{font-size:13px;color:var(--c-600);}
+.footer-copy a{color:var(--c-600);text-decoration:underline;}
+.footer-social{display:flex;gap:18px;margin-top:22px;}
+.footer-social a{color:var(--c-700);display:inline-flex;transition:color 0.15s ease;}
+.footer-social a:hover{color:var(--c-200);}
+.footer-social svg{width:18px;height:18px;}
+.footer-legal{font-size:11px;color:var(--c-800);line-height:1.75;margin-top:18px;}
+.footer-legal:first-of-type{margin-top:36px;}
+.footer-legal a{color:var(--c-700);text-decoration:underline;}
+.footer-reset{display:inline-block;font-size:11px;color:var(--c-700);text-decoration:underline;margin-top:32px;}
+
+@media (prefers-reduced-motion: no-preference){.ri{opacity:0;transform:translateY(24px);transition:opacity 0.7s cubic-bezier(0.2,0.6,0.2,1),transform 0.7s cubic-bezier(0.2,0.6,0.2,1);transition-delay:var(--d,0s);}.ri.in{opacity:1;transform:none;}}
+/* ---- burger + menu overlay (mobile) ---- */
+.nav .burger{display:none;position:absolute;right:20px;top:50%;transform:translateY(-50%);width:26px;height:12px;background:none;border:0;cursor:pointer;z-index:101}
+.nav .burger span{position:absolute;left:0;width:26px;height:1px;background:var(--c-1000);transition:background 0.35s ease}
+.nav .burger span:first-child{top:1px}.nav .burger span:last-child{bottom:1px}
+.menuov{position:fixed;inset:0;z-index:90;background:var(--c-black);display:flex;flex-direction:column;justify-content:center;opacity:0;visibility:hidden;transition:opacity 0.35s ease,visibility 0.35s ease}
+.menuov.open{opacity:1;visibility:visible}
+.menuov .mlist{display:flex;flex-direction:column;gap:calc(28 * var(--u));padding-left:max(24px, calc(450 * var(--u)))}
+.menuov a{font-weight:500;font-size:clamp(32px, calc(96 * var(--u)), 96px);line-height:1.05;letter-spacing:-0.02em;color:var(--c-700);text-decoration:none;transition:color 0.35s ease;width:fit-content}
+.menuov a.cur,.menuov a:hover{color:var(--c-white)}
+.menuov .mfoot{position:absolute;left:max(24px, calc(450 * var(--u)));bottom:calc(60 * var(--u));font-family:var(--mono);font-size:var(--t-mono13);letter-spacing:0.04em;color:var(--c-600)}
+body.menu-open .nav .burger span{background:var(--c-white)}
+body.menu-open .nav .burger span:first-child{top:50%;transform:translateY(-50%) rotate(45deg)}
+body.menu-open .nav .burger span:last-child{bottom:auto;top:50%;transform:translateY(-50%) rotate(-45deg)}
+body.menu-open .nav .logo path{fill:var(--c-white)}
+body.menu-open .nav .ncta{border-color:var(--c-white);color:var(--c-white)}
+body.menu-open{overflow:hidden}
+.menuov .menuov-cta{margin:48px 0 0 max(24px, calc(450 * var(--u)));display:inline-flex;align-items:center;justify-content:center;min-width:max(160px, calc(196 * var(--u)));height:max(44px, calc(48 * var(--u)));padding:0 22px;border:1px solid var(--c-white);font-family:var(--mono);font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-white);text-decoration:none;width:fit-content}
+/* ---- mobile (≤900px). Must stay last in the sheet. Ladder: 8 / 16 / 24 / 40 / 48 / 64 / 72. ---- */
+@media(max-width:900px){
+  html,body{max-width:100%;overflow-x:hidden}
+  .container{width:calc(100% - 40px);margin:0 auto;padding:0}
+  /* the CTA returns once the nav turns opaque on scroll (same as index-H) */
+  .navmenu,.nav .lang{display:none}
+  .navright{position:absolute;right:60px;top:50%;transform:translateY(-50%);display:flex;align-items:center;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s ease,visibility .35s ease}
+  .navright .lang{display:none}
+  .nav.scrolled .navright{opacity:1;visibility:visible;pointer-events:auto}
+  body.menu-open .navright{opacity:0;visibility:hidden;pointer-events:none}
+  .nav .burger{display:block}
+  /* rotating the 26px bars into an X shrinks their ink to 18.4px, pulling the right edge 3.8px inward. Nudge out so the X ink lands on the same 20px gutter as the logo. */
+  body.menu-open .nav .burger{right:16.2px}
+  .nav .logo{left:20px}
+  .heyeb-sep{display:none}.heyeb-b{display:block}
+  .cta-button,.lnk,.nav .ncta,.menuov .menuov-cta{font-size:13px}
+  .p-item .lnk .arr-svg{width:12px;height:12px}
+  .menuov .mlist{padding-left:20px}
+  .menuov a{font-size:27px} /* 32 is off-scale and out-shouted the 27 masthead at the same 500 weight */
+  .menuov .menuov-cta{margin-left:20px}
+  .menuov .mfoot{left:20px;right:20px;bottom:20px}
+  .menuov .mlang{margin:24px 0 0 20px;display:flex;gap:16px;font-family:var(--mono);font-size:13px;letter-spacing:0.04em}
+  .menuov .mlang a{font-size:13px;font-weight:400;color:var(--c-600);letter-spacing:0.04em}
+  .menuov .mlang a.on{color:var(--c-white)}
+
+  /* hero */
+  .p-hero{padding:120px 0 72px}
+  .p-eyb{margin-bottom:24px}
+  .p-title,.bottom-canon .cc-line{font-size:clamp(26px,6.92vw,40px);line-height:1.1;max-width:none}
+  .p-deck{margin-top:24px;line-height:1.4;max-width:none}
+
+  /* sections */
+  .p-sec{padding:72px 0}
+  .p-sec:first-of-type{padding-top:72px}
+  .sec-eyb{margin-bottom:24px}
+
+  /* No.01 membership */
+  .p-lead{margin-bottom:40px;max-width:none}
+  .p-item{margin-bottom:48px}
+  .p-item .k{margin-bottom:8px}
+  .p-item .d{line-height:1.4;max-width:none}
+  .p-item .lnk{margin-top:24px}
+  .p-foot{margin-top:48px}
+
+  /* No.02 structure */
+  .p-block{margin-bottom:48px}
+  .p-block .sub{margin-top:8px}
+  .p-block .body{margin-top:24px;line-height:1.4;max-width:none}
+  .p-block .body p+p{margin-top:24px}
+
+  /* No.03 questions */
+  .p-qa{margin-bottom:40px}
+  .p-qa .a{margin-top:16px;line-height:1.4;max-width:none}
+
+  /* close */
+  .bottom-canon{padding:72px 0}
+  .bottom-canon .cta-button{margin-top:32px}
+
+  /* ================= mobile typography + spacing canon (2026-07-28) =================
+     Ported from index-H after the section-by-section audit. Single source: Doctrine/Typography.md
+     leading: 27 -> 1.1 | 22/17 -> 1.15 | prose 15/13 -> 1.4 | mono -> 1.5 | .hbar box -> 1.5
+     mono:    13 section label + CTA | 11 meta/date/notice | 9 figure + data meta (12 retired)   */
+  h2,.bigh2,.mast+h2{line-height:1.1}
+  .streamhd,.qh2{line-height:1.15}
+  p,li,.body,.lead,.prose p{line-height:1.4}
+  .figcap,.src,.metaline,.trust .ti span,.trust9 .ti span{line-height:1.5}
+  .eyeb,.eyebrow,.eyebrow5,.qcap5,.mast,.heyeb{line-height:1.5}
+  .mlink,.mlink span,.cta-fill,.lnk{line-height:1.5}
+  section.band .eyeb,section.band .eyebrow,section.band .eyebrow5,
+  section.band .qcap5,section.band .mast,.hero .heyeb,
+  .page-header .eyeb,.pr-eyeb,.cl-eyeb{font-size:13px}
+  .figcap,.src{font-size:9px;letter-spacing:0.04em}
+  .hero .htrust,.metaline,.legal,.foot9,.foot9 span{font-size:11px}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="logo" href="index-H.html" aria-label="Home"><svg viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.59903 0H7.79315L2.19412 17.6523H0L5.59903 0Z"/><path d="M12.8061 0H15.0002L9.40115 17.6523H7.20703L12.8061 0Z"/></svg></a>
+  <div class="navmenu">
+    <a href="index-H.html">Home</a>
+    <a href="II Site V2 - Self-Directed.html">Self-Directed</a>
+    <a href="II Site V2 - Managed.html">Managed</a>
+    <a href="II Site V2 - Pricing.html" class="on">Pricing</a>
+    <a href="II Site V2 - Manifesto.html">Manifesto</a>
+    <a href="II Site V2 - Newsroom.html">Newsroom</a>
+  </div>
+  <div class="navright">
+    <span class="lang"><a href="#" onclick="return false" class="on">EN</a><a href="#" onclick="return false">FR</a></span>
+    <a class="ncta" href="II Site V2 - GetTheApp.html">OPEN AN ACCOUNT</a>
+  </div>
+  <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
+</nav>
+
+<div class="menuov" id="menuov" aria-hidden="true">
+  <div class="mlist">
+    <a href="index-H.html">Home</a>
+    <a href="II Site V2 - Self-Directed.html">Self-Directed</a>
+    <a href="II Site V2 - Managed.html">Managed</a>
+    <a href="II Site V2 - Pricing.html" class="cur">Pricing</a>
+    <a href="II Site V2 - Manifesto.html">Manifesto</a>
+    <a href="II Site V2 - Newsroom.html">Newsroom</a>
+  </div>
+  <a class="menuov-cta" href="II Site V2 - GetTheApp.html">OPEN AN ACCOUNT</a>
+  <div class="mlang"><a href="#" onclick="return false" class="on">EN</a><a href="#" onclick="return false">FR</a></div>
+  <div class="mfoot"><span>INTELLIGENT INVESTING</span><span class="heyeb-sep"> &middot; </span><span class="heyeb-b">A CAPITAL ALLOCATION SYSTEM</span></div>
+</div>
+
+<section class="p-hero">
+  <div class="container">
+    <div class="p-eyb ri" style="--d:0.04s">PRICING</div>
+    <h1 class="p-title ri" style="--d:0.08s">One membership for the whole system.</h1>
+    <div class="p-deck ri" style="--d:0.16s">Managed portfolios, Self-Directed investing, and Fiscal.ai research.<br>All under one membership, billed monthly.</div>
+  </div>
+</section>
+
+<div class="container">
+<section class="p-sec">
+  <div class="sec-eyb ri"><span class="no">NO. 01</span> &middot; THE MEMBERSHIP</div>
+  <div class="p-lead ri" style="--d:0.04s">$20/month, everything included.</div>
+  <div class="p-item ri" style="--d:0.06s">
+    <div class="k">Managed Portfolios</div>
+    <p class="d">Rules-based S&amp;P exposure, matched to your goals.<br>The managed core of the system.</p>
+    <a class="lnk" href="II Site V2 - Managed.html"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>VIEW MANAGED</a>
+  </div>
+  <div class="p-item ri" style="--d:0.08s">
+    <div class="k">Self-Directed Investing</div>
+    <p class="d">Self-directed positions, each opened under a sealed memo.<br>The active layer of the system.</p>
+    <a class="lnk" href="II Site V2 - Self-Directed.html"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>VIEW SELF-DIRECTED</a>
+  </div>
+  <div class="p-item ri" style="--d:0.1s">
+    <div class="k">Fiscal.ai Research</div>
+    <p class="d">Institutional research, included. Normally $99/month.<br>The research layer of the system.</p>
+    <a class="lnk" href="https://fiscal.ai" target="_blank" rel="noopener"><svg class="arr-svg" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>VISIT FISCAL.AI</a>
+  </div>
+  <p class="p-foot ri">Connected by a permanent decision record.</p>
+</section>
+</div>
+
+<section class="p-sec wht">
+<div class="container">
+  <div class="sec-eyb ri"><span class="no">NO. 02</span> &middot; THE STRUCTURE</div>
+  <div class="p-block ri" style="--d:0.04s">
+    <div class="t">Membership Structure</div>
+    <div class="body">
+      <p>Intelligent Investing operates on a flat monthly membership, combined with a minimal management fee on managed portfolios. $20 per month. Cancel anytime.</p>
+      <p>This structure is designed to align incentives with long-term outcomes, not activity.</p>
+    </div>
+  </div>
+  <div class="p-block ri" style="--d:0.06s">
+    <div class="t">Trading &amp; Foreign Exchange (FX)</div>
+    <div class="sub">SELF-DIRECTED INVESTING</div>
+    <div class="body">
+      <p>Trades involving US securities may incur an FX conversion. Intelligent Investing does not charge an FX fee or apply an FX markup to member transactions. FX is executed at the rate displayed to members by a third-party partner, and in certain circumstances, Intelligent Investing may incur a gain or a loss on FX transactions. This does not increase the FX rate paid by members.</p>
+      <p>FX is not contingent on transaction volume or frequency, and does not incentivize increased trading activity. We do not charge trading commissions.</p>
+    </div>
+  </div>
+  <div class="p-block ri" style="--d:0.08s">
+    <div class="t">Fiscal.ai Max</div>
+    <div class="sub">RESEARCH &amp; ANALYSIS</div>
+    <div class="body">
+      <p>Every membership includes access to Fiscal.ai Max (normally $99/month), a professional-grade research and analysis environment. Most investors trade based on price and headlines. Serious investors analyze businesses. Fiscal.ai provides structured access to: Multi-year income statements, balance sheets, and cash flow data. Return on capital and free cash flow analysis. Margin trends and capital allocation history. Clean company comparisons across time.</p>
+      <p>It also includes AI-assisted tools to summarize filings, surface financial trends, and accelerate research workflows. The AI supports analysis. It does not make decisions.</p>
+      <p>This research layer exists to raise the standard of thinking inside the platform. It is not a stock picker. It is not a signal engine. It is not a shortcut. It is a disciplined research environment designed for investors who intend to do the work.</p>
+    </div>
+  </div>
+  <div class="p-block ri" style="--d:0.1s">
+    <div class="t">Managed Portfolio Fee</div>
+    <div class="sub">MANAGED INVESTING</div>
+    <div class="body">
+      <p>Access to Intelligent Investing's core portfolios includes a 0.10% annual management fee on assets held in managed strategies. Applied only to managed portfolios. Calculated transparently. No performance fees.</p>
+      <p>This fee exists to cover portfolio management, rebalancing, custody and administration, and operational infrastructure. It is a fraction of what traditional wealth managers and funds charge.</p>
+    </div>
+  </div>
+  <div class="p-block ri" style="--d:0.12s">
+    <div class="t">Legal Structure</div>
+    <div class="body">
+      <p>Intelligent Investing operates through two regulated entities, an investment dealer and a portfolio manager, to provide different services. Each entity is separate and responsible only for the services it provides.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="container">
+<section class="p-sec">
+  <div class="sec-eyb ri"><span class="no">NO. 03</span> &middot; QUESTIONS</div>
+  <div class="p-qa ri" style="--d:0.04s">
+    <div class="q">Can I cancel at any time?</div>
+    <p class="a">Yes. Membership is monthly. Cancel anytime.</p>
+  </div>
+  <div class="p-qa ri" style="--d:0.06s">
+    <div class="q">What account types are supported?</div>
+    <p class="a">TFSA and RRSP accounts.</p>
+  </div>
+</section>
+</div>
+
+<div class="container">
+<section class="bottom-canon">
+  <div class="cc-line ri">Start with Managed, Self-Directed, or both.</div>
+  <a href="II Site V2 - GetTheApp.html" class="cta-button ri" style="--d:0.08s"><span class="roll"><span class="roll-in"><span>ENTER THE SYSTEM</span><span>ENTER THE SYSTEM</span></span></span></a>
+</section>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-copy">&copy;2026 <a href="#">Orion Digital Corp.</a> All rights reserved.</div>
+    <div class="footer-social">
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+      <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2H22l-7.6 8.7L23 22h-7l-5.5-7.2L4.2 22H1l8.1-9.3L1 2h7.2l5 6.6L18.9 2zm-1.2 18h1.9L7.4 4H5.5l12.2 16z"/></svg></a>
+      <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 7.5c-.3-1-1-1.8-2-2C19 5 12 5 12 5s-7 0-9 .5c-1 .3-1.8 1-2 2C.5 9.3.5 12 .5 12s0 2.7.5 4.5c.3 1 1 1.8 2 2C5 19 12 19 12 19s7 0 9-.5c1-.3 1.8-1 2-2 .5-1.8.5-4.5.5-4.5s0-2.7-.5-4.5zM9.8 15.3V8.7l5.7 3.3-5.7 3.3z"/></svg></a>
+    </div>
+    <p class="footer-legal">Past returns are no guarantee of future performance.</p>
+    <p class="footer-legal">Managed investing accounts are opened with IntelligentInvesting Wealth Management Inc., a registered portfolio manager. IntelligentInvesting Wealth Management Inc. accounts that are held with CI Investment Services Inc., a custodian, are protected by CIPF in accordance with its coverage policy. CI Investment Services Inc. is a CIRO member. Self-directed investing accounts are opened by IntelligentInvesting Securities Inc., an investment dealer regulated by the Canadian Investment Regulatory Organization (CIRO). IntelligentInvesting Securities Inc. is a CIPF member. IntelligentInvesting Securities Inc. accounts are covered by CIPF. A brochure describing the scope and nature of coverage, as well as the limitations and exclusions of coverage, is available upon request or at <a href="https://www.cipf.ca">www.cipf.ca</a>.</p>
+    <p class="footer-legal">IntelligentInvesting Wealth Management Inc. and IntelligentInvesting Securities Inc. are subsidiaries of Orion Digital Corp. Orion Digital Corp. is not an investment adviser or dealer and does not provide investment advice or deal in securities.</p>
+    <p class="footer-legal">Investing involves risk, including the potential loss of capital. The risks associated with any investment strategy, product, or service should be carefully considered before making any investment decision.</p>
+    <a href="#" class="footer-reset">Reset Cookie Preferences</a>
+  </div>
+</footer>
+
+<script>(function(){document.querySelectorAll('.p-title, .p-deck, .p-lead, .p-item .d, .p-block .body p, .p-qa .a').forEach(function(el){el.innerHTML=el.innerHTML.replace(/ ([^\s<]+)(\s*)$/,' $1$2');});})();</script>
+<script>if('IntersectionObserver' in window){var rio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');rio.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -6% 0px'});document.querySelectorAll('.ri').forEach(function(el){rio.observe(el);});}else{document.querySelectorAll('.ri').forEach(function(el){el.classList.add('in');});}</script>
+<script src="grid-overlay.js"></script>
+<script>(function(){var nav=document.querySelector(".nav");if(nav){function onScroll(){nav.classList.toggle("scrolled",window.scrollY>24);}window.addEventListener("scroll",onScroll,{passive:true});onScroll();}})();</script>
+<script>(function(){var burger=document.querySelector('.nav .burger');var ov=document.getElementById('menuov');if(!burger||!ov)return;function toggle(){var open=document.body.classList.toggle('menu-open');ov.classList.toggle('open',open);ov.setAttribute('aria-hidden',String(!open));burger.setAttribute('aria-expanded',String(open));}burger.addEventListener('click',toggle);document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.body.classList.contains('menu-open'))toggle();});})();</script>
+</body>
+</html>
