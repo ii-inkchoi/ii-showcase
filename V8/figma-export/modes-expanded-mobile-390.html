@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NO.01 Modes - Expanded, Mobile 390</title>
+<meta name="description" content="A Canadian capital allocation system combining managed investing, self-directed brokerage, decision records, and institutional-grade research.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ================= index-H - Inkyung's Figma hybrid (node 2776:628), 1:1 on --u = 100vw/2545, audit fixes applied ================= */
+:root {
+  --c-black:#000000; --c-elev:#0A0A0A; --c-surface:#151515; --c-1000:#1C1C1C; --c-900:#232627; --c-800:#565B5E;
+  --c-700:#929292; --c-600:#A7A7A7; --c-400:#C7C7C7; --c-200:#E3E2E2; --c-white:#FFFFFF;
+  --c-cream:#F4F2EB; --c-ink:#0C0C0C; --c-chalk:#FBFBF9; --c-graphite:#3A3A37; --c-stone:#8F8D85; --c-mist:#C9C7C0; --c-paper:#EDECE8; --c-urgent-muted:#BE3C36; --c-live-muted:#288752; --c-review-muted:#966E26; --c-research:#3F6DA6; --c-live:#30D158; --c-accent-sky:#BEEDFD; --c-accent:#BE3C36;
+  --font:'Inter',-apple-system,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace; --num:'IBM Plex Mono',ui-monospace,monospace;
+  --u: 0.153242px; /* pinned from calc(100vw/2545) at 390px */
+  /* reading floors: Figma size on wide screens, on-scale minimum on laptops */
+  --t-body: max(15px, calc(22 * var(--u)));
+  --t-lead24: max(17px, calc(24 * var(--u)));
+  --t-read27: max(17px, calc(27 * var(--u)));
+  --t-h34: max(22px, calc(34 * var(--u)));
+  --t-name28: max(15px, calc(27 * var(--u)));
+  --t-small17: max(13px, calc(17 * var(--u)));
+  --t-mono15: max(12px, calc(15 * var(--u)));
+  --t-mono13: max(11px, calc(13 * var(--u)));
+  --t-mono12: max(10px, calc(12 * var(--u)));
+  --t-mono11: max(9px, calc(11 * var(--u)));
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--c-black);color:var(--c-1000);font-family:var(--font);-webkit-font-smoothing:antialiased;font-feature-settings:'tnum' 1,'lnum' 1;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:none}
+.band{position:relative;width:100%;overflow:hidden}
+
+/* ---- nav: transparent over hero, white bar on scroll ---- */
+.nav{position:fixed;inset:0 0 auto;z-index:100;height:calc(78 * var(--u));min-height:54px;background:transparent;display:flex;align-items:center;transition:background 0.35s ease}
+.nav .burger{display:none;position:absolute;left:24px;width:26px;height:12px;background:none;border:0;cursor:pointer}
+.nav .burger span{position:absolute;left:0;width:26px;height:1px;background:var(--c-white);transition:background 0.35s ease}
+.nav .burger span:first-child{top:1px}.nav .burger span:last-child{bottom:1px}
+.brand{position:absolute;left:50%;transform:translateX(-50%);text-align:center;color:var(--c-white);transition:color 0.35s ease}
+.brand .wm{font-weight:600;font-size:clamp(13px,calc(18 * var(--u)),18px);letter-spacing:-0.02em;line-height:1.5}
+.brand .wm .lt{font-weight:300}
+.brand .tag{font-family:var(--mono);font-size:var(--t-mono11);letter-spacing:0.04em;color:var(--c-600);transition:color 0.35s ease}
+.nav .ncta{position:absolute;right:calc(21.6 * var(--u));top:50%;transform:translateY(-50%);min-width:max(150px, calc(196 * var(--u)));padding:0 22px;height:calc(48 * var(--u));min-height:36px;border:1px solid var(--c-white);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-white);transition:border-color 0.35s ease,color 0.35s ease}
+.nav.scrolled{background:rgba(255,255,255,0.95)}
+.nav.scrolled .burger span{background:var(--c-black)}
+.nav.scrolled .brand{color:var(--c-1000)}
+.nav.scrolled .brand .tag{color:var(--c-800)}
+.nav.scrolled .ncta{border-color:var(--c-black);color:var(--c-1000)}
+/* ---- nav v2: logo left, centered menu, EN/FR + CTA right ---- */
+.nav .logo{position:absolute;left:calc(40 * var(--u));top:50%;transform:translateY(-50%);height:calc(20 * var(--u));min-height:16px;width:auto;display:block}
+.nav .logo svg{height:100%;width:auto;display:block}
+.nav .logo path{fill:var(--c-white);transition:fill 0.35s ease}
+.nav.scrolled .logo path{fill:var(--c-1000)}
+.navmenu{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:calc(40 * var(--u))}
+.navmenu a{font-weight:400;font-size:max(14px, calc(15 * var(--u)));color:var(--c-600);transition:color 0.35s ease}
+.navmenu a.on{color:var(--c-white)}
+.nav.scrolled .navmenu a{color:var(--c-800)}
+.nav.scrolled .navmenu a.on{color:var(--c-1000)}
+.navright{position:absolute;right:calc(40 * var(--u));top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:calc(28 * var(--u))}
+.navright .ncta{position:static;right:auto;top:auto;transform:none}
+.nav .lang{display:flex;gap:calc(14 * var(--u));font-family:var(--mono);font-size:var(--t-mono13);letter-spacing:0.04em}
+.nav .lang a{color:var(--c-600);transition:color 0.35s ease}
+.nav .lang a.on{color:var(--c-white)}
+.nav.scrolled .lang a{color:var(--c-800)}
+.nav.scrolled .lang a.on{color:var(--c-1000)}
+
+/* ---- HERO (h1364) ---- */
+.hero{height:calc(1364 * var(--u));background:var(--c-black)}
+.hero>img{position:absolute;left:calc(-128 * var(--u));top:0;width:calc(2944 * var(--u));height:calc(1648 * var(--u));object-fit:cover;filter:contrast(0.9) brightness(1.2)}
+.hero>video{position:absolute;left:calc(-128 * var(--u));top:0;width:calc(2944 * var(--u));height:calc(1648 * var(--u));object-fit:cover;filter:brightness(0.6) contrast(0.9);opacity:0;transition:opacity 0.8s ease}
+.hero>video.on{opacity:1}
+.hero .hgroup{position:absolute;left:calc(440 * var(--u));top:calc(515 * var(--u));width:calc(940 * var(--u));display:flex;flex-direction:column;align-items:flex-start;gap:calc(50 * var(--u));z-index:2}
+.hbars{display:flex;flex-direction:column;align-items:flex-start;gap:calc(5 * var(--u))}
+.hbar{display:inline-block;white-space:nowrap;background:var(--c-black);color:var(--c-white);font-weight:500;font-size:calc(64 * var(--u));line-height:0.9;letter-spacing:-0.02em;padding:calc(10 * var(--u)) calc(12 * var(--u))}
+.hero .hsub{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200);max-width:calc(820 * var(--u))}
+.hero .heyeb{font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-600)}
+.hero .htrust{font-family:var(--mono);font-weight:400;font-size:max(12px, calc(12 * var(--u)));letter-spacing:0.04em;color:var(--c-600)}
+.hero .ctarow{display:flex;align-items:center;gap:calc(30 * var(--u));flex-wrap:wrap}
+.cta-line{min-width:max(160px, calc(196 * var(--u)));padding:0 22px;height:calc(48 * var(--u));min-height:38px;border:1px solid var(--c-white);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-white)}
+.cta-fill{min-width:max(160px, calc(196 * var(--u)));padding:0 22px;height:calc(48 * var(--u));min-height:38px;background:var(--c-black);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-white)}
+.cta-fill.inv{background:var(--c-white);color:var(--c-1000)}
+.hero .ctarow .mlink{color:var(--c-white)}
+
+/* ---- NO.01 THE SYSTEM (h1984, black; vertical stack: text -> full-width loop -> modes) ---- */
+.sys{background:var(--c-black);padding:calc(220 * var(--u)) 0}
+.sys .eyebrow{margin:0 0 calc(70 * var(--u)) calc(450 * var(--u));width:calc(1645 * var(--u));font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600)}
+.sys .row{margin-left:calc(450 * var(--u));width:calc(1645 * var(--u));display:flex;flex-direction:column;gap:calc(100 * var(--u));align-items:stretch}
+.sys .lcol{width:calc(804 * var(--u));display:flex;flex-direction:column;gap:calc(50 * var(--u))}
+.sys h2{font-weight:400;font-size:calc(64 * var(--u));line-height:1.05;letter-spacing:-0.02em}
+.sys h2 .a{display:block;font-weight:500;color:var(--c-white)}
+.sys h2 .b{display:block;font-weight:500;color:var(--c-white)}
+.sys .body{margin-top:calc(70 * var(--u));font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200)}
+.sys .pricehd{font-weight:500;font-size:var(--t-lead24);line-height:1.3;letter-spacing:0;color:var(--c-white)}
+.sys .fee{font-family:var(--mono);font-size:var(--t-mono15);line-height:1.35;letter-spacing:0.04em;color:var(--c-600);margin-top:calc(10 * var(--u))}
+.loopfig{position:relative;width:100%;height:calc(640 * var(--u));background:var(--c-cream);border:1px solid rgba(28,28,28,0.16);overflow:hidden}
+.loopfig canvas{position:absolute;inset:0;width:100%;height:100%}
+.loopfig .sys-legend{position:absolute;left:calc(15.7 * var(--u));top:calc(13.7 * var(--u));z-index:3;display:flex;gap:calc(24 * var(--u))}
+.loopfig .leg-group,.loopfig .leg-status{display:flex;flex-direction:column;gap:calc(6 * var(--u));min-width:calc(250 * var(--u));border-top:0.667px solid rgba(86,91,94,0.45);padding-top:calc(8.7 * var(--u))}
+.loopfig .leg-cap{font-family:var(--mono);font-size:max(11px, calc(11 * var(--u)));letter-spacing:0.04em;color:var(--c-800);line-height:1.6}
+.loopfig .k{display:inline-flex;align-items:center;gap:calc(7 * var(--u));font-size:max(11px, calc(12 * var(--u)));line-height:1.6;letter-spacing:0.04em;color:var(--c-800);white-space:nowrap}
+.loopfig .cd{width:calc(7 * var(--u));height:calc(7 * var(--u));border-radius:50%;flex:none}
+.loopfig .cd-bias{background:var(--c-review-muted)}
+.loopfig .cd-research{background:var(--c-research);border-radius:1px}
+.loopfig .cd-bench{background:transparent;border:1px dashed var(--c-800)}
+.loopfig .cd-g{background:var(--c-live-muted)}
+.loopfig .cd-a{background:var(--c-review-muted)}
+.loopfig .cd-r{background:var(--c-urgent-muted)}
+.loopfig .sys-note{position:absolute;right:calc(15.6 * var(--u));bottom:calc(13.7 * var(--u));z-index:3;font-family:var(--mono);font-size:max(11px, calc(11 * var(--u)));letter-spacing:0.04em;color:var(--c-800)}
+.sys .modes{display:grid;grid-template-columns:repeat(3,1fr);column-gap:calc(50 * var(--u))}
+.sys .mode{display:flex;flex-direction:column;gap:calc(50 * var(--u));align-items:flex-start}
+.sys .mode h3{font-weight:500;font-size:var(--t-h34);line-height:1.3;letter-spacing:-0.02em;color:var(--c-white)}
+.sys .mode p{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200)}
+
+/* ============================================================================
+   V8 mobile cut (CEO copy trim, 2026-07-29)
+   Desktop keeps the full narrative; mobile shows a shorter version of the same
+   content. Nothing is deleted from the markup - .dtonly is the desktop string,
+   .mbonly the mobile one, and the mobile media query swaps them. Elements the
+   cut drops entirely are hidden in the mobile block further down, never removed.
+   ============================================================================ */
+.mbonly{display:none}
+.sys .mode .msum{display:none} /* mobile one-liner under each mode title */
+.sys .mode .mlink{color:var(--c-white)}
+.sys .mode .mfoot{display:flex;flex-direction:column;gap:calc(40 * var(--u));align-items:flex-start;margin-top:calc(-30 * var(--u))}
+.sys .mode .mmeta{font-family:var(--mono);font-size:var(--t-mono13);letter-spacing:0.04em;color:var(--c-700)}
+.mlink{display:inline-flex;align-items:center;gap:calc(6 * var(--u));font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);line-height:1.35;letter-spacing:0.04em;color:var(--c-1000)}
+.bigh2 span.dim{color:var(--c-700)}
+.close9 .bigh2 span.dim{color:var(--c-800)}
+.mlink .arr{width:calc(12 * var(--u));height:calc(12 * var(--u));flex:none}
+
+/* ---- NO.02 MISSING LAYER (h1260, dark) ---- */
+.gap2{background:var(--c-black);padding:calc(220 * var(--u)) 0}
+.gap2 .eyebrow,.stats3 .eyebrow{position:relative;margin:0 0 calc(70 * var(--u)) calc(450 * var(--u));width:calc(1645 * var(--u));font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);z-index:3}
+.gap2 .ph1{position:absolute;left:calc(-316 * var(--u));top:calc(-147 * var(--u));width:calc(2944 * var(--u));height:calc(100% + 147 * var(--u));object-fit:cover}
+.gap2 .ph2{position:absolute;left:calc(1708 * var(--u));top:50%;transform:translateY(-50%);width:calc(836 * var(--u));height:calc(1046 * var(--u));object-fit:cover}
+.gap2 .hbargrp{position:relative;margin-left:calc(450 * var(--u));display:flex;flex-direction:column;align-items:flex-start;gap:calc(5 * var(--u));z-index:2}
+.gap2 .hbrow{display:contents}
+.gap2 .body{position:relative;margin:calc(120 * var(--u)) 0 0 calc(454 * var(--u));width:calc(807 * var(--u));display:flex;flex-direction:column;gap:calc(50 * var(--u));z-index:2}
+.gap2 .body p{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200)}
+.gap2 .g2stat{position:relative;margin:calc(90 * var(--u)) 0 0 calc(454 * var(--u));width:calc(807 * var(--u));display:flex;flex-direction:column;align-items:flex-start;gap:calc(40 * var(--u));z-index:2}
+.gap2 .g2stat .v{order:-1;margin-bottom:calc(-16 * var(--u));font-weight:500;font-size:var(--t-h34);line-height:1.4;letter-spacing:-0.069em;color:var(--c-white)}
+.gap2 .g2stat .rule{order:-2;border-top:0.667px solid rgba(255,255,255,0.18);height:0;width:100%;margin-bottom:calc(-24 * var(--u))}
+.gap2 .g2stat .t{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200);max-width:calc(807 * var(--u))}
+.gap2 .g2stat .t + .t{margin-top:calc(20 * var(--u))}
+.gap2 .g2stat .src{font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.35;letter-spacing:0.04em;color:var(--c-600)}
+.gap2 .g2stat .src a{border-bottom:1px solid var(--c-800);padding-bottom:1px;color:var(--c-600)}
+
+/* ---- stats interlude (h723, black) ---- */
+.stats3{background:var(--c-black);padding:calc(220 * var(--u)) 0}
+.stats3 .cells{margin-left:calc(454 * var(--u));display:grid;grid-template-columns:repeat(3,calc(528 * var(--u)));column-gap:calc(30 * var(--u))}
+.stats3 .cell{display:flex;flex-direction:column;gap:calc(50 * var(--u))}
+.stats3 .v{font-weight:500;font-size:var(--t-h34);line-height:1.4;letter-spacing:-0.069em;color:var(--c-white)}
+.stats3 .rule{border-top:0.667px dashed var(--c-600);height:0}
+.stats3 .t{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200);max-width:calc(460 * var(--u))}
+.stats3 .t + .t{margin-top:calc(20 * var(--u))}
+.stats3 .src{font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.35;letter-spacing:0.04em;color:var(--c-600)}
+.stats3 .src a{border-bottom:1px solid var(--c-800);padding-bottom:1px}
+
+/* ---- NO.03 THE LOOP (h2817, cream) ---- */
+.loop3{background:var(--c-white);padding-bottom:calc(220 * var(--u))}
+.loop3 .l3lower{position:relative;margin:calc(540 * var(--u)) 0 0 calc(449 * var(--u));width:calc(1645 * var(--u));display:flex;justify-content:space-between;align-items:flex-start}
+.loop3 .l3head{padding-top:calc(220 * var(--u));margin-left:calc(449 * var(--u));width:calc(1645 * var(--u))}
+.loop3 .mast{font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-800)}
+.loop3 h2{font-weight:400;margin-top:calc(70 * var(--u));max-width:calc((100% + 30 * var(--u)) / 12 * 9 - 30 * var(--u));font-size:calc(64 * var(--u));line-height:1.05;letter-spacing:-0.02em}
+.loop3 h2 .a{display:block;font-weight:500;color:var(--c-1000)}
+.loop3 h2 .b{display:block;font-weight:500;color:var(--c-accent);margin-top:0}
+.loop3 .l3grid{margin:calc(120 * var(--u)) 0 0 calc(4 * var(--u));display:grid;grid-template-columns:calc(798 * var(--u)) calc(796 * var(--u));column-gap:calc(35 * var(--u))}
+.loop3 .l3col{display:flex;flex-direction:column;gap:calc(40 * var(--u))}
+.loop3 .p1,.loop3 .p2,.loop3 .p3{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-1000)}
+.loop3 .p3{max-width:calc(749 * var(--u))}
+.loop3 .lmore,.gap2 .gmore{display:none} /* mobile-only fold controls - see the ≤900px block */
+.loop3 .step{position:absolute;top:calc(1136 * var(--u));width:calc(388.5 * var(--u));border-top:0.667px solid rgba(0,0,0,0.3);padding-top:calc(16.7 * var(--u));display:flex;flex-direction:column;gap:calc(11 * var(--u))}
+.loop3 .s1{left:calc(450 * var(--u))}
+.loop3 .s2{left:calc(868.6 * var(--u))}
+.loop3 .s3{left:calc(1287.2 * var(--u))}
+.loop3 .s4{left:calc(1705.7 * var(--u))}
+.loop3 .step b{font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-800)}
+.loop3 .step .t{font-weight:500;font-size:var(--t-read27);line-height:1.15;letter-spacing:0;color:var(--c-1000)}
+.loop3 .step .d{font-weight:400;font-size:var(--t-small17);line-height:1.3;color:var(--c-1000);max-width:calc(312 * var(--u))}
+.loop3 .loopnote{width:calc(807 * var(--u));display:flex;flex-direction:column;gap:calc(24 * var(--u))}
+.loop3 .loopnote p,.loop3 .lnote{font-weight:500;font-size:var(--t-read27);line-height:1.15;letter-spacing:0;color:var(--c-1000)}
+.loop3 .loopnote .mlink{margin-top:calc(16 * var(--u))}
+.loop3 .figcap{margin-top:calc(40 * var(--u));font-family:var(--mono);font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-800)}
+.loop3 .figcap .mut{color:var(--c-700)}
+
+/* ---- specimen card: Investment Memo (exact replica; off-II-scale sizes intentional) ---- */
+.loop3 .specimen{width:calc((100% + 30 * var(--u)) / 12 * 4 - 30 * var(--u))}
+.dr-doc{display:block;width:100%;max-width:566px;padding:34px 28px 32px;border:1px solid var(--c-800);border-radius:4px;background:var(--c-elev);font-family:'Inter',-apple-system,sans-serif;font-weight:400}
+.dr3-top{display:flex;justify-content:space-between;align-items:baseline;gap:20px;margin-bottom:22px;padding-bottom:16px;border-bottom:1px solid var(--c-900)}
+.dr3-toplabel{font-size:10px;letter-spacing:0.2em;line-height:15px;color:var(--c-700)}
+.dr3-topid{font-size:10px;letter-spacing:0.08em;line-height:15px;color:var(--c-800)}
+.dr3-name{margin-bottom:22px;font-size:19px;letter-spacing:-0.015em;line-height:20.9px;color:var(--c-white)}
+.dr3-ticker{font-size:13.3px;letter-spacing:-0.015em;color:var(--c-700)}
+.dr3-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 20px;margin-bottom:22px}
+.dr3-gk{display:block;font-size:9.5px;letter-spacing:0.16em;line-height:14.25px;color:var(--c-700)}
+.dr3-gv{display:block;margin-top:8px;font-size:12.5px;letter-spacing:0.02em;line-height:18.75px;color:var(--c-white)}
+.dr3-case{margin-bottom:22px;padding:16px;border:1px solid var(--c-900);border-radius:6px;background:var(--c-surface)}
+.dr3-casehd{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:13px}
+.dr3-casetag{font-size:8.5px;letter-spacing:0.1em;line-height:12.75px;color:var(--c-800)}
+.dr3-fieldtext{display:block;margin-top:8px;font-size:13px;letter-spacing:-0.025em;line-height:20.8px;color:var(--c-400)}
+.dr3-killtext{display:block;margin-top:8px;font-size:12px;letter-spacing:-0.025em;line-height:18.6px;color:var(--c-700)}
+.dr3-hp{margin-bottom:20px;padding-top:14px;border-top:1px solid var(--c-900)}
+.dr3-hurdle{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.dr3-chip{padding:5px 10px;border:1px solid var(--c-900);border-radius:7px;background:var(--c-elev);font-size:12.5px;letter-spacing:0.02em;line-height:18.75px;color:var(--c-white)}
+.dr3-chipyr{margin-left:1px;font-size:10.25px;letter-spacing:0.02em;color:var(--c-700)}
+.dr3-prob{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-top:16px}
+.dr3-problab{padding-bottom:3px}
+.dr3-probsub{display:block;margin-top:6px;font-size:9px;letter-spacing:0.06em;line-height:13.5px;color:var(--c-800)}
+.dr3-probnum{font-size:28px;font-weight:500;letter-spacing:-0.01em;line-height:25.2px;color:var(--c-white)}
+.dr3-div{margin:16px 0;border-top:1px solid var(--c-900)}
+.dr3-row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:10px 0;border-top:1px solid var(--c-900)}
+.dr3-hzwrap{display:inline-flex;align-items:center;gap:8px}
+.dr3-ring{width:22px;height:22px;flex:none;display:block}
+.dr3-spv2{font-size:12px;letter-spacing:0.01em;line-height:18px;color:var(--c-400)}
+.dr3-status{display:flex;align-items:center;gap:8px;margin-top:16px;font-size:11px;letter-spacing:0.06em;line-height:16.5px;color:var(--c-700)}
+.dr3-dot{width:6px;height:6px;border-radius:50%;background:var(--c-white);flex:none}
+
+
+/* ---- flow section shell (04 / 05b / close): guaranteed 220u top/bottom ---- */
+.secpad{padding:calc(220 * var(--u)) 0}
+.rail{margin:0 calc(450 * var(--u))}
+.eyeb{font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);margin-bottom:calc(70 * var(--u))}
+
+/* ---- LATEST (content band, white surface) ---- */
+.latest{background:var(--c-white)}
+.latest .eyeb{color:var(--c-800)}
+/* block heading: the two content streams are peers, so they carry the same heading size */
+.latest .streamhd{font-weight:500;font-size:var(--t-h34);line-height:1.3;letter-spacing:-0.02em;color:var(--c-1000);margin-bottom:calc(120 * var(--u))}
+.latest > .rail > .eyeb{margin-bottom:calc(40 * var(--u))}
+.latest .lt-feat{display:flex;flex-direction:column;align-items:flex-start;gap:calc(24 * var(--u))}
+.latest .lt-meta{font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-800)}
+.latest .lt-hd{font-weight:500;font-size:var(--t-read27);line-height:1.15;letter-spacing:0;color:var(--c-1000);max-width:calc((100% + 30 * var(--u)) / 12 * 9 - 30 * var(--u))}
+.latest .lt-sum{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-1000);max-width:calc((100% + 30 * var(--u)) / 12 * 6 - 30 * var(--u))}
+.latest .lt-hd a{color:inherit;text-decoration:none;transition:opacity 0.2s ease}
+.latest .lt-hd a:hover{opacity:0.6}
+.latest .ltgrid{display:grid;grid-template-columns:repeat(12, 1fr);column-gap:calc(30 * var(--u));align-items:start}
+.latest .ltgrid .lt-feat{grid-column:1 / span 9}
+/* the feature column is already nine columns wide, so the inner caps must be released */
+.latest .ltgrid .lt-hd{max-width:none}
+.latest .ltgrid .lt-sum{max-width:calc((100% + 30 * var(--u)) / 9 * 6 - 30 * var(--u))}
+.latest .lt-list{display:flex;flex-direction:column}
+.latest .lt-list .li{border-top:0.667px solid rgba(28,28,28,0.16);padding:calc(20 * var(--u)) 0;display:flex;flex-direction:column;gap:calc(8 * var(--u))}
+.latest .lt-list .li:first-child{padding-top:0;border-top:0}
+.latest .lt-list .li .k{font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);letter-spacing:0.04em;line-height:1.5;color:var(--c-800)}
+.latest .lt-list .li .t{font-weight:500;font-size:var(--t-small17);line-height:1.3;letter-spacing:0;color:var(--c-1000)}
+.latest .lt-feat .mlink{margin-top:calc(26 * var(--u))} /* 24u flex gap + 26u = 50u content-to-link canon */
+
+/* ---- CHANGELOG strip (same white band, under a hairline) ---- */
+.clog{margin-top:calc(220 * var(--u))}
+.clog .eyeb{color:var(--c-800);margin-bottom:calc(70 * var(--u))}
+.clog .cstrip{display:grid;grid-template-columns:repeat(12, 1fr);column-gap:calc(30 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16)}
+.clog .ci{grid-column:span 3;position:relative;display:block;padding-top:calc(40 * var(--u));color:inherit;text-decoration:none;transition:opacity 0.2s ease}
+.clog .ci:hover{opacity:0.6}
+.clog .ci::before{content:'';position:absolute;top:calc(-4 * var(--u));left:0;width:calc(8 * var(--u));height:calc(8 * var(--u));min-width:5px;min-height:5px;border-radius:50%;background:var(--c-600)}
+.clog .ci:first-child::before{background:var(--c-1000)}
+.clog .ci .ct{display:block;font-weight:500;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-1000);text-decoration:none}
+.clog .ci .cd{display:block;margin-top:calc(12 * var(--u));font-weight:400;font-size:var(--t-small17);line-height:1.3;color:var(--c-1000)}
+.clog .ci .cdate{display:block;margin-top:calc(24 * var(--u));font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-800)}
+.clog .cfoot{margin-top:calc(50 * var(--u))}
+.latest .ltfoot{margin-top:calc(50 * var(--u))} /* mirrors .cfoot - the release stream's "all" link */
+.bigh2{font-weight:400;max-width:calc((100% + 30 * var(--u)) / 12 * 9 - 30 * var(--u));font-size:calc(64 * var(--u));line-height:1.05;letter-spacing:-0.02em}
+.bigh2 .a{display:block;font-weight:500;color:var(--c-white)}
+.bigh2 .b{display:block;font-weight:500;color:var(--c-white)}
+/* 04 default (dark data) */
+.def4{background:var(--c-black)}
+.def4>img,.def4>video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;filter:brightness(0.42)}
+br.mbr{display:none}
+.def4 .rail{position:relative;z-index:2}
+.def4 .body{margin-top:calc(120 * var(--u));font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200);max-width:calc(804 * var(--u))}
+.dstats{margin-top:calc(100 * var(--u));display:grid;grid-template-columns:repeat(3,1fr);column-gap:calc(50 * var(--u))}
+.dstats .cell{display:flex;flex-direction:column;gap:calc(40 * var(--u))}
+.dstats .v{font-weight:500;font-size:var(--t-h34);line-height:1.4;letter-spacing:-0.069em;color:var(--c-white)}
+.dstats .gap .v{color:var(--c-urgent-muted)}
+.dstats .rule{border-top:0.667px dashed var(--c-600);height:0}
+.dstats .t{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200);max-width:calc(460 * var(--u))}
+.dstats .src{font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.35;letter-spacing:0.04em;color:var(--c-400)}
+.dlead{margin-top:calc(100 * var(--u));font-weight:500;font-size:var(--t-lead24);line-height:1.3;letter-spacing:0;color:var(--c-white);max-width:calc(807 * var(--u))}
+.def4 .mlink{margin-top:calc(50 * var(--u));color:var(--c-white)}
+.def4 .figcap{margin-top:calc(50 * var(--u));font-family:var(--mono);font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);max-width:calc(640 * var(--u))}
+/* 05 standard: photo band + dark content */
+.std5{height:calc(690 * var(--u));background:var(--c-black)}
+.std5>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 65%}
+.std5 .eyebrow5{position:absolute;left:calc(450 * var(--u));top:calc(220 * var(--u));font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);z-index:2}
+.std5 .hbargrp5{position:absolute;left:calc(450 * var(--u));top:calc(310 * var(--u));display:flex;flex-direction:column;align-items:flex-start;gap:calc(5 * var(--u));z-index:2}
+.std5 .hbargrp5 .hbar{color:var(--c-accent-sky)}
+.std5b{background:var(--c-black)}
+.qcap5{font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600)}
+.qh2{font-weight:400;margin-top:calc(40 * var(--u));max-width:calc((100% + 30 * var(--u)) / 12 * 6 - 30 * var(--u));font-size:var(--t-h34);line-height:1.3;letter-spacing:-0.02em}
+.qh2 .a{display:block;font-weight:500;color:var(--c-white)}
+.qh2 .b{display:block;font-weight:500;color:var(--c-white)}
+.pgrid5{margin-top:calc(120 * var(--u));display:grid;grid-template-columns:calc(807 * var(--u)) calc(807 * var(--u));column-gap:calc(26 * var(--u))}
+.pgrid5 .plead{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200)}
+.pgrid5 .pcol{display:flex;flex-direction:column;gap:calc(40 * var(--u))}
+.pgrid5 .pcol p{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200)}
+.suit5{margin-top:calc(120 * var(--u));display:grid;grid-template-columns:1fr 1fr;border:0.667px solid rgba(255,255,255,0.18);max-width:calc(1645 * var(--u))}
+.suit5>div{padding:calc(40 * var(--u)) calc(50 * var(--u)) calc(50 * var(--u))}
+.suit5>div+div{border-left:0.667px solid rgba(255,255,255,0.18)}
+.suit5 h3{font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);padding-bottom:calc(24 * var(--u));border-bottom:0.667px solid rgba(255,255,255,0.18)}
+.suit5 ul{list-style:none}
+.suit5 li{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200);padding:calc(22 * var(--u)) 0;border-bottom:0.667px solid rgba(255,255,255,0.10)}
+.suit5 li:last-child{border-bottom:0}
+.suit5 .no li{color:var(--c-400)}
+/* close (cream) */
+.close9{background:var(--c-cream)}
+.close9 .eyeb{color:var(--c-800)}
+.close9 .bigh2 .a{color:var(--c-1000)}
+.close9 .bigh2 .b{color:var(--c-1000)}
+.close9 .cols{display:grid;grid-template-columns:calc(807 * var(--u)) calc(807 * var(--u));column-gap:calc(26 * var(--u));margin-top:calc(120 * var(--u));max-width:calc(1645 * var(--u))}
+.close9 .cols .ccol > p{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-1000)}
+.close9 .cols .ccol{display:flex;flex-direction:column;gap:calc(60 * var(--u));align-items:flex-start}
+.close9 .offer{margin-top:0}
+.close9 .pricehd9{font-weight:500;font-size:var(--t-lead24);line-height:1.3;letter-spacing:0;color:var(--c-1000);max-width:calc(807 * var(--u))}
+.close9 .fee9{font-family:var(--mono);font-size:var(--t-mono15);line-height:1.35;letter-spacing:0.04em;color:var(--c-800);margin-top:calc(10 * var(--u))}
+.close9 .cta-row{margin-top:calc(40 * var(--u));display:flex;align-items:center;gap:calc(30 * var(--u));flex-wrap:wrap}
+.close9 .cta-line{border-color:var(--c-1000);color:var(--c-1000)}
+.trust9{margin-top:calc(120 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(40 * var(--u))}
+.trust9 .tlead{font-weight:400;font-size:var(--t-small17);line-height:1.3;color:var(--c-1000)}
+.trust9 .tg{margin-top:calc(50 * var(--u));display:grid;grid-template-columns:repeat(4,calc(388.5 * var(--u)));column-gap:calc(30 * var(--u))}
+.trust9 .ti{border-left:0.667px solid rgba(28,28,28,0.3);padding-left:calc(20 * var(--u))}
+.trust9 .ti b{display:block;font-weight:500;font-size:var(--t-body);letter-spacing:0;color:var(--c-1000)}
+.trust9 .tmore{display:none} /* mobile-only fold control - see the ≤900px block */
+.trust9 .ti span{display:block;margin-top:calc(6 * var(--u));font-family:var(--mono);font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-800)}
+.foot9{margin-top:calc(120 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(24 * var(--u));display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-800)}
+
+  .rail{margin:0 20px}
+  .secpad{padding:72px 0}
+  .pgrid5,.close9 .cols,.suit5,.l3grid{grid-template-columns:1fr;row-gap:24px;max-width:none}
+  .close9 .cols .ccol{gap:24px}
+  .close9 .fee9{margin-top:8px}
+  /* prose -> CTA is a block boundary, so 40; 48 was the parallel-items step (2026-07-28) */
+  .close9 .cta-row{margin-top:40px;flex-direction:column;align-items:flex-start;gap:24px}
+  .close9 .trust9{margin-top:64px}
+  .trust9 .ti b+span{margin-top:8px}
+  .trust9 .ti span{font-size:11px}
+  .close9 .foot9{margin-top:64px}
+  .trust9{margin-top:48px;padding-top:24px}
+  .trust9 .tg{row-gap:24px;margin-top:24px}
+  .trust9 .ti{border-left:0;padding-left:0}
+  .trust9 .ti span{margin-top:4px}
+  .foot9{margin-top:24px;padding-top:16px;flex-direction:column;gap:6px}
+  .loop3 .l3head{margin-left:0;width:auto;padding-top:0}
+  .qh2{font-size:15px;line-height:1.4} /* matched to NO.04's .dlead payoff (15/500) - both are white statements on dark, so they read as one tier (2026-07-28, Inkyung) */
+  /* at 15px the two clauses no longer need their own lines - let the question run on after "available." */
+  .qh2 .a,.qh2 .b{display:inline}
+  .trust9 .tg{grid-template-columns:1fr 1fr;row-gap:20px}
+  .dstats{grid-template-columns:1fr;row-gap:0}
+  /* fixed value column so every label starts at the same x */
+  .dstats .cell,.stats3 .cell{display:grid;grid-template-columns:64px 1fr;column-gap:16px;align-items:baseline;padding:16px 0;gap:0 16px;border-top:0;border-bottom:0.667px solid rgba(255,255,255,0.18)}
+  /* figcap belongs to the table: pull it up under the closing line, payoff + CTA follow */
+  br.mbr{display:inline}
+  /* NO.04 reading order: claim -> figures -> reading of the figures -> caption -> link.
+     The payoff sits straight under the card because it quotes 31% and 11% from it; the caption
+     drops to the end so it no longer splits the two prose blocks (2026-07-28). */
+  .def4 .rail{display:flex;flex-direction:column}
+  .def4 .rail>.mlink{align-self:flex-start;order:3}
+  .def4 .dlead{order:1;margin-top:24px;margin-bottom:0}
+  .def4 .figcap{order:2;margin-top:24px}
+  .dstats .cell .rule,.stats3 .cell .rule{display:none}
+  .dstats .cell .src,.stats3 .cell .src{grid-column:2}
+  /* NO.04 only: the stat rows become one comparison card - label left, figure right-aligned so the digits
+     line up. Three row hairlines competing with the rail-yard photo's vertical lines becomes one border. */
+  .def4 .dstats{border:0.667px solid var(--c-800);padding:0 16px}
+  .def4 .dstats .cell{grid-template-columns:1fr auto;border-bottom:0;align-items:baseline}
+  .def4 .dstats .cell .t{grid-column:1;grid-row:1}
+  .def4 .dstats .cell .v{grid-column:2;grid-row:1;text-align:right;font-size:17px} /* one step down the mobile ladder (22 -> 17); 18 is the product-app scale, not this one */
+  .def4 .dstats .cell .src{grid-column:1 / -1}
+  .dlead{margin-top:32px;margin-bottom:24px}
+  .def4 .figcap{margin-top:24px}
+
+
+/* reveal */
+.rv{opacity:0;transform:translateY(14px);transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1!important;transform:none!important;transition:none!important}}
+
+/* grid overlay alignment: 12 cols over the 1645u rail, 30u gutter (4 cols = 528.3u card) */
+.ii-grid-ov .container{width:calc(1645 * var(--u));margin:0 calc(450 * var(--u));--gutter:calc(30 * var(--u))}
+.ii-grid-ov .container{width:auto;margin:0 20px}
+
+/* ---- menu overlay ---- */
+.menuov{position:fixed;inset:0;z-index:90;background:var(--c-black);display:flex;flex-direction:column;justify-content:center;opacity:0;visibility:hidden;transition:opacity 0.35s ease,visibility 0.35s ease}
+.menuov.open{opacity:1;visibility:visible}
+.menuov .mlist{display:flex;flex-direction:column;gap:calc(28 * var(--u));padding-left:max(24px, calc(450 * var(--u)))}
+.menuov a{font-weight:500;font-size:clamp(32px, calc(96 * var(--u)), 96px);line-height:1.05;letter-spacing:-0.02em;color:var(--c-700);text-decoration:none;transition:color 0.35s ease;width:fit-content}
+.menuov a:hover{color:var(--c-white)}
+.menuov a.cur{color:var(--c-white)}
+.menuov .mfoot{position:absolute;left:max(24px, calc(450 * var(--u)));bottom:calc(60 * var(--u));font-family:var(--mono);font-size:var(--t-mono13);letter-spacing:0.04em;color:var(--c-600)}
+.menuov .menuov-cta{margin:48px 0 0 max(24px, calc(450 * var(--u)));display:inline-flex;align-items:center;justify-content:center;min-width:max(160px, calc(196 * var(--u)));height:max(44px, calc(48 * var(--u)));padding:0 22px;border:1px solid var(--c-white);font-family:var(--mono);font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-white);text-decoration:none;width:fit-content}
+body.menu-open .nav .burger span{background:var(--c-white)}
+body.menu-open .nav .burger span:first-child{top:50%;transform:translateY(-50%) rotate(45deg)}
+body.menu-open .nav .burger span:last-child{bottom:auto;top:50%;transform:translateY(-50%) rotate(-45deg)}
+body.menu-open .nav{background:transparent}
+body.menu-open .nav .brand{color:var(--c-white)}
+body.menu-open .nav .brand .tag{color:var(--c-600)}
+body.menu-open .nav .ncta{border-color:var(--c-white);color:var(--c-white)}
+body.menu-open{overflow:hidden}
+
+/* mobile: static stack */
+
+  /* ==== V8 mobile cut (CEO copy trim, 2026-07-29) ====
+     Swap the desktop strings for the mobile ones, then hide what the cut drops.
+     Desktop markup is untouched - remove these rules and the full page returns.
+     Target was 77.6 words/screen (CEO's own measurement); result is ~70. */
+  .dtonly,span.dtonly,.qh2 span.dtonly{display:none} /* .qh2 .a sets display:inline and outranks a single class */
+  .mbonly{display:block}
+  span.mbonly{display:inline}
+  /* mode titles are a directory: the one-liner stays visible, detail behind + */
+  .sys .mode p.msum{display:block;margin-top:8px}
+  /* --- dropped entirely on mobile (markup kept) --- */
+  .sys .lcol>p.body{display:none}                 /* NO.01, 41w framing paragraph */
+  .gap2 .body>p.rv{display:none}                  /* NO.02, 25w access paragraph */
+  .gap2 .gmore{display:none}                      /* its VIEW MORE control has nothing left to open */
+  .loop3 h2 .b{display:none}                      /* NO.03, "You run it from day one." */
+  .def4 .rail>p.body{display:none}                /* NO.04, 32w hurdle paragraph */
+  .std5b .qcap5{display:none}                     /* NO.05, "THE QUESTION" eyebrow */
+  .std5b .pgrid5 .plead{display:none}             /* NO.05, 23w plead */
+  .latest .lt-sum,.latest .lt-meta{display:none}  /* NEWSROOM, release summary + date */
+  .latest .ltfoot{display:none}                   /* NEWSROOM, ALL PRESS RELEASES */
+  .latest .clog{display:none}                     /* NEWSROOM, the changelog stream */
+  .close9 .ccol>p{display:none}                   /* CLOSE, the two 56w paragraphs */
+  .close9 .trust9 .tlead{display:none}            /* CLOSE, duplicates the hero trust line */
+
+  html,body{max-width:100%;overflow-x:hidden}
+  .band{height:auto!important;padding:72px 0}
+  .band>*{position:relative!important;width:calc(100% - 40px)!important;left:auto!important;top:auto!important;margin-left:auto!important;margin-right:auto!important;margin-bottom:28px;z-index:2}
+  /* last child's margin was stacking on top of the 72px bottom padding - top and bottom now match */
+  .band>*:last-child{margin-bottom:0}
+  .hero>img,.hero>video{width:100%!important;margin:0!important}
+  .hero>img,.hero>video,.gap2 .ph1,.def4>img,.def4>video,.std5>img{position:absolute!important;inset:0;width:100%!important;height:100%!important;margin:0}
+  .gap2 .ph2{display:none}
+  .hbars,.gap2 .hbargrp,.gap2 .hbrow,.std5 .hbargrp5{display:block}
+  .hbar{font-size:clamp(26px,6.92vw,40px);white-space:normal;display:inline;box-decoration-break:clone;-webkit-box-decoration-break:clone;padding:4px 8px;line-height:1.5}
+  .hero .hbar{font-size:clamp(26px,6.92vw,40px)} /* 32 at 390 - hero display only (2026-07-28). Section statements stay 27. */
+  .hbar::after{content:'\A';white-space:pre}
+  .sys h2,.loop3 h2,.bigh2{font-size:clamp(26px,6.92vw,40px);line-height:1.1}
+  .loop3 .l3grid{grid-template-columns:1fr;row-gap:16px;margin-left:0} /* 16 puts VIEW MORE with the paragraph; the paragraphs themselves add 8 back for a 24 gap when open */
+  .loop3 .l3grid .p3,.loop3 .l3grid .p2{margin-top:8px}
+  .loop3 .l3lower{flex-direction:column;row-gap:24px;margin-left:0} /* the CTA points at the memo above it, so 24 keeps them one group (40 would read as a new block) */
+  .loop3 .loopnote,.loop3 .specimen{width:auto}
+  .navmenu,.nav .lang{display:none}
+  /* the desktop nav CTA comes back once the hero is scrolled past - mobile had no
+     conversion point between the hero and No.09 (9 screens apart) */
+  .navright{position:absolute;right:60px;top:50%;transform:translateY(-50%);display:flex;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s ease,visibility .35s ease}
+  .nav.scrolled .navright{opacity:1;visibility:visible;pointer-events:auto}
+  .nav .ncta{min-width:0;padding:0 14px;height:34px;min-height:34px;white-space:nowrap}
+  /* .nav.scrolled .navright (3 classes) outranked a 2-class selector, so the nav CTA stayed
+     visible behind the open menu and the overlay's own CTA - two Open an Account buttons. */
+  body.menu-open .nav.scrolled .navright,body.menu-open .navright{opacity:0;visibility:hidden;pointer-events:none}
+  .nav .burger{display:block;left:auto;right:20px}
+  /* rotating the 26px bars into an X shrinks their ink to 18.4px, pulling the right edge 3.8px inward. Nudge out so the X ink lands on the same 20px gutter as the logo. */
+  body.menu-open .nav .burger{right:16.2px}
+  .nav .logo{left:20px}
+  .hero{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:0}
+  .hero>video{filter:brightness(0.45) contrast(1.05)}
+  .hero .hgroup{position:relative!important;z-index:2;gap:0;margin-top:0;margin-bottom:20px} /* matches the 20px left gutter */
+  .hero .hgroup .hbars{margin-top:24px}
+  .hero .hgroup .hsub{margin-top:24px;line-height:1.4}
+  .hero .hgroup .ctarow{margin-top:48px}
+  .hero .hgroup .htrust{margin-top:64px}
+  .bigh2,.sys h2,.loop3 h2,.qh2,.hero .hsub{max-width:none;width:auto}
+  .sys .row,.sys .modes{display:flex;flex-direction:column}
+  /* NO.01 mobile rhythm - same ladder as the hero: pair 20 / block 40 / layer 64, parallel items 48 */
+  .sys .row{gap:64px}
+  .sys .modes{gap:48px}
+  .sys .lcol{gap:0}
+  .sys .lcol .body{margin-top:40px}
+  .sys .lcol .body+div{margin-top:24px}
+  .sys .lcol .fee{margin-top:8px}
+  .sys .pricehd .nw{white-space:nowrap}
+  .sys .mode{gap:0}
+  /* item-title tier: matches No.03 steps and the No.06 feature title */
+  .sys .mode h3{font-size:17px;line-height:1.15;letter-spacing:0}
+  .sys .mode p{margin-top:16px}
+  .sys .mode .mlink{margin-top:24px}
+  .sys .mode .mfoot{margin-top:8px;gap:0}
+  .sys .mode .mfoot .mmeta{font-size:12px;color:var(--c-600)}
+  .sys .mode .mfoot .mlink{margin-top:24px}
+  /* NO.01 directory: titles only, tap to disclose (2026-07-28, same pattern as .suit5) */
+  .sys .mode h3{position:relative;cursor:pointer;padding-right:28px;width:100%}
+  .sys .mode h3::after{content:'+';position:absolute;right:0;top:0;font-family:var(--mono);font-size:15px;line-height:1.15;color:var(--c-600)}
+  .sys .mode.open h3::after{content:'\2212'}
+  .sys .mode p,.sys .mode>.mlink,.sys .mode .mfoot{display:none}
+  .sys .mode.open p:not(.msum){display:block}
+  .sys .mode.open p.msum{display:none} /* the one-liner is a compression of the paragraph below it, so it swaps out rather than stacking */
+  .sys .mode.open>.mlink{display:inline-flex}
+  .sys .mode.open .mfoot{display:flex}
+  /* ---- same ladder applied to the remaining sections: masthead->content 40, block->block 24,
+     parallel items 48, layer break 64, sub-link/figcap 16. Replaces u-based leftovers. ---- */
+  .gap2 .body{margin-top:40px}
+  .gap2 .g2stat{margin-top:40px}
+  .loop3 h2{margin-top:24px}
+  .loop3 .l3grid{margin-top:40px}
+  /* NO.03 prose fold: p1 stays, p3+p2 sit behind a hairline + (2026-07-28, pending Dave's copy review - the fold hides nothing from the DOM) */
+  .loop3 .l3grid .p3,.loop3 .l3grid .p2,.loop3 .l3grid .lnote{display:none}
+  .loop3 .l3grid.open .p3,.loop3 .l3grid.open .p2,.loop3 .l3grid.open .lnote{display:block}
+  .loop3 .l3grid .lnote{margin-top:8px} /* joins the 16 grid row-gap for a 24 prose gap, like p3/p2 */
+  /* a bare + can't say what it opens: the + idiom works on .suit5 / .sys .mode because a title is the handle,
+     and prose has none. So this uses the system's other expand affordance - a text label ("View All = expand
+     list", ii-design-guard) - at the mono text-link tier: 13 / 400 / 0.04em, typed CAPS, no arrow. */
+  .loop3 .lmore{display:block;background:none;border:0;padding:0;cursor:pointer;font-family:var(--mono);font-weight:400;font-size:13px;line-height:1.35;letter-spacing:0.04em;color:var(--c-800);text-align:left}
+  .loop3 .l3grid.open .lmore::after{content:'\2212'}
+  .loop3 .step+.step{margin-top:0} /* strip items sit side by side; vertical rhythm retired with the stack */
+  .loop3 .step .t{margin-top:8px;font-size:22px;line-height:1.15} /* swipe cards are their own units, so the step title takes the 22 stream-heading tier (2026-07-28, Inkyung) */
+  .loop3 .step .d{margin-top:16px}
+  .loop3 .l3lower{margin-top:48px} /* mirrors the 48 above the strip - the strip sits in equal air */
+  .loop3 .loopnote{gap:24px}
+  .loop3 .loopnote .mlink{margin-top:0}
+  .loop3 .figcap{margin-top:16px}
+  .def4 .body{margin-top:40px}
+  .def4 .dstats{margin-top:40px} /* block boundary: prose ends, the comparison card is its own object */
+  .def4 .dlead{margin-top:24px}
+  .def4 .mlink{margin-top:24px}
+  .def4 .figcap{margin-top:24px}
+  .std5b .qh2{margin-top:24px}
+  .std5b .pgrid5{margin-top:40px}
+  .std5b .suit5{margin-top:48px}
+  .close9 .cols{margin-top:40px}
+  /* prose paragraph gap must beat the line gap (21px) or paragraphs read as one block */
+  .loop3 .l3col,.gap2 .body,.close9 .cols .ccol,.pgrid5 .pcol{gap:24px}
+  /* mobile: the two lists stack, so the desktop box + 12 rules read as clutter.
+     Drop the box and the row rules, keep the two label rules, separate by tone. */
+  .suit5{border:0;row-gap:48px}
+  .suit5>div{padding:0}
+  .suit5>div+div{border-left:0}
+  /* both lists collapsed behind a + on mobile; the two labels carry the contrast */
+  .suit5 h3{padding-bottom:16px;padding-right:28px;position:relative;cursor:pointer}
+  .suit5 h3::after{content:'+';position:absolute;right:0;top:0;font-family:var(--mono);font-size:15px;line-height:1.2;color:var(--c-600)}
+  .suit5>div.open h3::after{content:'\2212'}
+  .suit5 ul{margin-top:0;display:none}
+  .suit5>div.open ul{display:block}
+  .suit5 li{padding:12px 0;border-bottom:0}
+  .suit5 li:first-child{padding-top:16px}
+  .suit5 li+li{border-top:0.667px solid rgba(255,255,255,0.18)}
+  .suit5 .no li{color:var(--c-700)}
+  /* mobile prose is 15/1.4 everywhere - these still carried the desktop 1.3 */
+  .def4 .body,.gap2 .g2stat .t,.dstats .t,.pgrid5 .plead,.pgrid5 .pcol p,.suit5 li{line-height:1.4}
+  /* payoff prose drops to body size on mobile, weight 500 stays */
+  .def4 .dlead,.close9 .offer p{font-size:15px;line-height:1.4}
+  /* stat block: value+rule = one unit, then text 16, source 8, link 16 */
+  .gap2 .g2stat{gap:0}
+  .gap2 .g2stat .v{margin-top:8px}
+  .gap2 .g2stat>div:not(.v):not(.rule){margin-top:16px}
+  .gap2 .g2stat .src{margin-top:8px}
+  .gap2 .g2stat .mlink{margin-top:24px}
+  .sys .eyebrow,.sys .row,.gap2 .eyebrow,.gap2 .hbargrp,.gap2 .body,.stats3 .eyebrow,.stats3 .cells{margin-left:0}
+  .stats3 .cells{display:flex;flex-direction:column;gap:0}
+  .loopfig{display:none}
+  .sys .lcol,.gap2 .body,.gap2 .g2stat,.loop3 .loopnote,.loop3 .l3head{width:auto;margin-left:0}
+  .loop3 .l3head{padding-top:0}
+  .hero .hsub,.gap2 .g2stat .t,.stats3 .t,.loop3 .p3,.loop3 .step .d,.def4 .body,.dstats .t,.dlead,.def4 .figcap,.close9 .pricehd9{max-width:none}
+  .hero .ctarow{flex-direction:column;align-items:flex-start;gap:24px}
+  .heyeb-sep{display:none}
+  .heyeb-b{display:block}
+  .band.secpad{padding-left:0;padding-right:0}
+  .hero .htrust{font-size:12px;color:var(--c-600)}
+  .cta-fill,.mlink,.nav .ncta,.menuov .menuov-cta,.cta-line{font-size:13px}
+  /* leading canon on the chrome: the section content was swept 2026-07-28 but nav, the burger
+     overlay, the CTA fills and the trust labels still carried browser `normal` or the retired 1.05.
+     These are fixed-height flex boxes, so the value is a system correction, not a layout change.
+     Mobile only - desktop keeps whatever it had. (2026-07-29) */
+  .cta-fill,.nav .ncta,.menuov .menuov-cta,.menuov .mlang a,.menuov .mfoot span{line-height:1.5}
+  .menuov a{line-height:1.1}                /* 27px masthead tier */
+  .trust9 .ti b{line-height:1.15}            /* 15/500 sub-heading tier */
+  /* these three carried `normal` and their inline spans inherited it, so six elements read off
+     canon from three declarations */
+  .hero .heyeb,.hero .htrust,.close9 .foot9{line-height:1.5}
+  .mlink .arr{width:12px;height:12px}
+  .mlink{gap:6px} /* 6u collapses to <1px at 390 - restore the 2545 render's 6px */
+  .trust9 .tg{grid-template-columns:1fr;row-gap:24px}
+  .menuov .mlist{padding-left:20px}
+  .menuov a{font-size:27px} /* 32 is off-scale and out-shouted the 27 masthead at the same 500 weight */
+  .menuov .menuov-cta{margin-left:20px}
+  .menuov .mfoot{left:20px;right:20px;bottom:20px}
+  .menuov .mlang{margin:24px 0 0 20px;display:flex;gap:16px;font-family:var(--mono);font-size:13px;letter-spacing:0.04em}
+  .menuov .mlang a{font-size:13px;font-weight:400;color:var(--c-600);letter-spacing:0.04em}
+  .menuov .mlang a.on{color:var(--c-white)}
+  .loop3 .step,.stats3 .cell{position:static;width:auto;margin-bottom:24px}
+  /* NO.03 steps: horizontal snap strip - the loop is a sequence, so it swipes (same pattern as the changelog strip).
+     Card owns its hairline + dot; the strip's 3px padding-top gives the dot straddle room inside the scroll clip. */
+  .loop3 .lstrip{display:grid;grid-auto-flow:column;grid-auto-columns:70%;column-gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-top:3px;margin-top:45px} /* 45 + the 3px dot headroom = 48 from the label to the card hairline */
+  .loop3 .lstrip::-webkit-scrollbar{display:none}
+  .loop3 .lstrip .step{position:relative;left:0;top:0;scroll-snap-align:start;border-top:0.667px solid rgba(0,0,0,0.3);padding-top:24px;margin:0} /* left/top:0 cancels the desktop absolute offsets, which relative would otherwise honor */
+  .loop3 .lstrip .step::before{content:'';position:absolute;top:-3px;left:0;width:5px;height:5px;border-radius:50%;background:var(--c-600)}
+  .sys .body,.sys .pricehd,.sys .mode p,.gap2 .body p,.stats3 .t{font-size:15px;line-height:1.4}
+  .loop3 .p1,.loop3 .p2,.loop3 .p3,.loop3 .loopnote p,.loop3 .lnote{font-size:15px;line-height:1.4}
+  .close9 .cols .ccol > p{font-size:15px;line-height:1.4}
+  .latest .lt-hd,.latest .lt-sum,.latest .ltgrid .lt-hd,.latest .ltgrid .lt-sum{max-width:none}
+  .latest .streamhd{margin-bottom:40px}
+  .clog .ci{padding-top:24px}
+  .clog .ci .cd{margin-top:8px}
+  .clog .ci .cdate{margin-top:16px;font-size:12px}
+  .clog .ci .cd{color:var(--c-800)}
+  .latest .lt-meta{font-size:12px}
+  .clog .cfoot,.latest .ltfoot{margin-top:24px}
+  .latest .lt-sum{line-height:1.4}
+  .latest .lt-feat{gap:16px}
+  .latest .lt-feat .mlink{margin-top:8px}
+  .latest .ltgrid{grid-template-columns:1fr;row-gap:32px}
+  .latest .ltgrid .lt-feat{grid-column:1}
+  .clog{margin-top:64px}
+  .clog .eyeb{margin-bottom:32px}
+  /* changelog runs as a horizontal snap strip on mobile - same 4 cards, different axis */
+  .clog .cstrip{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:70%;column-gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-top:0;padding-top:3px}
+  .clog .cstrip::-webkit-scrollbar{display:none}
+  .clog .ci{grid-column:auto;scroll-snap-align:start;padding-top:24px;border-top:0.667px solid rgba(28,28,28,0.16)}
+  .clog .ci+.ci{margin-top:0}
+  /* the card owns its hairline; the strip's 3px padding-top keeps the straddling dot inside the scroll clip */
+  .clog .ci::before{top:-3px;width:5px;height:5px;min-width:5px;min-height:5px;flex:none;border-radius:50%;background:var(--c-600)} /* fixed 5x5 - the u-based size with only min-width set rendered an ellipse */
+  .clog .ci .cd{line-height:1.4}
+  .clog .cfoot,.latest .ltfoot{margin-top:24px}
+  .band>*{margin-bottom:40px}
+  /* descendant, not direct child - No.04/06/09 keep their eyebrow inside .rail */
+  .band .eyebrow,.band .eyeb,.band .mast,.band .eyebrow5,.band .qcap5{margin-bottom:24px}
+  .latest > .rail > .eyeb{margin-bottom:24px}
+  .band>h2,.hbargrp,.hbargrp5,.band>.bigh2{margin-bottom:32px}
+  .brand .tag{display:none}
+
+  /* ---- leading, rationalised 2026-07-28 from the approved HERO / NO.01 / NO.02 render ----
+     clone-box titles 1.5 · section h2 1.1 · headings + item titles 1.15 · prose 1.4 · mono 1.5.
+     Placed last so it wins over the per-component values that had drifted to 1.3 / 1.35. */
+  .latest .streamhd{line-height:1.15}
+  .loop3 .step .d,.clog .cd{line-height:1.4}
+  /* ---- 9px meta tier (2026-07-28, Inkyung) ----
+     Auxiliary text that belongs to a figure, a mockup or a data block: source lines, illustrative
+     disclaimers, figure captions. 11 read as primary next to the thing it annotates. Mono / +0.04em /
+     lh 1.5. NOT for page prose, legal notices or the hero trust line - those stay 11+. */
+  .figcap,.src,.def4 .figcap,.loop3 .figcap,.gap2 .g2stat .src{font-size:9px;line-height:1.5}
+  /* mono collapses to three values: 13 section label + CTA · 11 meta/date/notice · 9 figure meta.
+     12 retired - it sat between two tiers with no job of its own (2026-07-28, Inkyung).
+     Selectors are section-scoped because the per-section rules (.sys .eyebrow etc.) outrank a bare class. */
+  section.band .eyeb,section.band .eyebrow,section.band .eyebrow5,
+  section.band .qcap5,section.band .mast,.hero .heyeb{font-size:13px}
+  .metaline.doclist,.close9 .metaline.doclist{font-size:9px}
+  .sys .fee,.close9 .offer p.fee9,.latest .lt-meta,.clog .ci .cdate,
+  .sys .mode .mfoot .mmeta,.std5b .suit5 h3,.close9 .foot9,.close9 .foot9 span{font-size:11px}
+  /* hero trust line: one line at the 9px meta tier. The same regulatory facts are set out in full in
+     the closing section, so here it is a reference, not the disclosure itself. Colour lifted to c-400
+     because 9px sits on a photograph. */
+  .hero .htrust{font-size:min(9px, 2.15vw);color:var(--c-400)}
+  /* one line would need 354px in a 350px rail, so it keeps the two-line break; the separator stays
+     hidden so neither line ends on a dangling middle dot. */
+  /* each closing hairline gets equal air above and below, taking the wider of its own pair:
+     trust rule 64/64, footer rule 24/24 (2026-07-28) */
+  .close9 .trust9{padding-top:64px}
+  .close9 .foot9{margin-top:24px;padding-top:24px}
+  /* one line, per Inkyung 2026-07-28. It needs 358px against the 350px rail, so nowrap lets it run to
+     378px - i.e. a 12px right gutter instead of 20 on this one element. Nothing overflows the 390 screen. */
+  .hero .htrust{align-self:stretch;white-space:nowrap}
+  .hero .htrust .heyeb-sep,.hero .htrust .heyeb-b{display:inline}
+  .mlink,.mlink span{line-height:1.5}
+  .dstats .v,.g2stat .v,.tri .v{line-height:1.15}
+  .clog .ci .ct{line-height:1.15}                   /* 15/500 card title = heading family */
+  .sys .fee,.loop3 .lmore,.trust9 .tlead{line-height:1.5} /* mono label + mono control */
+
+  /* ---- title -> body: 24 in every section (2026-07-28, Inkyung: "좁은 간격 기준") ----
+     was 40 (or 32 + collapse) which read as a second, wider rhythm on top of the 24 prose gap. */
+  .sys .row>.lcol>p.body,.gap2 .body,.loop3 .l3grid,.def4 p.body,.std5b .pgrid5,.close9 .cols{margin-top:24px}
+  /* NO.01: same two-tier logic as NO.04 - 40 at the block boundary, 48 between directory items */
+  .sys .offer{margin-top:40px}
+  .sys .modes{margin-top:48px}
+  .hbargrp,.hbargrp5{margin-bottom:24px}
+  .latest .streamhd{margin-bottom:24px}
+
+  /* ---- NO.02: paragraph 1 stays, 2-3 fold. Once NO.03 dropped to 28 exposed words this became the
+     page's heaviest prose block, so the same VIEW MORE treatment applies (2026-07-28). ---- */
+  .gap2 .body p:nth-of-type(2),.gap2 .body p:nth-of-type(3){display:none}
+  .gap2 .body.open p:nth-of-type(2),.gap2 .body.open p:nth-of-type(3){display:block}
+  .gap2 .gmore{display:block;background:none;border:0;padding:0;cursor:pointer;font-family:var(--mono);font-weight:400;font-size:13px;line-height:1.5;letter-spacing:0.04em;color:var(--c-600);text-align:left}
+
+  /* ---- closing trust block: the four regulatory labels stay visible, their 12px sub-lines fold ----
+     Regulatory standing must not need a tap to be seen, so only the descriptions go behind VIEW MORE. */
+  .trust9 .ti span{display:none}
+  .trust9.open .ti span{display:block}
+  .trust9 .tg{row-gap:16px}
+  .trust9 .tmore{display:block;margin-top:24px;background:none;border:0;padding:0;cursor:pointer;font-family:var(--mono);font-weight:400;font-size:13px;line-height:1.5;letter-spacing:0.04em;color:var(--c-800);text-align:left}
+
+
+/* ---- desktop only: THE QUESTION as two flush-top columns (statement left, prose right) ---- */
+
+
+/* ===================================================================
+   Extract overrides. Generated by figma-export/build-modes.ps1.
+   Only the page chrome around the block is neutralised - the block's
+   own type, colour and spacing are the real page at 390px.
+   =================================================================== */
+html,body{width:390px!important;max-width:390px!important;background:var(--c-black)!important;
+  margin:0!important;padding:0!important;overflow-x:visible!important}
+.band.sys{padding-top:0!important;padding-bottom:0!important;margin:0!important;background:var(--c-black)!important}
+.sys .row{display:block!important;margin-top:0!important;margin-bottom:0!important} /* keeps the 20px side gutter */
+.sys .modes{margin:0!important}
+.rv,.ri{opacity:1!important;transform:none!important;transition:none!important;animation:none!important}
+*{transition:none!important;animation:none!important}</style>
+</head>
+<body>
+<section class="band sys" id="system">
+  <div class="row">
+<div class="modes">
+    <div class="mode rv in open">
+      <h3>Managed</h3>
+      <p>Low-cost, long-term portfolios for capital that needs a disciplined core.</p>
+      <p class="msum">Disciplined, low-cost portfolios.</p>
+      <a class="mlink" href="II Site V2 - Managed.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>MANAGED</span></a>
+    </div>
+    <div class="mode rv in open">
+      <h3>Self-Directed</h3>
+      <p>An active decision system that places each order on the record before the outcome, and preserves what changed afterward.</p>
+      <p class="msum">Every decision on the record before the outcome.</p>
+      <a class="mlink" href="II Site V2 - Self-Directed.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>SELF-DIRECTED</span></a>
+    </div>
+    <div class="mode rv in open">
+      <h3>Fiscal.ai Max</h3>
+      <p>Multi-year financials, operating metrics, return on capital, margin trends and company comparisons. Included with membership. Research supplies evidence. Judgment remains yours.</p>
+      <p class="msum">Research, included.</p>
+      <div class="mfoot">
+        <span class="mmeta">Fiscal.ai Max &middot; $99/month standalone</span>
+        <a class="mlink" href="II Site V2 - Self-Directed.html#research"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>RESEARCH</span></a>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>

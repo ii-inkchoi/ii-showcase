@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>II Typography - Desktop 1440</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!--
+  Measured off V8/index-H.html at 1440x900 on 2026-07-29, transitions and reveals disabled.
+  Every specimen below is set in the value it actually renders at, not the value the doc claims.
+  Literal px only: no var() calc() clamp() min() max() vw, no media queries. Figma-importable.
+-->
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1440px;background:#000;color:#C7C7C7;font-family:'Inter',sans-serif;
+     font-feature-settings:'tnum' 1,'lnum' 1;-webkit-font-smoothing:antialiased}
+.wrap{width:1280px;margin:0 auto;padding:80px 0 160px}
+
+h1{font-size:36px;font-weight:500;line-height:1.05;letter-spacing:-0.02em;color:#FFF}
+.sub{font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.5;letter-spacing:0.04em;color:#565B5E;margin-top:16px}
+h2{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:400;line-height:1.5;letter-spacing:0.04em;
+   color:#565B5E;border-bottom:1px solid #232627;padding-bottom:12px;margin:80px 0 0}
+.note{font-size:13px;line-height:1.4;color:#929292;max-width:760px;margin-top:16px}
+.note b{font-weight:500;color:#C7C7C7}
+
+/* chart row: role | specimen | spec */
+.row{display:grid;grid-template-columns:150px 1fr 270px;gap:24px;align-items:baseline;
+     padding:22px 0;border-bottom:1px solid #1C1C1C}
+.role{font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.5;letter-spacing:0.04em;color:#565B5E}
+.spec{font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.5;letter-spacing:0.04em;color:#929292;text-align:right}
+.where{display:block;color:#565B5E;margin-top:4px}
+
+/* ---- the specimens, at their real desktop values ---- */
+.s-eyebrow  {font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:400;line-height:1.5;letter-spacing:0.04em;color:#A7A7A7}
+.s-display  {font-size:36px;font-weight:500;line-height:0.9;letter-spacing:-0.02em;color:#FFF}
+.s-h2       {font-size:36px;font-weight:500;line-height:1.05;letter-spacing:-0.02em;color:#FFF}
+.s-h3       {font-size:22px;font-weight:500;line-height:1.3;letter-spacing:-0.02em;color:#FFF}
+.s-stream   {font-size:22px;font-weight:500;line-height:1.3;letter-spacing:-0.02em;color:#FFF}
+.s-lead     {font-size:17px;font-weight:500;line-height:1.3;color:#FFF}
+.s-item     {font-size:17px;font-weight:500;line-height:1.15;color:#FFF}
+.s-payoff   {font-size:17px;font-weight:500;line-height:1.15;color:#FFF}
+.s-body     {font-size:15px;font-weight:400;line-height:1.3;color:#E3E2E2}
+.s-subhead  {font-size:15px;font-weight:500;line-height:1.3;color:#FFF}
+.s-small    {font-size:13px;font-weight:400;line-height:1.3;color:#E3E2E2}
+.s-stat     {font-size:22px;font-weight:500;line-height:1.4;letter-spacing:-0.069em;color:#FFF}
+.s-mono11   {font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:400;line-height:1.5;letter-spacing:0.04em;color:#A7A7A7}
+.s-legend   {font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:400;line-height:1.6;letter-spacing:0.04em;color:#565B5E}
+.s-cta      {font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:400;line-height:1.35;letter-spacing:0.04em;color:#FFF}
+.s-trust    {font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:400;letter-spacing:0.04em;color:#A7A7A7}
+
+/* token table */
+table{width:100%;border-collapse:collapse;margin-top:24px;
+      font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.5;letter-spacing:0.04em}
+th{text-align:right;font-weight:400;color:#565B5E;padding:10px 12px;border-bottom:1px solid #232627}
+th:first-child{text-align:left}
+td{text-align:right;color:#C7C7C7;padding:10px 12px;border-bottom:1px solid #1C1C1C}
+td:first-child{text-align:left;color:#929292}
+.pin{color:#FFF}
+.off{color:#565B5E}
+
+/* spacing ladder bars */
+.lad{display:grid;grid-template-columns:200px 1fr 90px;gap:24px;align-items:center;padding:12px 0;
+     border-bottom:1px solid #1C1C1C;font-family:'IBM Plex Mono',monospace;font-size:11px;
+     line-height:1.5;letter-spacing:0.04em;color:#929292}
+.bar{height:8px;background:#565B5E}
+.lad .n{text-align:right;color:#FFF}
+
+/* colour swatches */
+.sw{display:flex;gap:2px;margin-top:24px;flex-wrap:wrap}
+.sw>div{width:158px}
+.sw .chip{height:64px;border:1px solid #232627}
+.sw .lbl{font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.5;letter-spacing:0.04em;
+         color:#929292;padding:8px 0 0}
+.sw .hex{display:block;color:#565B5E}
+
+.flag{border-left:2px solid #BE3C36;padding:14px 0 14px 18px;margin-top:24px;
+      font-size:13px;line-height:1.4;color:#C7C7C7;max-width:760px}
+.flag b{font-weight:500;color:#FFF}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Typography, desktop</h1>
+<div class="sub">II HOME &middot; MEASURED AT 1440 &times; 900 &middot; V8 &middot; 2026-07-29</div>
+<div class="note">Every specimen is set in the value the page actually renders, taken from computed style with transitions and reveals disabled. Where a value sits outside the system it is marked. <b>Inter</b> carries reading type, <b>IBM Plex Mono</b> the operator type. Chakra Petch is retired and must not return.</div>
+
+<!-- ============================ SIZES ============================ -->
+<h2>01 &middot; ROLES AT 1440</h2>
+
+<div class="row">
+  <div class="role">eyebrow</div>
+  <div><div class="s-eyebrow">NO. 01 &middot; THE SYSTEM</div></div>
+  <div class="spec">mono 12 / 400 / 1.5 / +.04
+    <span class="where">section label, every band</span></div>
+</div>
+
+<div class="row">
+  <div class="role">display, clone box</div>
+  <div><div class="s-display">The market remembers</div></div>
+  <div class="spec">36 / 500 / <span class="pin">0.9</span> / &minus;.02
+    <span class="where">.hbar &middot; 0.9 sets the black box height</span></div>
+</div>
+
+<div class="row">
+  <div class="role">section h2</div>
+  <div><div class="s-h2">One system.</div></div>
+  <div class="spec">36 / 500 / <span class="pin">1.05</span> / &minus;.02
+    <span class="where">64u, no floor, grows with the viewport</span></div>
+</div>
+
+<div class="row">
+  <div class="role">card h3</div>
+  <div><div class="s-h3">Self-Directed</div></div>
+  <div class="spec">22 / 500 / 1.3 / &minus;.02
+    <span class="where">.sys .mode h3</span></div>
+</div>
+
+<div class="row">
+  <div class="role">stream heading</div>
+  <div><div class="s-stream">Press Releases</div></div>
+  <div class="spec">22 / 500 / 1.3 / &minus;.02
+    <span class="where">.streamhd &middot; opens a stream</span></div>
+</div>
+
+<div class="row">
+  <div class="role">stat figure</div>
+  <div><div class="s-stat">9 in 10&nbsp;&nbsp;&nbsp;+11%&nbsp;&nbsp;&nbsp;<span style="color:#BE3C36">&minus;20</span></div></div>
+  <div class="spec">22 / 500 / 1.4 / <span class="pin">&minus;.069</span>
+    <span class="where">signature tracking &middot; negative is #BE3C36</span></div>
+</div>
+
+<div class="row">
+  <div class="role">lead</div>
+  <div><div class="s-lead">$20 / month &middot; one membership</div></div>
+  <div class="spec">17 / 500 / 1.3 / 0
+    <span class="where">.pricehd &middot; .dlead</span></div>
+</div>
+
+<div class="row">
+  <div class="role">item title</div>
+  <div><div class="s-item">Record</div></div>
+  <div class="spec">17 / 500 / <span class="pin">1.15</span> / 0
+    <span class="where">.t &middot; .lt-hd &middot; list-item titles</span></div>
+</div>
+
+<div class="row">
+  <div class="role">payoff</div>
+  <div><div class="s-payoff">A sound decision can lose.</div></div>
+  <div class="spec">17 / 500 / <span class="pin">1.15</span> / 0
+    <span class="where">.lnote &middot; same tier as lead, other leading</span></div>
+</div>
+
+<div class="row">
+  <div class="role">body</div>
+  <div><div class="s-body" style="max-width:600px">Every position is measured against the S&amp;P 500, dollar for dollar, the same capital over the same period.</div></div>
+  <div class="spec">15 / 400 / 1.3 / 0
+    <span class="where">all prose &middot; #E3E2E2 dark, #1C1C1C light</span></div>
+</div>
+
+<div class="row">
+  <div class="role">sub-heading</div>
+  <div><div class="s-subhead">CIRO</div></div>
+  <div class="spec">15 / 500 / 1.3 / 0
+    <span class="where">.ct &middot; .ti b</span></div>
+</div>
+
+<div class="row">
+  <div class="role">small description</div>
+  <div><div class="s-small" style="max-width:520px">Classification, role, size and probability before an active order.</div></div>
+  <div class="spec">13 / 400 / 1.3 / 0
+    <span class="where">.d &middot; .cd &middot; .tlead</span></div>
+</div>
+
+<div class="row">
+  <div class="role">mono meta</div>
+  <div><div class="s-mono11">Illustrative. An active equity position over the same hold.</div></div>
+  <div class="spec">mono 11 / 400 / 1.5 / +.04
+    <span class="where">.figcap &middot; .cdate &middot; .mmeta</span></div>
+</div>
+
+<div class="row">
+  <div class="role">canvas legend</div>
+  <div><div class="s-legend">Behavioral bias &middot; what the loop guards against</div></div>
+  <div class="spec">mono 11 / 400 / <span class="pin">1.6</span> / +.04
+    <span class="where">.k &middot; .leg-cap &middot; only place 1.6 appears</span></div>
+</div>
+
+<div class="row">
+  <div class="role">CTA &middot; text link</div>
+  <div><div class="s-cta">EXPLORE THE DECISION RECORD</div></div>
+  <div class="spec">mono 12 / 400 / <span class="pin">1.35</span> / +.04
+    <span class="where">typed CAPS in the markup, never text-transform</span></div>
+</div>
+
+<div class="row">
+  <div class="role">hero trust line</div>
+  <div><div class="s-trust">A licensed Canadian brokerage &middot; regulated by CIRO &middot; CIPF member</div></div>
+  <div class="spec">mono 12 / 400 / <span class="off">normal</span> / +.04
+    <span class="where">leading is browser default, outside the system</span></div>
+</div>
+
+<!-- ============================ WIDTH BEHAVIOUR ============================ -->
+<h2>02 &middot; THE SAME TOKEN RENDERS DIFFERENTLY AT EVERY WIDTH</h2>
+<div class="note">Reading type is <b>max(floor px, N &times; 100vw / 2545)</b>. 2545 is the Figma frame width. Below roughly 1400 almost everything sits at its floor; each token unpins at its own crossover. <b>1440 is a floor-bound width</b>, so the hierarchy you see here is compressed relative to the 2545 design.</div>
+<table>
+<tr><th>token</th><th>floor</th><th>frame</th><th>1440</th><th>1600</th><th>1920</th><th>2160</th><th>2545</th><th>unpins at</th></tr>
+<tr><td>--t-h34</td><td>22</td><td>34</td><td class="pin">22</td><td>22</td><td>25.7</td><td>28.9</td><td>34</td><td>1647</td></tr>
+<tr><td>--t-read27</td><td>17</td><td>27</td><td class="pin">17</td><td>17</td><td>20.4</td><td>22.9</td><td>27</td><td>1602</td></tr>
+<tr><td>--t-name28</td><td>15</td><td>27</td><td class="pin">15.3</td><td>17</td><td>20.4</td><td>22.9</td><td>27</td><td>1414</td></tr>
+<tr><td>--t-lead24</td><td>17</td><td>24</td><td class="pin">17</td><td>17</td><td>18.1</td><td>20.4</td><td>24</td><td>1803</td></tr>
+<tr><td>--t-body</td><td>15</td><td>22</td><td class="pin">15</td><td>15</td><td>16.6</td><td>18.7</td><td>22</td><td>1735</td></tr>
+<tr><td>--t-small17</td><td>13</td><td>17</td><td class="pin">13</td><td>13</td><td>13</td><td>14.4</td><td>17</td><td>1946</td></tr>
+<tr><td>--t-mono15</td><td>12</td><td>15</td><td class="pin">12</td><td>12</td><td>12</td><td>12.7</td><td>15</td><td>2036</td></tr>
+<tr><td>--t-mono13</td><td>11</td><td>13</td><td class="pin">11</td><td>11</td><td>11</td><td>11</td><td>13</td><td>2153</td></tr>
+<tr><td>--t-mono11</td><td>9</td><td>11</td><td class="pin">9</td><td>9</td><td>9</td><td>9.3</td><td>11</td><td>2082</td></tr>
+<tr><td>96u display, no floor</td><td>&mdash;</td><td>96</td><td>54.3</td><td>60.4</td><td>72.4</td><td>81.5</td><td>96</td><td>always</td></tr>
+<tr><td>64u h2 / .hbar, no floor</td><td>&mdash;</td><td>64</td><td>36.2</td><td>40.2</td><td>48.3</td><td>54.3</td><td>64</td><td>always</td></tr>
+</table>
+<div class="note">At 1920 the body and heading have unpinned while the small description and mono are still at their floors, so the intervals are not the designed ones. <b>1920 is the least representative width to judge hierarchy at.</b></div>
+
+<!-- ============================ WEIGHT / TRACKING ============================ -->
+<h2>03 &middot; WEIGHT AND TRACKING</h2>
+<div class="row">
+  <div class="role">400 regular</div>
+  <div><span style="font-size:22px;font-weight:400;color:#FFF">Prose, mono, everything at 22u and below</span></div>
+  <div class="spec">default</div>
+</div>
+<div class="row">
+  <div class="role">500 medium</div>
+  <div><span style="font-size:22px;font-weight:500;color:#FFF">Display, headings, leads, stat figures</span></div>
+  <div class="spec">24u and above, always</div>
+</div>
+<div class="row">
+  <div class="role">300 / 600</div>
+  <div><span style="font-size:22px;font-weight:300;color:#565B5E">wordmark only</span> &nbsp; <span style="font-size:22px;font-weight:600;color:#565B5E">wordmark only</span></div>
+  <div class="spec">.brand .wm</div>
+</div>
+<div class="row">
+  <div class="role">700</div>
+  <div><span style="font-size:22px;font-weight:700;color:#BE3C36">does not exist in the system</span></div>
+  <div class="spec">an h2 with no declared weight
+    <span class="where">inherits browser bold. Always declare it.</span></div>
+</div>
+<div class="note"><b>Tracking is three values plus one signature.</b> Display and 34u headings <b>&minus;0.02</b>, prose <b>0</b>, mono <b>+0.04</b>, stat figures <b>&minus;0.069</b>. They are three optical corrections, not decoration: large type looks loose so it tightens, reading sizes are optimal as designed, small all-caps mono closes up so it opens. Flattening everything to 0 narrows mono labels 6.3% and widens display 4%. Retired values &minus;0.0343 / &minus;0.00625 / &minus;0.00556 are validator errors, and letter-spacing on <b>html, body</b> is forbidden.</div>
+
+<!-- ============================ SPACING ============================ -->
+<h2>04 &middot; SPACING, DESKTOP 1440</h2>
+<div class="note">Rail is <b>931px</b> starting at <b>x = 255</b>. Section padding <b>124 / 124</b>.</div>
+<div class="lad"><div>section padding</div><div class="bar" style="width:124px"></div><div class="n">124</div></div>
+<div class="lad"><div>eyebrow &rarr; title</div><div class="bar" style="width:40px"></div><div class="n">40</div></div>
+<div class="lad"><div>title &rarr; body</div><div class="bar" style="width:68px"></div><div class="n">68</div></div>
+<div class="lad"><div>prose &rarr; prose</div><div class="bar" style="width:28px"></div><div class="n">28</div></div>
+<div class="lad"><div>lead &rarr; notice</div><div class="bar" style="width:7px"></div><div class="n">6 &ndash; 7</div></div>
+<div class="lad"><div>above a stat block</div><div class="bar" style="width:57px"></div><div class="n">57</div></div>
+<div class="lad"><div>stat label &harr; figure</div><div class="bar" style="width:14px"></div><div class="n">12 &ndash; 16</div></div>
+<div class="lad"><div>above a card grid</div><div class="bar" style="width:92px"></div><div class="n">65 &ndash; 92</div></div>
+<div class="lad"><div>column gap, 2 up</div><div class="bar" style="width:14px"></div><div class="n">14</div></div>
+<div class="lad"><div>column gap, 3 up</div><div class="bar" style="width:28px"></div><div class="n">28</div></div>
+<div class="lad"><div>column gap, 4 up</div><div class="bar" style="width:17px"></div><div class="n">17</div></div>
+<div class="lad"><div>above the trust rule</div><div class="bar" style="width:92px"></div><div class="n">92</div></div>
+<div class="lad"><div>above the footer rule</div><div class="bar" style="width:115px"></div><div class="n">115</div></div>
+<div class="note"><b>Spacing is carried by margins only.</b> A flex <code>gap</code> stacks on top of <code>margin-top</code>, which is the most repeated defect on these pages, a 24 intent rendering as 48, 64 or 80. Set <code>row-gap:0</code> on vertical flex and grid containers and let the margins do the work. <b>Hairlines are symmetric</b>: the air above a rule matches the air below it.</div>
+
+<!-- ============================ COLOUR ============================ -->
+<h2>05 &middot; TEXT COLOUR BY GROUND</h2>
+<div class="sw">
+  <div><div class="chip" style="background:#FFF"></div><div class="lbl">display, headings, values<span class="hex">#FFFFFF &middot; --c-white</span></div></div>
+  <div><div class="chip" style="background:#E3E2E2"></div><div class="lbl">body on dark<span class="hex">#E3E2E2 &middot; --c-200</span></div></div>
+  <div><div class="chip" style="background:#C7C7C7"></div><div class="lbl">dimmed list side<span class="hex">#C7C7C7 &middot; --c-400</span></div></div>
+  <div><div class="chip" style="background:#A7A7A7"></div><div class="lbl">eyebrow, meta on dark<span class="hex">#A7A7A7 &middot; --c-600</span></div></div>
+  <div><div class="chip" style="background:#929292"></div><div class="lbl">micro accent only<span class="hex">#929292 &middot; --c-700</span></div></div>
+  <div><div class="chip" style="background:#565B5E"></div><div class="lbl">eyebrow, meta on light<span class="hex">#565B5E &middot; --c-800</span></div></div>
+  <div><div class="chip" style="background:#1C1C1C"></div><div class="lbl">ink on light and cream<span class="hex">#1C1C1C &middot; --c-1000</span></div></div>
+  <div><div class="chip" style="background:#BE3C36"></div><div class="lbl">negative figure<span class="hex">#BE3C36 &middot; --c-urgent-muted</span></div></div>
+</div>
+<div class="note"><b>--c-700 is a micro accent only.</b> Not for body or meta text. The one allowance is dimming the not-applicable side of a comparison list.</div>
+
+<!-- ============================ EXCEPTIONS ============================ -->
+<h2>06 &middot; OUTSIDE THE SYSTEM, ON PURPOSE</h2>
+<div class="note"><b>Replica components</b> are miniatures of app screens and run their own fixed px scale: the memo specimen (.dr3-*), the calibration card (.calcard), the fee panel (.fpanel). Measured values in use: 8.5 / 9 / 9.5 / 10 / 10.25 / 12 / 12.5 / 13 / 13.3 / 19 / 28px, tracking +0.2 to &minus;0.025, leading 0.9 to 1.83. <b>Do not pull these into the site ladder, and do not adjust them in Figma.</b></div>
+
+<div class="flag"><b>line-height: normal in eight places.</b> .hero .heyeb &middot; .hero .htrust &middot; .cta-fill &middot; .nav .ncta &middot; .sys-note &middot; .mmeta &middot; .close9 .ti b &middot; .foot9 span. Browser default, so it shifts with the font. Mobile was corrected on 2026-07-29; desktop has not been.</div>
+
+<div class="flag"><b>.lnote and .dlead are the same tier with different leading.</b> Both 17 / 500, but .lnote is 1.15 and .dlead is 1.3.</div>
+
+<div class="flag"><b>NO.05 uses a portfolio colour.</b> The two statement lines are #BEEDFD, which is --pf-balanced-income, a Managed portfolio identity token. Doctrine keeps --pf-* off the self-directed surface. Confirm whether this is a deliberate signal colour.</div>
+
+</div>
+</body>
+</html>

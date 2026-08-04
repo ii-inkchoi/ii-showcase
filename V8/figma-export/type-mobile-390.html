@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>II Typography - Mobile 390</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!--
+  Measured off V8/index-H.html at 390x844 on 2026-07-29, transitions and reveals disabled.
+  Mobile is a FIXED px system, unlike desktop: nothing here scales with the viewport, so these
+  are the shipping values. Literal px only, no media queries. Figma-importable.
+-->
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:390px;background:#000;color:#C7C7C7;font-family:'Inter',sans-serif;
+     font-feature-settings:'tnum' 1,'lnum' 1;-webkit-font-smoothing:antialiased}
+.wrap{width:350px;margin:0 auto;padding:72px 0 120px}
+
+h1{font-size:27px;font-weight:500;line-height:1.1;letter-spacing:-0.02em;color:#FFF}
+.sub{font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.5;letter-spacing:0.04em;color:#565B5E;margin-top:24px}
+h2{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:400;line-height:1.5;letter-spacing:0.04em;
+   color:#565B5E;border-bottom:1px solid #232627;padding-bottom:12px;margin:64px 0 0}
+.note{font-size:13px;line-height:1.4;color:#929292;margin-top:24px}
+.note b{font-weight:500;color:#C7C7C7}
+
+/* stacked chart row: role -> specimen -> spec */
+.row{padding:24px 0;border-bottom:1px solid #1C1C1C}
+.role{font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.5;letter-spacing:0.04em;color:#565B5E}
+.sp{margin-top:8px}
+.spec{font-family:'IBM Plex Mono',monospace;font-size:9px;line-height:1.5;letter-spacing:0.04em;color:#929292;margin-top:16px}
+.where{display:block;color:#565B5E;margin-top:4px}
+.pin{color:#FFF}
+.off{color:#565B5E}
+
+/* ---- specimens, real mobile values. Mono is three sizes only: 13 / 11 / 9 ---- */
+.s-eyebrow {font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:400;line-height:1.5;letter-spacing:0.04em;color:#A7A7A7}
+.s-box     {font-size:27px;font-weight:500;line-height:1.5;letter-spacing:-0.02em;color:#FFF}
+.s-mast    {font-size:27px;font-weight:500;line-height:1.1;letter-spacing:-0.02em;color:#FFF}
+.s-stream  {font-size:22px;font-weight:500;line-height:1.15;letter-spacing:-0.02em;color:#FFF}
+.s-card    {font-size:22px;font-weight:500;line-height:1.15;color:#FFF}
+.s-item    {font-size:17px;font-weight:500;line-height:1.15;color:#FFF}
+.s-subhead {font-size:15px;font-weight:500;line-height:1.4;color:#FFF}
+.s-body    {font-size:15px;font-weight:400;line-height:1.4;color:#E3E2E2}
+.s-small   {font-size:13px;font-weight:400;line-height:1.4;color:#E3E2E2}
+.s-stat17  {font-size:17px;font-weight:500;line-height:1.15;letter-spacing:-0.069em;color:#FFF}
+.s-stat22  {font-size:22px;font-weight:500;line-height:1.4;letter-spacing:-0.069em;color:#FFF}
+.s-cta     {font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:400;line-height:1.5;letter-spacing:0.04em;color:#FFF}
+.s-notice  {font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:400;line-height:1.5;letter-spacing:0.04em;color:#A7A7A7}
+.s-meta    {font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:400;line-height:1.5;letter-spacing:0.04em;color:#A7A7A7}
+.s-trust   {font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:400;line-height:1.5;letter-spacing:0.04em;color:#C7C7C7}
+
+/* spacing ladder */
+.lad{display:grid;grid-template-columns:1fr 44px;gap:12px;align-items:center;padding:14px 0;
+     border-bottom:1px solid #1C1C1C;font-family:'IBM Plex Mono',monospace;font-size:11px;
+     line-height:1.5;letter-spacing:0.04em;color:#929292}
+.lad .n{text-align:right;color:#FFF}
+.bar{height:6px;background:#565B5E;margin-top:8px}
+
+/* colour swatches */
+.sw>div{margin-top:16px}
+.chip{height:44px;border:1px solid #232627}
+.lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;line-height:1.5;letter-spacing:0.04em;color:#929292;padding-top:8px}
+.hex{display:block;color:#565B5E}
+
+.flag{border-left:2px solid #BE3C36;padding:14px 0 14px 16px;margin-top:24px;
+      font-size:13px;line-height:1.4;color:#C7C7C7}
+.flag b{font-weight:500;color:#FFF}
+
+.fold{border:1px solid #232627;padding:20px;margin-top:24px}
+.fold .h{display:flex;justify-content:space-between;align-items:flex-start}
+.fold .sign{font-family:'IBM Plex Mono',monospace;font-size:15px;line-height:1.15;color:#A7A7A7}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Typography, mobile</h1>
+<div class="sub">II HOME &middot; MEASURED AT 390 &times; 844 &middot; V8 &middot; 2026-07-29</div>
+<div class="note">Mobile is a <b>fixed px system</b>. Nothing scales with the viewport, so these are the shipping values. Every specimen is set in what the page actually renders, taken from computed style with transitions and reveals disabled.</div>
+
+<h2>01 &middot; ROLES AT 390</h2>
+
+<div class="row">
+  <div class="role">eyebrow</div>
+  <div class="sp"><div class="s-eyebrow">NO. 02 &middot; THE BENCHMARK</div></div>
+  <div class="spec">mono 13 / 400 / 1.5 / +.04<span class="where">section label &middot; #A7A7A7 dark, #565B5E light</span></div>
+</div>
+
+<div class="row">
+  <div class="role">hero, clone box</div>
+  <div class="sp"><div class="s-box">The market remembers every decision.</div></div>
+  <div class="spec">27 / 500 / <span class="pin">1.5</span> / &minus;.02<span class="where">.hbar &middot; 1.5 is what makes the boxes meet</span></div>
+</div>
+
+<div class="row">
+  <div class="role">section masthead</div>
+  <div class="sp"><div class="s-mast">The return is uncertain. The fee is not.</div></div>
+  <div class="spec">27 / 500 / <span class="pin">1.1</span> / &minus;.02<span class="where">every section h2 &middot; subpage h1 &middot; burger items</span></div>
+</div>
+
+<div class="row">
+  <div class="role">stream heading</div>
+  <div class="sp"><div class="s-stream">Press Releases</div></div>
+  <div class="spec">22 / 500 / 1.15 / &minus;.02<span class="where">.streamhd &middot; opens a stream</span></div>
+</div>
+
+<div class="row">
+  <div class="role">swipe card title</div>
+  <div class="sp"><div class="s-card">Benchmark</div></div>
+  <div class="spec">22 / 500 / 1.15 / 0<span class="where">a card is its own unit, so 22 not 17</span></div>
+</div>
+
+<div class="row">
+  <div class="role">item title</div>
+  <div class="sp"><div class="s-item">Self-Directed</div></div>
+  <div class="spec">17 / 500 / 1.15 / 0<span class="where">list-item titles &middot; stat figures</span></div>
+</div>
+
+<div class="row">
+  <div class="role">stat figure</div>
+  <div class="sp"><div class="s-stat17">+11%&nbsp;&nbsp;&nbsp;<span style="color:#BE3C36">&minus;20</span></div></div>
+  <div class="spec">17 / 500 / 1.15 / <span class="pin">&minus;.069</span><span class="where">NO.04 &middot; 22 was 1.47&times; the label, too much</span></div>
+</div>
+
+<div class="row">
+  <div class="role">stat figure, NO.02 only</div>
+  <div class="sp"><div class="s-stat22">9 in 10</div></div>
+  <div class="spec"><span class="off">22 / 500 / 1.4 / &minus;.069</span><span class="where">does not match the row above. See section 05.</span></div>
+</div>
+
+<div class="row">
+  <div class="role">sub-heading, price, payoff</div>
+  <div class="sp"><div class="s-subhead">$20/month &middot; Managed and Self-Directed included</div></div>
+  <div class="spec">15 / 500 / 1.4 / 0<span class="where">.pricehd9 &middot; .dlead &middot; .ti b &middot; changelog items</span></div>
+</div>
+
+<div class="row">
+  <div class="role">body</div>
+  <div class="sp"><div class="s-body">Each decision is recorded as a probability against a horizon, then scored against what occurred.</div></div>
+  <div class="spec">15 / 400 / <span class="pin">1.4</span> / 0<span class="where">all prose, no exceptions</span></div>
+</div>
+
+<div class="row">
+  <div class="role">small description</div>
+  <div class="sp"><div class="s-small">Classification, size, probability, before the order.</div></div>
+  <div class="spec">13 / 400 / 1.4 / 0<span class="where">step descriptions &middot; changelog notes &middot; trust lead</span></div>
+</div>
+
+<div class="row">
+  <div class="role">CTA &middot; fold control</div>
+  <div class="sp"><div class="s-cta">OPEN AN ACCOUNT &nbsp; VIEW MORE</div></div>
+  <div class="spec">mono 13 / 400 / 1.5 / +.04<span class="where">typed CAPS in the markup, never text-transform</span></div>
+</div>
+
+<div class="row">
+  <div class="role">notice &middot; date &middot; label</div>
+  <div class="sp"><div class="s-notice">Managed assets carry an additional 0.10% fee.</div></div>
+  <div class="spec">mono 11 / 400 / 1.5 / +.04<span class="where">fee notice &middot; dates &middot; regulatory labels</span></div>
+</div>
+
+<div class="row">
+  <div class="role">mono meta</div>
+  <div class="sp"><div class="s-meta">Illustrative. A calibration record, summarised.</div></div>
+  <div class="spec">mono 9 / 400 / 1.5 / +.04<span class="where">figure, mockup and data sub-text ONLY. Never page prose, legal, or the hero trust line.</span></div>
+</div>
+
+<div class="row">
+  <div class="role">hero trust line</div>
+  <div class="sp"><div class="s-trust">A licensed Canadian brokerage &middot; regulated by CIRO &middot; CIPF member</div></div>
+  <div class="spec"><span class="off">mono 8</span> / 400 / 1.5 / +.04<span class="where">below the 9px token floor. min(9px, 2.15vw) holds it to one line.</span></div>
+</div>
+
+<h2>02 &middot; MONO IS THREE SIZES</h2>
+<div class="sp"><div class="s-cta">13 &middot; SECTION LABEL AND CTA</div></div>
+<div class="sp"><div class="s-notice">11 &middot; notice, date, regulatory label</div></div>
+<div class="sp"><div class="s-meta">9 &middot; figure, mockup and data sub-text</div></div>
+<div class="note"><b>12 is retired</b> as of 2026-07-28. It had no role between 11 and 13. If you see 12 anywhere on a mobile view it is drift.</div>
+<div class="note"><b>Separate a section heading from an item title.</b> Titles of items inside a section are all 17; anything opening a section or stream is 22 or above. When that collapses you get a news label rendering larger than a product name. Hero display 32 exists once per page, and section box statements are 27.</div>
+
+<h2>03 &middot; WEIGHT AND TRACKING</h2>
+<div class="row">
+  <div class="role">two weights only</div>
+  <div class="sp"><span style="font-size:17px;font-weight:400;color:#FFF">400 regular</span> &nbsp;&middot;&nbsp; <span style="font-size:17px;font-weight:500;color:#FFF">500 medium</span></div>
+  <div class="spec">24u and above is 500. 22u and below is 400 by default.<span class="where">300 / 600 are wordmark only. 700 does not exist: an h2 with no declared weight inherits browser bold.</span></div>
+</div>
+<div class="row">
+  <div class="role">deliberate 500 below 22u</div>
+  <div class="sp"><div class="s-subhead">the price line, payoff prose, sub-headings, stat figures</div></div>
+  <div class="spec">kept on purpose<span class="where">stat figures stay 500 even at 17</span></div>
+</div>
+<div class="row">
+  <div class="role">tracking, three values</div>
+  <div class="sp">
+    <div style="font-size:22px;font-weight:500;letter-spacing:-0.02em;color:#FFF">&minus;0.02 display and headings</div>
+    <div style="font-size:15px;letter-spacing:0;color:#E3E2E2;margin-top:8px">0 prose</div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.04em;color:#A7A7A7;margin-top:8px">+0.04 MONO</div>
+    <div style="font-size:17px;font-weight:500;letter-spacing:-0.069em;color:#FFF;margin-top:8px">&minus;0.069 signature, stat figures</div>
+  </div>
+  <div class="spec">three optical corrections, not decoration<span class="where">flattening to 0 narrows mono 6.3% and widens display 4%</span></div>
+</div>
+
+<h2>04 &middot; SPACING LADDER</h2>
+<div class="note">Rail <b>350px</b>, gutter <b>20</b> each side. Read it as two steps: <b>24 means inside the same flow, 40 means a different kind of block begins.</b></div>
+<div class="lad"><div>section padding<div class="bar" style="width:72px"></div></div><div class="n">72</div></div>
+<div class="lad"><div>screen gutter<div class="bar" style="width:20px"></div></div><div class="n">20</div></div>
+<div class="lad"><div>eyebrow &rarr; title<div class="bar" style="width:24px"></div></div><div class="n">24</div></div>
+<div class="lad"><div>title &rarr; body<div class="bar" style="width:24px"></div></div><div class="n">24</div></div>
+<div class="lad"><div>prose &rarr; prose<div class="bar" style="width:24px"></div></div><div class="n">24</div></div>
+<div class="lad"><div>group internal, label &harr; line<div class="bar" style="width:8px"></div></div><div class="n">8</div></div>
+<div class="lad"><div>group internal, wider<div class="bar" style="width:16px"></div></div><div class="n">16</div></div>
+<div class="lad"><div>block boundary, prose &rarr; card<div class="bar" style="width:40px"></div></div><div class="n">40</div></div>
+<div class="lad"><div>parallel items, strip above and below<div class="bar" style="width:48px"></div></div><div class="n">48</div></div>
+<div class="lad"><div>major division<div class="bar" style="width:64px"></div></div><div class="n">64</div></div>
+<div class="note"><b>Spacing is carried by margins only.</b> A flex <code>gap</code> stacks on top of <code>margin-top</code>, which is the most repeated defect on these pages: a 24 intent rendering as 48, 64 or 80. Set <code>row-gap:0</code> on vertical flex and grid containers. <b>Hairlines are symmetric</b>, the air above a rule matches the air below.</div>
+
+<h2>05 &middot; FOLD PATTERNS</h2>
+<div class="note">Three shapes, and which one to use is decided by what the handle is.</div>
+<div class="fold">
+  <div class="s-body">A trade is not the important event. The decision is.</div>
+  <div class="s-cta" style="margin-top:16px;color:#A7A7A7">VIEW MORE</div>
+  <div class="spec" style="margin-top:16px">prose fold<span class="where">paragraph one stays, the rest reveals in DOM order. Label flips to VIEW LESS. mono 13, margin-top 16.</span></div>
+</div>
+<div class="fold">
+  <div class="h"><div class="s-item">Managed</div><div class="sign">+</div></div>
+  <div class="s-body" style="margin-top:8px">Disciplined, low-cost portfolios.</div>
+  <div class="spec" style="margin-top:16px">title-as-handle<span class="where">used where a title can carry the tap: account cards, .sys .mode, .suit5, the NO.03 steps. + flips to &minus;. A one-line summary stays visible so a bare label never sits alone.</span></div>
+</div>
+<div class="fold">
+  <div style="display:flex;gap:24px;overflow:hidden">
+    <div style="flex:0 0 245px">
+      <div style="height:1px;background:rgba(255,255,255,0.3)"></div>
+      <div style="width:5px;height:5px;border-radius:50%;background:#A7A7A7;margin-top:-3px"></div>
+      <div class="s-eyebrow" style="margin-top:19px;color:#565B5E">01</div>
+      <div class="s-card" style="margin-top:8px">Record</div>
+      <div class="s-small" style="margin-top:16px">Classification, size, probability, before the order.</div>
+    </div>
+    <div style="flex:0 0 245px;opacity:0.35">
+      <div style="height:1px;background:rgba(255,255,255,0.3)"></div>
+      <div style="width:5px;height:5px;border-radius:50%;background:#A7A7A7;margin-top:-3px"></div>
+      <div class="s-eyebrow" style="margin-top:19px;color:#565B5E">02</div>
+      <div class="s-card" style="margin-top:8px">Benchmark</div>
+    </div>
+  </div>
+  <div class="spec" style="margin-top:16px">horizontal snap strip<span class="where">cards at 70% width, 24 column gap, 3px strip padding so the dot straddling the hairline stays inside the clip. Only for items of even length: uneven descriptions leave a ragged cut-off card, and a fold is better.</span></div>
+</div>
+
+<h2>06 &middot; TEXT COLOUR BY GROUND</h2>
+<div class="sw">
+  <div><div class="chip" style="background:#FFF"></div><div class="lbl">masthead, values<span class="hex">#FFFFFF &middot; --c-white</span></div></div>
+  <div><div class="chip" style="background:#E3E2E2"></div><div class="lbl">body on dark<span class="hex">#E3E2E2 &middot; --c-200</span></div></div>
+  <div><div class="chip" style="background:#C7C7C7"></div><div class="lbl">hero trust line<span class="hex">#C7C7C7 &middot; --c-400</span></div></div>
+  <div><div class="chip" style="background:#A7A7A7"></div><div class="lbl">eyebrow, meta on dark<span class="hex">#A7A7A7 &middot; --c-600</span></div></div>
+  <div><div class="chip" style="background:#565B5E"></div><div class="lbl">eyebrow, meta on light<span class="hex">#565B5E &middot; --c-800</span></div></div>
+  <div><div class="chip" style="background:#1C1C1C"></div><div class="lbl">ink on light and cream<span class="hex">#1C1C1C &middot; --c-1000</span></div></div>
+  <div><div class="chip" style="background:#BE3C36"></div><div class="lbl">negative figure<span class="hex">#BE3C36 &middot; --c-urgent-muted</span></div></div>
+</div>
+<div class="note">Masthead second line dims to <b>#565B5E</b> on both grounds. <b>--c-700 is a micro accent only</b>, not for body or meta.</div>
+
+<h2>07 &middot; KNOWN MISMATCHES</h2>
+<div class="flag"><b>NO.02 stat figure does not match NO.04.</b> NO.02 renders 22 / 1.4, NO.04 renders 17 / 1.15. The canon is 17 / 1.15; the .g2stat figure was missed when the tier was corrected.</div>
+<div class="flag"><b>NO.05 statement uses a portfolio colour.</b> #BEEDFD is --pf-balanced-income, a Managed portfolio identity token, on a self-directed page. Doctrine keeps --pf-* off this surface.</div>
+<div class="flag"><b>NO.02 VIEW MORE opens nothing.</b> The paragraph it used to reveal is hidden by the mobile copy cut, so only the control is left.</div>
+<div class="flag"><b>The hero trust line is 8px</b>, under the 9px floor, and the smallest thing in the hero at 0.31&times; the headline. A customer interview on 2026-07-29 found someone who reached the app without knowing II is a licensed brokerage, which is exactly what this line says. Held as-is for now.</div>
+
+<h2>08 &middot; EXEMPT</h2>
+<div class="note"><b>Replica components</b> are miniatures of app screens and run their own fixed px scale: the memo specimen (.dr3-*), the calibration card (.calcard), the fee panel (.fpanel). Values in use: 8.5 / 9 / 9.5 / 10 / 10.25 / 12 / 12.5 / 13 / 13.3 / 19 / 28px. <b>Do not pull them into this ladder and do not adjust them in Figma.</b></div>
+
+</div>
+</body>
+</html>
