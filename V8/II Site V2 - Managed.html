@@ -442,6 +442,7 @@ body.menu-open{overflow:hidden}
   /* the tables scroll horizontally, but 20u/16u cell padding collapses to ~3px at 390 and the columns collide. Hold the 2545 render's real px. */
   .tbl{min-width:0;width:max-content}
   .tbl thead th{padding:0 20px 16px 0}
+  .tbl.wide th:first-child,.tbl.wide td:first-child{position:sticky;left:0;background:var(--c-cream);padding-right:16px} /* 8 columns, 314px hidden right - without a pinned name column the 3Y/5Y figures lose their row owner mid-scroll (mobile sweep 2026-08-02) */
   .tbl tbody td{padding:16px 20px 16px 0}
   /* row-gap:0 - the 40 is carried by the child's margin, so the two never stack */
   .defgrid,.pfgrid{grid-template-columns:1fr;row-gap:0}
@@ -810,7 +811,7 @@ body.menu-open{overflow:hidden}
     <h2 class="bigh2 rv"><span class="a">Net of fees. Beside the benchmark.</span></h2>
     <div class="content">
       <p class="body rv">The same standard we ask of you. Portfolio performance is published net of fees, beside the alternative that was always available, including the periods it&nbsp;trailed.</p>
-      <p class="metaline rv">As of June 30, 2026 &middot; inception dates per portfolio</p><!-- casing only (Inkyung 2026-08-01): typed CAPS is for the 13 label tier, not for a meta sentence. Desktop changes too. -->
+      <p class="metaline rv">As of July 31, 2026 &middot; inception dates per portfolio</p><!-- casing only (Inkyung 2026-08-01): typed CAPS is for the 13 label tier, not for a meta sentence. Desktop changes too. -->
 
       <div class="tblwrap rv">
         <table class="tbl wide">
@@ -818,12 +819,12 @@ body.menu-open{overflow:hidden}
             <tr><th>PORTFOLIO</th><th>1M</th><th>3M</th><th>YTD</th><th>1Y</th><th>3Y</th><th>5Y</th><th>SINCE INCEPTION</th></tr>
           </thead>
           <tbody>
-            <tr><td>Equity Growth</td><td>1.56%</td><td>17.12%</td><td>13.44%</td><td>26.52%</td><td>22.58%</td><td>15.02%</td><td>[TBD]</td></tr>
-            <tr><td>Balanced Growth</td><td>1.40%</td><td>12.41%</td><td>9.88%</td><td>19.30%</td><td>16.94%</td><td>10.54%</td><td>[TBD]</td></tr>
-            <tr><td>Balanced</td><td>1.30%</td><td>9.26%</td><td>7.51%</td><td>14.49%</td><td>13.18%</td><td>7.55%</td><td>[TBD]</td></tr>
-            <tr><td>Balanced Income</td><td>0.77%</td><td>1.14%</td><td>1.43%</td><td>2.42%</td><td>3.72%</td><td>0.99%</td><td>[TBD]</td></tr>
-            <tr><td>Cautious Income</td><td>0.17%</td><td>0.53%</td><td>1.07%</td><td>2.30%</td><td>3.56%</td><td>3.11%</td><td>[TBD]</td></tr>
-            <tr class="bench"><td>S&amp;P 500 (CAD)</td><td>2.01%</td><td>17.12%</td><td>14.07%</td><td>27.19%</td><td>23.45%</td><td>16.53%</td><td>[TBD]</td></tr>
+            <tr><td>Equity Growth</td><td>&minus;0.96%</td><td>7.33%</td><td>12.35%</td><td>20.34%</td><td>21.03%</td><td>14.45%</td><td>[TBD]</td></tr>
+            <tr><td>Balanced Growth</td><td>&minus;1.10%</td><td>5.11%</td><td>8.68%</td><td>14.73%</td><td>15.78%</td><td>9.99%</td><td>[TBD]</td></tr>
+            <tr><td>Balanced</td><td>&minus;1.20%</td><td>3.62%</td><td>6.24%</td><td>11.00%</td><td>12.28%</td><td>7.01%</td><td>[TBD]</td></tr>
+            <tr><td>Balanced Income</td><td>&minus;0.96%</td><td>0.10%</td><td>0.40%</td><td>1.84%</td><td>3.51%</td><td>0.64%</td><td>[TBD]</td></tr>
+            <tr><td>Cautious Income</td><td>0.17%</td><td>0.53%</td><td>1.06%</td><td>2.26%</td><td>3.46%</td><td>3.14%</td><td>[TBD]</td></tr>
+            <tr class="bench"><td>S&amp;P 500 (CAD)</td><td>&minus;1.18%</td><td>7.39%</td><td>12.72%</td><td>21.32%</td><td>21.89%</td><td>15.52%</td><td>[TBD]</td></tr>
           </tbody>
         </table>
       </div>
@@ -1189,11 +1190,11 @@ body.menu-open{overflow:hidden}
     <p class="footer-legal">IntelligentInvesting Securities Inc. (IISI) and IntelligentInvesting Wealth Management Inc.(IIWMI) are subsidiaries of Orion Digital Corp. Orion Digital Corp. is not an investment adviser or dealer and does not provide investment advice or deal in securities.</p>
     <p class="footer-legal">Managed investing accounts are opened with IIWMI, a registered portfolio manager whose principal regulator is the Autorité des Marchés Financiers (AMF). Registered accounts managed by IIWMI are held by CI Investment Services Inc., an independent custodian, a member of CIRO and CIPF. Accounts held by CI Investment Services Inc. are eligible for CIPF protection, in accordance with CIPF coverage policies.</p>
     <p class="footer-legal">Self-directed investing accounts are opened with IISI, an investment dealer offering order execution only account services, a member of CIRO and CIPF. Accounts with IISI are eligible for CIPF protection, in accordance with CIPF coverage policies.</p>
-    <p class="footer-legal">A brochure describing the scope and nature of coverage, as well as the limitations and exclusions of coverage, is available upon request or at <a href="https://www.cipf.ca">www.cipf.ca</a>.</p>
+    <p class="footer-legal">A brochure describing the scope and nature of coverage, as well as the limitations and exclusions of coverage, is available upon request or&nbsp;at&nbsp;<a href="https://www.cipf.ca">www.cipf.ca</a>.</p>
     <p class="footer-legal">IISI and IIWMI are registered in each province and territory in which it conducts business and is subject to regulation by the applicable provincial or territorial securities regulatory authorities.</p>
-    <p class="footer-legal">The information contained on this webpage is provided for informational purposes only and does not constitute a promise of specific results or future performance. Certain statements may contain opinions, assumptions, or forward-looking information that are subject to change and may not reflect actual outcomes. No representation or warranty, express or implied, is made as to the accuracy, completeness, or timeliness of the information presented. Statistics, examples, and projections, where provided, are for illustrative purposes only and should not be relied upon as guarantees of future results. Nothing herein should be considered investment advice or an offer or solicitation to buy or sell securities. The information provided may not be suitable or applicable to all investors. For additional details regarding the content of this page, please refer to our <a href="https://www.intelligentinvesting.ai/legal-documents/disclosures">full disclosure</a>.</p>
+    <p class="footer-legal">The information contained on this webpage is provided for informational purposes only and does not constitute a promise of specific results or future performance. Certain statements may contain opinions, assumptions, or forward-looking information that are subject to change and may not reflect actual outcomes. No representation or warranty, express or implied, is made as to the accuracy, completeness, or timeliness of the information presented. Statistics, examples, and projections, where provided, are for illustrative purposes only and should not be relied upon as guarantees of future results. Nothing herein should be considered investment advice or an offer or solicitation to buy or sell securities. The information provided may not be suitable or applicable to all investors. For additional details regarding the content of this page, please refer to&nbsp;our&nbsp;<a href="https://www.intelligentinvesting.ai/legal-documents/disclosures">full&nbsp;disclosure</a>.</p>
     <p class="footer-legal">Investing involves risk, and it is possible to lose some or all of your investment. Always research before investing.</p>
-    <p class="footer-legal">Fiscal.ai, an AI investment research tool powered by Fiscal.ai, is a third-party product provided &ldquo;as is&rdquo; without warranties on accuracy, completeness, quality, or timeliness. Verify information independently. Fiscal.ai outputs are not investment advice or recommendations and should not be used for investment decisions. By using <a href="https://fiscal.ai">Fiscal.ai</a>, you agree to our <a href="https://www.intelligentinvesting.ai/legal-documents/privacy-policy-security-practices">Privacy Policy</a> and <a href="https://www.intelligentinvesting.ai/legal-documents/intelligent-investing-terms-of-use">Terms of Use</a>.</p>
+    <p class="footer-legal">Fiscal.ai, an AI investment research tool powered by Fiscal.ai, is a third-party product provided &ldquo;as is&rdquo; without warranties on accuracy, completeness, quality, or timeliness. Verify information independently. Fiscal.ai outputs are not investment advice or recommendations and should not be used for investment decisions. By using <a href="https://fiscal.ai">Fiscal.ai</a>, you agree to our <a href="https://www.intelligentinvesting.ai/legal-documents/privacy-policy-security-practices">Privacy Policy</a> and&nbsp;<a href="https://www.intelligentinvesting.ai/legal-documents/intelligent-investing-terms-of-use">Terms&nbsp;of&nbsp;Use</a>.</p>
   </div>
 </footer>
 </body>
