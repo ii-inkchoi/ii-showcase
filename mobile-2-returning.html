@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#000000" />
+<title>II Login, Returning</title>
+<!-- kept: the phone loads this over wifi, and Inter vs Roboto changes how the type reads -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --c-black:#000000;--c-elev:#0A0A0A;--c-1000:#1C1C1C;--c-900:#232627;
+    --c-800:#565B5E;--c-700:#929292;--c-600:#A7A7A7;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFFFFF;
+    --c-urgent:#FF3533;
+    /* estimated from the shared screenshot; replace with a sampled value
+       once _evidence/F-auth-error-banner.png exists */
+    --c-alert:#DE5C56;
+    --font:'Inter',system-ui,-apple-system,sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html,body{margin:0;background:var(--c-black)}
+  body{font-family:var(--font)}
+
+  .page{
+    min-height:100vh;
+    min-height:100dvh;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+    padding-left:20px;
+    padding-right:20px;
+    padding-top:calc(32px + env(safe-area-inset-top));
+    padding-bottom:calc(24px + env(safe-area-inset-bottom));
+    overflow-y:auto;
+    background:var(--c-black);
+  }
+
+  /* wordmark - v4: 220: present but subordinate to the form (200 read as timid, 260 as loud) */
+  .wordmark{margin-top:0;color:var(--c-200);width:220px;cursor:pointer}
+  .wordmark svg{display:block;width:220px;height:auto}
+
+  /* fields */
+  .field{margin-top:48px}
+  .field-password{margin-top:24px}
+  .field-label{font-size:13px;line-height:1;color:var(--c-700);margin-bottom:8px}
+  .field.is-focus .field-label{color:var(--c-400)}
+  .field-row{display:flex;align-items:flex-end;justify-content:space-between}
+  .field-input{background:transparent;border:0;outline:0;width:100%;padding:0;color:var(--c-white);font-size:17px;line-height:1;font-family:inherit}
+  .field-input::placeholder{color:var(--c-800)}
+  .field-show{font-size:13px;line-height:1;color:var(--c-400);cursor:pointer;flex:0 0 auto;margin-left:8px}
+  .field-underline{margin-top:8px;height:1px;width:100%;background:var(--c-800)}
+  .field.is-focus .field-underline{background:var(--c-white)}
+  .field.is-error .field-underline{background:var(--c-urgent)}
+
+  /* field error slot (validation, sits under the offending field) */
+  .error-slot{margin-top:12px;display:flex;align-items:center;gap:8px}
+  .error-slot[hidden]{display:none}
+  .error-dot{width:4px;height:4px;border-radius:50%;background:var(--c-urgent);flex:0 0 4px}
+  .error-msg{font-size:13px;line-height:1;color:var(--c-700)}
+
+  /* auth-failure banner: faithful to the shipped app (filled red, rounded, white text).
+     Deliberate exceptions to the design system, kept on Inkyung's instruction 2026-08-13. */
+  .auth-banner{margin:0 0 32px 0;padding:16px 20px;background:var(--c-alert);border-radius:8px}
+  .auth-banner[hidden]{display:none}
+  .auth-banner-text{font-size:13px;line-height:1.5;color:var(--c-white)}
+
+  /* forgot password - v4: recovery affordance tied to the field above it, not a navigation link.
+     No arrow, quieter color, left-aligned. */
+  .forgot{margin-top:20px;display:flex;justify-content:flex-start}
+  .forgot.after-error{margin-top:16px}
+  .forgot a{display:flex;align-items:center;gap:8px;font-size:13px;line-height:1;color:var(--c-400);text-decoration:none}
+
+  /* primary CTA - v4: a real button. Bordered box, centered label, no fill, no radius, no arrow.
+     Inactive state is expressed with two border/label tokens, never opacity. */
+  .cta-login{margin-top:32px;height:56px;box-sizing:border-box;border:1px solid var(--c-800);display:flex;align-items:center;justify-content:center;cursor:pointer}
+  .cta-login span{font-size:15px;font-weight:500;line-height:1;color:var(--c-white)}
+  .cta-login.is-inactive{border-color:var(--c-900);pointer-events:none}
+  .cta-login.is-inactive span{color:var(--c-800)}
+
+  /* biometric - v4: paired with the CTA above it, no arrow, centered on the same axis */
+
+  /* footer - v4: Create Account + Contact Support collapsed into one row below a hairline.
+     These are the only two links that keep the arrow, since they are real navigation. */
+  .footer-hairline{margin-top:32px;height:1px;width:100%;background:var(--c-900)}
+  .footer-row{margin-top:16px;display:flex;justify-content:space-between}
+  .footer-row a{display:flex;align-items:center;gap:8px;font-size:13px;line-height:1;color:var(--c-400);text-decoration:none}
+
+  /* diagnostic overlay (device measurement, hidden by default) */
+  .diag-panel{position:fixed;top:8px;right:8px;z-index:10;background:var(--c-1000);color:var(--c-700);font-size:11px;line-height:1.4;padding:8px}
+  .diag-panel[hidden]{display:none}
+
+  /* OS biometric prompt simulation - a system surface we don't draw, only the copy we control */
+  .os-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--c-black);z-index:20;display:flex;align-items:center;justify-content:center}
+  .os-overlay[hidden]{display:none}
+  .os-block{max-width:350px;border:1px dashed var(--c-800);padding:24px}
+  .os-scenario{font-size:11px;line-height:1.5;color:var(--c-700);margin-bottom:16px}
+  .os-hint{font-size:11px;line-height:1.5;color:var(--c-700);margin-top:16px}
+  .os-title{font-size:13px;line-height:1;color:var(--c-white)}
+  .os-desc{font-size:13px;line-height:1.3;color:var(--c-700);margin-top:12px}
+  .os-sub{font-size:13px;line-height:1;color:var(--c-400);margin-top:16px}
+  .os-rows{margin-top:12px}
+  .os-row{display:flex;justify-content:space-between;margin-top:8px}
+  .os-row:first-child{margin-top:0}
+  .os-label{font-size:13px;line-height:1;color:var(--c-700)}
+  .os-value{font-size:13px;line-height:1;color:var(--c-white)}
+  .os-actions{margin-top:24px;display:flex;justify-content:space-between}
+  .os-action{font-size:13px;line-height:1;color:var(--c-400);cursor:pointer}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="auth-banner" id="authBanner" hidden>
+    <div class="auth-banner-text">Email or password is incorrect.</div>
+  </div>
+
+  <div class="wordmark" id="wordmark">
+    <svg viewBox="0 0 689 43" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M7.10058 0.565809V41.7549H-6.79493e-06V0.565809H7.10058ZM51.4977 0.565809V41.7549H44.3971L25.9242 12.2492V41.7549H18.8236V0.565809H25.9242L44.4536 30.128V0.565809H51.4977ZM78.9495 0.565809V41.7549H71.9055V0.565809H78.9495ZM91.8777 0.565809V6.22365H59.0905V0.565809H91.8777ZM127.166 36.1253V41.7549H105.298V36.1253H127.166ZM107.307 0.565809V41.7549H100.206V0.565809H107.307ZM124.308 17.7656V23.3103H105.298V17.7656H124.308ZM127.024 0.565809V6.22365H105.298V0.565809H127.024ZM161.661 36.1253V41.7549H140.982V36.1253H161.661ZM142.962 0.565809V41.7549H135.862V0.565809H142.962ZM195.846 36.1253V41.7549H175.167V36.1253H195.846ZM177.147 0.565809V41.7549H170.046V0.565809H177.147ZM211.813 0.565809V41.7549H204.712V0.565809H211.813ZM255.163 20.7077V36.4365C254.578 37.2098 253.664 38.0584 252.419 38.9825C251.193 39.8878 249.562 40.6705 247.525 41.3305C245.488 41.9906 242.951 42.3207 239.915 42.3207C236.483 42.3207 233.437 41.5474 230.778 40.001C228.137 38.4545 226.072 36.2102 224.582 33.2681C223.111 30.3072 222.376 26.7427 222.376 22.5748V19.7176C222.376 15.5685 223.055 12.0229 224.413 9.08086C225.789 6.13878 227.741 3.8945 230.268 2.34803C232.814 0.782693 235.841 2.52724e-05 239.349 2.52724e-05C242.725 2.52724e-05 245.516 0.565809 247.723 1.69738C249.948 2.81009 251.664 4.35656 252.871 6.33681C254.078 8.31705 254.842 10.5802 255.163 13.1262H248.204C247.977 11.6929 247.534 10.4105 246.874 9.27888C246.233 8.14731 245.309 7.26092 244.102 6.6197C242.914 5.95962 241.367 5.62958 239.462 5.62958C237.275 5.62958 235.445 6.18593 233.974 7.29864C232.503 8.39249 231.4 9.98611 230.664 12.0795C229.929 14.1541 229.561 16.6812 229.561 19.661V22.5748C229.561 25.5923 229.986 28.1572 230.834 30.2695C231.683 32.3629 232.899 33.9565 234.484 35.0503C236.068 36.1442 237.973 36.6911 240.198 36.6911C241.82 36.6911 243.149 36.5591 244.187 36.2951C245.224 36.0122 246.044 35.6821 246.648 35.3049C247.27 34.9089 247.751 34.5317 248.091 34.1734V25.9978H239.519V20.7077H255.163ZM292.884 36.1253V41.7549H271.016V36.1253H292.884ZM273.025 0.565809V41.7549H265.924V0.565809H273.025ZM290.027 17.7656V23.3103H271.016V17.7656H290.027ZM292.742 0.565809V6.22365H271.016V0.565809H292.742ZM334.254 0.565809V41.7549H327.153L308.68 12.2492V41.7549H301.58V0.565809H308.68L327.21 30.128V0.565809H334.254ZM361.706 0.565809V41.7549H354.662V0.565809H361.706ZM374.634 0.565809V6.22365H341.847V0.565809H374.634ZM388.818 0.565809V41.7549H384.348V0.565809H388.818ZM433.187 0.565809V41.7549H429.679L406.029 6.59141V41.7549H402.493V0.565809H406.029L429.707 35.7293V0.565809H433.187ZM459.479 36.6062L472.464 0.565809H476.254L460.95 41.7549H458.093L459.479 36.6062ZM446.07 0.565809L458.998 36.6062L460.412 41.7549H457.583L442.279 0.565809H446.07ZM510.863 38.7562V41.7549H487.694V38.7562H510.863ZM488.741 0.565809V41.7549H485.233V0.565809H488.741ZM507.978 19.0387V22.0373H487.694V19.0387H507.978ZM510.722 0.565809V3.56446H487.694V0.565809H510.722ZM544.426 31.5991C544.426 30.1092 544.086 28.8267 543.407 27.7517C542.728 26.6767 541.568 25.7243 539.928 24.8945C538.287 24.0458 536.043 23.216 533.195 22.4051C530.441 21.6318 528.056 20.7549 526.038 19.7742C524.02 18.7746 522.464 17.5488 521.37 16.0966C520.276 14.6255 519.729 12.8056 519.729 10.6368C519.729 8.5245 520.314 6.67628 521.483 5.09208C522.671 3.48903 524.303 2.2443 526.377 1.35791C528.47 0.452652 530.866 2.52724e-05 533.563 2.52724e-05C536.448 2.52724e-05 538.947 0.55638 541.059 1.66909C543.171 2.76294 544.803 4.24341 545.953 6.11049C547.104 7.95872 547.679 10.0238 547.679 12.3058H544.199C544.199 10.5142 543.775 8.92055 542.926 7.52495C542.096 6.12935 540.889 5.02607 539.305 4.21512C537.721 3.40416 535.807 2.99868 533.563 2.99868C531.299 2.99868 529.395 3.34758 527.848 4.04538C526.321 4.72432 525.17 5.63901 524.397 6.78943C523.624 7.93986 523.237 9.20344 523.237 10.5802C523.237 11.8815 523.576 13.0508 524.255 14.088C524.953 15.1253 526.104 16.0683 527.707 16.917C529.329 17.7656 531.526 18.5577 534.298 19.2933C537.202 20.0854 539.673 21.0095 541.71 22.0656C543.747 23.1217 545.293 24.4136 546.349 25.9412C547.424 27.45 547.962 29.3171 547.962 31.5425C547.962 33.7868 547.349 35.7199 546.123 37.3418C544.897 38.9448 543.219 40.1801 541.087 41.0477C538.956 41.8963 536.523 42.3207 533.789 42.3207C531.96 42.3207 530.13 42.0849 528.301 41.6134C526.49 41.142 524.84 40.4064 523.35 39.4069C521.86 38.4073 520.663 37.1343 519.757 35.5878C518.852 34.0225 518.4 32.146 518.4 29.9583H521.907C521.907 31.6934 522.256 33.1644 522.954 34.3714C523.652 35.5595 524.576 36.5214 525.726 37.2569C526.896 37.9736 528.178 38.5016 529.574 38.8411C530.988 39.1617 532.393 39.322 533.789 39.322C535.939 39.322 537.806 39.0014 539.39 38.3602C540.993 37.719 542.228 36.8231 543.096 35.6727C543.982 34.5034 544.426 33.1455 544.426 31.5991ZM572.189 0.565809V41.7549H568.737V0.565809H572.189ZM586.305 0.565809V3.56446H554.621V0.565809H586.305ZM600.15 0.565809V41.7549H596.642V0.565809H600.15ZM644.914 0.565809V41.7549H641.407L617.757 6.59141V41.7549H614.221V0.565809H617.757L641.435 35.7293V0.565809H644.914ZM688.067 22.1505V36.8326C687.595 37.5115 686.775 38.2847 685.606 39.1523C684.455 40.001 682.909 40.7459 680.966 41.3871C679.024 42.0095 676.619 42.3207 673.752 42.3207C670.509 42.3207 667.642 41.5569 665.153 40.0292C662.663 38.4828 660.711 36.3045 659.297 33.4944C657.901 30.6655 657.203 27.3274 657.203 23.4801V18.5295C657.203 14.7387 657.845 11.4666 659.127 8.7131C660.428 5.94076 662.277 3.80021 664.672 2.29145C667.067 0.763834 669.905 2.52724e-05 673.187 2.52724e-05C676.261 2.52724e-05 678.835 0.53752 680.91 1.61251C683.003 2.66864 684.634 4.11139 685.804 5.94076C686.992 7.77013 687.737 9.84467 688.039 12.1644H684.531C684.267 10.5236 683.71 9.01485 682.862 7.63811C682.032 6.24251 680.834 5.12037 679.269 4.27169C677.704 3.42302 675.676 2.99868 673.187 2.99868C670.528 2.99868 668.264 3.64933 666.397 4.95064C664.549 6.23308 663.135 8.03416 662.154 10.3539C661.192 12.6736 660.711 15.3799 660.711 18.4729V23.4801C660.711 26.6673 661.249 29.4491 662.324 31.8254C663.418 34.2017 664.936 36.0499 666.878 37.3701C668.84 38.6714 671.131 39.322 673.752 39.322C675.846 39.322 677.619 39.124 679.071 38.7279C680.542 38.3319 681.73 37.8604 682.635 37.3135C683.541 36.7477 684.182 36.2291 684.559 35.7576V25.1491H673.498V22.1505H688.067Z" fill="currentColor"/>
+    </svg>
+  </div>
+
+  <div class="field field-email" id="fieldEmail">
+    <div class="field-label">Email</div>
+    <div class="field-row">
+      <input class="field-input" id="emailInput" type="email" inputmode="email" autocomplete="email" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="" value="inkchoidesign2@gmail.com" />
+    </div>
+    <div class="field-underline"></div>
+  </div>
+
+  <div class="field field-password" id="fieldPassword">
+    <div class="field-label">Password</div>
+    <div class="field-row">
+      <input class="field-input" id="passwordInput" type="password" autocomplete="current-password" placeholder="" />
+      <div class="field-show" id="showToggle"><span id="showLabel">Show</span></div>
+    </div>
+    <div class="field-underline"></div>
+    <div class="error-slot" id="pwErrorSlot" hidden>
+      <div class="error-dot"></div>
+      <div class="error-msg">Password must be at least 8 characters</div>
+    </div>
+  </div>
+
+  <div class="forgot" id="forgotRow">
+    <a href="#"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M6 2L10 6L6 10" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>Forgot Password</a>
+  </div>
+
+  <div class="cta-login" id="ctaLogin">
+    <span id="ctaLabel">Use Biometric Login</span>
+  </div>
+
+
+  <div class="footer-hairline"></div>
+  <div class="footer-row">
+    <a href="#"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M6 2L10 6L6 10" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>Create Account</a>
+    <a href="#"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M6 2L10 6L6 10" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>Contact Support</a>
+  </div>
+
+</div>
+
+<div class="diag-panel" id="diagPanel" hidden>
+  <div id="diagViewport">Viewport: 0px</div>
+  <div id="diagVisual">Visual: n/a</div>
+  <div id="diagKeyboard">Keyboard: n/a</div>
+  <div id="diagStack">Stack: 0px</div>
+  <div id="diagLast">Last: 0px</div>
+</div>
+
+<!-- OS biometric prompt simulation - shown on entry, and re-shown any time the biometric affordance is tapped -->
+<div class="os-overlay" id="osOverlay">
+  <div class="os-block">
+    <div class="os-scenario">Scenario · returning to the app after it was closed</div>
+    <div class="os-title">OS · Android BiometricPrompt</div>
+    <div class="os-desc">Android draws this window. Layout, color, and icon are the system's, not ours. Only the strings below are ours to set.</div>
+    <div class="os-sub">Strings we control</div>
+    <div class="os-row"><span class="os-label">Title</span><span class="os-value">Intelligent Investing</span></div>
+    <div class="os-row"><span class="os-label">Subtitle</span><span class="os-value">Authentication required.</span></div>
+    <div class="os-actions"><span class="os-action" id="osPin">Use PIN</span><span class="os-action" id="osCancel">Cancel</span></div>
+    <div class="os-hint">Tap Cancel to reach the login screen.</div>
+  </div>
+</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var page = document.querySelector('.page');
+  var wordmark = document.getElementById('wordmark');
+  var diagPanel = document.getElementById('diagPanel');
+  var emailInput = document.getElementById('emailInput');
+  var passwordInput = document.getElementById('passwordInput');
+  var fieldEmail = document.getElementById('fieldEmail');
+  var fieldPassword = document.getElementById('fieldPassword');
+  var showToggle = document.getElementById('showToggle');
+  var showLabel = document.getElementById('showLabel');
+  var pwErrorSlot = document.getElementById('pwErrorSlot');
+  var forgotRow = document.getElementById('forgotRow');
+  var authBanner = document.getElementById('authBanner');
+  var ctaLogin = document.getElementById('ctaLogin');
+  var ctaLabel = document.getElementById('ctaLabel');
+  var osOverlay = document.getElementById('osOverlay');
+  var osCancel = document.getElementById('osCancel');
+
+  // returning: device already has a biometric-enrolled session. The CTA slot swaps between
+  // "Use Biometric Login" (password empty) and "Log In" (password typed) - one box, one label at a time.
+  function updateCtaState(){
+    var emailOk = emailInput.value.trim().length > 0;
+    var pwLen = passwordInput.value.length;
+    var pwOk = emailOk && pwLen >= 8;
+
+    if(pwLen === 0){
+      ctaLabel.textContent = 'Use Biometric Login';
+      ctaLogin.classList.remove('is-inactive');
+    } else {
+      ctaLabel.textContent = 'Log In';
+      if(pwOk){
+        ctaLogin.classList.remove('is-inactive');
+      } else {
+        ctaLogin.classList.add('is-inactive');
+      }
+    }
+  }
+
+  function clearAuthBanner(){
+    if(!authBanner.hidden){
+      authBanner.hidden = true;
+    }
+  }
+
+  // shows the field error only when a field blurs invalid; always clears once valid or empty
+  function evaluatePasswordError(showIfInvalid){
+    var len = passwordInput.value.length;
+    var invalid = len >= 1 && len < 8;
+    if(invalid && showIfInvalid){
+      pwErrorSlot.hidden = false;
+      fieldPassword.classList.add('is-error');
+      forgotRow.classList.add('after-error');
+    } else if(!invalid){
+      pwErrorSlot.hidden = true;
+      fieldPassword.classList.remove('is-error');
+      forgotRow.classList.remove('after-error');
+    }
+  }
+
+  emailInput.addEventListener('focus', function(){ fieldEmail.classList.add('is-focus'); });
+  emailInput.addEventListener('blur', function(){ fieldEmail.classList.remove('is-focus'); });
+  emailInput.addEventListener('input', function(){
+    updateCtaState();
+    clearAuthBanner();
+    updateDiagnostics();
+  });
+
+  passwordInput.addEventListener('focus', function(){ fieldPassword.classList.add('is-focus'); });
+  passwordInput.addEventListener('blur', function(){
+    fieldPassword.classList.remove('is-focus');
+    evaluatePasswordError(true);
+    updateDiagnostics();
+  });
+  passwordInput.addEventListener('input', function(){
+    updateCtaState();
+    clearAuthBanner();
+    evaluatePasswordError(false);
+    updateDiagnostics();
+  });
+
+  showToggle.addEventListener('click', function(){
+    var isPassword = passwordInput.type === 'password';
+    passwordInput.type = isPassword ? 'text' : 'password';
+    showLabel.textContent = isPassword ? 'Hide' : 'Show';
+  });
+
+  function openOsOverlay(){
+    osOverlay.hidden = false;
+  }
+  function closeOsOverlay(){
+    osOverlay.hidden = true;
+  }
+
+  ctaLogin.addEventListener('click', function(){
+    if(passwordInput.value.length === 0){
+      openOsOverlay();
+      return;
+    }
+    if(ctaLogin.classList.contains('is-inactive')) return;
+    authBanner.hidden = false;
+    updateDiagnostics();
+  });
+
+  osCancel.addEventListener('click', function(){
+    closeOsOverlay();
+    updateDiagnostics();
+  });
+  // "Use PIN" is a system action outside this prototype's scope - no-op by design
+
+  var links = document.querySelectorAll('a');
+  for(var i = 0; i < links.length; i++){
+    links[i].addEventListener('click', function(e){ e.preventDefault(); });
+  }
+
+  wordmark.addEventListener('click', function(){
+    diagPanel.hidden = !diagPanel.hidden;
+    updateDiagnostics();
+  });
+
+  function updateDiagnostics(){
+    var vh = window.innerHeight;
+    document.getElementById('diagViewport').textContent = 'Viewport: ' + vh + 'px';
+
+    var vv = window.visualViewport;
+    if(vv){
+      var visualH = Math.round(vv.height);
+      var kb = Math.round(vh - vv.height);
+      document.getElementById('diagVisual').textContent = 'Visual: ' + visualH + 'px';
+      document.getElementById('diagKeyboard').textContent = 'Keyboard: ' + kb + 'px';
+    } else {
+      document.getElementById('diagVisual').textContent = 'Visual: n/a';
+      document.getElementById('diagKeyboard').textContent = 'Keyboard: n/a';
+    }
+
+    var stackTop = wordmark.getBoundingClientRect().top;
+    var stackBottom = ctaLogin.getBoundingClientRect().bottom;
+    document.getElementById('diagStack').textContent = 'Stack: ' + Math.round(stackBottom - stackTop) + 'px';
+
+    var lastEl = page.lastElementChild;
+    document.getElementById('diagLast').textContent = 'Last: ' + Math.round(lastEl.getBoundingClientRect().bottom) + 'px';
+  }
+
+  if(window.visualViewport){
+    window.visualViewport.addEventListener('resize', updateDiagnostics);
+    window.visualViewport.addEventListener('scroll', updateDiagnostics);
+  }
+  window.addEventListener('resize', updateDiagnostics);
+
+  updateCtaState();
+  updateDiagnostics();
+})();
+</script>
+
+</body>
+</html>
