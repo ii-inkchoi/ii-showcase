@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#000000" />
+<title>II Login, clickable prototype</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --c-black:#000000;--c-elev:#0A0A0A;--c-1000:#1C1C1C;--c-900:#232627;
+    --c-800:#565B5E;--c-700:#929292;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFFFFF;
+    --c-urgent:#FF3533;--c-alert:#DE5C56;--c-review:#FBC308;
+    --c-live-muted:#288752;--c-urgent-muted:#BE3C36;
+    --r-cta:5px;
+    --font:'Inter',system-ui,-apple-system,sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  [hidden]{display:none !important}   /* class rules must never out-specify hidden */
+  /* phone-width column, centred. On a desktop the surround makes it read as a device preview. */
+  html,body{background:var(--c-elev);font-family:var(--font);-webkit-text-size-adjust:100%}
+  @media (min-width:520px){ body{background:var(--c-elev)} }
+
+  /* ---- review chrome. Sits outside the product, never inside the screen ---- */
+  .rev{position:sticky;top:0;z-index:40;height:40px;background:var(--c-1000);
+       display:flex;gap:16px;align-items:center;padding:0 12px;
+       font-size:11px;line-height:1;color:var(--c-700)}
+  .rev-set{display:flex;gap:4px;align-items:center}
+  .rev b{font-weight:400;color:var(--c-800);margin-right:2px}
+  .rev button{font:inherit;font-size:11px;color:var(--c-700);background:none;
+              border:1px solid var(--c-900);padding:5px 9px;border-radius:3px;cursor:pointer}
+  .rev button.on{color:var(--c-black);background:var(--c-400);border-color:var(--c-400)}
+
+  .screen{display:none;flex-direction:column;width:100%;max-width:393px;margin:0 auto;
+          background:var(--c-black);min-height:calc(100dvh - 40px);
+          padding:calc(46px + env(safe-area-inset-top)) 21.5px calc(24px + env(safe-area-inset-bottom));}
+  @media (min-width:520px){
+    .screen{width:393px;height:852px;min-height:0;margin:40px auto;
+            border:1px solid var(--c-900);overflow-y:auto}
+  }
+  .screen.on{display:flex}
+
+  .header-row{margin-bottom:24px;display:flex;align-items:center;justify-content:space-between}
+  .icon-btn{width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:var(--c-400);cursor:pointer}
+  .icon-btn:first-child{margin-left:-15px}
+  .icon-btn:last-child{margin-right:-15px}
+  .icon-btn svg{display:block;width:20px;height:20px}
+
+  .wordmark{margin:0 auto;color:var(--c-200);width:min(247.5px,68vw)}
+  .wordmark svg{display:block;width:100%;height:auto}
+
+  .intro-head{margin-top:19px;display:flex;flex-direction:column;align-items:center;text-align:center}
+  .intro-copy{margin-top:20px;font-size:15px;line-height:21px;color:var(--c-700)}
+  .viz-wrap{flex:1 1 auto;min-height:0;display:flex;width:100%;padding:24px 0}
+  .vis{display:flex;flex-direction:column;width:100%;min-height:0}
+  .vis-media{flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center;width:100%}
+  .vis-media .viz{width:100%;height:auto;max-height:100%;display:block}
+  .vis-media .mockup{width:auto;height:auto;max-width:74%;max-height:100%;display:block}
+  .figcap{flex:0 0 auto;margin-top:12px;font-size:11px;line-height:1.5;color:var(--c-800);text-align:center}
+
+  .field{margin-top:51px}
+  .field + .field{margin-top:24px}
+  .field-label{font-size:13px;line-height:1;color:var(--c-700);margin-bottom:8px}
+  .field.is-focus .field-label{color:var(--c-400)}
+  .field-row{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+  .field-row input{flex:1 1 auto;background:none;border:0;outline:0;padding:0;width:100%;
+                   font-family:inherit;font-size:17px;line-height:1;color:var(--c-white)}
+  .field-value{font-size:17px;line-height:1;color:var(--c-white)}
+  .field-show{font-size:13px;line-height:1;color:var(--c-400);cursor:pointer;flex:0 0 auto}
+  .field-underline{margin-top:8px;height:1px;width:100%;background:var(--c-800)}
+  .field.is-focus .field-underline{background:var(--c-white)}
+  .field.is-error .field-underline{background:var(--c-urgent)}
+
+  .error-row{margin-top:12px;display:flex;align-items:flex-start;gap:12px}
+  .error-dot{width:4px;height:4px;border-radius:50%;background:var(--c-urgent);flex:0 0 4px;margin-top:5px}
+  .error-msg{font-size:13px;line-height:1;color:var(--c-700)}
+
+  .auth-banner{margin:0 0 32px;padding:16px 20px;background:var(--c-alert);border-radius:8px}
+  .auth-banner-text{font-size:13px;line-height:1.5;color:var(--c-white)}
+
+  .cta{margin-top:32px;height:48px;box-sizing:border-box;display:flex;align-items:center;
+       justify-content:center;border:1px solid transparent;border-radius:var(--r-cta);cursor:pointer}
+  .cta span{font-size:15px;font-weight:500;line-height:1}
+  .primary{background:var(--c-white);border-color:var(--c-white)}
+  .primary span{color:var(--c-black)}
+  .primary.off{background:var(--c-1000);border-color:var(--c-1000);pointer-events:none}
+  .primary.off span{color:var(--c-800)}
+  .secondary{background:transparent;border-color:var(--c-800)}
+  .secondary span{color:var(--c-400)}
+
+  .forgot{margin-top:32px;display:flex;justify-content:flex-start}
+  .forgot a{display:flex;align-items:center;gap:8px;font-size:13px;line-height:1;
+            color:var(--c-400);text-decoration:none}
+
+  .intro-cta{margin-top:auto}
+  .intro-cta .cta{margin-top:0}
+  .intro-cta .secondary{margin-top:15px}
+
+  /* ---- OS biometric prompt: a system window, drawn only as a stand-in ---- */
+  .os{position:fixed;inset:0;z-index:30;background:var(--c-black);display:none;
+      align-items:center;justify-content:center;padding:21.5px}
+  .os.on{display:flex}
+  .os-block{max-width:350px;border:1px dashed var(--c-800);padding:24px}
+  .os-scenario{font-size:11px;line-height:1.5;color:var(--c-700);margin-bottom:16px}
+  .os-title{font-size:13px;line-height:1.4;color:var(--c-white)}
+  .os-desc{margin-top:8px;font-size:13px;line-height:1.5;color:var(--c-700)}
+  .os-sub{margin-top:20px;font-size:13px;line-height:1;color:var(--c-400)}
+  .os-row{margin-top:8px;display:flex;justify-content:space-between;gap:16px;font-size:13px;line-height:1.5}
+  .os-row .k{color:var(--c-700)} .os-row .v{color:var(--c-white)}
+  .os-actions{margin-top:24px;display:flex;justify-content:space-between}
+  .os-action{font-size:13px;line-height:1;color:var(--c-400);cursor:pointer}
+  .os-proto{margin-top:16px;font-size:11px;line-height:1.5;color:var(--c-700);cursor:pointer}
+
+  .end{flex:1 1 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+  .end-t{font-size:17px;line-height:1.3;color:var(--c-white)}
+  .end-n{margin-top:12px;font-size:13px;line-height:1.5;color:var(--c-700);max-width:280px}
+  .end .cta{margin-top:32px;width:100%;max-width:350px}
+
+  .viz .ln{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 900ms cubic-bezier(.22,.61,.36,1) forwards}
+  .viz .tail{opacity:0;animation:land 320ms ease forwards}
+  .viz .drift{animation-name:drift;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+  .viz circle{transform-box:fill-box;transform-origin:center;animation-name:tick;
+              animation-timing-function:cubic-bezier(.2,.7,.3,1);animation-iteration-count:infinite}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  @keyframes land{to{opacity:1}}
+  @keyframes drift{0%{transform:translateY(calc(var(--amp)*-1))}14%{transform:translateY(calc(var(--amp)*0.35))}
+    27%{transform:translateY(calc(var(--amp)*-0.55))}41%{transform:translateY(var(--amp))}
+    56%{transform:translateY(calc(var(--amp)*0.1))}68%{transform:translateY(calc(var(--amp)*-0.8))}
+    83%{transform:translateY(calc(var(--amp)*0.6))}100%{transform:translateY(calc(var(--amp)*-1))}}
+  @keyframes tick{0%{transform:scale(1)}4%{transform:scale(1.45)}11%{transform:scale(1)}100%{transform:scale(1)}}
+  @media (prefers-reduced-motion:reduce){
+    .viz .ln,.viz .tail,.viz .drift,.viz circle{animation:none}
+    .viz .ln{stroke-dashoffset:0}.viz .tail{opacity:1}
+  }
+</style>
+</head>
+<body>
+
+<div class="rev">
+  <div class="rev-set"><b>Intro</b>
+    <button data-vis-btn="A" class="on">A</button>
+    <button data-vis-btn="B">B</button>
+    <button data-vis-btn="C">C</button>
+  </div>
+</div>
+
+<!-- 1. intro -->
+<div class="screen on" id="s-intro">
+  <div class="intro-head">
+    <div class="wordmark">
+            <svg viewBox="0 0 689 43" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.10058 0.565809V41.7549H-6.79493e-06V0.565809H7.10058ZM51.4977 0.565809V41.7549H44.3971L25.9242 12.2492V41.7549H18.8236V0.565809H25.9242L44.4536 30.128V0.565809H51.4977ZM78.9495 0.565809V41.7549H71.9055V0.565809H78.9495ZM91.8777 0.565809V6.22365H59.0905V0.565809H91.8777ZM127.166 36.1253V41.7549H105.298V36.1253H127.166ZM107.307 0.565809V41.7549H100.206V0.565809H107.307ZM124.308 17.7656V23.3103H105.298V17.7656H124.308ZM127.024 0.565809V6.22365H105.298V0.565809H127.024ZM161.661 36.1253V41.7549H140.982V36.1253H161.661ZM142.962 0.565809V41.7549H135.862V0.565809H142.962ZM195.846 36.1253V41.7549H175.167V36.1253H195.846ZM177.147 0.565809V41.7549H170.046V0.565809H177.147ZM211.813 0.565809V41.7549H204.712V0.565809H211.813ZM255.163 20.7077V36.4365C254.578 37.2098 253.664 38.0584 252.419 38.9825C251.193 39.8878 249.562 40.6705 247.525 41.3305C245.488 41.9906 242.951 42.3207 239.915 42.3207C236.483 42.3207 233.437 41.5474 230.778 40.001C228.137 38.4545 226.072 36.2102 224.582 33.2681C223.111 30.3072 222.376 26.7427 222.376 22.5748V19.7176C222.376 15.5685 223.055 12.0229 224.413 9.08086C225.789 6.13878 227.741 3.8945 230.268 2.34803C232.814 0.782693 235.841 2.52724e-05 239.349 2.52724e-05C242.725 2.52724e-05 245.516 0.565809 247.723 1.69738C249.948 2.81009 251.664 4.35656 252.871 6.33681C254.078 8.31705 254.842 10.5802 255.163 13.1262H248.204C247.977 11.6929 247.534 10.4105 246.874 9.27888C246.233 8.14731 245.309 7.26092 244.102 6.6197C242.914 5.95962 241.367 5.62958 239.462 5.62958C237.275 5.62958 235.445 6.18593 233.974 7.29864C232.503 8.39249 231.4 9.98611 230.664 12.0795C229.929 14.1541 229.561 16.6812 229.561 19.661V22.5748C229.561 25.5923 229.986 28.1572 230.834 30.2695C231.683 32.3629 232.899 33.9565 234.484 35.0503C236.068 36.1442 237.973 36.6911 240.198 36.6911C241.82 36.6911 243.149 36.5591 244.187 36.2951C245.224 36.0122 246.044 35.6821 246.648 35.3049C247.27 34.9089 247.751 34.5317 248.091 34.1734V25.9978H239.519V20.7077H255.163ZM292.884 36.1253V41.7549H271.016V36.1253H292.884ZM273.025 0.565809V41.7549H265.924V0.565809H273.025ZM290.027 17.7656V23.3103H271.016V17.7656H290.027ZM292.742 0.565809V6.22365H271.016V0.565809H292.742ZM334.254 0.565809V41.7549H327.153L308.68 12.2492V41.7549H301.58V0.565809H308.68L327.21 30.128V0.565809H334.254ZM361.706 0.565809V41.7549H354.662V0.565809H361.706ZM374.634 0.565809V6.22365H341.847V0.565809H374.634ZM388.818 0.565809V41.7549H384.348V0.565809H388.818ZM433.187 0.565809V41.7549H429.679L406.029 6.59141V41.7549H402.493V0.565809H406.029L429.707 35.7293V0.565809H433.187ZM459.479 36.6062L472.464 0.565809H476.254L460.95 41.7549H458.093L459.479 36.6062ZM446.07 0.565809L458.998 36.6062L460.412 41.7549H457.583L442.279 0.565809H446.07ZM510.863 38.7562V41.7549H487.694V38.7562H510.863ZM488.741 0.565809V41.7549H485.233V0.565809H488.741ZM507.978 19.0387V22.0373H487.694V19.0387H507.978ZM510.722 0.565809V3.56446H487.694V0.565809H510.722ZM544.426 31.5991C544.426 30.1092 544.086 28.8267 543.407 27.7517C542.728 26.6767 541.568 25.7243 539.928 24.8945C538.287 24.0458 536.043 23.216 533.195 22.4051C530.441 21.6318 528.056 20.7549 526.038 19.7742C524.02 18.7746 522.464 17.5488 521.37 16.0966C520.276 14.6255 519.729 12.8056 519.729 10.6368C519.729 8.5245 520.314 6.67628 521.483 5.09208C522.671 3.48903 524.303 2.2443 526.377 1.35791C528.47 0.452652 530.866 2.52724e-05 533.563 2.52724e-05C536.448 2.52724e-05 538.947 0.55638 541.059 1.66909C543.171 2.76294 544.803 4.24341 545.953 6.11049C547.104 7.95872 547.679 10.0238 547.679 12.3058H544.199C544.199 10.5142 543.775 8.92055 542.926 7.52495C542.096 6.12935 540.889 5.02607 539.305 4.21512C537.721 3.40416 535.807 2.99868 533.563 2.99868C531.299 2.99868 529.395 3.34758 527.848 4.04538C526.321 4.72432 525.17 5.63901 524.397 6.78943C523.624 7.93986 523.237 9.20344 523.237 10.5802C523.237 11.8815 523.576 13.0508 524.255 14.088C524.953 15.1253 526.104 16.0683 527.707 16.917C529.329 17.7656 531.526 18.5577 534.298 19.2933C537.202 20.0854 539.673 21.0095 541.71 22.0656C543.747 23.1217 545.293 24.4136 546.349 25.9412C547.424 27.45 547.962 29.3171 547.962 31.5425C547.962 33.7868 547.349 35.7199 546.123 37.3418C544.897 38.9448 543.219 40.1801 541.087 41.0477C538.956 41.8963 536.523 42.3207 533.789 42.3207C531.96 42.3207 530.13 42.0849 528.301 41.6134C526.49 41.142 524.84 40.4064 523.35 39.4069C521.86 38.4073 520.663 37.1343 519.757 35.5878C518.852 34.0225 518.4 32.146 518.4 29.9583H521.907C521.907 31.6934 522.256 33.1644 522.954 34.3714C523.652 35.5595 524.576 36.5214 525.726 37.2569C526.896 37.9736 528.178 38.5016 529.574 38.8411C530.988 39.1617 532.393 39.322 533.789 39.322C535.939 39.322 537.806 39.0014 539.39 38.3602C540.993 37.719 542.228 36.8231 543.096 35.6727C543.982 34.5034 544.426 33.1455 544.426 31.5991ZM572.189 0.565809V41.7549H568.737V0.565809H572.189ZM586.305 0.565809V3.56446H554.621V0.565809H586.305ZM600.15 0.565809V41.7549H596.642V0.565809H600.15ZM644.914 0.565809V41.7549H641.407L617.757 6.59141V41.7549H614.221V0.565809H617.757L641.435 35.7293V0.565809H644.914ZM688.067 22.1505V36.8326C687.595 37.5115 686.775 38.2847 685.606 39.1523C684.455 40.001 682.909 40.7459 680.966 41.3871C679.024 42.0095 676.619 42.3207 673.752 42.3207C670.509 42.3207 667.642 41.5569 665.153 40.0292C662.663 38.4828 660.711 36.3045 659.297 33.4944C657.901 30.6655 657.203 27.3274 657.203 23.4801V18.5295C657.203 14.7387 657.845 11.4666 659.127 8.7131C660.428 5.94076 662.277 3.80021 664.672 2.29145C667.067 0.763834 669.905 2.52724e-05 673.187 2.52724e-05C676.261 2.52724e-05 678.835 0.53752 680.91 1.61251C683.003 2.66864 684.634 4.11139 685.804 5.94076C686.992 7.77013 687.737 9.84467 688.039 12.1644H684.531C684.267 10.5236 683.71 9.01485 682.862 7.63811C682.032 6.24251 680.834 5.12037 679.269 4.27169C677.704 3.42302 675.676 2.99868 673.187 2.99868C670.528 2.99868 668.264 3.64933 666.397 4.95064C664.549 6.23308 663.135 8.03416 662.154 10.3539C661.192 12.6736 660.711 15.3799 660.711 18.4729V23.4801C660.711 26.6673 661.249 29.4491 662.324 31.8254C663.418 34.2017 664.936 36.0499 666.878 37.3701C668.84 38.6714 671.131 39.322 673.752 39.322C675.846 39.322 677.619 39.124 679.071 38.7279C680.542 38.3319 681.73 37.8604 682.635 37.3135C683.541 36.7477 684.182 36.2291 684.559 35.7576V25.1491H673.498V22.1505H688.067Z" fill="currentColor"/>
+            </svg>
+          </div>
+    <div class="intro-copy">Every decision on the record.<br>Measured against the benchmark.</div>
+  </div>
+  <div class="viz-wrap" id="vizWrap">
+      <div class="vis" data-vis="A" hidden><div class="vis-media"><img class="mockup" src="_figma/intro-mockup.png" alt=""></div><div class="figcap">Illustrative, not live data</div></div>
+      <div class="vis" data-vis="B" hidden><div class="vis-media"><svg class="viz" viewBox="0 0 393 372" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif" aria-hidden="true">
+          <rect x="66" y="0" width="246" height="168" fill="var(--c-live-muted)" opacity="0.05"/>
+          <rect x="66" y="168" width="246" height="82" fill="var(--c-urgent-muted)" opacity="0.05"/>
+          <line x1="66" y1="99" x2="312" y2="99" stroke="var(--c-900)" stroke-width="1"/>
+          <text x="58" y="99" fill="var(--c-700)" font-size="11" text-anchor="end" dominant-baseline="middle">+30</text>
+          <line x1="66" y1="134" x2="312" y2="134" stroke="var(--c-900)" stroke-width="1"/>
+          <text x="58" y="134" fill="var(--c-700)" font-size="11" text-anchor="end" dominant-baseline="middle">+15</text>
+          <line x1="66" y1="202" x2="312" y2="202" stroke="var(--c-900)" stroke-width="1"/>
+          <text x="58" y="202" fill="var(--c-700)" font-size="11" text-anchor="end" dominant-baseline="middle">-15</text>
+          <line x1="66" y1="237" x2="312" y2="237" stroke="var(--c-900)" stroke-width="1"/>
+          <text x="58" y="237" fill="var(--c-700)" font-size="11" text-anchor="end" dominant-baseline="middle">-30</text>
+          <text x="66" y="336" fill="var(--c-700)" font-size="11" text-anchor="start">-2mo</text>
+          <text x="189" y="336" fill="var(--c-700)" font-size="11" text-anchor="middle">-1</text>
+          <text x="312" y="336" fill="var(--c-700)" font-size="11" text-anchor="end">now</text>
+          <polyline class="ln" pathLength="1" points="66,168 144,168 236,148.7 312,103.6" stroke="var(--c-live-muted)" stroke-width="0.9" fill="none" stroke-linejoin="round" style="animation-delay:0ms"><animate attributeName="points" values="66,168 144,168 236,148.7 312,103.6;66,168 144,168 236,147.3 312,99.1;66,168 144,168 236,150.0 312,108.1;66,168 144,168 236,147.9 312,101.0;66,168 144,168 236,148.7 312,103.6" dur="12.4s" begin="1.60s" repeatCount="indefinite"/></polyline>
+          <g class="tail" style="animation-delay:620ms">
+            <circle cx="312" cy="104" r="2.6" fill="var(--c-live-muted)" style="animation-duration:8.3s;animation-delay:0.0s"><animate attributeName="cy" values="103.6;99.1;108.1;101.0;103.6" dur="12.4s" begin="1.60s" repeatCount="indefinite"/></circle>
+            <line x1="312" y1="104" x2="318" y2="18" stroke="var(--c-live-muted)" stroke-width="0.8" stroke-opacity="0.55"><animate attributeName="y1" values="103.6;99.1;108.1;101.0;103.6" dur="12.4s" begin="1.60s" repeatCount="indefinite"/></line>
+            <text x="322" y="18" fill="var(--c-live-muted)" font-size="11" dominant-baseline="middle">WIX</text>
+          </g>
+          <polyline class="ln" pathLength="1" points="66,168 144,168 236,155.4 312,138.1" stroke="var(--c-live-muted)" stroke-width="0.9" fill="none" stroke-linejoin="round" style="animation-delay:55ms"><animate attributeName="points" values="66,168 144,168 236,155.4 312,138.1;66,168 144,168 236,154.6 312,136.0;66,168 144,168 236,156.3 312,140.2;66,168 144,168 236,154.9 312,136.9;66,168 144,168 236,155.4 312,138.1" dur="15.1s" begin="1.71s" repeatCount="indefinite"/></polyline>
+          <g class="tail" style="animation-delay:675ms">
+            <circle cx="312" cy="138" r="2.6" fill="var(--c-live-muted)" style="animation-duration:11.2s;animation-delay:11.4s"><animate attributeName="cy" values="138.1;136.0;140.2;136.9;138.1" dur="15.1s" begin="1.71s" repeatCount="indefinite"/></circle>
+            <line x1="312" y1="138" x2="318" y2="36" stroke="var(--c-live-muted)" stroke-width="0.8" stroke-opacity="0.55"><animate attributeName="y1" values="138.1;136.0;140.2;136.9;138.1" dur="15.1s" begin="1.71s" repeatCount="indefinite"/></line>
+            <text x="322" y="36" fill="var(--c-live-muted)" font-size="11" dominant-baseline="middle">SPT</text>
+          </g>
+          <polyline class="ln" pathLength="1" points="66,168 144,168 236,159.4 312,142.7" stroke="var(--c-live-muted)" stroke-width="0.9" fill="none" stroke-linejoin="round" style="animation-delay:110ms"><animate attributeName="points" values="66,168 144,168 236,159.4 312,142.7;66,168 144,168 236,158.8 312,140.9;66,168 144,168 236,160.0 312,144.5;66,168 144,168 236,159.1 312,141.7;66,168 144,168 236,159.4 312,142.7" dur="17.8s" begin="1.82s" repeatCount="indefinite"/></polyline>
+          <g class="tail" style="animation-delay:730ms">
+            <circle cx="312" cy="143" r="2.6" fill="var(--c-live-muted)" style="animation-duration:14.1s;animation-delay:9.8s"><animate attributeName="cy" values="142.7;140.9;144.5;141.7;142.7" dur="17.8s" begin="1.82s" repeatCount="indefinite"/></circle>
+            <line x1="312" y1="143" x2="318" y2="55" stroke="var(--c-live-muted)" stroke-width="0.8" stroke-opacity="0.55"><animate attributeName="y1" values="142.7;140.9;144.5;141.7;142.7" dur="17.8s" begin="1.82s" repeatCount="indefinite"/></line>
+            <text x="322" y="55" fill="var(--c-live-muted)" font-size="11" dominant-baseline="middle">ELWT</text>
+          </g>
+          <polyline class="ln" pathLength="1" points="66,168 144,168 236,157.4 312,145.0" stroke="var(--c-live-muted)" stroke-width="0.9" fill="none" stroke-linejoin="round" style="animation-delay:165ms"><animate attributeName="points" values="66,168 144,168 236,157.4 312,145.0;66,168 144,168 236,156.7 312,143.4;66,168 144,168 236,158.2 312,146.6;66,168 144,168 236,157.0 312,144.1;66,168 144,168 236,157.4 312,145.0" dur="20.5s" begin="1.93s" repeatCount="indefinite"/></polyline>
+          <g class="tail" style="animation-delay:785ms">
+            <circle cx="312" cy="145" r="2.6" fill="var(--c-live-muted)" style="animation-duration:17.0s;animation-delay:8.2s"><animate attributeName="cy" values="145.0;143.4;146.6;144.1;145.0" dur="20.5s" begin="1.93s" repeatCount="indefinite"/></circle>
+            <line x1="312" y1="145" x2="318" y2="73" stroke="var(--c-live-muted)" stroke-width="0.8" stroke-opacity="0.55"><animate attributeName="y1" values="145.0;143.4;146.6;144.1;145.0" dur="20.5s" begin="1.93s" repeatCount="indefinite"/></line>
+            <text x="322" y="73" fill="var(--c-live-muted)" font-size="11" dominant-baseline="middle">TENB</text>
+          </g>
+          <polyline class="ln" pathLength="1" points="66,168 144,168 236,160.5 312,147.3" stroke="var(--c-live-muted)" stroke-width="0.9" fill="none" stroke-linejoin="round" style="animation-delay:220ms"><animate attributeName="points" values="66,168 144,168 236,160.5 312,147.3;66,168 144,168 236,160.0 312,145.9;66,168 144,168 236,161.1 312,148.7;66,168 144,168 236,160.2 312,146.5;66,168 144,168 236,160.5 312,147.3" dur="23.2s" begin="2.04s" repeatCount="indefinite"/></polyline>
+          <g class="tail" style="animation-delay:840ms">
+            <circle cx="312" cy="147" r="2.6" fill="var(--c-live-muted)" style="animation-duration:8.3s;animation-delay:6.6s"><animate attributeName="cy" values="147.3;145.9;148.7;146.5;147.3" dur="23.2s" begin="2.04s" repeatCount="indefinite"/></circle>
+            <line x1="312" y1="147" x2="318" y2="91" stroke="var(--c-live-muted)" stroke-width="0.8" stroke-opacity="0.55"><animate attributeName="y1" values="147.3;145.9;148.7;146.5;147.3" dur="23.2s" begin="2.04s" repeatCount="indefinite"/></line>
+            <text x="322" y="91" fill="var(--c-live-muted)" font-size="11" dominant-baseline="middle">MNDY</text>
+          </g>
+          <polyline class="ln" pathLength="1" points="66,168 144,168 236,158.8 312,149.6" stroke="var(--c-live-muted)" stroke-width="0.9" fill="none" stroke-linejoin="round" style="animation-delay:275ms"><animate attributeName="points" values="66,168 144,168 236,158.8 312,149.6;66,168 144,168 236,158.2 312,148.3;66,168 144,168 236,159.4 312,150.9;66,168 144,168 236,158.4 312,148.9;66,168 144,168 236,158.8 312,149.6" dur="25.9s" begin="2.15s" repeatCount="indefinite"/></polyline>
+          <g class="tail" style="animation-delay:895ms">
+            <circle cx="312" cy="150" r="2.6" fill="var(--c-live-muted)" style="animation-duration:11.2s;animation-delay:4.9s"><animate attributeName="cy" values="149.6;148.3;150.9;148.9;149.6" dur="25.9s" begin="2.15s" repeatCount="indefinite"/></circle>
+            <line x1="312" y1="150" x2="318" y2="109" stroke="var(--c-live-muted)" stroke-width="0.8" stroke-opacity="0.55"><animate attributeName="y1" values="149.6;148.3;150.9;148.9;149.6" dur="25.9s" begin="2.15s" repeatCount="indefinite"/></line>
+            <text x="322" y="109" fill="var(--c-live-muted)" font-size="11" dominant-baseline="middle">EXE</text>
+          </g>
+          <polyline class="ln" pathLength="1" points="66,168 144,168 236,162.8 312,151.9" stroke="var(--c-live-muted)" stroke-width="0.9" fill="none" stroke-linejoin="round" style="animation-delay:330ms"><animate attributeName="points" values="66,168 144,168 236,162.8 312,151.9;66,168 144,168 236,162.5 312,150.8;66,168 144,168 236,163.2 312,153.0;66,168 144,168 236,162.6 312,151.3;66,168 144,168 236,162.8 312,151.9" dur="12.4s" begin="2.26s" repeatCount="indefinite"/></polyline>
+          <g class="tail" style="animation-delay:950ms">
+            <circle cx="312" cy="152" r="2.6" fill="var(--c-live-muted)" style="animation-duration:14.1s;animation-delay:3.3s"><animate attributeName="cy" values="151.9;150.8;153.0;151.3;151.9" dur="12.4s" begin="2.26s" repeatCount="indefinite"/></circle>
+            <line x1="312" y1="152" x2="318" y2="128" stroke="var(--c-live-muted)" stroke-width="0.8" stroke-opacity="0.55"><animate attributeName="y1" values="151.9;150.8;153.0;151.3;151.9" dur="12.4s" begin="2.26s" repeatCount="indefinite"/></line>
+            <text x="322" y="128" fill="var(--c-live-muted)" font-size="11" dominant-baseline="middle">PYPL</text>
+          </g>
+          <polyline class="ln" pathLength="1" points="66,168 144,168 236,161.9 312,154.2" stroke="var(--c-live-muted)" stroke-width="0.9" fill="none" stroke-linejoin="round" style="animation-delay:385ms"><animate attributeName="points" values="66,168 144,168 236,161.9 312,154.2;66,168 144,168 236,161.5 312,153.2;66,168 144,168 236,162.4 312,155.2;66,168 144,168 236,161.7 312,153.6;66,168 144,168 236,161.9 312,154.2" dur="15.1s" begin="2.37s" repeatCount="indefinite"/></polyline>
+          <g class="tail" style="animation-delay:1005ms">
+            <circle cx="312" cy="154" r="2.6" fill="var(--c-live-muted)" style="animation-duration:17.0s;animation-delay:1.7s"><animate attributeName="cy" values="154.2;153.2;155.2;153.6;154.2" dur="15.1s" begin="2.37s" repeatCount="indefinite"/></circle>
+            <line x1="312" y1="154" x2="318" y2="146" stroke="var(--c-live-muted)" stroke-width="0.8" stroke-opacity="0.55"><animate attributeName="y1" values="154.2;153.2;155.2;153.6;154.2" dur="15.1s" begin="2.37s" repeatCount="indefinite"/></line>
+            <text x="322" y="146" fill="var(--c-live-muted)" font-size="11" dominant-baseline="middle">RELY</text>
+          </g>
+          <polyline class="ln" pathLength="1" points="66,168 144,168 236,167.1 312,165.7" stroke="var(--c-400)" stroke-width="0.9" fill="none" stroke-linejoin="round" style="animation-delay:440ms"><animate attributeName="points" values="66,168 144,168 236,167.1 312,165.7;66,168 144,168 236,167.1 312,165.5;66,168 144,168 236,167.2 312,165.9;66,168 144,168 236,167.1 312,165.6;66,168 144,168 236,167.1 312,165.7" dur="17.8s" begin="2.48s" repeatCount="indefinite"/></polyline>
+          <g class="tail" style="animation-delay:1060ms">
+            <circle cx="312" cy="166" r="2.6" fill="var(--c-400)" style="animation-duration:8.3s;animation-delay:0.1s"><animate attributeName="cy" values="165.7;165.5;165.9;165.6;165.7" dur="17.8s" begin="2.48s" repeatCount="indefinite"/></circle>
+            <line x1="312" y1="166" x2="318" y2="164" stroke="var(--c-400)" stroke-width="0.8" stroke-opacity="0.55"><animate attributeName="y1" values="165.7;165.5;165.9;165.6;165.7" dur="17.8s" begin="2.48s" repeatCount="indefinite"/></line>
+            <text x="322" y="164" fill="var(--c-400)" font-size="11" dominant-baseline="middle">FND</text>
+          </g>
+          <polyline class="ln" pathLength="1" points="66,168 144,168 236,167.5 312,166.8" stroke="var(--c-400)" stroke-width="0.9" fill="none" stroke-linejoin="round" style="animation-delay:495ms"><animate attributeName="points" values="66,168 144,168 236,167.5 312,166.8;66,168 144,168 236,167.5 312,166.8;66,168 144,168 236,167.6 312,166.9;66,168 144,168 236,167.5 312,166.8;66,168 144,168 236,167.5 312,166.8" dur="20.5s" begin="2.59s" repeatCount="indefinite"/></polyline>
+          <g class="tail" style="animation-delay:1115ms">
+            <circle cx="312" cy="167" r="2.6" fill="var(--c-400)" style="animation-duration:11.2s;animation-delay:11.5s"><animate attributeName="cy" values="166.8;166.8;166.9;166.8;166.8" dur="20.5s" begin="2.59s" repeatCount="indefinite"/></circle>
+            <line x1="312" y1="167" x2="318" y2="182" stroke="var(--c-400)" stroke-width="0.8" stroke-opacity="0.55"><animate attributeName="y1" values="166.8;166.8;166.9;166.8;166.8" dur="20.5s" begin="2.59s" repeatCount="indefinite"/></line>
+            <text x="322" y="182" fill="var(--c-400)" font-size="11" dominant-baseline="middle">SPCX</text>
+          </g>
+          <polyline class="ln" pathLength="1" points="66,168 144,168 236,173.1 312,177.2" stroke="var(--c-urgent-muted)" stroke-width="0.9" fill="none" stroke-linejoin="round" style="animation-delay:550ms"><animate attributeName="points" values="66,168 144,168 236,173.1 312,177.2;66,168 144,168 236,173.4 312,177.8;66,168 144,168 236,172.7 312,176.6;66,168 144,168 236,173.3 312,177.6;66,168 144,168 236,173.1 312,177.2" dur="23.2s" begin="2.70s" repeatCount="indefinite"/></polyline>
+          <g class="tail" style="animation-delay:1170ms">
+            <circle cx="312" cy="177" r="2.6" fill="var(--c-urgent-muted)" style="animation-duration:14.1s;animation-delay:9.9s"><animate attributeName="cy" values="177.2;177.8;176.6;177.6;177.2" dur="23.2s" begin="2.70s" repeatCount="indefinite"/></circle>
+            <line x1="312" y1="177" x2="318" y2="201" stroke="var(--c-urgent-muted)" stroke-width="0.8" stroke-opacity="0.55"><animate attributeName="y1" values="177.2;177.8;176.6;177.6;177.2" dur="23.2s" begin="2.70s" repeatCount="indefinite"/></line>
+            <text x="322" y="201" fill="var(--c-urgent-muted)" font-size="11" dominant-baseline="middle">NYXH</text>
+          </g>
+          <polyline class="ln" pathLength="1" points="66,168 144,168 236,172.6 312,179.5" stroke="var(--c-urgent-muted)" stroke-width="0.9" fill="none" stroke-linejoin="round" style="animation-delay:605ms"><animate attributeName="points" values="66,168 144,168 236,172.6 312,179.5;66,168 144,168 236,172.9 312,180.3;66,168 144,168 236,172.3 312,178.7;66,168 144,168 236,172.8 312,180.0;66,168 144,168 236,172.6 312,179.5" dur="25.9s" begin="2.81s" repeatCount="indefinite"/></polyline>
+          <g class="tail" style="animation-delay:1225ms">
+            <circle cx="312" cy="180" r="2.6" fill="var(--c-urgent-muted)" style="animation-duration:17.0s;animation-delay:8.3s"><animate attributeName="cy" values="179.5;180.3;178.7;180.0;179.5" dur="25.9s" begin="2.81s" repeatCount="indefinite"/></circle>
+            <line x1="312" y1="180" x2="318" y2="219" stroke="var(--c-urgent-muted)" stroke-width="0.8" stroke-opacity="0.55"><animate attributeName="y1" values="179.5;180.3;178.7;180.0;179.5" dur="25.9s" begin="2.81s" repeatCount="indefinite"/></line>
+            <text x="322" y="219" fill="var(--c-urgent-muted)" font-size="11" dominant-baseline="middle">TLN</text>
+          </g>
+          <polyline class="ln" pathLength="1" points="66,168 144,168 236,175.7 312,184.1" stroke="var(--c-urgent-muted)" stroke-width="0.9" fill="none" stroke-linejoin="round" style="animation-delay:660ms"><animate attributeName="points" values="66,168 144,168 236,175.7 312,184.1;66,168 144,168 236,176.3 312,185.2;66,168 144,168 236,175.2 312,183.0;66,168 144,168 236,176.0 312,184.7;66,168 144,168 236,175.7 312,184.1" dur="12.4s" begin="2.92s" repeatCount="indefinite"/></polyline>
+          <g class="tail" style="animation-delay:1280ms">
+            <circle cx="312" cy="184" r="2.6" fill="var(--c-urgent-muted)" style="animation-duration:8.3s;animation-delay:6.7s"><animate attributeName="cy" values="184.1;185.2;183.0;184.7;184.1" dur="12.4s" begin="2.92s" repeatCount="indefinite"/></circle>
+            <line x1="312" y1="184" x2="318" y2="237" stroke="var(--c-urgent-muted)" stroke-width="0.8" stroke-opacity="0.55"><animate attributeName="y1" values="184.1;185.2;183.0;184.7;184.1" dur="12.4s" begin="2.92s" repeatCount="indefinite"/></line>
+            <text x="322" y="237" fill="var(--c-urgent-muted)" font-size="11" dominant-baseline="middle">UPWK</text>
+          </g>
+          <polyline class="ln" pathLength="1" points="66,168 144,168 236,174.6 312,186.4" stroke="var(--c-urgent-muted)" stroke-width="0.9" fill="none" stroke-linejoin="round" style="animation-delay:715ms"><animate attributeName="points" values="66,168 144,168 236,174.6 312,186.4;66,168 144,168 236,175.1 312,187.7;66,168 144,168 236,174.2 312,185.1;66,168 144,168 236,174.9 312,187.1;66,168 144,168 236,174.6 312,186.4" dur="15.1s" begin="3.03s" repeatCount="indefinite"/></polyline>
+          <g class="tail" style="animation-delay:1335ms">
+            <circle cx="312" cy="186" r="2.6" fill="var(--c-urgent-muted)" style="animation-duration:11.2s;animation-delay:5.1s"><animate attributeName="cy" values="186.4;187.7;185.1;187.1;186.4" dur="15.1s" begin="3.03s" repeatCount="indefinite"/></circle>
+            <line x1="312" y1="186" x2="318" y2="255" stroke="var(--c-urgent-muted)" stroke-width="0.8" stroke-opacity="0.55"><animate attributeName="y1" values="186.4;187.7;185.1;187.1;186.4" dur="15.1s" begin="3.03s" repeatCount="indefinite"/></line>
+            <text x="322" y="255" fill="var(--c-urgent-muted)" font-size="11" dominant-baseline="middle">OSCR</text>
+          </g>
+          <polyline class="ln" pathLength="1" points="66,168 144,168 236,210.8 312,237.0" stroke="var(--c-urgent-muted)" stroke-width="0.9" fill="none" stroke-linejoin="round" style="animation-delay:770ms"><animate attributeName="points" values="66,168 144,168 236,210.8 312,237.0;66,168 144,168 236,213.8 312,241.8;66,168 144,168 236,207.8 312,232.2;66,168 144,168 236,212.5 312,239.8;66,168 144,168 236,210.8 312,237.0" dur="17.8s" begin="3.14s" repeatCount="indefinite"/></polyline>
+          <g class="tail" style="animation-delay:1390ms">
+            <circle cx="312" cy="237" r="2.6" fill="var(--c-urgent-muted)" style="animation-duration:14.1s;animation-delay:3.5s"><animate attributeName="cy" values="237.0;241.8;232.2;239.8;237.0" dur="17.8s" begin="3.14s" repeatCount="indefinite"/></circle>
+            <line x1="312" y1="237" x2="318" y2="274" stroke="var(--c-urgent-muted)" stroke-width="0.8" stroke-opacity="0.55"><animate attributeName="y1" values="237.0;241.8;232.2;239.8;237.0" dur="17.8s" begin="3.14s" repeatCount="indefinite"/></line>
+            <text x="322" y="274" fill="var(--c-urgent-muted)" font-size="11" dominant-baseline="middle">SG</text>
+          </g>
+          <polyline class="ln" pathLength="1" points="66,168 144,168 236,206.3 312,241.6" stroke="var(--c-urgent-muted)" stroke-width="0.9" fill="none" stroke-linejoin="round" style="animation-delay:825ms"><animate attributeName="points" values="66,168 144,168 236,206.3 312,241.6;66,168 144,168 236,209.0 312,246.8;66,168 144,168 236,203.6 312,236.4;66,168 144,168 236,207.8 312,244.5;66,168 144,168 236,206.3 312,241.6" dur="20.5s" begin="3.25s" repeatCount="indefinite"/></polyline>
+          <g class="tail" style="animation-delay:1445ms">
+            <circle cx="312" cy="242" r="2.6" fill="var(--c-urgent-muted)" style="animation-duration:17.0s;animation-delay:1.8s"><animate attributeName="cy" values="241.6;246.8;236.4;244.5;241.6" dur="20.5s" begin="3.25s" repeatCount="indefinite"/></circle>
+            <line x1="312" y1="242" x2="318" y2="292" stroke="var(--c-urgent-muted)" stroke-width="0.8" stroke-opacity="0.55"><animate attributeName="y1" values="241.6;246.8;236.4;244.5;241.6" dur="20.5s" begin="3.25s" repeatCount="indefinite"/></line>
+            <text x="322" y="292" fill="var(--c-urgent-muted)" font-size="11" dominant-baseline="middle">ETOR</text>
+          </g>
+          <line x1="66" y1="168" x2="312" y2="168" stroke="var(--c-review)" stroke-width="0.7"/>
+          <text x="72" y="161" fill="var(--c-review)" font-size="11">S&amp;P 500</text>
+        </svg></div><div class="figcap">Illustrative, not live data</div></div>
+      <div class="vis" data-vis="C" hidden><div class="vis-media"><svg class="viz" viewBox="0 0 393 372" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif" aria-hidden="true">
+          <rect x="67" y="36" width="240" height="140" fill="var(--c-live-muted)" opacity="0.05"/>
+          <rect x="67" y="176" width="240" height="128" fill="var(--c-urgent-muted)" opacity="0.05"/>
+          <line x1="67" y1="107" x2="307" y2="107" stroke="var(--c-900)" stroke-width="1"/>
+          <text x="59" y="107" fill="var(--c-700)" font-size="11" text-anchor="end" dominant-baseline="middle">+30</text>
+          <line x1="67" y1="142" x2="307" y2="142" stroke="var(--c-900)" stroke-width="1"/>
+          <text x="59" y="142" fill="var(--c-700)" font-size="11" text-anchor="end" dominant-baseline="middle">+15</text>
+          <line x1="67" y1="210" x2="307" y2="210" stroke="var(--c-900)" stroke-width="1"/>
+          <text x="59" y="210" fill="var(--c-700)" font-size="11" text-anchor="end" dominant-baseline="middle">-15</text>
+          <line x1="67" y1="245" x2="307" y2="245" stroke="var(--c-900)" stroke-width="1"/>
+          <text x="59" y="245" fill="var(--c-700)" font-size="11" text-anchor="end" dominant-baseline="middle">-30</text>
+          <line x1="103" y1="36" x2="103" y2="304" stroke="var(--c-900)" stroke-width="1"/>
+          <text x="103" y="328" fill="var(--c-700)" font-size="11" text-anchor="middle">20</text>
+          <line x1="154" y1="36" x2="154" y2="304" stroke="var(--c-900)" stroke-width="1"/>
+          <text x="154" y="328" fill="var(--c-700)" font-size="11" text-anchor="middle">40</text>
+          <line x1="205" y1="36" x2="205" y2="304" stroke="var(--c-900)" stroke-width="1"/>
+          <text x="205" y="328" fill="var(--c-700)" font-size="11" text-anchor="middle">60</text>
+          <line x1="256" y1="36" x2="256" y2="304" stroke="var(--c-900)" stroke-width="1"/>
+          <text x="256" y="328" fill="var(--c-700)" font-size="11" text-anchor="middle">80</text>
+          <line x1="307" y1="36" x2="307" y2="304" stroke="var(--c-900)" stroke-width="1"/>
+          <text x="307" y="328" fill="var(--c-700)" font-size="11" text-anchor="middle">100</text>
+          <line class="ln" pathLength="1" x1="67" y1="176" x2="307" y2="176" stroke="var(--c-review)" stroke-width="0.8" style="animation-delay:0ms"/>
+          <text x="73" y="169" fill="var(--c-review)" font-size="11">S&amp;P 500</text>
+          <g class="tail" style="animation-delay:260ms">
+            <g class="drift" style="--amp:3.2px;animation-duration:6.4s;animation-delay:0.0s">
+              <circle cx="141" cy="112" r="4" fill="var(--c-live-muted)" style="animation-duration:9.7s;animation-delay:0.0s"/>
+            </g>
+            <line x1="147" y1="112" x2="317" y2="34" stroke="var(--c-live-muted)" stroke-width="0.8" stroke-opacity="0.5"/>
+            <text x="321" y="34" fill="var(--c-live-muted)" font-size="11" dominant-baseline="middle">WIX</text>
+          </g>
+          <g class="tail" style="animation-delay:315ms">
+            <g class="drift" style="--amp:2.4px;animation-duration:7.8s;animation-delay:-1.9s">
+              <circle cx="172" cy="146" r="4" fill="var(--c-live-muted)" style="animation-duration:12.0s;animation-delay:9.6s"/>
+            </g>
+            <line x1="178" y1="146" x2="317" y2="49" stroke="var(--c-live-muted)" stroke-width="0.8" stroke-opacity="0.5"/>
+            <text x="321" y="49" fill="var(--c-live-muted)" font-size="11" dominant-baseline="middle">SPT</text>
+          </g>
+          <g class="tail" style="animation-delay:370ms">
+            <g class="drift" style="--amp:4.1px;animation-duration:5.6s;animation-delay:-3.4s">
+              <circle cx="141" cy="153" r="4" fill="var(--c-live-muted)" style="animation-duration:14.3s;animation-delay:8.3s"/>
+            </g>
+            <line x1="147" y1="153" x2="317" y2="65" stroke="var(--c-live-muted)" stroke-width="0.8" stroke-opacity="0.5"/>
+            <text x="321" y="65" fill="var(--c-live-muted)" font-size="11" dominant-baseline="middle">ELWT</text>
+          </g>
+          <g class="tail" style="animation-delay:425ms">
+            <g class="drift" style="--amp:2.8px;animation-duration:8.4s;animation-delay:-0.8s">
+              <circle cx="156" cy="158" r="4" fill="var(--c-live-muted)" style="animation-duration:16.6s;animation-delay:6.9s"/>
+            </g>
+            <line x1="162" y1="158" x2="317" y2="80" stroke="var(--c-live-muted)" stroke-width="0.8" stroke-opacity="0.5"/>
+            <text x="321" y="80" fill="var(--c-live-muted)" font-size="11" dominant-baseline="middle">TENB</text>
+          </g>
+          <g class="tail" style="animation-delay:480ms">
+            <g class="drift" style="--amp:3.6px;animation-duration:6.9s;animation-delay:-2.6s">
+              <circle cx="167" cy="160" r="4" fill="var(--c-live-muted)" style="animation-duration:18.9s;animation-delay:5.5s"/>
+            </g>
+            <line x1="173" y1="160" x2="317" y2="96" stroke="var(--c-live-muted)" stroke-width="0.8" stroke-opacity="0.5"/>
+            <text x="321" y="96" fill="var(--c-live-muted)" font-size="11" dominant-baseline="middle">MNDY</text>
+          </g>
+          <g class="tail" style="animation-delay:535ms">
+            <g class="drift" style="--amp:2.2px;animation-duration:7.2s;animation-delay:-4.1s">
+              <circle cx="179" cy="162" r="4" fill="var(--c-live-muted)" style="animation-duration:9.7s;animation-delay:4.1s"/>
+            </g>
+            <line x1="185" y1="162" x2="317" y2="111" stroke="var(--c-live-muted)" stroke-width="0.8" stroke-opacity="0.5"/>
+            <text x="321" y="111" fill="var(--c-live-muted)" font-size="11" dominant-baseline="middle">PYPL</text>
+          </g>
+          <g class="tail" style="animation-delay:590ms">
+            <g class="drift" style="--amp:4.4px;animation-duration:5.9s;animation-delay:-1.2s">
+              <circle cx="141" cy="171" r="4" fill="var(--c-live-muted)" style="animation-duration:12.0s;animation-delay:2.8s"/>
+            </g>
+            <line x1="147" y1="171" x2="317" y2="127" stroke="var(--c-live-muted)" stroke-width="0.8" stroke-opacity="0.5"/>
+            <text x="321" y="127" fill="var(--c-live-muted)" font-size="11" dominant-baseline="middle">EXE</text>
+          </g>
+          <g class="tail" style="animation-delay:645ms">
+            <g class="drift" style="--amp:1.8px;animation-duration:8.8s;animation-delay:-3.9s">
+              <circle cx="174" cy="176" r="5" fill="var(--c-400)" style="animation-duration:14.3s;animation-delay:1.4s"/>
+            </g>
+            <line x1="181" y1="176" x2="317" y2="142" stroke="var(--c-400)" stroke-width="0.8" stroke-opacity="0.5"/>
+            <text x="321" y="142" fill="var(--c-400)" font-size="11" dominant-baseline="middle">FND</text>
+          </g>
+          <g class="tail" style="animation-delay:700ms">
+            <g class="drift" style="--amp:2.6px;animation-duration:6.1s;animation-delay:-2.2s">
+              <circle cx="177" cy="178" r="3" fill="var(--c-400)" style="animation-duration:16.6s;animation-delay:0.0s"/>
+            </g>
+            <line x1="182" y1="178" x2="317" y2="158" stroke="var(--c-400)" stroke-width="0.8" stroke-opacity="0.5"/>
+            <text x="321" y="158" fill="var(--c-400)" font-size="11" dominant-baseline="middle">SPCX</text>
+          </g>
+          <g class="tail" style="animation-delay:755ms">
+            <g class="drift" style="--amp:3.9px;animation-duration:7.5s;animation-delay:-0.5s">
+              <circle cx="154" cy="181" r="3" fill="var(--c-urgent-muted)" style="animation-duration:18.9s;animation-delay:9.7s"/>
+            </g>
+            <line x1="159" y1="181" x2="317" y2="173" stroke="var(--c-urgent-muted)" stroke-width="0.8" stroke-opacity="0.5"/>
+            <text x="321" y="173" fill="var(--c-urgent-muted)" font-size="11" dominant-baseline="middle">RELY</text>
+          </g>
+          <g class="tail" style="animation-delay:810ms">
+            <g class="drift" style="--amp:3.0px;animation-duration:6.6s;animation-delay:-4.6s">
+              <circle cx="144" cy="183" r="3" fill="var(--c-urgent-muted)" style="animation-duration:9.7s;animation-delay:8.3s"/>
+            </g>
+            <line x1="149" y1="183" x2="317" y2="189" stroke="var(--c-urgent-muted)" stroke-width="0.8" stroke-opacity="0.5"/>
+            <text x="321" y="189" fill="var(--c-urgent-muted)" font-size="11" dominant-baseline="middle">NYXH</text>
+          </g>
+          <g class="tail" style="animation-delay:865ms">
+            <g class="drift" style="--amp:4.6px;animation-duration:5.4s;animation-delay:-1.6s">
+              <circle cx="138" cy="185" r="5" fill="var(--c-urgent-muted)" style="animation-duration:12.0s;animation-delay:6.9s"/>
+            </g>
+            <line x1="145" y1="185" x2="317" y2="204" stroke="var(--c-urgent-muted)" stroke-width="0.8" stroke-opacity="0.5"/>
+            <text x="321" y="204" fill="var(--c-urgent-muted)" font-size="11" dominant-baseline="middle">TLN</text>
+          </g>
+          <g class="tail" style="animation-delay:920ms">
+            <g class="drift" style="--amp:2.1px;animation-duration:8.1s;animation-delay:-3.1s">
+              <circle cx="172" cy="192" r="5" fill="var(--c-urgent-muted)" style="animation-duration:14.3s;animation-delay:5.6s"/>
+            </g>
+            <line x1="179" y1="192" x2="317" y2="220" stroke="var(--c-urgent-muted)" stroke-width="0.8" stroke-opacity="0.5"/>
+            <text x="321" y="220" fill="var(--c-urgent-muted)" font-size="11" dominant-baseline="middle">UPWK</text>
+          </g>
+          <g class="tail" style="animation-delay:975ms">
+            <g class="drift" style="--amp:3.4px;animation-duration:7.0s;animation-delay:-2.9s">
+              <circle cx="172" cy="194" r="3" fill="var(--c-urgent-muted)" style="animation-duration:16.6s;animation-delay:4.2s"/>
+            </g>
+            <line x1="177" y1="194" x2="317" y2="235" stroke="var(--c-urgent-muted)" stroke-width="0.8" stroke-opacity="0.5"/>
+            <text x="321" y="235" fill="var(--c-urgent-muted)" font-size="11" dominant-baseline="middle">OSCR</text>
+          </g>
+          <g class="tail" style="animation-delay:1030ms">
+            <g class="drift" style="--amp:2.9px;animation-duration:6.3s;animation-delay:-0.3s">
+              <circle cx="179" cy="222" r="4" fill="var(--c-urgent-muted)" style="animation-duration:18.9s;animation-delay:2.8s"/>
+            </g>
+            <line x1="185" y1="222" x2="317" y2="266" stroke="var(--c-urgent-muted)" stroke-width="0.8" stroke-opacity="0.5"/>
+            <text x="321" y="266" fill="var(--c-urgent-muted)" font-size="11" dominant-baseline="middle">SG</text>
+          </g>
+          <g class="tail" style="animation-delay:1085ms">
+            <g class="drift" style="--amp:4.2px;animation-duration:7.7s;animation-delay:-4.4s">
+              <circle cx="179" cy="220" r="3" fill="var(--c-urgent-muted)" style="animation-duration:9.7s;animation-delay:1.4s"/>
+            </g>
+            <line x1="184" y1="220" x2="317" y2="251" stroke="var(--c-urgent-muted)" stroke-width="0.8" stroke-opacity="0.5"/>
+            <text x="321" y="251" fill="var(--c-urgent-muted)" font-size="11" dominant-baseline="middle">ETOR</text>
+          </g>
+        </svg></div><div class="figcap">Confidence against outcome &middot; illustrative, not live data</div></div>
+  </div>
+  <div class="intro-cta">
+    <div class="cta primary" data-go="createstub"><span>Create Account</span></div>
+    <div class="cta secondary" data-go="cold"><span>Log In</span></div>
+  </div>
+</div>
+
+<!-- 2. cold log in -->
+<div class="screen" id="s-cold">
+  <div class="auth-banner" id="authBanner" hidden>
+    <div class="auth-banner-text">Email or password is incorrect.</div>
+  </div>
+    <div class="header-row">
+      <div class="icon-btn" data-back><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M12 4L6 10L12 16"/></svg></div>
+      <div class="icon-btn"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="14" height="10" rx="2"/><path d="M6 14V17L9.5 14"/></svg></div>
+    </div>
+
+  <div class="wordmark">
+            <svg viewBox="0 0 689 43" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.10058 0.565809V41.7549H-6.79493e-06V0.565809H7.10058ZM51.4977 0.565809V41.7549H44.3971L25.9242 12.2492V41.7549H18.8236V0.565809H25.9242L44.4536 30.128V0.565809H51.4977ZM78.9495 0.565809V41.7549H71.9055V0.565809H78.9495ZM91.8777 0.565809V6.22365H59.0905V0.565809H91.8777ZM127.166 36.1253V41.7549H105.298V36.1253H127.166ZM107.307 0.565809V41.7549H100.206V0.565809H107.307ZM124.308 17.7656V23.3103H105.298V17.7656H124.308ZM127.024 0.565809V6.22365H105.298V0.565809H127.024ZM161.661 36.1253V41.7549H140.982V36.1253H161.661ZM142.962 0.565809V41.7549H135.862V0.565809H142.962ZM195.846 36.1253V41.7549H175.167V36.1253H195.846ZM177.147 0.565809V41.7549H170.046V0.565809H177.147ZM211.813 0.565809V41.7549H204.712V0.565809H211.813ZM255.163 20.7077V36.4365C254.578 37.2098 253.664 38.0584 252.419 38.9825C251.193 39.8878 249.562 40.6705 247.525 41.3305C245.488 41.9906 242.951 42.3207 239.915 42.3207C236.483 42.3207 233.437 41.5474 230.778 40.001C228.137 38.4545 226.072 36.2102 224.582 33.2681C223.111 30.3072 222.376 26.7427 222.376 22.5748V19.7176C222.376 15.5685 223.055 12.0229 224.413 9.08086C225.789 6.13878 227.741 3.8945 230.268 2.34803C232.814 0.782693 235.841 2.52724e-05 239.349 2.52724e-05C242.725 2.52724e-05 245.516 0.565809 247.723 1.69738C249.948 2.81009 251.664 4.35656 252.871 6.33681C254.078 8.31705 254.842 10.5802 255.163 13.1262H248.204C247.977 11.6929 247.534 10.4105 246.874 9.27888C246.233 8.14731 245.309 7.26092 244.102 6.6197C242.914 5.95962 241.367 5.62958 239.462 5.62958C237.275 5.62958 235.445 6.18593 233.974 7.29864C232.503 8.39249 231.4 9.98611 230.664 12.0795C229.929 14.1541 229.561 16.6812 229.561 19.661V22.5748C229.561 25.5923 229.986 28.1572 230.834 30.2695C231.683 32.3629 232.899 33.9565 234.484 35.0503C236.068 36.1442 237.973 36.6911 240.198 36.6911C241.82 36.6911 243.149 36.5591 244.187 36.2951C245.224 36.0122 246.044 35.6821 246.648 35.3049C247.27 34.9089 247.751 34.5317 248.091 34.1734V25.9978H239.519V20.7077H255.163ZM292.884 36.1253V41.7549H271.016V36.1253H292.884ZM273.025 0.565809V41.7549H265.924V0.565809H273.025ZM290.027 17.7656V23.3103H271.016V17.7656H290.027ZM292.742 0.565809V6.22365H271.016V0.565809H292.742ZM334.254 0.565809V41.7549H327.153L308.68 12.2492V41.7549H301.58V0.565809H308.68L327.21 30.128V0.565809H334.254ZM361.706 0.565809V41.7549H354.662V0.565809H361.706ZM374.634 0.565809V6.22365H341.847V0.565809H374.634ZM388.818 0.565809V41.7549H384.348V0.565809H388.818ZM433.187 0.565809V41.7549H429.679L406.029 6.59141V41.7549H402.493V0.565809H406.029L429.707 35.7293V0.565809H433.187ZM459.479 36.6062L472.464 0.565809H476.254L460.95 41.7549H458.093L459.479 36.6062ZM446.07 0.565809L458.998 36.6062L460.412 41.7549H457.583L442.279 0.565809H446.07ZM510.863 38.7562V41.7549H487.694V38.7562H510.863ZM488.741 0.565809V41.7549H485.233V0.565809H488.741ZM507.978 19.0387V22.0373H487.694V19.0387H507.978ZM510.722 0.565809V3.56446H487.694V0.565809H510.722ZM544.426 31.5991C544.426 30.1092 544.086 28.8267 543.407 27.7517C542.728 26.6767 541.568 25.7243 539.928 24.8945C538.287 24.0458 536.043 23.216 533.195 22.4051C530.441 21.6318 528.056 20.7549 526.038 19.7742C524.02 18.7746 522.464 17.5488 521.37 16.0966C520.276 14.6255 519.729 12.8056 519.729 10.6368C519.729 8.5245 520.314 6.67628 521.483 5.09208C522.671 3.48903 524.303 2.2443 526.377 1.35791C528.47 0.452652 530.866 2.52724e-05 533.563 2.52724e-05C536.448 2.52724e-05 538.947 0.55638 541.059 1.66909C543.171 2.76294 544.803 4.24341 545.953 6.11049C547.104 7.95872 547.679 10.0238 547.679 12.3058H544.199C544.199 10.5142 543.775 8.92055 542.926 7.52495C542.096 6.12935 540.889 5.02607 539.305 4.21512C537.721 3.40416 535.807 2.99868 533.563 2.99868C531.299 2.99868 529.395 3.34758 527.848 4.04538C526.321 4.72432 525.17 5.63901 524.397 6.78943C523.624 7.93986 523.237 9.20344 523.237 10.5802C523.237 11.8815 523.576 13.0508 524.255 14.088C524.953 15.1253 526.104 16.0683 527.707 16.917C529.329 17.7656 531.526 18.5577 534.298 19.2933C537.202 20.0854 539.673 21.0095 541.71 22.0656C543.747 23.1217 545.293 24.4136 546.349 25.9412C547.424 27.45 547.962 29.3171 547.962 31.5425C547.962 33.7868 547.349 35.7199 546.123 37.3418C544.897 38.9448 543.219 40.1801 541.087 41.0477C538.956 41.8963 536.523 42.3207 533.789 42.3207C531.96 42.3207 530.13 42.0849 528.301 41.6134C526.49 41.142 524.84 40.4064 523.35 39.4069C521.86 38.4073 520.663 37.1343 519.757 35.5878C518.852 34.0225 518.4 32.146 518.4 29.9583H521.907C521.907 31.6934 522.256 33.1644 522.954 34.3714C523.652 35.5595 524.576 36.5214 525.726 37.2569C526.896 37.9736 528.178 38.5016 529.574 38.8411C530.988 39.1617 532.393 39.322 533.789 39.322C535.939 39.322 537.806 39.0014 539.39 38.3602C540.993 37.719 542.228 36.8231 543.096 35.6727C543.982 34.5034 544.426 33.1455 544.426 31.5991ZM572.189 0.565809V41.7549H568.737V0.565809H572.189ZM586.305 0.565809V3.56446H554.621V0.565809H586.305ZM600.15 0.565809V41.7549H596.642V0.565809H600.15ZM644.914 0.565809V41.7549H641.407L617.757 6.59141V41.7549H614.221V0.565809H617.757L641.435 35.7293V0.565809H644.914ZM688.067 22.1505V36.8326C687.595 37.5115 686.775 38.2847 685.606 39.1523C684.455 40.001 682.909 40.7459 680.966 41.3871C679.024 42.0095 676.619 42.3207 673.752 42.3207C670.509 42.3207 667.642 41.5569 665.153 40.0292C662.663 38.4828 660.711 36.3045 659.297 33.4944C657.901 30.6655 657.203 27.3274 657.203 23.4801V18.5295C657.203 14.7387 657.845 11.4666 659.127 8.7131C660.428 5.94076 662.277 3.80021 664.672 2.29145C667.067 0.763834 669.905 2.52724e-05 673.187 2.52724e-05C676.261 2.52724e-05 678.835 0.53752 680.91 1.61251C683.003 2.66864 684.634 4.11139 685.804 5.94076C686.992 7.77013 687.737 9.84467 688.039 12.1644H684.531C684.267 10.5236 683.71 9.01485 682.862 7.63811C682.032 6.24251 680.834 5.12037 679.269 4.27169C677.704 3.42302 675.676 2.99868 673.187 2.99868C670.528 2.99868 668.264 3.64933 666.397 4.95064C664.549 6.23308 663.135 8.03416 662.154 10.3539C661.192 12.6736 660.711 15.3799 660.711 18.4729V23.4801C660.711 26.6673 661.249 29.4491 662.324 31.8254C663.418 34.2017 664.936 36.0499 666.878 37.3701C668.84 38.6714 671.131 39.322 673.752 39.322C675.846 39.322 677.619 39.124 679.071 38.7279C680.542 38.3319 681.73 37.8604 682.635 37.3135C683.541 36.7477 684.182 36.2291 684.559 35.7576V25.1491H673.498V22.1505H688.067Z" fill="currentColor"/>
+            </svg>
+          </div>
+  <div class="field" id="fEmail">
+    <div class="field-label">Email</div>
+    <div class="field-row"><input id="email" type="email" inputmode="email" autocomplete="email"
+      autocapitalize="off" autocorrect="off" spellcheck="false"></div>
+    <div class="field-underline"></div>
+  </div>
+  <div class="field" id="fPass">
+    <div class="field-label">Password</div>
+    <div class="field-row">
+      <input id="pass" type="password" autocomplete="current-password">
+      <div class="field-show" id="showBtn" hidden>Show</div>
+    </div>
+    <div class="field-underline"></div>
+    <div class="error-row" id="fieldError" hidden>
+      <div class="error-dot"></div>
+      <div class="error-msg">Password must be at least 8 characters</div>
+    </div>
+  </div>
+  <div class="cta primary off" id="coldCta"><span>Log In</span></div>
+  <div class="forgot"><a href="#"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M6 2L10 6L6 10" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg> Forgot Password</a></div>
+</div>
+
+<!-- 4. signed in -->
+<div class="screen" id="s-done">
+  <div class="end">
+    <div class="end-t">Signed in</div>
+    <div class="end-n">The app itself is outside this prototype. This is where the dashboard would open.</div>
+    <div class="cta secondary" data-go="restart"><span>Start over</span></div>
+  </div>
+</div>
+
+<!-- 5. create account, out of scope -->
+<div class="screen" id="s-createstub">
+    <div class="header-row">
+      <div class="icon-btn" data-back><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M12 4L6 10L12 16"/></svg></div>
+      <div class="icon-btn"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="14" height="10" rx="2"/><path d="M6 14V17L9.5 14"/></svg></div>
+    </div>
+
+  <div class="end">
+    <div class="end-t">Create Account</div>
+    <div class="end-n">The sign up flow is unchanged and outside this prototype.</div>
+    <div class="cta secondary" data-go="intro"><span>Back to start</span></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var screens = {intro:$('s-intro'), cold:$('s-cold'),
+                 done:$('s-done'), createstub:$('s-createstub')};
+  var history = [];
+
+  function show(name, remember){
+    if(remember !== false){ var cur = current(); if(cur) history.push(cur); }
+    Object.keys(screens).forEach(function(k){ screens[k].classList.toggle('on', k === name); });
+    window.scrollTo(0,0);
+  }
+  function current(){
+    return Object.keys(screens).filter(function(k){ return screens[k].classList.contains('on'); })[0];
+  }
+
+  // intro visual switcher, review chrome only
+  function setVis(k){
+    document.querySelectorAll('[data-vis]').forEach(function(v){ v.hidden = v.dataset.vis !== k; });
+    document.querySelectorAll('[data-vis-btn]').forEach(function(b){
+      b.classList.toggle('on', b.dataset.visBtn === k); });
+  }
+  document.querySelectorAll('[data-vis-btn]').forEach(function(b){
+    b.addEventListener('click', function(){ setVis(b.dataset.visBtn); }); });
+  setVis('A');
+
+  document.querySelectorAll('[data-go]').forEach(function(el){
+    el.addEventListener('click', function(){
+      var t = el.dataset.go;
+      if(t === 'restart'){ history = []; resetCold(); show('intro', false); return; }
+      show(t);
+    });
+  });
+  document.querySelectorAll('[data-back]').forEach(function(el){
+    el.addEventListener('click', function(){ show(history.pop() || 'intro', false); });
+  });
+
+  // ---- cold log in ----
+  var email = $('email'), pass = $('pass'), showBtn = $('showBtn'),
+      cta = $('coldCta'), fieldError = $('fieldError'), banner = $('authBanner'),
+      fPass = $('fPass'), attempts = 0;
+
+  function resetCold(){
+    email.value = ''; pass.value = ''; pass.type = 'password';
+    showBtn.hidden = true; showBtn.textContent = 'Show';
+    fieldError.hidden = true; fPass.classList.remove('is-error');
+    banner.hidden = true; attempts = 0; sync();
+  }
+  function sync(){
+    showBtn.hidden = pass.value.length === 0;
+    cta.classList.toggle('off', !(email.value.trim() && pass.value.length >= 8));
+  }
+  [email, pass].forEach(function(el){
+    el.addEventListener('input', function(){
+      sync(); banner.hidden = true;
+      if(pass.value.length >= 8 || pass.value.length === 0){
+        fieldError.hidden = true; fPass.classList.remove('is-error');
+      }
+    });
+    el.addEventListener('focus', function(){ el.closest('.field').classList.add('is-focus'); });
+    el.addEventListener('blur',  function(){ el.closest('.field').classList.remove('is-focus'); });
+  });
+  pass.addEventListener('blur', function(){
+    var n = pass.value.length;
+    if(n > 0 && n < 8){ fieldError.hidden = false; fPass.classList.add('is-error'); }
+  });
+  showBtn.addEventListener('click', function(){
+    var open = pass.type === 'text';
+    pass.type = open ? 'password' : 'text';
+    showBtn.textContent = open ? 'Show' : 'Hide';
+  });
+  // first attempt fails so the error state is reachable, the next one signs in
+  cta.addEventListener('click', function(){
+    attempts++;
+    if(attempts === 1){ banner.hidden = false; window.scrollTo(0,0); }
+    else { banner.hidden = true; show('done'); }
+  });
+
+  resetCold();   // must run after the vars above exist
+
+  // SMIL ignores prefers-reduced-motion
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.querySelectorAll('animate').forEach(function(a){ a.remove(); });
+  }
+})();
+</script>
+</body>
+</html>
