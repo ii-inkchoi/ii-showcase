@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactiveWidget=resizes-content" />
 <meta name="theme-color" content="#000000" />
 <title>II Login, clickable prototype</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet" />
@@ -18,11 +18,12 @@
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   [hidden]{display:none !important}   /* class rules must never out-specify hidden */
   /* phone-width column, centred. On a desktop the surround makes it read as a device preview. */
+  html{scroll-padding-bottom:24px}
   html,body{background:var(--c-elev);font-family:var(--font);-webkit-text-size-adjust:100%}
   @media (min-width:520px){ body{background:var(--c-elev)} }
 
   /* ---- review chrome. Sits outside the product, never inside the screen ---- */
-  .rev{position:sticky;top:0;z-index:40;height:40px;background:var(--c-1000);
+  .rev{position:sticky;top:0;z-index:40;height:40px;flex:0 0 auto;background:var(--c-1000);
        display:flex;gap:16px;align-items:center;padding:0 12px;
        font-size:11px;line-height:1;color:var(--c-700)}
   .rev-set{display:flex;gap:4px;align-items:center}
@@ -32,7 +33,7 @@
   .rev button.on{color:var(--c-black);background:var(--c-400);border-color:var(--c-400)}
 
   .screen{display:none;flex-direction:column;width:100%;max-width:393px;margin:0 auto;
-          background:var(--c-black);min-height:calc(100dvh - 40px);
+          background:var(--c-black);min-height:var(--avail,calc(100dvh - 40px));
           padding:calc(46px + env(safe-area-inset-top)) 21.5px calc(24px + env(safe-area-inset-bottom));}
   @media (min-width:520px){
     .screen{width:393px;height:852px;min-height:0;margin:40px auto;
@@ -66,6 +67,12 @@
   .field-row input{flex:1 1 auto;background:none;border:0;outline:0;padding:0;width:100%;
                    font-family:inherit;font-size:17px;line-height:1;color:var(--c-white)}
   .field-value{font-size:17px;line-height:1;color:var(--c-white)}
+  .field-row input:-webkit-autofill,
+  .field-row input:-webkit-autofill:hover,
+  .field-row input:-webkit-autofill:focus{
+    -webkit-text-fill-color:var(--c-white);caret-color:var(--c-white);
+    -webkit-box-shadow:0 0 0 1000px var(--c-black) inset;box-shadow:0 0 0 1000px var(--c-black) inset;
+    transition:background-color 100000s ease-in-out 0s}
   .field-show{font-size:13px;line-height:1;color:var(--c-400);cursor:pointer;flex:0 0 auto}
   .field-underline{margin-top:8px;height:1px;width:100%;background:var(--c-800)}
   .field.is-focus .field-underline{background:var(--c-white)}
@@ -477,12 +484,26 @@
   var $ = function(id){ return document.getElementById(id); };
   var screens = {intro:$('s-intro'), cold:$('s-cold'),
                  done:$('s-done'), createstub:$('s-createstub')};
-  var history = [];
+  var history = [], rev = document.querySelector('.rev');
+
+  // The stack must always be reachable: size it to what the keyboard leaves visible,
+  // so anything that no longer fits becomes scroll rather than disappearing.
+  function fit(){
+    var vv = window.visualViewport, h = vv ? vv.height : window.innerHeight;
+    document.documentElement.style.setProperty('--avail', (h - (rev.hidden ? 0 : 40)) + 'px');
+  }
+  if(window.visualViewport){
+    visualViewport.addEventListener('resize', fit);
+    visualViewport.addEventListener('scroll', fit);
+  }
+  window.addEventListener('orientationchange', fit);
 
   function show(name, remember){
     if(remember !== false){ var cur = current(); if(cur) history.push(cur); }
     Object.keys(screens).forEach(function(k){ screens[k].classList.toggle('on', k === name); });
+    rev.hidden = (name !== 'intro');
     window.scrollTo(0,0);
+    fit();
   }
   function current(){
     return Object.keys(screens).filter(function(k){ return screens[k].classList.contains('on'); })[0];
@@ -551,6 +572,7 @@
   });
 
   resetCold();   // must run after the vars above exist
+  fit();
 
   // SMIL ignores prefers-reduced-motion
   if(matchMedia('(prefers-reduced-motion: reduce)').matches){
