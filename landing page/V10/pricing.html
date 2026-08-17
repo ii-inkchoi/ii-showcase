@@ -387,7 +387,7 @@ body.menu-open{overflow:hidden}
 
 <script>(function(){document.querySelectorAll('.p-title, .p-deck, .p-lead, .p-item .d, .p-block .body p, .p-qa .a').forEach(function(el){el.innerHTML=el.innerHTML.replace(/ ([^\s<]+)(\s*)$/,' $1$2');});})();</script>
 <script>if('IntersectionObserver' in window){var rio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');rio.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -6% 0px'});document.querySelectorAll('.ri').forEach(function(el){rio.observe(el);});}else{document.querySelectorAll('.ri').forEach(function(el){el.classList.add('in');});}</script>
-<script src="../V8/grid-overlay.js"></script>
+<script src="grid-overlay.js"></script>
 <script>(function(){var nav=document.querySelector(".nav");if(nav){function onScroll(){nav.classList.toggle("scrolled",window.scrollY>24);}window.addEventListener("scroll",onScroll,{passive:true});onScroll();}})();</script>
 <script>(function(){var burger=document.querySelector('.nav .burger');var ov=document.getElementById('menuov');if(!burger||!ov)return;function toggle(){var open=document.body.classList.toggle('menu-open');ov.classList.toggle('open',open);ov.setAttribute('aria-hidden',String(!open));burger.setAttribute('aria-expanded',String(open));}burger.addEventListener('click',toggle);document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.body.classList.contains('menu-open'))toggle();});})();</script>
 
