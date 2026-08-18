@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<!-- interactiveWidget=resizes-content: without it Android keeps the layout viewport
+     at full height when the keyboard opens, so there is no scroll distance and
+     anything under the keyboard cannot be reached. iOS ignores it, so we also
+     track visualViewport in script. -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactiveWidget=resizes-content" />
+<title>Create Account</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --c-black:#000000;--c-1000:#1C1C1C;--c-900:#232627;
+    --c-800:#565B5E;--c-700:#929292;--c-400:#C7C7C7;--c-200:#E3E2E2;--c-white:#FFFFFF;
+    --c-urgent:#FF3533;
+    /* shipped app's failure red. Estimated from a screenshot, not sampled from code. */
+    --c-alert:#DE5C56;
+    --r-cta:5px;
+    /* review chrome only, never used inside the screen */
+    --c-canvas:#EFEFEF;
+    --font:'Inter',system-ui,-apple-system,sans-serif;
+    /* set from visualViewport in script; falls back to the dynamic viewport unit */
+    --vvh:100dvh;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--c-black);font-family:var(--font);
+            -webkit-font-smoothing:antialiased;overscroll-behavior:none}
+
+  .app{position:relative;height:var(--vvh);display:flex;flex-direction:column;
+       background:var(--c-black);padding-top:env(safe-area-inset-top);overflow:hidden}
+
+  /* the field area scrolls; the action group never leaves the screen */
+  .content{flex:1 1 auto;overflow-y:auto;min-height:0;padding:0 21.5px;
+           scrollbar-width:none}
+  .content::-webkit-scrollbar{display:none}
+
+  /* nav row: back, centred title, help. The shipped screen puts the title under the
+     header and a Login link top right; both moved (Inkyung, 2026-08-17). Frees 41,
+     which takes the agreement from clipped to fully visible under the measured 344
+     keyboard. Platform nav pattern, not a Wealthsimple borrow. */
+  .header-row{position:relative;margin-top:-1px;margin-bottom:32px;display:flex;
+              align-items:center;justify-content:space-between}
+  .icon-btn{width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+            color:var(--c-400);background:none;border:0;cursor:pointer}
+  /* pull the 44 tap boxes outward so the 20 glyphs sit on the 21.5 content edge */
+  .header-row .icon-btn:first-child{margin-left:-18px}
+  .header-row .icon-btn:last-child{margin-right:-15px}
+  .icon-btn svg{display:block;width:20px;height:20px}
+
+  /* inset 44 both sides so centring stays symmetric and the title cannot collide
+     with the back button. 500, not 400: at 400 it reads lighter than the glyph
+     beside it and stops reading as a nav label. */
+  .screen-title{position:absolute;left:44px;right:44px;top:50%;transform:translateY(-50%);
+                text-align:center;font-size:17px;line-height:17px;font-weight:500;
+                color:var(--c-200);cursor:default;
+                -webkit-user-select:none;user-select:none}
+
+  /* 47 total = label 13 / 8 / value 17 / 8 / underline 1.
+     The nav row carries the 32 to the first field; set explicitly, never by collapse. */
+  .field{margin-top:0}
+  .field + .field{margin-top:24px}
+  .field-label{font-size:13px;line-height:13px;color:var(--c-700);margin-bottom:8px;
+               transition:color .12s}
+  .field.is-focus .field-label{color:var(--c-400)}
+  .field-row{display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
+
+  /* the input must be exactly 17 tall. Left to its intrinsic height it renders 20,
+     the field becomes 50, and every row below drifts. */
+  .inp{flex:1 1 auto;min-width:0;height:17px;line-height:17px;font-family:var(--font);
+       font-size:17px;font-weight:400;color:var(--c-white);background:none;border:0;
+       outline:none;padding:0;border-radius:0}
+  .inp::placeholder{color:transparent}
+  /* masked characters at 12 / 3px tracking. At the field's 17 the default bullet
+     reads as a blob. Height is fixed so toggling Show causes no reflow. */
+  .inp[type="password"]{font-size:12px;letter-spacing:3px}
+  .inp:-webkit-autofill{-webkit-text-fill-color:var(--c-white);
+                        transition:background-color 9999s}
+
+  /* Show exists only once the field has a value. Nothing to reveal, no control. */
+  .field-show{font-size:13px;line-height:13px;color:var(--c-400);flex:0 0 auto;
+              background:none;border:0;padding:0;cursor:pointer;font-family:var(--font)}
+  .field-show[hidden]{display:none}
+
+  .field-underline{margin-top:8px;height:1px;width:100%;background:var(--c-800);
+                   transition:background-color .12s}
+  .field.is-focus .field-underline{background:var(--c-white)}
+  .field.is-error .field-underline{background:var(--c-urgent)}
+
+  /* helper shows only while the password field has focus, and the error replaces it
+     rather than stacking with it */
+  .note{margin-top:12px;font-size:13px;line-height:19.5px;color:var(--c-700)}
+  .note[hidden]{display:none}
+  .error-slot{margin-top:12px;display:flex;align-items:flex-start;gap:12px}
+  .error-slot[hidden]{display:none}
+  .error-dot{width:4px;height:4px;border-radius:50%;background:var(--c-urgent);
+             flex:0 0 4px;margin-top:5px}
+  .error-msg{font-size:13px;line-height:13px;color:var(--c-700)}
+
+  /* two deliberate exceptions to the system, both to stay faithful to the shipped
+     component: the --c-alert red and the 8px radius. Sits below the nav so back and
+     help stay reachable while an error is up. In the flow, never an overlay. */
+  .banner{margin:0 0 32px 0;padding:16px 20px;background:var(--c-alert);border-radius:8px}
+  .banner[hidden]{display:none}
+  .banner-text{font-size:13px;line-height:1.5;color:var(--c-white)}
+
+  /* compliance-approved string. Not to be edited. 11 / 16.5 is one step below the
+     13 tier; colour stays --c-700 rather than the 11 tier's --c-800 because this is
+     legal copy. Links keep their underline, a deliberate exception. */
+  .agreement{padding-top:32px;font-size:11px;line-height:16.5px;color:var(--c-700)}
+  .agreement a{color:var(--c-400);text-decoration:underline;text-underline-offset:2px}
+
+  /* sticky, not pinned. At rest it sits in flow right after the agreement, so there
+     is no dead space. When the keyboard shrinks the viewport it holds the bottom
+     edge and the fields scroll underneath. The 24 inset is padding, not a margin on
+     the button: sticky resolves bottom:0 against the margin box, so a margin would
+     collapse and the button would sit flush on the keyboard. */
+  .bottom-group{position:sticky;bottom:0;background:var(--c-black);
+                padding-bottom:calc(24px + env(safe-area-inset-bottom))}
+  .cta{margin-top:24px;width:100%;height:48px;border:1px solid var(--c-white);
+       background:var(--c-white);border-radius:var(--r-cta);cursor:pointer;
+       font-family:var(--font);font-size:15px;font-weight:500;line-height:1;
+       color:var(--c-black)}
+  /* fill states the role, contrast states availability. The disabled primary keeps
+     its fill so it never collapses into the secondary shape. Never opacity. */
+  .cta:disabled{background:var(--c-1000);border-color:var(--c-1000);color:var(--c-800);
+                pointer-events:none}
+
+  /* keyboard measurement panel. Triple tap the title on a real device. */
+  .probe{position:absolute;left:0;right:0;bottom:0;z-index:9;background:var(--c-1000);
+         border-top:1px solid var(--c-900);padding:12px 20px;
+         font-size:12px;line-height:20px;color:var(--c-400)}
+  .probe[hidden]{display:none}
+  .probe b{color:var(--c-white);font-weight:500}
+  .probe span{color:var(--c-700)}
+
+  /* ---- review chrome. Desktop only. Never part of the screen. ---- */
+  .legend{display:none}
+  @media (min-width:560px){
+    html,body{background:var(--c-canvas)}
+    body{display:flex;flex-direction:column;align-items:center;gap:20px;padding:48px 24px}
+    /* hold the reference frame so the layout reads at its real proportions instead of
+       stretching to a desktop window */
+    .app{width:393px;height:852px;flex:0 0 auto;padding-top:0}
+    /* status band. On a phone this space is the system status bar and comes from
+       env(safe-area-inset-top); on desktop there is no inset, so reserve the 48 the
+       static frames use, or the nav sits flush to the top edge and the frame lies
+       about how much vertical room the screen actually has. */
+    .app::before{content:"";flex:0 0 48px}
+    .legend{display:block;max-width:393px;font-size:13px;line-height:1.6;
+            color:var(--c-800)}
+    .legend b{color:var(--c-black);font-weight:500}
+    .legend code{font-family:ui-monospace,monospace;font-size:12px}
+    .legend p + p{margin-top:12px}
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="content">
+
+    <div class="header-row">
+      <button class="icon-btn" type="button" aria-label="Back">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4L6 10L12 16"/></svg>
+      </button>
+      <div class="screen-title" id="title">Account Creation</div>
+      <!-- same glyph as the login screen. Signup is where people get stuck, so the
+           support route belongs here too, and the slot has a real function rather
+           than existing for symmetry. -->
+      <button class="icon-btn" type="button" aria-label="Help">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="10" rx="2"/><path d="M6 14V17L9.5 14"/></svg>
+      </button>
+    </div>
+
+    <div class="banner" id="banner" hidden role="alert">
+      <div class="banner-text" id="bannerText"></div>
+    </div>
+
+    <div class="field" id="fEmail">
+      <label class="field-label" for="email">Email</label>
+      <div class="field-row">
+        <input class="inp" id="email" type="email" inputmode="email" autocomplete="email"
+               autocapitalize="none" autocorrect="off" spellcheck="false" />
+      </div>
+      <div class="field-underline"></div>
+      <div class="error-slot" id="eEmail" hidden>
+        <div class="error-dot"></div><div class="error-msg"></div>
+      </div>
+    </div>
+
+    <div class="field" id="fPass">
+      <label class="field-label" for="password">Password</label>
+      <div class="field-row">
+        <input class="inp" id="password" type="password" autocomplete="new-password" />
+        <button class="field-show" type="button" data-for="password" hidden>Show</button>
+      </div>
+      <div class="field-underline"></div>
+      <div class="note" id="hPass" hidden>Minimum 8 characters, including a number and uppercase letter.</div>
+      <div class="error-slot" id="ePass" hidden>
+        <div class="error-dot"></div><div class="error-msg"></div>
+      </div>
+    </div>
+
+    <div class="field" id="fConfirm">
+      <label class="field-label" for="confirm">Confirm Password</label>
+      <div class="field-row">
+        <input class="inp" id="confirm" type="password" autocomplete="new-password" />
+        <button class="field-show" type="button" data-for="confirm" hidden>Show</button>
+      </div>
+      <div class="field-underline"></div>
+      <div class="error-slot" id="eConfirm" hidden>
+        <div class="error-dot"></div><div class="error-msg"></div>
+      </div>
+    </div>
+
+    <div class="agreement">
+      By creating an account, you agree to the <a href="#">Managed Terms of Use</a>, <a href="#">Self-Directed Terms of Use</a>, and <a href="#">Privacy Policy</a>, and authorize Intelligent Investing to charge $20 per month starting September 14, 2026, until canceled.
+    </div>
+
+    <div class="bottom-group">
+      <button class="cta" id="submit" type="button" disabled>Create Account</button>
+    </div>
+  </div>
+
+  <div class="probe" id="probe" hidden></div>
+</div>
+
+<div class="legend">
+  <p><b>Create Account</b>, rebuilt. Frame is 393 x 852. Open it on a phone to see the keyboard behaviour, which is the point of the rebuild.</p>
+  <p><b>What to try.</b> Type in the fields. <code>Show</code> appears only once a field has a value. Errors wait for you to leave the field, they do not interrupt typing. The password requirement line shows only while that field has focus.</p>
+  <p><b>Server error.</b> Use <code>taken@example.com</code> and press Create Account.</p>
+  <p><b>Keyboard readout.</b> Triple tap the title. Reports the real keyboard height and where the button lands, for replacing the 344 assumption with a measured number.</p>
+  <p><b>Top space.</b> The 48 band above the nav is the system status bar. On a phone it comes from the safe-area inset; in a mobile browser the address bar sits there instead, so the nav will look tighter to the top than it will in the shipped app. That is a testing artifact, not the layout.</p>
+  <p><b>Not final.</b> The two inline error strings and the server error string are new and need engineering's real copy. Whether the agreement needs an explicit checkbox is a compliance question, and it would change this layout.</p>
+</div>
+
+<script>
+(function () {
+  var email   = document.getElementById('email');
+  var pass    = document.getElementById('password');
+  var confirm = document.getElementById('confirm');
+  var submit  = document.getElementById('submit');
+  var hPass   = document.getElementById('hPass');
+  var banner  = document.getElementById('banner');
+  var bannerText = document.getElementById('bannerText');
+
+  var slots = {
+    email:   document.getElementById('eEmail'),
+    password:document.getElementById('ePass'),
+    confirm: document.getElementById('eConfirm')
+  };
+  var fields = {
+    email:   document.getElementById('fEmail'),
+    password:document.getElementById('fPass'),
+    confirm: document.getElementById('fConfirm')
+  };
+
+  // Server rule is unconfirmed. This mirrors the helper string the app shows today;
+  // if engineering reports a different rule, change it here and in the helper copy.
+  function passOK(v){ return v.length >= 8 && /[0-9]/.test(v) && /[A-Z]/.test(v); }
+  function emailOK(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+
+  var MSG = {
+    email:   'Enter a valid email address',
+    // reuses the app's own helper string. One requirement, one sentence.
+    password:'Minimum 8 characters, including a number and uppercase letter.',
+    confirm: 'Passwords do not match'
+  };
+
+  function setError(key, on){
+    slots[key].hidden = !on;
+    fields[key].classList.toggle('is-error', !!on);
+    if (on) slots[key].querySelector('.error-msg').textContent = MSG[key];
+    // the helper never stacks with the error
+    if (key === 'password') hPass.hidden = on || document.activeElement !== pass;
+  }
+
+  // The agreement authorizes a recurring charge, so it must not be possible to have
+  // a pressable button that the user has never seen it with. The button only enables
+  // when all three fields are valid; at that moment we bring the agreement on screen
+  // if it is not already there. Once shown, we do not keep yanking the view around.
+  var agreementSeen = false;
+  var agreement = document.querySelector('.agreement');
+  var scroller  = document.querySelector('.content');
+
+  function agreementInView(){
+    var a = agreement.getBoundingClientRect();
+    var s = scroller.getBoundingClientRect();
+    var groupTop = document.querySelector('.bottom-group').getBoundingClientRect().top;
+    return a.top >= s.top && a.bottom <= groupTop + 1;
+  }
+
+  function refresh(){
+    var wasDisabled = submit.disabled;
+    submit.disabled = !(emailOK(email.value) && passOK(pass.value) &&
+                        confirm.value !== '' && confirm.value === pass.value);
+    if (wasDisabled && !submit.disabled && !agreementSeen && !agreementInView()) {
+      // scrollIntoView is no use here: the sticky group sits inside the scrollport,
+      // so the browser counts the agreement as visible while the button covers it.
+      // Move it above the group's top edge by hand.
+      var delta = agreement.getBoundingClientRect().bottom -
+                  document.querySelector('.bottom-group').getBoundingClientRect().top;
+      if (delta > 0) scroller.scrollTo({top: scroller.scrollTop + delta, behavior:'smooth'});
+    }
+    if (agreementInView()) agreementSeen = true;
+  }
+  // also mark it seen if the user simply scrolls past it themselves
+  scroller.addEventListener('scroll', function(){
+    if (!agreementSeen && agreementInView()) agreementSeen = true;
+  }, {passive:true});
+
+  [email, pass, confirm].forEach(function (el) {
+    var key = el.id === 'password' ? 'password' : el.id;
+    var wrap = fields[key];
+    var show = wrap.querySelector('.field-show');
+
+    el.addEventListener('focus', function(){
+      wrap.classList.add('is-focus');
+      if (el === pass && slots.password.hidden) hPass.hidden = false;
+    });
+
+    el.addEventListener('blur', function(){
+      wrap.classList.remove('is-focus');
+      if (el === pass) hPass.hidden = true;
+      // validate on blur only. Do not tell someone they are wrong before they finish.
+      if (el.value === '') { setError(key, false); return; }
+      if (key === 'email')    setError('email', !emailOK(el.value));
+      if (key === 'password') setError('password', !passOK(el.value));
+      if (key === 'confirm')  setError('confirm', el.value !== pass.value);
+    });
+
+    el.addEventListener('input', function(){
+      if (show) show.hidden = el.value === '';
+      // clear an error as soon as the input becomes valid, or is emptied
+      if (el.value === '') setError(key, false);
+      else if (key === 'email'    && emailOK(el.value))         setError('email', false);
+      else if (key === 'password' && passOK(el.value))          setError('password', false);
+      else if (key === 'confirm'  && el.value === pass.value)   setError('confirm', false);
+      if (key === 'password' && !slots.confirm.hidden && confirm.value === el.value) {
+        setError('confirm', false);
+      }
+      if (!banner.hidden) banner.hidden = true;   // clears on any edit
+      refresh();
+    });
+  });
+
+  document.querySelectorAll('.field-show').forEach(function (btn) {
+    btn.addEventListener('click', function(){
+      var input = document.getElementById(btn.dataset.for);
+      var masked = input.type === 'password';
+      input.type = masked ? 'text' : 'password';
+      btn.textContent = masked ? 'Hide' : 'Show';
+    });
+  });
+
+  // Demo trigger for the server-error state. The real string is unconfirmed.
+  submit.addEventListener('click', function(){
+    if (email.value.trim().toLowerCase() === 'taken@example.com') {
+      bannerText.textContent = 'An account with this email already exists.';
+    } else {
+      bannerText.textContent = 'Submitted. This prototype goes no further.';
+    }
+    banner.hidden = false;
+    scroller.scrollTop = 0;
+  });
+
+  // Keyboard. iOS ignores interactiveWidget, so drive the height from visualViewport.
+  // Skipped on desktop, where the frame is held at the 852 reference height.
+  var vv = window.visualViewport;
+  function onPhone(){ return window.matchMedia('(max-width:559px)').matches; }
+  function sizeToViewport(){
+    if (!vv || !onPhone()) return;
+    document.documentElement.style.setProperty('--vvh', vv.height + 'px');
+    if (!probe.hidden) readout();
+  }
+  if (vv) {
+    vv.addEventListener('resize', sizeToViewport);
+    vv.addEventListener('scroll', sizeToViewport);
+    sizeToViewport();
+  }
+
+  var probe = document.getElementById('probe');
+  var taps = 0, timer = null;
+  document.getElementById('title').addEventListener('click', function(){
+    taps++;
+    clearTimeout(timer);
+    timer = setTimeout(function(){ taps = 0; }, 600);
+    if (taps >= 3) { taps = 0; probe.hidden = !probe.hidden; readout(); }
+  });
+  function readout(){
+    var vh = vv ? Math.round(vv.height) : window.innerHeight;
+    var kb = Math.max(0, Math.round(window.innerHeight - vh));
+    var cta = submit.getBoundingClientRect();
+    var appBottom = Math.round(document.querySelector('.app').getBoundingClientRect().bottom);
+    probe.innerHTML =
+      'screen <b>' + window.screen.width + ' x ' + window.screen.height + '</b> &middot; ' +
+      'dpr <b>' + window.devicePixelRatio + '</b><br>' +
+      'innerHeight <b>' + window.innerHeight + '</b> &middot; ' +
+      'visual <b>' + vh + '</b><br>' +
+      'keyboard <b>' + kb + '</b> &middot; ' +
+      'button bottom <b>' + Math.round(cta.bottom) + '</b> ' +
+      '<span>(must be &lt;= ' + appBottom + ')</span>';
+  }
+  window.addEventListener('resize', function(){ if (!probe.hidden) readout(); });
+})();
+</script>
+</body>
+</html>
