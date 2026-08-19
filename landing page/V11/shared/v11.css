@@ -25,7 +25,7 @@
    already forked (Self-Directed's base says .acct3 .a h3 is 22px, Managed's
    says 17px) - this file is what makes them agree again.
 
-   VERIFY AFTER EDITING: python _shared/check-v11.py
+   VERIFY AFTER EDITING: python shared/check-v11.py
    ========================================================================== */
 
 

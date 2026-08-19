@@ -253,7 +253,7 @@ body.menu-open{overflow:hidden}
 <!-- mobile-canon.css (2026-08-17) 링크를 뺐다 — _backups/ 로 아카이브됨.
      그 파일도 공유 모바일 레이어를 노렸지만 홈·SD·Managed 가 링크하지 않았고,
      이 페이지들에는 그 파일이 겨냥한 컴포넌트가 거의 없었다. 실측 결과 6페이지
-     전체에서 바꾸는 값이 2개뿐이었고(버거 메뉴 선 색) 그 규칙은 _shared/v11.css
+     전체에서 바꾸는 값이 2개뿐이었고(버거 메뉴 선 색) 그 규칙은 shared/v11.css
      4l-2 로 옮겼다. 이제 9페이지 전부가 같은 파일 하나를 본다. -->
 </head>
 <body class="p-doc">
@@ -424,14 +424,14 @@ body.menu-open{overflow:hidden}
      the shared layer is: the burger-menu tier, the footer boundary and hairline,
      the inline-link underline, and the desktop type floors.
      No body class is needed - body.p-sub only switches on the band hero.
-     Verify with:  python _shared/check-v11.py                See _shared/v11.css -->
-<link rel="stylesheet" href="_shared/v11.css">
+     Verify with:  python shared/check-v11.py                See shared/v11.css -->
+<link rel="stylesheet" href="shared/v11.css">
 
 
 
 <!-- THE SHARED SCRIPT LAYER. On this page only the footer builder does anything -
      it wraps the legal paragraphs so they can run in two columns on desktop.
-     The hero, trust and reveal parts find nothing and bail. See _shared/v11-sub.js. -->
-<script src="_shared/v11-sub.js"></script>
+     The hero, trust and reveal parts find nothing and bail. See shared/v11-sub.js. -->
+<script src="shared/v11-sub.js"></script>
 </body>
 </html>
