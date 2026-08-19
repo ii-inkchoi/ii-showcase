@@ -722,6 +722,8 @@ footer .container{margin:0 calc(450 * var(--u))}
      chrome, ported from home 07-29 (parity audit 2026-07-31: ncta and the foot spans carried `normal`) */
   .metaline{font-size:11px}
   .metaline.doclist{font-size:9px} /* legal link list joins the 9px meta tier (Inkyung 2026-07-28) */
+  #research .metaline{font-size:9px} /* fee notes are one tier = 9 (Inkyung 2026-08-18): the home's
+     $20-plate fee and CLOSE .fee9 both render 9 now, and this commissions/FX note is the same role */
   /* hero trust line = homepage: 11px c-400 per the Figma mobile master (2026-07-31, Typography.md §9
      exception - mobile sits below the desktop 12px floor). Two lines via the sep/b pattern. */
   .hero .htrust{font-size:11px;color:var(--c-600);line-height:1.5;align-self:stretch;max-width:none} /* c-600, one tone under the 07-31 c-400 (Inkyung) */
@@ -853,21 +855,21 @@ footer .container{margin:0 calc(450 * var(--u))}
 </style>
 
 </head>
-<body>
+<body class="p-sub">
 
 <nav class="nav">
   <a class="logo" href="index.html" aria-label="Home"><svg viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.59903 0H7.79315L2.19412 17.6523H0L5.59903 0Z"/><path d="M12.8061 0H15.0002L9.40115 17.6523H7.20703L12.8061 0Z"/></svg></a>
   <div class="navmenu">
     <a href="index.html">Home</a>
     <a href="self-directed.html" class="on">Self-Directed</a>
-    <a href="../V10/managed.html">Managed</a>
-    <a href="../V10/pricing.html">Pricing</a>
-    <a href="../V10/manifesto.html">Manifesto</a>
-    <a href="../V10/newsroom.html">Newsroom</a>
+    <a href="managed.html">Managed</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="manifesto.html">Manifesto</a>
+    <a href="newsroom.html">Newsroom</a>
   </div>
   <div class="navright">
     <span class="lang"><a href="#" onclick="return false" class="on">EN</a><a href="#" onclick="return false">FR</a></span>
-    <a class="ncta" href="../V10/get-the-app.html">OPEN AN ACCOUNT</a>
+    <a class="ncta" href="get-the-app.html">OPEN AN ACCOUNT</a>
   </div>
   <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
 </nav>
@@ -876,12 +878,12 @@ footer .container{margin:0 calc(450 * var(--u))}
   <div class="mlist">
     <a href="index.html">Home</a>
     <a href="self-directed.html" class="cur">Self-Directed</a>
-    <a href="../V10/managed.html">Managed</a>
-    <a href="../V10/pricing.html">Pricing</a>
-    <a href="../V10/manifesto.html">Manifesto</a>
-    <a href="../V10/newsroom.html">Newsroom</a>
+    <a href="managed.html">Managed</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="manifesto.html">Manifesto</a>
+    <a href="newsroom.html">Newsroom</a>
   </div>
-  <a class="menuov-cta" href="../V10/get-the-app.html">OPEN AN ACCOUNT</a>
+  <a class="menuov-cta" href="get-the-app.html">OPEN AN ACCOUNT</a>
   <div class="mlang"><a href="#" onclick="return false" class="on">EN</a><a href="#" onclick="return false">FR</a></div>
   <div class="mfoot"><span>INTELLIGENT INVESTING</span><span class="heyeb-sep"> &middot; </span><span class="heyeb-b">A CAPITAL ALLOCATION SYSTEM</span></div>
 </div>
@@ -896,7 +898,7 @@ footer .container{margin:0 calc(450 * var(--u))}
     </div>
     <p class="hsub rv">An active decision system that places each order on the record before the outcome, and preserves what changed afterward. Without the reasoning, the outcome teaches nothing.</p>
     <div class="btnrow rv">
-      <a class="cta-fill inv" href="../V10/get-the-app.html">OPEN AN ACCOUNT</a>
+      <a class="cta-fill inv" href="get-the-app.html">OPEN AN ACCOUNT</a>
       <a class="mlink" href="#record"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>SEE THE RECORD</span></a>
     </div>
     <p class="htrust rv"><span>A licensed Canadian brokerage</span><span class="heyeb-sep"> &middot; </span><span class="heyeb-b">regulated by CIRO &middot; CIPF member</span></p>
@@ -1063,7 +1065,7 @@ footer .container{margin:0 calc(450 * var(--u))}
         <div class="dcol">
           <p class="body">We promise no outcome. We hold one belief: people who consistently make higher-quality allocation decisions tend to achieve better long-term outcomes. Not always. Not immediately. But over time.</p>
           <p class="body">A rigorous record may teach some investors that most of their capital belongs in the default. That is not failure. That is the system working. The highest expression of allocation is knowing when you can beat the market, and when you cannot.</p>
-          <a class="mlink" href="../V10/managed.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>MANAGED</span></a>
+          <a class="mlink" href="managed.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>MANAGED</span></a>
         </div>
         <button class="dmore" type="button" aria-expanded="false">VIEW MORE</button><!-- mobile only: folds everything after the first paragraph, including the second column. -->
       </div>
@@ -1080,7 +1082,7 @@ footer .container{margin:0 calc(450 * var(--u))}
       <p class="body rv">Every membership includes access to Fiscal.ai Max, a professional-grade research and analysis environment. Most investors trade on price and headlines. Serious investors analyse businesses.</p>
       <p class="body rv">Research supplies evidence. Judgment remains yours. It is not a stock picker, a signal engine, or a shortcut. It does not make the decision, assign the probability, or absorb the consequence.</p>
       <div class="fpanel rv">
-        <div class="fhead"><span class="l">FISCAL.AI MAX</span><span class="r">$99/MONTH STANDALONE &middot; INCLUDED WITH MEMBERSHIP</span></div>
+        <div class="fhead"><span class="l">Fiscal.ai Max</span><span class="r">$99/month standalone &middot; included with membership</span></div>
         <div class="fgrid">
           <div class="f"><b>Multi-year financials</b><span>Income statement, balance sheet, cash flow.</span></div>
           <div class="f"><b>Capital allocation</b><span>Return on capital and free cash flow analysis.</span></div>
@@ -1095,14 +1097,14 @@ footer .container{margin:0 calc(450 * var(--u))}
       <p class="metaline rv">No trading commissions. <br>FX carries no added fee; a conversion spread applies. <br>The $20/month membership applies.</p><!-- trailing spaces are invisible on desktop; they carry the word gap when mobile hides the brs -->
       <!-- PRICING ↗ added 2026-08-18 (Inkyung). This section is the DESTINATION of the home's
            Fiscal.ai Max "RESEARCH ↗", so it had no exit of its own. The panel header states
-           "$99/MONTH STANDALONE · INCLUDED WITH MEMBERSHIP" and the metaline above ends on fees, so
+           "$99/month standalone · included with membership" and the metaline above ends on fees, so
            the one question the reader is left holding is what the membership costs - and the site has
            a page for it. Chosen over an outbound fiscal.ai link on purpose: every other ↗ in this
            page's body stays inside the site, and Fiscal.ai carries its own third-party disclaimer in
            the footer, so a prominent body link there is a compliance call rather than a design one.
-           ⬜ Label canon: PRICING is new on this page. ii-design-guard/SKILL.md enforces labels via a
+           ✅ Label canon: PRICING registered in ii-design-guard/SKILL.md 2026-08-18 (internal exit = destination name, same family as MANAGED/SELF-DIRECTED/RESEARCH). VIEW THE FULL RECORD / VIEW THE RECORD DIAGRAM registered under the VIEW THE [THING] + disclosure pattern.
            PostToolUse hook and that file is not on this machine - confirm before shipping. -->
-      <a class="mlink rv" href="../V10/pricing.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>PRICING</span></a>
+      <a class="mlink rv" href="pricing.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>PRICING</span></a>
     </div>
   </div>
 </section>
@@ -1133,19 +1135,19 @@ footer .container{margin:0 calc(450 * var(--u))}
       <div class="acct3 rv">
         <div class="a">
           <h3>TFSA</h3>
-          <p class="lim">TAX-FREE</p>
+          <p class="lim">Tax-free</p>
           <p>Growth and withdrawals are completely tax-free, within an annual contribution limit that carries forward when unused. The most flexible registered account, with no tax on what compounds inside it.</p>
           <p class="lim">2025 contribution limit: $7,000</p>
         </div>
         <div class="a">
           <h3>RRSP</h3>
-          <p class="lim">TAX-DEFERRED</p>
+          <p class="lim">Tax-deferred</p>
           <p>Contributions reduce your taxable income now, and investment growth is deferred until you withdraw, usually in retirement when your marginal rate is lower. Built for long-horizon, tax-aware compounding.</p>
           <p class="lim">2025 contribution limit: $32,490</p>
         </div>
         <div class="a">
           <h3>Non-Registered</h3>
-          <p class="lim">TAXABLE</p>
+          <p class="lim">Taxable</p>
           <p>No contribution limit and no withdrawal restrictions, but investment income and capital gains are taxed each year. Typically used once your registered accounts are fully funded.</p>
           <p class="lim">No contribution limit</p>
         </div>
@@ -1169,8 +1171,8 @@ footer .container{margin:0 calc(450 * var(--u))}
             <p class="pricehd9">One $20/month membership includes access to Managed, Self-Directed, and Fiscal.ai Max.</p>
             <p class="fee9">Managed assets carry an additional 0.10% fee.</p>
             <div class="btnrow">
-              <a class="cta-fill" href="../V10/get-the-app.html">OPEN AN ACCOUNT</a>
-              <a class="mlink" href="../V10/managed.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>SEE MANAGED</span></a>
+              <a class="cta-fill" href="get-the-app.html">OPEN AN ACCOUNT</a>
+              <a class="mlink" href="managed.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>SEE MANAGED</span></a>
             </div>
           </div>
         </div>
@@ -1198,6 +1200,14 @@ footer .container{margin:0 calc(450 * var(--u))}
 </section>
 
 <style id="v11-mobile-sd">
+/* ---------------------------------------------------------------------------
+   2026-08-19: every rule that belongs to more than one page was DELETED from this
+   block and now lives in _shared/v11.css, which loads after it. If a value you
+   expect is not here, it is there. Comments left behind describe decisions whose
+   rule moved - the reasoning is kept, the duplicate is not.
+   THIS BLOCK MAY ONLY CARRY #section-id RHYTHM AND DOCUMENTED PAGE EXCEPTIONS.
+   --------------------------------------------------------------------------- */
+
 /* ============ V11 mobile layer - Self-Directed (2026-08-18) ============
    Sits on top of the V8 base and the V9 mobile block. Everything here is a value already decided
    on the V11 home; the reasoning lives in HANDOFF-V11.md and is summarised per rule below.
@@ -1218,27 +1228,15 @@ footer .container{margin:0 calc(450 * var(--u))}
      they sit on #F2F1EE where they are already visible, and the home did not touch its cream lines
      either. The product-UI mockups are excluded too: .dr3-*, .cal-card, .calcard and .cal-diag use
      c-900 correctly because they carry their own elevated surface (HANDOFF 4-B-7 - those clones have
-     their own scale and are not landing chrome). */
-  .top-hair-dark{border-top-color:var(--c-800)}          /* section boundary, black -> black */
-  #development{border-top-color:var(--c-800)}            /* was c-900, the one black-black boundary added 08-16 */
-  .v9band>img{border-top-color:var(--c-800);border-bottom-color:var(--c-800)}  /* plate edges: night photos melt into the ground */
-  .tri .cell{border-top-color:var(--c-800)}              /* stat stack, = home .dstats/.tri sweep */
-  .tri .cell:last-child{border-bottom-color:var(--c-800)}
-  .acct3{border-top-color:var(--c-800)}
-  .acct3 .a{border-top-color:var(--c-800)}
-  .refuse{border-top-color:var(--c-800)}
-  .refuse .r{border-top-color:var(--c-800)}
-  .constfig{border-color:var(--c-800)}
-  footer{border-top-color:var(--c-800)}                  /* = home line 2352 */
+     their own scale and are not landing chrome). */          /* section boundary, black -> black */
+  #development{border-top-color:var(--c-800)}            /* was c-900, the one black-black boundary added 08-16 */  /* plate edges: night photos melt into the ground */              /* stat stack, = home .dstats/.tri sweep */
+  .constfig{border-color:var(--c-800)}                  /* = home line 2352 */
 
   /* The CLOSING lines were still 0.18. Same miss the home made and fixed with its own rule for
      .dstats .cell.gap: a figure block reads as a bracket, so an invisible bottom edge means there is
      no signal that the figure has ended and the air after it reads as an arbitrary hole in the prose
      (HANDOFF 4 "스탯 블록 브래킷"). Measured after the first pass: 4 bottoms left behind - the
      .refuse list's closing rule, its two inner rows, and the .acct3 stack's. */
-  .refuse{border-bottom-color:var(--c-800)}
-  .refuse .r{border-bottom-color:var(--c-800)}
-  .acct3{border-bottom-color:var(--c-800)}
 
   /* ============ HERO -> TWO BITS (2026-08-18, Inkyung) ============
      The home split its hero into two bits: [media + wordmark + statement] as one viewport, then
@@ -1260,7 +1258,6 @@ footer .container{margin:0 calc(450 * var(--u))}
      cut and the reader saw a 9px sliver. At 812 the same markup gave it 154px (19%). A ratio cannot
      come out of leftover space - it has to be declared. flex:none + 23.5svh does that, and moving
      the deck/CTAs/trust into bit 2 is what makes room for it. */
-  .hero>video{order:-1;flex:1 1 auto;height:auto;min-height:0}
   /* margin-top:auto, NOT justify-content:flex-end. The hero is a column flex box holding the text
      group and the clip; flex-end would push BOTH to the bottom and the statement would ride up
      against the clip. auto on the last child alone opens the gap in the middle, which is the point. */
@@ -1287,7 +1284,6 @@ footer .container{margin:0 calc(450 * var(--u))}
      "100svh minus the band" and re-resolves on its own when the statement rewraps at 320. order:-1
      rather than moving the markup: the V10 desktop keeps its absolute .hgroup + absolute video.
      32 above and below the band is the home's value (its one documented hero exception). */
-  .hero .hgroup{margin:32px 20px 32px}
 
   /* ---- bit 2: deck + trust + CTAs, built by script#v11-hero2 ----
      Internal spacing is the home's beat 2, value for value: deck -> 24 -> trust -> 48 -> box CTA
@@ -1305,34 +1301,23 @@ footer .container{margin:0 calc(450 * var(--u))}
      band grammar the rest of the site uses (eyebrow -> 24 -> text).
      Result: band 250 -> 231, media 69.2% -> 71.6%, and the gap to the home closes from 60px to 41.
      Managed will be pinned to this same 231 when its turn comes - the two product pages match each
-     other; the home is left at its approved 190 (Inkyung: "홈은 지금처럼"). */
-  .hero .heyeb .heyeb-b{display:none}   /* moved into bit 2 by script#v11-hero2 */
+     other; the home is left at its approved 190 (Inkyung: "홈은 지금처럼"). */   /* moved into bit 2 by script#v11-hero2 */
 
   /* TOP PADDING IS 72, NOT 104 (Inkyung 2026-08-18: "여기 공간보면 홈페이지보다 좀 넓어").
      The hero already ends with 32 below the statement - that 32 is the fold clearance, not a section
      gap - so 104 here totalled 136 of ink where the home reads 104. The home hit the same thing and
      landed on 72: hero tail 32 + 72 = 104, the beat value. Bottom stays 104, because the boundary
      into NO.01 IS a section boundary (104 + 104 = 208). */
-  .v11-hero2{background:var(--c-black);padding:72px 0 104px}
-  .v11-hero2 .h2eyeb{margin:0 0 24px;font-family:var(--mono);font-weight:400;font-size:13px;line-height:1.5;letter-spacing:0.04em;color:var(--c-600)}
-  .v11-hero2 .h2rail{margin:0 20px;display:flex;flex-direction:column;align-items:flex-start}
 
   /* ★ Elements moved out of .hero LOSE every .hero-scoped rule. This bit the home once: .mlink fell
      back to the light-ground canon #000 and went invisible on black - what looked like "the CTAs are
      too far apart" was an unreadable link sitting in the gap. Restated here, all of them: */
-  .v11-hero2 .hsub{margin:0;max-width:none;font-size:15px;font-weight:400;line-height:1.4;letter-spacing:0;color:var(--c-400)}
-  .v11-hero2 .htrust{margin:24px 0 0;max-width:none;font-family:var(--mono);font-weight:400;font-size:11px;line-height:1.4;letter-spacing:0.04em;color:var(--c-600)}
   /* The trust line flows as ONE sentence, folding only at the separator. Mobile hides .heyeb-sep
      globally (line 673) and blocks .heyeb-b, which forced the compliance line into two stacked
      phrases; re-inlining .heyeb-b alone glued them together as "brokerageregulated by CIRO" - the
      separator was still display:none. Ported from the home, all four rules:
      phrases nowrap so they never break mid-clause, separator NORMAL so the line has a break
-     opportunity at all - with every span nowrap there is none and the line runs off screen. */
-  .v11-hero2 .htrust .heyeb-sep{display:inline;white-space:normal}
-  .v11-hero2 .htrust .heyeb-b{display:inline}
-  .v11-hero2 .htrust>span{white-space:nowrap}
-  .v11-hero2 .btnrow{margin:48px 0 0;display:flex;flex-direction:column;align-items:flex-start;gap:0}
-  .v11-hero2 .btnrow .mlink{color:var(--c-white);margin-top:24px}   /* was .hero .mlink */
+     opportunity at all - with every span nowrap there is none and the line runs off screen. */   /* was .hero .mlink */
 
   /* ============ NO.01 THE RECORD (#record) - 2 beats (2026-08-18) ============
      104 │ eyebrow →24→ masthead →24→ prose (3 steps of one argument)     beat 1
@@ -1393,7 +1378,6 @@ footer .container{margin:0 calc(450 * var(--u))}
   .v9band>img,.v9band>video,.v9band>.bg{
     margin-left:20px!important;margin-right:20px!important;width:calc(100% - 40px)!important;
     border:0!important}
-  .v9band .v9ovl{padding-bottom:48px}
   /* ★ On the CONTAINER, not the first child. First attempt put margin-top:104 on the first child of
      .content and measured 144 - .bandimg .content already carries margin-top:64 (line 802, rendering
      40 after .v9ovl's own padding), and a child margin stacks on top of the parent's. Trap 6-6 for
@@ -1439,7 +1423,6 @@ footer .container{margin:0 calc(450 * var(--u))}
      at #review strength on purpose: .rows3 alone is (0,1,0) and would be fighting .content>*+* for
      source order, which is how the band gaps went wrong twice earlier today. */
   #review .rows3{margin-top:104px}
-  .rows3 .row{display:block}
   /* ---- the numbers go from accent red to c-800 (2026-08-18, Inkyung) ----
      The base sheet sets .rows3 .row b{color:var(--c-accent)} = #BE3C36. Counted the accent's uses on
      both pages and it does exactly two jobs:
@@ -1452,9 +1435,6 @@ footer .container{margin:0 calc(450 * var(--u))}
      Inter to 11px mono left the mobile ledger "without a visual anchor, quieter" (PORT 7-9). This
      page's red number WAS that anchor. If the ledger reads too quiet on either page, the fix is the
      number's SIZE, one tier at a time - not spending the accent on it. */
-  .rows3 .row>b{display:block;color:var(--c-800)}
-  .rows3 .row .t{font-size:22px;font-weight:400;line-height:1.25;letter-spacing:0;margin-top:8px}
-  .rows3 .row .d{font-size:13px;line-height:1.4;margin-top:16px;max-width:none}
 
   /* ============ NO.04 CALIBRATION (#calibration) - 3 beats (2026-08-18) ============
      104 │ eyebrow →24→ masthead →24→ prose →24→ payoff      beat 1
@@ -1567,7 +1547,6 @@ footer .container{margin:0 calc(450 * var(--u))}
      It reads better too: "The same capital, in the index" and "overconfident, on the record" are
      sentences; in mono they eat width and pair visually with the 9px mono caption underneath, which
      blurs figure-label against footnote. Now: number Inter 34 -> label Inter 15 -> caption mono 9. */
-  .tri .cell .t{font-family:var(--font)}
 
   /* ============ NO.05 THE DEVELOPMENT (#development) - 3 beats (2026-08-18) ============
        0 │ eyebrow →24→ masthead →48→ [plate]                         beat 1
@@ -1735,7 +1714,6 @@ footer .container{margin:0 calc(450 * var(--u))}
   .constfig canvas{position:static;inset:auto;width:100%;height:auto;aspect-ratio:9/13;
     display:block;background:var(--c-surface);border:0.667px solid var(--c-800)}
   .constfig .fig-caps{position:static;left:auto;right:auto;top:auto;margin-top:16px}
-  .close9 .trust9{margin-top:48px;padding-top:48px}
   /* ④ the fee note -> CTA pair was 40; the home measures 48 here. Read the home's own chain: masthead
      →24→ offer →8→ fee note →48→ [OPEN AN ACCOUNT + READ THE MANIFESTO ↗] →48→ line →48→ trust.
      I had only compared gaps inside this page and missed it (Inkyung: "홈페이지 본거 맞아?"). */
@@ -1747,27 +1725,24 @@ footer .container{margin:0 calc(450 * var(--u))}
      boundary is 104 / line / 104 = 208 ink. The footer is its own section: separate element, own
      hairline, present on all nine pages. padding-top only, so the sides and bottom keep their
      shorthand values. */
-  footer{padding-top:104px}
 
 
   /* ---- REGULATORY STANDING fold, ported verbatim from the home (2026-08-18, "홈페이지 기준") ----
      Same control, same spec: 13 mono label, + sign 15/c-800 at the right edge, 44px tap target,
      .suit5's focus ring. Default closed; opening reveals any .rv inside so nothing sits at opacity 0.
-     Built by script#v11-trust. ⚠ COMPLIANCE UNCONFIRMED - flagged in SESSION §9-1 / PORT §7-1. */
-  .close9 .trust9 .tmore{display:inline-flex;align-items:center;justify-content:space-between;
-    width:100%;margin-top:24px;background:none;border:0;padding:0;cursor:pointer;position:relative;
-    font-family:var(--mono);font-weight:400;font-size:13px;letter-spacing:0.04em;line-height:1.5;
-    color:var(--c-1000);text-align:left}
-  .close9 .trust9 .tmore::after{content:'';position:absolute;inset:-14px 0} /* 44px tap target */
-  .close9 .trust9 .tmore{outline:none}
-  .close9 .trust9 .tmore:focus-visible{outline:0.667px solid var(--c-600);outline-offset:4px}
-  .close9 .trust9 .tmore .sign{font-size:15px;line-height:1;color:var(--c-800)}
-  .close9 .trust9 .tg{display:none}
-  .close9 .trust9.open .tg{display:grid}
+     Built by script#v11-trust. ⚠ COMPLIANCE UNCONFIRMED - flagged in SESSION §9-1 / PORT §7-1. */ /* 44px tap target */
 }
 </style>
 
 <style id="v11-global-sd">
+/* ---------------------------------------------------------------------------
+   2026-08-19: every rule that belongs to more than one page was DELETED from this
+   block and now lives in _shared/v11.css, which loads after it. If a value you
+   expect is not here, it is there. Comments left behind describe decisions whose
+   rule moved - the reasoning is kept, the duplicate is not.
+   THIS BLOCK MAY ONLY CARRY #section-id RHYTHM AND DOCUMENTED PAGE EXCEPTIONS.
+   --------------------------------------------------------------------------- */
+
 /* ============ V11 GLOBAL - Self-Directed (2026-08-18). NOT inside a media query. ============
    ★ BASELINE NOTE (Inkyung, 2026-08-18: "데스크탑은 v10 아님?"). Correct: the desktop baseline for
    this page is V10, not V8. The base sheet above has been edited after V8 at both widths - the
@@ -1804,7 +1779,6 @@ footer .container{margin:0 calc(450 * var(--u))}
    the same time rather than left for an audit to find.
    Leading is left alone: 1.15 is the item-title value at 17, and on desktop the 22-tier rule in
    v11-global picks these selectors up separately. */
-.fgrid .f b,.refuse .r b{font-weight:400}
 
 /* ---- and the panel's names go to Title Case (Inkyung 2026-08-18) ----
    text-transform rather than editing the strings: the words stay exactly as written (V11 rule - copy
@@ -1814,7 +1788,6 @@ footer .container{margin:0 calc(450 * var(--u))}
    case, and the stat labels differ again across pages (home Title Case, this page sentence and
    lower). Case is copy canon - Dave's call - and should be settled once for the site rather than
    drifting per component. Applied here on Inkyung's instruction; the rest is left as found. */
-.fgrid .f b{text-transform:capitalize}
 
 /* ---- 2. TEXT-CTA GRAMMAR: arrow to the RIGHT of the label, plus an underline ----
    Dave, 08-17: our Managed / Self-Directed links "don't totally look like CTAs on mobile", and he
@@ -1822,8 +1795,6 @@ footer .container{margin:0 calc(450 * var(--u))}
    baseline stay put. The arrow was the one part of the component with no floor - its label is
    --t-mono15 = max(12px,15u) while the arrow was a bare 12u, rendering 6.79px against a 12px label
    at 1440. Same token pattern now. This page has 3 .mlink instances. */
-.mlink .arr{order:2;width:max(12px, calc(12 * var(--u)));height:max(12px, calc(12 * var(--u)))}
-.mlink span{text-decoration:underline;text-decoration-thickness:0.667px;text-underline-offset:5px}
 
 /* ---- 3. REVEAL: one animation -> three roles (see script#v11-reveal for the sorting) ----
      label   scramble decode, no move    mono eyebrows
@@ -1839,15 +1810,8 @@ footer .container{margin:0 calc(450 * var(--u))}
    On this page the .v9band>img elements are direct children of .v9band, which is not itself an .rv,
    so the media role lands on the <img>. If a wiped image ever fails to appear, that is why: observe
    a wrapper instead. */
-.rv{transition-duration:.8s;transition-timing-function:cubic-bezier(.16,1,.3,1)}
-.rv[data-rv="text"]{transform:translateY(24px)}
 /* Restated at (0,3,0): the global .rv.in{transform:none} is (0,2,0) and .rv[data-rv="text"] is also
-   (0,2,0), so the tie went to source order and elements faded in but stayed parked 24px down. */
-.rv[data-rv="text"].in{transform:none}
-.rv[data-rv="label"]{transform:none;opacity:1} /* the scramble IS the entrance */
-.rv[data-rv="media"]{transform:none;opacity:1;clip-path:inset(0 100% 0 0);
-  transition-property:clip-path;transition-duration:.9s}
-.rv[data-rv="media"].in{clip-path:inset(0 0 0 0)}
+   (0,2,0), so the tie went to source order and elements faded in but stayed parked 24px down. */ /* the scramble IS the entrance */
 
 @media (min-width:901px){
   /* ---- 4. DESKTOP TYPE FLOORS (HANDOFF 2-3b) ----
@@ -1859,19 +1823,9 @@ footer .container{margin:0 calc(450 * var(--u))}
      size is invented. Verified on the home: 375 identical (149 nodes), 2545 identical (202 nodes).
      Must stay inside min-width:901 - the tokens are on :root and mobile still resolves several
      elements through them. */
-  :root{
-    --t-body: max(17px, calc(22 * var(--u)));
-    --t-h34: max(28px, calc(34 * var(--u)));
-    --t-mono15: max(15px, calc(15 * var(--u)));
-    --t-mono13: max(13px, calc(13 * var(--u)));
-    --t-read27: max(22px, calc(27 * var(--u)));
-    --t-lead24: max(22px, calc(24 * var(--u)));
-    --t-small17: max(15px, calc(17 * var(--u)));
-  }
   /* Display type had no floor at all: 64u = 38px at 1512, 36 at 1440, and it keeps shrinking.
      Anduril's H1 sits near 5% of viewport width where ours was at 2.5%. 48px, releasing at 1909.
      .hbar is white-space:nowrap on desktop, so this is measured, not guessed - see the check below. */
-  .bigh2,.hbar{font-size:max(48px, calc(64 * var(--u)))}
 
   /* ---- 5. FOOTER LEGAL IN TWO COLUMNS on desktop (2026-08-18) ----
      Eight compliance paragraphs in one 916-wide column ran a measure roughly twice the page's
@@ -1879,8 +1833,6 @@ footer .container{margin:0 calc(450 * var(--u))}
      page. Mobile ignores this - no column-count there - and the wrapper is built in JS
      (script#v11-footer) so the compliance-approved markup stays byte-identical: wording, order and
      element structure untouched, only a wrapper introduced. */
-  .footer-legalwrap{column-count:2;column-gap:calc(30 * var(--u));column-fill:balance}
-  .footer-legalwrap .footer-legal{margin-top:16px;break-inside:avoid}
 
   /* ---- 6. 22 TIER = 400 / 1.25 / tracking 0 on desktop (2026-08-18, ported from the home) ----
      The tier moved on the home on 08-17 (both widths: it had read as two tiers, 1.15/500 mobile vs
@@ -1891,13 +1843,18 @@ footer .container{margin:0 calc(450 * var(--u))}
      .pricehd9 is NOT in this list - it renders 22 here vs 17 on the home CLOSE, an SD-home
      divergence flagged in SESSION §9 territory, to be settled as its own question.
      Stat figures keep 500/-0.069em as everywhere. */
-  .lead,.specimens .snote .cl,.rows3 .row .t,.refuse .r b,.fgrid .f b,.acct3 .a h3{
-    font-weight:400;line-height:1.25;letter-spacing:0}
   /* .acct3 .a h3 joined 2026-08-18: its base is --t-h34 (28 on desktop), same token as the home's
      Managed/Self-Directed titles, which render 28/400/1.25 there. It was the one directory title
      still at 500/1.3. */
 }
 </style>
+<!-- THE SHARED LAYER. Loads last so it wins on source order at equal specificity.
+     Every rule that must be identical on every V11 page lives in this one file -
+     component sizes, weights, leading, and border treatment. Do not copy it into a
+     page; a page block may only carry #section-id rhythm and documented exceptions.
+     Verify with:  python _shared/check-v11.py                See _shared/v11.css -->
+<link rel="stylesheet" href="_shared/v11.css">
+
 
 <script id="v11-sheets">
 /* Bottom sheets for the two product specimens (2026-08-18). Generalised from the home's single-memo
@@ -1990,297 +1947,11 @@ footer .container{margin:0 calc(450 * var(--u))}
 })();
 </script>
 
-<script id="v11-hero2">
-/* Moves the deck, the trust line and the CTA row out of .hero into their own section, so the hero
-   is one bit (eyebrow + statement + clip) and these three are the second bit. Mirrors what the home
-   does; see the CSS note in style#v11-mobile-sd.
-   MOBILE ONLY - the V10 desktop is left as it is, with all of this inside .hero in an absolutely
-   positioned .hgroup. Gated on matchMedia rather than a resize listener, same as the home: the
-   restructure runs once, for the width the page loaded at.
-   ORDER MATTERS AND IS NOT THE DOM ORDER. Source order is deck -> CTAs -> trust; bit 2 wants
-   deck -> trust -> CTAs, because the trust line qualifies the statement above it rather than the
-   button. Appending in the order below is what performs that swap. */
-(function(){
-  if(!window.matchMedia('(max-width:900px)').matches) return;
-  function build(){
-    var hero=document.querySelector('.hero');
-    if(!hero||document.querySelector('.v11-hero2'))return;
-    var sub=hero.querySelector('.hsub'),
-        trust=hero.querySelector('.htrust'),
-        btns=hero.querySelector('.btnrow');
-    if(!sub&&!trust&&!btns)return;
-    var sec=document.createElement('section');
-    sec.className='band v11-hero2';
-    var rail=document.createElement('div');
-    rail.className='h2rail';
-    sec.appendChild(rail);
-    /* the eyebrow's qualifier leads bit 2. Deliberately NOT given class="rv": the reveal script
-       collects .rv synchronously at parse time, so an element created here would never be observed
-       and would sit at opacity 0 forever. Plain and visible is the right trade for one mono line. */
-    var qual=hero.querySelector('.heyeb .heyeb-b');
-    if(qual){
-      var eb=document.createElement('div');
-      eb.className='h2eyeb';
-      eb.textContent=qual.textContent;
-      rail.appendChild(eb);
-    }
-    [sub,trust,btns].forEach(function(el){ if(el) rail.appendChild(el); });
-    hero.parentNode.insertBefore(sec,hero.nextSibling);
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build);
-  else build();
-})();
-</script>
+<!-- THE SHARED SCRIPT LAYER. Replaces the four inline blocks v11-hero2 / v11-footer /
+     v11-trust / v11-reveal, which were byte-identical across the sub pages. No defer:
+     it must run at exactly the position those blocks did. See _shared/v11-sub.js. -->
+<script src="_shared/v11-sub.js"></script>
 
-<script id="v11-footer">
-/* Wraps the run of .footer-legal paragraphs in one container so desktop can column-count them.
-   Ported verbatim from V11/index.html. Done in JS rather than in the markup so the footer stays
-   byte-identical to the compliance-approved block that ships on every other page - the wording,
-   order and element structure are untouched and only a wrapper is introduced.
-   The wrapper also carries the 48 group boundary at BOTH widths (see the CSS note): before it
-   existed, that 48 sat on .footer-legal:first-of-type, which stops separating the block from the
-   social row the moment the paragraphs move inside a wrapper. */
-(function(){
-  function build(){
-    var f=document.querySelector('footer .container')||document.querySelector('footer');
-    if(!f||f.querySelector('.footer-legalwrap'))return;
-    var legals=[].slice.call(f.querySelectorAll(':scope > .footer-legal'));
-    if(legals.length<2)return;
-    var w=document.createElement('div'); w.className='footer-legalwrap';
-    legals[0].parentNode.insertBefore(w,legals[0]);
-    legals.forEach(function(el){w.appendChild(el);});
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build);
-  else build();
-})();
-</script>
-
-<script id="v11-trust">
-/* REGULATORY STANDING fold - home verbatim (2026-08-18). Mobile only, like the home. */
-(function(){
-  if(!window.matchMedia('(max-width:900px)').matches) return;
-  function build(){
-    var tw=document.querySelector('.close9 .trust9');
-    if(!tw || tw.querySelector('.tmore')) return;
-    var tb=document.createElement('button');
-    tb.className='tmore'; tb.type='button'; tb.setAttribute('aria-expanded','false');
-    tb.innerHTML='<span>REGULATORY STANDING</span><span class="sign" aria-hidden="true">+</span>';
-    var tg=tw.querySelector('.tg');
-    if(!tg) return;
-    tw.insertBefore(tb,tg);
-    tb.addEventListener('click',function(){
-      var open=tw.classList.toggle('open');
-      tb.setAttribute('aria-expanded',open?'true':'false');
-      tb.querySelector('.sign').textContent=open?'−':'+';
-      if(open) tg.querySelectorAll('.rv:not(.in)').forEach(function(el){el.classList.add('in');});
-    });
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build);
-  else build();
-})();
-</script>
-
-
-<script id="v11-reveal">
-/* ============ V11 REVEAL - ported verbatim from V11/index.html (2026-08-18) ============
-   This replaced the V9-era single-animation observer that used to sit here (one 14px Y fade for all
-   44 .rv elements, rootMargin -8%, threshold .06, no stagger, no roles). The home page's rewrite
-   and the reasons for every value are documented in V11/index.html and HANDOFF-V11.md 4-B-1.
-   Nothing here is new work: same three roles, same 160ms stagger, same flat -60px rootMargin,
-   same load+120ms deferral. Role assignment is data-driven, so it sorts THIS page's elements by
-   the same test rather than by a hand-written list. */
-(function(){
-  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var rv=[].slice.call(document.querySelectorAll('.rv'));
-
-  /* sort every reveal into one of the three roles (see the CSS note in style#v11-global) */
-  if(!reduce){
-    rv.forEach(function(el){
-      var t=el.tagName;
-      if(t==='IMG'||t==='VIDEO'||t==='FIGURE'||el.classList.contains('ph1')){el.dataset.rv='media';return;}
-      /* mono eyebrows only, and only when they hold nothing but text - an eyebrow carrying the
-         wordmark <img> would be emptied by the scramble's text rewrite. */
-      if((/(^|\s)(eyeb|eyebrow|eyebrow5|htrust)(\s|$)/.test(el.className)
-          ||/^NO\.\s*\d/.test((el.textContent||'').trim()))&&!el.querySelector('img,svg')){el.dataset.rv='label';return;}
-      el.dataset.rv='text';
-    });
-  }
-
-  /* ---- scramble decode, for data-rv="label" ---- */
-  var GLYPH='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  function scramble(el){
-    var nodes=[], total=0;
-    (function walk(n){
-      for(var i=0;i<n.childNodes.length;i++){
-        var c=n.childNodes[i];
-        if(c.nodeType===3){ if(c.textContent.length){nodes.push({n:c,t:c.textContent}); total+=c.textContent.length;} }
-        else if(c.nodeType===1) walk(c);
-      }
-    })(el);
-    if(!total) return;
-    var DUR=520, t0=null;
-    function frame(now){
-      if(t0===null)t0=now;
-      var p=Math.min(1,(now-t0)/DUR), done=p*total, seen=0;
-      nodes.forEach(function(r){
-        var out='';
-        for(var i=0;i<r.t.length;i++){
-          var ch=r.t[i];
-          out+=(seen+i<done||!/[a-z0-9]/i.test(ch))?ch:GLYPH[(Math.random()*GLYPH.length)|0];
-        }
-        r.n.textContent=out; seen+=r.t.length;
-      });
-      if(p<1)requestAnimationFrame(frame);
-      else nodes.forEach(function(r){r.n.textContent=r.t;});
-    }
-    requestAnimationFrame(frame);
-  }
-
-  /* ---- stagger: everything that crosses in the same frame goes 160ms apart, capped at 4 ---- */
-  var queue=[],pending=false;
-  function reveal(el,i){
-    var d=Math.min(i,4)*160;
-    if(el.dataset.rv==='label'){setTimeout(function(){scramble(el);},d);el.classList.add('in');return;}
-    el.style.transitionDelay=(d/1000)+'s';
-    el.classList.add('in');
-  }
-  function enqueue(el){
-    if(reduce){el.classList.add('in');return;}
-    queue.push(el);
-    if(pending)return; pending=true;
-    requestAnimationFrame(function(){
-      queue.forEach(function(e,i){reveal(e,i);});
-      queue=[];pending=false;
-    });
-  }
-
-  /* ---- media role: the band photography (2026-08-18) ----
-     Role sorting above only reaches elements that already carry .rv, and this page's band images
-     never had a reveal at all - so all three would have stayed static while everything around them
-     animated. Ported from the home's binder verbatim.
-     ★ WATCH THE PARENT, NOT THE IMAGE. clip-path:inset(0 100% 0 0) leaves the element with zero
-     visible area and IntersectionObserver measures the clipped box: an image sitting squarely in the
-     viewport reports isIntersecting:false, ratio 0.00, so the observer never fires and the image
-     stays wiped out forever - the effect blocks its own trigger. .v9band is never clipped. It is
-     also taller than the image (it holds the masthead too), so the margin is -35% rather than -60px:
-     that lands the trigger where the IMAGE reaches the viewport, not the masthead.
-     .v9band is built by the V9 mobile JS at the bottom of this file, so the wrappers may not exist
-     yet - a MutationObserver picks them up whenever they land, and gives up at load. Desktop matches
-     nothing here (no .v9band wrappers), which is correct: the home leaves full-bleed desktop band
-     photography out of the media role because a 0.9s wipe across 1666px reads as an event, not an
-     entrance. */
-  if(!reduce){(function(){
-    function go(){
-      var med=[].slice.call(document.querySelectorAll('.v9band>img,.v9band>video'))
-        .filter(function(m){return !m.dataset.rv;});
-      if(!med.length) return false;
-      var mio=new IntersectionObserver(function(es){
-        es.forEach(function(e){
-          if(!e.isIntersecting) return;
-          var t=e.target.__rvMedia; if(t) t.classList.add('in');
-          mio.unobserve(e.target);
-        });
-      },{rootMargin:'0px 0px -35% 0px',threshold:0});
-      med.forEach(function(m){
-        m.classList.add('rv'); m.dataset.rv='media';
-        var r=m.getBoundingClientRect();
-        if(r.top<window.innerHeight&&r.bottom>0){m.classList.add('in');return;}
-        var host=m.parentElement||m;
-        host.__rvMedia=m;
-        mio.observe(host);
-      });
-      return true;
-    }
-    go();
-    var mo=new MutationObserver(go);
-    mo.observe(document.documentElement,{childList:true,subtree:true});
-    window.addEventListener('load',function(){ go(); mo.disconnect(); });
-  })();}
-
-  if(reduce||!('IntersectionObserver' in window)){rv.forEach(function(el){el.classList.add('in');});}
-  else{
-    /* flat -60px, not -8%: on an 812 screen -8% puts the trigger at 747, above the hero's own
-       second line - a one-viewport hero would wait for a scroll that never comes. */
-    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){enqueue(e.target);io.unobserve(e.target);}});},{rootMargin:'0px 0px -60px 0px',threshold:0});
-    var observeAll=function(){
-      if(observeAll.done) return; observeAll.done=true;
-      setTimeout(function(){ rv.forEach(function(el){io.observe(el);}); },120);
-    };
-    if(document.readyState==='complete') observeAll();
-    else window.addEventListener('load',observeAll);
-  }
-})();
-(function(){
-  var nav=document.querySelector('.nav');
-  function onScroll(){nav.classList.toggle('scrolled',window.scrollY>24);}
-  window.addEventListener('scroll',onScroll,{passive:true});
-  onScroll();
-})();
-
-/* horizon ring glyph (ported verbatim from index-H) */
-(function(){
-  var cv=document.getElementById('recRingH'); if(!cv) return; var ctx=cv.getContext('2d');
-  var DPR=Math.min(devicePixelRatio||1,2), S=44; cv.width=S*DPR; cv.height=S*DPR; ctx.scale(DPR,DPR);
-  var RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var cx=S/2, cy=S/2, R=15, PROG=0.10; /* 5-year, early */
-  function frame(now){
-    ctx.clearRect(0,0,S,S);
-    var pulse=0.55+0.45*Math.sin(now*0.004);
-    ctx.strokeStyle='rgba(244,243,240,0.14)'; ctx.lineWidth=2;
-    ctx.beginPath(); ctx.arc(cx,cy,R,0,6.28); ctx.stroke();
-    ctx.strokeStyle='rgba(244,243,240,0.9)'; ctx.lineWidth=2; ctx.lineCap='round';
-    ctx.beginPath(); ctx.arc(cx,cy,R,-Math.PI/2,-Math.PI/2+PROG*6.28); ctx.stroke(); ctx.lineCap='butt';
-    ctx.strokeStyle='rgba(244,243,240,'+(0.5+0.4*pulse).toFixed(3)+')'; ctx.lineWidth=1.3;
-    ctx.beginPath(); ctx.arc(cx,cy,3.4,0,6.28); ctx.stroke();
-    if(!RM) requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-})();
-
-/* below 900px the clip is served from its light encode (data-m) instead of the 4K master */
-(function(){
-  if(!window.matchMedia('(max-width:900px)').matches)return;
-  [].slice.call(document.querySelectorAll('video[data-m]')).forEach(function(v){
-    v.src=v.dataset.m; v.load();
-  });
-})();
-
-/* menu overlay */
-(function(){
-  var burger=document.querySelector('.nav .burger');
-  var ov=document.getElementById('menuov');
-  if(!burger||!ov)return;
-  function toggle(){var open=document.body.classList.toggle('menu-open');ov.classList.toggle('open',open);ov.setAttribute('aria-hidden',String(!open));}
-  burger.addEventListener('click',toggle);
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.body.classList.contains('menu-open'))toggle();});
-})();
-
-/* mobile prose folds: VIEW MORE / VIEW LESS (same pattern as index-H) */
-(function(){
-  if(!window.matchMedia('(max-width:900px)').matches) return;
-  /* account types: tap the title to disclose (same as the homepage NO.01 directory) */
-  [].slice.call(document.querySelectorAll('.acct3 .a')).forEach(function(d){
-    var h=d.querySelector('h3'); if(!h) return;
-    h.setAttribute('role','button'); h.setAttribute('tabindex','0'); h.setAttribute('aria-expanded','false');
-    function toggle(){var open=d.classList.toggle('open'); h.setAttribute('aria-expanded',open?'true':'false');}
-    h.addEventListener('click',toggle);
-    h.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}});
-  });
-  [['.specimens .snote .smore','.snote'],
-   ['.calcol .cmore','.calcol'],
-   ['.devgrid .dmore','.devgrid']].forEach(function(pair){ /* .trust9 left the fold system 2026-07-31 */
-    var btn=document.querySelector(pair[0]); if(!btn) return;
-    btn.addEventListener('click',function(){
-      var box=btn.closest(pair[1]);
-      var open=box.classList.toggle('open');
-      btn.setAttribute('aria-expanded',open?'true':'false');
-      btn.textContent=open?'VIEW LESS':'VIEW MORE';
-      if(open) box.querySelectorAll('.rv:not(.in)').forEach(function(el){el.classList.add('in');});
-      /* newly-revealed .rv elements would otherwise sit at opacity 0 on motion-enabled devices */
-    });
-  });
-})();
-</script>
 <script>
   // No. 04 calibration scatter - provisional decisions drift, settle, and lock at horizon end (ported from V4 SD; filter chips + stats strip removed, the section's .tri already carries 70/64/6)
   (function(){
