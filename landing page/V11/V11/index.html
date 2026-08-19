@@ -762,8 +762,13 @@ body.menu-open{overflow:hidden}
   section.band .qcap5,section.band .mast,.hero .heyeb{font-size:13px}
   .hero .heyeb .hlogo{width:192px} /* Figma mobile master: 12px-tall wordmark */
   .metaline.doclist,.close9 .metaline.doclist{font-size:9px}
-  .sys .fee,.close9 .offer p.fee9,.latest .lt-meta,.clog .ci .cdate,
+  .sys .fee,.latest .lt-meta,.clog .ci .cdate,
   .sys .mode .mfoot .mmeta,.close9 .foot9,.close9 .foot9 span{font-size:11px}
+  /* fee notes are one tier, and it is 9 (Inkyung 2026-08-18). The same sentence - "Managed assets
+     carry an additional 0.10% fee." - was rendering 9 in the $20 plate (moved there 08-17, which is
+     also what lets the sentence hold one line inside the inset) and 11 down here in CLOSE. One
+     sentence, one size. SD's #research fee note takes the same 9. */
+  .close9 .offer p.fee9{font-size:9px}
   .std5b .suit5 h3{font-size:13px} /* Figma: list captions take the 13 label tier (was 11) */
   /* hero trust line: was one line at min(9px,2.15vw) (Inkyung 2026-07-28) - 8.4px was unreadable on
      phones. Settled at 11px c-400 per the Figma mobile master (2026-07-31, Typography.md §9 exception:
@@ -1064,8 +1069,19 @@ body.menu-open{overflow:hidden}
   .std5b .qh2{font-size:22px;line-height:1.15;letter-spacing:-0.02em} /* 22 tier leading unified with h3/step/streamhd (same size = same leading) */
 
   /* ---- Newsroom: date leads the row (Anduril news list) ---- */
-  .latest .lt-feat .lt-meta{order:-1;margin-top:0}
-  .latest .lt-feat .lt-hd{margin-top:8px}
+  /* THE PICTURE SITS UNDER THE HEADLINE, NOT ABOVE IT.
+     Built picture-first from the desktop layout, and on a phone that put a
+     335px image before any words - you scrolled past a photograph to find out
+     what it was of. Date, headline, then the picture as evidence, then the
+     summary and the link (Inkyung 2026-08-19: "이미지만 제목밑에", applied to the
+     home and the newsroom together: "홈도 뉴스룸도?").
+     Type sizes are untouched - only the order moved. */
+  .latest .lt-feat>.lt-body{display:contents}
+  .latest .lt-feat .lt-meta{order:0;margin-top:0}
+  .latest .lt-feat .lt-hd{order:1;margin-top:8px}
+  .latest .lt-feat>.lt-plate{order:2;margin-top:24px}
+  .latest .lt-feat .lt-sum{order:3;margin-top:24px}
+  .latest .lt-feat .mlink{order:4;margin-top:24px}
   .clog .ci{display:flex;flex-direction:column}
   .clog .ci .cdate{order:-1;margin:0 0 8px}
 
@@ -1131,21 +1147,21 @@ body.menu-open{overflow:hidden}
 </style>
 
 </head>
-<body>
+<body class="p-home">
 
 <nav class="nav">
   <a class="logo" href="index.html" aria-label="Home"><svg viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.59903 0H7.79315L2.19412 17.6523H0L5.59903 0Z"/><path d="M12.8061 0H15.0002L9.40115 17.6523H7.20703L12.8061 0Z"/></svg></a>
   <div class="navmenu">
     <a href="index.html" class="on">Home</a>
-    <a href="../V10/self-directed.html">Self-Directed</a>
-    <a href="../V10/managed.html">Managed</a>
-    <a href="../V10/pricing.html">Pricing</a>
-    <a href="../V10/manifesto.html">Manifesto</a>
-    <a href="../V10/newsroom.html">Newsroom</a>
+    <a href="self-directed.html">Self-Directed</a>
+    <a href="managed.html">Managed</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="manifesto.html">Manifesto</a>
+    <a href="newsroom.html">Newsroom</a>
   </div>
   <div class="navright">
     <span class="lang"><a href="#" onclick="return false" class="on">EN</a><a href="#" onclick="return false">FR</a></span>
-    <a class="ncta" href="../V10/get-the-app.html">OPEN AN ACCOUNT</a>
+    <a class="ncta" href="get-the-app.html">OPEN AN ACCOUNT</a>
   </div>
   <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
 </nav>
@@ -1153,13 +1169,13 @@ body.menu-open{overflow:hidden}
 <div class="menuov" id="menuov" aria-hidden="true">
   <div class="mlist">
     <a href="index.html" class="cur">Home</a>
-    <a href="../V10/self-directed.html">Self-Directed</a>
-    <a href="../V10/managed.html">Managed</a>
-    <a href="../V10/pricing.html">Pricing</a>
-    <a href="../V10/manifesto.html">Manifesto</a>
-    <a href="../V10/newsroom.html">Newsroom</a>
+    <a href="self-directed.html">Self-Directed</a>
+    <a href="managed.html">Managed</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="manifesto.html">Manifesto</a>
+    <a href="newsroom.html">Newsroom</a>
   </div>
-  <a class="menuov-cta" href="../V10/get-the-app.html">OPEN AN ACCOUNT</a>
+  <a class="menuov-cta" href="get-the-app.html">OPEN AN ACCOUNT</a>
   <div class="mlang"><a href="#" onclick="return false" class="on">EN</a><a href="#" onclick="return false">FR</a></div>
   <div class="mfoot"><span>INTELLIGENT INVESTING</span><span class="heyeb-sep"> &middot; </span><span class="heyeb-b">A CAPITAL ALLOCATION SYSTEM</span></div>
 </div>
@@ -1174,11 +1190,11 @@ body.menu-open{overflow:hidden}
        swap. NO.04's train clip carries the attribute and plays fine; this one was the outlier.
        Only clip 1 needs it - clips 2 and 3 are started by advance() from ended/timeupdate, which
        fire during playback and so already have a playing context. -->
-  <video class="on" autoplay muted playsinline preload="auto" poster="Images/v5 images/hero-still-nyse.jpg" data-m="Images/v5 images/video mobile/hero-nyse-m.mp4" src="Images/v5 images/video desktop/hero-nyse-d.mp4"></video>
-  <video muted playsinline preload="metadata" data-m="Images/v5 images/video mobile/hero-refinery-m.mp4" src="Images/v5 images/video desktop/hero-refinery-d.mp4"></video>
-  <video muted playsinline preload="metadata" data-m="Images/v5 images/video mobile/hero-port-m.mp4" src="Images/v5 images/video desktop/hero-port-d.mp4"></video>
+  <video class="on" autoplay muted playsinline preload="auto" poster="Images/v5-images/hero-still-nyse.jpg" data-m="Images/v5-images/video-mobile/hero-nyse-m.mp4" src="Images/v5-images/video-desktop/hero-nyse-d.mp4"></video>
+  <video muted playsinline preload="metadata" data-m="Images/v5-images/video-mobile/hero-refinery-m.mp4" src="Images/v5-images/video-desktop/hero-refinery-d.mp4"></video>
+  <video muted playsinline preload="metadata" data-m="Images/v5-images/video-mobile/hero-port-m.mp4" src="Images/v5-images/video-desktop/hero-port-d.mp4"></video>
   <div class="hgroup">
-    <div class="heyeb rv"><img class="hlogo" src="II word logo.svg" alt="Intelligent Investing"></div><!-- typed wordmark replaced with the real logo, tagline removed (2026-07-31) -->
+    <div class="heyeb rv"><img class="hlogo" src="II-word-logo.svg" alt="Intelligent Investing"></div><!-- typed wordmark replaced with the real logo, tagline removed (2026-07-31) -->
     <div class="hbars">
       <span class="hbar rv dtonly">The market remembers <br class="mbr">every decision.</span>
       <span class="hbar rv mbonly">The market remembers</span>
@@ -1187,7 +1203,7 @@ body.menu-open{overflow:hidden}
     </div><!-- mobile takes the Figma 3-line break (2026-07-31); desktop keeps the two-sentence spans -->
     <p class="hsub rv">A Canadian capital allocation system combining managed investing, self-directed brokerage, decision records, and institutional-grade research.</p>
     <div class="ctarow rv">
-      <a class="cta-fill inv" href="../V10/get-the-app.html">OPEN AN ACCOUNT</a>
+      <a class="cta-fill inv" href="get-the-app.html">OPEN AN ACCOUNT</a>
       <a class="mlink" href="#system"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>EXPLORE THE SYSTEM</span></a>
     </div>
     <p class="htrust rv"><span>A licensed Canadian brokerage</span><span class="heyeb-sep"> &middot; </span><span class="heyeb-b">regulated by CIRO &middot; CIPF member</span></p>
@@ -1229,19 +1245,19 @@ body.menu-open{overflow:hidden}
     <div class="mode rv">
       <h3>Managed</h3>
       <p>Low-cost, long-term portfolios for capital that needs a disciplined core.</p>
-      <a class="mlink" href="../V10/managed.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>MANAGED</span></a>
+      <a class="mlink" href="managed.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>MANAGED</span></a>
     </div>
     <div class="mode rv">
       <h3>Self-Directed</h3>
       <p>An active decision system that places each order on the record before the outcome, and preserves what changed afterward.</p>
-      <a class="mlink" href="../V10/self-directed.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>SELF-DIRECTED</span></a>
+      <a class="mlink" href="self-directed.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>SELF-DIRECTED</span></a>
     </div>
     <div class="mode rv">
       <h3>Fiscal.ai Max</h3>
       <p>Multi-year financials, operating metrics, return on capital, margin trends and company comparisons. Included with membership. Research supplies evidence. Judgment remains&nbsp;yours.</p>
       <div class="mfoot">
         <span class="mmeta">Fiscal.ai Max &middot; $99/month standalone</span>
-        <a class="mlink" href="../V10/self-directed.html#research"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>RESEARCH</span></a>
+        <a class="mlink" href="self-directed.html#research"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>RESEARCH</span></a>
       </div>
     </div>
     </div>
@@ -1250,8 +1266,8 @@ body.menu-open{overflow:hidden}
 
 <!-- NO.02 THE MISSING LAYER -->
 <section class="band gap2" id="missing-layer"><!-- ids on every content section feed the SECTIONS list in the burger overlay (2026-08-01) -->
-  <img class="ph1" src="Images/v5 images/judgement section.png" alt="">
-  <img class="ph2" src="Images/v5 images/matthew-dlr-0_Hp9s_hW6g-unsplash.jpg" alt="">
+  <img class="ph1" src="Images/v5-images/judgement-section.png" alt="">
+  <img class="ph2" src="Images/v5-images/matthew-dlr-0_Hp9s_hW6g-unsplash.jpg" alt="">
 
   <div class="eyebrow rv">NO. 02 &middot; THE MISSING LAYER</div>
   <div class="hbargrp">
@@ -1274,7 +1290,7 @@ body.menu-open{overflow:hidden}
           <p class="t mbonly">active large-cap US funds trailed the S&amp;P 500 over 15 years.</p>
     </div>
     <p class="src"><a href="https://www.spglobal.com/spdji/en/research-insights/spiva/" target="_blank" rel="noopener">S&amp;P SPIVA Scorecard, Year-End 2024</a></p>
-    <a class="mlink" style="color:var(--c-white)" href="../V10/manifesto.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>READ THE MANIFESTO</span></a>
+    <a class="mlink" style="color:var(--c-white)" href="manifesto.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>READ THE MANIFESTO</span></a>
   </div>
 </section>
 
@@ -1309,7 +1325,7 @@ body.menu-open{overflow:hidden}
   <div class="l3lower">
   <div class="loopnote rv">
     <p class="lnote">A sound decision can lose. A reckless one can pay off. The outcome alone never tells you which you made, which is why the number goes down first. Every active decision begins with a record. When the allocator returns, the case can change. The history cannot.</p><!-- merged 2026-07-28: was two paragraphs; wording unchanged. On mobile a script relocates this into the VIEW MORE fold. -->
-    <a class="mlink" href="../V10/self-directed.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>EXPLORE THE DECISION RECORD</span></a>
+    <a class="mlink" href="self-directed.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>EXPLORE THE DECISION RECORD</span></a>
   </div>
 
   <div class="specimen">
@@ -1349,7 +1365,7 @@ body.menu-open{overflow:hidden}
 
 <!-- NO.04 THE DEFAULT (dark data) -->
 <section class="band def4 secpad" id="default">
-  <video autoplay muted loop playsinline poster="Images/v5 images/def4-still-rails.jpg" data-m="Images/v5 images/video mobile/fig-train-m.mp4" src="Images/v5 images/video desktop/fig-train-d.mp4"></video>
+  <video autoplay muted loop playsinline poster="Images/v5-images/def4-still-rails.jpg" data-m="Images/v5-images/video-mobile/fig-train-m.mp4" src="Images/v5-images/video-desktop/fig-train-d.mp4"></video>
   <div class="rail">
     <div class="eyeb rv">NO. 04 &middot; THE DEFAULT</div>
     <h2 class="bigh2 rv"><span class="a">The default is the market.</span><span class="b">Everything else is earned.</span></h2>
@@ -1364,14 +1380,14 @@ body.menu-open{overflow:hidden}
     </div>
     <p class="dlead rv dtonly">The same capital, invested in the index over the same period, made 31%. That is what the 11% cost.</p>
       <p class="dlead rv mbonly">That is what the 11% cost.</p>
-    <a class="mlink rv" href="../V10/self-directed.html#benchmark"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>BENCHMARK METHODOLOGY</span></a>
+    <a class="mlink rv" href="self-directed.html#benchmark"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>BENCHMARK METHODOLOGY</span></a>
     <p class="figcap rv">Illustrative. An active equity position over the same&nbsp;hold.</p><!-- one line: at the 9px meta tier this measures 331px in a 350px rail -->
   </div>
 </section>
 
 <!-- NO.05 THE STANDARD (photo band; PLACEHOLDER image - replace when picked) -->
 <section class="band std5" id="standard">
-  <img src="Images/v5 images/panagiotis-falcos-eFQy2PmThNo-unsplash.jpg" alt="">
+  <img src="Images/v5-images/panagiotis-falcos-eFQy2PmThNo-unsplash.jpg" alt="">
   <div class="eyebrow5 rv">NO. 05 &middot; THE STANDARD</div>
   <div class="hbargrp5">
     <span class="hbar rv">The standard is high.</span>
@@ -1422,45 +1438,45 @@ body.menu-open{overflow:hidden}
     <h2 class="streamhd rv">Press Releases</h2>
     <div class="ltgrid rv">
       <div class="lt-feat">
-        <h2 class="lt-hd"><a href="../V10/press-release.html">Orion Digital Commercially Launches Intelligent Investing</a></h2><!-- swap href to the Business Wire or Orion IR URL if the release is not hosted on our site -->
+        <h2 class="lt-hd"><a href="press-release.html">Orion Digital Commercially Launches Intelligent Investing</a></h2><!-- swap href to the Business Wire or Orion IR URL if the release is not hosted on our site -->
         <p class="lt-sum">The investing industry solved access. In an AI world, Intelligent Investing is built to help investors make better investment&nbsp;decisions.</p>
         <p class="lt-meta">JUL 27, 2026</p>
-        <a class="mlink" href="../V10/press-release.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>READ THE PRESS RELEASE</span></a>
+        <a class="mlink" href="press-release.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>READ THE PRESS RELEASE</span></a>
       </div>
     </div>
     <!-- Hidden while the stream holds a single release: two ↗ links stacked read as a duplicate, and
          moving "all" up beside the heading would mint a new landing CTA slot. Restore this when a
          second release lands (2026-07-31, Inkyung). Mobile already hid it in the 07-29 cut. -->
     <div class="ltfoot rv" hidden>
-      <a class="mlink" href="../V10/newsroom.html#press-release"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>ALL PRESS RELEASES</span></a>
+      <a class="mlink" href="newsroom.html#press-release"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>ALL PRESS RELEASES</span></a>
     </div>
 
     <div class="clog">
       <h2 class="streamhd rv">Changelog</h2>
       <div class="cstrip rv">
-        <a class="ci" href="../V10/changelog-entry.html">
+        <a class="ci" href="changelog-entry.html">
           <span class="ct">[July improvement title]</span>
           <span class="cd">[Two line note on what changed and what it means.]</span>
           <span class="cdate">JUL [DD], 2026</span>
         </a>
-        <a class="ci" href="../V10/changelog-entry.html">
+        <a class="ci" href="changelog-entry.html">
           <span class="ct">[Second improvement title]</span>
           <span class="cd">[Two line note on what changed and what it means.]</span>
           <span class="cdate">JUL [DD], 2026</span>
         </a>
-        <a class="ci" href="../V10/changelog-entry.html">
+        <a class="ci" href="changelog-entry.html">
           <span class="ct">[June improvement title]</span>
           <span class="cd">[Two line note on what changed and what it means.]</span>
           <span class="cdate">JUN [DD], 2026</span>
         </a>
-        <a class="ci" href="../V10/changelog-entry.html">
+        <a class="ci" href="changelog-entry.html">
           <span class="ct">[Fourth improvement title]</span>
           <span class="cd">[Two line note on what changed and what it means.]</span>
           <span class="cdate">JUN [DD], 2026</span>
         </a>
       </div>
       <div class="cfoot rv">
-        <a class="mlink" href="../V10/newsroom.html#changelog"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>VIEW ALL</span></a>
+        <a class="mlink" href="newsroom.html#changelog"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>VIEW ALL</span></a>
       </div>
     </div>
   </div>
@@ -1480,8 +1496,8 @@ body.menu-open{overflow:hidden}
         <p class="pricehd9">One $20/month membership includes access to Managed, Self-Directed, and Fiscal.ai Max.</p>
         <p class="fee9">Managed assets carry an additional 0.10% fee.</p>
         <div class="cta-row">
-          <a class="cta-fill" href="../V10/get-the-app.html">OPEN AN ACCOUNT</a>
-          <a class="mlink" href="../V10/manifesto.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>READ THE MANIFESTO</span></a>
+          <a class="cta-fill" href="get-the-app.html">OPEN AN ACCOUNT</a>
+          <a class="mlink" href="manifesto.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>READ THE MANIFESTO</span></a>
         </div>
       </div>
     </div>
@@ -1992,6 +2008,14 @@ body.menu-open{overflow:hidden}
 
 
 <style id="v11-mobile">
+/* ---------------------------------------------------------------------------
+   2026-08-19: every rule that belongs to more than one page was DELETED from this
+   block and now lives in _shared/v11.css, which loads after it. If a value you
+   expect is not here, it is there. Comments left behind describe decisions whose
+   rule moved - the reasoning is kept, the duplicate is not.
+   THIS BLOCK MAY ONLY CARRY #section-id RHYTHM AND DOCUMENTED PAGE EXCEPTIONS.
+   --------------------------------------------------------------------------- */
+
 /* ============ V11 MOBILE — beat layer (2026-08-17) ============
    V11 doctrine: copy unchanged · zero content loss · no horizontal
    swipe · desktop untouched. Everything else serves mobile polish.
@@ -2026,27 +2050,27 @@ body.menu-open{overflow:hidden}
      fallback is the 375 value (32 media->wordmark + 10 wordmark + 24 + 92 statement + 32 foot).
      The 104 bottom pad is gone: this hero's foot IS the fold, and the 104 that used to live here
      now sits on .v11-hero2's top so the beat gap reads 104 ink-to-ink. */
-  .hero{background:var(--c-black);padding-top:0!important;padding-bottom:0!important;justify-content:flex-start!important}
-  .hero>video,.hero>img{inset:auto!important;top:0!important;left:0!important;right:0!important;bottom:auto!important;width:100%!important;height:calc(100svh - var(--htail,190px))!important} /* was a flat 76.5svh; see the .hero note above. At 375/812 this resolves to 622 - within 1px of the old 621, so the crop the footage was chosen for is preserved and only short/tall devices change. The media->wordmark leftover stays 32 (DS scale) rather than 28. SD splits 81 text / 19 video at 375; the home hero takes the same proportion inverted. 77 is the floor: wordmark 12 + 24 + statement 92 + 32 pad needs ~23svh, so the media cannot go past 77 without crushing the band. inset first - it is a shorthand and resets top/left if it comes after */
+  body.p-home .hero{background:var(--c-black);padding-top:0!important;padding-bottom:0!important;justify-content:flex-start!important}
+  body.p-home .hero>video,.hero>img{inset:auto!important;top:0!important;left:0!important;right:0!important;bottom:auto!important;width:100%!important;height:calc(100svh - var(--htail,190px))!important} /* was a flat 76.5svh; see the .hero note above. At 375/812 this resolves to 622 - within 1px of the old 621, so the crop the footage was chosen for is preserved and only short/tall devices change. The media->wordmark leftover stays 32 (DS scale) rather than 28. SD splits 81 text / 19 video at 375; the home hero takes the same proportion inverted. 77 is the floor: wordmark 12 + 24 + statement 92 + 32 pad needs ~23svh, so the media cannot go past 77 without crushing the band. inset first - it is a shorthand and resets top/left if it comes after */
   /* footage is no longer under the type, so the readability scrim goes (was 0.45) */
-  .hero>video{filter:brightness(0.9) contrast(1)}
+  body.p-home .hero>video{filter:brightness(0.9) contrast(1)}
   /* wordmark + statement = one lockup on the black ground. v9 pins the
      wordmark to the hero top (932, absolute top:74); back to static flow. */
-  .hero>.heyeb{position:static!important;top:auto!important;left:auto!important;margin:calc(100svh - var(--htail,190px) + 32px) 0 24px!important;padding:0 20px;z-index:2}
+  body.p-home .hero>.heyeb{position:static!important;top:auto!important;left:auto!important;margin:calc(100svh - var(--htail,190px) + 32px) 0 24px!important;padding:0 20px;z-index:2}
   /* wordmark eased down from the Figma master's 192 (=12px tall) to 168
      (=10.5px). In the lockup it sits directly above a 28px statement, so the
      master's size - set when the wordmark stood alone at the hero top - now
      competes with it (Inkyung 08-17). Flag for Figma sync. */
-  .hero .heyeb .hlogo{width:168px}
-  .hero .hgroup{background:var(--c-black);margin-bottom:0!important}
-  .hero .hgroup .hbars{margin-bottom:0}
+  body.p-home .hero .heyeb .hlogo{width:168px}
+  body.p-home .hero .hgroup{background:var(--c-black);margin-bottom:0!important}
+  body.p-home .hero .hgroup .hbars{margin-bottom:0}
   /* no box means no box leading. DS: .hbar's 1.5 exists only to make the
      black clone boxes meet - on a plain ground it goes to the 1.1 display
      tier (same call as the SD hero, V10 HANDOFF 0-B). */
-  .hero .hbar{background:none!important;padding:0!important;line-height:1.1!important}
+  body.p-home .hero .hbar{background:none!important;padding:0!important;line-height:1.1!important}
   /* top gradient protects wordmark/nav over the brighter footage (Apple pattern) */
-  .hero{position:relative}
-  .hero::after{content:'';position:absolute;left:0;right:0;top:0;height:24vh;pointer-events:none;z-index:1;
+  body.p-home .hero{position:relative}
+  body.p-home .hero::after{content:'';position:absolute;left:0;right:0;top:0;height:24vh;pointer-events:none;z-index:1;
     background:
       /* corner scrim - the nyse clip is bright sky in the top right exactly where the
          burger sits, while the left is dark facade. Darkening the whole frame again
@@ -2077,7 +2101,7 @@ body.menu-open{overflow:hidden}
      renders 104 ink-to-ink - the ladder's BETWEEN-BEATS value, half the 208 it used to be.
      These two are one masthead (wordmark -> statement -> descriptor -> CTA) that the fold happens
      to cut in half, not two sections, so they take a beat gap and no rule. Bottom stays 104. */
-  .v11-hero2{background:var(--c-black);padding:72px 20px 104px} /* section rhythm canon: 104/104, same as every band */
+  body.p-home .v11-hero2{background:var(--c-black);padding:72px 20px 104px} /* section rhythm canon: 104/104, same as every band */
   /* Same-colour adjacency takes the c-900 hairline (doctrine; same call as
      .gap2/.std5/.std5b at 924). Two boundaries need it here, not one: the
      hero foot meets beat 2 on black, and beat 2 meets NO.01 on black. Without
@@ -2131,10 +2155,7 @@ body.menu-open{overflow:hidden}
      separating, so the air only has to be equal and on the ladder. 104 would put
      208 here - the same total as a section boundary - and the trust block is the
      section's tail, not a section of its own. (I first proposed 64/64 and withdrew
-     it: 64 is not one of the three V11 values.) */
-  .close9 .trust9{margin-top:48px;padding-top:48px}
-  .close9 .trust9 .tg{margin-top:48px;row-gap:48px} /* four parallel items */
-  .close9 .trust9 .ti span{margin-top:8px}          /* label -> value, inside one item */
+     it: 64 is not one of the three V11 values.) */ /* four parallel items */          /* label -> value, inside one item */
 
   /* ---- trust block folds behind a + (2026-08-17, Inkyung, Anduril footer grammar) ----
      ⚠ COMPLIANCE UNCONFIRMED. This is the "푸터 아코디언 컴플라이언스" item already flagged for
@@ -2144,20 +2165,10 @@ body.menu-open{overflow:hidden}
 
      No new tokens: the control reuses the .vmemo spec already proven on "+ VIEW THE FULL MEMO"
      (13 mono, 0.04em, 44px tap target via ::after inset), the toggle reuses the .lmore/.gmore
-     pattern, and .tmore is the class this page already reserved for exactly this. */
-  .close9 .trust9 .tmore{display:inline-flex;align-items:center;justify-content:space-between;
-    width:100%;margin-top:24px;background:none;border:0;padding:0;cursor:pointer;position:relative;
-    font-family:var(--mono);font-weight:400;font-size:13px;letter-spacing:0.04em;line-height:1.5;
-    color:var(--c-1000);text-align:left}
-  .close9 .trust9 .tmore::after{content:'';position:absolute;inset:-14px 0} /* 44px tap target */
+     pattern, and .tmore is the class this page already reserved for exactly this. */ /* 44px tap target */
   /* Was falling back to the UA focus ring - a black rectangle round the full 335 width (Inkyung
      screenshot 2026-08-17). Only .suit5's fold heading had a styled ring, so this borrows its exact
      spec rather than inventing one. Fires on click in a desktop browser; touch usually skips it. */
-  .close9 .trust9 .tmore{outline:none}
-  .close9 .trust9 .tmore:focus-visible{outline:0.667px solid var(--c-600);outline-offset:4px}
-  .close9 .trust9 .tmore .sign{font-size:15px;line-height:1;color:var(--c-800)}
-  .close9 .trust9 .tg{display:none}
-  .close9 .trust9.open .tg{display:grid}
 
   /* ===== NEWSROOM (.latest) — beats (2026-08-17) =====
      This section carries TWO streams, Press Releases and Changelog, and they are
@@ -2328,7 +2339,7 @@ body.menu-open{overflow:hidden}
      rgba(255,255,255,0.18) composites to rgb(46,46,46) = 1.54:1 on #000, in the
      same invisible range c-900 was. Raising only the section lines would leave
      the page with two line brightnesses and the stat rules still unreadable. */
-  .gap2 .g2stat .rule,.def4 .dstats .cell,.dstats .cell,.tri .cell,.stats3 .cell{border-top-color:var(--c-800)}
+  .gap2 .g2stat .rule,.def4 .dstats .cell,.dstats .cell,.stats3 .cell{border-top-color:var(--c-800)}
   .def4 .dstats .cell.gap{border-bottom-color:var(--c-800)} /* the closing line was still 0.18 */
 
   /* ===== ON-BLACK LINE RULE (2026-08-17, full sweep) =====
@@ -2349,7 +2360,6 @@ body.menu-open{overflow:hidden}
   .std5b .suit5{border-color:var(--c-800)}
   .std5b .suit5>div+div{border-top-color:var(--c-800)}
   .std5b .no{border-top-color:var(--c-800)}
-  footer{border-top-color:var(--c-800)}
   /* ORGANISE: .suit5 h3 underline, ul rule and li rows stay as they are - they sit
      inside the box above, which is now found. */
 
@@ -2357,7 +2367,6 @@ body.menu-open{overflow:hidden}
      DS names this tier explicitly: "section masthead - 29 at 390 / 500 - section h2,
      subpage H1, BURGER ITEMS", which this page renders as clamp(28px,7.4vw,40px).
      Leading 1.05 is the desktop display value; mobile masthead leading is 1.1. */
-  .menuov a{font-size:clamp(28px,7.4vw,40px);line-height:1.1}
 
   /* CLOSE THE STAT BLOCKS. NO.04's trio already brackets itself - a rule above each
      cell and a closing rule under the last one - but NO.02's "9 in 10" and NO.01's
@@ -2441,8 +2450,7 @@ body.menu-open{overflow:hidden}
      kind of gap beat 2 sets at 48 - a group break inside a beat - so it joins 48
      and the beat keeps three levels only: 24 / 48 / 104.
      ⚠ managed.html and self-directed.html carry the same 40; they need this when
-     they get V11. */
-  .v9band .v9ovl{padding-bottom:48px} /* all three bands, not just .gap2 - NO.02/04/05 share this grammar */
+     they get V11. */ /* all three bands, not just .gap2 - NO.02/04/05 share this grammar */
   /* (removed) ANTITHESIS SPLIT — tried putting "It never solved judgment." below
      the photo so the image would pivot between the two halves. Reverted the same
      day: "The industry solved access. It never solved judgment." is ONE sentence
@@ -2455,10 +2463,7 @@ body.menu-open{overflow:hidden}
      near-black edges melt into the ground and the sides were bleeding off screen
      where there is no edge to define. Inset, all four edges now sit on black, so
      the same argument gives the plate a full border - at c-800, the value every
-     other on-black line moved to today. */
-  .v9band>.ph1,.v9band>img,.v9band>video{
-    margin-left:20px!important;margin-right:20px!important;width:calc(100% - 40px)!important;
-    border:0!important} /* outline removed 2026-08-17 (Inkyung): the plate border was added to stop
+     other on-black line moved to today. */ /* outline removed 2026-08-17 (Inkyung): the plate border was added to stop
     dark-edged photos melting into the black ground, but it reads as a frame drawn around every
     image. The inset itself (20px each side) already separates the plate from the ground. */
   /* extended from .gap2 to every band (Inkyung 08-17 "오케"): NO.02 was inset while
@@ -2510,7 +2515,7 @@ body.menu-open{overflow:hidden}
      ★ An image the desktop does not have is never added to a mobile section.
      Inkyung settled this earlier the same day ("데스크탑에 없으니까 넣지 말까").
      I reopened it by reframing it as "NO.02/03/05 need new photography", found two
-     unused photos in Images/v5 images that fit the copy exactly, placed them - and
+     unused photos in Images/v5-images that fit the copy exactly, placed them - and
      was pulled back. The decision stands and is not a judgement call to revisit:
        - V11 is rearrangement. Same copy, same assets, different order and spacing.
          Adding a photo is a CONTENT change and belongs to Dave, not to this pass.
@@ -2599,8 +2604,8 @@ body.menu-open{overflow:hidden}
      Only safe because the tap boxes were narrowed to -8 first (see the note in the mobile block) -
      at the old -14 they already overlapped by 3px at 24, and 16 would have overlapped them by 12.
      Box CTA -> text CTA pairs keep 24: a filled button is its own target and a heavier object. */
-  .v11-hero2 .v11-wrap{max-width:560px}
-  .v11-hero2 .hsub{font-weight:500;font-size:22px;line-height:1.15;letter-spacing:0;color:var(--c-200);margin:0;max-width:none}
+  body.p-home .v11-hero2 .v11-wrap{max-width:560px}
+  body.p-home .v11-hero2 .hsub{font-weight:500;font-size:22px;line-height:1.15;letter-spacing:0;color:var(--c-200);margin:0;max-width:none}
   /* ONE LEADING PER SIZE: 22 = 1.15, every role - the DS value, unchanged.
      (Inkyung 2026-08-17: "디자인 시스템은 우리걸로 하고, 갑자기 없던
      타이포그래피 넣지 말고".) I had added a 1.25 large-prose leading and
@@ -2641,29 +2646,29 @@ body.menu-open{overflow:hidden}
      reason `.step .t` went back to 17 once the swipe strip became a ledger.
      CTA -> CTA stays 24 (CTA gap unification, 2026-08-01). Stacked, not a row:
      at 375 the box and the link side by side leave the link no room. */
-  .v11-hero2 .ctarow{display:flex;flex-direction:column;align-items:flex-start;row-gap:24px;margin-top:48px}
+  body.p-home .v11-hero2 .ctarow{display:flex;flex-direction:column;align-items:flex-start;row-gap:24px;margin-top:48px}
   /* EXPLORE THE SYSTEM restored now that the beat has room (Inkyung 08-17).
      Underline + arrow is the Anduril grammar Dave asked for on 08-17 - our
      text CTAs did not read as CTAs on mobile. */
   /* the white-on-dark CTA colour lives on `.hero .ctarow .mlink` (90), which
      stops matching once the row moves out of the hero - so the link fell back
      to the light-ground canon (#000) and went invisible on black. */
-  .v11-hero2 .mlink{display:inline-flex;color:var(--c-white)}
+  body.p-home .v11-hero2 .mlink{display:inline-flex;color:var(--c-white)}
   /* The trust line qualifies the statement, so it belongs to that block, not
      to the CTA. 24 above (meta attaches to the content it qualifies), and the
      CTA row keeps its 64 clearance from the text block below. */
-  .v11-hero2 .htrust{font-family:var(--mono);font-weight:400;font-size:11px;line-height:1.4;letter-spacing:0.04em;color:var(--c-600);margin:24px 0 0}
+  body.p-home .v11-hero2 .htrust{font-family:var(--mono);font-weight:400;font-size:11px;line-height:1.4;letter-spacing:0.04em;color:var(--c-600);margin:24px 0 0}
   /* 654-655 forces this into exactly two lines and drops the middle separator.
      Restored to one flowing sentence; each clause is nowrap so the line can
      only break at a separator, never mid-phrase. */
-  .v11-hero2 .htrust .heyeb-sep{display:inline}
-  .v11-hero2 .htrust .heyeb-b{display:inline}
-  .v11-hero2 .htrust>span{white-space:nowrap}
+  body.p-home .v11-hero2 .htrust .heyeb-sep{display:inline}
+  body.p-home .v11-hero2 .htrust .heyeb-b{display:inline}
+  body.p-home .v11-hero2 .htrust>span{white-space:nowrap}
   /* the separator must stay breakable - with all three spans nowrap and no
      text node between them the line had no break opportunity at all and ran
      off the screen. Its spaces are now the only break points, so the line
      folds at the separator and never mid-phrase. */
-  .v11-hero2 .htrust .heyeb-sep{white-space:normal}
+  body.p-home .v11-hero2 .htrust .heyeb-sep{white-space:normal}
 }
 @media (max-width:900px){
   /* Both blocks below landed AFTER this style element's own @media closed, so they were leaking
@@ -2684,7 +2689,7 @@ body.menu-open{overflow:hidden}
      reads as a heading rather than prose; the 1-liners lose nothing by matching.
      .qh2 .a/.b need naming explicitly - line 320/321 set 500 on the spans, so the parent alone
      would not reach them. MOBILE ONLY: desktop keeps 22/500/1.15 (V8 parity is frozen). */
-  .v11-hero2 .hsub,
+  body.p-home .v11-hero2 .hsub,
   .sys .mode h3,
   .loop3 .lstrip .step .t,
   .loop3 .loopnote .lnote,
@@ -2694,6 +2699,43 @@ body.menu-open{overflow:hidden}
   /* The reveal roles moved OUT of this mobile block on 2026-08-17 - they now run at every width.
      See the reveal block at the end of the v11-global sheet. (Do not write the closing style tag
      inside a CSS comment - the HTML parser ends the element there, whatever the comment says.) */
+}
+
+@media (max-width:900px){
+  /* ===== NO.05 QUESTION (.std5b) - beats (2026-08-18) =====
+     Two beats: [the question and the answer it demands] / [the ledger pair].
+
+     Gaps were 24 / 16 / 48 - the 16 and the 48 are both off the ladder for what they
+     separate. Now 24 / 24 / 104.
+
+     THE QUESTION -> .qh2 stays 24: eyebrow-to-title is band grammar.
+
+     .qh2 -> .pgrid5 was 16 (line 810, "question-to-threshold line 16, Figma 3283:1111 ").
+     That 16 was set when the mobile page hid .plead and showed a single 8-word line, so it
+     was pairing a label with its value. Both are restored now (954/955), so what follows the
+     question is a 23w answer plus the threshold - the next step of one argument, not a caption.
+     24 is the paragraph value. (16 is not one of the three V11 gaps at all.)
+
+     .pgrid5 -> .suit5 was 48. 48 is for parallel items inside a beat (the modes, the stat
+     cells); the ledger pair is not parallel to the prose above it - it changes register from
+     "can you name the number?" to what the system asks of you and what it refuses to be.
+     Different idea = 104. (§2-2: is this the next step, or another idea?)
+
+     The two ledger boxes keep 0 between them and stay ONE beat - their own hairlines already
+     divide them, exactly as the .lstrip steps do. Splitting them would be the NO.03 mistake:
+     a pair read as two claims. */
+  .std5b .pgrid5{margin-top:24px}
+  .std5b .suit5{margin-top:104px}
+
+  /* ===== footer: 64 above the hairline -> 104 (2026-08-18) =====
+     .close9 ends with 104, the hairline follows, and the footer opened with 64 - the same
+     lopsided line the hero had before it was fixed (32 above / 104 below). Every other
+     section boundary on this page is 104 / line / 104 = 208 ink. The footer is its own
+     section here: separate element, own hairline, present on all nine pages - unlike
+     .trust9, which took 48/48 because it is the tail of the section above it.
+     padding-top only: line 414's shorthand keeps 0 40px for the sides and the bottom.
+     PORT: the footer is a shared component ("identical on every page") - this value goes
+     with the footer port in PORT-TO-PAGES.md 5, not on its own. */
 }
 
 </style>
@@ -3008,8 +3050,8 @@ body.menu-open{overflow:hidden}
     /* Label names its destination tab, so stream name = link label = destination tab name
        (Changelog -> ALL CHANGELOGS -> the CHANGELOG tab). "VIEW ALL" twice cannot do that, and the
        two headings sit far enough apart that proximity does not disambiguate them. */
-    [['.latest > .rail > .streamhd', '../V10/newsroom.html#press-release', 'ALL RELEASES'],
-     ['.latest .clog > .streamhd',   '../V10/newsroom.html#changelog',     'ALL CHANGELOGS']
+    [['.latest > .rail > .streamhd', 'newsroom.html#press-release', 'ALL RELEASES'],
+     ['.latest .clog > .streamhd',   'newsroom.html#changelog',     'ALL CHANGELOGS']
     ].forEach(function(cfg){
       var hd=document.querySelector(cfg[0]); if(!hd || hd.closest('.streamrow')) return;
       var row=document.createElement('div'); row.className='streamrow';
@@ -3055,13 +3097,13 @@ body.menu-open{overflow:hidden}
     if(feat && !feat.querySelector('.lt-plate')){
       var plate=document.createElement('img');
       plate.className='lt-plate'; plate.alt='';
-      plate.src='Images/v5 images/press-release-light-clean.png';
+      plate.src='Images/v5-images/press-release-light-clean.png';
       feat.insertBefore(plate, feat.firstChild);
     }
     document.querySelectorAll('.clog .ci').forEach(function(row){
       if(row.querySelector('.cthumb')) return;
       var th=document.createElement('span'); th.className='cthumb';
-      var lg=document.createElement('img'); lg.src='II word logo.svg'; lg.alt='';
+      var lg=document.createElement('img'); lg.src='II-word-logo.svg'; lg.alt='';
       th.appendChild(lg); row.appendChild(th);
     });
   }
@@ -3072,6 +3114,14 @@ body.menu-open{overflow:hidden}
 
 
 <style id="v11-global">
+/* ---------------------------------------------------------------------------
+   2026-08-19: every rule that belongs to more than one page was DELETED from this
+   block and now lives in _shared/v11.css, which loads after it. If a value you
+   expect is not here, it is there. Comments left behind describe decisions whose
+   rule moved - the reasoning is kept, the duplicate is not.
+   THIS BLOCK MAY ONLY CARRY #section-id RHYTHM AND DOCUMENTED PAGE EXCEPTIONS.
+   --------------------------------------------------------------------------- */
+
 /* ============ V11 GLOBAL — text-CTA grammar (2026-08-17) ============
    ★ This is the ONE V11 block that is NOT inside @media (max-width:900px).
    Every other V11 rule is mobile-only; this one changes desktop too, on
@@ -3084,13 +3134,11 @@ body.menu-open{overflow:hidden}
    trails the words like Anduril's, instead of gating them.
 
    `order` rather than row-reverse, so the flex gap and baseline stay put. */
-.mlink .arr{order:2;width:max(12px, calc(12 * var(--u)));height:max(12px, calc(12 * var(--u)))}
 /* The arrow was the one part of this component with no floor: its label is
    --t-mono15 = max(12px, 15u), but the arrow was a bare 12u, so at 1440 it
    rendered 6.79px against a 12px label while mobile (669) hardcoded 12px.
    Same token pattern as the reading type - floors at 12, still scales past
    the 2545 frame. Unified to the larger value (Inkyung 08-17). */
-.mlink span{text-decoration:underline;text-decoration-thickness:0.667px;text-underline-offset:5px}
 
 @media (min-width:901px){
 /* Gated to 901+. These first shipped unscoped and immediately broke mobile: .clog .ci got
@@ -3198,7 +3246,11 @@ body.menu-open{overflow:hidden}
    of investigation, partly because I invented a third rule ("11px tier = 1.4") that exists nowhere
    and reverted a correct value on the strength of it. Mono leading differences of 0.1 are a
    bookkeeping matter, not a design one - read the two group rules, match them, move on. */
-.sys .fee{font-size:11px;line-height:1.4}
+/* var(--t-mono13), not a hardcoded 11. This was set to 11px on 2026-08-18 to match .src and .figcap,
+   which rendered 11 at the time. The desktop floor pass later that day raised --t-mono13 to 13, so
+   those neighbours moved to 13 and this one stayed behind - the page's only mono 11. A hardcoded px
+   in the desktop block does not follow the tokens; use the token. */
+.sys .fee{font-size:var(--t-mono13);line-height:1.4}
 
 /* Legal block in two columns on desktop (2026-08-17, Inkyung). It was eight paragraphs stacked at
    the full 916 rail: at 11px that is roughly 150 characters a line, against a 45-90 norm, and it was
@@ -3207,8 +3259,6 @@ body.menu-open{overflow:hidden}
    from 654 to about 420 at the same time. Copy is untouched: this is compliance-approved wording and
    only the container changes.
    column-fill:balance so the two sides end level rather than filling the first column to the brim. */
-.footer-legalwrap{column-count:2;column-gap:calc(30 * var(--u));column-fill:balance}
-.footer-legalwrap .footer-legal{margin-top:16px;break-inside:avoid}
 
 /* $20 block, desktop half of the mobile treatment. In place inside .lcol (455), not lifted onto the
    rail the way mobile does it. Type values are mobile's, scaled to the desktop tiers: the figure
@@ -3235,8 +3285,67 @@ body.menu-open{overflow:hidden}
 .clog .ci{grid-column:span 4}
 .clog .ci:nth-child(n+4){display:none}
 
+/* ===== DESKTOP TYPE FLOORS - the laptop range was rendering the mobile ladder (2026-08-18) =====
+   Inkyung, on a MacBook after working on a wider screen: "audril 페이지와 비교하면 좀 다 작아보여."
+   Measured, and it is not perception.
+
+   --u is 100vw/2545: desktop type is proportional to a 2545px Figma master. Every token carries a
+   px floor so it cannot collapse on narrow screens - but those floors were set at the MOBILE values,
+   so below the crossover width the floor is what renders. Crossovers:
+
+     --t-body   22u  hits its 15px floor below 1735px
+     --t-h34    34u  hits 22px below 1647px
+     --t-mono15 15u  hits 13px below 2206px      <- the whole laptop range, always
+     --t-mono13 13u  hits 11px below 2153px
+
+   At 1512 (this MacBook) u = 0.594, so the page rendered 15 prose / 13 label / 11 meta / 22 figure -
+   the mobile ladder, on the desktop layout. The "desktop 7-value ladder" in HANDOFF 2-3 and
+   PORT-TO-PAGES 3-1 was measured in this state: it recorded the floors, not the design.
+
+   PRECEDENT, not a new idea: the --t-mono11 comment above (2026-08-02) raised the mono floors
+   12->13 / 10->11 for exactly this reason ("the whole laptop range sat at 12/10, one step under the
+   13/11 canon and smaller than mobile"). This is the other half of that fix. Each floor moves up
+   ONE step on the ladder to the token's own name value - no size is invented:
+
+     --t-body   15 -> 17    prose        (36 elements at 1512)
+     --t-mono15 13 -> 15    label / CTA  (30)
+     --t-mono13 11 -> 13    meta         (22)
+     --t-h34    22 -> 28    mode titles, stat figures (11)
+
+   MOBILE IS UNTOUCHED - that is why this sits in min-width:901px. The tokens are on :root, and 16
+   visible mobile elements still resolve through them (8 on --t-body incl. .plead and .def4 .body,
+   2 on --t-h34 = the newsroom stream headings, 2 on --t-mono13 = the hero trust line). Raising the
+   floors globally would have moved all of them. Verified: 149 mobile text nodes, sizes identical.
+
+   SECOND BATCH, added right after (2026-08-18, Inkyung approved on screen): --t-read27 17 -> 22
+   (.loop3 .step .t, .lnote, .latest .lt-hd), --t-lead24 17 -> 22 (.dlead, .sys .pricehd,
+   .close9 .pricehd9), --t-small17 13 -> 15 (.loop3 .step .d, .lt-list .li .t, .clog .cd, .tlead).
+   Same repair, same rule - one ladder step up. I had first held these back as "design calls
+   because 22 on .lnote collides with the 22 tier", which was wrong: the 22 tier unified on 08-18
+   is LEADING 1.25 / WEIGHT 400 / TRACKING 0, not a size. Those elements never shared a size
+   (at the 2545 master .mode h3 is 34 and .step .t is 27), so nothing is being reunited or split.
+
+   DS: 15 (mono), 28 and 48 are not in the DS desktop ladder. Not registering them yet, on purpose -
+   the value gets confirmed on screen first, then #type-landing and Doctrine/Typography.md follow in
+   one pass. Do not "fix" this block back to the DS ladder without reading that the DS ladder itself
+   recorded the floor state. */
+
+/* Display type had NO floor at all - it just kept shrinking: 64u = 38px at 1512, 36px at 1440, and
+   Anduril's H1 sits at roughly 5% of viewport width where ours was at 2.5%. Their root font-size
+   scales but never collapses (measured on /mission: 1200 -> 14px, 1512 -> 16.2, 1920 -> 17.8).
+   48px floor, releasing at 1909px. .hbar is white-space:nowrap, so the ceiling is measured, not
+   guessed - at 1512 the longest line ("The market remembers every decision.") is 869px inside a
+   1497 rail, 382px spare. 52 and 56 also fit; 48 is the value that still clears 1280. */
+
 }
 </style>
+<!-- THE SHARED LAYER. Loads last so it wins on source order at equal specificity.
+     Every rule that must be identical on every V11 page lives in this one file -
+     component sizes, weights, leading, and border treatment. Do not copy it into a
+     page; a page block may only carry #section-id rhythm and documented exceptions.
+     Verify with:  python _shared/check-v11.py                See _shared/v11.css -->
+<link rel="stylesheet" href="_shared/v11.css">
+
 
 </body>
 </html>

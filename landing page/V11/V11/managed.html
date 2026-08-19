@@ -57,7 +57,8 @@ img{display:block;max-width:none}
 .nav .logo path{fill:var(--c-white);transition:fill 0.35s ease}
 .nav.scrolled .logo path{fill:var(--c-1000)}
 .navmenu{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:calc(40 * var(--u))}
-.navmenu a{font-weight:400;font-size:max(14px, calc(15 * var(--u)));color:var(--c-600);transition:color 0.35s ease}
+/* 13/1.3, ported (home 08-17, SD 08-18): 14 is on no ladder and line-height fell to `normal`. */
+.navmenu a{font-weight:400;font-size:13px;line-height:1.3;color:var(--c-600);transition:color 0.35s ease}
 .navmenu a.on{color:var(--c-white)}
 .nav.scrolled .navmenu a{color:var(--c-800)}
 .nav.scrolled .navmenu a.on{color:var(--c-1000)}
@@ -251,14 +252,17 @@ footer{background:var(--c-black);color:var(--c-800);border-top:0.667px solid rgb
 footer .container{margin:0 calc(450 * var(--u))}
 .footer-copy{font-size:13px;color:var(--c-600)}
 .footer-copy a{color:var(--c-600);text-decoration:underline}
-.footer-social{display:flex;gap:18px;margin-top:22px}
+.footer-social{display:flex;gap:18px;margin-top:24px} /* 22->24, ladder (ported 08-18) */
 .footer-social a{color:var(--c-700);display:inline-flex;transition:color 0.15s ease}
 .footer-social a:hover{color:var(--c-200)}
 .footer-social svg{width:18px;height:18px}
 .footer-legal{font-size:11px;color:var(--c-700);line-height:1.4;margin-top:16px} /* c-800 on black was 3.05:1 (WCAG AA fail). c-700 = 6.75:1, the exact colour the live footer uses (2026-08-02) */
-.footer-legal:first-of-type{margin-top:36px}
+/* The 48 group boundary lives on the wrapper script#v11-footer builds; the :first-of-type rule is
+   the no-JS fallback and stops mattering once the paragraphs move inside it (ported 08-18). */
+.footer-legalwrap{margin-top:48px}
+.footer-legal:first-of-type{margin-top:48px}
 .footer-legal a{color:var(--c-700);text-decoration:underline}
-.footer-links{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:22px;font-size:11px;line-height:1.4}
+.footer-links{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:24px;font-size:11px;line-height:1.4}
 .footer-links a{color:var(--c-700);text-decoration:underline;position:relative}
 .footer-links a:hover{color:var(--c-200)}
 .footer-links a::after{content:'';position:absolute;inset:-16px 0} /* live-footer legal nav, added with the approved wording (2026-08-02) */
@@ -607,7 +611,7 @@ body.menu-open{overflow:hidden}
 }
 </style>
 </head>
-<body>
+<body class="p-sub">
 
 <nav class="nav">
   <a class="logo" href="index.html" aria-label="Home"><svg viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.59903 0H7.79315L2.19412 17.6523H0L5.59903 0Z"/><path d="M12.8061 0H15.0002L9.40115 17.6523H7.20703L12.8061 0Z"/></svg></a>
@@ -656,7 +660,7 @@ body.menu-open{overflow:hidden}
     <p class="htrust rv">Provided by a registered portfolio manager &middot; client assets held separately <span class="nb">by a CIRO-member custodian</span> &middot; CIPF coverage applies per its&nbsp;policy</p>
   </div>
   <!-- the clip plays on mobile too, from a 900px-tall encode (1.3 MB vs 20 MB). The still is the poster. -->
-  <video autoplay muted loop playsinline poster="Images/v5 images/hero-still-managed.jpg" data-m="Images/v5 images/video mobile/hero-managed-m.mp4" src="Images/v5 images/video desktop/hero-managed-d.mp4"></video>
+  <video autoplay muted loop playsinline poster="Images/v5-images/hero-still-managed.jpg" data-m="Images/v5-images/video-mobile/hero-managed-m.mp4" src="Images/v5-images/video-desktop/hero-managed-d.mp4"></video>
 </header>
 
 <!-- NO.01 THE DEFAULT -->
@@ -696,7 +700,7 @@ body.menu-open{overflow:hidden}
 
 <!-- NO.02 THE FEE -->
 <section class="band secpad bandimg" id="fee">
-  <img class="bg" src="Images/v5 images/egor-komarov-io5clS15h9Q-unsplash.jpg" alt="">
+  <img class="bg" src="Images/v5-images/egor-komarov-io5clS15h9Q-unsplash.jpg" alt="">
   <div class="rail">
     <div class="eyeb rv">NO. 02 &middot; THE FEE</div>
     <h2 class="bigh2 rv"><span class="a">The return is uncertain. The fee is not.</span></h2>
@@ -738,7 +742,7 @@ body.menu-open{overflow:hidden}
 
 <!-- NO.04 WHAT IT DOESN'T DO -->
 <section class="band secpad bandimg" id="refuses"><!-- id added 2026-08-01 for the mobile photo-band selector, same vocabulary as SD -->
-  <img class="bg" src="Images/v5 images/szymon-shields-YYuq-KJ-mO4-unsplash.jpg" alt="">
+  <img class="bg" src="Images/v5-images/szymon-shields-YYuq-KJ-mO4-unsplash.jpg" alt="">
   <div class="rail">
     <div class="eyeb rv">NO. 04 &middot; WHAT IT DOESN'T DO</div>
     <h2 class="bigh2 rv"><span class="a">The absence is the decision.</span></h2>
@@ -770,7 +774,7 @@ body.menu-open{overflow:hidden}
       <div class="tblwrap rv">
         <table class="tbl">
           <thead>
-            <tr><th>PORTFOLIO</th><th>ALLOCATION</th><th>PEAK DRAWDOWN</th><th>RISK LEVEL</th><th>HISTORICAL RETURN&dagger;</th></tr>
+            <tr><th>Portfolio</th><th>Allocation</th><th>Peak drawdown</th><th>Risk level</th><th>Historical return&dagger;</th></tr>
           </thead>
           <tbody>
             <tr><td>Equity Growth</td><td>100% Equity (S&amp;P 500)</td><td>50%+</td><td>5 / 5</td><td>~11%</td></tr>
@@ -817,7 +821,7 @@ body.menu-open{overflow:hidden}
       <div class="tblwrap rv">
         <table class="tbl wide">
           <thead>
-            <tr><th>PORTFOLIO</th><th>1M</th><th>3M</th><th>YTD</th><th>1Y</th><th>3Y</th><th>5Y</th><th>SINCE INCEPTION</th></tr>
+            <tr><th>Portfolio</th><th>1M</th><th>3M</th><th>YTD</th><th>1Y</th><th>3Y</th><th>5Y</th><th>Since inception</th></tr>
           </thead>
           <tbody>
             <tr><td>Equity Growth</td><td>&minus;0.96%</td><td>7.33%</td><td>12.35%</td><td>20.34%</td><td>21.03%</td><td>14.45%</td><td>[TBD]</td></tr>
@@ -844,19 +848,19 @@ body.menu-open{overflow:hidden}
       <div class="acct3 rv">
         <div class="a">
           <h3>TFSA</h3>
-          <p class="lim">TAX-FREE</p>
+          <p class="lim">Tax-free</p>
           <p>Growth and withdrawals are completely tax-free, within an annual contribution limit that carries forward when unused. The most flexible registered account, with no tax on what compounds inside it.</p>
           <p class="lim">2025 contribution limit: $7,000</p>
         </div>
         <div class="a">
           <h3>RRSP</h3>
-          <p class="lim">TAX-DEFERRED</p>
+          <p class="lim">Tax-deferred</p>
           <p>Contributions reduce your taxable income now, and investment growth is deferred until you withdraw, usually in retirement when your marginal rate is lower. Built for long-horizon, tax-aware compounding.</p>
           <p class="lim">2025 contribution limit: $32,490</p>
         </div>
         <div class="a">
           <h3>Non-Registered</h3>
-          <p class="lim">TAXABLE</p>
+          <p class="lim">Taxable</p>
           <p>No contribution limit and no withdrawal restrictions, but investment income and capital gains are taxed each year. Typically used once your registered accounts are fully funded.</p>
           <p class="lim">No contribution limit</p>
         </div>
@@ -982,7 +986,7 @@ body.menu-open{overflow:hidden}
        first). Returns are right-aligned so the column reads down like the desktop table. */
     b.innerHTML='<span class="n"></span><span class="p">+</span><span class="a"></span><span class="v"></span>';
     b.querySelector('.n').textContent=cells[0];
-    b.querySelector('.v').textContent=cells[4]; /* HISTORICAL RETURN */
+    b.querySelector('.v').textContent=cells[4]; /* Historical return */
     b.querySelector('.a').textContent=cells[1]; /* ALLOCATION */
     b.addEventListener('click',function(){open(i);});
     list.appendChild(b);
@@ -1017,7 +1021,11 @@ body.menu-open{overflow:hidden}
   });
   /* [button, wrapper, class] - NO.02 needs two independent folds on the same .content, so the
      class is explicit rather than always 'open' */
-  [['.trust9 .tmore','.trust9','open'],
+  /* ['.trust9 .tmore','.trust9','open'] REMOVED 2026-08-18: that legacy VIEW MORE fold was retired
+     07-31 and its control is display:none, but the selector would also match the REGULATORY
+     STANDING button script#v11-trust builds - two handlers both toggling .open = a fold that never
+     opens. The v11 script carries its own wiring. */
+  [
    ['#fee .fmore','.content','open'],
    ['#fee .fnmore','.content','fnopen']].forEach(function(pair){
     var btn=document.querySelector(pair[0]); if(!btn) return;
@@ -1267,6 +1275,214 @@ body.menu-open{overflow:hidden}
   #refuses .refuse{margin-top:0}
 }
 </style>
+
+<style id="v11-mobile-mg">
+/* ---------------------------------------------------------------------------
+   2026-08-19: every rule that belongs to more than one page was DELETED from this
+   block and now lives in _shared/v11.css, which loads after it. If a value you
+   expect is not here, it is there. Comments left behind describe decisions whose
+   rule moved - the reasoning is kept, the duplicate is not.
+   THIS BLOCK MAY ONLY CARRY #section-id RHYTHM AND DOCUMENTED PAGE EXCEPTIONS.
+   --------------------------------------------------------------------------- */
+
+/* ============ V11 MOBILE - Managed (2026-08-18). Ported from self-directed.html; every rule here
+   exists there with the same rationale. Read SESSION-2026-08-18-SD.md 5-1 before touching the hero. */
+@media (max-width:900px){
+  /* ---- on-black hairlines -> c-800 (SD 4-1). Contrast on pure black: 0.18 = 1.55:1, c-800 = 3.05:1.
+     Mobile only - the V10 desktop keeps its own values. Selector set = SD's, minus the SD-only
+     sections; .tri kept (harmless if absent). Closing lines included - the miss both previous pages
+     made and fixed. */
+  /* Band photography: 20px inset, NO border - measured on both the home and SD (335 wide, border 0).
+     Managed was the odd one out: full-bleed 375 with 1px plate edges. The c-800 recolor that was
+     here is moot once the width is 0. Home's exact rule (08-17, "이미지마다 아웃라인 제거"). */
+
+  /* ============ HERO -> TWO BITS (2026-08-18, Inkyung) ============
+     The home split its hero into two bits: [media + wordmark + statement] as one viewport, then
+     [deck + trust + CTAs] as its own area below. One screen, one thing. This page had all six
+     elements stacked inside a single 812 viewport - eyebrow, statement, deck, box CTA, text link,
+     trust line, and the clip - which is the "desktop compressed" shape V11 exists to retire.
+
+     THE CLIP STAYS AT THE BOTTOM. That is the deliberate difference between this page (and Managed)
+     and the home: home puts its media in the TOP area, SD/Managed put it in the BOTTOM area, so the
+     two read as different places. Only the RATIO is shared - 76.5 / 23.5, same as the home.
+
+     Statement hugs the top (option A): the home's statement sits at the bottom of its hero because
+     its media is above; mirroring that puts ours at the top with the clip below. The air between
+     them is the breath the home gets from its video.
+
+     ★ WHY THE CLIP WAS COLLAPSING. .hero>video was flex:1 1 auto with min-height:140px, i.e. "take
+     whatever is left over". With all six elements in the stack there was nothing left: measured at
+     375x667 the clip started at y=658 inside an overflow:hidden 667-tall hero, so 131px of it was
+     cut and the reader saw a 9px sliver. At 812 the same markup gave it 154px (19%). A ratio cannot
+     come out of leftover space - it has to be declared. flex:none + 23.5svh does that, and moving
+     the deck/CTAs/trust into bit 2 is what makes room for it. */
+  /* margin-top:auto, NOT justify-content:flex-end. The hero is a column flex box holding the text
+     group and the clip; flex-end would push BOTH to the bottom and the statement would ride up
+     against the clip. auto on the last child alone opens the gap in the middle, which is the point. */
+  /* ---- SAME AS THE HOME ON MOBILE: media on top, text band underneath (2026-08-18, Inkyung) ----
+     Three arrangements were built and measured before this one, and the record matters because each
+     was killed by the SAME fact - this page's text band is 88px taller than the home's.
+
+       1. everything in one viewport (inherited)   the clip got whatever was left over, which at 667
+                                                  was nothing: 9px of a 140px clip, the rest cut off
+       2. clip at the bottom, text top-aligned     332px of black between statement and clip
+       3. clip at the bottom, text on the divider  the void moved under the nav - 403px - and a
+                                                  23.5% clip reads as a strip, not a hero
+
+     Why the mirror could not hold: the home's band is wordmark 10.5 + 24 + statement 3 lines = 126px
+     and the nav floats over its media, so the band owes the nav nothing. Here the eyebrow is 2 lines
+     (39) and the statement wraps to 4 (123) = 186px, and with the text at the TOP it also has to
+     clear a 54px nav. 240px of text cannot sit in a 23.5% (191px) band, so either the divider moves
+     or a void opens. Inkyung, after seeing all three: "그냥 홈이랑 똑같이 만들까? 모바일만?"
+
+     So: media on top, band underneath, exactly the home's composition. The void is gone because the
+     media fills the large share, which is the whole reason the home's hero works.
+     NO JS HERE. The home measures --htail in JS because its media is positioned and the wordmark is
+     pinned with a calc(); this hero is a plain column flex, so flex:1 on the clip already resolves to
+     "100svh minus the band" and re-resolves on its own when the statement rewraps at 320. order:-1
+     rather than moving the markup: the V10 desktop keeps its absolute .hgroup + absolute video.
+     32 above and below the band is the home's value (its one documented hero exception). */
+  /* min-height pins the BAND to SD's 231 (SESSION 5-1: "Managed will be pinned to this same 231 -
+     the two product pages match each other"). SD reaches 231 naturally (eyebrow 1 line + statement
+     4 lines); Managed's statement is shorter, so without the pin the band is ~169 and the divider
+     sits at a different height on every product page. 231 - 32 - 32 = 167 of content box.
+     Confirmed with Inkyung 2026-08-18: 판단 필요 부분은 홈/SD 기준. */
+
+  /* PAGE EXCEPTION. The sub-page hero itself lives in _shared/v11.css; this is the one
+     Managed-only value on top of it. Managed's title block is shorter than Self-Directed's,
+     so the band divider landed at a different height. 167 pins the group so the divider sits
+     at 231 and the video keeps the same 71.6% ratio as Self-Directed - the two product pages
+     have to agree at the fold. */
+  .hero .hgroup{min-height:167px}
+
+  /* ---- bit 2: deck + trust + CTAs, built by script#v11-hero2 ----
+     Internal spacing is the home's beat 2, value for value: deck -> 24 -> trust -> 48 -> box CTA
+     -> 24 -> text link. The trust line sits ABOVE the CTAs because it qualifies the statement, not
+     the button (Inkyung, home, 08-17: "큰 텍스트 아래, CTA 위"). On this page it had been below the
+     CTAs, which is what produced the 64 gap - a value that is on no ladder.
+     NO HAIRLINE between the hero and this. Same rule the home landed on: a line declares a SECTION
+     boundary, and eyebrow -> statement -> deck -> CTA is one masthead that the fold happens to cut.
+     The clip's own bottom edge is already a visible boundary here. */
+  /* ---- the eyebrow's second half moves to bit 2 (2026-08-18, Inkyung) ----
+     "SELF-DIRECTED · PART OF THE INTELLIGENT INVESTING SYSTEM" wrapped to 2 lines at 13px mono,
+     making this band 250px against the home's 190. REDISTRIBUTED, not cut (V11 rule: copy unchanged,
+     only moved): "SELF-DIRECTED" stays as the band's label - one line, the same role the home's
+     wordmark plays - and the qualifier becomes bit 2's eyebrow, 24 above the deck, which is the
+     band grammar the rest of the site uses (eyebrow -> 24 -> text).
+     Result: band 250 -> 231, media 69.2% -> 71.6%, and the gap to the home closes from 60px to 41.
+     Managed will be pinned to this same 231 when its turn comes - the two product pages match each
+     other; the home is left at its approved 190 (Inkyung: "홈은 지금처럼"). */   /* moved into bit 2 by script#v11-hero2 */
+
+  /* TOP PADDING IS 72, NOT 104 (Inkyung 2026-08-18: "여기 공간보면 홈페이지보다 좀 넓어").
+     The hero already ends with 32 below the statement - that 32 is the fold clearance, not a section
+     gap - so 104 here totalled 136 of ink where the home reads 104. The home hit the same thing and
+     landed on 72: hero tail 32 + 72 = 104, the beat value. Bottom stays 104, because the boundary
+     into NO.01 IS a section boundary (104 + 104 = 208). */
+
+  /* ★ Elements moved out of .hero LOSE every .hero-scoped rule. This bit the home once: .mlink fell
+     back to the light-ground canon #000 and went invisible on black - what looked like "the CTAs are
+     too far apart" was an unreadable link sitting in the gap. Restated here, all of them: */
+  /* The trust line flows as ONE sentence, folding only at the separator. Mobile hides .heyeb-sep
+     globally (line 673) and blocks .heyeb-b, which forced the compliance line into two stacked
+     phrases; re-inlining .heyeb-b alone glued them together as "brokerageregulated by CIRO" - the
+     separator was still display:none. Ported from the home, all four rules:
+     phrases nowrap so they never break mid-clause, separator NORMAL so the line has a break
+     opportunity at all - with every span nowrap there is none and the line runs off screen. */   /* was .hero .mlink */
+
+  /* ---- REGULATORY STANDING fold, ported verbatim from the home (2026-08-18, "홈페이지 기준") ----
+     Same control, same spec: 13 mono label, + sign 15/c-800 at the right edge, 44px tap target,
+     .suit5's focus ring. Default closed; opening reveals any .rv inside so nothing sits at opacity 0.
+     Built by script#v11-trust. ⚠ COMPLIANCE UNCONFIRMED - flagged in SESSION §9-1 / PORT §7-1. */ /* 44px tap target */
+
+  /* ---- SD-parity spacing, measured pair-by-pair against self-directed.html at 375 (2026-08-18) ----
+     Same role, same value. SD renders each of these as a 104 beat (ink 129 with the stat leading);
+     Managed inherited V10's 48/64.
+       prose -> stat trio (#default, #fee): the trio answers the prose, but it is the next idea -
+       SD's #benchmark/#calibration made the same call.
+       #refuses band image -> refusal list: image ends the statement, the list is the argument.
+     Trust boundary: home/SD grammar is 48 above the hairline / 48 below (ink 99); V10's 40/16 read
+     as 57. */
+  #fee .content .tri{margin-top:104px}
+  /* #default's trio sits inside a .grp with the prose, DOM-first but VISUALLY after the prose (flex
+     order). A margin on .grp therefore landed between the masthead and the prose (measured 128 where
+     24 belongs) - the beat gap goes on the trio itself, which flex places after the prose. */
+  /* 64, not 104: .grp is a flex column whose 40 gap STACKS on this margin (SESSION trap #2 - "104 를
+     줬는데 144/128 로 렌더"). 64 + 40 = the 104 beat. Zeroing the gap instead would collapse the
+     prose-to-prose rhythm that same gap carries. */
+  #default .grp>.tri{margin-top:64px}
+
+  /* ---- stat trio internals, home/SD hairline-stack grammar (2026-08-18) ----
+     V10 left these as loose stacks: value -> label 16, cell -> cell 33, no rules. The same-role
+     component on the home (.dstats/.g2stat) and SD (#benchmark) runs value -> label 8 and
+     hairline rows at the ledger pitch (ink -24- line -25- ink). Symmetric per 6b: cells carry
+     padding on BOTH sides of their rule, closing line included. */
+  #default .tri,#fee .tri{row-gap:0}
+  #default .tri .cell,#fee .tri .cell{border-top:0.667px solid var(--c-800);padding:24px 0;margin:0}
+  #default .tri .cell:last-child,#fee .tri .cell:last-child{border-bottom:0.667px solid var(--c-800)}
+  #default .tri .cell .t,#fee .tri .cell .t{margin-top:8px}
+  /* Sizes, mirrored from SD #benchmark's computed set (2026-08-18): .v = the 34 stat-figure tier
+     (mobile floors stay put below 900, so the base --t-h34 renders 22 here without this), .t = 15.
+     This is the "숫자·서브타이틀 크기" Inkyung flagged - Managed's trios were reading a tier small. */
+  #default .tri .v,#fee .tri .v{font-size:34px;font-weight:500;line-height:1.15;letter-spacing:-0.069em}
+  #default .tri .cell .t,#fee .tri .cell .t{font-size:15px;line-height:1.4}
+  /* Two V10 leftovers inside each cell were padding the pitch to 66 where SD reads 49: a visible
+     1px .rule element (SD hides it - the cell's own border IS the rule now) and a 16px top margin
+     on the value. With both gone the cell reads border -24- value -8- label -24-, SD exactly. */
+  #default .tri .cell .rule,#fee .tri .cell .rule{display:none}
+  #default .tri .v,#fee .tri .v{margin-top:0}
+  /* Stat block -> payoff prose is a BEAT on the home (NO.02: figure closes, the argument's next idea
+     begins - 104). V10 left these at 40, which reads as the caption gap. The closing hairline keeps
+     its symmetric 24 inside the cell; the 104 runs from the line to the prose, the same relation
+     acct3's bottom line has to its document list. */
+  #default .content .tri + .lead,#fee .content .tri + .lead{margin-top:104px}
+  /* 40, not 104: the band wrapper's own tail already carries ~64 to the list, and 104 on top of it
+     measured ink 193 where SD's same pair (#refuses .bg -> first refusal title) reads 129. 40 lands
+     the identical ink value; the BOX intent is still the 104 beat, split across the two boxes. */
+  #refuses .refuse{margin-top:40px}
+  .trust9{margin-top:48px;padding-top:48px}
+}
+</style>
+
+<style id="v11-global-mg">
+/* ---------------------------------------------------------------------------
+   2026-08-19: every rule that belongs to more than one page was DELETED from this
+   block and now lives in _shared/v11.css, which loads after it. If a value you
+   expect is not here, it is there. Comments left behind describe decisions whose
+   rule moved - the reasoning is kept, the duplicate is not.
+   THIS BLOCK MAY ONLY CARRY #section-id RHYTHM AND DOCUMENTED PAGE EXCEPTIONS.
+   --------------------------------------------------------------------------- */
+
+/* ============ V11 GLOBAL - Managed (2026-08-18). NOT inside a media query. ============
+   Ported from self-directed.html style#v11-global-sd, which itself ports V11/index.html. The
+   desktop baseline is V10 PLUS the same five decisions that page carries: type floors, .mlink
+   arrow/underline, the three reveal roles, nav 13/1.3, and the two-column footer legal.
+   Read HANDOFF-V11.md 3 and 2-3b before reverting any of them.
+   DROPPED relative to SD: the specimen-sheet guards (no sheets on this page yet) and the .fgrid
+   weight/Title Case rules - Managed's .fgrid is its own component and gets its own section pass. */
+
+/* reveal roles - see script#v11-reveal */ /* (0,3,0) restatement - the (0,2,0) tie went to source order */
+
+@media (min-width:901px){
+  /* desktop type floors (HANDOFF 2-3b) - one rung up from the mobile values the floors used to hold */
+
+  /* footer legal in two columns - wrapper built by script#v11-footer, markup byte-identical */
+
+  /* 22 tier = 400 / 1.25 / tracking 0 on desktop. SD's list minus its page-only selectors;
+     .fgrid deferred to Managed's own section pass. */
+}
+</style>
+<!-- THE SHARED LAYER. Loads last so it wins on source order at equal specificity.
+     Every rule that must be identical on every V11 page lives in this one file -
+     component sizes, weights, leading, and border treatment. Do not copy it into a
+     page; a page block may only carry #section-id rhythm and documented exceptions.
+     Verify with:  python _shared/check-v11.py                See _shared/v11.css -->
+<link rel="stylesheet" href="_shared/v11.css">
+
+
+<!-- THE SHARED SCRIPT LAYER. Replaces the four inline blocks v11-hero2 / v11-footer /
+     v11-trust / v11-reveal, which were byte-identical across the sub pages. No defer:
+     it must run at exactly the position those blocks did. See _shared/v11-sub.js. -->
+<script src="_shared/v11-sub.js"></script>
 
 <script id="v9-mobile-js">
 /* V10 mobile relocations - Managed. Gated to <=900; desktop DOM stays V8 verbatim. */
