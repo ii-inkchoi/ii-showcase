@@ -25,7 +25,7 @@
   --t-small17: max(13px, calc(17 * var(--u)));
   --t-mono15: max(13px, calc(15 * var(--u)));
   --t-mono13: max(11px, calc(13 * var(--u)));
-  --t-mono12: max(11px, calc(12 * var(--u)));
+  --t-mono12: max(11px, calc(11 * var(--u))); /* 12u -> 11u 2026-08-20: with desktop mono at 13/11/9 this token was the only 12 left, sitting between two rungs */
   --t-mono11: max(9px, calc(11 * var(--u))); /* floor raised 12->13 / 10->11 (2026-08-02): 15u is 8.5px at 1440, so below ~2205px the floor is what renders - the whole laptop range sat at 12/10, one step under the 13/11 canon and smaller than mobile. The 2545 Figma frame is untouched: 15u=15 and 12u=12 both beat the new floors. */
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -56,8 +56,8 @@ img{display:block;max-width:none}
 .nav .logo svg{height:100%;width:auto;display:block}
 .nav .logo path{fill:var(--c-white);transition:fill 0.35s ease}
 .nav.scrolled .logo path{fill:var(--c-1000)}
-.navmenu{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:calc(40 * var(--u))}
-.navmenu a{font-weight:400;font-size:max(14px, calc(15 * var(--u)));color:var(--c-600);transition:color 0.35s ease}
+.navmenu{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:calc(42 * var(--u))}
+.navmenu a{font-weight:400;font-size:13px;line-height:1.3;color:var(--c-600);transition:color 0.35s ease} /* was max(14px,15u) with no line-height: 14 is not on the DS ladder and `normal` is not one of the DS leadings, so the six nav links were the only type on the page outside both. 13/1.3 = the mono label tier the rest of the chrome uses (home fix 2026-08-18, type audit) */
 .navmenu a.on{color:var(--c-white)}
 .nav.scrolled .navmenu a{color:var(--c-800)}
 .nav.scrolled .navmenu a.on{color:var(--c-1000)}
@@ -72,13 +72,13 @@ img{display:block;max-width:none}
 .cta-fill{min-width:max(160px, calc(196 * var(--u)));padding:0 22px;height:calc(48 * var(--u));min-height:38px;background:var(--c-black);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-white)}
 
 /* ---- flow section shell (guaranteed 220u top/bottom) ---- */
-.secpad{padding:calc(220 * var(--u)) 0}
+.secpad{padding:calc(184 * var(--u)) 0}
 .rail{margin:0 calc(450 * var(--u))}
-.eyeb{font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);margin-bottom:calc(70 * var(--u))}
+.eyeb{font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);margin-bottom:calc(71 * var(--u))}
 .bigh2{max-width:calc((100% + 30 * var(--u)) / 12 * 9 - 30 * var(--u));font-weight:500;font-size:calc(64 * var(--u));line-height:1.05;letter-spacing:-0.02em}
 .bigh2.w10{max-width:calc((100% + 30 * var(--u)) / 12 * 10 - 30 * var(--u))}
-#benchmark .bigh2,#development .bigh2,#refuses .bigh2{display:flex;flex-direction:column;align-items:flex-start;gap:calc(5 * var(--u));max-width:none}
-#benchmark .bigh2 .a,#benchmark .bigh2 .b,#development .bigh2 .a,#development .bigh2 .b,#refuses .bigh2 .a,#refuses .bigh2 .b{display:inline-block;white-space:nowrap;background:var(--c-black);color:var(--c-white);line-height:0.9;padding:calc(10 * var(--u)) calc(12 * var(--u))}
+#benchmark .bigh2,#development .bigh2,#refuses .bigh2{display:flex;flex-direction:column;align-items:flex-start;gap:calc(6 * var(--u));max-width:none}
+#benchmark .bigh2 .a,#benchmark .bigh2 .b,#development .bigh2 .a,#development .bigh2 .b,#refuses .bigh2 .a,#refuses .bigh2 .b{display:inline-block;white-space:nowrap;background:var(--c-black);color:var(--c-white);line-height:0.9;padding:calc(10 * var(--u)) calc(14 * var(--u))}
 #benchmark .bigh2 .b{color:var(--c-accent)}
 .bigh2 .a{display:block;font-weight:500;color:var(--c-white)}
 .bigh2 .b{display:block;font-weight:500;color:var(--c-white)}
@@ -91,13 +91,13 @@ img{display:block;max-width:none}
 .close9 .bigh2 .a{color:var(--c-1000)}
 .close9 .bigh2 .b{color:var(--c-1000)}
 .trust9 .tmore{display:none} /* mobile-only fold control */
-.trust9{margin-top:calc(120 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(40 * var(--u))}
+.trust9{margin-top:calc(113 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(42 * var(--u))}
 .trust9 .tlead{font-weight:400;font-size:var(--t-small17);line-height:1.3;color:var(--c-1000)}
-.trust9 .tg{margin-top:calc(50 * var(--u));display:grid;grid-template-columns:repeat(4,calc(388.5 * var(--u)));column-gap:calc(30 * var(--u))}
-.trust9 .ti{border-left:0.667px solid rgba(28,28,28,0.16);padding-left:calc(20 * var(--u))}
+.trust9 .tg{margin-top:calc(42 * var(--u));display:grid;grid-template-columns:repeat(4,calc(388.5 * var(--u)));column-gap:calc(28 * var(--u))}
+.trust9 .ti{border-left:0.667px solid rgba(28,28,28,0.16);padding-left:calc(14 * var(--u))}
 .trust9 .ti b{display:block;font-weight:500;font-size:var(--t-body);line-height:1.15;letter-spacing:0;color:var(--c-1000)} /* sub-heading tier (type audit 2026-07-31) */
 .trust9 .ti span{display:block;margin-top:calc(6 * var(--u));font-family:var(--mono);font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-800)}
-.foot9{margin-top:calc(120 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(24 * var(--u));display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-800)}
+.foot9{margin-top:calc(113 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(28 * var(--u));display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-800)}
 
 /* reveal */
 .rv{opacity:0;transform:translateY(14px);transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1)}
@@ -106,22 +106,21 @@ img{display:block;max-width:none}
 
 /* ============ NEW - Self-Directed page, built on index-H tokens (2026-07-22) ============ */
 .top-hair{border-top:0.667px solid rgba(28,28,28,0.16)}
-.bigh2 .dim{color:var(--c-700)}
-.close9 .bigh2 .dim{color:var(--c-800)}
+/* .dim retired 2026-08-20 (Inkyung: "한톤으로 전체 다 유지") - the close-band second line no longer dims; the red payoff pairs are untouched */
 
-.content{margin-top:calc(120 * var(--u));display:flex;flex-direction:column;gap:calc(60 * var(--u))}
+.content{margin-top:calc(113 * var(--u));display:flex;flex-direction:column;gap:calc(71 * var(--u))}
 .content p.body{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200);max-width:calc(807 * var(--u))}
 .close9 .content p.body{color:var(--c-1000)}
 
 .lead{font-weight:500;font-size:var(--t-lead24);line-height:1.3;letter-spacing:0;color:var(--c-white);max-width:calc(807 * var(--u))}
-.content .specimens + .lead,.content .tri + .lead{margin-top:calc(40 * var(--u))}
+.content .specimens + .lead,.content .tri + .lead{margin-top:calc(42 * var(--u))}
 .content .lead + .lead{margin-top:0}
 .cta-fill.inv{background:var(--c-white);color:var(--c-black)}
 /* two-column body (loop3 l3grid idiom) */
 .close9 .cta-fill{background:var(--c-accent);color:var(--c-cream)}
 .close9 .cta-fill:hover{background:var(--c-accent-d);color:var(--c-cream)} /* closing CTA = the site's one saturated moment; the other 5 pages' .cta-button was already red and this was black, so the same label rendered two colours on the same light ground. Mid-body .cta-fill.inv stays as-is so red does not become common (2026-08-02) */
-.devgrid{display:grid;grid-template-columns:calc(798 * var(--u)) calc(796 * var(--u));column-gap:calc(35 * var(--u));align-items:start}
-.devgrid .dcol{display:flex;flex-direction:column;gap:calc(60 * var(--u))}
+.devgrid{display:grid;grid-template-columns:calc(798 * var(--u)) calc(796 * var(--u));column-gap:calc(28 * var(--u));align-items:start}
+.devgrid .dcol{display:flex;flex-direction:column;gap:calc(71 * var(--u))}
 .devgrid .lead{margin-top:0}
 .lead.mut{color:var(--c-700)}
 .close9 .lead{color:var(--c-1000)}
@@ -138,19 +137,19 @@ img{display:block;max-width:none}
 .rail .mlink{color:var(--c-white)}
 .close9 .rail .mlink{color:var(--c-black)}
 
-.btnrow{display:flex;align-items:center;gap:calc(30 * var(--u));flex-wrap:wrap}
+.btnrow{display:flex;align-items:center;gap:calc(28 * var(--u));flex-wrap:wrap}
 
 /* specimen: text-left (cols 1-6) / card-right (cols 9-12), mirrors home loop3 layout */
-.specimens{display:grid;grid-template-columns:calc((100% + 30 * var(--u)) / 12 * 6 - 30 * var(--u)) 1fr calc((100% + 30 * var(--u)) / 12 * 4 - 30 * var(--u));column-gap:calc(30 * var(--u));align-items:start}
-.specimens .snote{grid-column:1;display:flex;flex-direction:column;gap:calc(60 * var(--u))}
-.specimens .sfig{grid-column:3;display:flex;flex-direction:column;gap:calc(40 * var(--u));margin-top:calc(-258 * var(--u))}
+.specimens{display:grid;grid-template-columns:calc((100% + 30 * var(--u)) / 12 * 6 - 30 * var(--u)) 1fr calc((100% + 30 * var(--u)) / 12 * 5 - 30 * var(--u));column-gap:calc(28 * var(--u));align-items:start} /* memo track 4col -> 5col (2026-08-20), same reason as index .loop3 .specimen; 6col would overflow this 6col+memo row */
+.specimens .snote{grid-column:1;display:flex;flex-direction:column;gap:calc(71 * var(--u))}
+.specimens .sfig{grid-column:3;display:flex;flex-direction:column;gap:calc(42 * var(--u));margin-top:0} /* the -258u pull-up put the card level with the NO.01 title; once the card went 4col -> 5col (2026-08-20) the 9col title ran into it. Card starts below the title now, title keeps its full width. */
 .specimens .snote .smore,.calcol .cmore,.devgrid .dmore{display:none} /* mobile-only fold controls */
 .specimens .snote .cl{font-weight:500;font-size:var(--t-read27);line-height:1.15;letter-spacing:0;color:var(--c-white)}
 .close9 .specimens .snote .cl{color:var(--c-1000)}
 /* close: two-column body + offer (index-H close9 idiom) */
-.close9 .cols{display:grid;grid-template-columns:calc(807 * var(--u)) calc(807 * var(--u));column-gap:calc(26 * var(--u));max-width:calc(1645 * var(--u))}
+.close9 .cols{display:grid;grid-template-columns:calc(807 * var(--u)) calc(807 * var(--u));column-gap:calc(28 * var(--u));max-width:calc(1645 * var(--u))}
 .close9 .cols p{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-1000)}
-.close9 .offer{margin-top:0;display:flex;flex-direction:column;gap:calc(40 * var(--u));align-items:flex-start}
+.close9 .offer{margin-top:0;display:flex;flex-direction:column;gap:calc(42 * var(--u));align-items:flex-start}
 .close9 .pricehd9{font-weight:500;font-size:var(--t-lead24);line-height:1.3;letter-spacing:0;color:var(--c-1000);max-width:calc(807 * var(--u))}
 /* fee disclosure under the membership line, ported from the homepage close (index-H L307) */
 .close9 .offer p.fee9{font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-800);margin-top:calc(10 * var(--u))} /* mono is 1.5 (type audit 2026-07-31) */
@@ -158,7 +157,8 @@ img{display:block;max-width:none}
 .tk.static .krow,.tk.static .status,.tk.static .rowline{position:static;margin-top:calc(14 * var(--u))}
 
 /* specimen card: Investment Memo (exact replica; off-II-scale sizes intentional) */
-.dr-doc{display:block;width:100%;max-width:566px;padding:34px 28px 32px;border:1px solid var(--c-800);border-radius:4px;background:var(--c-elev);font-family:'Inter',-apple-system,sans-serif;font-weight:400}
+.dr-doc{display:block;width:100%;max-width:566px;padding:34px 28px 32px;border:1px solid var(--c-800);border-radius:4px;background:var(--c-elev);font-family:'Inter',-apple-system,sans-serif;font-weight:400;position:relative;aspect-ratio:528/630;overflow:hidden} /* mockups keep their designed ratio (Inkyung 2026-08-20), same rule as index .dr-doc */
+.dr-doc::after{content:'';position:absolute;left:0;right:0;bottom:0;height:64px;background:linear-gradient(to bottom,rgba(20,20,20,0),var(--c-elev));pointer-events:none}
 /* Card rebuilt to the approved app screen (Figma 3233:2864 / 3233:2890, 2026-07-31) - same as the
    homepage specimen. Hurdle / probability / horizon / dated rows collapse into the app's Prediction
    line, and Kill Criteria becomes the app's numbered list. */
@@ -202,8 +202,8 @@ img{display:block;max-width:none}
 .dr3-dot{width:6px;height:6px;border-radius:50%;background:var(--c-white);flex:none}
 
 /* 3-cell stat/number pattern, reuse of .stats3 tokens */
-.tri{display:grid;grid-template-columns:repeat(3,1fr);column-gap:calc(50 * var(--u))}
-.tri .cell{display:flex;flex-direction:column;gap:calc(20 * var(--u))}
+.tri{display:grid;grid-template-columns:repeat(3,1fr);column-gap:calc(42 * var(--u))}
+.tri .cell{display:flex;flex-direction:column;gap:calc(14 * var(--u))}
 .tri .v{font-weight:500;font-size:var(--t-h34);line-height:1.4;letter-spacing:-0.069em;color:var(--c-white)}
 .tri .v.gap{color:var(--c-urgent-muted)}
 .tri .rule{border-top:0.667px dashed var(--c-600);height:0}
@@ -211,12 +211,12 @@ img{display:block;max-width:none}
 
 /* No. 04 calibration scatter + Close constellation (ported from V4 Self-Directed, 2026-07-22) */
 .calgrid{display:grid;grid-template-columns:calc(807 * var(--u)) calc(528.3 * var(--u));justify-content:space-between;align-items:stretch}
-.calgrid + .tri{margin-top:calc(60 * var(--u))}
-.calgrid .calcol{display:flex;flex-direction:column;gap:calc(60 * var(--u))}
-.grp{display:flex;flex-direction:column;gap:calc(40 * var(--u))}
-.grp.tight{gap:calc(20 * var(--u))}
-.grp.pay{gap:calc(32 * var(--u))}
-.calgrid .calfig{display:flex;flex-direction:column;gap:calc(40 * var(--u))}
+.calgrid + .tri{margin-top:calc(71 * var(--u))}
+.calgrid .calcol{display:flex;flex-direction:column;gap:calc(71 * var(--u))}
+.grp{display:flex;flex-direction:column;gap:calc(42 * var(--u))}
+.grp.tight{gap:calc(14 * var(--u))}
+.grp.pay{gap:calc(28 * var(--u))}
+.calgrid .calfig{display:flex;flex-direction:column;gap:calc(42 * var(--u))}
 /* Calibration card - bible fig02 replica, verbatim (off-scale px intentional) */
 .cal-card{width:100%;max-width:624px;border:1px solid var(--c-900);border-radius:4px;background:var(--c-elev);font-family:'Inter',-apple-system,sans-serif;font-weight:400}
 .cal-cardhd{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:28px 28px 4px}
@@ -233,24 +233,24 @@ img{display:block;max-width:none}
 .cal-stat{padding:14px 16px}
 .cal-stat-b{border-left:1px solid var(--c-1000)}
 .cal-k{font-size:13px;line-height:1.5;color:var(--c-700)}
-.cal-v{margin-top:6px;font-size:24px;letter-spacing:-0.02em;line-height:1.5;color:var(--c-200)}
+.cal-v{margin-top:6px;font-weight:500;font-size:24px;letter-spacing:-0.02em;line-height:1.5;color:var(--c-200)} /* figure tier is 500 (2026-08-20) */
 .cal-diag{padding:14px 28px 12px;border-top:1px solid var(--c-900);font-size:15px;letter-spacing:-0.01em;line-height:1.5;color:var(--c-400)}
 .cal-overtime{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:0 28px 26px}
 .cal-ot-k{font-size:13px;letter-spacing:-0.01em;line-height:1.5;color:var(--c-700)}
 .calcard{width:100%;background:var(--c-elev);border:0.5px solid var(--c-900);border-radius:28px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.05);overflow:hidden}
-.calcard .chd{display:flex;align-items:flex-start;justify-content:space-between;gap:calc(16 * var(--u));padding:calc(32 * var(--u)) calc(28 * var(--u)) calc(14 * var(--u))}
+.calcard .chd{display:flex;align-items:flex-start;justify-content:space-between;gap:calc(14 * var(--u));padding:calc(28 * var(--u)) calc(28 * var(--u)) calc(14 * var(--u))}
 .calcard .chd .l{font-size:var(--t-mono15);color:var(--c-200);letter-spacing:-0.01em}
 .calcard .chd .r{font-family:var(--mono);font-size:var(--t-mono11);letter-spacing:0.04em;color:var(--c-700);text-align:right;line-height:1.55}
-.calcard .calfilter{display:flex;flex-wrap:wrap;gap:calc(8 * var(--u));padding:0 calc(28 * var(--u)) calc(10 * var(--u))}
+.calcard .calfilter{display:flex;flex-wrap:wrap;gap:calc(6 * var(--u));padding:0 calc(28 * var(--u)) calc(10 * var(--u))}
 .calcard .filtlbl{font-family:var(--mono);font-size:var(--t-mono11);letter-spacing:0.12em;color:var(--c-700);align-self:center;margin-right:2px}
-.calcard .filtlbl:not(:first-child){margin-left:calc(8 * var(--u))}
-.calcard .chip{font-family:var(--mono);font-size:var(--t-mono11);letter-spacing:0.03em;color:var(--c-700);border:0.5px solid var(--c-800);border-radius:99px;padding:calc(4 * var(--u)) calc(11 * var(--u))}
+.calcard .filtlbl:not(:first-child){margin-left:calc(6 * var(--u))}
+.calcard .chip{font-family:var(--mono);font-size:var(--t-mono11);letter-spacing:0.03em;color:var(--c-700);border:0.5px solid var(--c-800);border-radius:99px;padding:calc(6 * var(--u)) calc(14 * var(--u))}
 .calcard .chip.active{color:var(--c-black);background:var(--c-white);border-color:var(--c-white)}
 .calcard .chip.tk{border-style:dashed}
 .calcard .chip.tk.active{border-style:solid}
 .calcard canvas{width:100%;aspect-ratio:1.5/1;display:block}
-.calcard .csum{display:grid;grid-template-columns:repeat(3,1fr);padding:0 calc(12 * var(--u));border-top:0.5px solid var(--c-1000)}
-.calcard .ci{padding:calc(20 * var(--u)) calc(16 * var(--u));display:flex;flex-direction:column}
+.calcard .csum{display:grid;grid-template-columns:repeat(3,1fr);padding:0 calc(14 * var(--u));border-top:0.5px solid var(--c-1000)}
+.calcard .ci{padding:calc(14 * var(--u)) calc(14 * var(--u));display:flex;flex-direction:column}
 .calcard .ci+.ci{border-left:0.5px solid var(--c-1000)}
 .calcard .ck{font-size:var(--t-mono13);color:var(--c-700);line-height:1.3}
 .calcard .cv{font-size:max(17px, calc(24 * var(--u)));color:var(--c-200);letter-spacing:-0.02em;margin-top:auto;padding-top:calc(10 * var(--u))}
@@ -258,42 +258,42 @@ img{display:block;max-width:none}
 .constfig{position:relative;aspect-ratio:9/13;background:var(--c-surface);border:0.667px solid rgba(255,255,255,0.18);width:calc(528.3 * var(--u));align-self:start;justify-self:end;margin-top:calc(-255 * var(--u))}
 .constfig .fig-caps{position:absolute;left:0;right:0;top:calc(100% + 14px)}
 .constfig .fig-leg{font-family:var(--mono);font-size:9px;line-height:1.4;color:var(--c-700);letter-spacing:0.04em} /* c-800 on the dark figure was 2.66:1 (WCAG AA fail); c-700 = 6.75:1 (2026-08-02) */
-.constfig .fig-note{margin-top:6px;font-family:var(--mono);font-size:12px;color:var(--c-700);letter-spacing:0.04em}
-.close9 .cols .ccol{display:flex;flex-direction:column;gap:calc(60 * var(--u));align-items:flex-start}
+.constfig .fig-note{margin-top:6px;font-family:var(--mono);font-size:var(--t-mono11);color:var(--c-700);letter-spacing:0.04em} /* hardcoded 12px -> the 11 token 2026-08-20: it was the last 12 on desktop, off the 13/11/9 mono ladder. Mobile keeps its own 9 below. */
+.close9 .cols .ccol{display:flex;flex-direction:column;gap:calc(71 * var(--u));align-items:flex-start}
 .close9 .cols .ccol .pricehd9{font-weight:500;font-size:var(--t-lead24);line-height:1.3;letter-spacing:0;color:var(--c-1000)}
 .close9 .cols .ccol .offer{margin-top:0}
 .constfig canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 
 /* 3-row step pattern (cream), reuse of .loop3 .step tokens */
 .rows3{display:grid;grid-auto-rows:1fr;border-bottom:0.667px solid rgba(28,28,28,0.16)}
-.rows3 .row{display:grid;grid-template-columns:calc(249.2 * var(--u)) 1fr;column-gap:calc(30 * var(--u));align-items:start;border-top:0.667px solid rgba(28,28,28,0.16);padding:calc(60 * var(--u)) 0}
+.rows3 .row{display:grid;grid-template-columns:calc(249.2 * var(--u)) 1fr;column-gap:calc(28 * var(--u));align-items:start;border-top:0.667px solid rgba(28,28,28,0.16);padding:calc(71 * var(--u)) 0}
 .rows3 .row b{grid-column:1;grid-row:1 / 3;font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-accent)}
 .rows3 .row .t{grid-column:2;font-weight:500;font-size:var(--t-read27);line-height:1.15;letter-spacing:0;color:var(--c-1000)}
-.rows3 .row .d{grid-column:2;margin-top:calc(24 * var(--u));max-width:calc(807.5 * var(--u));font-weight:400;font-size:var(--t-small17);line-height:1.3;color:var(--c-1000)}
+.rows3 .row .d{grid-column:2;margin-top:calc(28 * var(--u));max-width:calc(807.5 * var(--u));font-weight:400;font-size:var(--t-small17);line-height:1.3;color:var(--c-1000)}
 
 /* refusal list (dark), reuse of .suit5 border/token language */
 .refuse{display:grid;grid-template-columns:repeat(3,1fr);border:0.667px solid rgba(255,255,255,0.18)}
 .bandimg .refuse{background:rgba(0,0,0,0.55)}
-.refuse .r{padding:calc(40 * var(--u)) calc(50 * var(--u));border-right:0.667px solid rgba(255,255,255,0.18)}
+.refuse .r{padding:calc(42 * var(--u)) calc(42 * var(--u));border-right:0.667px solid rgba(255,255,255,0.18)}
 .refuse .r:last-child{border-right:0}
-.refuse .r b{display:block;font-weight:500;font-size:var(--t-read27);line-height:1.15;letter-spacing:0;color:var(--c-white);margin-bottom:calc(20 * var(--u))}
+.refuse .r b{display:block;font-weight:500;font-size:var(--t-read27);line-height:1.15;letter-spacing:0;color:var(--c-white);margin-bottom:calc(14 * var(--u))}
 .refuse .r p{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200)}
 
 /* research feature rows (cream) */
 /* research: Fiscal.ai terminal panel (specimen-document idiom) */
-.fpanel{background:var(--c-cream);padding:calc(40 * var(--u)) calc(50 * var(--u))}
-.fpanel .fhead{display:flex;justify-content:space-between;align-items:baseline;gap:calc(20 * var(--u));border-bottom:0.667px solid rgba(28,28,28,0.16);padding-bottom:calc(14 * var(--u));font-family:var(--mono);font-size:var(--t-mono11);line-height:1.6}
-.fpanel .fhead .l{color:var(--c-800);letter-spacing:0.16em}
-.fpanel .fhead .r{color:var(--c-800);letter-spacing:0.08em} /* c-700 on the light fiscal panel was 2.78:1 (WCAG AA fail); c-800 = 6.9:1 (2026-08-02) */
-.fgrid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,auto);grid-auto-flow:column;column-gap:calc(80 * var(--u))}
-.fgrid .f{display:flex;flex-direction:column;gap:calc(6 * var(--u));padding:calc(22 * var(--u)) 0;border-bottom:0.667px solid rgba(28,28,28,0.16)}
+.fpanel{background:var(--c-cream);padding:calc(42 * var(--u)) calc(42 * var(--u))}
+.fpanel .fhead{display:flex;justify-content:space-between;align-items:baseline;gap:calc(14 * var(--u));border-bottom:0.667px solid rgba(28,28,28,0.16);padding-bottom:calc(14 * var(--u));font-family:var(--mono);font-size:var(--t-mono11);line-height:1.6}
+.fpanel .fhead .l{color:var(--c-800);letter-spacing:0.04em} /* was 0.16em - mono tracking is 0.04em everywhere (2026-08-20) */
+.fpanel .fhead .r{color:var(--c-800);letter-spacing:0.04em} /* was 0.08em - mono tracking is 0.04em everywhere. c-800 kept: c-700 on this light panel was 2.78:1, a contrast fail (2026-08-02) */
+.fgrid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,auto);grid-auto-flow:column;column-gap:calc(85 * var(--u))}
+.fgrid .f{display:flex;flex-direction:column;gap:calc(6 * var(--u));padding:calc(28 * var(--u)) 0;border-bottom:0.667px solid rgba(28,28,28,0.16)}
 .fgrid .f b{font-weight:500;font-size:var(--t-read27);line-height:1.15;letter-spacing:0;color:var(--c-1000)}
 .fgrid .f span{font-weight:400;font-size:var(--t-small17);line-height:1.3;color:var(--c-800)}
 .fgrid .f:nth-child(4),.fgrid .f:last-child{border-bottom:0}
 
 /* account type cards (cream) */
-.acct3{display:grid;grid-template-columns:repeat(3,1fr);column-gap:calc(30 * var(--u))}
-.acct3 .a{border-top:0.667px solid rgba(255,255,255,0.18);padding-top:calc(20 * var(--u));display:flex;flex-direction:column;gap:calc(12 * var(--u))}
+.acct3{display:grid;grid-template-columns:repeat(3,1fr);column-gap:calc(28 * var(--u))}
+.acct3 .a{border-top:0.667px solid rgba(255,255,255,0.18);padding-top:calc(14 * var(--u));display:flex;flex-direction:column;gap:calc(14 * var(--u))}
 .acct3 .a h3{font-weight:500;font-size:var(--t-h34);line-height:1.3;letter-spacing:-0.02em;color:var(--c-white)}
 .acct3 .a p{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200)}
 .acct3 .a .lim{font-family:var(--mono);font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-700)} /* mono is 1.5 - was inheriting 1.3 (type audit 2026-07-31) */
@@ -301,15 +301,27 @@ img{display:block;max-width:none}
 .acct3 .a .lim:last-child{margin-top:auto}
 
 /* ---- version B: split hero (text left on black, image right column) + index-H hero typography ---- */
+br.dbr{display:none} /* hero break: OFF by default, so wide screens keep the two-line statement */
+@media (min-width:901px) and (max-width:1759px){
+  br.dbr{display:inline} /* ...and ON only in the laptop band that cannot hold it.
+     The hero title is nowrap at a floored 48px while the photo keeps its 33% share, so between
+     901 and ~1700 the two sentences ran into the picture (118px at 1440). Measured: the two-line
+     version first clears the photo at 1700, so the switch sits at 1760 with headroom.
+     Above that the hero is two lines again, as designed. Copy is untouched either way. */
+}
 .hero{height:calc(1364 * var(--u));background:var(--c-black)}
 .hero>img,.hero>video{position:absolute;right:0;top:0;width:calc(836 * var(--u));min-width:280px;height:100%;object-fit:cover;filter:saturate(0.8) contrast(0.92) brightness(1.05)}
 .hero::after{content:'';position:absolute;top:0;right:0;width:calc(836 * var(--u));min-width:280px;height:100%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.13;mix-blend-mode:overlay;pointer-events:none;z-index:1}
-.hero .hgroup{position:absolute;left:calc(440 * var(--u));top:calc(415 * var(--u));width:calc(940 * var(--u));display:flex;flex-direction:column;align-items:flex-start;gap:calc(50 * var(--u));z-index:2}
+.hero .hgroup{position:absolute;left:calc(440 * var(--u));top:calc(415 * var(--u));width:calc(940 * var(--u));display:flex;flex-direction:column;align-items:flex-start;gap:calc(42 * var(--u));z-index:2}
 .hero .heyeb{font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-600)}
 .hbars{display:flex;flex-direction:column;align-items:flex-start;gap:0}
 .hbar{display:inline-block;white-space:nowrap;color:var(--c-white);font-weight:500;font-size:calc(64 * var(--u));line-height:1.05;letter-spacing:-0.02em}
 .hero .hsub{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200);max-width:calc(820 * var(--u))}
-.hero .htrust{font-family:var(--mono);font-weight:400;font-size:max(12px, calc(12 * var(--u)));line-height:1.5;letter-spacing:0.04em;color:var(--c-600)} /* compliance line - 12px floor per Typography.md §9, matches home (type audit 2026-07-31) */
+/* var(--t-mono13), not the hand-rolled max(12px, 12u) this carried. The home took the same fix on
+   2026-08-18: 12 is not on the mono ladder at any width, and Typography.md §9 now reads 11px both
+   widths via the token. A hardcoded floor does not follow the desktop floor pass - this was the one
+   mono 12 left on the page. */
+.hero .htrust{font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-600)}
 .hero .mlink{color:var(--c-white)}
 /* full-bleed photo sections (index-H gap2 idiom) */
 .bandimg>.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.5) contrast(0.95)}
@@ -354,18 +366,26 @@ body.menu-open{overflow:hidden}
 
 /* ---- site footer, identical on every page (2026-08-01). Ported verbatim from Pricing; the inner
    wrapper is scoped as `footer .container` so it cannot collide with the grid-overlay .container. ---- */
-footer{background:var(--c-black);color:var(--c-800);border-top:0.667px solid rgba(255,255,255,0.18);padding:64px 0 36px;font-size:11px;line-height:1.5;margin-top:calc(120 * var(--u))}
+footer{background:var(--c-black);color:var(--c-800);border-top:0.667px solid rgba(255,255,255,0.18);padding:64px 0 36px;font-size:11px;line-height:1.5;margin-top:calc(113 * var(--u))}
 footer .container{margin:0 calc(450 * var(--u))}
-.footer-copy{font-size:13px;color:var(--c-600)}
+.footer-copy{font-size:13px;line-height:1.4;color:var(--c-600)} /* meta tier 1.4, matching the doc pages (2026-08-20) */
 .footer-copy a{color:var(--c-600);text-decoration:underline}
-.footer-social{display:flex;gap:18px;margin-top:22px}
+.footer-social{display:flex;gap:18px;margin-top:24px}
 .footer-social a{color:var(--c-700);display:inline-flex;transition:color 0.15s ease}
 .footer-social a:hover{color:var(--c-200)}
 .footer-social svg{width:18px;height:18px}
 .footer-legal{font-size:11px;color:var(--c-700);line-height:1.4;margin-top:16px} /* c-800 on black was 3.05:1 (WCAG AA fail). c-700 = 6.75:1, the exact colour the live footer uses (2026-08-02) */
-.footer-legal:first-of-type{margin-top:36px}
+/* ---- footer spacing 22 / 22 / 36 -> 24 / 24 / 48 (home 2026-08-18, ported here 08-18) ----
+   None of 22/22/36 were ladder values. 24 is the step inside a group, 48 is the group boundary, and
+   the legal block is a different group from the site links above it. Paragraph-to-paragraph inside
+   the legal block STAYS 16 - the ladder governs space BETWEEN elements; 16 is an intra-block value,
+   and 24 there would add another 56px to the tallest block on the page.
+   The 48 sits on .footer-legalwrap, not on :first-of-type: once script#v11-footer moves the
+   paragraphs inside the wrapper, :first-of-type no longer separates the block from the social row
+   and the gap collapses to 0. */
+.footer-legalwrap{margin-top:48px}
 .footer-legal a{color:var(--c-700);text-decoration:underline}
-.footer-links{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:22px;font-size:11px;line-height:1.4}
+.footer-links{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:24px;font-size:11px;line-height:1.4}
 .footer-links a{color:var(--c-700);text-decoration:underline;position:relative}
 .footer-links a:hover{color:var(--c-200)}
 .footer-links a::after{content:'';position:absolute;inset:-16px 0} /* live-footer legal nav, added with the approved wording (2026-08-02) */
@@ -438,7 +458,7 @@ footer .container{margin:0 calc(450 * var(--u))}
   .lead,.content .lead,.grp .lead{font-size:15px;line-height:1.4}
   /* body prose one tone down on dark grounds: c-200 -> c-400 (Inkyung 2026-07-31, "전반적으로 너무 쎄다").
      White sections keep their own darker override; labels, payoffs and statements unchanged. */
-  .content p.body,.hero .hsub,.refuse .r p,.acct3 .a p{color:var(--c-400)} /* .lim keeps its own c-700 (3-class rule wins) */
+  /* the mobile c-400 prose override was removed 2026-08-20 (Inkyung: match the more readable side) - dark-ground prose now inherits the same c-200 the desktop shows */ /* .lim keeps its own c-700 */
   /* closing block matched to index-H: prose 24, payoff 15/500 lh1.4, figure -> caption 24 */
   /* gap:0 then margins only - the flex row-gap was adding to the margin and giving 48 */
   /* ROOT FIX: on mobile no vertical flex gap anywhere - every distance is a margin, so gap and margin
@@ -555,10 +575,17 @@ footer .container{margin:0 calc(450 * var(--u))}
   /* + disclosure retired (mobile-native pass 2026-07-31): all three account types exposed, same as
      the home NO.01 directory - title / limit / description are short rows, nothing to fold.
      The .open JS toggle is now a visual no-op. */
-  .acct3{row-gap:24px;border-bottom:0.667px solid rgba(255,255,255,0.18);padding-bottom:24px} /* hairline
-     list grammar (home NO.01): equal air around each line - 24 above (row-gap) = 24 below (card
-     padding-top), pitch 48; closes like it opens (2026-08-01, was 16 above) */
-  .acct3 .a h3{font-size:17px;line-height:1.15;letter-spacing:0} /* 17 item-title tier = tracking 0, matches home h3 (type audit 2026-07-31) */
+  /* SUPERSEDED RATIONALE REMOVED (2026-08-18). This rule's old comment described a 24-above/24-below
+     row-gap grammar from 08-01; the beat pass later that day set #accounts .acct3{row-gap:0} with its
+     own rationale ("let the hairline divide", see the beat comment further down), which overrides the
+     row-gap here. The border-bottom + padding stay: they close the list. */
+  .acct3{row-gap:24px;border-bottom:0.667px solid rgba(255,255,255,0.18);padding-bottom:24px}
+  /* 22 tier, not 17 (2026-08-18, Inkyung - closes SESSION §9-5's open flag). The old comment said
+     "matches home h3" citing the 07-31 audit, but the home moved its directory titles to the 22 tier
+     on 08-17 ("Mode titles join the 22 tier") and the tier itself went 400/1.25 the same evening -
+     so 17/500/1.15 was matching a retired value. TFSA/RRSP/Non-Registered are product names in the
+     same eyebrow -> title -> three-row directory grammar as Managed/Self-Directed. */
+  .acct3 .a h3{font-size:22px;font-weight:400;line-height:1.25;letter-spacing:0}
   .acct3 .a .lim{margin-top:8px}
   .acct3 .a p{margin-top:16px}
   .acct3 .a .lim:last-child{margin-top:8px}
@@ -703,6 +730,8 @@ footer .container{margin:0 calc(450 * var(--u))}
      chrome, ported from home 07-29 (parity audit 2026-07-31: ncta and the foot spans carried `normal`) */
   .metaline{font-size:11px}
   .metaline.doclist{font-size:9px} /* legal link list joins the 9px meta tier (Inkyung 2026-07-28) */
+  #research .metaline{font-size:9px} /* fee notes are one tier = 9 (Inkyung 2026-08-18): the home's
+     $20-plate fee and CLOSE .fee9 both render 9 now, and this commissions/FX note is the same role */
   /* hero trust line = homepage: 11px c-400 per the Figma mobile master (2026-07-31, Typography.md §9
      exception - mobile sits below the desktop 12px floor). Two lines via the sep/b pattern. */
   .hero .htrust{font-size:11px;color:var(--c-600);line-height:1.5;align-self:stretch;max-width:none} /* c-600, one tone under the 07-31 c-400 (Inkyung) */
@@ -749,6 +778,7 @@ footer .container{margin:0 calc(450 * var(--u))}
    Desktop above is V8 verbatim. Grammar ported from the V9 home: full copy, ground titles,
    solo image beats, vertical stat stacks, 104 section rhythm. ============ */
 @media (max-width:900px){
+  br.dbr{display:none} /* the desktop-only hero break collapses on mobile (2026-08-20) */
   /* ---- copy exposure: every mobile cut retired ---- */
   div.dtonly,p.dtonly{display:block}
   span.dtonly{display:inline}
@@ -759,7 +789,11 @@ footer .container{margin:0 calc(450 * var(--u))}
   .devgrid .dcol p.body+p.body,.devgrid .dcol+.dcol p.body{display:block}
   .close9 .cols .constfig{display:block}
   .calgrid + .tri{display:flex}
-  .specimens .snote .smore,.calcol .cmore,.devgrid .dmore,.trust9 .tmore{display:none!important}
+  /* .trust9 .tmore removed from this hide list 2026-08-18 (Inkyung: "홈페이지 기준") - the home's
+     REGULATORY STANDING fold is ported below, so the control must render. The other three stay
+     retired. ⚠ The fold itself is still COMPLIANCE UNCONFIRMED (SESSION §9-1); if the answer is
+     no, both pages drop the block in one move. */
+  .specimens .snote .smore,.calcol .cmore,.devgrid .dmore{display:none!important}
   .hero .heyeb .heyeb-b{display:block}
 
   /* ---- type tiers (home canon) ---- */
@@ -799,7 +833,7 @@ footer .container{margin:0 calc(450 * var(--u))}
   .tri .cell:last-child{border-bottom:0.667px solid rgba(255,255,255,0.18)}
   .tri .cell .v{order:-1;text-align:left;font-size:34px;font-weight:500;line-height:1.15;letter-spacing:-0.069em;margin:0;color:var(--c-white)}
   .tri .cell .v.gap{color:var(--c-urgent-muted)}
-  .tri .cell .t{margin:8px 0 0;font-size:15px;font-weight:400;line-height:1.4;letter-spacing:0;color:var(--c-400);max-width:none}
+  .tri .cell .t{margin:8px 0 0;font-size:15px;font-weight:400;line-height:1.4;letter-spacing:0;color:var(--c-200);max-width:none} /* c-400 -> c-200, matching desktop (2026-08-20) */
   .tri .cell .rule{display:none}
 
   /* ---- NO.03 review sequence: vertical ledger (2026-08-14).
@@ -830,7 +864,7 @@ footer .container{margin:0 calc(450 * var(--u))}
 </style>
 
 </head>
-<body>
+<body class="p-sub">
 
 <nav class="nav">
   <a class="logo" href="index.html" aria-label="Home"><svg viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.59903 0H7.79315L2.19412 17.6523H0L5.59903 0Z"/><path d="M12.8061 0H15.0002L9.40115 17.6523H7.20703L12.8061 0Z"/></svg></a>
@@ -868,8 +902,8 @@ footer .container{margin:0 calc(450 * var(--u))}
   <div class="hgroup">
     <div class="heyeb rv"><span>SELF-DIRECTED</span><span class="heyeb-sep"> &middot; </span><span class="heyeb-b">PART OF THE INTELLIGENT INVESTING SYSTEM</span></div>
     <div class="hbars">
-      <span class="hbar rv">Most investors record outcomes.</span>
-      <span class="hbar rv">The decision comes before the trade.</span>
+      <span class="hbar rv">Most investors record <br class="dbr">outcomes.</span>
+      <span class="hbar rv">The decision comes <br class="dbr">before the trade.</span>
     </div>
     <p class="hsub rv">An active decision system that places each order on the record before the outcome, and preserves what changed afterward. Without the reasoning, the outcome teaches nothing.</p>
     <div class="btnrow rv">
@@ -879,14 +913,14 @@ footer .container{margin:0 calc(450 * var(--u))}
     <p class="htrust rv"><span>A licensed Canadian brokerage</span><span class="heyeb-sep"> &middot; </span><span class="heyeb-b">regulated by CIRO &middot; CIPF member</span></p>
   </div>
   <!-- the clip plays on mobile too, from a 900px-tall encode (2.5 MB vs 27 MB). The still is the poster. -->
-  <video autoplay muted loop playsinline poster="Images/v5 images/hero-still-sd.jpg" data-m="Images/v5 images/video mobile/hero-sd-m.mp4" src="Images/v5 images/video desktop/hero-sd-d.mp4"></video>
+  <video autoplay muted loop playsinline poster="Images/v5-images/hero-still-sd.jpg" data-m="Images/v5-images/video-mobile/hero-sd-m.mp4" src="Images/v5-images/video-desktop/hero-sd-d.mp4"></video>
 </header>
 
 <!-- NO.01 THE RECORD -->
 <section class="band secpad close9 wht" id="record">
   <div class="rail">
     <div class="eyeb rv">NO. 01 &middot; THE RECORD</div>
-    <h2 class="bigh2 rv"><span class="a">A thesis without a stated way to be</span> <span class="b">wrong is an opinion.</span></h2><!-- the space matters once the spans go inline on mobile; on desktop they are display:block so it collapses -->
+    <h2 class="bigh2 rv"><span class="a">A thesis without a stated way</span> <span class="b">to be wrong is an opinion.</span></h2><!-- the space matters once the spans go inline on mobile; on desktop they are display:block so it collapses -->
     <div class="content">
       <div class="specimens rv">
         <div class="snote">
@@ -929,7 +963,7 @@ footer .container{margin:0 calc(450 * var(--u))}
 
 <!-- NO.02 THE BENCHMARK -->
 <section class="band secpad bandimg" id="benchmark">
-  <img class="bg lift" src="Images/v5 images/felix-mylLKoplEoc-unsplash.jpg" alt="">
+  <img class="bg lift" src="Images/v5-images/felix-mylLKoplEoc-unsplash.jpg" alt="">
   <div class="rail">
     <div class="eyeb rv">NO. 02 &middot; THE BENCHMARK</div>
     <h2 class="bigh2 w10 rv"><span class="a">Every dollar is measured against the market.</span> <span class="b">Including when it loses.</span></h2>
@@ -1027,7 +1061,7 @@ footer .container{margin:0 calc(450 * var(--u))}
 
 <!-- NO.05 THE DEVELOPMENT -->
 <section class="band secpad bandimg" id="development">
-  <img class="bg" src="Images/v5 images/marcel-strauss-3XeUpu1KKaQ-unsplash.jpg" alt="">
+  <img class="bg" src="Images/v5-images/marcel-strauss-3XeUpu1KKaQ-unsplash.jpg" alt="">
   <div class="rail">
     <div class="eyeb rv">NO. 05 &middot; THE DEVELOPMENT</div>
     <h2 class="bigh2 rv"><span class="a">The portfolio is an artifact.</span> <span class="b">The allocator is the product.</span></h2>
@@ -1057,7 +1091,7 @@ footer .container{margin:0 calc(450 * var(--u))}
       <p class="body rv">Every membership includes access to Fiscal.ai Max, a professional-grade research and analysis environment. Most investors trade on price and headlines. Serious investors analyse businesses.</p>
       <p class="body rv">Research supplies evidence. Judgment remains yours. It is not a stock picker, a signal engine, or a shortcut. It does not make the decision, assign the probability, or absorb the consequence.</p>
       <div class="fpanel rv">
-        <div class="fhead"><span class="l">FISCAL.AI MAX</span><span class="r">$99/MONTH STANDALONE &middot; INCLUDED WITH MEMBERSHIP</span></div>
+        <div class="fhead"><span class="l">Fiscal.ai Max</span><span class="r">$99/month standalone &middot; included with membership</span></div>
         <div class="fgrid">
           <div class="f"><b>Multi-year financials</b><span>Income statement, balance sheet, cash flow.</span></div>
           <div class="f"><b>Capital allocation</b><span>Return on capital and free cash flow analysis.</span></div>
@@ -1070,13 +1104,23 @@ footer .container{margin:0 calc(450 * var(--u))}
       </div>
 
       <p class="metaline rv">No trading commissions. <br>FX carries no added fee; a conversion spread applies. <br>The $20/month membership applies.</p><!-- trailing spaces are invisible on desktop; they carry the word gap when mobile hides the brs -->
+      <!-- PRICING ↗ added 2026-08-18 (Inkyung). This section is the DESTINATION of the home's
+           Fiscal.ai Max "RESEARCH ↗", so it had no exit of its own. The panel header states
+           "$99/month standalone · included with membership" and the metaline above ends on fees, so
+           the one question the reader is left holding is what the membership costs - and the site has
+           a page for it. Chosen over an outbound fiscal.ai link on purpose: every other ↗ in this
+           page's body stays inside the site, and Fiscal.ai carries its own third-party disclaimer in
+           the footer, so a prominent body link there is a compliance call rather than a design one.
+           ✅ Label canon: PRICING registered in ii-design-guard/SKILL.md 2026-08-18 (internal exit = destination name, same family as MANAGED/SELF-DIRECTED/RESEARCH). VIEW THE FULL RECORD / VIEW THE RECORD DIAGRAM registered under the VIEW THE [THING] + disclosure pattern.
+           PostToolUse hook and that file is not on this machine - confirm before shipping. -->
+      <a class="mlink rv" href="pricing.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>PRICING</span></a>
     </div>
   </div>
 </section>
 
 <!-- NO.07 WHAT IT REFUSES -->
 <section class="band secpad bandimg" id="refuses">
-  <img class="bg" src="Images/v5 images/jonathan-cooper-GbfSgh39y0Q-unsplash.jpg" alt="">
+  <img class="bg" src="Images/v5-images/jonathan-cooper-GbfSgh39y0Q-unsplash.jpg" alt="">
   <div class="rail">
     <div class="eyeb rv">NO. 07 &middot; WHAT IT REFUSES</div>
     <h2 class="bigh2 rv"><span class="a">Refusal is governance.</span></h2>
@@ -1100,19 +1144,19 @@ footer .container{margin:0 calc(450 * var(--u))}
       <div class="acct3 rv">
         <div class="a">
           <h3>TFSA</h3>
-          <p class="lim">TAX-FREE</p>
+          <p class="lim">Tax-free</p>
           <p>Growth and withdrawals are completely tax-free, within an annual contribution limit that carries forward when unused. The most flexible registered account, with no tax on what compounds inside it.</p>
           <p class="lim">2025 contribution limit: $7,000</p>
         </div>
         <div class="a">
           <h3>RRSP</h3>
-          <p class="lim">TAX-DEFERRED</p>
+          <p class="lim">Tax-deferred</p>
           <p>Contributions reduce your taxable income now, and investment growth is deferred until you withdraw, usually in retirement when your marginal rate is lower. Built for long-horizon, tax-aware compounding.</p>
           <p class="lim">2025 contribution limit: $32,490</p>
         </div>
         <div class="a">
           <h3>Non-Registered</h3>
-          <p class="lim">TAXABLE</p>
+          <p class="lim">Taxable</p>
           <p>No contribution limit and no withdrawal restrictions, but investment income and capital gains are taxed each year. Typically used once your registered accounts are fully funded.</p>
           <p class="lim">No contribution limit</p>
         </div>
@@ -1126,7 +1170,7 @@ footer .container{margin:0 calc(450 * var(--u))}
 <section class="band secpad close9 top-hair">
   <div class="rail">
     <div class="eyeb rv">INTELLIGENT INVESTING</div>
-    <h2 class="bigh2 rv"><span class="a">The record starts empty.</span> <span class="b dim">That is the same for everyone.</span></h2>
+    <h2 class="bigh2 rv"><span class="a">The record starts empty.</span> <span class="b">That is the same for everyone.</span></h2>
     <div class="content">
       <div class="cols rv">
         <div class="ccol">
@@ -1164,87 +1208,759 @@ footer .container{margin:0 calc(450 * var(--u))}
   </div>
 </section>
 
-<script>
+<style id="v11-mobile-sd">
+/* ---------------------------------------------------------------------------
+   2026-08-19: every rule that belongs to more than one page was DELETED from this
+   block and now lives in shared/v11.css, which loads after it. If a value you
+   expect is not here, it is there. Comments left behind describe decisions whose
+   rule moved - the reasoning is kept, the duplicate is not.
+   THIS BLOCK MAY ONLY CARRY #section-id RHYTHM AND DOCUMENTED PAGE EXCEPTIONS.
+   --------------------------------------------------------------------------- */
+
+/* ============ V11 mobile layer - Self-Directed (2026-08-18) ============
+   Sits on top of the V8 base and the V9 mobile block. Everything here is a value already decided
+   on the V11 home; the reasoning lives in HANDOFF-V11.md and is summarised per rule below.
+   This block is spacing-neutral ON PURPOSE - the bit split (the 40s this page still carries at 12
+   places) is a design pass that needs the 2-2 question asked per site, not a port. Only the four
+   mechanical ports are here. ============ */
+@media (max-width:900px){
+
+  /* ---- 1. ON-BLACK HAIRLINES -> c-800 (HANDOFF 2-4) ----
+     Measured composites on pure black: rgba(255,255,255,0.18) = 1.55:1 and c-900 = 1.38:1, both far
+     under the 3:1 floor for a non-text boundary, so the line renders and cannot be seen. c-800
+     (#565B5E) = 3.05:1 is the first token that clears it. Raising the thickness does not help - it
+     just makes a thicker invisible line. c-900 is the DS structural-line token, but it needs a
+     surface to stand on (c-elev #0A0A0A / c-surface #151515); on pure black there is nothing to
+     push away from.
+     SCOPE = the same one the home took: on-black lines only. This page's cream-ground lines
+     (rgba(28,28,28,0.16) on .rows3 rows, #review, #research and the closing section) are left alone -
+     they sit on #F2F1EE where they are already visible, and the home did not touch its cream lines
+     either. The product-UI mockups are excluded too: .dr3-*, .cal-card, .calcard and .cal-diag use
+     c-900 correctly because they carry their own elevated surface (HANDOFF 4-B-7 - those clones have
+     their own scale and are not landing chrome). */          /* section boundary, black -> black */
+  #development{border-top-color:var(--c-800)}            /* was c-900, the one black-black boundary added 08-16 */  /* plate edges: night photos melt into the ground */              /* stat stack, = home .dstats/.tri sweep */
+  .constfig{border-color:var(--c-800)}                  /* = home line 2352 */
+
+  /* The CLOSING lines were still 0.18. Same miss the home made and fixed with its own rule for
+     .dstats .cell.gap: a figure block reads as a bracket, so an invisible bottom edge means there is
+     no signal that the figure has ended and the air after it reads as an arbitrary hole in the prose
+     (HANDOFF 4 "스탯 블록 브래킷"). Measured after the first pass: 4 bottoms left behind - the
+     .refuse list's closing rule, its two inner rows, and the .acct3 stack's. */
+
+  /* ============ HERO -> TWO BITS (2026-08-18, Inkyung) ============
+     The home split its hero into two bits: [media + wordmark + statement] as one viewport, then
+     [deck + trust + CTAs] as its own area below. One screen, one thing. This page had all six
+     elements stacked inside a single 812 viewport - eyebrow, statement, deck, box CTA, text link,
+     trust line, and the clip - which is the "desktop compressed" shape V11 exists to retire.
+
+     THE CLIP STAYS AT THE BOTTOM. That is the deliberate difference between this page (and Managed)
+     and the home: home puts its media in the TOP area, SD/Managed put it in the BOTTOM area, so the
+     two read as different places. Only the RATIO is shared - 76.5 / 23.5, same as the home.
+
+     Statement hugs the top (option A): the home's statement sits at the bottom of its hero because
+     its media is above; mirroring that puts ours at the top with the clip below. The air between
+     them is the breath the home gets from its video.
+
+     ★ WHY THE CLIP WAS COLLAPSING. .hero>video was flex:1 1 auto with min-height:140px, i.e. "take
+     whatever is left over". With all six elements in the stack there was nothing left: measured at
+     375x667 the clip started at y=658 inside an overflow:hidden 667-tall hero, so 131px of it was
+     cut and the reader saw a 9px sliver. At 812 the same markup gave it 154px (19%). A ratio cannot
+     come out of leftover space - it has to be declared. flex:none + 23.5svh does that, and moving
+     the deck/CTAs/trust into bit 2 is what makes room for it. */
+  /* margin-top:auto, NOT justify-content:flex-end. The hero is a column flex box holding the text
+     group and the clip; flex-end would push BOTH to the bottom and the statement would ride up
+     against the clip. auto on the last child alone opens the gap in the middle, which is the point. */
+  /* ---- SAME AS THE HOME ON MOBILE: media on top, text band underneath (2026-08-18, Inkyung) ----
+     Three arrangements were built and measured before this one, and the record matters because each
+     was killed by the SAME fact - this page's text band is 88px taller than the home's.
+
+       1. everything in one viewport (inherited)   the clip got whatever was left over, which at 667
+                                                  was nothing: 9px of a 140px clip, the rest cut off
+       2. clip at the bottom, text top-aligned     332px of black between statement and clip
+       3. clip at the bottom, text on the divider  the void moved under the nav - 403px - and a
+                                                  23.5% clip reads as a strip, not a hero
+
+     Why the mirror could not hold: the home's band is wordmark 10.5 + 24 + statement 3 lines = 126px
+     and the nav floats over its media, so the band owes the nav nothing. Here the eyebrow is 2 lines
+     (39) and the statement wraps to 4 (123) = 186px, and with the text at the TOP it also has to
+     clear a 54px nav. 240px of text cannot sit in a 23.5% (191px) band, so either the divider moves
+     or a void opens. Inkyung, after seeing all three: "그냥 홈이랑 똑같이 만들까? 모바일만?"
+
+     So: media on top, band underneath, exactly the home's composition. The void is gone because the
+     media fills the large share, which is the whole reason the home's hero works.
+     NO JS HERE. The home measures --htail in JS because its media is positioned and the wordmark is
+     pinned with a calc(); this hero is a plain column flex, so flex:1 on the clip already resolves to
+     "100svh minus the band" and re-resolves on its own when the statement rewraps at 320. order:-1
+     rather than moving the markup: the V10 desktop keeps its absolute .hgroup + absolute video.
+     32 above and below the band is the home's value (its one documented hero exception). */
+
+  /* ---- bit 2: deck + trust + CTAs, built by script#v11-hero2 ----
+     Internal spacing is the home's beat 2, value for value: deck -> 24 -> trust -> 48 -> box CTA
+     -> 24 -> text link. The trust line sits ABOVE the CTAs because it qualifies the statement, not
+     the button (Inkyung, home, 08-17: "큰 텍스트 아래, CTA 위"). On this page it had been below the
+     CTAs, which is what produced the 64 gap - a value that is on no ladder.
+     NO HAIRLINE between the hero and this. Same rule the home landed on: a line declares a SECTION
+     boundary, and eyebrow -> statement -> deck -> CTA is one masthead that the fold happens to cut.
+     The clip's own bottom edge is already a visible boundary here. */
+  /* ---- the eyebrow's second half moves to bit 2 (2026-08-18, Inkyung) ----
+     "SELF-DIRECTED · PART OF THE INTELLIGENT INVESTING SYSTEM" wrapped to 2 lines at 13px mono,
+     making this band 250px against the home's 190. REDISTRIBUTED, not cut (V11 rule: copy unchanged,
+     only moved): "SELF-DIRECTED" stays as the band's label - one line, the same role the home's
+     wordmark plays - and the qualifier becomes bit 2's eyebrow, 24 above the deck, which is the
+     band grammar the rest of the site uses (eyebrow -> 24 -> text).
+     Result: band 250 -> 231, media 69.2% -> 71.6%, and the gap to the home closes from 60px to 41.
+     Managed will be pinned to this same 231 when its turn comes - the two product pages match each
+     other; the home is left at its approved 190 (Inkyung: "홈은 지금처럼"). */   /* moved into bit 2 by script#v11-hero2 */
+
+  /* TOP PADDING IS 72, NOT 104 (Inkyung 2026-08-18: "여기 공간보면 홈페이지보다 좀 넓어").
+     The hero already ends with 32 below the statement - that 32 is the fold clearance, not a section
+     gap - so 104 here totalled 136 of ink where the home reads 104. The home hit the same thing and
+     landed on 72: hero tail 32 + 72 = 104, the beat value. Bottom stays 104, because the boundary
+     into NO.01 IS a section boundary (104 + 104 = 208). */
+
+  /* ★ Elements moved out of .hero LOSE every .hero-scoped rule. This bit the home once: .mlink fell
+     back to the light-ground canon #000 and went invisible on black - what looked like "the CTAs are
+     too far apart" was an unreadable link sitting in the gap. Restated here, all of them: */
+  /* The trust line flows as ONE sentence, folding only at the separator. Mobile hides .heyeb-sep
+     globally (line 673) and blocks .heyeb-b, which forced the compliance line into two stacked
+     phrases; re-inlining .heyeb-b alone glued them together as "brokerageregulated by CIRO" - the
+     separator was still display:none. Ported from the home, all four rules:
+     phrases nowrap so they never break mid-clause, separator NORMAL so the line has a break
+     opportunity at all - with every span nowrap there is none and the line runs off screen. */   /* was .hero .mlink */
+
+  /* ============ NO.01 THE RECORD (#record) - 2 beats (2026-08-18) ============
+     104 │ eyebrow →24→ masthead →24→ prose (3 steps of one argument)     beat 1
+     104 │ [NVYX memo specimen + caption]                                 beat 2
+     104 │
+
+     PROSE -> MEMO WAS 40, NOW 104. The prose says how a record is made ("Before an active order, the
+     position is classified..."), and what follows is an actual record. Different idea, so it is a
+     beat boundary - the same relationship the home resolved by promoting its NVYX memo to a document
+     beat of its own.
+
+     WHERE THE 40 CAME FROM (trap 6-6): it was not a declared value. .specimens carries a grid
+     row-gap of 24 (line 555) and .sfig adds margin-top:16 (line 596) - a nested row-gap ADDS to the
+     child's margin, so the rendered gap was 16+24. The DS rule is "space with margin only, vertical
+     flex/grid gets row-gap:0", so the gap is zeroed and the whole value goes on the margin. Setting
+     margin-top:104 alone would have rendered 128.
+
+     THE THIRD PROSE CHUNK HAD 0. "You will read it later and disagree with yourself. That is the
+     record working." is the payoff of the paragraph above it, and it was rendering flush against it,
+     so the two read as one run-on paragraph. 0 is on no ladder; a payoff attaches at 24 (same as the
+     home's "That is what the 11% cost"). .specimens .snote>* sets margin-top:0 for every child, so
+     the sibling form is restated here - later in source at equal specificity.
+
+     The three prose chunks stay ONE beat: classify -> seal -> "you will disagree with yourself" is
+     one argument walking forward. 104 between them would be the mistake the home made three times
+     (6-2). The memo's own internals (.dr3-*) are product-UI clones with their own scale - left alone
+     (4-B-7). */
+  .specimens{row-gap:0}
+  .specimens .snote{row-gap:0}
+  .specimens .snote>*+*{margin-top:24px}
+  .specimens .sfig{margin-top:0}   /* was 104 to the memo plate; the plate is in a sheet now and the
+                                      control that replaces it carries the ladder's 24 itself */
+
+  /* ============ THE THREE BAND SECTIONS - #benchmark / #development / #refuses (2026-08-18) ============
+     Decided once here and applied to all three, because they are one component with one grammar.
+
+     ---- 1. INSET PLATE, NO BORDER (ported from the home, 08-17) ----
+     The images were full-bleed 375 while every piece of text on this page sits inside a 20px rail -
+     so the plate was the only thing breaking the rail, and it read as a banner cutting across the
+     page rather than a plate on it. Now inset by the page's own gutter.
+     BORDER STAYS OFF. The home added a four-edge c-800 border first (a night photo's near-black
+     edges melt into the black ground) and then removed it on Inkyung's call: it reads as a frame
+     drawn around every image, and the 20px inset already separates plate from ground. The top/bottom
+     hairlines this page carried since 08-16 come off with it - same argument, and keeping them while
+     the sides have none is the half-state the home rejected.
+     This also makes the media reveal correct: the clip-wipe was designed for rail-width elements
+     (see the reveal note), and across a full-bleed plate it reads as an event, not an entrance.
+
+     ---- 2. TITLE -> IMAGE 48 ----
+     Was 40. 48 is the group boundary inside a beat - the home's value for all three of its bands.
+     It comes from .v9ovl's padding-bottom, not a margin, so that is what changes.
+
+     ---- 3. IMAGE -> PROSE 104, PROSE -> STAT TRIO 104 ----
+     Both were 40. The plate is its own beat, and the trio is a figure beat - the same structure as
+     the home's NO.04 (masthead + plate / prose / stat trio). The trio's cells stay at 0: three
+     angles on the same capital over the same period are ONE figure, and its own hairlines already
+     divide them. Trio -> caption stays 16. */
+  .v9band>img,.v9band>video,.v9band>.bg{
+    margin-left:20px!important;margin-right:20px!important;width:calc(100% - 40px)!important;
+    border:0!important}
+  /* ★ On the CONTAINER, not the first child. First attempt put margin-top:104 on the first child of
+     .content and measured 144 - .bandimg .content already carries margin-top:64 (line 802, rendering
+     40 after .v9ovl's own padding), and a child margin stacks on top of the parent's. Trap 6-6 for
+     the second time today. And the per-child form missed #development outright, whose first child is
+     .devgrid rather than .body. One rule on the block that owns the gap: */
+  /* ★★ SPECIFICITY, trap 6-1. `.bandimg .content` (0,2,0) lost to an existing
+     `#benchmark .content, #development .content, #refuses .content{margin-top:40px}` - an ID
+     selector is (1,1,0) and no amount of source order beats it. Measured 40 twice before reading the
+     cascade. The rule has to be written at the same ID strength: */
+  #benchmark .content,#development .content,#refuses .content{margin-top:104px}
+  #benchmark .content>.tri{margin-top:104px}
+
+  /* ============ NO.03 THE REVIEW (#review) - 2 beats + ledger rebuild (2026-08-18) ============
+     104 │ eyebrow →24→ masthead →24→ prose        beat 1
+     104 │ [01 / 02 / 03 ledger]                   beat 2
+     104 │
+
+     ---- the ledger was the structure the home already retired ----
+     It was a `48px 271px` grid: a 48px column spending 13% of a 375 screen on a two-digit number,
+     with the text crushed to 271 and every row an identical hairline band - so three steps read as a
+     spec table rather than a process. The home's NO.03 ledger fixed exactly this. Measured against
+     the home's current state (not its history - the number went 11 mono -> 34 Inter -> back to 11
+     mono in the type audit, and 11 mono is where it stands):
+
+                       this page (was)      home (now)
+       layout          48px + 271 grid      display:block
+       number          11 mono @ left 20    11 mono @ left 20   <- already identical, untouched
+       number->title   same row             8
+       title           17                   22
+       title->desc     16                   16
+       desc            13                   13
+       text width      271                  335
+       row padding     24/24                24/24
+       row gap         0 (hairline)         0 (hairline)
+
+     So three structural changes, and the number needs nothing. Title 22 takes the 22-tier values the
+     rest of the site settled on (400 / 1.25 / tracking 0), not the 17px item-title tier it was on.
+     ROWS STAY AT 0. The hairlines already divide them, and 104 between steps would split one process
+     into three assertions - the home considered and rejected exactly that.
+
+     ---- prose -> ledger 40 -> 104 ----
+     The prose says the thesis is revised "version by version"; the ledger is that procedure. Written
+     at #review strength on purpose: .rows3 alone is (0,1,0) and would be fighting .content>*+* for
+     source order, which is how the band gaps went wrong twice earlier today. */
+  #review .rows3{margin-top:104px}
+  /* ---- the numbers go from accent red to c-800 (2026-08-18, Inkyung) ----
+     The base sheet sets .rows3 .row b{color:var(--c-accent)} = #BE3C36. Counted the accent's uses on
+     both pages and it does exactly two jobs:
+       band-title turn   "Including when it loses."  /  "You run it from day one."
+       negative figures  −7.60%                      /  −20
+     Red is the colour of the uncomfortable half of a sentence. A sequence number is neither - it just
+     counts. Left as it was, this page carried 5 red items against the home's 2, and the ledger we had
+     just matched pixel-for-pixel would have differed on colour alone. c-800 is the home's value.
+     KNOWN COST, recorded so it can be reopened: the home logged that dropping its numbers from 34px
+     Inter to 11px mono left the mobile ledger "without a visual anchor, quieter" (PORT 7-9). This
+     page's red number WAS that anchor. If the ledger reads too quiet on either page, the fix is the
+     number's SIZE, one tier at a time - not spending the accent on it. */
+
+  /* ============ NO.04 CALIBRATION (#calibration) - 3 beats (2026-08-18) ============
+     104 │ eyebrow →24→ masthead →24→ prose →24→ payoff      beat 1
+     104 │ [predicted-vs-actual scatter + caption]           beat 2
+     104 │ [70% / 64% / 6 pts trio]                          beat 3
+     104 │
+
+     Both boundaries were 40, and this time the cascade was read BEFORE writing rather than after
+     measuring a wrong number twice:
+       prose -> diagram   .calgrid{row-gap:40px}      -> row-gap 0, value moves onto .calfig
+       diagram -> trio    .calgrid + .tri{margin:40}  -> restated at the same (0,2,0) + sibling form
+
+     WHY THREE BEATS, NOT TWO. The diagram and the trio are different figures, not one figure and its
+     caption: the scatter states the general idea (where stated confidence meets actual accuracy) and
+     the trio is one reading of it (70 said / 64 real / 6 points overconfident). The trio also closes
+     itself with its own c-800 bracket. The home's NO.04 has the same shape - plate, prose, then the
+     stat trio as its own beat.
+     Inside beat 1 the two prose blocks stay at 24: "almost none has ever checked" then "a sound
+     decision can lose" is one argument's next step, and .grp.pay is its payoff.
+     The scatter's internals (.cal-card, .cal-k/.cal-v at 6px) are a product-UI clone with its own
+     scale - untouched (4-B-7). */
+  #calibration .calgrid{row-gap:0}
+  #calibration .calgrid + .tri{margin-top:104px}   /* prose -> trio, the section's one beat boundary
+     now that the scatter card lives in a sheet. The row-gap:0 above still matters: it is what stops
+     .calgrid's old 40 from stacking onto anything that returns to this block later. */
+
+  /* ============ SPECIMEN SHEETS - the two product mockups get their own screen (2026-08-18) ============
+     Inkyung: "홈페이지에 메모는 cta를 클릭하면 나오잖아" - correct, and this page had no equivalent.
+     The home's NO.03 memo carries VIEW THE FULL MEMO + and opens a bottom sheet; this page showed
+     both of its product replicas inline at 335px with no control at all. Same component class, same
+     affordance - ported from the home's sheet, generalised to take either specimen.
+
+     I ARGUED AGAINST THIS FIRST AND WAS WRONG. My objection was "a sheet only buys 40px of width,
+     since the card is already 89% of the rail" - width was the wrong measurement. What a sheet buys
+     is the SCREEN: 812px of height for a 512px card, so the specimen can be read at its own scale
+     instead of at whatever the rail leaves. That is why the home gave its memo one.
+
+     Ratio note (Inkyung: "실존하는 목업인데... 유저가 간접적으로 경험하는거니까"): the mockups are NOT
+     re-proportioned. Measured both widths - card 314x514 desktop / 335x512 mobile, scatter 1.64 /
+     1.63, viewBox 380x258, type 9/11/13/15/24 identical - so the replica already holds the product's
+     own proportions at both widths, and an earlier idea of mine to square the scatter is dropped: it
+     would have invented a screen the product does not have.
+     The 9px axis labels stay 9px for the same reason (4-B-7: product clones keep their own scale).
+     The sheet is what makes them readable, not a type change. */
+  /* ---- the specimens leave the mobile FLOW, exactly as the home does (2026-08-18, Inkyung) ----
+     I first argued the opposite - keep them inline on this page because it is the product page and the
+     specimens are its evidence - and Inkyung corrected it: the home hides its memo for a reason
+     ("너무 공간을 많이 차지하는거 같아서 cta를 한번 더 눌러야 볼수 있게 했지"), and answering the same
+     question two different ways on two pages is what leaves a site inconsistent. The argument is
+     stronger here, not weaker: this page carries TWO replicas totalling 1,151px - 1.4 screens of
+     product screenshot - where the home carried one.
+     Measured on the home at 375: .dr-doc display:none, .figcap display:none, and all that remains in
+     the flow is the VIEW THE FULL MEMO + text link. No teaser, no crop (the 330px max-height I first
+     read is the DESKTOP crop). Same treatment here.
+     Nothing is lost: the sheet clones the specimen AND its caption, and shows the specimen at a size
+     the rail never gave it. */
+  #record .sfig .dr-doc,#record .sfig .figcap{display:none}
+  #calibration .calgrid>.calfig{display:none}
+  #record .sfig{margin-top:0}   /* the control carries its own 24 */
+
+  /* .sheet{display:none} is NOT here - it lives in v11-global-sd, outside every media query. Keeping
+     it inside this block meant the element fell back to a plain div on desktop, so both cloned
+     specimens rendered in the flow at the end of <body>. The home puts the same rule in its base
+     sheet for exactly this reason ("hidden by default so it can never leak"). Measured at 1512. */
+  .sheet.open{display:block;position:fixed;inset:0;z-index:120}
+  .sheet .scrim{position:absolute;inset:0;background:rgba(0,0,0,0.55)}
+  .sheet .panel{position:absolute;inset:0;overflow-y:auto;padding:72px 20px 96px}
+  .sheet.light .panel{background:var(--c-white)}
+  .sheet.dark .panel{background:var(--c-black)}
+  .sheet .panel .dr-doc{max-height:none;overflow:visible;aspect-ratio:auto}
+  .sheet .panel .dr-doc::after{content:none}
+  /* the card is 335 in the rail; in the sheet it takes the sheet's own width and grows with it */
+  .sheet .panel .cal-card{max-width:none;width:100%}
+  .sheet .scap{margin-top:16px;font-family:var(--mono);font-weight:400;font-size:9px;line-height:1.4;letter-spacing:0.04em;color:var(--c-800)}
+  .sheet .scap .mut{display:block}
+  .sheet .sclose{position:fixed;right:14px;top:14px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:none;border:0;cursor:pointer;font-family:var(--font);font-size:20px;line-height:1;color:var(--c-1000)}
+  .sheet.dark .sclose{color:var(--c-white)}
+  body.sheet-open{overflow:hidden}
+
+  /* the control. + because it opens in place rather than leaving the page (2-6), 13 mono like the
+     home's .vmemo, underlined because Inkyung put an underline on that one explicitly on 08-17. */
+  /* ★ align-self AND text-align, both needed. A <button> carries the UA's text-align:center, and as a
+     flex child of .content it stretched to the full 335 rail - so the label rendered from x=96 while
+     every other line on the page starts at 20 (Inkyung: "가운데 정렬?"). display:inline-block does not
+     save it: a flex child's display is blockified, so the element was block/335 regardless.
+     align-self:flex-start makes the box hug its text, text-align:left fixes the inherited centring. */
+  .v11-sview{display:inline-block;align-self:flex-start;text-align:left;
+    margin:24px 0 0;background:none;border:0;padding:0;cursor:pointer;
+    font-family:var(--mono);font-weight:400;font-size:13px;letter-spacing:0.04em;line-height:1.5;
+    position:relative}
+  /* the underline goes on the LABEL SPAN, not the button - same as .mlink span. On the button it also
+     underlines the + and the gap before it, which reads as one long rule rather than a link. */
+  .v11-sview>span:first-child{text-decoration:underline;text-decoration-thickness:0.667px;text-underline-offset:5px}
+  .v11-sview::after{content:'';position:absolute;inset:-14px 0}   /* tap target */
+  .close9 .v11-sview,#review .v11-sview,#record .v11-sview{color:var(--c-1000)}
+  #calibration .v11-sview{color:var(--c-200)}
+  .v11-sview .sign{margin-left:8px}
+
+  /* ---- stat labels are PROSE, not mono (2026-08-18, Inkyung: "숫자밑 폰트 검토") ----
+     Measured both pages. Everything about this label already matched the home - 15px / 400 / 1.4 /
+     tracking 0 / c-200 - except the typeface: this page rendered it in IBM Plex Mono while the home's
+     three stat blocks (+11% / −20, 9 in 10, $20) all use Inter.
+     Where it came from: line 552 sets .tri .cell .t to mono 13/0.04em for the desktop layout, and the
+     mobile rule at 810 re-declares size, leading, tracking and colour but not font-family - so mono
+     leaked through into a rule that had otherwise been converted to the prose tier.
+     Why prose is right: the home's own note on the stat bracket says "the stat's label is 15px PROSE,
+     the same size and colour as the paragraph below it" - that is the reason those blocks need a
+     closing hairline at all. And 15px mono is not on the mono ladder (9 / 11 / 13), so this was also
+     the page's one size outside it.
+     It reads better too: "The same capital, in the index" and "overconfident, on the record" are
+     sentences; in mono they eat width and pair visually with the 9px mono caption underneath, which
+     blurs figure-label against footnote. Now: number Inter 34 -> label Inter 15 -> caption mono 9. */
+
+  /* ============ NO.05 THE DEVELOPMENT (#development) - 3 beats (2026-08-18) ============
+       0 │ eyebrow →24→ masthead →48→ [plate]                         beat 1
+     104 │ what the system is: "not features. They are training."      beat 2
+     104 │ what it refuses to promise + the exit to Managed            beat 3
+     104 │
+
+     ---- the two .dcol columns are two beats, not one ----
+     They were 24 apart (.devgrid row-gap). Desktop sets them side by side, so on mobile the stack
+     order is what carries the argument, and the two halves are doing different jobs:
+       dcol 1  what the record/benchmark/review/score ARE - training, and what compounds is the
+               allocator, not the portfolio
+       dcol 2  what we will NOT promise, and the admission that a rigorous record may teach some
+               investors to stop picking - which is why it ends with MANAGED ↗
+     The second half is not the next step of the first, it is the turn: claim, then the honest limit
+     of the claim plus the door out. Different idea = 104.
+     Paragraphs inside each column stay 24, and the columns' own row-gap goes to 0 so the boundary is
+     a margin (DS: space with margin, vertical flex/grid row-gap:0).
+
+     ---- MANAGED ↗ was flush against its paragraph (0) ----
+     Not an oversight in the ladder - a rule with dead state. `.devgrid .dcol + .dcol > .mlink` is
+     pinned to margin-top:0, and the only rule that restores 24 is scoped to `.devgrid.open`. `.open`
+     is applied by the .dmore "VIEW MORE" fold, which V9 retired with display:none!important when the
+     copy was restored - so the class can never appear and the 24 was unreachable. Same family as the
+     dead ARIA the home found on its three modes: the fold went, its CSS stayed.
+     Content -> text CTA is 24 everywhere on this site. */
+  #development .devgrid{row-gap:0}
+  #development .devgrid>.dcol+.dcol{margin-top:104px}
+  #development .devgrid .dcol+.dcol>.mlink{margin-top:24px}
+
+  /* ============ NO.06 RESEARCH (#research) - 2 beats + an exit (2026-08-18) ============
+     104 │ eyebrow →24→ masthead →24→ prose →24→ prose        beat 1
+     104 │ [Fiscal.ai Max panel] →16→ fees →24→ PRICING ↗     beat 2
+     104 │
+
+     PROSE -> PANEL WAS 40. The prose states a position ("Research supplies evidence. Judgment remains
+     yours. It is not a stock picker, a signal engine...") and the panel is a seven-item product spec.
+     Different layer, so a beat boundary.
+     The panel's own internals are already on the ladder and stay untouched: items at 0 divided by
+     their hairlines (a finished component, like the ledger), title -> description 8, panel -> fees 16.
+     The one off-ladder value left inside is the 4px between the panel header's two mono lines, which
+     are one label folded onto two lines at 375. Left alone deliberately - there is no equivalent on
+     the home to measure against, and Managed carries the same panel, so the two should be decided
+     together rather than guessed at here.
+
+     PRICING ↗ is the section's exit - see the markup comment for why it is internal and not fiscal.ai.
+     Content -> text CTA is 24, the site's value everywhere. */
+  #research .content>.fpanel{margin-top:104px}
+  #research .content>.mlink{margin-top:24px}
+
+  /* ---- the panel's own rhythm (2026-08-18, audit) ----
+     ① The header DOES have a closing line already (.fpanel .fhead carries border-bottom 0.16), but its
+     padding-bottom is calc(14 * var(--u)) - a desktop-proportional value that resolves to 2px at 375.
+     So the rule sat directly under the two mono lines and read as part of the text rather than as the
+     boundary between the label and the list. 16 puts it the same distance below the header as the
+     first title sits below it (the items carry padding-top:16), so the line is centred in its own air.
+     ② The last item was 16/0 while the other six are 16/16. The panel's 24 padding did cover it, so
+     nothing looked broken - but one row in seven had a different rhythm, and that is the kind of
+     thing that reads as sloppiness without being nameable. 16 makes the list uniform and the panel's
+     own 24 still closes the plate.
+     Left alone on purpose: title 17 (a DS item-title tier, and a feature spec is not the same species
+     as the loop's 22px process steps), item dividers at 0.16 on cream (visible ground - the c-800
+     sweep is for on-black), and the header's 4px inter-line gap, which Managed carries too and should
+     be settled once for both. */
+  #research .fpanel .fhead{padding-bottom:16px}
+  #research .fgrid .f:last-child{padding-bottom:16px}
+
+  /* ============ NO.07 WHAT IT REFUSES (#refuses) - 2 beats (2026-08-18) ============
+       0 │ eyebrow →24→ masthead →48→ [plate]                     beat 1
+     104 │ three refusals →24→ "Each of these costs us growth"    beat 2
+     104 │
+     The three rows already match the home's ledger grammar - 0 between them with a c-800 hairline
+     doing the dividing, 24/24 padding, title →8→ description - so they are untouched.
+     The payoff was 40. "Each of these costs us growth. That is why you can believe them." is the
+     conclusion the list exists to earn, and 24 is the value the home uses for exactly this move
+     ("That is what the 11% cost" under its stat trio). At 40 the evidence and its conclusion read as
+     two separate remarks. */
+  #refuses .content>.lead{margin-top:24px}
+  /* ---- and the list stops being a box (Inkyung 2026-08-18: "인덴트 하지마") ----
+     Measured: the text inside these three rows started at x=41 while every other line on the page -
+     including the two sibling lists - starts on the 20px rail:
+       #review ledger    title x=20   no border, hairline above each row
+       #accounts list    title x=20   same
+       #refuses          title x=41   4-sided c-800 box + 20px padding on every row
+       #research panel   title x=44   legitimate: it has a cream GROUND, so it needs inner padding
+     A box needs padding; a hairline-divided list does not. This one had both a frame and an indent
+     while carrying no background, so it read as a card set dropped into a page that has none - and
+     the indent broke the page's single left edge, which is the one thing that holds a 375 layout
+     together. Frame off, padding off, hairlines kept: now identical to the two lists it sits between.
+     The rows' 24/24 vertical padding stays - that is the ledger row value. */
+  #refuses .refuse{border:0}
+  #refuses .refuse .r{padding-left:0;padding-right:0}
+  #refuses .refuse .r:first-child{border-top:0.667px solid var(--c-800)}
+
+  /* ============ NO.08 ACCOUNT TYPES (#accounts) - 2 beats (2026-08-18) ============
+     104 │ eyebrow →24→ masthead →24→ [TFSA / RRSP / Non-Registered]   beat 1
+     104 │ [FAQ · Privacy · Fee Schedule · App Terms]                  beat 2
+     104 │
+     ① The three account rows were 24 apart AND separated by their own c-800 hairlines - the line and
+     the air were both doing the dividing, so the set read as three cards rather than one directory.
+     0 is what the home's ledger and this page's own refusal list use: let the hairline divide.
+     ② Accounts → document list was 40. The rows are product description; the list underneath is legal
+     documentation (FAQ, Privacy Policy & Security Practices, Fee Schedule, App Terms). The register
+     changes, so it is a beat boundary - the same judgement as the home's marketing→regulatory break.
+     Row internals stay: title →8→ TAX-FREE →16→ description →8→ contribution limit. */
+  #accounts .acct3{row-gap:0}
+  /* Hairline symmetry, ported from the home ledger it cites (measured there: ink -24- line -25- ink,
+     every step padding:24px 0). The row-gap:0 decision was right but the implementation was half of
+     it - cards only carried padding-TOP, so between rows the line sat directly on the previous row's
+     last ink (0 above / 25 below), breaking §6b "hairlines are symmetric". Cards now pad both
+     sides; the container's own bottom padding goes to 0 so the closing line keeps ink-24-line rather
+     than doubling to 48. */
+  #accounts .acct3 .a{padding-bottom:24px}
+  #accounts .acct3{padding-bottom:0}
+  #accounts .content>.metaline{margin-top:104px}
+
+  /* ============ CLOSE (.close9) - 4 beats (2026-08-18) ============
+     104 │ eyebrow →24→ masthead →24→ prose →24→ prose →24→ $20 offer →40→ [CTA pair]   beat 1
+     104 │ [ten-year record diagram] →16→ caption                                       beat 2
+      48 │ ─── hairline ───                                                             
+      48 │ regulatory standing                                                          beat 3
+     104 │
+
+     ★ THE DIAGRAM WAS BROKEN, NOT JUST MISPLACED (Inkyung: "이것도 해결").
+     Measured at 375: .constfig rendered 78px wide, pinned to the right edge, with its caption starting
+     at y=4204 while .trust9 starts at 4255 - the two overlapped. Cause: the desktop rule sets
+     width:calc(528.3 * var(--u)) with justify-self:end for the two-column grid, and V9 restored the
+     block with display:block but never reset its geometry. 528.3u resolves to 77.8px at 375. So this
+     is the same class of bug as the panel header's 14u padding: a desktop-proportional value that
+     collapses on mobile, invisible until something lands on top of it.
+     Full reset: rail width, no self-alignment, and the canvas re-sized with it. The canvas has
+     width/height ATTRIBUTES (153x222) for its backing store, so CSS width must be set explicitly or
+     it keeps drawing into the old box.
+     ① offer → diagram was 0. The $20 line is the page's commercial offer; the diagram is what ten
+     years of the record looks like. Different ideas, and the diagram is a figure beat.
+     ② diagram → caption 14 → 16, the site's figure-to-caption value.
+     ③ prose → trust9 was 64. The home settled this at 48/48 around its hairline, explicitly NOT 104:
+     the trust block is the section's tail, not a section of its own, and the line is already doing the
+     separating. */
+  /* The figure is a PLATE with an absolutely-positioned caption hanging under it:
+       .constfig            aspect-ratio 9/13, width 528.3u, justify-self:end, margin-top -255u
+       .constfig canvas     position:absolute; inset:0  (fills the plate)
+       .constfig .fig-caps  position:absolute; top:calc(100% + 14px)  (sits below the plate)
+     That composition only works if the plate has the width it was drawn for. At 375 the width
+     collapsed to 78px, and the caption - pinned to 100% of a 78px-tall-ish box - ended up beside the
+     trust block. Widening the plate alone made it worse: at 335 wide the 9/13 ratio gives 484px of
+     height, so the caption moved to top:497 and overflowed the section instead.
+     So the absolute composition is retired for mobile and the three parts stack in normal flow:
+     the plate keeps its 9/13 ratio, the canvas fills it (the drawing script re-reads the box on
+     resize, so it repaints at 334x167 rather than stretching the old bitmap), and the caption
+     becomes a static sibling 16 below - the site's figure-to-caption value. */
+  /* ⑤ AND THEN IT LEAVES THE FLOW ALTOGETHER (2026-08-18). Measured against the home's CLOSE, which
+     is 759px / 0.9 screens: eyebrow → masthead → offer → CTA pair → line → trust, and NO figure. This
+     page's CLOSE ran 1,786 / 2.2 screens, and 500 of that was this diagram plus its caption.
+     Same call as NO.01's memo and NO.04's scatter: a product artifact gets its own screen behind a +
+     control rather than 484px of the closing argument. The three specimens now read the same way.
+     The rules below still matter - the sheet needs the plate laid out in normal flow, and the diagram
+     is moved into it, not cloned (see script#v11-sheets). */
+  /* ★ Scoped to BOTH places. First pass wrote these as `.close9 .cols .constfig`, and the moment the
+     script moved the node into the sheet the selector stopped matching - so the plate fell back to the
+     base desktop rule and rendered 78px wide inside the sheet with a 0x0 canvas. Written on .constfig
+     itself now: within this mobile block there is exactly one, wherever it currently lives. */
+  .constfig{width:auto;max-width:none;margin:0;align-self:stretch;justify-self:stretch;
+    aspect-ratio:auto;background:none;border:0;position:static}
+  .constfig canvas{position:static;inset:auto;width:100%;height:auto;aspect-ratio:9/13;
+    display:block;background:var(--c-surface);border:0.667px solid var(--c-800)}
+  .constfig .fig-caps{position:static;left:auto;right:auto;top:auto;margin-top:16px}
+  /* ④ the fee note -> CTA pair was 40; the home measures 48 here. Read the home's own chain: masthead
+     →24→ offer →8→ fee note →48→ [OPEN AN ACCOUNT + READ THE MANIFESTO ↗] →48→ line →48→ trust.
+     I had only compared gaps inside this page and missed it (Inkyung: "홈페이지 본거 맞아?"). */
+  .close9 .offer .btnrow{margin-top:48px}
+
+  /* ---- 5b. FOOTER: 104 above the hairline, not 64 (2026-08-18) ----
+     The section above ends with 104, the hairline follows, and the footer opened with 64 - the same
+     lopsided line the home hero had (32 above / 104 below) before it was fixed. Every other section
+     boundary is 104 / line / 104 = 208 ink. The footer is its own section: separate element, own
+     hairline, present on all nine pages. padding-top only, so the sides and bottom keep their
+     shorthand values. */
+
+
+  /* ---- REGULATORY STANDING fold, ported verbatim from the home (2026-08-18, "홈페이지 기준") ----
+     Same control, same spec: 13 mono label, + sign 15/c-800 at the right edge, 44px tap target,
+     .suit5's focus ring. Default closed; opening reveals any .rv inside so nothing sits at opacity 0.
+     Built by script#v11-trust. ⚠ COMPLIANCE UNCONFIRMED - flagged in SESSION §9-1 / PORT §7-1. */ /* 44px tap target */
+}
+</style>
+
+<style id="v11-global-sd">
+/* ---------------------------------------------------------------------------
+   2026-08-19: every rule that belongs to more than one page was DELETED from this
+   block and now lives in shared/v11.css, which loads after it. If a value you
+   expect is not here, it is there. Comments left behind describe decisions whose
+   rule moved - the reasoning is kept, the duplicate is not.
+   THIS BLOCK MAY ONLY CARRY #section-id RHYTHM AND DOCUMENTED PAGE EXCEPTIONS.
+   --------------------------------------------------------------------------- */
+
+/* ============ V11 GLOBAL - Self-Directed (2026-08-18). NOT inside a media query. ============
+   ★ BASELINE NOTE (Inkyung, 2026-08-18: "데스크탑은 v10 아님?"). Correct: the desktop baseline for
+   this page is V10, not V8. The base sheet above has been edited after V8 at both widths - the
+   --t-mono11 floor (08-02), .close9 .cta-fill:hover (08-02), .figcap .mut contrast (08-02),
+   .trust9 .ti b (07-31) - so "V8 verbatim" was wrong wherever earlier comments in this file say it.
+   V11's rule is "leave the V10 desktop alone", and even that is no longer absolute: as of today this
+   page's desktop is V10 PLUS five ported decisions - type floors, .mlink arrow/underline, the three
+   reveal roles, nav 13/1.3, and the two-column footer legal. Each is marked where it lands.
+
+   Two things reach desktop here, both ported from V11/index.html style#v11-global. Read
+   HANDOFF-V11.md 3 and 2-3b before reverting either.
+   1. .mlink grammar - Inkyung's "전체 적용": one component must not render two ways across pages.
+   2. Desktop type floors - the laptop range was rendering the mobile ladder. ============ */
+
+/* ---- specimen sheets: never present outside mobile ----
+   Both guards are at every width on purpose:
+   .sheet stays display:none until .open is added, and .open only styles inside the mobile block, so
+   a sheet cannot appear on desktop even if something calls open().
+   The control is hidden from 901 up because desktop shows the specimens inline - a + that opens
+   nothing would be a marker with no action (2-6: no control without a behaviour, and nothing
+   clickable without a marker). Measured at 1512 before this: both controls rendered and did nothing. */
+.sheet{display:none}
+@media (min-width:901px){ .v11-sview{display:none} }
+
+/* ---- item titles: weight 400 at every width (2026-08-18, Inkyung "글로벌 체인지") ----
+   These three groups all render from --t-read27: the Fiscal.ai panel's 7 feature names, the three
+   refusals in NO.07, and (via a different token) the account titles.
+   MOBILE: they were the page's only 17px sans, and the only place a mid-size took weight 500 - every
+   other 500 on the page is a display size (34 / 28 / 27, all with negative tracking), while the 22
+   title tier came down to 400 on 08-18. So 17/500 sat at a coordinate nothing else on the page
+   occupies, which is what read as "a different style" rather than simply heavy (Inkyung).
+   DESKTOP: measured 22/500/1.15 here - and the 22 tier's canon is 400 / 1.25 / tracking 0. That is a
+   real violation, and one I introduced today by raising --t-read27's floor to 22, so it is fixed at
+   the same time rather than left for an audit to find.
+   Leading is left alone: 1.15 is the item-title value at 17, and on desktop the 22-tier rule in
+   v11-global picks these selectors up separately. */
+
+/* ---- and the panel's names go to Title Case (Inkyung 2026-08-18) ----
+   text-transform rather than editing the strings: the words stay exactly as written (V11 rule - copy
+   unchanged), and CSS capitalize does the right thing on all seven, including "KPI" (already caps, so
+   untouched) and "Multi-year" -> "Multi-Year" (hyphen is a word boundary).
+   ⬜ FLAG: NO.07's three refusals ("No recommendations", ...) are the SAME tier and remain sentence
+   case, and the stat labels differ again across pages (home Title Case, this page sentence and
+   lower). Case is copy canon - Dave's call - and should be settled once for the site rather than
+   drifting per component. Applied here on Inkyung's instruction; the rest is left as found. */
+
+/* ---- 2. TEXT-CTA GRAMMAR: arrow to the RIGHT of the label, plus an underline ----
+   Dave, 08-17: our Managed / Self-Directed links "don't totally look like CTAs on mobile", and he
+   preferred Anduril's arrow + underline. `order` rather than row-reverse so the flex gap and the
+   baseline stay put. The arrow was the one part of the component with no floor - its label is
+   --t-mono15 = max(12px,15u) while the arrow was a bare 12u, rendering 6.79px against a 12px label
+   at 1440. Same token pattern now. This page has 3 .mlink instances. */
+
+/* ---- 3. REVEAL: one animation -> three roles (see script#v11-reveal for the sorting) ----
+     label   scramble decode, no move    mono eyebrows
+     text    Y 24 + fade                 titles, prose, CTAs
+     media   left-to-right clip wipe     photography
+   14 -> 24 because 14px over .8s is below the distance at which the eye registers movement.
+   cubic-bezier(.16,1,.3,1) approximates Anduril's per-frame lerp, measured off /mission.
+   A WIPE, NOT AN X SLIDE: this page's media sits inside the same 20px rail as the text, so an X
+   translate either crosses the rail or needs a new clipping wrapper. A wipe is bounded by the
+   image's own box.
+   ★ TRAP (cost the home an hour): clip-path:inset(0 100% 0 0) gives the element ZERO AREA, so an
+   IntersectionObserver watching the image itself never fires - the effect blocks its own trigger.
+   On this page the .v9band>img elements are direct children of .v9band, which is not itself an .rv,
+   so the media role lands on the <img>. If a wiped image ever fails to appear, that is why: observe
+   a wrapper instead. */
+/* Restated at (0,3,0): the global .rv.in{transform:none} is (0,2,0) and .rv[data-rv="text"] is also
+   (0,2,0), so the tie went to source order and elements faded in but stayed parked 24px down. */ /* the scramble IS the entrance */
+
+@media (min-width:901px){
+  /* ---- 4. DESKTOP TYPE FLOORS (HANDOFF 2-3b) ----
+     --u is 100vw/2545, so desktop type is proportional to a 2545px master, and every token carries
+     a px floor - set at the MOBILE values. Below the crossover width the floor is what renders:
+     --t-mono15 below 2206 (the whole laptop range), --t-body below 1735, --t-h34 below 1647. At
+     1512 this page therefore rendered 15 prose / 13 label / 11 meta / 22 figure - the mobile ladder
+     on the desktop layout. Each floor moves up ONE ladder step to the token's own name value; no
+     size is invented. Verified on the home: 375 identical (149 nodes), 2545 identical (202 nodes).
+     Must stay inside min-width:901 - the tokens are on :root and mobile still resolves several
+     elements through them. */
+  /* Display type had no floor at all: 64u = 38px at 1512, 36 at 1440, and it keeps shrinking.
+     Anduril's H1 sits near 5% of viewport width where ours was at 2.5%. 48px, releasing at 1909.
+     .hbar is white-space:nowrap on desktop, so this is measured, not guessed - see the check below. */
+
+  /* ---- 5. FOOTER LEGAL IN TWO COLUMNS on desktop (2026-08-18) ----
+     Eight compliance paragraphs in one 916-wide column ran a measure roughly twice the page's
+     reading band (449-464). Two columns at 449 put it back on the same measure as the rest of the
+     page. Mobile ignores this - no column-count there - and the wrapper is built in JS
+     (script#v11-footer) so the compliance-approved markup stays byte-identical: wording, order and
+     element structure untouched, only a wrapper introduced. */
+
+  /* ---- 6. 22 TIER = 400 / 1.25 / tracking 0 on desktop (2026-08-18, ported from the home) ----
+     The tier moved on the home on 08-17 (both widths: it had read as two tiers, 1.15/500 mobile vs
+     1.30/500 desktop) but SD still rendered its 22px elements on the old values - audit found
+     1.15/500 (.cl, ledger .t), 1.30/500 (.lead), 1.15/400 (panel headers). One tier, one value.
+     Desktop-scoped: SD's mobile passed its own 10/10 review on 08-18 and its mobile equivalents sit
+     on different tokens (--t-lead24 floors 17 there), so this must not leak down.
+     .pricehd9 is NOT in this list - it renders 22 here vs 17 on the home CLOSE, an SD-home
+     divergence flagged in SESSION §9 territory, to be settled as its own question.
+     Stat figures keep 500/-0.069em as everywhere. */
+  /* .acct3 .a h3 joined 2026-08-18: its base is --t-h34 (28 on desktop), same token as the home's
+     Managed/Self-Directed titles, which render 28/400/1.25 there. It was the one directory title
+     still at 500/1.3. */
+}
+</style>
+<!-- THE SHARED LAYER. Loads last so it wins on source order at equal specificity.
+     Every rule that must be identical on every V11 page lives in this one file -
+     component sizes, weights, leading, and border treatment. Do not copy it into a
+     page; a page block may only carry #section-id rhythm and documented exceptions.
+     Verify with:  python shared/check-v11.py                See shared/v11.css -->
+<link rel="stylesheet" href="shared/v11.css">
+
+
+<script id="v11-sheets">
+/* Bottom sheets for the two product specimens (2026-08-18). Generalised from the home's single-memo
+   version: same markup, same open/close, same escape and scrim handling, but it takes a list.
+   MOBILE-ONLY BY CSS, NOT BY BUILD. The sheet is built at every width - visibility is CSS's job - so
+   a window resized down still has one. open() re-checks matchMedia at CLICK time: the home learned
+   that gating at build time froze the desktop page (scroll locked behind an invisible panel).
+   The clone must be un-revealed: it inherits class="rv", the reveal observer only watches the
+   originals, so a cloned node sits at opacity 0 and the sheet looks empty. */
 (function(){
-  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var rv=[].slice.call(document.querySelectorAll('.rv'));
-  if(reduce||!('IntersectionObserver' in window)){rv.forEach(function(el){el.classList.add('in');});}
-  else{
-    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px',threshold:.06});
-    rv.forEach(function(el){io.observe(el);});
+  var SPECS=[
+    {fig:'#record .sfig',   node:'.dr-doc',  cap:'#record .sfig .figcap',      theme:'light',
+     label:'VIEW THE FULL MEMO'},
+    {fig:'#calibration .calfig', node:'.cal-card', cap:'#calibration .calfig .figcap', theme:'dark',
+     label:'VIEW THE FULL RECORD', after:'#calibration .tri'},
+    /* ★ MOVED, NOT CLONED. This one is a <canvas> driven by a script: cloneNode copies the element but
+       not the bitmap, so a cloned canvas arrives blank. Moving the real node keeps the script's
+       reference intact, and the drawing loop is requestAnimationFrame-continuous with a ResizeObserver
+       on the canvas - so when the sheet opens and the box finally has a size, it re-measures and
+       repaints itself. The caption travels with it (it is inside .constfig), hence cap:null. */
+    {fig:'.close9 .cols', node:'.constfig', cap:null, theme:'light', move:true,
+     label:'VIEW THE RECORD DIAGRAM', after:'.close9 .offer'}
+  ];
+  function unreveal(node){
+    node.classList.remove('rv','in');
+    [].forEach.call(node.querySelectorAll('.rv'),function(n){n.classList.remove('rv','in');});
+    return node;
   }
-})();
-(function(){
-  var nav=document.querySelector('.nav');
-  function onScroll(){nav.classList.toggle('scrolled',window.scrollY>24);}
-  window.addEventListener('scroll',onScroll,{passive:true});
-  onScroll();
-})();
+  SPECS.forEach(function(spec){
+    var fig=document.querySelector(spec.fig);
+    var src=fig&&fig.querySelector(spec.node);
+    if(!fig||!src) return;
+    var cap=document.querySelector(spec.cap);
 
-/* horizon ring glyph (ported verbatim from index-H) */
-(function(){
-  var cv=document.getElementById('recRingH'); if(!cv) return; var ctx=cv.getContext('2d');
-  var DPR=Math.min(devicePixelRatio||1,2), S=44; cv.width=S*DPR; cv.height=S*DPR; ctx.scale(DPR,DPR);
-  var RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var cx=S/2, cy=S/2, R=15, PROG=0.10; /* 5-year, early */
-  function frame(now){
-    ctx.clearRect(0,0,S,S);
-    var pulse=0.55+0.45*Math.sin(now*0.004);
-    ctx.strokeStyle='rgba(244,243,240,0.14)'; ctx.lineWidth=2;
-    ctx.beginPath(); ctx.arc(cx,cy,R,0,6.28); ctx.stroke();
-    ctx.strokeStyle='rgba(244,243,240,0.9)'; ctx.lineWidth=2; ctx.lineCap='round';
-    ctx.beginPath(); ctx.arc(cx,cy,R,-Math.PI/2,-Math.PI/2+PROG*6.28); ctx.stroke(); ctx.lineCap='butt';
-    ctx.strokeStyle='rgba(244,243,240,'+(0.5+0.4*pulse).toFixed(3)+')'; ctx.lineWidth=1.3;
-    ctx.beginPath(); ctx.arc(cx,cy,3.4,0,6.28); ctx.stroke();
-    if(!RM) requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-})();
+    var sheet=document.createElement('div');
+    sheet.className='sheet '+spec.theme;
+    sheet.setAttribute('aria-hidden','true');
+    sheet.innerHTML='<div class="scrim"></div><div class="panel" role="dialog" aria-modal="true"></div>'+
+      '<button class="sclose" aria-label="Close">&#215;</button>';
+    var panel=sheet.querySelector('.panel');
+    panel.appendChild(unreveal(spec.move?src:src.cloneNode(true)));
+    if(cap){
+      var c=unreveal(cap.cloneNode(true));
+      c.className='scap';
+      [].forEach.call(c.querySelectorAll('.mbonly'),function(n){n.remove();});
+      panel.appendChild(c);
+    }
+    document.body.appendChild(sheet);
 
-/* below 900px the clip is served from its light encode (data-m) instead of the 4K master */
-(function(){
-  if(!window.matchMedia('(max-width:900px)').matches)return;
-  [].slice.call(document.querySelectorAll('video[data-m]')).forEach(function(v){
-    v.src=v.dataset.m; v.load();
-  });
-})();
+    var btn=document.createElement('button');
+    btn.className='v11-sview';
+    btn.type='button';
+    btn.innerHTML='<span>'+spec.label+'</span><span class="sign" aria-hidden="true">+</span>';
+    /* Placement is per specimen, because the thing the control belongs to differs.
+       #record: the prose describes making a record, so the control follows it directly - the .sfig
+       wrapper it lands in is now empty of everything but this button.
+       #calibration: the 70/64/6-pts trio IS the summary of the card, so the control goes AFTER the
+       trio and closes the section, the way the home's memo link closes NO.03. */
+    var host=spec.after?document.querySelector(spec.after):null;
+    if(host&&host.parentNode) host.parentNode.insertBefore(btn,host.nextSibling);
+    else (cap||src).parentNode.insertBefore(btn,(cap||src).nextSibling);
 
-/* menu overlay */
-(function(){
-  var burger=document.querySelector('.nav .burger');
-  var ov=document.getElementById('menuov');
-  if(!burger||!ov)return;
-  function toggle(){var open=document.body.classList.toggle('menu-open');ov.classList.toggle('open',open);ov.setAttribute('aria-hidden',String(!open));}
-  burger.addEventListener('click',toggle);
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.body.classList.contains('menu-open'))toggle();});
-})();
-
-/* mobile prose folds: VIEW MORE / VIEW LESS (same pattern as index-H) */
-(function(){
-  if(!window.matchMedia('(max-width:900px)').matches) return;
-  /* account types: tap the title to disclose (same as the homepage NO.01 directory) */
-  [].slice.call(document.querySelectorAll('.acct3 .a')).forEach(function(d){
-    var h=d.querySelector('h3'); if(!h) return;
-    h.setAttribute('role','button'); h.setAttribute('tabindex','0'); h.setAttribute('aria-expanded','false');
-    function toggle(){var open=d.classList.toggle('open'); h.setAttribute('aria-expanded',open?'true':'false');}
-    h.addEventListener('click',toggle);
-    h.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}});
-  });
-  [['.specimens .snote .smore','.snote'],
-   ['.calcol .cmore','.calcol'],
-   ['.devgrid .dmore','.devgrid']].forEach(function(pair){ /* .trust9 left the fold system 2026-07-31 */
-    var btn=document.querySelector(pair[0]); if(!btn) return;
-    btn.addEventListener('click',function(){
-      var box=btn.closest(pair[1]);
-      var open=box.classList.toggle('open');
-      btn.setAttribute('aria-expanded',open?'true':'false');
-      btn.textContent=open?'VIEW LESS':'VIEW MORE';
-      if(open) box.querySelectorAll('.rv:not(.in)').forEach(function(el){el.classList.add('in');});
-      /* newly-revealed .rv elements would otherwise sit at opacity 0 on motion-enabled devices */
+    function open(){
+      if(!window.matchMedia('(max-width:900px)').matches) return;
+      sheet.classList.add('open');sheet.setAttribute('aria-hidden','false');
+      document.body.classList.add('sheet-open');
+      /* ★ Canvas specimens need one nudge. The record diagram sizes its backing store from a
+         ResizeObserver, which fires once while the sheet is still display:none - it reads 0x0, sets
+         canvas.width/height to 0, and does not fire again when the box appears (the observed element's
+         size changes, but RO had already delivered its entry for this frame and the script only reacts
+         to what it is given). Measured: attr 0x0 with a 335x484 box, so the plate was blank.
+         A synthetic resize hits the same handler the script binds to window and it repaints at
+         670x967. Harmless for the DOM/CSS specimens, which ignore it. */
+      /* One rAF was not enough - measured attr 0x0 with a 335x484 box after opening. Fire on three
+         ticks: immediately, next frame, and after the sheet has settled. The DOM/CSS specimens ignore
+         a resize event entirely, so the redundancy costs nothing. */
+      [0,60,200].forEach(function(d){setTimeout(function(){window.dispatchEvent(new Event('resize'));},d);});
+    }
+    function close(){
+      sheet.classList.remove('open');sheet.setAttribute('aria-hidden','true');
+      document.body.classList.remove('sheet-open');
+    }
+    btn.addEventListener('click',open);
+    sheet.querySelector('.sclose').addEventListener('click',close);
+    sheet.querySelector('.scrim').addEventListener('click',close);
+    document.addEventListener('keydown',function(e){
+      if(e.key==='Escape'&&sheet.classList.contains('open'))close();
     });
   });
 })();
 </script>
+
+<!-- THE SHARED SCRIPT LAYER. Replaces the four inline blocks v11-hero2 / v11-footer /
+     v11-trust / v11-reveal, which were byte-identical across the sub pages. No defer:
+     it must run at exactly the position those blocks did. See shared/v11-sub.js. -->
+<script src="shared/v11-sub.js"></script>
+
 <script>
   // No. 04 calibration scatter - provisional decisions drift, settle, and lock at horizon end (ported from V4 SD; filter chips + stats strip removed, the section's .tri already carries 70/64/6)
   (function(){

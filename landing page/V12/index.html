@@ -25,7 +25,7 @@
   --t-small17: max(13px, calc(17 * var(--u)));
   --t-mono15: max(13px, calc(15 * var(--u)));
   --t-mono13: max(11px, calc(13 * var(--u)));
-  --t-mono12: max(11px, calc(12 * var(--u)));
+  --t-mono12: max(11px, calc(11 * var(--u))); /* 12u -> 11u 2026-08-20: with desktop mono at 13/11/9 this token was the only 12 left, sitting between two rungs */
   --t-mono11: max(9px, calc(11 * var(--u))); /* floor raised 12->13 / 10->11 (2026-08-02): 15u is 8.5px at 1440, so below ~2205px the floor is what renders - the whole laptop range sat at 12/10, one step under the 13/11 canon and smaller than mobile. The 2545 Figma frame is untouched: 15u=15 and 12u=12 both beat the new floors. */
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -56,8 +56,12 @@ img{display:block;max-width:none}
 .nav .logo svg{height:100%;width:auto;display:block}
 .nav .logo path{fill:var(--c-white);transition:fill 0.35s ease}
 .nav.scrolled .logo path{fill:var(--c-1000)}
-.navmenu{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:calc(40 * var(--u))}
-.navmenu a{font-weight:400;font-size:max(14px, calc(15 * var(--u)));color:var(--c-600);transition:color 0.35s ease}
+.navmenu{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:calc(42 * var(--u))}
+/* 13/1.3, not max(14px, 15u) with no leading at all (Inkyung 2026-08-17). 14 is not on the sans
+   ladder (11/13/15/17/22/28/36) and these six links were the only elements on desktop off it;
+   line-height was falling through to `normal`, which is not a value the page uses anywhere else.
+   1.3 is what every other sans 13 on desktop already renders at (.d, .cd, .tlead). */
+.navmenu a{font-weight:400;font-size:13px;line-height:1.3;color:var(--c-600);transition:color 0.35s ease}
 .navmenu a.on{color:var(--c-white)}
 .nav.scrolled .navmenu a{color:var(--c-800)}
 .nav.scrolled .navmenu a.on{color:var(--c-1000)}
@@ -74,14 +78,19 @@ img{display:block;max-width:none}
 .hero>img{position:absolute;left:calc(-128 * var(--u));top:0;width:calc(2944 * var(--u));height:calc(1648 * var(--u));object-fit:cover;filter:contrast(0.9) brightness(1.2)}
 .hero>video{position:absolute;left:calc(-128 * var(--u));top:0;width:calc(2944 * var(--u));height:calc(1648 * var(--u));object-fit:cover;filter:brightness(0.6) contrast(0.9);opacity:0;transition:opacity 0.8s ease}
 .hero>video.on{opacity:1}
-.hero .hgroup{position:absolute;left:calc(440 * var(--u));top:calc(515 * var(--u));width:calc(940 * var(--u));display:flex;flex-direction:column;align-items:flex-start;gap:calc(50 * var(--u));z-index:2}
-.hbars{display:flex;flex-direction:column;align-items:flex-start;gap:calc(5 * var(--u))}
-.hbar{display:inline-block;white-space:nowrap;background:var(--c-black);color:var(--c-white);font-weight:500;font-size:calc(64 * var(--u));line-height:0.9;letter-spacing:-0.02em;padding:calc(10 * var(--u)) calc(12 * var(--u))}
+.hero .hgroup{position:absolute;left:calc(440 * var(--u));top:calc(515 * var(--u));width:calc(940 * var(--u));display:flex;flex-direction:column;align-items:flex-start;gap:calc(42 * var(--u));z-index:2}
+.hbars{display:flex;flex-direction:column;align-items:flex-start;gap:calc(6 * var(--u))}
+.hbar{display:inline-block;white-space:nowrap;background:var(--c-black);color:var(--c-white);font-weight:500;font-size:calc(64 * var(--u));line-height:0.9;letter-spacing:-0.02em;padding:calc(10 * var(--u)) calc(14 * var(--u))}
 .hero .hsub{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200);max-width:calc(820 * var(--u))}
 .hero .heyeb{font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-600)}
 .hero .heyeb .hlogo{display:block;width:max(151px, calc(189 * var(--u)));height:auto} /* sized to the typed wordmark it replaced: 21ch of mono 12px (15u at frame) */
-.hero .htrust{font-family:var(--mono);font-weight:400;font-size:max(12px, calc(12 * var(--u)));line-height:1.5;letter-spacing:0.04em;color:var(--c-600)}
-.hero .ctarow{display:flex;align-items:center;gap:calc(30 * var(--u));flex-wrap:wrap}
+/* --t-mono13 (the 11px tier), not a hand-rolled 12u/12px. This line was missed by the 2026-08-02
+   floor pass that raised 12->13 / 10->11 precisely because "the whole laptop range sat at 12/10,
+   one step under the 13/11 canon" - see the token note above. It was the only mono on desktop off
+   the 13/11/9 ladder (3 spans at 12px), and mobile already renders the same line at 11.
+   Compliance / trust copy is meta, so it belongs on the 11 tier, not the 13 label tier. */
+.hero .htrust{font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-600)}
+.hero .ctarow{display:flex;align-items:center;gap:calc(28 * var(--u));flex-wrap:wrap}
 .cta-line{min-width:max(160px, calc(196 * var(--u)));padding:0 22px;height:calc(48 * var(--u));min-height:38px;border:1px solid var(--c-white);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-white)}
 .cta-fill{min-width:max(160px, calc(196 * var(--u)));padding:0 22px;height:calc(48 * var(--u));min-height:38px;background:var(--c-black);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-white)}
 .cta-fill.inv{background:var(--c-white);color:var(--c-black)} /* CTA colour canon (Inkyung 2026-07-31): boxes and text links use pure #000/#FFF only - c-1000 is a surface and body-text token, so a CTA in it reads a step softer than the CTA below it */
@@ -90,23 +99,23 @@ img{display:block;max-width:none}
 .hero .ctarow .mlink{color:var(--c-white)}
 
 /* ---- NO.01 THE SYSTEM (h1984, black; vertical stack: text -> full-width loop -> modes) ---- */
-.sys{background:var(--c-black);padding:calc(220 * var(--u)) 0}
-.sys .eyebrow{margin:0 0 calc(70 * var(--u)) calc(450 * var(--u));width:calc(1645 * var(--u));font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600)}
-.sys .row{margin-left:calc(450 * var(--u));width:calc(1645 * var(--u));display:flex;flex-direction:column;gap:calc(100 * var(--u));align-items:stretch}
+.sys{background:var(--c-black);padding:calc(184 * var(--u)) 0}
+.sys .eyebrow{margin:0 0 calc(71 * var(--u)) calc(450 * var(--u));width:calc(1645 * var(--u));font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600)}
+.sys .row{margin-left:calc(450 * var(--u));width:calc(1645 * var(--u));display:flex;flex-direction:column;gap:calc(113 * var(--u));align-items:stretch}
 .sys .lcol{width:calc(804 * var(--u));display:flex;flex-direction:column;gap:0} /* margins only - the old gap 50u stacked with .body's margin (audit 2026-07-31) */
 .sys h2{font-weight:400;font-size:calc(64 * var(--u));line-height:1.05;letter-spacing:-0.02em}
 .sys h2 .a{display:block;font-weight:500;color:var(--c-white)}
 .sys h2 .b{display:block;font-weight:500;color:var(--c-white)}
-.sys .body{margin-top:calc(120 * var(--u));font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200)} /* was gap 50u + margin 70u = same 120u rendered */
-.sys .lcol .body+div{margin-top:calc(50 * var(--u))} /* was carried by the lcol gap */
+.sys .body{margin-top:calc(113 * var(--u));font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200)} /* was gap 50u + margin 70u = same 120u rendered */
+.sys .lcol .body+div{margin-top:calc(42 * var(--u))} /* was carried by the lcol gap */
 .sys .pricehd{font-weight:500;font-size:var(--t-lead24);line-height:1.3;letter-spacing:0;color:var(--c-white)}
 .sys .fee{font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);margin-top:calc(10 * var(--u))} /* mono is 1.5, matches .close9 .fee9 (type audit 2026-07-31) */
 .loopfig{position:relative;width:100%;height:calc(640 * var(--u));background:var(--c-cream);border:1px solid rgba(28,28,28,0.16);overflow:hidden}
 .loopfig canvas{position:absolute;inset:0;width:100%;height:100%}
-.loopfig .sys-legend{position:absolute;left:calc(15.7 * var(--u));top:calc(13.7 * var(--u));z-index:3;display:flex;gap:calc(24 * var(--u))}
-.loopfig .leg-group,.loopfig .leg-status{display:flex;flex-direction:column;gap:calc(6 * var(--u));min-width:calc(250 * var(--u));border-top:0.667px solid rgba(255,255,255,0.18);padding-top:calc(8.7 * var(--u))}
+.loopfig .sys-legend{position:absolute;left:calc(15.7 * var(--u));top:calc(13.7 * var(--u));z-index:3;display:flex;gap:calc(28 * var(--u))}
+.loopfig .leg-group,.loopfig .leg-status{display:flex;flex-direction:column;gap:calc(6 * var(--u));min-width:calc(250 * var(--u));border-top:0.667px solid rgba(255,255,255,0.18);padding-top:calc(6 * var(--u))}
 .loopfig .leg-cap{font-family:var(--mono);font-size:max(9px, calc(11 * var(--u)));letter-spacing:0.04em;color:var(--c-800);line-height:1.4} /* mono tier audit 2026-08-02: figcap/legend/stamp = 9 at 1.4, not the 13 label token */
-.loopfig .k{display:inline-flex;align-items:center;gap:calc(7 * var(--u));font-size:max(11px, calc(12 * var(--u)));line-height:1.6;letter-spacing:0;color:var(--c-800);white-space:nowrap} /* Inter rows take Inter tracking (0) - +0.04 is the mono value. leg-cap stays mono/+0.04 (type audit 2026-07-31) */
+.loopfig .k{display:inline-flex;align-items:center;gap:calc(6 * var(--u));font-size:max(11px, calc(12 * var(--u)));line-height:1.6;letter-spacing:0;color:var(--c-800);white-space:nowrap} /* Inter rows take Inter tracking (0) - +0.04 is the mono value. leg-cap stays mono/+0.04 (type audit 2026-07-31) */
 .loopfig .cd{width:calc(7 * var(--u));height:calc(7 * var(--u));border-radius:50%;flex:none}
 .loopfig .cd-bias{background:var(--c-review-muted)}
 .loopfig .cd-research{background:var(--c-research);border-radius:1px}
@@ -115,8 +124,8 @@ img{display:block;max-width:none}
 .loopfig .cd-a{background:var(--c-review-muted)}
 .loopfig .cd-r{background:var(--c-urgent-muted)}
 .loopfig .sys-note{position:absolute;right:calc(15.6 * var(--u));bottom:calc(13.7 * var(--u));z-index:3;font-family:var(--mono);font-size:max(9px, calc(11 * var(--u)));line-height:1.4;letter-spacing:0.04em;color:var(--c-800)} /* diagram legend = 9/1.4, same as leg-cap (mono tier audit 2026-08-02) */
-.sys .modes{display:grid;grid-template-columns:repeat(3,1fr);column-gap:calc(50 * var(--u))}
-.sys .mode{display:flex;flex-direction:column;gap:calc(50 * var(--u));align-items:flex-start}
+.sys .modes{display:grid;grid-template-columns:repeat(3,1fr);column-gap:calc(42 * var(--u))}
+.sys .mode{display:flex;flex-direction:column;gap:calc(42 * var(--u));align-items:flex-start}
 .sys .mode h3{font-weight:500;font-size:var(--t-h34);line-height:1.3;letter-spacing:-0.02em;color:var(--c-white)}
 .sys .mode p{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200)}
 
@@ -129,56 +138,55 @@ img{display:block;max-width:none}
    ============================================================================ */
 .mbonly{display:none}
 .sys .mode .mlink{color:var(--c-white)}
-.sys .mode .mfoot{display:flex;flex-direction:column;gap:calc(40 * var(--u));align-items:flex-start;margin-top:calc(-30 * var(--u))}
+.sys .mode .mfoot{display:flex;flex-direction:column;gap:calc(42 * var(--u));align-items:flex-start;margin-top:calc(-30 * var(--u))}
 .sys .mode .mmeta{font-family:var(--mono);font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-700)}
 .mlink{display:inline-flex;align-items:center;gap:calc(6 * var(--u));font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);line-height:1.35;letter-spacing:0.04em;color:var(--c-black)} /* CTA colour canon: #000 on light grounds, #FFF on dark (2026-07-31) */
-.bigh2 span.dim{color:var(--c-700)}
-.close9 .bigh2 span.dim{color:var(--c-800)}
+/* .dim retired 2026-08-20 (Inkyung: "한톤으로 전체 다 유지") - the close-band second line no longer dims; the red payoff pairs are untouched */
 .mlink .arr{width:calc(12 * var(--u));height:calc(12 * var(--u));flex:none}
 
 /* ---- NO.02 MISSING LAYER (h1260, dark) ---- */
-.gap2{background:var(--c-black);padding:calc(220 * var(--u)) 0}
-.gap2 .eyebrow,.stats3 .eyebrow{position:relative;margin:0 0 calc(70 * var(--u)) calc(450 * var(--u));width:calc(1645 * var(--u));font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);z-index:3}
+.gap2{background:var(--c-black);padding:calc(184 * var(--u)) 0}
+.gap2 .eyebrow,.stats3 .eyebrow{position:relative;margin:0 0 calc(71 * var(--u)) calc(450 * var(--u));width:calc(1645 * var(--u));font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);z-index:3}
 .gap2 .ph1{position:absolute;left:calc(-316 * var(--u));top:calc(-147 * var(--u));width:calc(2944 * var(--u));height:calc(100% + 147 * var(--u));object-fit:cover}
 .gap2 .ph2{position:absolute;left:calc(1708 * var(--u));top:50%;transform:translateY(-50%);width:calc(836 * var(--u));height:calc(1046 * var(--u));object-fit:cover}
-.gap2 .hbargrp{position:relative;margin-left:calc(450 * var(--u));display:flex;flex-direction:column;align-items:flex-start;gap:calc(5 * var(--u));z-index:2}
+.gap2 .hbargrp{position:relative;margin-left:calc(450 * var(--u));display:flex;flex-direction:column;align-items:flex-start;gap:calc(6 * var(--u));z-index:2}
 .gap2 .hbrow{display:contents}
 .gap2 .hbrow.mbonly{display:none} /* the contents rule above outranks the bare .mbonly hide */
-.gap2 .body{position:relative;margin:calc(120 * var(--u)) 0 0 calc(454 * var(--u));width:calc(807 * var(--u));display:flex;flex-direction:column;gap:calc(50 * var(--u));z-index:2}
+.gap2 .body{position:relative;margin:calc(113 * var(--u)) 0 0 calc(454 * var(--u));width:calc(807 * var(--u));display:flex;flex-direction:column;gap:calc(42 * var(--u));z-index:2}
 .gap2 .body p{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200)}
-.gap2 .g2stat{position:relative;margin:calc(90 * var(--u)) 0 0 calc(454 * var(--u));width:calc(807 * var(--u));display:flex;flex-direction:column;align-items:flex-start;gap:calc(40 * var(--u));z-index:2}
+.gap2 .g2stat{position:relative;margin:calc(85 * var(--u)) 0 0 calc(454 * var(--u));width:calc(807 * var(--u));display:flex;flex-direction:column;align-items:flex-start;gap:calc(42 * var(--u));z-index:2}
 .gap2 .g2stat .v{order:-1;margin-bottom:calc(-16 * var(--u));font-weight:500;font-size:var(--t-h34);line-height:1.4;letter-spacing:-0.069em;color:var(--c-white)}
 .gap2 .g2stat .rule{order:-2;border-top:0.667px solid rgba(255,255,255,0.18);height:0;width:100%;margin-bottom:calc(-24 * var(--u))}
 .gap2 .g2stat .t{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200);max-width:calc(807 * var(--u))}
-.gap2 .g2stat .t + .t{margin-top:calc(20 * var(--u))}
+.gap2 .g2stat .t + .t{margin-top:calc(14 * var(--u))}
 .gap2 .g2stat .src{font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.35;letter-spacing:0.04em;color:var(--c-600)}
 .gap2 .g2stat .src a{border-bottom:1px solid var(--c-800);padding-bottom:1px;color:var(--c-600)}
 
 /* ---- stats interlude (h723, black) ---- */
-.stats3{background:var(--c-black);padding:calc(220 * var(--u)) 0}
-.stats3 .cells{margin-left:calc(454 * var(--u));display:grid;grid-template-columns:repeat(3,calc(528 * var(--u)));column-gap:calc(30 * var(--u))}
-.stats3 .cell{display:flex;flex-direction:column;gap:calc(50 * var(--u))}
+.stats3{background:var(--c-black);padding:calc(184 * var(--u)) 0}
+.stats3 .cells{margin-left:calc(454 * var(--u));display:grid;grid-template-columns:repeat(3,calc(528 * var(--u)));column-gap:calc(28 * var(--u))}
+.stats3 .cell{display:flex;flex-direction:column;gap:calc(42 * var(--u))}
 .stats3 .v{font-weight:500;font-size:var(--t-h34);line-height:1.4;letter-spacing:-0.069em;color:var(--c-white)}
 .stats3 .rule{border-top:0.667px dashed var(--c-600);height:0}
 .stats3 .t{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200);max-width:calc(460 * var(--u))}
-.stats3 .t + .t{margin-top:calc(20 * var(--u))}
+.stats3 .t + .t{margin-top:calc(14 * var(--u))}
 .stats3 .src{font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.35;letter-spacing:0.04em;color:var(--c-600)}
 .stats3 .src a{border-bottom:1px solid var(--c-800);padding-bottom:1px}
 
 /* ---- NO.03 THE LOOP (h2817, cream) ---- */
-.loop3{background:var(--c-white);padding-bottom:calc(220 * var(--u))}
+.loop3{background:var(--c-white);padding-bottom:calc(184 * var(--u))}
 .loop3 .l3lower{position:relative;margin:calc(540 * var(--u)) 0 0 calc(449 * var(--u));width:calc(1645 * var(--u));display:flex;justify-content:space-between;align-items:flex-start}
-.loop3 .l3head{padding-top:calc(220 * var(--u));margin-left:calc(449 * var(--u));width:calc(1645 * var(--u))}
+.loop3 .l3head{padding-top:calc(184 * var(--u));margin-left:calc(449 * var(--u));width:calc(1645 * var(--u))}
 .loop3 .mast{font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-800)}
-.loop3 h2{font-weight:400;margin-top:calc(70 * var(--u));max-width:calc((100% + 30 * var(--u)) / 12 * 9 - 30 * var(--u));font-size:calc(64 * var(--u));line-height:1.05;letter-spacing:-0.02em}
+.loop3 h2{font-weight:400;margin-top:calc(71 * var(--u));max-width:calc((100% + 30 * var(--u)) / 12 * 9 - 30 * var(--u));font-size:calc(64 * var(--u));line-height:1.05;letter-spacing:-0.02em}
 .loop3 h2 .a{display:block;font-weight:500;color:var(--c-1000)}
 .loop3 h2 .b{display:block;font-weight:500;color:var(--c-accent);margin-top:0}
-.loop3 .l3grid{margin:calc(120 * var(--u)) 0 0 calc(4 * var(--u));display:grid;grid-template-columns:calc(798 * var(--u)) calc(796 * var(--u));column-gap:calc(35 * var(--u))}
-.loop3 .l3col{display:flex;flex-direction:column;gap:calc(40 * var(--u))}
+.loop3 .l3grid{margin:calc(113 * var(--u)) 0 0 calc(6 * var(--u));display:grid;grid-template-columns:calc(798 * var(--u)) calc(796 * var(--u));column-gap:calc(28 * var(--u))}
+.loop3 .l3col{display:flex;flex-direction:column;gap:calc(42 * var(--u))}
 .loop3 .p1,.loop3 .p2,.loop3 .p3{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-1000)}
 .loop3 .p3{max-width:calc(749 * var(--u))}
 .loop3 .lmore,.gap2 .gmore{display:none} /* mobile-only fold controls - see the ≤900px block */
-.loop3 .step{position:absolute;top:calc(1136 * var(--u));width:calc(388.5 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(16.7 * var(--u));display:flex;flex-direction:column;gap:calc(11 * var(--u))}
+.loop3 .step{position:absolute;top:calc(1136 * var(--u));width:calc(388.5 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(14 * var(--u));display:flex;flex-direction:column;gap:calc(14 * var(--u))}
 .loop3 .s1{left:calc(450 * var(--u))}
 .loop3 .s2{left:calc(868.6 * var(--u))}
 .loop3 .s3{left:calc(1287.2 * var(--u))}
@@ -188,16 +196,18 @@ img{display:block;max-width:none}
 .loop3 .step .d{font-weight:400;font-size:var(--t-small17);line-height:1.3;color:var(--c-1000);max-width:calc(312 * var(--u))}
 .loop3 .loopnote{width:calc(807 * var(--u));display:flex;flex-direction:column;gap:0} /* margins only (audit 2026-07-31) */
 .loop3 .loopnote p,.loop3 .lnote{font-weight:500;font-size:var(--t-read27);line-height:1.15;letter-spacing:0;color:var(--c-1000)}
-.loop3 .loopnote .mlink{margin-top:calc(40 * var(--u))} /* was gap 24u + margin 16u = same 40u rendered */
-.loop3 .figcap{margin-top:calc(40 * var(--u));font-family:var(--mono);font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-800)}
+.loop3 .loopnote .mlink{margin-top:calc(42 * var(--u))} /* was gap 24u + margin 16u = same 40u rendered */
+/* 1.4 = meta, per the role pair in the base sheet and the 2026-08-02 mono audit ("figcap/legend/stamp = 9 at 1.4"). Was 1.5, the label value. */
+.loop3 .figcap{margin-top:calc(42 * var(--u));font-family:var(--mono);font-size:var(--t-mono13);line-height:1.4;letter-spacing:0.04em;color:var(--c-800)}
 .loop3 .figcap .mut{color:var(--c-800)} /* same light-ground contrast fix (2026-08-02) */
 
 /* the memo sheet is mobile-only and built by script - hidden by default so it can never leak onto
    desktop as a bare block (2026-08-01) */
 .sheet{display:none}
 /* ---- specimen card: Investment Memo (exact replica; off-II-scale sizes intentional) ---- */
-.loop3 .specimen{width:calc((100% + 30 * var(--u)) / 12 * 4 - 30 * var(--u))}
-.dr-doc{display:block;width:100%;max-width:566px;padding:34px 28px 32px;border:1px solid var(--c-800);border-radius:4px;background:var(--c-elev);font-family:'Inter',-apple-system,sans-serif;font-weight:400}
+.loop3 .specimen{width:calc((100% + 30 * var(--u)) / 12 * 5 - 30 * var(--u))} /* 4col -> 5col (2026-08-20): the memo copy is fixed-px, so the 4-col track (294px at 1440) stacked it 825px tall. Widths stay on the 12-col system - no px floors. */
+.dr-doc{display:block;width:100%;max-width:566px;padding:34px 28px 32px;border:1px solid var(--c-800);border-radius:4px;background:var(--c-elev);font-family:'Inter',-apple-system,sans-serif;font-weight:400;position:relative;aspect-ratio:528/630;overflow:hidden} /* mockups keep their designed ratio (Inkyung 2026-08-20): the copy inside is fixed-px, so a narrow track stacked this 825px tall at 1440. Cropped with the same fade mobile uses. */
+.dr-doc::after{content:'';position:absolute;left:0;right:0;bottom:0;height:64px;background:linear-gradient(to bottom,rgba(20,20,20,0),var(--c-elev));pointer-events:none}
 /* Card rebuilt to the approved app screen (Figma 3233:2864 / 3233:2890, 2026-07-31). The old layout
    carried RETURN HURDLE / PROBABILITY / HORIZON / DATED rows the app no longer has; those collapse
    into the app's single Prediction line, and Kill Criteria becomes the app's numbered list.
@@ -243,92 +253,92 @@ img{display:block;max-width:none}
 
 
 /* ---- flow section shell (04 / 05b / close): guaranteed 220u top/bottom ---- */
-.secpad{padding:calc(220 * var(--u)) 0}
+.secpad{padding:calc(184 * var(--u)) 0}
 .rail{margin:0 calc(450 * var(--u))}
-.eyeb{font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);margin-bottom:calc(70 * var(--u))}
+.eyeb{font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);margin-bottom:calc(71 * var(--u))}
 
 /* ---- LATEST (content band, white surface) ---- */
 .latest{background:var(--c-white)}
 .latest .eyeb{color:var(--c-800)}
 /* block heading: the two content streams are peers, so they carry the same heading size */
-.latest .streamhd{font-weight:500;font-size:var(--t-h34);line-height:1.3;letter-spacing:-0.02em;color:var(--c-1000);margin-bottom:calc(120 * var(--u))}
-.latest > .rail > .eyeb{margin-bottom:calc(40 * var(--u))}
+.latest .streamhd{font-weight:500;font-size:var(--t-h34);line-height:1.3;letter-spacing:-0.02em;color:var(--c-1000);margin-bottom:calc(113 * var(--u))}
+.latest > .rail > .eyeb{margin-bottom:calc(42 * var(--u))}
 .latest .lt-feat{display:flex;flex-direction:column;align-items:flex-start;gap:0} /* margins only (audit 2026-07-31) */
-.latest .lt-feat>*+*{margin-top:calc(24 * var(--u))} /* the old flex gap, as margins */
+.latest .lt-feat>*+*{margin-top:calc(28 * var(--u))} /* the old flex gap, as margins */
 .latest .lt-meta{font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-800)}
 .latest .lt-hd{font-weight:500;font-size:var(--t-read27);line-height:1.15;letter-spacing:0;color:var(--c-1000);max-width:calc((100% + 30 * var(--u)) / 12 * 9 - 30 * var(--u))}
 .latest .lt-sum{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-1000);max-width:calc((100% + 30 * var(--u)) / 12 * 6 - 30 * var(--u))}
 .latest .lt-hd a{color:inherit;text-decoration:none;transition:opacity 0.2s ease}
 .latest .lt-hd a:hover{opacity:0.6}
-.latest .ltgrid{display:grid;grid-template-columns:repeat(12, 1fr);column-gap:calc(30 * var(--u));align-items:start}
+.latest .ltgrid{display:grid;grid-template-columns:repeat(12, 1fr);column-gap:calc(28 * var(--u));align-items:start}
 .latest .ltgrid .lt-feat{grid-column:1 / span 9}
 /* the feature column is already nine columns wide, so the inner caps must be released */
 .latest .ltgrid .lt-hd{max-width:none}
 .latest .ltgrid .lt-sum{max-width:calc((100% + 30 * var(--u)) / 9 * 6 - 30 * var(--u))}
 .latest .lt-list{display:flex;flex-direction:column}
-.latest .lt-list .li{border-top:0.667px solid rgba(28,28,28,0.16);padding:calc(20 * var(--u)) 0;display:flex;flex-direction:column;gap:calc(8 * var(--u))}
+.latest .lt-list .li{border-top:0.667px solid rgba(28,28,28,0.16);padding:calc(14 * var(--u)) 0;display:flex;flex-direction:column;gap:calc(6 * var(--u))}
 .latest .lt-list .li:first-child{padding-top:0;border-top:0}
 .latest .lt-list .li .k{font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);letter-spacing:0.04em;line-height:1.5;color:var(--c-800)}
 .latest .lt-list .li .t{font-weight:500;font-size:var(--t-small17);line-height:1.3;letter-spacing:0;color:var(--c-1000)}
-.latest .lt-feat .mlink{margin-top:calc(50 * var(--u))} /* content-to-link canon, single declaration (was gap 24u + 26u) */
+.latest .lt-feat .mlink{margin-top:calc(42 * var(--u))} /* content-to-link canon, single declaration (was gap 24u + 26u) */
 
 /* ---- CHANGELOG strip (same white band, under a hairline) ---- */
-.clog{margin-top:calc(220 * var(--u))}
-.clog .eyeb{color:var(--c-800);margin-bottom:calc(70 * var(--u))}
-.clog .cstrip{display:grid;grid-template-columns:repeat(12, 1fr);column-gap:calc(30 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16)}
-.clog .ci{grid-column:span 3;position:relative;display:block;padding-top:calc(40 * var(--u));color:inherit;text-decoration:none;transition:opacity 0.2s ease}
+.clog{margin-top:calc(184 * var(--u))}
+.clog .eyeb{color:var(--c-800);margin-bottom:calc(71 * var(--u))}
+.clog .cstrip{display:grid;grid-template-columns:repeat(12, 1fr);column-gap:calc(28 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16)}
+.clog .ci{grid-column:span 3;position:relative;display:block;padding-top:calc(42 * var(--u));color:inherit;text-decoration:none;transition:opacity 0.2s ease}
 .clog .ci:hover{opacity:0.6}
 .clog .ci::before{content:'';position:absolute;top:calc(-4 * var(--u));left:0;width:calc(8 * var(--u));height:calc(8 * var(--u));min-width:5px;min-height:5px;border-radius:50%;background:var(--c-600)}
 .clog .ci:first-child::before{background:var(--c-1000)}
 .clog .ci .ct{display:block;font-weight:500;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-1000);text-decoration:none}
-.clog .ci .cd{display:block;margin-top:calc(12 * var(--u));font-weight:400;font-size:var(--t-small17);line-height:1.3;color:var(--c-1000)}
-.clog .ci .cdate{display:block;margin-top:calc(24 * var(--u));font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-800)}
-.clog .cfoot{margin-top:calc(50 * var(--u))}
-.latest .ltfoot{margin-top:calc(50 * var(--u))} /* mirrors .cfoot - the release stream's "all" link */
+.clog .ci .cd{display:block;margin-top:calc(14 * var(--u));font-weight:400;font-size:var(--t-small17);line-height:1.3;color:var(--c-1000)}
+.clog .ci .cdate{display:block;margin-top:calc(28 * var(--u));font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-800)}
+.clog .cfoot{margin-top:calc(42 * var(--u))}
+.latest .ltfoot{margin-top:calc(42 * var(--u))} /* mirrors .cfoot - the release stream's "all" link */
 .bigh2{font-weight:400;max-width:calc((100% + 30 * var(--u)) / 12 * 9 - 30 * var(--u));font-size:calc(64 * var(--u));line-height:1.05;letter-spacing:-0.02em}
 .bigh2 .a{display:block;font-weight:500;color:var(--c-white)}
 .bigh2 .b{display:block;font-weight:500;color:var(--c-white)}
 /* NO.04 sits on a photograph, so its masthead takes the same clone box the other photo sections use
    (Inkyung 2026-07-31). The 5u row gap matches .hbargrp; 12u/10u padding matches .hbar. */
-.def4 .bigh2{display:flex;flex-direction:column;align-items:flex-start;gap:calc(5 * var(--u))}
-.def4 .bigh2 .a,.def4 .bigh2 .b{display:inline-block;width:auto;background:var(--c-black);padding:calc(10 * var(--u)) calc(12 * var(--u))}
+.def4 .bigh2{display:flex;flex-direction:column;align-items:flex-start;gap:calc(6 * var(--u))}
+.def4 .bigh2 .a,.def4 .bigh2 .b{display:inline-block;width:auto;background:var(--c-black);padding:calc(10 * var(--u)) calc(14 * var(--u))}
 /* 04 default (dark data) */
 .def4{background:var(--c-black)}
 .def4>img,.def4>video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;filter:brightness(0.42)}
 br.mbr{display:none}
 .def4 .rail{position:relative;z-index:2}
-.def4 .body{margin-top:calc(120 * var(--u));font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200);max-width:calc(804 * var(--u))}
-.dstats{margin-top:calc(100 * var(--u));display:grid;grid-template-columns:repeat(3,1fr);column-gap:calc(50 * var(--u))}
-.dstats .cell{display:flex;flex-direction:column;gap:calc(40 * var(--u))}
+.def4 .body{margin-top:calc(113 * var(--u));font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200);max-width:calc(804 * var(--u))}
+.dstats{margin-top:calc(113 * var(--u));display:grid;grid-template-columns:repeat(3,1fr);column-gap:calc(42 * var(--u))}
+.dstats .cell{display:flex;flex-direction:column;gap:calc(42 * var(--u))}
 .dstats .v{font-weight:500;font-size:var(--t-h34);line-height:1.4;letter-spacing:-0.069em;color:var(--c-white)}
 .dstats .gap .v{color:var(--c-urgent-muted)}
 .dstats .rule{border-top:0.667px dashed var(--c-600);height:0}
 .dstats .t{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200);max-width:calc(460 * var(--u))}
 .dstats .src{font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.35;letter-spacing:0.04em;color:var(--c-400)}
-.dlead{margin-top:calc(100 * var(--u));font-weight:500;font-size:var(--t-lead24);line-height:1.3;letter-spacing:0;color:var(--c-white);max-width:calc(807 * var(--u))}
-.def4 .mlink{margin-top:calc(50 * var(--u));color:var(--c-white)}
-.def4 .figcap{margin-top:calc(50 * var(--u));font-family:var(--mono);font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);max-width:calc(640 * var(--u))}
+.dlead{margin-top:calc(113 * var(--u));font-weight:500;font-size:var(--t-lead24);line-height:1.3;letter-spacing:0;color:var(--c-white);max-width:calc(807 * var(--u))}
+.def4 .mlink{margin-top:calc(42 * var(--u));color:var(--c-white)}
+.def4 .figcap{margin-top:calc(42 * var(--u));font-family:var(--mono);font-size:var(--t-mono13);line-height:1.4;letter-spacing:0.04em;color:var(--c-600)} /* max-width 640u dropped: the fixed-13px line needs 454px but 640u is only 362px at 1440, so it wrapped; one line was the stated intent (2026-08-20) */
 /* 05 standard: photo band + dark content */
 .std5{height:calc(690 * var(--u));background:var(--c-black)}
 .std5>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 65%}
 .std5 .eyebrow5{position:absolute;left:calc(450 * var(--u));top:calc(220 * var(--u));font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);z-index:2}
-.std5 .hbargrp5{position:absolute;left:calc(450 * var(--u));top:calc(310 * var(--u));display:flex;flex-direction:column;align-items:flex-start;gap:calc(5 * var(--u));z-index:2}
+.std5 .hbargrp5{position:absolute;left:calc(450 * var(--u));top:calc(310 * var(--u));display:flex;flex-direction:column;align-items:flex-start;gap:calc(6 * var(--u));z-index:2}
 .std5 .hbargrp5 .hbar{color:var(--c-accent-sky)}
 .std5b{background:var(--c-black)}
 .qcap5{font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600)}
-.qh2{font-weight:400;margin-top:calc(40 * var(--u));max-width:calc((100% + 30 * var(--u)) / 12 * 6 - 30 * var(--u));font-size:var(--t-h34);line-height:1.3;letter-spacing:-0.02em}
+.qh2{font-weight:400;margin-top:calc(42 * var(--u));max-width:calc((100% + 30 * var(--u)) / 12 * 6 - 30 * var(--u));font-size:var(--t-h34);line-height:1.3;letter-spacing:-0.02em}
 .qh2 .a{display:block;font-weight:500;color:var(--c-white)}
 .qh2 .b{display:block;font-weight:500;color:var(--c-white)}
-.pgrid5{margin-top:calc(120 * var(--u));display:grid;grid-template-columns:calc(807 * var(--u)) calc(807 * var(--u));column-gap:calc(26 * var(--u))}
+.pgrid5{margin-top:calc(113 * var(--u));display:grid;grid-template-columns:calc(807 * var(--u)) calc(807 * var(--u));column-gap:calc(28 * var(--u))}
 .pgrid5 .plead{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200)}
-.pgrid5 .pcol{display:flex;flex-direction:column;gap:calc(40 * var(--u))}
+.pgrid5 .pcol{display:flex;flex-direction:column;gap:calc(42 * var(--u))}
 .pgrid5 .pcol p{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200)}
-.suit5{margin-top:calc(120 * var(--u));display:grid;grid-template-columns:1fr 1fr;border:0.667px solid rgba(255,255,255,0.18);max-width:calc(1645 * var(--u))}
-.suit5>div{padding:calc(40 * var(--u)) calc(50 * var(--u)) calc(50 * var(--u))}
+.suit5{margin-top:calc(113 * var(--u));display:grid;grid-template-columns:1fr 1fr;border:0.667px solid rgba(255,255,255,0.18);max-width:calc(1645 * var(--u))}
+.suit5>div{padding:calc(42 * var(--u)) calc(42 * var(--u)) calc(42 * var(--u))}
 .suit5>div+div{border-left:0.667px solid rgba(255,255,255,0.18)}
-.suit5 h3{font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);padding-bottom:calc(24 * var(--u));border-bottom:0.667px solid rgba(255,255,255,0.18)}
+.suit5 h3{font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);padding-bottom:calc(28 * var(--u));border-bottom:0.667px solid rgba(255,255,255,0.18)}
 .suit5 ul{list-style:none}
-.suit5 li{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200);padding:calc(22 * var(--u)) 0;border-bottom:0.667px solid rgba(255,255,255,0.10)}
+.suit5 li{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200);padding:calc(28 * var(--u)) 0;border-bottom:0.667px solid rgba(255,255,255,0.10)}
 .suit5 li:last-child{border-bottom:0}
 .suit5 .no li{color:var(--c-400)}
 /* close (cream) */
@@ -336,22 +346,22 @@ br.mbr{display:none}
 .close9 .eyeb{color:var(--c-800)}
 .close9 .bigh2 .a{color:var(--c-1000)}
 .close9 .bigh2 .b{color:var(--c-1000)}
-.close9 .cols{display:grid;grid-template-columns:calc(807 * var(--u)) calc(807 * var(--u));column-gap:calc(26 * var(--u));margin-top:calc(120 * var(--u));max-width:calc(1645 * var(--u))}
+.close9 .cols{display:grid;grid-template-columns:calc(807 * var(--u)) calc(807 * var(--u));column-gap:calc(28 * var(--u));margin-top:calc(113 * var(--u));max-width:calc(1645 * var(--u))}
 .close9 .cols .ccol > p{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-1000)}
-.close9 .cols .ccol{display:flex;flex-direction:column;gap:calc(60 * var(--u));align-items:flex-start}
+.close9 .cols .ccol{display:flex;flex-direction:column;gap:calc(71 * var(--u));align-items:flex-start}
 .close9 .offer{margin-top:0}
 .close9 .pricehd9{font-weight:500;font-size:var(--t-lead24);line-height:1.3;letter-spacing:0;color:var(--c-1000);max-width:calc(807 * var(--u))}
 .close9 .fee9{font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-800);margin-top:calc(10 * var(--u))} /* mono is 1.5 (type audit 2026-07-31) */
-.close9 .cta-row{margin-top:calc(40 * var(--u));display:flex;align-items:center;gap:calc(30 * var(--u));flex-wrap:wrap}
+.close9 .cta-row{margin-top:calc(42 * var(--u));display:flex;align-items:center;gap:calc(28 * var(--u));flex-wrap:wrap}
 .close9 .cta-line{border-color:var(--c-1000);color:var(--c-1000)}
-.trust9{margin-top:calc(120 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(40 * var(--u))}
+.trust9{margin-top:calc(113 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(42 * var(--u))}
 .trust9 .tlead{font-weight:400;font-size:var(--t-small17);line-height:1.3;color:var(--c-1000)}
-.trust9 .tg{margin-top:calc(50 * var(--u));display:grid;grid-template-columns:repeat(4,calc(388.5 * var(--u)));column-gap:calc(30 * var(--u))}
-.trust9 .ti{border-left:0.667px solid rgba(28,28,28,0.16);padding-left:calc(20 * var(--u))}
+.trust9 .tg{margin-top:calc(42 * var(--u));display:grid;grid-template-columns:repeat(4,calc(388.5 * var(--u)));column-gap:calc(28 * var(--u))}
+.trust9 .ti{border-left:0.667px solid rgba(28,28,28,0.16);padding-left:calc(14 * var(--u))}
 .trust9 .ti b{display:block;font-weight:500;font-size:var(--t-body);line-height:1.15;letter-spacing:0;color:var(--c-1000)} /* sub-heading tier (type audit 2026-07-31) */
 .trust9 .tmore{display:none} /* mobile-only fold control - see the ≤900px block */
 .trust9 .ti span{display:block;margin-top:calc(6 * var(--u));font-family:var(--mono);font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-800)}
-.foot9{margin-top:calc(120 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(24 * var(--u));display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-800)}
+.foot9{margin-top:calc(113 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(28 * var(--u));display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-800)}
 /* ---- mono leading canon on DESKTOP (2026-08-01) ----------------------------------------------
    The 07-28 / 08-01 leading sweep only edited the mobile block, so the base cascade still ran 1.35,
    1.05 and browser `normal`. Two values, decided by role, same as mobile:
@@ -369,18 +379,33 @@ br.mbr{display:none}
 
 /* ---- site footer, identical on every page (2026-08-01). Ported verbatim from Pricing; the inner
    wrapper is scoped as `footer .container` so it cannot collide with the grid-overlay .container. ---- */
-footer{background:var(--c-black);color:var(--c-800);border-top:0.667px solid rgba(255,255,255,0.18);padding:64px 0 36px;font-size:11px;line-height:1.5;margin-top:calc(120 * var(--u))}
+footer{background:var(--c-black);color:var(--c-800);border-top:0.667px solid rgba(255,255,255,0.18);padding:64px 0 36px;font-size:11px;line-height:1.5;margin-top:calc(113 * var(--u))}
+/* ---- spacing on the ladder (2026-08-17, Inkyung) ----
+   Was 22 / 22 / 36 between the link row, the copyright, the social row and the legal block - none of
+   them ladder values. Now 24 / 24 / 48: 24 is the step inside a group, 48 is the group boundary, and
+   the legal block is a different group from the site links above it.
+   Paragraph-to-paragraph inside the legal block STAYS 16. The ladder governs the space between
+   elements; 16 is an intra-block value, the same one .lt-hd -> .lt-sum uses, and 24 there would add
+   another 56px to a block that is already the tallest thing on the page.
+   NOTE this footer is "identical on every page, ported verbatim from Pricing" - V10's nine pages
+   still carry the old 22/22/36 and now differ from V11 until they are re-ported. */
 footer .container{margin:0 calc(450 * var(--u))}
-.footer-copy{font-size:13px;color:var(--c-600)}
+.footer-copy{font-size:13px;line-height:1.4;color:var(--c-600)} /* meta tier 1.4, matching the doc pages (2026-08-20) */
 .footer-copy a{color:var(--c-600);text-decoration:underline}
-.footer-social{display:flex;gap:18px;margin-top:22px}
+.footer-social{display:flex;gap:18px;margin-top:24px}
 .footer-social a{color:var(--c-700);display:inline-flex;transition:color 0.15s ease}
 .footer-social a:hover{color:var(--c-200)}
 .footer-social svg{width:18px;height:18px}
 .footer-legal{font-size:11px;color:var(--c-700);line-height:1.4;margin-top:16px} /* c-800 on black was 3.05:1 (WCAG AA fail). c-700 = 6.75:1, the exact colour the live footer uses (2026-08-02) */
-.footer-legal:first-of-type{margin-top:36px}
+/* The 48 group boundary now lives on the wrapper, not on the first paragraph: once the paragraphs
+   moved inside .footer-legalwrap, :first-of-type stopped separating the block from the social row
+   above it and the gap collapsed to 0. Applied at both widths - the wrapper exists everywhere, only
+   the columns are desktop-only. */
+.footer-legalwrap{margin-top:48px}
+.footer-legalwrap .footer-legal:first-of-type{margin-top:0}
+.footer-legal:first-of-type{margin-top:48px}
 .footer-legal a{color:var(--c-700);text-decoration:underline}
-.footer-links{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:22px;font-size:11px;line-height:1.4}
+.footer-links{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:24px;font-size:11px;line-height:1.4}
 .footer-links a{color:var(--c-700);text-decoration:underline;position:relative}
 .footer-links a:hover{color:var(--c-200)}
 .footer-links a::after{content:'';position:absolute;inset:-16px 0} /* live-footer legal nav, added with the approved wording (2026-08-02) */
@@ -627,7 +652,7 @@ body.menu-open{overflow:hidden}
   .suit5 li{padding:8px 0;border-bottom:0.667px solid rgba(255,255,255,0.10)}
   .suit5 li:first-child{padding-top:0}
   .suit5 li:last-child{border-bottom:0} /* the boxed version closes the list with the box edge - the extra last-row hairline doubled it (Inkyung 2026-07-31) */
-  .suit5 .no li{color:var(--c-700)}
+  /* .suit5 .no li mobile c-700 removed 2026-08-20 - the muted list uses its base c-400 at every width, same as desktop */
   /* mobile prose is 15/1.4 everywhere - these still carried the desktop 1.3 */
   .def4 .body,.gap2 .g2stat .t,.dstats .t,.pgrid5 .plead,.pgrid5 .pcol p,.suit5 li{line-height:1.4}
   /* payoff prose drops to body size on mobile, weight 500 stays */
@@ -686,7 +711,7 @@ body.menu-open{overflow:hidden}
   .sys .body,.sys .pricehd,.sys .mode p,.gap2 .body p,.stats3 .t{font-size:15px;line-height:1.4}
   /* body prose one tone down on dark grounds: c-200 -> c-400 (Inkyung 2026-07-31, "전반적으로 너무 쎄다").
      Light sections, labels, payoffs and statements unchanged. */
-  .hero .hsub,.sys .mode p,.gap2 .g2stat .t,.def4 .rail>p.body,.suit5 li,.pgrid5 .pcol p,.pgrid5 .plead{color:var(--c-400)}
+  /* the mobile c-400 prose override was removed 2026-08-20 (Inkyung: match the more readable side) - dark-ground prose now inherits the same c-200 the desktop shows */
   .loop3 .p1,.loop3 .p2,.loop3 .p3,.loop3 .loopnote p,.loop3 .lnote{font-size:15px;line-height:1.4}
   .close9 .cols .ccol > p{font-size:15px;line-height:1.4}
   .latest .lt-hd,.latest .lt-sum,.latest .ltgrid .lt-hd,.latest .ltgrid .lt-sum{max-width:none}
@@ -729,7 +754,7 @@ body.menu-open{overflow:hidden}
      Auxiliary text that belongs to a figure, a mockup or a data block: source lines, illustrative
      disclaimers, figure captions. 11 read as primary next to the thing it annotates. Mono / +0.04em /
      lh 1.5. NOT for page prose, legal notices or the hero trust line - those stay 11+. */
-  .figcap,.src,.def4 .figcap,.loop3 .figcap,.gap2 .g2stat .src{font-size:9px;line-height:1.5}
+  .figcap,.src,.def4 .figcap,.loop3 .figcap,.gap2 .g2stat .src{font-size:9px;line-height:1.4} /* meta, not label (2026-08-17) */
   /* mono collapses to three values: 13 section label + CTA · 11 meta/date/notice · 9 figure meta.
      12 retired - it sat between two tiers with no job of its own (2026-07-28, Inkyung).
      Selectors are section-scoped because the per-section rules (.sys .eyebrow etc.) outrank a bare class. */
@@ -737,8 +762,13 @@ body.menu-open{overflow:hidden}
   section.band .qcap5,section.band .mast,.hero .heyeb{font-size:13px}
   .hero .heyeb .hlogo{width:192px} /* Figma mobile master: 12px-tall wordmark */
   .metaline.doclist,.close9 .metaline.doclist{font-size:9px}
-  .sys .fee,.close9 .offer p.fee9,.latest .lt-meta,.clog .ci .cdate,
+  .sys .fee,.latest .lt-meta,.clog .ci .cdate,
   .sys .mode .mfoot .mmeta,.close9 .foot9,.close9 .foot9 span{font-size:11px}
+  /* fee notes are one tier, and it is 9 (Inkyung 2026-08-18). The same sentence - "Managed assets
+     carry an additional 0.10% fee." - was rendering 9 in the $20 plate (moved there 08-17, which is
+     also what lets the sentence hold one line inside the inset) and 11 down here in CLOSE. One
+     sentence, one size. SD's #research fee note takes the same 9. */
+  .close9 .offer p.fee9{font-size:9px}
   .std5b .suit5 h3{font-size:13px} /* Figma: list captions take the 13 label tier (was 11) */
   /* hero trust line: was one line at min(9px,2.15vw) (Inkyung 2026-07-28) - 8.4px was unreadable on
      phones. Settled at 11px c-400 per the Figma mobile master (2026-07-31, Typography.md §9 exception:
@@ -770,7 +800,7 @@ body.menu-open{overflow:hidden}
   /* explicit placement - the DOM order is .v then .t, so without this the value lands in column 1 */
   .def4 .dstats .cell .t{grid-column:1;grid-row:1;font-family:var(--mono);font-size:13px;font-weight:400;line-height:1.5;letter-spacing:0.04em;color:var(--c-200);margin:0;max-width:none}
   .def4 .dstats .cell .v{grid-column:2;grid-row:1;text-align:right;font-size:17px;font-weight:500;line-height:1.4;letter-spacing:-0.069em;margin:0}
-  .def4 .figcap{margin-top:16px;font-size:9px;line-height:1.5;color:var(--c-700)} /* figure annotation tier
+  .def4 .figcap{margin-top:16px;font-size:9px;line-height:1.4;color:var(--c-700)} /* figure annotation tier
      (mono re-sort 2026-08-01): a one-line "Illustrative…" note on a data block is 9 - 11 is reserved for
      text that must be read (required disclosures, dates, fee notes). gap 16, c-700. */
   .def4 .dlead{margin-top:40px;font-size:17px;font-weight:500;line-height:1.4}
@@ -814,7 +844,7 @@ body.menu-open{overflow:hidden}
   .sheet.open{display:block;position:fixed;inset:0;z-index:120}
   .sheet .scrim{position:absolute;inset:0;background:rgba(0,0,0,0.55)}
   .sheet .panel{position:absolute;inset:0;background:var(--c-white);overflow-y:auto;padding:72px 20px 96px}
-  .sheet .panel .dr-doc{max-height:none;overflow:visible} /* the sheet shows the memo uncropped */
+  .sheet .panel .dr-doc{max-height:none;overflow:visible;aspect-ratio:auto} /* the sheet shows the memo uncropped */
   .sheet .panel .dr-doc::after{content:none} /* and without the crop's fade */
   .sheet .scap{margin-top:16px;font-family:var(--mono);font-weight:400;font-size:9px;line-height:1.4;letter-spacing:0.04em;color:var(--c-800)}
   .sheet .scap .mut{display:block}
@@ -848,7 +878,7 @@ body.menu-open{overflow:hidden}
   .cta-fill,.cta-line,.src a,.foot9 a,.metaline.doclist a{position:relative}
   /* .nav .logo is already position:absolute - adding relative here knocked it out of place (2026-08-01) */
   .nav .logo::after{content:'';position:absolute;inset:-14px}
-  .cta-fill::after,.cta-line::after{content:'';position:absolute;inset:-3px}
+  .cta-fill::after,.cta-line::after{content:'';position:absolute;inset:-5px -3px} /* box is 34 tall on mobile (157x34 canon), so -3 only reached 40; -5 vertical = 44 (2026-08-20) */
   .src a::after,.foot9 a::after,.metaline.doclist a::after{content:'';position:absolute;inset:-16px 0}
   /* the burger overlay's own links were 30 (pages) and 20 (EN/FR), and the release headline 40 */
   .menuov .mlist a,.menuov .mlang a,.latest .lt-hd a{position:relative}
@@ -871,13 +901,45 @@ body.menu-open{overflow:hidden}
 
 /* ---- desktop only: THE QUESTION as two flush-top columns (statement left, prose right) ---- */
 @media (min-width:901px){
-  .std5b .rail{display:grid;grid-template-columns:repeat(12, 1fr);column-gap:calc(30 * var(--u));align-items:start}
+  .std5b .rail{display:grid;grid-template-columns:repeat(12, 1fr);column-gap:calc(28 * var(--u));align-items:start}
   .std5b .qcap5,.std5b .suit5{grid-column:1 / -1}
-  .std5b .qh2{grid-column:1 / span 6;max-width:none;margin-top:calc(40 * var(--u))}
+  .std5b .qh2{grid-column:1 / span 6;max-width:none;margin-top:calc(42 * var(--u))}
   /* prose sits in columns 7-12, on the statement's line, so it drops the 120u offset and stacks in one column */
-  .std5b .pgrid5{grid-column:7 / span 6;margin-top:calc(40 * var(--u));grid-template-columns:1fr;row-gap:calc(40 * var(--u))}
-  .std5b .pgrid5 .pcol{gap:calc(40 * var(--u))}
+  .std5b .pgrid5{grid-column:7 / span 6;margin-top:calc(42 * var(--u));grid-template-columns:1fr;row-gap:calc(42 * var(--u))}
+  .std5b .pgrid5 .pcol{gap:calc(42 * var(--u))}
 }
+
+/* ===== REVEAL: one animation -> three roles (2026-08-17, Inkyung) =====
+   Before: all 58 .rv elements ran the same 14px Y fade over .7s, all at once. Measured against
+   anduril.com/mission frame by frame (title -31.9 -> -26.4 -> -16.6 -> -8.5 -> -4.4 -> -2.3 -> 0,
+   subtitle starting 160ms later), the two differences that matter are ROLE and STAGGER, not
+   scroll-scrubbing - their reveals are one-shot too, exactly like ours.
+     label   scramble decode, no move    mono eyebrows
+     text    Y 24 + fade                 titles, prose, CTAs
+     media   left-to-right clip wipe     band photography (had no reveal at all before)
+   14 -> 24 because 14px over .8s is below the distance at which the eye registers movement.
+   cubic-bezier(.16,1,.3,1) approximates Anduril's per-frame lerp: it settles like an instrument
+   coming to rest instead of easing out like a slide.
+   MEDIA IS A WIPE, NOT AN X SLIDE. Anduril slides media in from -100px, but theirs is full-bleed;
+   ours sits inside the same 20px rail as the text (outlines came off 2026-08-17 and 20px side
+   margins went on), so any X translate either crosses the rail or needs a new clipping wrapper.
+   A wipe reads just as directional and cannot overflow - it is bounded by the image's own box.
+   Text keeps Y for the same reason. ALL WIDTHS since 2026-08-17 (Inkyung): desktop had been left on the old single 14px Y fade, so the
+     two screens moved by different grammars. Desktop's band photography is NOT in this - it is
+     full-bleed background media up to 1666px wide, and a 0.9s wipe across that reads as an event in
+     itself rather than an entrance. Only the newsroom feature image takes the media role there. */
+.rv{transition-duration:.8s;transition-timing-function:cubic-bezier(.16,1,.3,1)}
+.rv[data-rv="text"]{transform:translateY(24px)}
+/* The .in reset has to be restated here. Global .rv.in{transform:none} is two classes (0,2,0) and
+   .rv[data-rv="text"] is one class + one attribute - also (0,2,0) - so the tie went to whichever
+   came later in the file, which is this block. Result: elements faded in but stayed parked 24px
+   down. Restating at (0,3,0) settles it in the right direction. */
+.rv[data-rv="text"].in{transform:none}
+.rv[data-rv="label"]{transform:none;opacity:1} /* the scramble IS the entrance - a fade on top of it reads as two separate events */
+.rv[data-rv="media"]{transform:none;opacity:1;clip-path:inset(0 100% 0 0);
+  transition-property:clip-path;transition-duration:.9s}
+.rv[data-rv="media"].in{clip-path:inset(0 0 0 0)}
+
 </style>
 
 <style id="v9-mobile">
@@ -893,7 +955,7 @@ body.menu-open{overflow:hidden}
   .sys .lcol>p.body{display:block}
   .gap2 .body{display:flex;margin-top:64px;gap:24px}
   .loop3 h2 .b{display:block}
-  .def4 .rail>p.body{display:block;margin-top:40px;color:var(--c-400)}
+  .def4 .rail>p.body{display:block;margin-top:40px} /* colour override dropped 2026-08-20 - see the note above */
   .std5b .qcap5{display:block}
   .std5b .pgrid5 .plead{display:block}
   .latest .lt-sum{display:block}
@@ -968,7 +1030,10 @@ body.menu-open{overflow:hidden}
   .loopfig .leg-status{display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;gap:4px 16px;border:0;padding:0;min-width:0}
   .loopfig .leg-status .leg-cap{width:100%}
   .loopfig .leg-cap{font-family:var(--mono);font-size:9px;letter-spacing:0.04em;color:var(--c-800);line-height:1.4} /* dg-allow-font: figure legend. 1.4 per the 2026-08-02 mono tier audit, not the DS 1.5 - see note at the end of this block */
-  .loopfig .k{display:inline-flex;align-items:center;gap:8px;font-size:13px;line-height:1.4;letter-spacing:0;color:var(--c-800);white-space:normal} /* DS small description 13/400/1.4 - 12px was retired 2026-07-28 */
+  /* 11, matching desktop (Inkyung 2026-08-17). NOTE this reverses the 2026-07-28 call that raised
+     it to 13 when 12px was retired - 11 is a live sans tier (16 uses on mobile), but it is a step
+     below the "DS small description" tier that comment was pointing at. */
+  .loopfig .k{display:inline-flex;align-items:center;gap:8px;font-size:11px;line-height:1.4;letter-spacing:0;color:var(--c-800);white-space:normal}
   .sys .row>.pricemoved{order:3;margin-top:40px}
   .sys .pricemoved .fee{margin-top:8px}
   /* The 17/500 family carried a single 1.3 leading (Inkyung 2026-08-13). The intent - one leading
@@ -996,7 +1061,7 @@ body.menu-open{overflow:hidden}
   .loop3 .specimen{margin-top:64px}
 
   /* ---- NO.02: the stat interrupts the prose run - p1, p2, stat, p3 (GM rhythm; JS moves the nodes) ---- */
-  .gap2 p.v9-p3{position:relative;z-index:2;width:calc(100% - 40px);margin:40px auto 0;font-weight:400;font-size:15px;line-height:1.4;letter-spacing:0;color:var(--c-200)}
+  .gap2 p.v9-p3{position:relative;z-index:2;width:calc(100% - 40px);margin:40px auto 0;font-weight:400;font-size:15px;line-height:1.4;letter-spacing:0;color:var(--c-200)} /* prose matches desktop c-200 (2026-08-20) */
   .gap2>.mlink.v9-end{position:relative!important;z-index:2;margin:24px 20px 0!important;width:auto!important;color:var(--c-white)} /* !important - the .band>* linearizer pushed the box to left 0 */
 
   /* ---- The Question: subordinate to NO.05, so it keeps the 22 heading tier
@@ -1004,8 +1069,19 @@ body.menu-open{overflow:hidden}
   .std5b .qh2{font-size:22px;line-height:1.15;letter-spacing:-0.02em} /* 22 tier leading unified with h3/step/streamhd (same size = same leading) */
 
   /* ---- Newsroom: date leads the row (Anduril news list) ---- */
-  .latest .lt-feat .lt-meta{order:-1;margin-top:0}
-  .latest .lt-feat .lt-hd{margin-top:8px}
+  /* THE PICTURE SITS UNDER THE HEADLINE, NOT ABOVE IT.
+     Built picture-first from the desktop layout, and on a phone that put a
+     335px image before any words - you scrolled past a photograph to find out
+     what it was of. Date, headline, then the picture as evidence, then the
+     summary and the link (Inkyung 2026-08-19: "이미지만 제목밑에", applied to the
+     home and the newsroom together: "홈도 뉴스룸도?").
+     Type sizes are untouched - only the order moved. */
+  .latest .lt-feat>.lt-body{display:contents}
+  .latest .lt-feat .lt-meta{order:0;margin-top:0}
+  .latest .lt-feat .lt-hd{order:1;margin-top:8px}
+  .latest .lt-feat>.lt-plate{order:2;margin-top:24px}
+  .latest .lt-feat .lt-sum{order:3;margin-top:24px}
+  .latest .lt-feat .mlink{order:4;margin-top:24px}
   .clog .ci{display:flex;flex-direction:column}
   .clog .ci .cdate{order:-1;margin:0 0 8px}
 
@@ -1058,11 +1134,13 @@ body.menu-open{overflow:hidden}
   .def4 .dstats .cell{display:flex;flex-direction:column;padding:24px 0;border-top:0.667px solid rgba(255,255,255,0.18);border-bottom:0;margin:0}
   .def4 .dstats .cell.gap{border-bottom:0.667px solid rgba(255,255,255,0.18)}
   .def4 .dstats .cell .v{order:-1;text-align:left;font-size:34px;font-weight:500;line-height:1.15;letter-spacing:-0.069em;margin:0}
-  .def4 .dstats .cell .t{font-family:var(--font);font-size:15px;font-weight:400;line-height:1.4;letter-spacing:0;color:var(--c-400);margin:8px 0 0}
+  .def4 .dstats .cell .t{font-family:var(--font);font-size:15px;font-weight:400;line-height:1.4;letter-spacing:0;color:var(--c-200);margin:8px 0 0} /* c-400 -> c-200, matching desktop (2026-08-20) */
 
   /* ---- DS conformance pass (design-system v15, ladder 2026-07-28). These are values the DS
      forbids outright, corrected without changing any confirmed V9 composition decision. ---- */
-  .clog .ci .ct{line-height:1.4}                /* DS sub-heading 15/500 = 1.4, was 1.15 */
+  .clog .ci .ct{font-size:17px;line-height:1.3}   /* 2026-08-20: was body 15. An item title in a tight
+     list is the 17 tier (17/500/1.30). These four were the only titles on the site rendering at body
+     size; the same kind of row in newsroom was already 17, so the two pages disagreed on one thing. */
   /* NOT touched here: mono meta leading stays 1.4. The DS says all mono is 1.5, but that rule is
      dated 2026-07-28 and Inkyung set mono meta to 1.4 across all pages on 2026-08-01 (see the
      block above, ~line 863) with a stated reason. Later decision, so it needs her call, not a
@@ -1071,7 +1149,7 @@ body.menu-open{overflow:hidden}
 </style>
 
 </head>
-<body>
+<body class="p-home">
 
 <nav class="nav">
   <a class="logo" href="index.html" aria-label="Home"><svg viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.59903 0H7.79315L2.19412 17.6523H0L5.59903 0Z"/><path d="M12.8061 0H15.0002L9.40115 17.6523H7.20703L12.8061 0Z"/></svg></a>
@@ -1108,11 +1186,17 @@ body.menu-open{overflow:hidden}
 <header class="band hero">
   <!-- the clips now play on mobile too. data-m points at a 900px-tall encode trimmed to the 20s hold window
        (3.2 / 3.0 / 1.8 MB vs 157 / 157 / 27 MB), and the still is the poster so the first frame paints instantly. -->
-  <video class="on" muted playsinline preload="auto" poster="Images/v5 images/hero-still-nyse.jpg" data-m="Images/v5 images/video mobile/hero-nyse-m.mp4" src="Images/v5 images/video desktop/hero-nyse-d.mp4"></video>
-  <video muted playsinline preload="metadata" data-m="Images/v5 images/video mobile/hero-refinery-m.mp4" src="Images/v5 images/video desktop/hero-refinery-d.mp4"></video>
-  <video muted playsinline preload="metadata" data-m="Images/v5 images/video mobile/hero-port-m.mp4" src="Images/v5 images/video desktop/hero-port-d.mp4"></video>
+  <!-- autoplay added 2026-08-17: without it this clip relied solely on the rotation script's
+       play() call, which was failing and being swallowed by its own p0.catch(function(){}), so all
+       three hero clips sat frozen on frame 0 - on desktop too, so it was not the mobile source
+       swap. NO.04's train clip carries the attribute and plays fine; this one was the outlier.
+       Only clip 1 needs it - clips 2 and 3 are started by advance() from ended/timeupdate, which
+       fire during playback and so already have a playing context. -->
+  <video class="on" autoplay muted playsinline preload="auto" poster="Images/v5-images/hero-still-nyse.jpg" data-m="Images/v5-images/video-mobile/hero-nyse-m.mp4" src="Images/v5-images/video-desktop/hero-nyse-d.mp4"></video>
+  <video muted playsinline preload="metadata" data-m="Images/v5-images/video-mobile/hero-refinery-m.mp4" src="Images/v5-images/video-desktop/hero-refinery-d.mp4"></video>
+  <video muted playsinline preload="metadata" data-m="Images/v5-images/video-mobile/hero-port-m.mp4" src="Images/v5-images/video-desktop/hero-port-d.mp4"></video>
   <div class="hgroup">
-    <div class="heyeb rv"><img class="hlogo" src="II word logo.svg" alt="Intelligent Investing"></div><!-- typed wordmark replaced with the real logo, tagline removed (2026-07-31) -->
+    <div class="heyeb rv"><img class="hlogo" src="II-word-logo.svg" alt="Intelligent Investing"></div><!-- typed wordmark replaced with the real logo, tagline removed (2026-07-31) -->
     <div class="hbars">
       <span class="hbar rv dtonly">The market remembers <br class="mbr">every decision.</span>
       <span class="hbar rv mbonly">The market remembers</span>
@@ -1136,7 +1220,7 @@ body.menu-open{overflow:hidden}
       <h2><span class="a">One system.</span><span class="b">Two ways to allocate.</span></h2>
       <p class="body">Some capital is best served by a disciplined default. Some decisions you will choose to make yourself. Both are capital allocation. Both should have a defined purpose, an appropriate benchmark, and a record of what the capital was asked to do.</p>
       <div>
-        <p class="pricehd dtonly">$20 / month &middot; one membership &middot; <span class="nw">Managed and Self-Directed included</span></p>
+        <p class="pricehd dtonly">$20 / month &middot; <span class="v11-mem">One Membership</span> &middot; <span class="nw">Managed and Self-Directed included</span></p><!-- "one membership" -> Title Case (Inkyung 2026-08-17): once $20 / month is lifted onto the figure line, this fragment starts the label, and a label opens in Title Case per the casing rule. Same words. -->
         <p class="pricehd mbonly">$20 / month &middot; one membership<br>Managed and Self-Directed included</p><!-- Figma mobile master 2026-07-31: "one membership" restored, fixed 2-line break -->
         <p class="fee">Managed assets carry an additional 0.10% fee.</p>
       </div>
@@ -1184,8 +1268,8 @@ body.menu-open{overflow:hidden}
 
 <!-- NO.02 THE MISSING LAYER -->
 <section class="band gap2" id="missing-layer"><!-- ids on every content section feed the SECTIONS list in the burger overlay (2026-08-01) -->
-  <img class="ph1" src="Images/v5 images/judgement section.png" alt="">
-  <img class="ph2" src="Images/v5 images/matthew-dlr-0_Hp9s_hW6g-unsplash.jpg" alt="">
+  <img class="ph1" src="Images/v5-images/judgement-section.png" alt="">
+  <img class="ph2" src="Images/v5-images/matthew-dlr-0_Hp9s_hW6g-unsplash.jpg" alt="">
 
   <div class="eyebrow rv">NO. 02 &middot; THE MISSING LAYER</div>
   <div class="hbargrp">
@@ -1283,7 +1367,7 @@ body.menu-open{overflow:hidden}
 
 <!-- NO.04 THE DEFAULT (dark data) -->
 <section class="band def4 secpad" id="default">
-  <video autoplay muted loop playsinline poster="Images/v5 images/def4-still-rails.jpg" data-m="Images/v5 images/video mobile/fig-train-m.mp4" src="Images/v5 images/video desktop/fig-train-d.mp4"></video>
+  <video autoplay muted loop playsinline poster="Images/v5-images/def4-still-rails.jpg" data-m="Images/v5-images/video-mobile/fig-train-m.mp4" src="Images/v5-images/video-desktop/fig-train-d.mp4"></video>
   <div class="rail">
     <div class="eyeb rv">NO. 04 &middot; THE DEFAULT</div>
     <h2 class="bigh2 rv"><span class="a">The default is the market.</span><span class="b">Everything else is earned.</span></h2>
@@ -1305,7 +1389,7 @@ body.menu-open{overflow:hidden}
 
 <!-- NO.05 THE STANDARD (photo band; PLACEHOLDER image - replace when picked) -->
 <section class="band std5" id="standard">
-  <img src="Images/v5 images/panagiotis-falcos-eFQy2PmThNo-unsplash.jpg" alt="">
+  <img src="Images/v5-images/panagiotis-falcos-eFQy2PmThNo-unsplash.jpg" alt="">
   <div class="eyebrow5 rv">NO. 05 &middot; THE STANDARD</div>
   <div class="hbargrp5">
     <span class="hbar rv">The standard is high.</span>
@@ -1404,7 +1488,7 @@ body.menu-open{overflow:hidden}
 <section class="band close9 secpad">
   <div class="rail">
     <div class="eyeb rv">INTELLIGENT INVESTING</div>
-    <h2 class="bigh2 rv"><span class="a">Nobody can buy a ten-year record.</span><span class="b dim">It has to be kept.</span></h2>
+    <h2 class="bigh2 rv"><span class="a">Nobody can buy a ten-year record.</span><span class="b">It has to be kept.</span></h2>
     <div class="cols rv">
       <div class="ccol">
         <p>Money buys access, information and tools this afternoon. It cannot buy ten years of dated decisions, revised cases, recorded mistakes and measured outcomes. Time is the one input that cannot be accelerated.</p>
@@ -1435,26 +1519,153 @@ body.menu-open{overflow:hidden}
 <script>
 (function(){
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mob=window.matchMedia('(max-width:900px)').matches;
+
+  /* Band photography is NOT tagged here. The .v9band wrappers are built by the mobile JS further
+     down the document, so at this point they do not exist and the selector matched nothing.
+     Media reveals are set up in v11-mobile-js instead, after the wrapping has run. */
+
+  /* The hero CTA pair was one 78px .rv block, so the filled button and the text link arrived in the
+     same instant. Moving the reveal down onto its two children lets them take consecutive stagger
+     slots (button, then link) - the pair reads as an offer followed by an alternative rather than a
+     slab. Mobile only; desktop keeps the row as a single reveal. */
+  if(!reduce){
+    [].forEach.call(document.querySelectorAll('.ctarow.rv'),function(row){
+      if(row.children.length<2) return;
+      row.classList.remove('rv');
+      [].forEach.call(row.children,function(c){c.classList.add('rv');});
+    });
+  }
+
   var rv=[].slice.call(document.querySelectorAll('.rv'));
+
+  /* sort every reveal into one of the three roles (see the CSS note). All widths since 2026-08-17. */
+  if(!reduce){
+    rv.forEach(function(el){
+      var t=el.tagName;
+      if(t==='IMG'||t==='VIDEO'||t==='FIGURE'||el.classList.contains('ph1')){el.dataset.rv='media';return;}
+      /* mono eyebrows only, and only when they hold nothing but text. .heyeb is excluded on purpose:
+         it carries the wordmark <img>, and the scramble rewrites textContent, which would delete it. */
+      /* .htrust joins the labels: "A licensed Canadian brokerage . regulated by CIRO . CIPF member"
+         is IBM Plex Mono 11/0.04em - the same machine-label surface as the eyebrows - and it gives
+         beat 2 the decode moment the hero cannot have (the hero wordmark is an <img>, and running a
+         decode on a 28px statement would read as a gimmick).
+         The img/svg guard matters: .heyeb also looks like an eyebrow but carries the wordmark image,
+         and a label reveal would leave it with no animation at all. */
+      if((/(^|\s)(eyeb|eyebrow|eyebrow5|htrust)(\s|$)/.test(el.className)
+          ||/^NO\.\s*\d/.test((el.textContent||'').trim()))&&!el.querySelector('img,svg')){el.dataset.rv='label';return;}
+      /* the text test catches NO.03, whose eyebrow is a leaf div.mast rather than an .eyeb */
+      el.dataset.rv='text';
+    });
+  }
+
+  /* ---- scramble decode, for data-rv="label" ----
+     Anduril needs a duplicate aria-hidden copy of the string to hold the line while the visible one
+     churns. We do not: every eyebrow is IBM Plex Mono, so all glyphs share one advance width and the
+     line cannot reflow. Punctuation and spaces are held fixed, so the shape of "NO. 01 . THE SYSTEM"
+     is readable from the first frame and only letters and digits churn, resolving left to right. */
+  var GLYPH='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  function scramble(el){
+    /* Walks TEXT NODES rather than rewriting textContent. .htrust is three <span>s (two phrases and
+       a separator), and a wholesale textContent rewrite would delete them along with their styling.
+       Resolution is measured across the concatenated length so the left-to-right sweep runs over the
+       whole line, not restarting inside each span. */
+    var nodes=[], total=0;
+    (function walk(n){
+      for(var i=0;i<n.childNodes.length;i++){
+        var c=n.childNodes[i];
+        if(c.nodeType===3){ if(c.textContent.length){nodes.push({n:c,t:c.textContent}); total+=c.textContent.length;} }
+        else if(c.nodeType===1) walk(c);
+      }
+    })(el);
+    if(!total) return;
+    var DUR=520, t0=null;
+    function frame(now){
+      if(t0===null)t0=now;
+      var p=Math.min(1,(now-t0)/DUR), done=p*total, seen=0;
+      nodes.forEach(function(r){
+        var out='';
+        for(var i=0;i<r.t.length;i++){
+          var ch=r.t[i];
+          out+=(seen+i<done||!/[a-z0-9]/i.test(ch))?ch:GLYPH[(Math.random()*GLYPH.length)|0];
+        }
+        r.n.textContent=out; seen+=r.t.length;
+      });
+      if(p<1)requestAnimationFrame(frame);
+      else nodes.forEach(function(r){r.n.textContent=r.t;});
+    }
+    requestAnimationFrame(frame);
+  }
+
+  /* ---- stagger: everything that crosses in the same frame goes 160ms apart ----
+     Grouping by FRAME rather than by section is what makes a paragraph assemble instead of the whole
+     page popping: the elements that enter together are exactly the ones the reader takes in together.
+     Capped at 4 steps (640ms) so a long run never leaves its last item lagging behind the scroll. */
+  var queue=[],pending=false;
+  function reveal(el,i){
+    var d=Math.min(i,4)*160;
+    if(el.dataset.rv==='label'){setTimeout(function(){scramble(el);},d);el.classList.add('in');return;}
+    el.style.transitionDelay=(d/1000)+'s';
+    el.classList.add('in');
+  }
+  function enqueue(el){
+    if(reduce){el.classList.add('in');return;}
+    queue.push(el);
+    if(pending)return; pending=true;
+    requestAnimationFrame(function(){
+      queue.forEach(function(e,i){reveal(e,i);});
+      queue=[];pending=false;
+    });
+  }
+
   if(reduce||!('IntersectionObserver' in window)){rv.forEach(function(el){el.classList.add('in');});}
   else{
-    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px',threshold:.06});
-    /* anything already inside the first screen reveals immediately - the observer's
-       -8% bottom margin left first-screen elements (e.g. the hero compliance line) hidden until scroll */
-    rv.forEach(function(el){
-      var r=el.getBoundingClientRect();
-      if(r.top<window.innerHeight&&r.bottom>0){el.classList.add('in');}
-      else{io.observe(el);}
-    });
+    /* ---- everything is observed; nothing is revealed by a one-off measurement (2026-08-17) ----
+       There used to be a "already inside the first screen -> reveal immediately" branch, and it was
+       the reason beat 2 felt dead: it measured positions once, at parse time, while the descriptor,
+       trust line and CTA pair were STILL INSIDE .hero near the top of the document (the mobile JS
+       moves them into .v11-hero2 later) and the hero had not yet been sized to 100svh. All of beat 2
+       therefore counted as on-screen and spent its entrance at scrollY 0; by the time the reader
+       scrolled down it was simply sitting there. Deferring that measurement was tried twice - one
+       rAF, then a layout-ready handshake - and both still raced the restructure.
+       Handing every element to the observer removes the race outright: IntersectionObserver
+       re-evaluates continuously, so an element that gets moved after being observed is still judged
+       on where it actually ends up. Inkyung 2026-08-17: "스크롤 하면서 노출이 되어야 애니메이션이
+       작동하게끔" - which is exactly what this now guarantees.
+       rootMargin is a flat -60px rather than -8%: the percentage put the trigger line at 747 on an
+       812 screen, which is above the hero's own second headline line (748) - so the hero would have
+       waited for a scroll that never comes on a one-viewport hero. 60px still holds back anything
+       merely peeking in at the bottom edge. */
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){enqueue(e.target);io.unobserve(e.target);}});},{rootMargin:'0px 0px -60px 0px',threshold:0});
+    /* Observation itself is deferred to load. IntersectionObserver runs its FIRST evaluation the
+       moment observe() is called, against whatever layout exists right then - so observing early and
+       trusting IO to re-evaluate does not help: beat 2 fired and unobserved itself immediately.
+       By load, the mobile restructure has moved beat 2 out of .hero and the hero has its 100svh
+       height (its own fit() also runs on load, and registers later in the document than this, so it
+       runs first). One rAF after that guarantees layout is flushed. */
+    var observeAll=function(){
+      if(observeAll.done) return; observeAll.done=true;
+      /* load + 120ms, not load + 1 frame: the hero re-fits once more when fonts.ready resolves, and
+         observing before that settled left the descriptor and trust line still measuring above the
+         fold - they revealed at scrollY 0 while the CTA pair below them correctly waited. */
+      setTimeout(function(){ rv.forEach(function(el){io.observe(el);}); },120);
+    };
+    if(document.readyState==='complete') observeAll();
+    else window.addEventListener('load',observeAll);
   }
 })();
 (function(){
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
     [].slice.call(document.querySelectorAll('video[autoplay]')).forEach(function(v){v.removeAttribute('autoplay');v.pause();});
   }
-  /* mobile runs on still frames - never download the section clips */
+  /* mobile drops the SECTION clips to still frames - never download those masters.
+     The hero is excluded (2026-08-17): it is the one clip that does play on mobile (see the note
+     on the <video> tags and the data-m swap right below, which deliberately fetches its light
+     encode). This rule matched on video[autoplay], so the moment the hero gained that attribute it
+     fell in here and got its src stripped - which is why adding autoplay alone did nothing. */
   if(window.matchMedia('(max-width:900px)').matches){
-    [].slice.call(document.querySelectorAll('video[autoplay]')).forEach(function(v){v.removeAttribute('autoplay');v.pause();v.preload='none';v.removeAttribute('src');v.load();});
+    [].slice.call(document.querySelectorAll('video[autoplay]')).filter(function(v){return !v.closest('.hero');})
+      .forEach(function(v){v.removeAttribute('autoplay');v.pause();v.preload='none';v.removeAttribute('src');v.load();});
   }
 })();
 /* below 900px every clip is served from its light encode (data-m) instead of the 4K master */
@@ -1492,19 +1703,34 @@ body.menu-open{overflow:hidden}
     v.addEventListener('ended',advance);
     v.addEventListener('timeupdate',function(){if(v.classList.contains('on')&&v.currentTime>=HOLD)advance();});
   });
-  var p0=vids[0].play(); if(p0&&p0.catch)p0.catch(function(){});
+  /* Start clip 1 defensively (2026-08-17). A bare play() here lost a race: the data-m swap above
+     calls load(), whose resource-selection step is queued, so it could land AFTER this play() and
+     abort it - and the old p0.catch(function(){}) swallowed the AbortError, leaving all three clips
+     frozen on frame 0 with no trace. Proof it was self-inflicted and not browser policy: an
+     identical <video muted autoplay> built from the same src plays fine on this page.
+     Clip 1 now also carries the autoplay attribute, so this is the second of two chances; the
+     canplay retry is the third and covers the case where load() aborts both. */
+  (function start(v){
+    var p=v.play();
+    if(p&&p.catch)p.catch(function(){
+      v.addEventListener('canplay',function h(){
+        v.removeEventListener('canplay',h);
+        var q=v.play(); if(q&&q.catch)q.catch(function(){});
+      });
+    });
+  })(vids[0]);
 })();
 /* No.05b suitability lists: collapsed on mobile, tap the label to expand */
 (function(){
   if(!window.matchMedia('(max-width:900px)').matches) return;
-  /* NO.01 directory + No.05b suitability lists share the same tap-title-to-disclose pattern */
-  [].slice.call(document.querySelectorAll('.sys .mode')).forEach(function(d){ /* .suit5 fold retired 2026-07-31 */
-    var h=d.querySelector('h3'); if(!h) return;
-    h.setAttribute('role','button'); h.setAttribute('tabindex','0'); h.setAttribute('aria-expanded','false');
-    function toggle(){var open=d.classList.toggle('open'); h.setAttribute('aria-expanded',open?'true':'false');}
-    h.addEventListener('click',toggle);
-    h.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}});
-  });
+  /* The NO.01 mode fold (Managed / Self-Directed / Fiscal.ai Max) was retired when the mode bodies
+     went permanently visible on mobile, but this JS kept running: it was still stamping
+     role="button", tabindex="0" and aria-expanded="false" on the three h3s and toggling an .open
+     class that no rule reads (verified: zero CSS matches .mode.open). The result was three headings
+     a screen reader announced as "button, collapsed" over content that was already showing, three
+     dead keyboard tab stops, and a tap that did nothing - while the h3s had no + and no pointer
+     cursor, because they are correctly NOT controls any more. Removed 2026-08-17.
+     The suitability lists keep their own handler further down; only NO.01's is dead. */
   /* NO.03 prose fold: the VIEW MORE label reveals p3/p2 */
   /* NO.03, mobile only (CSS cannot move a node between containers):
      the closing payoff joins the VIEW MORE fold, and the CTA moves below the memo specimen so the
@@ -1650,7 +1876,12 @@ body.menu-open{overflow:hidden}
   var burger=document.querySelector('.nav .burger');
   var ov=document.getElementById('menuov');
   if(!burger||!ov)return;
-  function toggle(){var open=document.body.classList.toggle('menu-open');ov.classList.toggle('open',open);ov.setAttribute('aria-hidden',String(!open));}
+  /* bind once. Two handlers on the same button toggle twice per click, so the menu opens and shuts in
+     the same frame - it looks like a dead button. Seven pages carried both this block and the page's own
+     copy until 2026-08-20; the page copies were removed and this flag stops it happening again. */
+  if(document.documentElement.dataset.iiBurger)return;
+  document.documentElement.dataset.iiBurger='1';
+  function toggle(){var open=document.body.classList.toggle('menu-open');ov.classList.toggle('open',open);ov.setAttribute('aria-hidden',String(!open));burger.setAttribute('aria-expanded',String(open));}
   burger.addEventListener('click',toggle);
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.body.classList.contains('menu-open'))toggle();});
 })();
@@ -1729,8 +1960,11 @@ body.menu-open{overflow:hidden}
   var hero=document.querySelector('.hero'),heyeb=document.querySelector('.hero .heyeb'),hg=document.querySelector('.hero .hgroup');
   if(hero&&heyeb&&hg){hero.insertBefore(heyeb,hg);}
   /* legend stays inside the cream plate (2026-08-13) */
+  /* MOBILE ONLY moves the block out of .lcol and onto the rail. The .pricemoved CLASS is applied at
+     every width by the script below, because desktop wants the same treatment in place - lifting it
+     out of the left column there would mean rebuilding the section's three-band flex. */
   var fee=document.querySelector('.sys .lcol .fee'),row=document.querySelector('.sys .row');
-  if(fee&&row){var pw=fee.parentElement;pw.classList.add('pricemoved');row.appendChild(pw);}
+  if(fee&&row){row.appendChild(fee.parentElement);}
   /* photo bands: wrap media + masthead, masthead bottom-anchored (GM) */
   function v9band(sec, bandSel, ovlSels){
     var el=document.querySelector(sec); if(!el) return;
@@ -1778,6 +2012,1347 @@ body.menu-open{overflow:hidden}
 }
 })();
 </script>
+
+
+<style id="v11-mobile">
+/* ---------------------------------------------------------------------------
+   2026-08-19: every rule that belongs to more than one page was DELETED from this
+   block and now lives in shared/v11.css, which loads after it. If a value you
+   expect is not here, it is there. Comments left behind describe decisions whose
+   rule moved - the reasoning is kept, the duplicate is not.
+   THIS BLOCK MAY ONLY CARRY #section-id RHYTHM AND DOCUMENTED PAGE EXCEPTIONS.
+   --------------------------------------------------------------------------- */
+
+/* ============ V11 MOBILE — beat layer (2026-08-17) ============
+   V11 doctrine: copy unchanged · zero content loss · no horizontal
+   swipe · desktop untouched. Everything else serves mobile polish.
+   Reference: Apple iPhone 17 Pro (one idea per screen). */
+@media (max-width:900px){
+  /* ===== BEAT 1 — split hero: media on top, text on black below =====
+     Inkyung 08-17: stop setting text over the footage. The SD hero already
+     splits its viewport (text 638 / video 154 at 375 = 80/20); the home hero
+     takes the same proportion inverted - image top, words bottom - so the
+     black text zone runs straight into the next beat with no seam. Apple
+     iPhone 17 Pro does the same: full-bleed product shot, then a black band
+     carrying the words and the CTA. */
+    /* Section rhythm is 104/104 everywhere - measured on all 9 sections, edge to
+     first/last element. The hero was the only exception at 32, which made its
+     hairline asymmetric (32 above / 104 below) and read as a mistake.
+     Fixed without giving up the media ratio: the hero is no longer clamped to
+     one viewport. It runs media + 32 + lockup + 104, so at 375 it is 884 tall
+     and the fold at 812 cuts through the 104 bottom padding. The reader still
+     sees media at 76.5% of the screen and the statement 32px clear of the
+     bottom edge, while the section itself keeps a full 104 before the line.
+     flex-start + explicit margin instead of flex-end: with flex-end the band
+     is pinned to the content-box foot, so a 104 pad drags it up under the media. */
+  /* REBUILT 2026-08-17 - the hero is now exactly one viewport on every device.
+     What was wrong: only the MEDIA was proportional (76.5svh); the tail under it was fixed pixels
+     (32 + wordmark + 24 + statement + 104 pad = 262). So the composition only landed at ~812:
+       667 -> statement bottom 668 vs fold 667  = CUT BY 1px
+       812 -> 780 vs 812                        = 32 clear   <- the screenshot Inkyung sent
+       932 -> 871 vs 932                        = 61 clear, statement floating
+     The fix inverts which side is fixed: the TAIL is now fixed and the MEDIA takes the remainder,
+     so the statement sits 32 off the fold at every height. --htail is measured in JS (see
+     v11-mobile-js) because the statement's line count changes with viewport width; the 190px
+     fallback is the 375 value (32 media->wordmark + 10 wordmark + 24 + 92 statement + 32 foot).
+     The 104 bottom pad is gone: this hero's foot IS the fold, and the 104 that used to live here
+     now sits on .v11-hero2's top so the beat gap reads 104 ink-to-ink. */
+  body.p-home .hero{background:var(--c-black);padding-top:0!important;padding-bottom:0!important;justify-content:flex-start!important}
+  body.p-home .hero>video,.hero>img{inset:auto!important;top:0!important;left:0!important;right:0!important;bottom:auto!important;width:100%!important;height:calc(100svh - var(--htail,190px))!important} /* was a flat 76.5svh; see the .hero note above. At 375/812 this resolves to 622 - within 1px of the old 621, so the crop the footage was chosen for is preserved and only short/tall devices change. The media->wordmark leftover stays 32 (DS scale) rather than 28. SD splits 81 text / 19 video at 375; the home hero takes the same proportion inverted. 77 is the floor: wordmark 12 + 24 + statement 92 + 32 pad needs ~23svh, so the media cannot go past 77 without crushing the band. inset first - it is a shorthand and resets top/left if it comes after */
+  /* footage is no longer under the type, so the readability scrim goes (was 0.45) */
+  body.p-home .hero>video{filter:brightness(0.9) contrast(1)}
+  /* wordmark + statement = one lockup on the black ground. v9 pins the
+     wordmark to the hero top (932, absolute top:74); back to static flow. */
+  body.p-home .hero>.heyeb{position:static!important;top:auto!important;left:auto!important;margin:calc(100svh - var(--htail,190px) + 32px) 0 24px!important;padding:0 20px;z-index:2}
+  /* wordmark eased down from the Figma master's 192 (=12px tall) to 168
+     (=10.5px). In the lockup it sits directly above a 28px statement, so the
+     master's size - set when the wordmark stood alone at the hero top - now
+     competes with it (Inkyung 08-17). Flag for Figma sync. */
+  body.p-home .hero .heyeb .hlogo{width:168px}
+  body.p-home .hero .hgroup{background:var(--c-black);margin-bottom:0!important}
+  body.p-home .hero .hgroup .hbars{margin-bottom:0}
+  /* no box means no box leading. DS: .hbar's 1.5 exists only to make the
+     black clone boxes meet - on a plain ground it goes to the 1.1 display
+     tier (same call as the SD hero, V10 HANDOFF 0-B). */
+  body.p-home .hero .hbar{background:none!important;padding:0!important;line-height:1.1!important}
+  /* top gradient protects wordmark/nav over the brighter footage (Apple pattern) */
+  body.p-home .hero{position:relative}
+  body.p-home .hero::after{content:'';position:absolute;left:0;right:0;top:0;height:24vh;pointer-events:none;z-index:1;
+    background:
+      /* corner scrim - the nyse clip is bright sky in the top right exactly where the
+         burger sits, while the left is dark facade. Darkening the whole frame again
+         would undo the 0.45 -> 0.9 lift, so only the corner gets a ground. The other
+         two clips are already dark there, so it costs them nothing (Inkyung 08-17). */
+      radial-gradient(75% 100% at 100% 0%,rgba(0,0,0,0.55),rgba(0,0,0,0) 72%),
+      linear-gradient(to bottom,rgba(0,0,0,0.72),rgba(0,0,0,0.30) 45%,rgba(0,0,0,0))}
+  /* the burger is two 1px white hairlines, so it needs a dark ground to exist
+     at all - it vanished once the footage went to 0.9 brightness. The gradient
+     above carries it at rest; the shadow carries it if the nav reappears over
+     a bright frame mid-scroll (hide-on-scroll can bring it back anywhere). */
+  /* c-600 (944, 2026-08-16) was chosen against footage at 0.45 brightness. At
+     0.9 two 1px c-600 hairlines vanish into the sky. c-200 restores contrast
+     and still sits a step below the white logo, keeping that decision's intent. */
+  .nav .burger span{background:var(--c-200)!important}
+  /* ...but the !important also clobbered the scrolled state (947 sets c-800 for the
+     light nav), so on cream sections the burger went light-grey-on-white and
+     disappeared. The scrolled state has to win it back at the same weight. */
+  .nav.scrolled .burger span{background:var(--c-800)!important}
+  body.menu-open .nav .burger span{background:var(--c-200)!important}
+  /* (removed) drop-shadow on the burger and the logo. I had added a 2px shadow as
+     a second guarantee for the scroll-up case, but it reads as a blur on the mark -
+     worst of all in the .scrolled state, where the nav goes light and the shadow has
+     nothing to fight (Inkyung 08-17). The top gradient and the c-200 bump carry it. */
+
+  /* BEAT 2 — hero deck promoted to its own moment */
+  /* 72 top, not 104: the hero's foot is the fold and its own bottom pad is now 32, so 32 + 72
+     renders 104 ink-to-ink - the ladder's BETWEEN-BEATS value, half the 208 it used to be.
+     These two are one masthead (wordmark -> statement -> descriptor -> CTA) that the fold happens
+     to cut in half, not two sections, so they take a beat gap and no rule. Bottom stays 104. */
+  body.p-home .v11-hero2{background:var(--c-black);padding:72px 20px 104px} /* section rhythm canon: 104/104, same as every band */
+  /* Same-colour adjacency takes the c-900 hairline (doctrine; same call as
+     .gap2/.std5/.std5b at 924). Two boundaries need it here, not one: the
+     hero foot meets beat 2 on black, and beat 2 meets NO.01 on black. Without
+     the line the 136px between the statement and the deck reads as empty
+     space rather than a boundary - Inkyung 2026-08-16: "black-on-black without
+     a line reads as one endless space." */
+  /* .v11-hero2 dropped from this rule 2026-08-17. A hairline announces a section boundary, and
+     there is none here - same ground, same masthead, only the fold between them. Removing it makes
+     the rule mean something: line = between sections, no line = inside one. */
+  #system{border-top:0.667px solid var(--c-900)}
+  /* ...but c-900 cannot be seen on c-black. Measured contrast #232627 on #000
+     is 1.38:1, against the 3:1 floor for a non-text boundary - so the line was
+     rendering (1 physical px at DPR 2) and still invisible, at any thickness.
+     c-900 is the DS "structural lines" token and it works: on c-elev (#0A0A0A)
+     or c-surface (#151515), where it has a raised ground to sit on. On pure
+     black it has nothing to push against. c-800 (#565B5E) measures 3.05:1 -
+     the first token that clears the floor - and stays a hairline rather than a
+     divider. Applied to the V10 lines on this page too (.gap2/.std5/.std5b at
+     924), which had the same problem. DS v17 candidate. */
+  #system,.gap2,.std5,.std5b{border-top-color:var(--c-800)}
+
+  /* ---- NO.05 (#standard): the line under the plate, and the gap that caused it
+     (2026-08-17, Inkyung: "하단에 섹션 헤어라인이 있음. 그거 제거") ----
+     #standard is a band-only section and kept the original design's 0/0 padding,
+     so .std5b's section hairline landed flush on the image's bottom edge (measured:
+     image bottom, section bottom and .std5b top all at y=9233). It stopped reading
+     as a section divider and started reading as part of the picture frame.
+     Two fixes, both needed: drop that one hairline, and give the section the 104
+     bottom it never had, which also repairs the 105 boundary (target 208). */
+  /* Reverted to 0 on 2026-08-17 (Inkyung: "한 섹션인데?" / "여기 공간 너무 멀어").
+     I had given #standard a 104 bottom so the NO.05 -> QUESTION boundary would read 208, the section
+     value. That was wrong: #standard is a band-image-only <section> and QUESTION is the text that
+     belongs to it, so the two tags are one unit of content. 208 is for a boundary between sections;
+     this is a beat inside one, which is 104 - and .std5b already supplies it. Counting <section>
+     tags instead of reading the content is what produced the error. */
+  #standard{padding-bottom:0}
+  .std5b{border-top:0}
+
+  /* ===== CLOSE (.close9) — beats (2026-08-17) =====
+     Two beats: [statement + offer + action] / [regulatory standing].
+     The masthead states the close, the $20 line is its offer and the CTA pair is
+     the action for that offer - one idea walking forward, so 48 inside. The trust
+     block is a different register (marketing -> regulatory disclosure), so it is
+     separated, and it already carries a hairline.
+
+     Was: 40 above the line / 16 below, and the item gaps ran 4 / 16 / 51 / 4 / 16
+     - none of them ladder values, and the asymmetric line read as attached to the
+     text under it rather than dividing the two blocks.
+
+     48/48 around the line, not 104/104: the hairline is already doing the
+     separating, so the air only has to be equal and on the ladder. 104 would put
+     208 here - the same total as a section boundary - and the trust block is the
+     section's tail, not a section of its own. (I first proposed 64/64 and withdrew
+     it: 64 is not one of the three V11 values.) */ /* four parallel items */          /* label -> value, inside one item */
+
+  /* ---- trust block folds behind a + (2026-08-17, Inkyung, Anduril footer grammar) ----
+     ⚠ COMPLIANCE UNCONFIRMED. This is the "푸터 아코디언 컴플라이언스" item already flagged for
+     Dave in the V10 handoff §7-4, and .trust9's own fold was retired on 2026-07-31. Regulatory
+     standing may have to stay visible rather than sit behind a tap. If the answer is no, delete
+     this block and the matching JS - nothing else depends on it.
+
+     No new tokens: the control reuses the .vmemo spec already proven on "+ VIEW THE FULL MEMO"
+     (13 mono, 0.04em, 44px tap target via ::after inset), the toggle reuses the .lmore/.gmore
+     pattern, and .tmore is the class this page already reserved for exactly this. */ /* 44px tap target */
+  /* Was falling back to the UA focus ring - a black rectangle round the full 335 width (Inkyung
+     screenshot 2026-08-17). Only .suit5's fold heading had a styled ring, so this borrows its exact
+     spec rather than inventing one. Fires on click in a desktop browser; touch usually skips it. */
+
+  /* ===== NEWSROOM (.latest) — beats (2026-08-17) =====
+     This section carries TWO streams, Press Releases and Changelog, and they are
+     different ideas - one is company news, the other is product history. So the
+     section is two beats and the stream boundary takes 104 (was 64, off ladder).
+
+     Inside the featured release, date / headline / summary are one item: 8 for the
+     date-to-headline pair (the label-to-value relation the trust block uses) and
+     16 for headline-to-summary. Were 7 and 17 - near-miss values, not chosen ones.
+
+     The changelog rows are left alone: .ci carries padding-top 24 and its own
+     hairline, so the 49/57/59 the audit reported are row height + 24, the same
+     ledger component NO.03 uses. */
+  .latest .clog{margin-top:104px}
+  .latest .lt-hd{margin-top:8px}
+  .latest .lt-sum{margin-top:16px}
+
+  /* ---- images in NEWSROOM (2026-08-17, Inkyung, Anduril news grammar) ----
+     ⚠ Desktop NEWSROOM carries no images at all, so this is mobile-only and touches §2-5
+     ("no image that the desktop does not have"). Opened on Inkyung's instruction, recorded here
+     rather than done quietly. Two different things, on purpose:
+
+     1. The featured release gets its OWN plate - press-release-light-clean.png is the image the
+        press-release page already runs, so this is that article's picture in that article's slot,
+        not a new photo pulled from the library. 210 tall, not the 360 the section bands use: a band
+        opens a beat, this is a figure attached to a story, and the tiers should not read alike.
+     2. The changelog rows get an 88x56 wordmark tile. There are no product screenshots, so a photo
+        would have to be invented; Anduril solves the same gap with a plain ANDURIL tile. All four
+        rows carry the same tile - if that reads as repetition, the fallback is to keep the tile on
+        the newest row only. */
+  /* .lt-feat is a flex column and .lt-meta carries order:-1 (V10, line ~1007), so inserting the
+     plate as first child still rendered it BELOW the date. It needs an order of its own to sit
+     first: image -> date -> headline -> summary -> link, the Anduril order. Spacing is declared
+     here rather than left to the generic `>*+*` rule, which was giving 32 and 39. */
+    /* display:contents so the wrapper the newsroom script adds for the desktop two-column layout has
+     no effect here - .lt-plate's order:-2 and .lt-meta's order:-1 keep working against .lt-feat. */
+  .latest .lt-feat .lt-body{display:contents}
+  /* 1:1, not the old fixed 210 (2026-08-17). Same reason as desktop: the source is a 5552x6243
+     portrait, so a 335x210 landscape frame was cropping away more than half of it. */
+  .latest .lt-plate{order:-2;display:block;width:100%;aspect-ratio:1/1;height:auto;object-fit:cover;margin:0}
+  .latest .lt-feat .lt-meta{margin-top:24px}   /* image -> date */
+  .latest .ltgrid{margin-top:0}             /* was 24 twice (here and again at the streamrow block below): it stacked with the date row's own 24, so Press Releases sat 48 under its rule while Changelog sat 24. The rule gets 24 on both faces now (Inkyung 2026-08-20) */
+
+  /* ---- stream header row: heading + VIEW ALL, hairline under (2026-08-17, Inkyung) ----
+     Anduril's news grammar, which Inkyung picked out: "News ———— All Articles ↗".
+
+     ⚠ REOPENS A CLOSED DECISION. The ALL PRESS RELEASES link was hidden on 2026-07-31 with this
+     reason in the markup: "moving 'all' up beside the heading would mint a new landing CTA slot."
+     Reopened on Inkyung's instruction 2026-08-17 after she chose the Anduril treatment. Recording it
+     rather than doing it quietly, per the rule about not reframing closed decisions.
+
+     Both streams get the same row, so the asymmetry (Changelog had VIEW ALL, Press Releases did not)
+     is gone. Labels stay different because the destinations differ - #press-release vs #changelog. */
+  .latest .streamrow{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+    border-bottom:0.667px solid rgba(28,28,28,0.16);padding-bottom:24px}
+  .latest .streamrow .streamhd{margin:0}
+  .latest .streamrow .mlink{margin:0;flex:none}
+  .latest .ltgrid{margin-top:0} /* see the note on the twin rule above (2026-08-20) */
+  .latest .clog .cstrip{border-top:0;margin-top:0}
+  .latest .clog .ci:first-child{border-top:0}
+
+  /* Per-item READ, on the featured release and on every changelog row.
+     Reverses the "whole-block tap stays implicit" call from earlier today - Inkyung asked for an
+     explicit control on each item. The row stays an <a>, so the CTA is a visible affordance inside
+     an already-tappable block, not a second link target.
+     Label unified to READ (see the canon note in the JS). */
+  .clog .ci .cread{grid-column:1;margin-top:24px;display:inline-flex;align-items:center;gap:6px;justify-self:start;
+    font-family:var(--mono);font-weight:400;font-size:13px;letter-spacing:0.04em;line-height:1.5;
+    color:var(--c-1000)}
+  .clog .ci .cread span{text-decoration:underline;text-decoration-thickness:0.667px;text-underline-offset:5px}
+  .clog .ci .cread .arr{order:2;width:12px;height:12px;flex:none}
+
+
+  /* ---- stacked text-CTA pairs: 24 -> 16 (2026-08-17, Inkyung) ----
+     Measured first: the pairs sat at 24-25 and each control carries a tap box that reaches 12-14px
+     past its own edge (.mlink::after inset -12, .vmemo::after inset -14). So the two hit areas were
+     ALREADY overlapping by ~3px at 24, and closing to 16 would have overlapped them by 12 - a mis-tap,
+     not a tighter rhythm.
+
+     So the tap boxes shrink to -8 first, then the gap closes. 20px ink + 8 + 8 = 36px per control,
+     still above the 36 floor these mono 13 links use elsewhere, and 16 of clear space between the two
+     boxes. Applies only where two TEXT CTAs stack; box-CTA -> text-CTA pairs keep 24 (that is the
+     documented "content -> box CTA" relation, and the filled button is its own target). */
+  .loop3 .vmemo::after,.loop3 .l3lower .mlink::after{inset:-8px 0}
+
+  .clog .ci{display:grid;grid-template-columns:1fr 88px;column-gap:16px;align-items:start}
+  .clog .ci .ct,.clog .ci .cd,.clog .ci .cdate{grid-column:1}
+  .clog .ci .cthumb{grid-column:2;grid-row:1 / span 3;align-self:start;
+    width:88px;height:56px;background:var(--c-black);display:flex;align-items:center;justify-content:center}
+  .clog .ci .cthumb img{width:56px;height:auto;display:block}
+
+  /* Changelog shows two rows on mobile, not four (2026-08-17, Inkyung).
+     This is a list length, not a copy cut: the section is an index and VIEW ALL reaches the rest,
+     so it does not collide with the "no content loss" rule the way trimming an argument would.
+     Rows 3-4 stay in the DOM. Desktop still shows all four. */
+  .clog .ci:nth-child(n+3){display:none}
+
+  /* ===== NO.01 THE SYSTEM — beats (2026-08-17) =====
+     Was 1,779px / 2.2 screens with 7 things stacked at 24-64. Now six beats
+     at one gap: 104, the same value the section edges use. One rule for the
+     whole page - 104 between beats, 208 (two paddings) plus a hairline at a
+     section boundary.
+     Order swap: the loop diagram moves ahead of the three modes. The section
+     says "one system, two ways to allocate", so the system's diagram belongs
+     before the ways - and it puts a visual between the thesis and the three
+     text blocks instead of leaving five text beats in a row.
+     Eyebrow + masthead + thesis stay one beat at 24/24: that is the band
+     grammar already in use (eyebrow->title 24), and splitting a title from its
+     own opening sentence would be quantising for its own sake. */
+  .sys .loopfig{order:1;margin-top:104px}
+  .sys .modes{order:2;margin-top:104px} /* beat boundary: loop -> the modes group */
+  .sys .mode+.mode{margin-top:104px}
+  /* 48 -> 104, third and final pass (2026-08-17, Inkyung: "공간 넓은건 좋은데" then
+     "여기 공간을 좀 더 분리해주는건 어때").
+
+     History so I do not flip this a fourth time: raised to 104 earlier today, reverted to 48 on the
+     grounds that it "bought nothing" because the three CTAs still shared one screen. That reasoning
+     was wrong in two ways. First, one-CTA-per-screen was never reachable by spacing - it needs ~649px
+     between 163px blocks, which is a blank screen, so failing that test says nothing about 104.
+     Second, and the real point: measured, these three are NOT parallel items. Description lines run
+     2 / 3 / 5 and only Fiscal.ai Max carries a price meta, so heights are 127 / 148 / 213. The DS
+     "parallel items = 48" value assumes siblings that match; ours do not, so 48 has no claim here.
+
+     What they are: three separate products, each with its own destination link. An item you have to
+     ARRIVE at earns a beat; an item you scan past does not. That is the distinction to apply, not
+     "parallel = 48". Items without their own CTA (.suit5, the loop steps, changelog rows) keep the
+     tighter spacing.
+
+     Still open: Fiscal.ai Max is a tool included with the membership, not an account type like the
+     other two, and its 213px block breaks the rhythm even at 104. Flagged for Inkyung - the fix is
+     structural (pull it out as its own beat), not a spacing value. Copy is Dave canon, so it cannot
+     be shortened. */
+  /* (Superseded note, kept for the record.) Tried 104 here on 2026-08-17 to answer the meeting note
+     ("three CTAs in this area" / "scroll through three different things") and reverted it, because the
+     change bought nothing while spending a DS value.
+
+     Measured at 375 after raising to 104: the three mode CTAs still landed on one
+     screen (y=2660 / 2912 / 3229). Mode blocks are only ~163px tall (22 title +
+     2-3 line description + link), so the three span 696px = 0.86 of a viewport.
+     One-per-screen would need ~649px between them - that is a blank screen, not a
+     rhythm, and exactly the "whitespace pretending to be structure" this file
+     warns about elsewhere.
+
+     Also correcting a claim I made while doing it: I wrote that Apple gives every
+     CTA-bearing item its own screen. Measured on apple.com/ca/iphone-17-pro at
+     375 - 51 screens, 16 CTAs, mid-page CTAs alone on their screen - but that is
+     because each Apple section is a full-bleed visual plus long copy that already
+     fills a viewport. The item is big; the margin is not. A 163px text block
+     cannot inherit that result by copying the gap.
+
+     The count is the real lever, not the gap (see the CTA note below). Spacing
+     stays on the DS ladder: 48 for parallel items. */
+  .sys .row>.pricemoved{margin-top:104px} /* 972 uses the child combinator, so a 2-class selector loses - trap #6 */
+
+  /* $20 promoted to the Anduril stat block: figure 34/500/-0.069em, hairline,
+     then the label. Same grammar as "9 in 10" and the +11/+31/-20 trio, so the
+     one number in this section reads as a figure and not as a bold sentence. */
+  /* Matched to the two stat blocks already on the page (.g2stat "9 in 10" and
+     .dstats +11/+31/-20), measured rather than assumed:
+       figure  34 / 500 / 1.15 / -0.069em / c-white
+       label   15 / 400 / 1.4  / tracking 0 / c-400
+       rule    rgba(255,255,255,0.18) ON TOP of the figure, 24 above it
+     The rule leads the block, it does not divide it - stacked stats read
+     rule-figure-label, rule-figure-label. Note this line is NOT the c-900/c-800
+     section token: on-black internal rules are their own 18% white value. */
+  .sys .row>.pricemoved{border-top:0;padding-top:24px} /* top rule dropped - the plate replaces it (see below) */
+  /* every on-black line goes to c-800, not just the section boundaries.
+     rgba(255,255,255,0.18) composites to rgb(46,46,46) = 1.54:1 on #000, in the
+     same invisible range c-900 was. Raising only the section lines would leave
+     the page with two line brightnesses and the stat rules still unreadable. */
+  .gap2 .g2stat .rule,.def4 .dstats .cell,.dstats .cell,.stats3 .cell{border-top-color:var(--c-800)}
+  .def4 .dstats .cell.gap{border-bottom-color:var(--c-800)} /* the closing line was still 0.18 */
+
+  /* ===== ON-BLACK LINE RULE (2026-08-17, full sweep) =====
+     Not every line goes to c-800. Two jobs, two answers:
+       FOUND  - a line the eye has to locate on an otherwise uniform black scroll:
+                section boundaries, the bracket that closes a figure block, a row
+                rule sitting on bare ground. These need >=3:1, so c-800 (3.05:1).
+       ORGANISE - a line inside an already-visible container (rows inside a bordered
+                box). The box does the finding; these may stay faint, exactly as the
+                cream ledger's rows do at rgba(28,28,28,0.16) ~ 1.2:1 and read fine.
+     Measured, composited over #000: rgba(255,255,255,0.18) = 1.55:1,
+     0.10 = 1.21:1, c-900 = 1.38:1, c-800 = 3.05:1.
+     ⚠ Finding for the DS: the neutral scale has exactly ONE usable hairline on pure
+     black. There is nothing between c-900 (1.38) and c-800 (3.05), so a two-level
+     visible hierarchy is not available on #000 - it needs either a new token or a
+     raised surface (c-elev #0A0A0A), which is what c-900 was designed for. */
+  /* FOUND: the .suit5 box outline, the fold row on bare ground, the footer rule */
+  .std5b .suit5{border-color:var(--c-800)}
+  .std5b .suit5>div+div{border-top-color:var(--c-800)}
+  .std5b .no{border-top-color:var(--c-800)}
+  /* ORGANISE: .suit5 h3 underline, ul rule and li rows stay as they are - they sit
+     inside the box above, which is now found. */
+
+  /* Burger overlay items were 27px - not on the mobile ladder at all (V8 leftover).
+     DS names this tier explicitly: "section masthead - 29 at 390 / 500 - section h2,
+     subpage H1, BURGER ITEMS", which this page renders as clamp(28px,7.4vw,40px).
+     Leading 1.05 is the desktop display value; mobile masthead leading is 1.1. */
+
+  /* CLOSE THE STAT BLOCKS. NO.04's trio already brackets itself - a rule above each
+     cell and a closing rule under the last one - but NO.02's "9 in 10" and NO.01's
+     "$20" only had the opening rule. Their labels are 15px prose, the same size and
+     colour as the paragraph that follows, so with no closing line there was nothing
+     to say the figure block had ended and the 104 beat gap after it read as an
+     arbitrary hole between two paragraphs (Inkyung 08-17). The bracket is what makes
+     104 legible as a boundary rather than a gap. */
+  .gap2 .g2stat{padding-bottom:24px;border-bottom:0.667px solid var(--c-800)}
+
+  /* ===== NO.04 THE DEFAULT — 3 beats (2026-08-17) =====
+     Gaps were 40 / 40 / 40 / 16 / 40 / 24. Three beats:
+       1  eyebrow + masthead + the plate
+       2  the thesis - "For an active equity decision, the S&P 500 is the default
+          hurdle..."
+       3  the +11 / +31 / -20 trio, its caption, its payoff and the exit
+     The trio is ONE figure, not three: it is a single comparison read from three
+     angles, the same capital over the same period - not parallel items.
+     "The same capital, invested in the index... That is what the 11% cost" is the
+     figure's payoff, the next step of that idea, so it stays with it at 24 rather
+     than opening a beat of its own. */
+  .def4 .rail>p.body{margin-top:104px} /* plate -> thesis. v9 uses .def4 .rail>p.body (0,3,1), so a 2-class selector loses - trap #6 */
+  .def4 .dstats{margin-top:104px}    /* thesis -> the figure */
+  .def4 .figcap{margin-top:16px}     /* caption belongs to the figure */
+  .def4 .dlead{margin-top:24px}      /* the figure's payoff, not a new beat */
+  /* ---- $20 becomes an inset surface, not a bracket of rules (2026-08-17, Inkyung) ----
+     "너무 섹션 나눔을 다 선으로 처리하려는 ui" - the page had 34 hairlines and most were repeating the
+     same sentence, "this is a separate block". A raised plate says it once, in one move, and adds a
+     level of hierarchy a line cannot.
+
+     c-1000 (#1C1C1C) is the DS "elevated surface" token used for exactly this. It also steps around
+     the constraint recorded in §2-4: on pure black there is only ONE usable hairline value, so a
+     line-based hierarchy cannot have two levels - a surface can.
+
+     Inset (335, inside the 20px rail) rather than full-bleed on purpose: the band images run
+     full-bleed, and a figure attached to an argument should not wear the same shape as a section-
+     opening image.
+
+     Trial scope: $20 only. "9 in 10" (1 rule) and the +11/+31/-20 trio (4 rules) get the same
+     treatment if this reads right - that would take the page from 34 hairlines to 27 and give
+     stat blocks one grammar instead of the current three. */
+  .sys .row>.pricemoved{background:var(--c-1000);margin:104px 0 0;padding:24px 20px;border:0}
+  /* .nw exists to hold "Managed and Self-Directed included" on one line on desktop. At 335 it forces
+     the whole span onto line 2, which left the separator dangling at the end of line 1
+     ("one membership ·"). Released here so the line breaks where the measure runs out. Copy
+     untouched - only where it wraps. */
+  /* Break BEFORE "Managed" so the two halves of the label sit on their own lines
+     (Inkyung 2026-08-17). Releasing .nw entirely gave 329/61 - "included" alone on line 2 - and
+     keeping it gave "one membership ·" with the separator dangling. Making the first fragment the
+     line and letting the rest wrap naturally avoids both. Copy untouched, only where it wraps. */
+  .sys .pricemoved .pricehd .nw{white-space:normal;display:block;margin-top:2px}
+  .sys .pricemoved .pricehd .v11-mem{white-space:nowrap}
+  /* Inset after all (2026-08-17). It went full-bleed for a while because the inset measure (295)
+     broke the fee line into a 28px orphan - but the cause was the fee sitting on the wrong type
+     tier, not the inset. See the .fee rule below. With that corrected the plate stays inset as
+     originally intended, which is what keeps it from wearing the same shape as the band images. */
+  .sys .pricemoved .v11-stat{display:flex;align-items:baseline;gap:12px;
+    font-size:34px;font-weight:500;line-height:1.15;letter-spacing:-0.069em;color:var(--c-white)}
+  /* the unit rides the figure's baseline as mono meta, so the number reads as a figure and the
+     description below can start at the words that matter (2026-08-17, Inkyung's layout B) */
+  .sys .pricemoved .v11-unit{font-family:var(--mono);font-weight:400;font-size:13px;line-height:1.5;
+    letter-spacing:0.04em;color:var(--c-600)}
+  .sys .pricemoved .pricehd,.sys .pricemoved .pricehd .nw{font-size:15px;font-weight:400;line-height:1.4;letter-spacing:0;color:var(--c-400)}
+  .sys .pricemoved .pricehd{margin-top:8px}
+  /* 11 -> 9. Not a fit-hack: the DS mono ladder is 13 label/CTA, 11 meta/date/notice, 9 figure and
+     data sub-text, and every other footnote on this page already renders at 9 - .leg-cap (NO.01),
+     .src (NO.02), .figcap (NO.04). This line is the stat figure's own footnote, so 11 was the
+     outlier and the "no sizes off the ladder" check had missed it. Side effect that unblocked the
+     inset: 317px -> 263px, one line inside the 295 measure with room to spare. */
+  .sys .pricemoved .fee{margin-top:16px;font-size:9px}
+
+  /* ===== NO.02 THE MISSING LAYER — beats (2026-08-17) =====
+     Gaps were 64 / 24 / 40 / 40 / 24. Five beats, one gap: 104.
+       band statement -> copy 1 -> copy 2 -> "9 in 10" stat -> copy 3 + CTA
+     The stat stays interleaved between the argument and its conclusion (V9's
+     call): the number interrupts the prose instead of summarising it.
+     copy 3 -> READ THE MANIFESTO keeps 24 - a text CTA belongs to the
+     paragraph it points out of (CTA gap unification, 2026-08-01). */
+  /* Band internals: 24 inside the title block, 48 to the image, 48 back out.
+     The 40 that .v9ovl carried (band rhythm 104/24/40/64, 2026-08-16) is the same
+     kind of gap beat 2 sets at 48 - a group break inside a beat - so it joins 48
+     and the beat keeps three levels only: 24 / 48 / 104.
+     ⚠ managed.html and self-directed.html carry the same 40; they need this when
+     they get V11. */ /* all three bands, not just .gap2 - NO.02/04/05 share this grammar */
+  /* (removed) ANTITHESIS SPLIT — tried putting "It never solved judgment." below
+     the photo so the image would pivot between the two halves. Reverted the same
+     day: "The industry solved access. It never solved judgment." is ONE sentence
+     pair, and 360px of photo between the halves reads as two unrelated statements
+     instead of a turn. A rhetorical unit stays together. */
+  /* INSET PLATE — the band image leaves full-bleed and takes the page's own 20px
+     gutter (Inkyung 2026-08-17), so it reads as a plate on the page like the loop
+     canvas rather than a banner cutting across it.
+     §7-3-i put a hairline on the top and bottom only, because a night photo's
+     near-black edges melt into the ground and the sides were bleeding off screen
+     where there is no edge to define. Inset, all four edges now sit on black, so
+     the same argument gives the plate a full border - at c-800, the value every
+     other on-black line moved to today. */ /* outline removed 2026-08-17 (Inkyung): the plate border was added to stop
+    dark-edged photos melting into the black ground, but it reads as a frame drawn around every
+    image. The inset itself (20px each side) already separates the plate from the ground. */
+  /* extended from .gap2 to every band (Inkyung 08-17 "오케"): NO.02 was inset while
+     NO.04 and NO.05 stayed full-bleed, so the same band grammar had two faces.
+     All three sit on black, so the four-edge c-800 border works for all. */
+  /* 104 goes BETWEEN BEATS, not between paragraphs of one beat.
+     I had put 104 on every gap here, which split copy 1 / 2 / 3 into four
+     free-standing blocks. They are not three ideas - they are one argument in
+     three moves (access was solved -> professionals do more -> so we add the
+     missing layer), and section-scale air between them reads as three
+     disconnected assertions. Same error as splitting the antithesis, one scale
+     down: separating things that belong together.
+     So the prose is ONE beat of three paragraphs at 24 (the value V10 used),
+     and NO.02 is three beats, not five: [title + plate] / [stat] / [argument].
+     Five was whitespace pretending to be structure. */
+  .gap2 .body{margin-top:104px;row-gap:0} /* beat boundary: stat -> argument */
+  .gap2 .body>p+p{margin-top:24px}        /* paragraph, not beat */
+  .gap2 p.v9-p3{margin-top:24px}          /* 999 sets margin:40px auto 0 as a shorthand - override the top only */
+  .gap2 .g2stat{margin-top:104px}         /* beat boundary: plate -> stat */
+
+  /* ===== NO.03 THE LOOP — 4 beats (2026-08-17) =====
+     Gaps were 24 / 32 / 24 / 48 / 48 / 24 / 16. Four beats, one rule:
+       1  eyebrow + masthead + "A trade is not the important event"   (24 / 24)
+       2  the mechanics: "Before the order..." + "The system can..."  (24 between)
+       3  the 01-04 ledger
+       4  the closing note + the two exits                            (24 / 24)
+     The four steps are NOT four beats. .lstrip is one designed component whose
+     own 0.667px hairline rows and 48px number column already separate the steps;
+     putting 104 between them would break a sequence into four assertions - the
+     same error as NO.02's paragraphs. A process is read as one thing.
+     DS: spacing is margins, so grid row-gap goes to 0. */
+  /* p1 and p3 live inside .l3col, not directly in .l3grid, and .l3col carries its
+     own row-gap:24 - which was adding to every margin set here. Both gaps go to 0
+     so the margins below are the only spacing (DS: margins, never flex/grid gap). */
+  .loop3 .l3grid,.loop3 .l3col{row-gap:0}
+  /* .l3grid already carries margin-top:24 from the masthead, so p1 adds nothing */
+  .loop3 .l3col .p3{margin-top:24px}    /* paragraph, not beat - see below */
+  /* The three paragraphs are ONE argument in three moves: the decision is the
+     event, not the trade (claim) -> this is how it gets recorded (mechanism) ->
+     this is what the system will not do for you (boundary). I had put 104 after
+     the first one, which separated the claim from its own explanation - the third
+     time this same error came up today (NO.02's paragraphs, the band antithesis,
+     this). Desktop groups all three closely too.
+     So NO.03 is three beats, not four: [masthead + argument] / [ledger] / [close]. */
+  .loop3 .l3grid>.p2{margin-top:24px}   /* paragraph */
+  .loop3 .lstrip{margin-top:104px}      /* beat 2 -> the ledger */
+
+  /* ===== NO SECOND PLATES — standing decision (2026-08-17) =====
+     ★ An image the desktop does not have is never added to a mobile section.
+     Inkyung settled this earlier the same day ("데스크탑에 없으니까 넣지 말까").
+     I reopened it by reframing it as "NO.02/03/05 need new photography", found two
+     unused photos in Images/v5 images that fit the copy exactly, placed them - and
+     was pulled back. The decision stands and is not a judgement call to revisit:
+       - V11 is rearrangement. Same copy, same assets, different order and spacing.
+         Adding a photo is a CONTENT change and belongs to Dave, not to this pass.
+       - "Unused" is not "available". 25 of 231 images are referenced; the other 206
+         may well be cut, not spare. I never verified that.
+       - The problem I was solving was one I invented - the "a visual every 2-3
+         beats" cadence rule, which I had already conceded was too rigid. Once the
+         paragraphs sit at 24 as one argument block, the prose-wall problem is much
+         smaller than the rule implied.
+     If Dave ever opens it: the two that fit were egor-komarov (an office facade at
+     dusk, the literal picture of "professional organisations preserve research")
+     for NO.02, and marcel-strauss (a dark tower, three lit windows, one figure
+     still working) for NO.03 - both at beat boundaries, never mid-argument. */
+
+  /* ===== CTA SPACING AUDIT (2026-08-17) =====
+     Audited all 13 CTAs on the page. Eleven already agreed:
+       content -> text CTA = 24  (MANAGED / SELF-DIRECTED / RESEARCH / READ THE
+                                  MANIFESTO / EXPLORE THE DECISION RECORD /
+                                  BENCHMARK METHODOLOGY / READ THE PRESS RELEASE /
+                                  VIEW ALL)
+       CTA -> CTA          = 24  (EXPLORE THE SYSTEM, close9's READ THE MANIFESTO)
+     Two did not, and both are fixed here:
+       VIEW THE FULL MEMO was 36 - .specimen's 24 plus .vmemo's own 12 stacking.
+       close9's box CTA sat 40 below its content while beat 2's sits at 48. Same
+       relationship, so it takes 48 - the group-boundary value in the 24/48/104
+       ladder. (A box CTA keeps more air than a text CTA at 24: it is a heavier
+       object, and the Figma master had it at 64 before the trust line moved in.) */
+  .loop3 .vmemo{margin-top:0!important} /* .specimen carries the gap, not .vmemo */
+  .close9 .offer .cta-row{margin-top:48px}
+
+  /* the + follows the label like every other text CTA now, and takes the underline
+     (Inkyung 08-17). Apple's own pill puts its + on the right too. */
+  .loop3 .vmemo span{text-decoration:underline;text-decoration-thickness:0.667px;text-underline-offset:5px}
+  .loop3 .vmemo i{font-style:normal;margin-left:8px}
+  /* Tried full width with the + parked at the right edge, to match .trust9's REGULATORY STANDING.
+     Reverted the same day (Inkyung): the + belongs beside its label here. Pushing it 150px away
+     left the mark reading as an unrelated glyph rather than as part of the control, and this one
+     sits in a column of text CTAs rather than in a stack of disclosure rows. */
+
+  /* LEDGER REDESIGN (2026-08-17) — the 48px number column was spending 13% of a
+     375 screen on four two-digit numbers, the descriptions were squeezed into what
+     was left, and four identical hairline rows read as a spec table rather than a
+     sequence. This section also has no image at all.
+     So the numerals become the section's visual: they take the existing stat-figure
+     tier (34 / 500 / -0.069em - the same role reassignment v16 made for 34), the
+     column disappears, and the text gets the full 335. Step titles join the 22
+     tier like the mode titles; descriptions stay 13, which is what the DS names
+     for "step descriptions". No new type enters the system. */
+  .loop3 .lstrip .step{display:block!important} /* was a 48px+1fr grid; children carry grid-column, so a 1fr grid just made an implicit second column - block stacks them on the gutter */
+  /* ---- 01-04 back on the mono label tier (Inkyung 2026-08-17) ----
+     These were 34 / 500 / -0.069em in Inter: the DS STAT-FIGURE tier. The comment that shipped with
+     that change flagged the problem itself - "a sequence number is not a stat... Flag for DS: name
+     the role if it stays" - and the cross-width audit closed it, because desktop had never moved:
+     it still rendered them as 11 mono labels, so one content took two opposite treatments (3x the
+     size, a different face, opposite tracking).
+     Resolved toward desktop. The 34 tier carries QUANTITIES on this page - $20, 9 in 10,
+     +11/+31/-20 - things with a unit and a meaning. 01-04 index Record -> Benchmark -> Review ->
+     Calibrate; nothing is being counted. On a page whose argument is that numbers only matter once
+     they are recorded, spending the loudest numeric tier on an ordinal makes `01` speak as loudly as
+     `+31%` and costs the tier its meaning.
+     The cost is real and worth stating: the mobile ledger loses its visual anchor and the steps go
+     quieter. That was the trade taken.
+     Leading is 1.5 because the mono ladder is by ROLE, not size - the base sheet names the step
+     number under "label + CTA" - and desktop already rendered it that way. */
+  .loop3 .lstrip .step>b{display:block;font-family:var(--mono);font-size:11px;font-weight:400;line-height:1.5;letter-spacing:0.04em;color:var(--c-800)}
+  .loop3 .lstrip .step .t{font-size:22px;line-height:1.15;letter-spacing:0;margin-top:8px!important}
+  .loop3 .lstrip .step .d{font-size:13px;line-height:1.4;margin-top:16px!important}
+
+  /* The closing note is the section's payoff ("A sound decision can lose... The
+     history cannot."), and the DS already keeps it at 500 as payoff prose. It takes
+     the 22 tier for the same reason the hero deck does - it is the sentence that
+     says what the loop is for. */
+  .loop3 .loopnote .lnote{font-size:22px;line-height:1.15;letter-spacing:0}
+  /* The closing note that actually renders is inside .loopnote; `.lnote.mbonly` is
+     display:none on mobile - the same class-name inversion as the price line and
+     the band title. So the beat boundary goes on .l3lower, the block that holds
+     the note and both exits. */
+  .loop3 .l3lower,.loop3 .loopnote{row-gap:0}
+  /* The 48 was coming from `.loop3 .loopnote .lnote` (v9), not from .l3lower - and
+     .l3lower's own margin would not take even as a later same-specificity rule, so
+     this follows trap 2 and uses !important on the element that actually renders. */
+  .loop3 .loopnote .lnote{margin-top:104px!important} /* ledger -> closing note */
+  .loop3 .loopnote .mlink{margin-top:24px!important}  /* closing note -> text CTA */
+  .loop3 .specimen{margin-top:16px}        /* CTA -> CTA. 24 -> 16 on 2026-08-17 (Inkyung): two text
+     CTAs stacked read as one control group, so they take the pair value, not the element value.
+     Only safe because the tap boxes were narrowed to -8 first (see the note in the mobile block) -
+     at the old -14 they already overlapped by 3px at 24, and 16 would have overlapped them by 12.
+     Box CTA -> text CTA pairs keep 24: a filled button is its own target and a heavier object. */
+  body.p-home .v11-hero2 .v11-wrap{max-width:560px}
+  body.p-home .v11-hero2 .hsub{font-weight:500;font-size:22px;line-height:1.15;letter-spacing:0;color:var(--c-200);margin:0;max-width:none}
+  /* ONE LEADING PER SIZE: 22 = 1.15, every role - the DS value, unchanged.
+     (Inkyung 2026-08-17: "디자인 시스템은 우리걸로 하고, 갑자기 없던
+     타이포그래피 넣지 말고".) I had added a 1.25 large-prose leading and
+     registered it as DS v17; that is reverted and the DS is restored from
+     index.html.bak-v16-20260817. Nothing new enters the type system.
+     Trade-off accepted: 1.15 is a heading leading, so the five-line deck and the
+     four-line .qh2 sit tighter than prose would. A beat earns its weight from
+     isolation and the 104 rhythm, not from leading.
+     Tracking IS unified to 0 - that is read off the DS, not invented: its
+     tracking table puts 22 in the prose group at 0, and the mobile ladder states
+     tracking 0 for the neighbouring item title. .qh2 / .streamhd were carrying
+     the display -0.02em (-0.44px at 22) inherited from their desktop rules while
+     .hsub and the mode titles were already 0 - the same class of defect as the
+     -0.52px inheritance bug swept on 2026-08-16. */
+  .std5b .qh2,.qh2 .a,.qh2 .b,.latest .streamhd{letter-spacing:0} /* .std5b .qh2 (0,2,0) carries the 22 - a bare .qh2 loses to it, trap #6 */
+  /* Mode titles join the 22 tier (Inkyung 08-17). V9 had them at 22 because the
+     modes were swipe cards - "independent units" - and V10 returned them to 17
+     when the strip became a vertical ledger and that premise died. V11 gives
+     each mode its own beat at 104, so the premise is back and the same argument
+     runs the other way. In DS terms a mode heading now opens its own beat, which
+     is what the 22 stream-heading tier is for. */
+  .sys .mode h3{font-size:22px;line-height:1.15;letter-spacing:0;font-weight:500} /* DS 22 stream-heading tier as-is */
+  /* DECK - the DS 22 stream-heading tier (500, tracking 0, c-200) at the new
+     large-prose leading 1.25 (Inkyung 2026-08-17, registered in DS v17).
+     Why 1.25 and not one of the four existing values: 1.15 is a heading value
+     and this runs five lines; 1.4 is calibrated for 15px prose and opens the
+     block to 154px against 126 at 1.15. Measured at 375: 1.15=126 / 1.25=138 /
+     1.30=143 / 1.40=154. 1.30 reads the same as 1.25 but is the value the DS
+     polices as "desktop 1.3 leaking down" - V10 swept it out of five
+     selectors - so a clean new value is safer than one that looks like the bug. */
+    /* Beat 2 runs on three levels and nothing else: 24 inside a group, 48
+     between groups, 104 at the section edge. Roughly a doubling sequence, and
+     48 is on the DS spacing scale where 64 is not.
+     The Figma master's body-to-CTA 64 (548) was measured when the CTA followed
+     the deck directly and the trust line sat 134 below it. The trust line now
+     sits between them, so the text block is deck+trust and 64 after it reads
+     as a second section rather than the next move in the same one - the same
+     reason `.step .t` went back to 17 once the swipe strip became a ledger.
+     CTA -> CTA stays 24 (CTA gap unification, 2026-08-01). Stacked, not a row:
+     at 375 the box and the link side by side leave the link no room. */
+  body.p-home .v11-hero2 .ctarow{display:flex;flex-direction:column;align-items:flex-start;row-gap:24px;margin-top:48px}
+  /* EXPLORE THE SYSTEM restored now that the beat has room (Inkyung 08-17).
+     Underline + arrow is the Anduril grammar Dave asked for on 08-17 - our
+     text CTAs did not read as CTAs on mobile. */
+  /* the white-on-dark CTA colour lives on `.hero .ctarow .mlink` (90), which
+     stops matching once the row moves out of the hero - so the link fell back
+     to the light-ground canon (#000) and went invisible on black. */
+  body.p-home .v11-hero2 .mlink{display:inline-flex;color:var(--c-white)}
+  /* The trust line qualifies the statement, so it belongs to that block, not
+     to the CTA. 24 above (meta attaches to the content it qualifies), and the
+     CTA row keeps its 64 clearance from the text block below. */
+  body.p-home .v11-hero2 .htrust{font-family:var(--mono);font-weight:400;font-size:11px;line-height:1.4;letter-spacing:0.04em;color:var(--c-600);margin:24px 0 0}
+  /* 654-655 forces this into exactly two lines and drops the middle separator.
+     Restored to one flowing sentence; each clause is nowrap so the line can
+     only break at a separator, never mid-phrase. */
+  body.p-home .v11-hero2 .htrust .heyeb-sep{display:inline}
+  body.p-home .v11-hero2 .htrust .heyeb-b{display:inline}
+  body.p-home .v11-hero2 .htrust>span{white-space:nowrap}
+  /* the separator must stay breakable - with all three spans nowrap and no
+     text node between them the line had no break opportunity at all and ran
+     off the screen. Its spaces are now the only break points, so the line
+     folds at the separator and never mid-phrase. */
+  body.p-home .v11-hero2 .htrust .heyeb-sep{white-space:normal}
+}
+@media (max-width:900px){
+  /* Both blocks below landed AFTER this style element's own @media closed, so they were leaking
+     to desktop - the reveal duration had already gone 0.7s -> 0.8s there, and the 22-tier weight
+     rule was reaching desktop's .sys .mode h3 (34px, weight 500) and flattening it to 400.
+     Re-wrapped in their own query 2026-08-17. Desktop is frozen at V8 parity; nothing here
+     should reach it. */
+  /* ===== 22 tier: leading 1.15 -> 1.3, weight 500 -> 400 (2026-08-17, Inkyung: "글로벌 체인지") =====
+     Placed at the very END of this block on purpose: the per-element 22px declarations live at
+     .step .t / .lnote / .hsub / .mode h3 further up, all at equal specificity, so an earlier
+     position lost to them on source order - it took the weight but not the leading. (§6-1 trap.)
+     Every element that renders at 22 on mobile, so the tier stays one value rather than splitting:
+       .hsub (hero descriptor, 6 lines)   .sys .mode h3 x3      .loop3 .step .t x4
+       .lnote (9 lines)                   .std5b .qh2 + .a/.b   .latest .streamhd x2
+     1.15 is display leading - it was set when this tier only carried 1-line headings, and it is too
+     tight for the 6- and 9-line blocks that later joined it. 1.3 first, then 1.25 (Inkyung, same day).
+     400 because 500 at 22 over six lines
+     reads as a heading rather than prose; the 1-liners lose nothing by matching.
+     .qh2 .a/.b need naming explicitly - line 320/321 set 500 on the spans, so the parent alone
+     would not reach them. MOBILE ONLY: desktop keeps 22/500/1.15 (V8 parity is frozen). */
+  body.p-home .v11-hero2 .hsub,
+  .sys .mode h3,
+  .loop3 .lstrip .step .t,
+  .loop3 .loopnote .lnote,
+  .std5b .qh2,.std5b .qh2 .a,.std5b .qh2 .b,
+  .latest .streamhd{line-height:1.25;font-weight:500} /* was 400 (08-17 "prose set large"); reversed 2026-08-20, Inkyung: "17부터는 다 500" - one weight above the body sizes */
+
+  /* The reveal roles moved OUT of this mobile block on 2026-08-17 - they now run at every width.
+     See the reveal block at the end of the v11-global sheet. (Do not write the closing style tag
+     inside a CSS comment - the HTML parser ends the element there, whatever the comment says.) */
+}
+
+@media (max-width:900px){
+  /* ===== NO.05 QUESTION (.std5b) - beats (2026-08-18) =====
+     Two beats: [the question and the answer it demands] / [the ledger pair].
+
+     Gaps were 24 / 16 / 48 - the 16 and the 48 are both off the ladder for what they
+     separate. Now 24 / 24 / 104.
+
+     THE QUESTION -> .qh2 stays 24: eyebrow-to-title is band grammar.
+
+     .qh2 -> .pgrid5 was 16 (line 810, "question-to-threshold line 16, Figma 3283:1111 ").
+     That 16 was set when the mobile page hid .plead and showed a single 8-word line, so it
+     was pairing a label with its value. Both are restored now (954/955), so what follows the
+     question is a 23w answer plus the threshold - the next step of one argument, not a caption.
+     24 is the paragraph value. (16 is not one of the three V11 gaps at all.)
+
+     .pgrid5 -> .suit5 was 48. 48 is for parallel items inside a beat (the modes, the stat
+     cells); the ledger pair is not parallel to the prose above it - it changes register from
+     "can you name the number?" to what the system asks of you and what it refuses to be.
+     Different idea = 104. (§2-2: is this the next step, or another idea?)
+
+     The two ledger boxes keep 0 between them and stay ONE beat - their own hairlines already
+     divide them, exactly as the .lstrip steps do. Splitting them would be the NO.03 mistake:
+     a pair read as two claims. */
+  .std5b .pgrid5{margin-top:24px}
+  .std5b .suit5{margin-top:104px}
+
+  /* ===== footer: 64 above the hairline -> 104 (2026-08-18) =====
+     .close9 ends with 104, the hairline follows, and the footer opened with 64 - the same
+     lopsided line the hero had before it was fixed (32 above / 104 below). Every other
+     section boundary on this page is 104 / line / 104 = 208 ink. The footer is its own
+     section here: separate element, own hairline, present on all nine pages - unlike
+     .trust9, which took 48/48 because it is the tail of the section above it.
+     padding-top only: line 414's shorthand keeps 0 40px for the sides and the bottom.
+     PORT: the footer is a shared component ("identical on every page") - this value goes
+     with the footer port in PORT-TO-PAGES.md 5, not on its own. */
+}
+
+</style>
+<script id="v11-mobile-js">
+/* ---- media reveal (2026-08-17) ----
+   The band photography had no reveal at all. It cannot be tagged in the early observer script,
+   because the .v9band wrappers it lives in are built by the mobile JS below - at that point the
+   selector matches nothing. Registering on DOMContentLoaded here runs AFTER applyV9's own handler
+   (listeners fire in registration order and that one was registered earlier in the document).
+   A wipe, not a slide: see the .rv[data-rv="media"] note in the CSS. */
+(function(){
+  /* No width gate since 2026-08-17. On desktop the .v9band selectors match nothing (those wrappers
+     are built by the mobile JS), so this binds the newsroom feature image only - which is the
+     intended scope: the full-bleed band media stays without a reveal there. */
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  /* The .v9band wrappers are built by applyV9/run() on their own matchMedia + DOMContentLoaded path,
+     and a bounded rAF poll still lost the race. Watch the DOM instead: a MutationObserver fires the
+     moment the wrappers land, whenever that is, and disconnects itself. If they never appear the
+     images just stay visible, which is the right fallback. */
+  /* Binds in more than one pass on purpose: the three band images land with the .v9band wrapping,
+     but the newsroom feature image is inserted later still by the v11 mobile JS. So each pass takes
+     whatever is newly present (data-rv marks what is already done) and the watcher stays alive until
+     load rather than latching after the first hit. */
+  function go(){
+    var med=[].slice.call(document.querySelectorAll('.v9band>img,.v9band>video,.v9band>.ph1,.lt-feat>.lt-plate'))
+      .filter(function(m){return !m.dataset.rv;});
+    if(!med.length) return false;
+    /* ---- watch the PARENT, not the image ----
+       The wipe was blocking its own trigger. clip-path:inset(0 100% 0 0) leaves the element with
+       zero visible area, and IntersectionObserver measures the clipped box: a band image sitting
+       squarely in the viewport reported isIntersecting:false, ratio 0.00, so the observer never
+       fired and the image stayed wiped out forever. Observing the wrapper - which is never clipped -
+       breaks the deadlock. The wrapper is taller than the image (it also holds the masthead), so the
+       margin is pulled in to -35% instead of -8%; that lands the trigger around the point where the
+       image itself reaches the viewport rather than when the masthead does. */
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(!e.isIntersecting) return;
+        var t=e.target.__rvMedia; if(t) t.classList.add('in');
+        io.unobserve(e.target);
+      });
+    },{rootMargin:'0px 0px -35% 0px',threshold:0});
+    med.forEach(function(m){
+      m.classList.add('rv'); m.dataset.rv='media';
+      var r=m.getBoundingClientRect();
+      if(r.top<window.innerHeight&&r.bottom>0){m.classList.add('in');return;}
+      var host=m.parentElement||m;
+      host.__rvMedia=m;
+      io.observe(host);
+    });
+    return true;
+  }
+  go();
+  var mo=new MutationObserver(go);
+  mo.observe(document.documentElement,{childList:true,subtree:true});
+  window.addEventListener('load',function(){ go(); mo.disconnect(); });
+})();
+/* ---- hero: one viewport on every device (2026-08-17) ----
+   Publishes --htail = everything below the media, so the media can take (100svh - tail) in CSS.
+   It has to be measured rather than hardcoded because the statement's line count changes with
+   viewport width (3 lines at 375, 4 on a 320 screen), and the wordmark is a clamp() image.
+   Unlike the block below this one runs on every resize, so it is a separate IIFE with no
+   apply.done latch. Landscape and font-load both change the tail, hence the extra listeners. */
+(function(){
+  var mq=window.matchMedia('(max-width:900px)');
+  var hero=document.querySelector('.hero');
+  function fit(){
+    if(!hero)return;
+    if(!mq.matches){hero.style.removeProperty('--htail');return;}
+    var eb=hero.querySelector(':scope > .heyeb'), hg=hero.querySelector('.hgroup');
+    if(!eb||!hg)return;
+    var h=eb.offsetHeight, g=hg.offsetHeight;
+    if(!h||!g)return; /* wordmark image not decoded yet - the 190px fallback holds until load */
+    /* 32 media->wordmark + wordmark + 24 wordmark->statement + statement + 32 statement->fold */
+    hero.style.setProperty('--htail',(32+h+24+g+32)+'px');
+  }
+  fit();
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',fit);
+  window.addEventListener('load',fit);
+  window.addEventListener('resize',fit);
+  window.addEventListener('orientationchange',fit);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+  mq.addEventListener&&mq.addEventListener('change',fit);
+})();
+(function(){
+  var mq=window.matchMedia('(max-width:900px)');
+  function apply(){
+    if(apply.done)return; apply.done=true;
+
+    /* trust block fold (2026-08-17, Inkyung). ⚠ COMPLIANCE UNCONFIRMED - see the CSS note.
+       Same toggle shape as .lmore/.gmore: one .open class on the container, aria-expanded on the
+       button, and any .rv inside gets .in when revealed so it is not left at opacity 0. */
+    /* ---- NEWSROOM: stream header rows + per-item READ (2026-08-17, Inkyung) ----
+       Built in JS so the desktop DOM stays V10-verbatim.
+
+       LABEL: unified to READ. The canon table (ii-design-guard, 2026-07-27) currently splits these -
+       "READ THE PRESS RELEASE" for the homepage featured slot, "READ" for list rows. That split was
+       written when the featured item held the section's ONLY link; now every item carries one, so a
+       longer label on the feature reads as inconsistency rather than hierarchy, and Anduril labels
+       feature and rows alike. ⬜ The canon table needs the same edit once this is confirmed -
+       otherwise the next session will restore the old label. */
+    var ARROW='<svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true">'+
+      '<path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/>'+
+      '<path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg>';
+
+    /* heading + VIEW ALL on one row, per stream */
+    /* Only Changelog carries an index link (2026-08-17, Inkyung).
+
+       Label first: it names its destination tab, so stream name = link label = destination tab name
+       (Changelog -> ALL CHANGELOGS -> the CHANGELOG tab). VIEW ALL twice could not do that - the
+       canon rule is that a label says where the reader lands, and the two headings sit ~600px apart
+       so proximity does not disambiguate. ALL UPDATES was wrong for the same reason: it renames a
+       stream the page already calls Changelog.
+
+       Both streams carry the link again (2026-08-17). It was pulled briefly to honour Inkyung's
+       2026-07-31 call - one release meant "all" opened a list of one - but a second release row was
+       added right after, so the condition that justified hiding it is gone. */
+    /* The NEWSROOM rebuild moved OUT of this mobile-only block on 2026-08-17 and now runs at every
+       width - see the standalone script after this one. Desktop had ended up worse off than mobile:
+       one "VIEW ALL" at the very bottom of the changelog and nothing at all on the press-release
+       stream, no images anywhere, and "READ THE PRESS RELEASE" where mobile says "READ". */
+
+    var tw=document.querySelector('.close9 .trust9');
+    if(tw && !tw.querySelector('.tmore')){
+      var tb=document.createElement('button');
+      tb.className='tmore'; tb.type='button'; tb.setAttribute('aria-expanded','false');
+      tb.innerHTML='<span>REGULATORY STANDING</span><span class="sign" aria-hidden="true">+</span>';
+      var tg=tw.querySelector('.tg');
+      if(tg){
+        tw.insertBefore(tb,tg);
+        tb.addEventListener('click',function(){
+          var open=tw.classList.toggle('open');
+          tb.setAttribute('aria-expanded',open?'true':'false');
+          tb.querySelector('.sign').textContent=open?'−':'+';
+          if(open) tg.querySelectorAll('.rv:not(.in)').forEach(function(el){el.classList.add('in');});
+        });
+      }
+    }
+
+    var hero=document.querySelector('header.hero'); if(!hero)return;
+    var hsub=hero.querySelector('.hsub'),row=hero.querySelector('.ctarow'),trust=hero.querySelector('.htrust');
+    if(!hsub&&!row&&!trust)return;
+    var sec=document.createElement('section'); sec.className='v11-hero2';
+    var wrap=document.createElement('div'); wrap.className='v11-wrap'; sec.appendChild(wrap);
+    /* trust sits under the deck, above the CTAs (Inkyung 08-17).
+       The forced classList.add('in') that used to be here is GONE (2026-08-17). It was defensive -
+       move a node and it could be stranded at opacity 0 - but it was the actual reason beat 2 felt
+       dead: the descriptor and the trust line were marked revealed at the instant they were moved,
+       at scrollY 0, so scrolling down found them already in place. The CTA pair looked fine only by
+       accident, because its .rv had just been pushed down onto its two children and this line no
+       longer matched it. The reveal observer now starts observing after load, when these are in
+       their final position, so the stranding this guarded against cannot happen. */
+    [hsub,trust,row].forEach(function(el){ if(el) wrap.appendChild(el); });
+    hero.parentNode.insertBefore(sec,hero.nextSibling);
+
+    /* NO.01 price line -> Anduril stat block. The figure has to become its own
+       element to take the 34/-0.069em tier, so "$20" is lifted out of the
+       sentence and a hairline is inserted under it. Copy is untouched - only
+       the wrapping changes. */
+    /* NO.02 order, third attempt and the one the reference actually supports:
+         band statement -> image -> "9 in 10" -> copy 1 -> copy 2 -> copy 3 -> CTA
+       Apple's iPhone 17 Pro runs title -> image -> STATS -> prose (the 8x / 48MP
+       pair sits between the camera shot and the paragraph that explains it), so
+       a figure there is a bridge INTO the argument, not its payoff.
+       This gives the paragraphs the desktop reading order - 1, 2, 3, unbroken -
+       while still putting a visual and a number in front of them, so the reader
+       never hits prose cold. Both earlier attempts were worse: interleaved
+       (V9) split the argument, and stat-last left 15 lines of prose with only
+       whitespace in them.
+       Still the asset shortage underneath: Apple never runs two paragraphs in a
+       row because it has an image for each. We have one image for three
+       paragraphs. Logged with NO.03 / NO.05 for new photography. */
+    var ml2=document.querySelector('#missing-layer');
+    if(ml2){
+      var stat=ml2.querySelector('.g2stat'), body=ml2.querySelector('.body');
+      if(stat&&body&&!stat.dataset.v11moved){stat.dataset.v11moved='1';body.parentNode.insertBefore(stat,body);}
+    }
+
+    /* (superseded) NO.02 kept V9's interleave: copy 1 -> copy 2 -> "9 in 10" -> copy 3.
+       Tried matching the desktop order (all three paragraphs, then the stat) on
+       2026-08-17 and reverted the same day. The argument for moving it was that
+       V11's 104 gaps had already broken the prose wall the interleave existed to
+       break. That was wrong: 104 fixes crowding, not monotony. With the stat at
+       the end the section runs 15 lines of prose over ~2 screens with nothing
+       but whitespace between - which is the experience Dave objected to on
+       08-17, not a fix for it. The interleave caps the longest prose run at two
+       beats (10 lines) and gives the eye a number to land on.
+       The real problem is that NO.02 has ONE visual for a five-beat section, so
+       both orders are compromises around an asset shortage. When there is a
+       second image, the stat can go back to the desktop position and the photo
+       takes the mid-argument slot. Logged with NO.03 / NO.05. */
+
+    /* + moves to the right of the label and takes the underline */
+    var vm=document.querySelector('.loop3 .vmemo');
+    if(vm&&!vm.dataset.v11plus){vm.dataset.v11plus='1';
+      vm.innerHTML='<span>VIEW THE FULL MEMO</span><i aria-hidden="true">+</i>';}
+
+    /* The $20 figure lift moved OUT of this mobile block on 2026-08-17 - it runs at every width
+       now. See script#v11-price. */
+  }
+  /* The reveal observer has to wait for this. Until apply() runs, beat 2's descriptor, trust line
+     and CTA pair are still sitting inside .hero near the top of the document, so a first-screen
+     measurement taken any earlier marks all of them "already visible" and spends their entrance at
+     scrollY 0. One rAF was not enough - this is a DOM move, not a resize. */
+  function start(){ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',run11);}else{run11();} }
+  function run11(){
+    apply();
+    /* apply() moves the wordmark and the whole of beat 2 out of .hero, so the --htail the hero-fit
+       IIFE computed at parse time was measured against a layout that no longer exists - the hero
+       came out short and beat 2 still read as above the fold. A synthetic resize makes that IIFE
+       (which already listens for it) recompute against the finished DOM; two frames later the
+       layout is settled and the reveal pass can trust getBoundingClientRect. */
+    window.dispatchEvent(new Event('resize'));
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){ document.dispatchEvent(new Event('v11-layout-ready')); });
+    });
+  }
+  if(mq.matches)start();
+  var onch=function(e){if(e.matches)start();};
+  mq.addEventListener?mq.addEventListener('change',onch):mq.addListener(onch);
+})();
+</script>
+
+
+<script id="v11-footer">
+/* Wraps the run of .footer-legal paragraphs in one container so desktop can column-count them.
+   Done in JS rather than in the markup so the footer stays byte-identical to the compliance-approved
+   block that ships on every other page - the wording, order and element structure are untouched and
+   only a wrapper is introduced. Mobile ignores the wrapper entirely (no column-count there). */
+(function(){
+  function build(){
+    var f=document.querySelector('footer .container')||document.querySelector('footer');
+    if(!f||f.querySelector('.footer-legalwrap'))return;
+    var legals=[].slice.call(f.querySelectorAll(':scope > .footer-legal'));
+    if(legals.length<2)return;
+    var w=document.createElement('div'); w.className='footer-legalwrap';
+    legals[0].parentNode.insertBefore(w,legals[0]);
+    legals.forEach(function(el){w.appendChild(el);});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build);
+  else build();
+})();
+</script>
+
+
+<script id="v11-price">
+/* ============ $20 BLOCK — all widths (2026-08-17, Inkyung: "일단 모바일 기준으로 시도") ============
+   Desktop was still running the old treatment - the price sentence as one 17/500/1.30 line - while
+   mobile had been rebuilt: figure lifted onto its own baseline with "/ month" as a mono unit, the
+   description dropped to prose, separators removed. Three settings disagreed across the two widths
+   on the same element (17 vs 15, 1.30 vs 1.40, 500 vs 400), which is what this closes.
+   Desktop keeps the block WHERE IT IS, inside .lcol at 455. Only mobile moves it onto the rail. */
+(function(){
+  function build(){
+    var fee=document.querySelector('.sys .fee');
+    if(fee && fee.parentElement) fee.parentElement.classList.add('pricemoved');
+    var moved=document.querySelector('.sys .pricemoved');
+    if(moved){
+      var line=[].slice.call(moved.querySelectorAll('.pricehd')).filter(function(p){
+        return getComputedStyle(p).display!=='none';})[0];
+      if(line&&!line.dataset.v11stat){
+        var html=line.innerHTML;
+        /* Lift BOTH the figure and its unit onto one baseline: "$20  / MONTH".
+           2026-08-17, Inkyung picked this layout. Same words, different wrapping - the figure was
+           already being lifted out of this sentence, and "/ month" is the unit that belongs beside
+           it, not the start of the description. The leading separator that used to join them
+           ("· ") is dropped because the two halves are no longer one run of text.
+           ⬜ Copy is Dave canon: the WORDS are untouched, but the sentence is now displayed in two
+           parts. Worth confirming with Dave that the split reads as intended. */
+        var m=html.match(/^\s*(\$\d+)\s*(\/\s*month)?\s*(?:&middot;|·)?\s*/i);
+        if(m){
+          var rest=html.slice(m[0].length);
+        /* Drop the separator in front of "Managed and Self-Directed" too (Inkyung 2026-08-17).
+           The middot exists to join fragments that share a line; once .nw breaks to its own line
+           the break IS the separator and the mark just dangles at the end of line 1. The leading
+           separator was already gone (stripped with the figure above), so removing this one makes
+           the pair consistent. Words untouched, and desktop keeps both marks on its single line. */
+        rest=rest.replace(/\s*(?:&middot;|·)\s*(?=<span class="nw")/i,' ');
+          line.dataset.v11stat='1';
+          var fig=document.createElement('span'); fig.className='v11-stat'; fig.textContent=m[1];
+          if(m[2]){
+            var unit=document.createElement('span'); unit.className='v11-unit';
+            unit.textContent=m[2].replace(/\s+/g,' ').trim();  /* "/ month" as written - no caps (Inkyung 08-17) */
+            fig.appendChild(unit);
+          }
+          line.innerHTML=rest;
+          moved.insertBefore(fig,line);
+        }
+      }
+    }
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build);
+  else build();
+})();
+</script>
+
+
+<script id="v11-newsroom">
+/* ============ NEWSROOM — all widths (2026-08-17, Inkyung) ============
+   Was mobile-only. Promoted to desktop on her audit call, which found three things that were not
+   style differences but gaps:
+     - the press-release stream had NO index link at all (the single "VIEW ALL" sat under the
+       changelog, ~600px away from the releases it did not point at)
+     - no imagery on either stream, while mobile had both - a live violation of the handoff's §2-5
+       ("no image on mobile that desktop lacks"), which promoting resolves in the right direction
+     - two labels for one action: "READ THE PRESS RELEASE" here, "READ" on mobile
+   Kept as ONE implementation rather than a desktop copy: every step below is idempotent and
+   width-agnostic, so the mobile CSS (<=900) and the desktop CSS in v11-global dress the same DOM. */
+(function(){
+  var ARROW='<svg class="arr" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true" focusable="false"><path d="M4 12L12 4M12 4H6M12 4V10" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>';
+  function build(){
+    /* Label names its destination tab, so stream name = link label = destination tab name
+       (Changelog -> ALL CHANGELOGS -> the CHANGELOG tab). "VIEW ALL" twice cannot do that, and the
+       two headings sit far enough apart that proximity does not disambiguate them. */
+    [['.latest > .rail > .streamhd', 'newsroom.html#press-release', 'ALL RELEASES'],
+     ['.latest .clog > .streamhd',   'newsroom.html#changelog',     'ALL CHANGELOGS']
+    ].forEach(function(cfg){
+      var hd=document.querySelector(cfg[0]); if(!hd || hd.closest('.streamrow')) return;
+      var row=document.createElement('div'); row.className='streamrow';
+      hd.parentNode.insertBefore(row,hd); row.appendChild(hd);
+      if(!cfg[1]) return;                       /* heading + rule only, no index link */
+      var a=document.createElement('a');
+      a.className='mlink'; a.href=cfg[1];
+      a.innerHTML=ARROW+'<span>'+cfg[2]+'</span>';
+      row.appendChild(a);
+    });
+
+    /* the old bottom links are now duplicates of the header row */
+    var lf=document.querySelector('.latest .ltfoot'); if(lf) lf.remove();
+    var cf=document.querySelector('.latest .cfoot');  if(cf) cf.remove();
+
+    /* The feature's text needs to be ONE grid cell so it can sit beside the image on desktop.
+       Without this the four items land in four separate rows, and the image spanning those rows
+       stretches them - the first attempt put 333px of air between the headline and the summary.
+       On mobile .lt-body is display:contents, so the children keep taking part in .lt-feat's own
+       flex order exactly as before (the date's order:-1 still lands it under the image). */
+    var lf=document.querySelector('.latest .lt-feat');
+    if(lf && !lf.querySelector('.lt-body')){
+      var body=document.createElement('div'); body.className='lt-body';
+      [].slice.call(lf.children).forEach(function(c){ if(!c.classList.contains('lt-plate')) body.appendChild(c); });
+      lf.appendChild(body);
+    }
+
+    /* featured release: READ (was READ THE PRESS RELEASE) */
+    var featLink=document.querySelector('.latest .lt-feat .mlink span');
+    if(featLink) featLink.textContent='READ';
+
+    /* every changelog row gets its own READ */
+    document.querySelectorAll('.clog .ci').forEach(function(row){
+      if(row.querySelector('.cread')) return;
+      var r=document.createElement('span');
+      r.className='cread'; r.innerHTML=ARROW+'<span>READ</span>';
+      row.appendChild(r);
+    });
+
+    /* NEWSROOM images (2026-08-17, Inkyung). Built in JS so the desktop DOM stays V10-verbatim -
+       see the CSS note for the §2-5 caveat. */
+    var feat=document.querySelector('.latest .lt-feat');
+    if(feat && !feat.querySelector('.lt-plate')){
+      var plate=document.createElement('img');
+      plate.className='lt-plate'; plate.alt='';
+      plate.src='Images/v5-images/press-release-light-clean.png';
+      feat.insertBefore(plate, feat.firstChild);
+    }
+    document.querySelectorAll('.clog .ci').forEach(function(row){
+      if(row.querySelector('.cthumb')) return;
+      var th=document.createElement('span'); th.className='cthumb';
+      var lg=document.createElement('img'); lg.src='II-word-logo.svg'; lg.alt='';
+      th.appendChild(lg); row.appendChild(th);
+    });
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build);
+  else build();
+})();
+</script>
+
+
+<style id="v11-global">
+/* ---------------------------------------------------------------------------
+   2026-08-19: every rule that belongs to more than one page was DELETED from this
+   block and now lives in shared/v11.css, which loads after it. If a value you
+   expect is not here, it is there. Comments left behind describe decisions whose
+   rule moved - the reasoning is kept, the duplicate is not.
+   THIS BLOCK MAY ONLY CARRY #section-id RHYTHM AND DOCUMENTED PAGE EXCEPTIONS.
+   --------------------------------------------------------------------------- */
+
+/* ============ V11 GLOBAL — text-CTA grammar (2026-08-17) ============
+   ★ This is the ONE V11 block that is NOT inside @media (max-width:900px).
+   Every other V11 rule is mobile-only; this one changes desktop too, on
+   Inkyung's "전체 적용" (08-17).
+
+   Why: Dave, 08-17 - our Managed / Self-Directed links "don't totally look
+   like CTAs on mobile", and he preferred Anduril's arrow + underline. Applied
+   to every `.mlink` on the site so one component does not render two ways.
+   Arrow moves from the left of the label to the right (Inkyung 08-17): it now
+   trails the words like Anduril's, instead of gating them.
+
+   `order` rather than row-reverse, so the flex gap and baseline stay put. */
+/* The arrow was the one part of this component with no floor: its label is
+   --t-mono15 = max(12px, 15u), but the arrow was a bare 12u, so at 1440 it
+   rendered 6.79px against a 12px label while mobile (669) hardcoded 12px.
+   Same token pattern as the reading type - floors at 12, still scales past
+   the 2545 frame. Unified to the larger value (Inkyung 08-17). */
+
+@media (min-width:901px){
+/* Gated to 901+. These first shipped unscoped and immediately broke mobile: .clog .ci got
+   display:flex, overriding the mobile 2-column grid, and .cthumb went 88x56 -> 335x56. Equal
+   specificity, and this block sits after the mobile one, so it won on both. */
+/* ---------- NEWSROOM on desktop (2026-08-17) ----------
+   Same DOM as mobile now (see script#v11-newsroom); this dresses it at desktop width. Written
+   outside any media query on purpose - it is the second thing in this file that touches desktop,
+   and it is here rather than in the mobile block so the two live side by side. */
+.latest .streamrow{display:flex;align-items:baseline;justify-content:space-between;gap:24px}
+.latest .streamrow .streamhd{margin:0}
+.latest .streamrow .mlink{margin:0;flex:none}
+/* The heading keeps the air it used to carry as margin-bottom, moved onto the row so the link
+   shares it. 68px is the rendered value of the old .streamhd margin at 1440. */
+.latest .streamrow{margin-bottom:calc(113 * var(--u))}
+.latest .streamhd{margin-bottom:0}
+
+/* Featured release: IMAGE LEFT, TEXT RIGHT (2026-08-17, Inkyung: "엉성해").
+   It was a single left-hand stack - image, then headline, summary, date, READ, all under each other
+   inside a 683 column of a 916 rail. Measured, that left 466px of the rail (51%) empty down the
+   whole block, while the rows directly above (Press Releases + ALL RELEASES) and below (the
+   four-up changelog) both used the full 916. The feature was the only thing on the page using half
+   a rail, which is what read as loose.
+   Six and six: 449 each, the measure .lt-sum already had, so no new width enters the section.
+
+   SQUARE, NOT 16:10. The source is 5552x6243 - a PORTRAIT mockup (0.89) - and it was being poured
+   into a 1.60 landscape frame, so object-fit:cover threw away more than half the height and served
+   a band from the middle: the phone was cut off at the bottom and what remained was mostly the
+   cream surround. At 1:1 the crop is about 5%. The honest fix is a web crop of the asset; this is
+   the most CSS can do. Mobile takes the same 1:1 for the same reason. */
+/* .ltgrid held .lt-feat to a 683 column of the 916 rail, so width:100% on the feature resolved to
+   683 and the two columns came out at 333 each. The feature takes the whole rail now. */
+.latest .ltgrid{grid-template-columns:1fr}
+/* 4 / 8, not 6 / 6 (Inkyung 2026-08-17: "이미지가 아직도 큼"). At six columns the square came out
+   449 tall against a 180-tall text stack, so 270px of the right-hand column sat empty and the photo
+   read as the subject of the section rather than its illustration. Four columns puts it at 294, and
+   the eight it gives back widens the summary - a wider measure is a shorter block, so the two sides
+   end up closer in height as well as calmer. align-items:center rather than start: whatever
+   difference remains is then split above and below the text instead of pooling under it. */
+/* TEXT LEFT, IMAGE RIGHT (Inkyung 2026-08-17: "이미지가 왼쪽에 있는 이유"). It was image-left
+   because mobile stacks image-then-text and that order got laid on its side - but side by side the
+   two columns are read at once, so what carried over was not an order, it was an AXIS. Measured:
+   NO. 06 NEWSROOM, Press Releases, Changelog and all four changelog card titles start at 255, and
+   the feature's headline, summary and READ were the only text in the section at 566. The page is a
+   left-aligned text spine; this block was the one place it broke. */
+.latest .lt-feat{width:100%;display:grid;
+  grid-template-columns:1fr calc((100% + 30 * var(--u)) / 12 * 4 - 30 * var(--u));
+  column-gap:calc(28 * var(--u));align-items:center}
+/* grid-row:1 on BOTH is required, not decorative. With only grid-column set, auto-placement runs
+   sparse: the image took row 1 / column 2, the cursor was then past column 2, and .lt-body - which
+   comes later in the DOM - could not go back to column 1 of row 1, so it dropped to row 2. The two
+   halves stopped being side by side and the block grew a screen of empty space. */
+.latest .lt-feat .lt-plate{grid-column:2;grid-row:1;width:100%;aspect-ratio:1/1;object-fit:cover;margin:0}
+.latest .lt-feat .lt-body{grid-column:1;grid-row:1;display:flex;flex-direction:column;align-items:flex-start}
+/* The stack's own rhythm has to be restated: it used to come from rules on .lt-feat's children, and
+   moving them into .lt-body left every gap at 0. Same rendered values as before the rebuild
+   (24u / 24u / 50u = 14 / 14 / 28 at 1440), so only the arrangement changed, not the spacing. */
+.latest .lt-feat .lt-body>*+*{margin-top:calc(28 * var(--u))}
+.latest .lt-feat .lt-body>.mlink{margin-top:calc(42 * var(--u))}
+/* The summary keeps a prose measure of its own instead of filling the 605 column. Measured across
+   the page, every 15px prose block sits between 455 and 464 - NO.04 body 455, CLOSE 457, the hero
+   descriptor 464 - and letting this one run to 605 made it the single widest line of reading text
+   on the site. It takes .lt-hd's expression so the headline and the summary share one left column
+   edge and one right one. (The 2/3 max-width it used to carry was sized against the old 683 column
+   and had gone stale in both directions.) */
+.latest .lt-feat .lt-body .lt-sum{max-width:calc((100% + 30 * var(--u)) / 12 * 9 - 30 * var(--u))}
+
+/* Changelog thumbnails ride on top of each card. .ci is a plain block on desktop, so it becomes a
+   flex column purely to let the thumbnail take order:-1 without touching the markup order. */
+.clog .ci{display:flex;flex-direction:column}
+.clog .ci .cthumb{order:-1;display:flex;align-items:center;justify-content:center;
+  width:100%;aspect-ratio:335/210;background:var(--c-black);margin:0 0 calc(28 * var(--u))}
+.clog .ci .cthumb img{width:45%;height:auto;display:block}
+.clog .ci .cread{margin-top:calc(28 * var(--u));display:inline-flex;align-items:center;gap:6px;
+  align-self:flex-start;font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);
+  letter-spacing:0.04em;line-height:1.5;color:var(--c-1000)}
+.clog .ci .cread span{text-decoration:underline;text-decoration-thickness:0.667px;text-underline-offset:5px}
+.clog .ci .cread .arr{order:2;width:12px;height:12px;flex:none}
+
+/* 22 tier unified to the mobile treatment (Inkyung 2026-08-17). Desktop ran 1.30/500, mobile 1.25/400,
+   so the same tier read as two. Stat FIGURES are deliberately excluded even where they render at 22
+   (.g2stat .v, .dstats .v, .stats3 .v): those carry -0.069em and 500 as the figure tier, and pulling
+   them to 400 would flatten a number into prose. */
+.sys .mode h3,
+.latest .streamhd,
+.loop3 .step .t,
+.loop3 .loopnote p,.loop3 .lnote,
+.std5b .qh2,.std5b .qh2 .a,.std5b .qh2 .b,
+.qh2,.qh2 .a,.qh2 .b{line-height:1.25;font-weight:500;letter-spacing:0} /* was 400; 2026-08-20 "17부터는 다 500" */
+/* Tracking 0, not the display -0.02em desktop still carried (2026-08-17). 22 arrived as a heading
+   size and took heading tracking, but the tier now holds prose - the hero descriptor runs 6 lines
+   and .lnote 9 - and today's other two moves on it (500 -> 400, 1.15 -> 1.25) were both toward
+   prose. Leaving tracking on the display value would have been the one setting still pointing the
+   other way, and negative tracking costs most over long lines. */
+
+/* The stat figure's own footnote was the only one on the page at 13. Its neighbours - .src and
+   .figcap - are 11, and the desktop mono ladder puts figure sub-text there. Same outlier that was
+   corrected on mobile (to 9, which is the mobile tier); this is the desktop half of it. */
+/* 11 / 1.4, matching mobile. Two documented rules disagreed here: the base sheet files .sys .fee
+   under "label = 1.5", while the mobile block's later pass (2026-08-01, Inkyung, "all pages") files
+   it under "mono meta text = 1.4" and states the sharper principle - leading only does work on text
+   that wraps; single-line label BOXES keep 1.5 because the value just sets their height. Following
+   the later rule, so both widths read the same.
+   Worth knowing this is 1.1px of box height on one unwrapped line: invisible. It cost three rounds
+   of investigation, partly because I invented a third rule ("11px tier = 1.4") that exists nowhere
+   and reverted a correct value on the strength of it. Mono leading differences of 0.1 are a
+   bookkeeping matter, not a design one - read the two group rules, match them, move on. */
+/* var(--t-mono13), not a hardcoded 11. This was set to 11px on 2026-08-18 to match .src and .figcap,
+   which rendered 11 at the time. The desktop floor pass later that day raised --t-mono13 to 13, so
+   those neighbours moved to 13 and this one stayed behind - the page's only mono 11. A hardcoded px
+   in the desktop block does not follow the tokens; use the token. */
+.sys .fee{font-size:var(--t-mono13);line-height:1.4}
+
+/* Legal block in two columns on desktop (2026-08-17, Inkyung). It was eight paragraphs stacked at
+   the full 916 rail: at 11px that is roughly 150 characters a line, against a 45-90 norm, and it was
+   the longest reading line on the site sitting on its smallest type - the eye loses the start of the
+   next line. Two columns put the measure at ~449, the same as the page's prose, and drop the footer
+   from 654 to about 420 at the same time. Copy is untouched: this is compliance-approved wording and
+   only the container changes.
+   column-fill:balance so the two sides end level rather than filling the first column to the brim. */
+
+/* $20 block, desktop half of the mobile treatment. In place inside .lcol (455), not lifted onto the
+   rail the way mobile does it. Type values are mobile's, scaled to the desktop tiers: the figure
+   keeps 34/500/-0.069em (the stat tier is width-independent), the description takes the desktop
+   prose settings 15/1.30/400 rather than mobile's 15/1.40/400, and the unit stays mono 13. */
+/* descendant, not `.sys .row>` - on desktop the block stays inside .lcol so it is a grandchild of
+   .row. The mobile rule can use the child combinator because mobile lifts it onto the rail. */
+.sys .pricemoved{background:var(--c-1000);padding:calc(42 * var(--u)) calc(42 * var(--u));margin-top:calc(42 * var(--u))}
+.sys .pricemoved .v11-stat{display:flex;align-items:baseline;gap:calc(14 * var(--u));
+  font-size:34px;font-weight:500;line-height:1.15;letter-spacing:-0.069em;color:var(--c-white)}
+.sys .pricemoved .v11-unit{font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);
+  line-height:1.5;letter-spacing:0.04em;color:var(--c-600)}
+.sys .pricemoved .pricehd,.sys .pricemoved .pricehd .nw{font-size:15px;font-weight:400;
+  line-height:1.3;letter-spacing:0;color:var(--c-400)}
+.sys .pricemoved .pricehd{margin-top:calc(14 * var(--u))}
+.sys .pricemoved .fee{margin-top:calc(28 * var(--u))}
+
+/* Changelog shows THREE on desktop, not four (Inkyung 2026-08-17). Four 216-wide cards read as a
+   spec table; at three the card is 294 - the same width as the feature image - so the section
+   resolves to one repeated measure. The fourth stays in the DOM for the index page.
+   Done by widening the CARD to 4 of the existing 12 columns, NOT by re-declaring the strip as
+   repeat(3,1fr): .ci carries grid-column:span 3, so against a 3-column grid each card spanned the
+   whole strip and the three stacked at full rail width. */
+.clog .ci{grid-column:span 4}
+.clog .ci:nth-child(n+4){display:none}
+
+/* ===== DESKTOP TYPE FLOORS - the laptop range was rendering the mobile ladder (2026-08-18) =====
+   Inkyung, on a MacBook after working on a wider screen: "audril 페이지와 비교하면 좀 다 작아보여."
+   Measured, and it is not perception.
+
+   --u is 100vw/2545: desktop type is proportional to a 2545px Figma master. Every token carries a
+   px floor so it cannot collapse on narrow screens - but those floors were set at the MOBILE values,
+   so below the crossover width the floor is what renders. Crossovers:
+
+     --t-body   22u  hits its 15px floor below 1735px
+     --t-h34    34u  hits 22px below 1647px
+     --t-mono15 15u  hits 13px below 2206px      <- the whole laptop range, always
+     --t-mono13 13u  hits 11px below 2153px
+
+   At 1512 (this MacBook) u = 0.594, so the page rendered 15 prose / 13 label / 11 meta / 22 figure -
+   the mobile ladder, on the desktop layout. The "desktop 7-value ladder" in HANDOFF 2-3 and
+   PORT-TO-PAGES 3-1 was measured in this state: it recorded the floors, not the design.
+
+   PRECEDENT, not a new idea: the --t-mono11 comment above (2026-08-02) raised the mono floors
+   12->13 / 10->11 for exactly this reason ("the whole laptop range sat at 12/10, one step under the
+   13/11 canon and smaller than mobile"). This is the other half of that fix. Each floor moves up
+   ONE step on the ladder to the token's own name value - no size is invented:
+
+     --t-body   15 -> 17    prose        (36 elements at 1512)
+     --t-mono15 13 -> 15    label / CTA  (30)
+     --t-mono13 11 -> 13    meta         (22)
+     --t-h34    22 -> 28    mode titles, stat figures (11)
+
+   MOBILE IS UNTOUCHED - that is why this sits in min-width:901px. The tokens are on :root, and 16
+   visible mobile elements still resolve through them (8 on --t-body incl. .plead and .def4 .body,
+   2 on --t-h34 = the newsroom stream headings, 2 on --t-mono13 = the hero trust line). Raising the
+   floors globally would have moved all of them. Verified: 149 mobile text nodes, sizes identical.
+
+   SECOND BATCH, added right after (2026-08-18, Inkyung approved on screen): --t-read27 17 -> 22
+   (.loop3 .step .t, .lnote, .latest .lt-hd), --t-lead24 17 -> 22 (.dlead, .sys .pricehd,
+   .close9 .pricehd9), --t-small17 13 -> 15 (.loop3 .step .d, .lt-list .li .t, .clog .cd, .tlead).
+   Same repair, same rule - one ladder step up. I had first held these back as "design calls
+   because 22 on .lnote collides with the 22 tier", which was wrong: the 22 tier unified on 08-18
+   is LEADING 1.25 / WEIGHT 400 / TRACKING 0, not a size. Those elements never shared a size
+   (at the 2545 master .mode h3 is 34 and .step .t is 27), so nothing is being reunited or split.
+
+   DS: 15 (mono), 28 and 48 are not in the DS desktop ladder. Not registering them yet, on purpose -
+   the value gets confirmed on screen first, then #type-landing and Doctrine/Typography.md follow in
+   one pass. Do not "fix" this block back to the DS ladder without reading that the DS ladder itself
+   recorded the floor state. */
+
+/* Display type had NO floor at all - it just kept shrinking: 64u = 38px at 1512, 36px at 1440, and
+   Anduril's H1 sits at roughly 5% of viewport width where ours was at 2.5%. Their root font-size
+   scales but never collapses (measured on /mission: 1200 -> 14px, 1512 -> 16.2, 1920 -> 17.8).
+   48px floor, releasing at 1909px. .hbar is white-space:nowrap, so the ceiling is measured, not
+   guessed - at 1512 the longest line ("The market remembers every decision.") is 869px inside a
+   1497 rail, 382px spare. 52 and 56 also fit; 48 is the value that still clears 1280. */
+
+}
+</style>
+<!-- THE SHARED LAYER. Loads last so it wins on source order at equal specificity.
+     Every rule that must be identical on every V11 page lives in this one file -
+     component sizes, weights, leading, and border treatment. Do not copy it into a
+     page; a page block may only carry #section-id rhythm and documented exceptions.
+     Verify with:  python shared/check-v11.py                See shared/v11.css -->
+<link rel="stylesheet" href="shared/v11.css">
+
 
 </body>
 </html>
