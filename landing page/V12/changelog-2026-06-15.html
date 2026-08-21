@@ -5,7 +5,7 @@
 <meta http-equiv="Cache-Control" content="no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Changelog · Intelligent Investing</title>
+<title>S&P 500 comparison · Changelog · Intelligent Investing</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -34,7 +34,7 @@ a{color:inherit;}
 /* ---- nav v2, ink on cream ---- */
 .nav{position:fixed;inset:0 0 auto;z-index:100;height:calc(78 * var(--u));min-height:54px;background:transparent;display:flex;align-items:center;transition:background 0.35s ease}
 .nav a{text-decoration:none}
-.nav .logo{position:absolute;left:calc(40 * var(--u));top:50%;transform:translateY(-50%);height:calc(16 * var(--u));min-height:13px;width:auto;display:block}
+.nav .logo{position:absolute;left:calc(40 * var(--u));top:50%;transform:translateY(-50%);height:calc(20 * var(--u));min-height:16px;width:auto;display:block} /* 16u/13 -> 20u/16: the doc pages carried a smaller logo than home/SD/managed - one logo size site-wide (2026-08-20) */
 .nav .logo svg{height:100%;width:auto;display:block}
 .nav .logo path{fill:var(--c-1000)}
 .navmenu{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:calc(42 * var(--u))}
@@ -77,14 +77,15 @@ a{color:inherit;}
 .pr-attrib{margin-top:calc(14 * var(--u));font-family:var(--mono);font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-800);}
 
 /* ---- figure (product screenshot) ---- */
-.pr-fig{margin:0 0 calc(113 * var(--u));max-width:calc((100% + var(--gutter)) / 12 * 8 - var(--gutter));}
+.pr-fig{margin:0 0 calc(113 * var(--u));max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));} /* 6col, the press-release figure width (2026-08-20) */
 .pr-doc .pr-fig-mark+.pr-fig,.pr-doc .pr-fig-mark+.pr-body{margin-top:0;}
 .pr-body+.pr-fig-mark,.pr-quote+.pr-fig-mark{margin-top:calc(113 * var(--u));}
 .pr-fig img{display:block;width:100%;height:auto;border:0.667px solid rgba(28,28,28,0.16);}
 .pr-fig figcaption{margin-top:calc(14 * var(--u));font-family:var(--mono);font-size:var(--t-mono11);line-height:1.4;/* mono tier audit 2026-08-02: figcap/legend/stamp = 9 at 1.4, not the 13 label token */ letter-spacing:0.04em;color:var(--c-800);}
 
 /* ---- changelog items ---- */
-.cl-item{border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(28 * var(--u));}
+.cl-item{border-top:0;padding-top:0;}
+.cl-item+.cl-item{margin-top:calc(113 * var(--u));} /* hairlines between entries retired 2026-08-20 - the press-release page separates its sections with the 113u beat, and this page follows its design */
 .cl-item+.cl-item{margin-top:calc(113 * var(--u));}
 .cl-name{font-weight:500;font-size:var(--t-h34);line-height:1.3;letter-spacing:-0.02em;color:var(--c-1000);margin-bottom:calc(28 * var(--u)); /* was 24u - unified at 28u = 16px (2026-08-20) */max-width:calc((100% + var(--gutter)) / 12 * 8 - var(--gutter));}
 .cl-item .pr-fig{margin-top:calc(42 * var(--u));}
@@ -210,6 +211,7 @@ body.menu-open{overflow:hidden}
   .cl-item+.cl-item{margin-top:64px}
   .cl-name{font-size:22px;line-height:1.15;margin-bottom:16px}
   .cl-item .pr-fig{margin-top:24px}
+  .cl-item+.cl-item{margin-top:64px} /* PR mobile beat (2026-08-20) */
   .pr-block,.pr-more{margin-top:64px;padding-top:24px}
   .pr-legal{margin-top:64px;padding:24px 0 0}
   .pr-block h2,.pr-legal h2,.pr-more h2{margin-bottom:16px}
@@ -295,20 +297,24 @@ body.menu-open{overflow:hidden}
       <span class="sep" aria-hidden="true">/</span>
       <a href="newsroom.html#changelog">CHANGELOG</a>
       <span class="sep" aria-hidden="true">/</span>
-      <span class="cur">JUL [DD], 2026</span>
+      <span class="cur">JUN 15, 2026</span>
     </nav>
-    <h1 class="pr-title ri" style="--d:0.08s">[Month changelog title]</h1>
-    <p class="pr-deck ri" style="--d:0.18s">[One or two line summary of the month's improvements, the same summary used on the homepage.]</p>
+    <h1 class="pr-title ri" style="--d:0.08s">S&amp;P 500 comparison</h1>
+    <p class="pr-deck ri" style="--d:0.18s">Self-directed performance is now shown against the S&amp;P 500, tracked through VFV, mirroring the member’s own deposits and withdrawals into the index.</p>
   </div>
 </section>
 
 <div class="container">
 <section class="pr-doc">
   <div class="cl-item ri">
-    <h2 class="cl-name">[First improvement]</h2>
+    <h2 class="cl-name">The comparison</h2>
     <div class="pr-body">
-      <p>[What changed, and what it means for the member. Two or three sentences.]</p>
+      <p>Self-directed performance is now shown against the S&amp;P 500, tracked through VFV. It mirrors the member’s own deposits and withdrawals into the index, on the dates they were made - so it reflects the decisions taken, not a difference in starting point or timing.</p>
+      <p>A return on its own doesn’t tell you whether the decisions behind it were sound. It only tells you the outcome. The index over the same period is the reference point that separates the two.</p>
+      <p>Most retail investors never see this comparison at all - not once, not ever, unless they build it themselves. That absence isn’t neutral. Without a reference point sitting next to your own results, there’s nothing to measure a decision against except how it felt at the time. This isn’t about giving you a new piece of information to look up. It’s a different environment to operate in - one where the comparison is just there, every time you check your account, whether you go looking for it or not. Professional allocators have never operated any other way.</p>
+      <p>The comparison appears in the self-directed section once an account is funded, and opens to a detail view: a summary, the method used, and a breakdown of contributions versus growth. At launch it covers all accounts combined.</p>
     </div>
+    <div class="pr-fig-mark ri">FIG. 01</div>
     <figure class="pr-fig">
       <img src="Images/v5-images/press-release-light-clean.png" alt="The Intelligent Investing app on a phone">
       <figcaption>Illustrative. Figures and positions shown are examples, not a client record and not a recommendation.</figcaption>
@@ -316,20 +322,13 @@ body.menu-open{overflow:hidden}
   </div>
 
   <div class="cl-item ri">
-    <h2 class="cl-name">[Second improvement]</h2>
+    <h2 class="cl-name">Notes on stock pages</h2>
     <div class="pr-body">
-      <p>[What changed, and what it means for the member.]</p>
+      <p>A note field has been added to each stock page, kept between sessions - write something down today, find it again in six months.</p>
     </div>
   </div>
 
-  <div class="cl-item ri">
-    <h2 class="cl-name">[Third improvement]</h2>
-    <div class="pr-body">
-      <p>[What changed, and what it means for the member.]</p>
-    </div>
-  </div>
-
-  <section class="pr-block ri">
+    <section class="pr-block ri">
     <h2>MEMBERS RECEIVE THIS BY EMAIL</h2>
     <p>Every changelog goes to members as a monthly note. Nothing here is a recommendation to buy, sell, or hold any security.</p>
   </section>
@@ -344,7 +343,7 @@ body.menu-open{overflow:hidden}
     <h2>MORE UPDATES</h2>
     <div class="mlist2">
       <div class="li"><span class="k">Press Release<span class="d">JUL 27, 2026</span></span><a class="t" href="press-release.html">Orion Digital Commercially Launches Intelligent Investing</a></div>
-      <div class="li"><span class="k">Changelog<span class="d">JUN 30, 2026</span></span><a class="t" href="changelog-entry.html">[June changelog title]</a></div>
+      <div class="li"><span class="k">Changelog<span class="d">AUG 17, 2026</span></span><a class="t" href="changelog-2026-08-17.html">The stock page: the memo at the sell decision</a></div>
     </div>
     <a class="mlink allupdates" href="newsroom.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>ALL UPDATES</span></a>
   </section>

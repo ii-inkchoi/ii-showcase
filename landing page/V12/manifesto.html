@@ -33,7 +33,7 @@ body{min-height:100vh;font-size:15px;line-height:1.4;} /* was 1.55 - it leaked i
 /* ---- nav v2, ink on cream ---- */
 .nav{position:fixed;inset:0 0 auto;z-index:100;height:calc(78 * var(--u));min-height:54px;background:transparent;display:flex;align-items:center;transition:background 0.35s ease}
 .nav a{text-decoration:none}
-.nav .logo{position:absolute;left:calc(40 * var(--u));top:50%;transform:translateY(-50%);height:calc(16 * var(--u));min-height:13px;width:auto;display:block}
+.nav .logo{position:absolute;left:calc(40 * var(--u));top:50%;transform:translateY(-50%);height:calc(20 * var(--u));min-height:16px;width:auto;display:block} /* 16u/13 -> 20u/16: the doc pages carried a smaller logo than home/SD/managed - one logo size site-wide (2026-08-20) */
 .nav .logo svg{height:100%;width:auto;display:block}
 .nav .logo path{fill:var(--c-1000)}
 .navmenu{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:calc(42 * var(--u))}

@@ -34,7 +34,7 @@ a{color:inherit;}
 /* ---- nav v2, ink on cream ---- */
 .nav{position:fixed;inset:0 0 auto;z-index:100;height:calc(78 * var(--u));min-height:54px;background:transparent;display:flex;align-items:center;transition:background 0.35s ease}
 .nav a{text-decoration:none}
-.nav .logo{position:absolute;left:calc(40 * var(--u));top:50%;transform:translateY(-50%);height:calc(16 * var(--u));min-height:13px;width:auto;display:block}
+.nav .logo{position:absolute;left:calc(40 * var(--u));top:50%;transform:translateY(-50%);height:calc(20 * var(--u));min-height:16px;width:auto;display:block} /* 16u/13 -> 20u/16: the doc pages carried a smaller logo than home/SD/managed - one logo size site-wide (2026-08-20) */
 .nav .logo svg{height:100%;width:auto;display:block}
 .nav .logo path{fill:var(--c-1000)}
 .navmenu{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:calc(42 * var(--u))}
@@ -88,19 +88,20 @@ a{color:inherit;}
    Same story and same plate as the home, so the two surfaces agree.
    The headline steps 17 -> 22, one rung, because it has to out-rank the rows
    under it; everything else is the row's own values. */
-.nr-list .row.feat{padding-top:0;grid-template-rows:auto auto auto 1fr;}
+.nr-list .row.first{padding-top:0;grid-template-rows:auto auto auto 1fr;}
 /* auto auto 1fr: the plate spans three rows, and without explicit sizing the browser
    shares its 544px equally across them - label, headline and link drift apart by 125px.
    Content-size the first two and let the last absorb the remainder. */
-.nr-list .row.feat .nr-plate{grid-column:1 / span 5;grid-row:1 / span 4;width:100%;aspect-ratio:1/1;object-fit:cover;display:block;}
+.nr-list .row .nr-plate{display:none}
+.nr-list .row.first .nr-plate{grid-column:1 / span 5;grid-row:1 / span 4;width:100%;aspect-ratio:1/1;object-fit:cover;display:block;}
 /* grid-row span 3, or the plate owns row 1 alone and its 544px height pushes the
    headline down to the plate's baseline while the label sits at the top */
-.nr-list .row.feat .k{grid-column:7 / span 2;}
-.nr-list .row.feat>.t{grid-column:7 / span 5;display:block;margin-top:calc(28 * var(--u));}
-.nr-list .row.feat .rbody{grid-column:7 / span 5;margin-top:calc(28 * var(--u));}
-.nr-list .row.feat .t{font-size:var(--t-h34);line-height:1.25;letter-spacing:0;} /* 22 tier = 500/1.25/0; it carried the 28 tier's -0.02em and a 1.3 (2026-08-20) */
-.nr-list .row.feat .go{grid-column:7 / span 3;margin-top:calc(28 * var(--u));justify-self:start;align-self:start;}
-.nr-list .row.first{border-top:0;padding-top:0;}
+.nr-list .row.first .k{grid-column:7 / span 2;}
+.nr-list .row.first>.t{grid-column:7 / span 5;display:block;margin-top:calc(28 * var(--u));}
+.nr-list .row.first .rbody{grid-column:7 / span 5;margin-top:calc(28 * var(--u));}
+.nr-list .row.first .t{font-size:var(--t-h34);line-height:1.25;letter-spacing:0;} /* 22 tier = 500/1.25/0; it carried the 28 tier's -0.02em and a 1.3 (2026-08-20) */
+.nr-list .row.first .go{grid-column:7 / span 3;margin-top:calc(28 * var(--u));justify-self:start;align-self:start;}
+.nr-list .row.first{border-top:0;padding-top:0;} /* .first is the featured row at EVERY filter now, not just the top of the page (2026-08-20) */
 .nr-list .row[hidden]{display:none;}
 /* changelog reads in place, so it has no action column and its body runs to the rail edge */
 .nr-list .row.cl .rbody{grid-column:4 / span 9;}
@@ -207,7 +208,7 @@ body.menu-open{overflow:hidden}
   .nr-list .row .s{margin-top:8px;line-height:1.4;}
   .nr-list .row .go{margin-top:24px;}
   /* feature row, stacked: plate, then the row's own ladder underneath */
-  .nr-list .row.feat{padding-top:0}
+  .nr-list .row.first{padding-top:0}
   /* every feat child needs the column reset: the desktop rules are (0,4,0) and
      outrank the generic mobile reset at (0,3,0), so without this the 12-column
      placement survives into the single-column grid, implicit columns are
@@ -221,7 +222,7 @@ body.menu-open{overflow:hidden}
      headline - here the page's own hero and filter strip do that job.
      Every child needs the column reset: the desktop rules are (0,4,0) and would
      otherwise carry 12-column placement into the single-column grid. */
-  .nr-list .row.feat{grid-template-rows:none}
+  .nr-list .row.first{grid-template-rows:none}
   /* THE PICTURE SITS UNDER THE HEADLINE, NOT ABOVE IT.
      Built picture-first from the desktop layout, and on a phone that put a
      335px image before any words - you scrolled past a photograph to find out
@@ -229,15 +230,15 @@ body.menu-open{overflow:hidden}
      summary and the link (Inkyung 2026-08-19: "이미지만 제목밑에", applied to the
      home and the newsroom together: "홈도 뉴스룸도?").
      Type sizes are untouched - only the order moved. */
-  .nr-list .row.feat .nr-plate,.nr-list .row.feat .k,.nr-list .row.feat>.t,
-  .nr-list .row.feat .rbody,.nr-list .row.feat .go{grid-column:1}
-  .nr-list .row.feat .k{order:0}
-  .nr-list .row.feat>.t{order:1;margin-top:16px}
-  .nr-list .row.feat .nr-plate{grid-row:auto;order:2;margin-top:24px}
-  .nr-list .row.feat .rbody{order:3;margin-top:24px}
-  .nr-list .row.feat .s{margin-top:0} /* .rbody already pays the 24; the row's own
+  .nr-list .row.first .nr-plate,.nr-list .row.first .k,.nr-list .row.first>.t,
+  .nr-list .row.first .rbody,.nr-list .row.first .go{grid-column:1}
+  .nr-list .row.first .k{order:0}
+  .nr-list .row.first>.t{order:1;margin-top:16px}
+  .nr-list .row.first .nr-plate{grid-row:auto;order:2;margin-top:24px}
+  .nr-list .row.first .rbody{order:3;margin-top:24px}
+  .nr-list .row.first .s{margin-top:0} /* .rbody already pays the 24; the row's own
      .s margin would stack on top of it and the gap under the plate came out 40 */
-  .nr-list .row.feat .go{order:4;margin-top:24px}
+  .nr-list .row.first .go{order:4;margin-top:24px}
   .nr-note{margin-top:48px;padding-top:24px;font-size:11px}
   .nr-tabs button,.nr-list .row .k{font-size:11px}
   .nr-close{padding:72px 0;}
@@ -338,7 +339,7 @@ body.menu-open{overflow:hidden}
 <!-- aria-live so a filter change is announced; the rows are hidden/shown in place rather than replaced -->
 <section class="nr-list" aria-live="polite" aria-atomic="false">
 
-  <div class="row feat ri" data-type="press-release">
+  <div class="row ri" data-type="press-release">
     <img class="nr-plate" alt="" src="Images/v5-images/press-release-light-clean.png">
     <span class="k">Press Release<span class="d">JUL 27, 2026</span></span>
     <a class="t" href="press-release.html">Orion Digital Commercially Launches Intelligent Investing</a>
@@ -349,12 +350,23 @@ body.menu-open{overflow:hidden}
   </div>
 
   <div class="row ri" data-type="changelog">
-    <span class="k">Changelog<span class="d">[MMM DD], 2026</span></span>
+    <img class="nr-plate" alt="" src="Images/v5-images/press-release-light-clean.png"><!-- placeholder art, to be replaced per item (2026-08-20) -->
+    <span class="k">Changelog<span class="d">AUG 17, 2026</span></span>
     <div class="rbody">
-      <a class="t" href="changelog-entry.html">[July changelog title]</a>
-      <span class="s">[Two line summary of what shipped this month and what it changes for members, written to be read without opening the entry.]</span>
+      <a class="t" href="changelog-2026-08-17.html">The stock page: the memo at the sell decision</a>
+      <span class="s">The memo now shows in the sell flow. Selling or reducing a position that has one surfaces it first, read&nbsp;only.</span>
     </div>
-    <a class="mlink go" href="changelog-entry.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>READ</span></a>
+    <a class="mlink go" href="changelog-2026-08-17.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>READ</span></a>
+  </div>
+
+  <div class="row ri" data-type="changelog">
+    <img class="nr-plate" alt="" src="Images/v5-images/press-release-light-clean.png"><!-- placeholder art, to be replaced per item (2026-08-20) -->
+    <span class="k">Changelog<span class="d">JUL 27, 2026</span></span>
+    <div class="rbody">
+      <a class="t" href="changelog-2026-07-27.html">Writing the investment case</a>
+      <span class="s">The editor now behaves like a proper notes editor, not a form field, and a memo opens to the full investment&nbsp;case.</span>
+    </div>
+    <a class="mlink go" href="changelog-2026-07-27.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>READ</span></a>
   </div>
 
   <!-- PLACEHOLDER ROW (2026-08-17). Added so the homepage "ALL RELEASES" link lands on a list that
@@ -362,6 +374,7 @@ body.menu-open{overflow:hidden}
        [brackets], matching how the changelog and in-the-press rows are stubbed on this page.
        ⬜ Website copy is Dave canon - replace with the real release or delete before any public build. -->
   <div class="row ri" data-type="press-release">
+    <img class="nr-plate" alt="" src="Images/v5-images/press-release-light-clean.png"><!-- placeholder art, to be replaced per item (2026-08-20) -->
     <span class="k">Press Release<span class="d">[MMM DD], 2026</span></span>
     <div class="rbody">
       <a class="t" href="press-release.html">[Second press release headline]</a>
@@ -371,15 +384,27 @@ body.menu-open{overflow:hidden}
   </div>
 
   <div class="row ri" data-type="changelog">
-    <span class="k">Changelog<span class="d">JUN 30, 2026</span></span>
+    <img class="nr-plate" alt="" src="Images/v5-images/press-release-light-clean.png"><!-- placeholder art, to be replaced per item (2026-08-20) -->
+    <span class="k">Changelog<span class="d">JUL 17, 2026</span></span>
     <div class="rbody">
-      <a class="t" href="changelog-entry.html">[June changelog title]</a>
-      <span class="s">[Two line summary of what shipped this month and what it changes for members, written to be read without opening the entry.]</span>
+      <a class="t" href="changelog-2026-07-17.html">Investment memos</a>
+      <span class="s">A memo is now required before an order, covering classification, role, the case, idea origin, and a&nbsp;prediction.</span>
     </div>
-    <a class="mlink go" href="changelog-entry.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>READ</span></a>
+    <a class="mlink go" href="changelog-2026-07-17.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>READ</span></a>
+  </div>
+
+  <div class="row ri" data-type="changelog">
+    <img class="nr-plate" alt="" src="Images/v5-images/press-release-light-clean.png"><!-- placeholder art, to be replaced per item (2026-08-20) -->
+    <span class="k">Changelog<span class="d">JUN 15, 2026</span></span>
+    <div class="rbody">
+      <a class="t" href="changelog-2026-06-15.html">S&amp;P 500 comparison</a>
+      <span class="s">Self-directed performance is now shown against the S&amp;P 500, mirroring your own deposits and&nbsp;withdrawals.</span>
+    </div>
+    <a class="mlink go" href="changelog-2026-06-15.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>READ</span></a>
   </div>
 
   <div class="row ri" data-type="in-the-press">
+    <img class="nr-plate" alt="" src="Images/v5-images/press-release-light-clean.png"><!-- placeholder art, to be replaced per item (2026-08-20) -->
     <span class="k">In the Press<span class="d">[MMM DD], 2026</span></span>
     <div class="rbody">
       <a class="t" href="#" onclick="return false">[Coverage headline as published]</a><!-- inert placeholder: clicking used to jump to the top of the page. Swap href + drop the onclick when the coverage URL exists (2026-08-20) -->
