@@ -25,7 +25,7 @@
   --t-small17: max(13px, calc(17 * var(--u)));
   --t-mono15: max(13px, calc(15 * var(--u)));
   --t-mono13: max(11px, calc(13 * var(--u)));
-  --t-mono12: max(11px, calc(11 * var(--u))); /* 12u -> 11u 2026-08-20: with desktop mono at 13/11/9 this token was the only 12 left, sitting between two rungs */
+  --t-mono12: max(11px, calc(12 * var(--u)));
   --t-mono11: max(9px, calc(11 * var(--u))); /* floor raised 12->13 / 10->11 (2026-08-02): 15u is 8.5px at 1440, so below ~2205px the floor is what renders - the whole laptop range sat at 12/10, one step under the 13/11 canon and smaller than mobile. The 2545 Figma frame is untouched: 15u=15 and 12u=12 both beat the new floors. */
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -56,7 +56,7 @@ img{display:block;max-width:none}
 .nav .logo svg{height:100%;width:auto;display:block}
 .nav .logo path{fill:var(--c-white);transition:fill 0.35s ease}
 .nav.scrolled .logo path{fill:var(--c-1000)}
-.navmenu{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:calc(42 * var(--u))}
+.navmenu{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:calc(40 * var(--u))}
 /* 13/1.3, not max(14px, 15u) with no leading at all (Inkyung 2026-08-17). 14 is not on the sans
    ladder (11/13/15/17/22/28/36) and these six links were the only elements on desktop off it;
    line-height was falling through to `normal`, which is not a value the page uses anywhere else.
@@ -78,9 +78,9 @@ img{display:block;max-width:none}
 .hero>img{position:absolute;left:calc(-128 * var(--u));top:0;width:calc(2944 * var(--u));height:calc(1648 * var(--u));object-fit:cover;filter:contrast(0.9) brightness(1.2)}
 .hero>video{position:absolute;left:calc(-128 * var(--u));top:0;width:calc(2944 * var(--u));height:calc(1648 * var(--u));object-fit:cover;filter:brightness(0.6) contrast(0.9);opacity:0;transition:opacity 0.8s ease}
 .hero>video.on{opacity:1}
-.hero .hgroup{position:absolute;left:calc(440 * var(--u));top:calc(515 * var(--u));width:calc(940 * var(--u));display:flex;flex-direction:column;align-items:flex-start;gap:calc(42 * var(--u));z-index:2}
-.hbars{display:flex;flex-direction:column;align-items:flex-start;gap:calc(6 * var(--u))}
-.hbar{display:inline-block;white-space:nowrap;background:var(--c-black);color:var(--c-white);font-weight:500;font-size:calc(64 * var(--u));line-height:0.9;letter-spacing:-0.02em;padding:calc(10 * var(--u)) calc(14 * var(--u))}
+.hero .hgroup{position:absolute;left:calc(440 * var(--u));top:calc(515 * var(--u));width:calc(940 * var(--u));display:flex;flex-direction:column;align-items:flex-start;gap:calc(50 * var(--u));z-index:2}
+.hbars{display:flex;flex-direction:column;align-items:flex-start;gap:calc(5 * var(--u))}
+.hbar{display:inline-block;white-space:nowrap;background:var(--c-black);color:var(--c-white);font-weight:500;font-size:calc(64 * var(--u));line-height:0.9;letter-spacing:-0.02em;padding:calc(10 * var(--u)) calc(12 * var(--u))}
 .hero .hsub{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200);max-width:calc(820 * var(--u))}
 .hero .heyeb{font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-600)}
 .hero .heyeb .hlogo{display:block;width:max(151px, calc(189 * var(--u)));height:auto} /* sized to the typed wordmark it replaced: 21ch of mono 12px (15u at frame) */
@@ -90,7 +90,7 @@ img{display:block;max-width:none}
    the 13/11/9 ladder (3 spans at 12px), and mobile already renders the same line at 11.
    Compliance / trust copy is meta, so it belongs on the 11 tier, not the 13 label tier. */
 .hero .htrust{font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-600)}
-.hero .ctarow{display:flex;align-items:center;gap:calc(28 * var(--u));flex-wrap:wrap}
+.hero .ctarow{display:flex;align-items:center;gap:calc(30 * var(--u));flex-wrap:wrap}
 .cta-line{min-width:max(160px, calc(196 * var(--u)));padding:0 22px;height:calc(48 * var(--u));min-height:38px;border:1px solid var(--c-white);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-white)}
 .cta-fill{min-width:max(160px, calc(196 * var(--u)));padding:0 22px;height:calc(48 * var(--u));min-height:38px;background:var(--c-black);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-white)}
 .cta-fill.inv{background:var(--c-white);color:var(--c-black)} /* CTA colour canon (Inkyung 2026-07-31): boxes and text links use pure #000/#FFF only - c-1000 is a surface and body-text token, so a CTA in it reads a step softer than the CTA below it */
@@ -99,23 +99,23 @@ img{display:block;max-width:none}
 .hero .ctarow .mlink{color:var(--c-white)}
 
 /* ---- NO.01 THE SYSTEM (h1984, black; vertical stack: text -> full-width loop -> modes) ---- */
-.sys{background:var(--c-black);padding:calc(184 * var(--u)) 0}
-.sys .eyebrow{margin:0 0 calc(71 * var(--u)) calc(450 * var(--u));width:calc(1645 * var(--u));font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600)}
-.sys .row{margin-left:calc(450 * var(--u));width:calc(1645 * var(--u));display:flex;flex-direction:column;gap:calc(113 * var(--u));align-items:stretch}
+.sys{background:var(--c-black);padding:calc(220 * var(--u)) 0}
+.sys .eyebrow{margin:0 0 calc(70 * var(--u)) calc(450 * var(--u));width:calc(1645 * var(--u));font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600)}
+.sys .row{margin-left:calc(450 * var(--u));width:calc(1645 * var(--u));display:flex;flex-direction:column;gap:calc(100 * var(--u));align-items:stretch}
 .sys .lcol{width:calc(804 * var(--u));display:flex;flex-direction:column;gap:0} /* margins only - the old gap 50u stacked with .body's margin (audit 2026-07-31) */
 .sys h2{font-weight:400;font-size:calc(64 * var(--u));line-height:1.05;letter-spacing:-0.02em}
 .sys h2 .a{display:block;font-weight:500;color:var(--c-white)}
 .sys h2 .b{display:block;font-weight:500;color:var(--c-white)}
-.sys .body{margin-top:calc(113 * var(--u));font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200)} /* was gap 50u + margin 70u = same 120u rendered */
-.sys .lcol .body+div{margin-top:calc(42 * var(--u))} /* was carried by the lcol gap */
+.sys .body{margin-top:calc(120 * var(--u));font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200)} /* was gap 50u + margin 70u = same 120u rendered */
+.sys .lcol .body+div{margin-top:calc(50 * var(--u))} /* was carried by the lcol gap */
 .sys .pricehd{font-weight:500;font-size:var(--t-lead24);line-height:1.3;letter-spacing:0;color:var(--c-white)}
 .sys .fee{font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);margin-top:calc(10 * var(--u))} /* mono is 1.5, matches .close9 .fee9 (type audit 2026-07-31) */
 .loopfig{position:relative;width:100%;height:calc(640 * var(--u));background:var(--c-cream);border:1px solid rgba(28,28,28,0.16);overflow:hidden}
 .loopfig canvas{position:absolute;inset:0;width:100%;height:100%}
-.loopfig .sys-legend{position:absolute;left:calc(15.7 * var(--u));top:calc(13.7 * var(--u));z-index:3;display:flex;gap:calc(28 * var(--u))}
-.loopfig .leg-group,.loopfig .leg-status{display:flex;flex-direction:column;gap:calc(6 * var(--u));min-width:calc(250 * var(--u));border-top:0.667px solid rgba(255,255,255,0.18);padding-top:calc(6 * var(--u))}
+.loopfig .sys-legend{position:absolute;left:calc(15.7 * var(--u));top:calc(13.7 * var(--u));z-index:3;display:flex;gap:calc(24 * var(--u))}
+.loopfig .leg-group,.loopfig .leg-status{display:flex;flex-direction:column;gap:calc(6 * var(--u));min-width:calc(250 * var(--u));border-top:0.667px solid rgba(255,255,255,0.18);padding-top:calc(8.7 * var(--u))}
 .loopfig .leg-cap{font-family:var(--mono);font-size:max(9px, calc(11 * var(--u)));letter-spacing:0.04em;color:var(--c-800);line-height:1.4} /* mono tier audit 2026-08-02: figcap/legend/stamp = 9 at 1.4, not the 13 label token */
-.loopfig .k{display:inline-flex;align-items:center;gap:calc(6 * var(--u));font-size:max(11px, calc(12 * var(--u)));line-height:1.6;letter-spacing:0;color:var(--c-800);white-space:nowrap} /* Inter rows take Inter tracking (0) - +0.04 is the mono value. leg-cap stays mono/+0.04 (type audit 2026-07-31) */
+.loopfig .k{display:inline-flex;align-items:center;gap:calc(7 * var(--u));font-size:max(11px, calc(12 * var(--u)));line-height:1.6;letter-spacing:0;color:var(--c-800);white-space:nowrap} /* Inter rows take Inter tracking (0) - +0.04 is the mono value. leg-cap stays mono/+0.04 (type audit 2026-07-31) */
 .loopfig .cd{width:calc(7 * var(--u));height:calc(7 * var(--u));border-radius:50%;flex:none}
 .loopfig .cd-bias{background:var(--c-review-muted)}
 .loopfig .cd-research{background:var(--c-research);border-radius:1px}
@@ -124,8 +124,8 @@ img{display:block;max-width:none}
 .loopfig .cd-a{background:var(--c-review-muted)}
 .loopfig .cd-r{background:var(--c-urgent-muted)}
 .loopfig .sys-note{position:absolute;right:calc(15.6 * var(--u));bottom:calc(13.7 * var(--u));z-index:3;font-family:var(--mono);font-size:max(9px, calc(11 * var(--u)));line-height:1.4;letter-spacing:0.04em;color:var(--c-800)} /* diagram legend = 9/1.4, same as leg-cap (mono tier audit 2026-08-02) */
-.sys .modes{display:grid;grid-template-columns:repeat(3,1fr);column-gap:calc(42 * var(--u))}
-.sys .mode{display:flex;flex-direction:column;gap:calc(42 * var(--u));align-items:flex-start}
+.sys .modes{display:grid;grid-template-columns:repeat(3,1fr);column-gap:calc(50 * var(--u))}
+.sys .mode{display:flex;flex-direction:column;gap:calc(50 * var(--u));align-items:flex-start}
 .sys .mode h3{font-weight:500;font-size:var(--t-h34);line-height:1.3;letter-spacing:-0.02em;color:var(--c-white)}
 .sys .mode p{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200)}
 
@@ -138,55 +138,56 @@ img{display:block;max-width:none}
    ============================================================================ */
 .mbonly{display:none}
 .sys .mode .mlink{color:var(--c-white)}
-.sys .mode .mfoot{display:flex;flex-direction:column;gap:calc(42 * var(--u));align-items:flex-start;margin-top:calc(-30 * var(--u))}
+.sys .mode .mfoot{display:flex;flex-direction:column;gap:calc(40 * var(--u));align-items:flex-start;margin-top:calc(-30 * var(--u))}
 .sys .mode .mmeta{font-family:var(--mono);font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-700)}
 .mlink{display:inline-flex;align-items:center;gap:calc(6 * var(--u));font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);line-height:1.35;letter-spacing:0.04em;color:var(--c-black)} /* CTA colour canon: #000 on light grounds, #FFF on dark (2026-07-31) */
-/* .dim retired 2026-08-20 (Inkyung: "한톤으로 전체 다 유지") - the close-band second line no longer dims; the red payoff pairs are untouched */
+.bigh2 span.dim{color:var(--c-700)}
+.close9 .bigh2 span.dim{color:var(--c-800)}
 .mlink .arr{width:calc(12 * var(--u));height:calc(12 * var(--u));flex:none}
 
 /* ---- NO.02 MISSING LAYER (h1260, dark) ---- */
-.gap2{background:var(--c-black);padding:calc(184 * var(--u)) 0}
-.gap2 .eyebrow,.stats3 .eyebrow{position:relative;margin:0 0 calc(71 * var(--u)) calc(450 * var(--u));width:calc(1645 * var(--u));font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);z-index:3}
+.gap2{background:var(--c-black);padding:calc(220 * var(--u)) 0}
+.gap2 .eyebrow,.stats3 .eyebrow{position:relative;margin:0 0 calc(70 * var(--u)) calc(450 * var(--u));width:calc(1645 * var(--u));font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);z-index:3}
 .gap2 .ph1{position:absolute;left:calc(-316 * var(--u));top:calc(-147 * var(--u));width:calc(2944 * var(--u));height:calc(100% + 147 * var(--u));object-fit:cover}
 .gap2 .ph2{position:absolute;left:calc(1708 * var(--u));top:50%;transform:translateY(-50%);width:calc(836 * var(--u));height:calc(1046 * var(--u));object-fit:cover}
-.gap2 .hbargrp{position:relative;margin-left:calc(450 * var(--u));display:flex;flex-direction:column;align-items:flex-start;gap:calc(6 * var(--u));z-index:2}
+.gap2 .hbargrp{position:relative;margin-left:calc(450 * var(--u));display:flex;flex-direction:column;align-items:flex-start;gap:calc(5 * var(--u));z-index:2}
 .gap2 .hbrow{display:contents}
 .gap2 .hbrow.mbonly{display:none} /* the contents rule above outranks the bare .mbonly hide */
-.gap2 .body{position:relative;margin:calc(113 * var(--u)) 0 0 calc(454 * var(--u));width:calc(807 * var(--u));display:flex;flex-direction:column;gap:calc(42 * var(--u));z-index:2}
+.gap2 .body{position:relative;margin:calc(120 * var(--u)) 0 0 calc(454 * var(--u));width:calc(807 * var(--u));display:flex;flex-direction:column;gap:calc(50 * var(--u));z-index:2}
 .gap2 .body p{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200)}
-.gap2 .g2stat{position:relative;margin:calc(85 * var(--u)) 0 0 calc(454 * var(--u));width:calc(807 * var(--u));display:flex;flex-direction:column;align-items:flex-start;gap:calc(42 * var(--u));z-index:2}
+.gap2 .g2stat{position:relative;margin:calc(90 * var(--u)) 0 0 calc(454 * var(--u));width:calc(807 * var(--u));display:flex;flex-direction:column;align-items:flex-start;gap:calc(40 * var(--u));z-index:2}
 .gap2 .g2stat .v{order:-1;margin-bottom:calc(-16 * var(--u));font-weight:500;font-size:var(--t-h34);line-height:1.4;letter-spacing:-0.069em;color:var(--c-white)}
 .gap2 .g2stat .rule{order:-2;border-top:0.667px solid rgba(255,255,255,0.18);height:0;width:100%;margin-bottom:calc(-24 * var(--u))}
 .gap2 .g2stat .t{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200);max-width:calc(807 * var(--u))}
-.gap2 .g2stat .t + .t{margin-top:calc(14 * var(--u))}
+.gap2 .g2stat .t + .t{margin-top:calc(20 * var(--u))}
 .gap2 .g2stat .src{font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.35;letter-spacing:0.04em;color:var(--c-600)}
 .gap2 .g2stat .src a{border-bottom:1px solid var(--c-800);padding-bottom:1px;color:var(--c-600)}
 
 /* ---- stats interlude (h723, black) ---- */
-.stats3{background:var(--c-black);padding:calc(184 * var(--u)) 0}
-.stats3 .cells{margin-left:calc(454 * var(--u));display:grid;grid-template-columns:repeat(3,calc(528 * var(--u)));column-gap:calc(28 * var(--u))}
-.stats3 .cell{display:flex;flex-direction:column;gap:calc(42 * var(--u))}
+.stats3{background:var(--c-black);padding:calc(220 * var(--u)) 0}
+.stats3 .cells{margin-left:calc(454 * var(--u));display:grid;grid-template-columns:repeat(3,calc(528 * var(--u)));column-gap:calc(30 * var(--u))}
+.stats3 .cell{display:flex;flex-direction:column;gap:calc(50 * var(--u))}
 .stats3 .v{font-weight:500;font-size:var(--t-h34);line-height:1.4;letter-spacing:-0.069em;color:var(--c-white)}
 .stats3 .rule{border-top:0.667px dashed var(--c-600);height:0}
 .stats3 .t{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200);max-width:calc(460 * var(--u))}
-.stats3 .t + .t{margin-top:calc(14 * var(--u))}
+.stats3 .t + .t{margin-top:calc(20 * var(--u))}
 .stats3 .src{font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.35;letter-spacing:0.04em;color:var(--c-600)}
 .stats3 .src a{border-bottom:1px solid var(--c-800);padding-bottom:1px}
 
 /* ---- NO.03 THE LOOP (h2817, cream) ---- */
-.loop3{background:var(--c-white);padding-bottom:calc(184 * var(--u))}
+.loop3{background:var(--c-white);padding-bottom:calc(220 * var(--u))}
 .loop3 .l3lower{position:relative;margin:calc(540 * var(--u)) 0 0 calc(449 * var(--u));width:calc(1645 * var(--u));display:flex;justify-content:space-between;align-items:flex-start}
-.loop3 .l3head{padding-top:calc(184 * var(--u));margin-left:calc(449 * var(--u));width:calc(1645 * var(--u))}
+.loop3 .l3head{padding-top:calc(220 * var(--u));margin-left:calc(449 * var(--u));width:calc(1645 * var(--u))}
 .loop3 .mast{font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-800)}
-.loop3 h2{font-weight:400;margin-top:calc(71 * var(--u));max-width:calc((100% + 30 * var(--u)) / 12 * 9 - 30 * var(--u));font-size:calc(64 * var(--u));line-height:1.05;letter-spacing:-0.02em}
+.loop3 h2{font-weight:400;margin-top:calc(70 * var(--u));max-width:calc((100% + 30 * var(--u)) / 12 * 9 - 30 * var(--u));font-size:calc(64 * var(--u));line-height:1.05;letter-spacing:-0.02em}
 .loop3 h2 .a{display:block;font-weight:500;color:var(--c-1000)}
 .loop3 h2 .b{display:block;font-weight:500;color:var(--c-accent);margin-top:0}
-.loop3 .l3grid{margin:calc(113 * var(--u)) 0 0 calc(6 * var(--u));display:grid;grid-template-columns:calc(798 * var(--u)) calc(796 * var(--u));column-gap:calc(28 * var(--u))}
-.loop3 .l3col{display:flex;flex-direction:column;gap:calc(42 * var(--u))}
+.loop3 .l3grid{margin:calc(120 * var(--u)) 0 0 calc(4 * var(--u));display:grid;grid-template-columns:calc(798 * var(--u)) calc(796 * var(--u));column-gap:calc(35 * var(--u))}
+.loop3 .l3col{display:flex;flex-direction:column;gap:calc(40 * var(--u))}
 .loop3 .p1,.loop3 .p2,.loop3 .p3{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-1000)}
 .loop3 .p3{max-width:calc(749 * var(--u))}
 .loop3 .lmore,.gap2 .gmore{display:none} /* mobile-only fold controls - see the ≤900px block */
-.loop3 .step{position:absolute;top:calc(1136 * var(--u));width:calc(388.5 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(14 * var(--u));display:flex;flex-direction:column;gap:calc(14 * var(--u))}
+.loop3 .step{position:absolute;top:calc(1136 * var(--u));width:calc(388.5 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(16.7 * var(--u));display:flex;flex-direction:column;gap:calc(11 * var(--u))}
 .loop3 .s1{left:calc(450 * var(--u))}
 .loop3 .s2{left:calc(868.6 * var(--u))}
 .loop3 .s3{left:calc(1287.2 * var(--u))}
@@ -196,18 +197,17 @@ img{display:block;max-width:none}
 .loop3 .step .d{font-weight:400;font-size:var(--t-small17);line-height:1.3;color:var(--c-1000);max-width:calc(312 * var(--u))}
 .loop3 .loopnote{width:calc(807 * var(--u));display:flex;flex-direction:column;gap:0} /* margins only (audit 2026-07-31) */
 .loop3 .loopnote p,.loop3 .lnote{font-weight:500;font-size:var(--t-read27);line-height:1.15;letter-spacing:0;color:var(--c-1000)}
-.loop3 .loopnote .mlink{margin-top:calc(42 * var(--u))} /* was gap 24u + margin 16u = same 40u rendered */
+.loop3 .loopnote .mlink{margin-top:calc(40 * var(--u))} /* was gap 24u + margin 16u = same 40u rendered */
 /* 1.4 = meta, per the role pair in the base sheet and the 2026-08-02 mono audit ("figcap/legend/stamp = 9 at 1.4"). Was 1.5, the label value. */
-.loop3 .figcap{margin-top:calc(42 * var(--u));font-family:var(--mono);font-size:var(--t-mono13);line-height:1.4;letter-spacing:0.04em;color:var(--c-800)}
+.loop3 .figcap{margin-top:calc(40 * var(--u));font-family:var(--mono);font-size:var(--t-mono13);line-height:1.4;letter-spacing:0.04em;color:var(--c-800)}
 .loop3 .figcap .mut{color:var(--c-800)} /* same light-ground contrast fix (2026-08-02) */
 
 /* the memo sheet is mobile-only and built by script - hidden by default so it can never leak onto
    desktop as a bare block (2026-08-01) */
 .sheet{display:none}
 /* ---- specimen card: Investment Memo (exact replica; off-II-scale sizes intentional) ---- */
-.loop3 .specimen{width:calc((100% + 30 * var(--u)) / 12 * 5 - 30 * var(--u))} /* 4col -> 5col (2026-08-20): the memo copy is fixed-px, so the 4-col track (294px at 1440) stacked it 825px tall. Widths stay on the 12-col system - no px floors. */
-.dr-doc{display:block;width:100%;max-width:566px;padding:34px 28px 32px;border:1px solid var(--c-800);border-radius:4px;background:var(--c-elev);font-family:'Inter',-apple-system,sans-serif;font-weight:400;position:relative;aspect-ratio:528/630;overflow:hidden} /* mockups keep their designed ratio (Inkyung 2026-08-20): the copy inside is fixed-px, so a narrow track stacked this 825px tall at 1440. Cropped with the same fade mobile uses. */
-.dr-doc::after{content:'';position:absolute;left:0;right:0;bottom:0;height:64px;background:linear-gradient(to bottom,rgba(20,20,20,0),var(--c-elev));pointer-events:none}
+.loop3 .specimen{width:calc((100% + 30 * var(--u)) / 12 * 4 - 30 * var(--u))}
+.dr-doc{display:block;width:100%;max-width:566px;padding:34px 28px 32px;border:1px solid var(--c-800);border-radius:4px;background:var(--c-elev);font-family:'Inter',-apple-system,sans-serif;font-weight:400}
 /* Card rebuilt to the approved app screen (Figma 3233:2864 / 3233:2890, 2026-07-31). The old layout
    carried RETURN HURDLE / PROBABILITY / HORIZON / DATED rows the app no longer has; those collapse
    into the app's single Prediction line, and Kill Criteria becomes the app's numbered list.
@@ -253,92 +253,92 @@ img{display:block;max-width:none}
 
 
 /* ---- flow section shell (04 / 05b / close): guaranteed 220u top/bottom ---- */
-.secpad{padding:calc(184 * var(--u)) 0}
+.secpad{padding:calc(220 * var(--u)) 0}
 .rail{margin:0 calc(450 * var(--u))}
-.eyeb{font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);margin-bottom:calc(71 * var(--u))}
+.eyeb{font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);margin-bottom:calc(70 * var(--u))}
 
 /* ---- LATEST (content band, white surface) ---- */
 .latest{background:var(--c-white)}
 .latest .eyeb{color:var(--c-800)}
 /* block heading: the two content streams are peers, so they carry the same heading size */
-.latest .streamhd{font-weight:500;font-size:var(--t-h34);line-height:1.3;letter-spacing:-0.02em;color:var(--c-1000);margin-bottom:calc(113 * var(--u))}
-.latest > .rail > .eyeb{margin-bottom:calc(42 * var(--u))}
+.latest .streamhd{font-weight:500;font-size:var(--t-h34);line-height:1.3;letter-spacing:-0.02em;color:var(--c-1000);margin-bottom:calc(120 * var(--u))}
+.latest > .rail > .eyeb{margin-bottom:calc(40 * var(--u))}
 .latest .lt-feat{display:flex;flex-direction:column;align-items:flex-start;gap:0} /* margins only (audit 2026-07-31) */
-.latest .lt-feat>*+*{margin-top:calc(28 * var(--u))} /* the old flex gap, as margins */
+.latest .lt-feat>*+*{margin-top:calc(24 * var(--u))} /* the old flex gap, as margins */
 .latest .lt-meta{font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-800)}
 .latest .lt-hd{font-weight:500;font-size:var(--t-read27);line-height:1.15;letter-spacing:0;color:var(--c-1000);max-width:calc((100% + 30 * var(--u)) / 12 * 9 - 30 * var(--u))}
 .latest .lt-sum{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-1000);max-width:calc((100% + 30 * var(--u)) / 12 * 6 - 30 * var(--u))}
 .latest .lt-hd a{color:inherit;text-decoration:none;transition:opacity 0.2s ease}
 .latest .lt-hd a:hover{opacity:0.6}
-.latest .ltgrid{display:grid;grid-template-columns:repeat(12, 1fr);column-gap:calc(28 * var(--u));align-items:start}
+.latest .ltgrid{display:grid;grid-template-columns:repeat(12, 1fr);column-gap:calc(30 * var(--u));align-items:start}
 .latest .ltgrid .lt-feat{grid-column:1 / span 9}
 /* the feature column is already nine columns wide, so the inner caps must be released */
 .latest .ltgrid .lt-hd{max-width:none}
 .latest .ltgrid .lt-sum{max-width:calc((100% + 30 * var(--u)) / 9 * 6 - 30 * var(--u))}
 .latest .lt-list{display:flex;flex-direction:column}
-.latest .lt-list .li{border-top:0.667px solid rgba(28,28,28,0.16);padding:calc(14 * var(--u)) 0;display:flex;flex-direction:column;gap:calc(6 * var(--u))}
+.latest .lt-list .li{border-top:0.667px solid rgba(28,28,28,0.16);padding:calc(20 * var(--u)) 0;display:flex;flex-direction:column;gap:calc(8 * var(--u))}
 .latest .lt-list .li:first-child{padding-top:0;border-top:0}
 .latest .lt-list .li .k{font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);letter-spacing:0.04em;line-height:1.5;color:var(--c-800)}
 .latest .lt-list .li .t{font-weight:500;font-size:var(--t-small17);line-height:1.3;letter-spacing:0;color:var(--c-1000)}
-.latest .lt-feat .mlink{margin-top:calc(42 * var(--u))} /* content-to-link canon, single declaration (was gap 24u + 26u) */
+.latest .lt-feat .mlink{margin-top:calc(50 * var(--u))} /* content-to-link canon, single declaration (was gap 24u + 26u) */
 
 /* ---- CHANGELOG strip (same white band, under a hairline) ---- */
-.clog{margin-top:calc(184 * var(--u))}
-.clog .eyeb{color:var(--c-800);margin-bottom:calc(71 * var(--u))}
-.clog .cstrip{display:grid;grid-template-columns:repeat(12, 1fr);column-gap:calc(28 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16)}
-.clog .ci{grid-column:span 3;position:relative;display:block;padding-top:calc(42 * var(--u));color:inherit;text-decoration:none;transition:opacity 0.2s ease}
+.clog{margin-top:calc(220 * var(--u))}
+.clog .eyeb{color:var(--c-800);margin-bottom:calc(70 * var(--u))}
+.clog .cstrip{display:grid;grid-template-columns:repeat(12, 1fr);column-gap:calc(30 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16)}
+.clog .ci{grid-column:span 3;position:relative;display:block;padding-top:calc(40 * var(--u));color:inherit;text-decoration:none;transition:opacity 0.2s ease}
 .clog .ci:hover{opacity:0.6}
 .clog .ci::before{content:'';position:absolute;top:calc(-4 * var(--u));left:0;width:calc(8 * var(--u));height:calc(8 * var(--u));min-width:5px;min-height:5px;border-radius:50%;background:var(--c-600)}
 .clog .ci:first-child::before{background:var(--c-1000)}
 .clog .ci .ct{display:block;font-weight:500;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-1000);text-decoration:none}
-.clog .ci .cd{display:block;margin-top:calc(14 * var(--u));font-weight:400;font-size:var(--t-small17);line-height:1.3;color:var(--c-1000)}
-.clog .ci .cdate{display:block;margin-top:calc(28 * var(--u));font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-800)}
-.clog .cfoot{margin-top:calc(42 * var(--u))}
-.latest .ltfoot{margin-top:calc(42 * var(--u))} /* mirrors .cfoot - the release stream's "all" link */
+.clog .ci .cd{display:block;margin-top:calc(12 * var(--u));font-weight:400;font-size:var(--t-small17);line-height:1.3;color:var(--c-1000)}
+.clog .ci .cdate{display:block;margin-top:calc(24 * var(--u));font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-800)}
+.clog .cfoot{margin-top:calc(50 * var(--u))}
+.latest .ltfoot{margin-top:calc(50 * var(--u))} /* mirrors .cfoot - the release stream's "all" link */
 .bigh2{font-weight:400;max-width:calc((100% + 30 * var(--u)) / 12 * 9 - 30 * var(--u));font-size:calc(64 * var(--u));line-height:1.05;letter-spacing:-0.02em}
 .bigh2 .a{display:block;font-weight:500;color:var(--c-white)}
 .bigh2 .b{display:block;font-weight:500;color:var(--c-white)}
 /* NO.04 sits on a photograph, so its masthead takes the same clone box the other photo sections use
    (Inkyung 2026-07-31). The 5u row gap matches .hbargrp; 12u/10u padding matches .hbar. */
-.def4 .bigh2{display:flex;flex-direction:column;align-items:flex-start;gap:calc(6 * var(--u))}
-.def4 .bigh2 .a,.def4 .bigh2 .b{display:inline-block;width:auto;background:var(--c-black);padding:calc(10 * var(--u)) calc(14 * var(--u))}
+.def4 .bigh2{display:flex;flex-direction:column;align-items:flex-start;gap:calc(5 * var(--u))}
+.def4 .bigh2 .a,.def4 .bigh2 .b{display:inline-block;width:auto;background:var(--c-black);padding:calc(10 * var(--u)) calc(12 * var(--u))}
 /* 04 default (dark data) */
 .def4{background:var(--c-black)}
 .def4>img,.def4>video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;filter:brightness(0.42)}
 br.mbr{display:none}
 .def4 .rail{position:relative;z-index:2}
-.def4 .body{margin-top:calc(113 * var(--u));font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200);max-width:calc(804 * var(--u))}
-.dstats{margin-top:calc(113 * var(--u));display:grid;grid-template-columns:repeat(3,1fr);column-gap:calc(42 * var(--u))}
-.dstats .cell{display:flex;flex-direction:column;gap:calc(42 * var(--u))}
+.def4 .body{margin-top:calc(120 * var(--u));font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200);max-width:calc(804 * var(--u))}
+.dstats{margin-top:calc(100 * var(--u));display:grid;grid-template-columns:repeat(3,1fr);column-gap:calc(50 * var(--u))}
+.dstats .cell{display:flex;flex-direction:column;gap:calc(40 * var(--u))}
 .dstats .v{font-weight:500;font-size:var(--t-h34);line-height:1.4;letter-spacing:-0.069em;color:var(--c-white)}
 .dstats .gap .v{color:var(--c-urgent-muted)}
 .dstats .rule{border-top:0.667px dashed var(--c-600);height:0}
 .dstats .t{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200);max-width:calc(460 * var(--u))}
 .dstats .src{font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.35;letter-spacing:0.04em;color:var(--c-400)}
-.dlead{margin-top:calc(113 * var(--u));font-weight:500;font-size:var(--t-lead24);line-height:1.3;letter-spacing:0;color:var(--c-white);max-width:calc(807 * var(--u))}
-.def4 .mlink{margin-top:calc(42 * var(--u));color:var(--c-white)}
-.def4 .figcap{margin-top:calc(42 * var(--u));font-family:var(--mono);font-size:var(--t-mono13);line-height:1.4;letter-spacing:0.04em;color:var(--c-600)} /* max-width 640u dropped: the fixed-13px line needs 454px but 640u is only 362px at 1440, so it wrapped; one line was the stated intent (2026-08-20) */
+.dlead{margin-top:calc(100 * var(--u));font-weight:500;font-size:var(--t-lead24);line-height:1.3;letter-spacing:0;color:var(--c-white);max-width:calc(807 * var(--u))}
+.def4 .mlink{margin-top:calc(50 * var(--u));color:var(--c-white)}
+.def4 .figcap{margin-top:calc(50 * var(--u));font-family:var(--mono);font-size:var(--t-mono13);line-height:1.4;letter-spacing:0.04em;color:var(--c-600);max-width:calc(640 * var(--u))}
 /* 05 standard: photo band + dark content */
 .std5{height:calc(690 * var(--u));background:var(--c-black)}
 .std5>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 65%}
 .std5 .eyebrow5{position:absolute;left:calc(450 * var(--u));top:calc(220 * var(--u));font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);z-index:2}
-.std5 .hbargrp5{position:absolute;left:calc(450 * var(--u));top:calc(310 * var(--u));display:flex;flex-direction:column;align-items:flex-start;gap:calc(6 * var(--u));z-index:2}
+.std5 .hbargrp5{position:absolute;left:calc(450 * var(--u));top:calc(310 * var(--u));display:flex;flex-direction:column;align-items:flex-start;gap:calc(5 * var(--u));z-index:2}
 .std5 .hbargrp5 .hbar{color:var(--c-accent-sky)}
 .std5b{background:var(--c-black)}
 .qcap5{font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600)}
-.qh2{font-weight:400;margin-top:calc(42 * var(--u));max-width:calc((100% + 30 * var(--u)) / 12 * 6 - 30 * var(--u));font-size:var(--t-h34);line-height:1.3;letter-spacing:-0.02em}
+.qh2{font-weight:400;margin-top:calc(40 * var(--u));max-width:calc((100% + 30 * var(--u)) / 12 * 6 - 30 * var(--u));font-size:var(--t-h34);line-height:1.3;letter-spacing:-0.02em}
 .qh2 .a{display:block;font-weight:500;color:var(--c-white)}
 .qh2 .b{display:block;font-weight:500;color:var(--c-white)}
-.pgrid5{margin-top:calc(113 * var(--u));display:grid;grid-template-columns:calc(807 * var(--u)) calc(807 * var(--u));column-gap:calc(28 * var(--u))}
+.pgrid5{margin-top:calc(120 * var(--u));display:grid;grid-template-columns:calc(807 * var(--u)) calc(807 * var(--u));column-gap:calc(26 * var(--u))}
 .pgrid5 .plead{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200)}
-.pgrid5 .pcol{display:flex;flex-direction:column;gap:calc(42 * var(--u))}
+.pgrid5 .pcol{display:flex;flex-direction:column;gap:calc(40 * var(--u))}
 .pgrid5 .pcol p{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200)}
-.suit5{margin-top:calc(113 * var(--u));display:grid;grid-template-columns:1fr 1fr;border:0.667px solid rgba(255,255,255,0.18);max-width:calc(1645 * var(--u))}
-.suit5>div{padding:calc(42 * var(--u)) calc(42 * var(--u)) calc(42 * var(--u))}
+.suit5{margin-top:calc(120 * var(--u));display:grid;grid-template-columns:1fr 1fr;border:0.667px solid rgba(255,255,255,0.18);max-width:calc(1645 * var(--u))}
+.suit5>div{padding:calc(40 * var(--u)) calc(50 * var(--u)) calc(50 * var(--u))}
 .suit5>div+div{border-left:0.667px solid rgba(255,255,255,0.18)}
-.suit5 h3{font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);padding-bottom:calc(28 * var(--u));border-bottom:0.667px solid rgba(255,255,255,0.18)}
+.suit5 h3{font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);padding-bottom:calc(24 * var(--u));border-bottom:0.667px solid rgba(255,255,255,0.18)}
 .suit5 ul{list-style:none}
-.suit5 li{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200);padding:calc(28 * var(--u)) 0;border-bottom:0.667px solid rgba(255,255,255,0.10)}
+.suit5 li{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200);padding:calc(22 * var(--u)) 0;border-bottom:0.667px solid rgba(255,255,255,0.10)}
 .suit5 li:last-child{border-bottom:0}
 .suit5 .no li{color:var(--c-400)}
 /* close (cream) */
@@ -346,22 +346,22 @@ br.mbr{display:none}
 .close9 .eyeb{color:var(--c-800)}
 .close9 .bigh2 .a{color:var(--c-1000)}
 .close9 .bigh2 .b{color:var(--c-1000)}
-.close9 .cols{display:grid;grid-template-columns:calc(807 * var(--u)) calc(807 * var(--u));column-gap:calc(28 * var(--u));margin-top:calc(113 * var(--u));max-width:calc(1645 * var(--u))}
+.close9 .cols{display:grid;grid-template-columns:calc(807 * var(--u)) calc(807 * var(--u));column-gap:calc(26 * var(--u));margin-top:calc(120 * var(--u));max-width:calc(1645 * var(--u))}
 .close9 .cols .ccol > p{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-1000)}
-.close9 .cols .ccol{display:flex;flex-direction:column;gap:calc(71 * var(--u));align-items:flex-start}
+.close9 .cols .ccol{display:flex;flex-direction:column;gap:calc(60 * var(--u));align-items:flex-start}
 .close9 .offer{margin-top:0}
 .close9 .pricehd9{font-weight:500;font-size:var(--t-lead24);line-height:1.3;letter-spacing:0;color:var(--c-1000);max-width:calc(807 * var(--u))}
 .close9 .fee9{font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-800);margin-top:calc(10 * var(--u))} /* mono is 1.5 (type audit 2026-07-31) */
-.close9 .cta-row{margin-top:calc(42 * var(--u));display:flex;align-items:center;gap:calc(28 * var(--u));flex-wrap:wrap}
+.close9 .cta-row{margin-top:calc(40 * var(--u));display:flex;align-items:center;gap:calc(30 * var(--u));flex-wrap:wrap}
 .close9 .cta-line{border-color:var(--c-1000);color:var(--c-1000)}
-.trust9{margin-top:calc(113 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(42 * var(--u))}
+.trust9{margin-top:calc(120 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(40 * var(--u))}
 .trust9 .tlead{font-weight:400;font-size:var(--t-small17);line-height:1.3;color:var(--c-1000)}
-.trust9 .tg{margin-top:calc(42 * var(--u));display:grid;grid-template-columns:repeat(4,calc(388.5 * var(--u)));column-gap:calc(28 * var(--u))}
-.trust9 .ti{border-left:0.667px solid rgba(28,28,28,0.16);padding-left:calc(14 * var(--u))}
+.trust9 .tg{margin-top:calc(50 * var(--u));display:grid;grid-template-columns:repeat(4,calc(388.5 * var(--u)));column-gap:calc(30 * var(--u))}
+.trust9 .ti{border-left:0.667px solid rgba(28,28,28,0.16);padding-left:calc(20 * var(--u))}
 .trust9 .ti b{display:block;font-weight:500;font-size:var(--t-body);line-height:1.15;letter-spacing:0;color:var(--c-1000)} /* sub-heading tier (type audit 2026-07-31) */
 .trust9 .tmore{display:none} /* mobile-only fold control - see the ≤900px block */
 .trust9 .ti span{display:block;margin-top:calc(6 * var(--u));font-family:var(--mono);font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-800)}
-.foot9{margin-top:calc(113 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(28 * var(--u));display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-800)}
+.foot9{margin-top:calc(120 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(24 * var(--u));display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-800)}
 /* ---- mono leading canon on DESKTOP (2026-08-01) ----------------------------------------------
    The 07-28 / 08-01 leading sweep only edited the mobile block, so the base cascade still ran 1.35,
    1.05 and browser `normal`. Two values, decided by role, same as mobile:
@@ -379,7 +379,7 @@ br.mbr{display:none}
 
 /* ---- site footer, identical on every page (2026-08-01). Ported verbatim from Pricing; the inner
    wrapper is scoped as `footer .container` so it cannot collide with the grid-overlay .container. ---- */
-footer{background:var(--c-black);color:var(--c-800);border-top:0.667px solid rgba(255,255,255,0.18);padding:64px 0 36px;font-size:11px;line-height:1.5;margin-top:calc(113 * var(--u))}
+footer{background:var(--c-black);color:var(--c-800);border-top:0.667px solid rgba(255,255,255,0.18);padding:64px 0 36px;font-size:11px;line-height:1.5;margin-top:calc(120 * var(--u))}
 /* ---- spacing on the ladder (2026-08-17, Inkyung) ----
    Was 22 / 22 / 36 between the link row, the copyright, the social row and the legal block - none of
    them ladder values. Now 24 / 24 / 48: 24 is the step inside a group, 48 is the group boundary, and
@@ -390,7 +390,7 @@ footer{background:var(--c-black);color:var(--c-800);border-top:0.667px solid rgb
    NOTE this footer is "identical on every page, ported verbatim from Pricing" - V10's nine pages
    still carry the old 22/22/36 and now differ from V11 until they are re-ported. */
 footer .container{margin:0 calc(450 * var(--u))}
-.footer-copy{font-size:13px;line-height:1.4;color:var(--c-600)} /* meta tier 1.4, matching the doc pages (2026-08-20) */
+.footer-copy{font-size:13px;color:var(--c-600)}
 .footer-copy a{color:var(--c-600);text-decoration:underline}
 .footer-social{display:flex;gap:18px;margin-top:24px}
 .footer-social a{color:var(--c-700);display:inline-flex;transition:color 0.15s ease}
@@ -652,7 +652,7 @@ body.menu-open{overflow:hidden}
   .suit5 li{padding:8px 0;border-bottom:0.667px solid rgba(255,255,255,0.10)}
   .suit5 li:first-child{padding-top:0}
   .suit5 li:last-child{border-bottom:0} /* the boxed version closes the list with the box edge - the extra last-row hairline doubled it (Inkyung 2026-07-31) */
-  /* .suit5 .no li mobile c-700 removed 2026-08-20 - the muted list uses its base c-400 at every width, same as desktop */
+  .suit5 .no li{color:var(--c-700)}
   /* mobile prose is 15/1.4 everywhere - these still carried the desktop 1.3 */
   .def4 .body,.gap2 .g2stat .t,.dstats .t,.pgrid5 .plead,.pgrid5 .pcol p,.suit5 li{line-height:1.4}
   /* payoff prose drops to body size on mobile, weight 500 stays */
@@ -711,7 +711,7 @@ body.menu-open{overflow:hidden}
   .sys .body,.sys .pricehd,.sys .mode p,.gap2 .body p,.stats3 .t{font-size:15px;line-height:1.4}
   /* body prose one tone down on dark grounds: c-200 -> c-400 (Inkyung 2026-07-31, "전반적으로 너무 쎄다").
      Light sections, labels, payoffs and statements unchanged. */
-  /* the mobile c-400 prose override was removed 2026-08-20 (Inkyung: match the more readable side) - dark-ground prose now inherits the same c-200 the desktop shows */
+  .hero .hsub,.sys .mode p,.gap2 .g2stat .t,.def4 .rail>p.body,.suit5 li,.pgrid5 .pcol p,.pgrid5 .plead{color:var(--c-400)}
   .loop3 .p1,.loop3 .p2,.loop3 .p3,.loop3 .loopnote p,.loop3 .lnote{font-size:15px;line-height:1.4}
   .close9 .cols .ccol > p{font-size:15px;line-height:1.4}
   .latest .lt-hd,.latest .lt-sum,.latest .ltgrid .lt-hd,.latest .ltgrid .lt-sum{max-width:none}
@@ -844,7 +844,7 @@ body.menu-open{overflow:hidden}
   .sheet.open{display:block;position:fixed;inset:0;z-index:120}
   .sheet .scrim{position:absolute;inset:0;background:rgba(0,0,0,0.55)}
   .sheet .panel{position:absolute;inset:0;background:var(--c-white);overflow-y:auto;padding:72px 20px 96px}
-  .sheet .panel .dr-doc{max-height:none;overflow:visible;aspect-ratio:auto} /* the sheet shows the memo uncropped */
+  .sheet .panel .dr-doc{max-height:none;overflow:visible} /* the sheet shows the memo uncropped */
   .sheet .panel .dr-doc::after{content:none} /* and without the crop's fade */
   .sheet .scap{margin-top:16px;font-family:var(--mono);font-weight:400;font-size:9px;line-height:1.4;letter-spacing:0.04em;color:var(--c-800)}
   .sheet .scap .mut{display:block}
@@ -878,7 +878,7 @@ body.menu-open{overflow:hidden}
   .cta-fill,.cta-line,.src a,.foot9 a,.metaline.doclist a{position:relative}
   /* .nav .logo is already position:absolute - adding relative here knocked it out of place (2026-08-01) */
   .nav .logo::after{content:'';position:absolute;inset:-14px}
-  .cta-fill::after,.cta-line::after{content:'';position:absolute;inset:-5px -3px} /* box is 34 tall on mobile (157x34 canon), so -3 only reached 40; -5 vertical = 44 (2026-08-20) */
+  .cta-fill::after,.cta-line::after{content:'';position:absolute;inset:-3px}
   .src a::after,.foot9 a::after,.metaline.doclist a::after{content:'';position:absolute;inset:-16px 0}
   /* the burger overlay's own links were 30 (pages) and 20 (EN/FR), and the release headline 40 */
   .menuov .mlist a,.menuov .mlang a,.latest .lt-hd a{position:relative}
@@ -901,12 +901,12 @@ body.menu-open{overflow:hidden}
 
 /* ---- desktop only: THE QUESTION as two flush-top columns (statement left, prose right) ---- */
 @media (min-width:901px){
-  .std5b .rail{display:grid;grid-template-columns:repeat(12, 1fr);column-gap:calc(28 * var(--u));align-items:start}
+  .std5b .rail{display:grid;grid-template-columns:repeat(12, 1fr);column-gap:calc(30 * var(--u));align-items:start}
   .std5b .qcap5,.std5b .suit5{grid-column:1 / -1}
-  .std5b .qh2{grid-column:1 / span 6;max-width:none;margin-top:calc(42 * var(--u))}
+  .std5b .qh2{grid-column:1 / span 6;max-width:none;margin-top:calc(40 * var(--u))}
   /* prose sits in columns 7-12, on the statement's line, so it drops the 120u offset and stacks in one column */
-  .std5b .pgrid5{grid-column:7 / span 6;margin-top:calc(42 * var(--u));grid-template-columns:1fr;row-gap:calc(42 * var(--u))}
-  .std5b .pgrid5 .pcol{gap:calc(42 * var(--u))}
+  .std5b .pgrid5{grid-column:7 / span 6;margin-top:calc(40 * var(--u));grid-template-columns:1fr;row-gap:calc(40 * var(--u))}
+  .std5b .pgrid5 .pcol{gap:calc(40 * var(--u))}
 }
 
 /* ===== REVEAL: one animation -> three roles (2026-08-17, Inkyung) =====
@@ -955,7 +955,7 @@ body.menu-open{overflow:hidden}
   .sys .lcol>p.body{display:block}
   .gap2 .body{display:flex;margin-top:64px;gap:24px}
   .loop3 h2 .b{display:block}
-  .def4 .rail>p.body{display:block;margin-top:40px} /* colour override dropped 2026-08-20 - see the note above */
+  .def4 .rail>p.body{display:block;margin-top:40px;color:var(--c-400)}
   .std5b .qcap5{display:block}
   .std5b .pgrid5 .plead{display:block}
   .latest .lt-sum{display:block}
@@ -1061,7 +1061,7 @@ body.menu-open{overflow:hidden}
   .loop3 .specimen{margin-top:64px}
 
   /* ---- NO.02: the stat interrupts the prose run - p1, p2, stat, p3 (GM rhythm; JS moves the nodes) ---- */
-  .gap2 p.v9-p3{position:relative;z-index:2;width:calc(100% - 40px);margin:40px auto 0;font-weight:400;font-size:15px;line-height:1.4;letter-spacing:0;color:var(--c-200)} /* prose matches desktop c-200 (2026-08-20) */
+  .gap2 p.v9-p3{position:relative;z-index:2;width:calc(100% - 40px);margin:40px auto 0;font-weight:400;font-size:15px;line-height:1.4;letter-spacing:0;color:var(--c-200)}
   .gap2>.mlink.v9-end{position:relative!important;z-index:2;margin:24px 20px 0!important;width:auto!important;color:var(--c-white)} /* !important - the .band>* linearizer pushed the box to left 0 */
 
   /* ---- The Question: subordinate to NO.05, so it keeps the 22 heading tier
@@ -1134,13 +1134,11 @@ body.menu-open{overflow:hidden}
   .def4 .dstats .cell{display:flex;flex-direction:column;padding:24px 0;border-top:0.667px solid rgba(255,255,255,0.18);border-bottom:0;margin:0}
   .def4 .dstats .cell.gap{border-bottom:0.667px solid rgba(255,255,255,0.18)}
   .def4 .dstats .cell .v{order:-1;text-align:left;font-size:34px;font-weight:500;line-height:1.15;letter-spacing:-0.069em;margin:0}
-  .def4 .dstats .cell .t{font-family:var(--font);font-size:15px;font-weight:400;line-height:1.4;letter-spacing:0;color:var(--c-200);margin:8px 0 0} /* c-400 -> c-200, matching desktop (2026-08-20) */
+  .def4 .dstats .cell .t{font-family:var(--font);font-size:15px;font-weight:400;line-height:1.4;letter-spacing:0;color:var(--c-400);margin:8px 0 0}
 
   /* ---- DS conformance pass (design-system v15, ladder 2026-07-28). These are values the DS
      forbids outright, corrected without changing any confirmed V9 composition decision. ---- */
-  .clog .ci .ct{font-size:17px;line-height:1.3}   /* 2026-08-20: was body 15. An item title in a tight
-     list is the 17 tier (17/500/1.30). These four were the only titles on the site rendering at body
-     size; the same kind of row in newsroom was already 17, so the two pages disagreed on one thing. */
+  .clog .ci .ct{line-height:1.4}                /* DS sub-heading 15/500 = 1.4, was 1.15 */
   /* NOT touched here: mono meta leading stays 1.4. The DS says all mono is 1.5, but that rule is
      dated 2026-07-28 and Inkyung set mono meta to 1.4 across all pages on 2026-08-01 (see the
      block above, ~line 863) with a stated reason. Later decision, so it needs her call, not a
@@ -1148,22 +1146,6 @@ body.menu-open{overflow:hidden}
 }
 </style>
 
-<style id="loop-mobile-relayout">
-/* ---- Operating Loop, mobile relayout (2026-08-20). Euan: station labels overlapped on phones.
-   The canvas keeps the ring, the S&P core and the NUMBERS; names, sublines and the bias words
-   move into .loop-mlist below it. Desktop draws everything on the canvas as before. ---- */
-@media(min-width:901px){.loop-mlist{display:none}}
-@media(max-width:900px){
-  .loop-mlist{position:relative;z-index:3;margin:412px 16px 0;display:flex;flex-direction:column}
-  .loop-mlist .ml-s{display:flex;gap:12px;padding:12px 0;border-top:0.667px solid rgba(28,28,28,0.16)}
-  .loop-mlist .ml-s:first-child{border-top:0;padding-top:0}
-  .loop-mlist .ml-s .n{font-family:var(--mono);font-size:11px;line-height:1.4;letter-spacing:0.04em;color:#565b5e;padding-top:4px}
-  .loop-mlist .ml-s b{display:block;font-weight:500;font-size:17px;line-height:1.3;color:#1c1c1c}
-  .loop-mlist .ml-s .s{display:block;margin-top:4px;font-family:var(--mono);font-size:11px;line-height:1.4;letter-spacing:0.04em;color:#565b5e}
-  .loop-mlist .ml-loop{padding:12px 0 0;border-top:0.667px solid rgba(28,28,28,0.16);font-family:var(--mono);font-size:9px;line-height:1.4;letter-spacing:0.04em;color:#565b5e}
-  .loopfig .sys-legend{margin:24px 16px 0}
-}
-</style>
 </head>
 <body class="p-home">
 
@@ -1243,13 +1225,6 @@ body.menu-open{overflow:hidden}
     </div>
     <div class="loopfig rv">
       <canvas id="sysLoopCanvas" aria-hidden="true"></canvas>
-      <div class="loop-mlist"><!-- mobile only: the ring keeps its numbers, the words live here (Euan 2026-08-20, "needs a new mobile layout") -->
-        <div class="ml-s"><span class="n">01</span><div><b>Research &amp; Analysis</b><span class="s">Fiscal.ai + your AI tools</span></div></div>
-        <div class="ml-s"><span class="n">02</span><div><b>Memo</b><span class="s">classify, size, conviction, record</span></div></div>
-        <div class="ml-s"><span class="n">03</span><div><b>Review</b><span class="s">the research, run again</span></div></div>
-        <div class="ml-s"><span class="n">04</span><div><b>Calibration</b><span class="s">conviction, scored against outcome</span></div></div>
-        <div class="ml-loop">&#8635;&nbsp; BACK TO 01 &middot; THE LOOP REPEATS</div>
-      </div>
       <div class="sys-legend">
         <div class="leg-group">
           <span class="leg-cap">Nodes</span>
@@ -1479,25 +1454,25 @@ body.menu-open{overflow:hidden}
     <div class="clog">
       <h2 class="streamhd rv">Changelog</h2>
       <div class="cstrip rv">
-        <a class="ci" href="changelog-2026-08-17.html">
-          <span class="ct">The stock page: the memo at the sell decision</span>
-          <span class="cd">The memo now shows in the sell flow. Selling or reducing a position that has one surfaces it first, read&nbsp;only.</span>
-          <span class="cdate">AUG 17, 2026</span>
+        <a class="ci" href="changelog-entry.html">
+          <span class="ct">[July improvement title]</span>
+          <span class="cd">[Two line note on what changed and what it means.]</span>
+          <span class="cdate">JUL [DD], 2026</span>
         </a>
-        <a class="ci" href="changelog-2026-07-27.html">
-          <span class="ct">Writing the investment case</span>
-          <span class="cd">The editor now behaves like a proper notes editor, not a form field, and a memo opens to the full investment&nbsp;case.</span>
-          <span class="cdate">JUL 27, 2026</span>
+        <a class="ci" href="changelog-entry.html">
+          <span class="ct">[Second improvement title]</span>
+          <span class="cd">[Two line note on what changed and what it means.]</span>
+          <span class="cdate">JUL [DD], 2026</span>
         </a>
-        <a class="ci" href="changelog-2026-07-17.html">
-          <span class="ct">Investment memos</span>
-          <span class="cd">A memo is now required before an order, covering classification, role, the case, idea origin, and a&nbsp;prediction.</span>
-          <span class="cdate">JUL 17, 2026</span>
+        <a class="ci" href="changelog-entry.html">
+          <span class="ct">[June improvement title]</span>
+          <span class="cd">[Two line note on what changed and what it means.]</span>
+          <span class="cdate">JUN [DD], 2026</span>
         </a>
-        <a class="ci" href="changelog-2026-06-15.html">
-          <span class="ct">S&amp;P 500 comparison</span>
-          <span class="cd">Self-directed performance is now shown against the S&amp;P 500, mirroring your own deposits and&nbsp;withdrawals.</span>
-          <span class="cdate">JUN 15, 2026</span>
+        <a class="ci" href="changelog-entry.html">
+          <span class="ct">[Fourth improvement title]</span>
+          <span class="cd">[Two line note on what changed and what it means.]</span>
+          <span class="cdate">JUN [DD], 2026</span>
         </a>
       </div>
       <div class="cfoot rv">
@@ -1511,7 +1486,7 @@ body.menu-open{overflow:hidden}
 <section class="band close9 secpad">
   <div class="rail">
     <div class="eyeb rv">INTELLIGENT INVESTING</div>
-    <h2 class="bigh2 rv"><span class="a">Nobody can buy a ten-year record.</span><span class="b">It has to be kept.</span></h2>
+    <h2 class="bigh2 rv"><span class="a">Nobody can buy a ten-year record.</span><span class="b dim">It has to be kept.</span></h2>
     <div class="cols rv">
       <div class="ccol">
         <p>Money buys access, information and tools this afternoon. It cannot buy ten years of dated decisions, revised cases, recorded mistakes and measured outcomes. Time is the one input that cannot be accelerated.</p>
@@ -1865,7 +1840,7 @@ body.menu-open{overflow:hidden}
         }else{ctx.textAlign=right?'left':'right';lx=ox2+(right?4:-4);ly=oy2;}
         ctx.strokeStyle='rgba(24,24,24,0.32)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(p.sx+dx/len*6,p.sy+dy/len*6);ctx.lineTo(ox2,oy2);ctx.stroke();
         ctx.save();ctx.shadowColor='rgba(236,234,229,0.95)';ctx.shadowBlur=8;
-        ctx.letterSpacing='0.1em';ctx.font='10px "IBM Plex Mono",ui-monospace,Menlo,monospace';ctx.fillStyle='rgba(92,86,76,0.95)';ctx.fillText(String(i+1).padStart(2,'0'),lx,MB?(p.sy<cy?p.sy-14:p.sy+20):ly-8);ctx.letterSpacing='0px';if(!MB){ /* mobile: numbers only - the words live in .loop-mlist (2026-08-20) */
+        ctx.letterSpacing='0.1em';ctx.font='10px "IBM Plex Mono",ui-monospace,Menlo,monospace';ctx.fillStyle='rgba(92,86,76,0.95)';ctx.fillText(String(i+1).padStart(2,'0'),lx,ly-8);ctx.letterSpacing='0px';
         ctx.font='500 '+LF+'px "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif';ctx.fillStyle=isR?'rgba(26,23,20,1)':'rgba(30,27,24,0.97)';ctx.fillText(ST[i],lx,ly+9);
         ctx.letterSpacing='0.02em';
         const SUB=[['Fiscal.ai + your AI tools'],['classify, size, conviction, record'],['the research, run again'],['conviction, scored against outcome']][i];
@@ -1873,7 +1848,7 @@ body.menu-open{overflow:hidden}
         SUB.forEach((ln,li)=>ctx.fillText(ln,lx,ly+(MB?25:29)+li*(MB?11:13)));
         ctx.letterSpacing='0px';
         const _by=ly+(MB?25:29)+SUB.length*(MB?11:13)+2;
-        if(i===biasIdx&&bEmph>0.02){ctx.letterSpacing='0.04em';ctx.font='10px "IBM Plex Mono",ui-monospace,Menlo,monospace';ctx.fillStyle=`rgba(150,110,38,${(0.62*bEmph).toFixed(3)})`;ctx.fillText('Guards Against',lx,_by);ctx.letterSpacing='0px';ctx.font='500 13px "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif';ctx.fillStyle=`rgba(150,110,38,${(0.68+0.32*bEmph).toFixed(3)})`;ctx.fillText(BIAS[i],lx,_by+14);}}
+        if(i===biasIdx&&bEmph>0.02){ctx.letterSpacing='0.04em';ctx.font='10px "IBM Plex Mono",ui-monospace,Menlo,monospace';ctx.fillStyle=`rgba(150,110,38,${(0.62*bEmph).toFixed(3)})`;ctx.fillText('Guards Against',lx,_by);ctx.letterSpacing='0px';ctx.font='500 13px "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif';ctx.fillStyle=`rgba(150,110,38,${(0.68+0.32*bEmph).toFixed(3)})`;ctx.fillText(BIAS[i],lx,_by+14);}
         ctx.restore()}
       const stp=sp[biasIdx],ring=(bp<0.66?Math.min(1,bp/0.18):Math.max(0,1-(bp-0.66)/0.34));
       ctx.strokeStyle=`rgba(150,110,38,${0.42*ring})`;ctx.lineWidth=1.4;
@@ -1882,8 +1857,8 @@ body.menu-open{overflow:hidden}
       { const gw=54, gx=(W<600)?Math.max(gw/2+8,Math.min(W-gw/2-8,sp[CAL].sx)):sp[CAL].sx, gy=sp[CAL].sy+46;
         ctx.save();ctx.shadowColor='rgba(236,234,229,0.92)';ctx.shadowBlur=6;ctx.textAlign='center';
         ctx.strokeStyle='rgba(24,24,24,0.30)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(gx-gw/2,gy);ctx.lineTo(gx+gw/2,gy);ctx.stroke();
-        if(!MB){ctx.letterSpacing='0.04em';ctx.font='10px "IBM Plex Mono",ui-monospace,Menlo,monospace';ctx.textBaseline='bottom';ctx.fillStyle='rgba(80,75,68,0.85)';ctx.fillText('Calibrated',gx,gy-3);
-        ctx.textBaseline='top';ctx.fillStyle='rgba(98,92,84,0.7)';ctx.fillText('Overconfident',gx,gy+18);ctx.letterSpacing='0px';}
+        ctx.letterSpacing='0.04em';ctx.font='10px "IBM Plex Mono",ui-monospace,Menlo,monospace';ctx.textBaseline='bottom';ctx.fillStyle='rgba(80,75,68,0.85)';ctx.fillText('Calibrated',gx,gy-3);
+        ctx.textBaseline='top';ctx.fillStyle='rgba(98,92,84,0.7)';ctx.fillText('Overconfident',gx,gy+18);ctx.letterSpacing='0px';
         for(const d of scored){const fade=Math.min(1,d.l/0.28)*Math.max(0,1-(d.l-2.6)/1.0);
           const dxx=gx+(d.x-0.5)*gw, dyy=gy+d.over*15;
           ctx.fillStyle=d.hit?`rgba(${SIG.green},${0.92*fade})`:`rgba(${SIG.red},${0.92*fade})`;
@@ -2221,15 +2196,12 @@ body.menu-open{overflow:hidden}
      ("no image that the desktop does not have"). Opened on Inkyung's instruction, recorded here
      rather than done quietly. Two different things, on purpose:
 
-     1. The featured release gets its OWN plate - "press release light.png" (swapped from
-        press-release-light-clean.png 2026-08-21, same art re-rendered light at 1605x1338) is the
-        image the press-release page already runs, so this is that article's picture in that article's slot,
+     1. The featured release gets its OWN plate - press-release-light-clean.png is the image the
+        press-release page already runs, so this is that article's picture in that article's slot,
         not a new photo pulled from the library. 210 tall, not the 360 the section bands use: a band
         opens a beat, this is a figure attached to a story, and the tiers should not read alike.
-     2. The changelog rows get an 88x56 wordmark tile. There were no product screenshots then, so a
-        photo would have to be invented; Anduril solves the same gap with a plain ANDURIL tile.
-        (2026-08-21: real screenshots exist now - the builder swaps in per-item art keyed by href,
-        see CLOG_ART below; the wordmark stays as the fallback for unmapped rows.) All four
+     2. The changelog rows get an 88x56 wordmark tile. There are no product screenshots, so a photo
+        would have to be invented; Anduril solves the same gap with a plain ANDURIL tile. All four
         rows carry the same tile - if that reads as repetition, the fallback is to keep the tile on
         the newest row only. */
   /* .lt-feat is a flex column and .lt-meta carries order:-1 (V10, line ~1007), so inserting the
@@ -2241,9 +2213,9 @@ body.menu-open{overflow:hidden}
   .latest .lt-feat .lt-body{display:contents}
   /* 1:1, not the old fixed 210 (2026-08-17). Same reason as desktop: the source is a 5552x6243
      portrait, so a 335x210 landscape frame was cropping away more than half of it. */
-  .latest .lt-plate{order:-2;display:block;width:100%;aspect-ratio:1605/1338;height:auto;object-fit:cover;margin:0} /* 1/1 -> asset ratio 2026-08-21, see the desktop note */
+  .latest .lt-plate{order:-2;display:block;width:100%;aspect-ratio:1/1;height:auto;object-fit:cover;margin:0}
   .latest .lt-feat .lt-meta{margin-top:24px}   /* image -> date */
-  .latest .ltgrid{margin-top:0}             /* was 24 twice (here and again at the streamrow block below): it stacked with the date row's own 24, so Press Releases sat 48 under its rule while Changelog sat 24. The rule gets 24 on both faces now (Inkyung 2026-08-20) */
+  .latest .ltgrid{margin-top:24px}             /* stream heading -> image (was 39) */
 
   /* ---- stream header row: heading + VIEW ALL, hairline under (2026-08-17, Inkyung) ----
      Anduril's news grammar, which Inkyung picked out: "News ———— All Articles ↗".
@@ -2259,7 +2231,7 @@ body.menu-open{overflow:hidden}
     border-bottom:0.667px solid rgba(28,28,28,0.16);padding-bottom:24px}
   .latest .streamrow .streamhd{margin:0}
   .latest .streamrow .mlink{margin:0;flex:none}
-  .latest .ltgrid{margin-top:0} /* see the note on the twin rule above (2026-08-20) */
+  .latest .ltgrid{margin-top:24px}
   .latest .clog .cstrip{border-top:0;margin-top:0}
   .latest .clog .ci:first-child{border-top:0}
 
@@ -2292,12 +2264,6 @@ body.menu-open{overflow:hidden}
   .clog .ci .cthumb{grid-column:2;grid-row:1 / span 3;align-self:start;
     width:88px;height:56px;background:var(--c-black);display:flex;align-items:center;justify-content:center}
   .clog .ci .cthumb img{width:56px;height:auto;display:block}
-  .clog .ci .cthumb.cart{height:auto;aspect-ratio:1605/1338}
-  .clog .ci .cthumb.cart img{width:100%;height:100%;object-fit:contain}
-  /* The art tile stays the 88px SIDE THUMBNAIL the wordmark used (2026-08-21, Inkyung: a thumbnail,
-     not a full picture). At list altitude the tile's job is to mark and separate the rows, not to be
-     read - the article page carries the readable figure. Only the ratio follows the asset, so the
-     art is not cropped inside the tile. */
 
   /* Changelog shows two rows on mobile, not four (2026-08-17, Inkyung).
      This is a list length, not a copy cut: the section is an index and VIEW ALL reaches the rest,
@@ -2733,7 +2699,7 @@ body.menu-open{overflow:hidden}
   .loop3 .lstrip .step .t,
   .loop3 .loopnote .lnote,
   .std5b .qh2,.std5b .qh2 .a,.std5b .qh2 .b,
-  .latest .streamhd{line-height:1.25;font-weight:500} /* was 400 (08-17 "prose set large"); reversed 2026-08-20, Inkyung: "17부터는 다 500" - one weight above the body sizes */
+  .latest .streamhd{line-height:1.25;font-weight:400}
 
   /* The reveal roles moved OUT of this mobile block on 2026-08-17 - they now run at every width.
      See the reveal block at the end of the v11-global sheet. (Do not write the closing style tag
@@ -3136,25 +3102,13 @@ body.menu-open{overflow:hidden}
     if(feat && !feat.querySelector('.lt-plate')){
       var plate=document.createElement('img');
       plate.className='lt-plate'; plate.alt='';
-      plate.src='press release/press release light.png';
+      plate.src='Images/v5 images/press-release-light-clean.png';
       feat.insertBefore(plate, feat.firstChild);
     }
-    /* Per-item changelog art (2026-08-21). The wordmark tile below was a stand-in from the days
-       when no product screenshots existed; the real screens do now, keyed by the row's href.
-       Unmapped rows keep the wordmark, so a new changelog card degrades to the old tile, not a
-       broken image. The art is black-on-black like the tile itself, so contain (in CSS, via
-       .cart) letterboxes invisibly instead of cover cropping the screens. */
-    var CLOG_ART={
-      'changelog-2026-08-17.html':'changelog images/AUG 17, 2026 - The memo in the sell flow..png',
-      'changelog-2026-07-27.html':'changelog images/JUL 27, 2026 - Investment case.png',
-      'changelog-2026-07-17.html':'changelog images/JUL 17, 2026 - Investment memos.png',
-      'changelog-2026-06-15.html':'changelog images/JUN 15, 2026 - S&P 500 comparison.png'
-    };
     document.querySelectorAll('.clog .ci').forEach(function(row){
       if(row.querySelector('.cthumb')) return;
-      var art=CLOG_ART[row.getAttribute('href')];
-      var th=document.createElement('span'); th.className='cthumb'+(art?' cart':'');
-      var lg=document.createElement('img'); lg.src=art||'II word logo.svg'; lg.alt='';
+      var th=document.createElement('span'); th.className='cthumb';
+      var lg=document.createElement('img'); lg.src='II word logo.svg'; lg.alt='';
       th.appendChild(lg); row.appendChild(th);
     });
   }
@@ -3204,7 +3158,7 @@ body.menu-open{overflow:hidden}
 .latest .streamrow .mlink{margin:0;flex:none}
 /* The heading keeps the air it used to carry as margin-bottom, moved onto the row so the link
    shares it. 68px is the rendered value of the old .streamhd margin at 1440. */
-.latest .streamrow{margin-bottom:calc(113 * var(--u))}
+.latest .streamrow{margin-bottom:calc(120 * var(--u))}
 .latest .streamhd{margin-bottom:0}
 
 /* Featured release: IMAGE LEFT, TEXT RIGHT (2026-08-17, Inkyung: "엉성해").
@@ -3237,22 +3191,18 @@ body.menu-open{overflow:hidden}
    left-aligned text spine; this block was the one place it broke. */
 .latest .lt-feat{width:100%;display:grid;
   grid-template-columns:1fr calc((100% + 30 * var(--u)) / 12 * 4 - 30 * var(--u));
-  column-gap:calc(28 * var(--u));align-items:center}
+  column-gap:calc(30 * var(--u));align-items:center}
 /* grid-row:1 on BOTH is required, not decorative. With only grid-column set, auto-placement runs
    sparse: the image took row 1 / column 2, the cursor was then past column 2, and .lt-body - which
    comes later in the DOM - could not go back to column 1 of row 1, so it dropped to row 2. The two
    halves stopped being side by side and the block grew a screen of empty space. */
-.latest .lt-feat .lt-plate{grid-column:2;grid-row:1;width:100%;aspect-ratio:1605/1338;object-fit:cover;margin:0}
-/* 1/1 -> 1605/1338 (2026-08-21). The square was cut against the old 5552x6243 PORTRAIT asset
-   (see the SQUARE note above); the re-made "press release light.png" is 1605x1338, and at its own
-   ratio the crop is zero. Same ratio as the changelog art tiles below - one proportion per section
-   (Inkyung: "같은 비율로"). */
+.latest .lt-feat .lt-plate{grid-column:2;grid-row:1;width:100%;aspect-ratio:1/1;object-fit:cover;margin:0}
 .latest .lt-feat .lt-body{grid-column:1;grid-row:1;display:flex;flex-direction:column;align-items:flex-start}
 /* The stack's own rhythm has to be restated: it used to come from rules on .lt-feat's children, and
    moving them into .lt-body left every gap at 0. Same rendered values as before the rebuild
    (24u / 24u / 50u = 14 / 14 / 28 at 1440), so only the arrangement changed, not the spacing. */
-.latest .lt-feat .lt-body>*+*{margin-top:calc(28 * var(--u))}
-.latest .lt-feat .lt-body>.mlink{margin-top:calc(42 * var(--u))}
+.latest .lt-feat .lt-body>*+*{margin-top:calc(24 * var(--u))}
+.latest .lt-feat .lt-body>.mlink{margin-top:calc(50 * var(--u))}
 /* The summary keeps a prose measure of its own instead of filling the 605 column. Measured across
    the page, every 15px prose block sits between 455 and 464 - NO.04 body 455, CLOSE 457, the hero
    descriptor 464 - and letting this one run to 605 made it the single widest line of reading text
@@ -3265,14 +3215,9 @@ body.menu-open{overflow:hidden}
    flex column purely to let the thumbnail take order:-1 without touching the markup order. */
 .clog .ci{display:flex;flex-direction:column}
 .clog .ci .cthumb{order:-1;display:flex;align-items:center;justify-content:center;
-  width:100%;aspect-ratio:335/210;background:var(--c-black);margin:0 0 calc(28 * var(--u))}
+  width:100%;aspect-ratio:335/210;background:var(--c-black);margin:0 0 calc(24 * var(--u))}
 .clog .ci .cthumb img{width:45%;height:auto;display:block}
-/* Art tiles take the screenshot's own ratio (2026-08-21, Inkyung: "같은 비율로"). 335/210 above
-   was sized for the wordmark; the per-item art is 1605x1338 and the feature plate now shares the
-   same ratio, so every image in the section renders un-cropped at one proportion. */
-.clog .ci .cthumb.cart{aspect-ratio:1605/1338}
-.clog .ci .cthumb.cart img{width:100%;height:100%;object-fit:contain}
-.clog .ci .cread{margin-top:calc(28 * var(--u));display:inline-flex;align-items:center;gap:6px;
+.clog .ci .cread{margin-top:calc(24 * var(--u));display:inline-flex;align-items:center;gap:6px;
   align-self:flex-start;font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);
   letter-spacing:0.04em;line-height:1.5;color:var(--c-1000)}
 .clog .ci .cread span{text-decoration:underline;text-decoration-thickness:0.667px;text-underline-offset:5px}
@@ -3287,7 +3232,7 @@ body.menu-open{overflow:hidden}
 .loop3 .step .t,
 .loop3 .loopnote p,.loop3 .lnote,
 .std5b .qh2,.std5b .qh2 .a,.std5b .qh2 .b,
-.qh2,.qh2 .a,.qh2 .b{line-height:1.25;font-weight:500;letter-spacing:0} /* was 400; 2026-08-20 "17부터는 다 500" */
+.qh2,.qh2 .a,.qh2 .b{line-height:1.25;font-weight:400;letter-spacing:0}
 /* Tracking 0, not the display -0.02em desktop still carried (2026-08-17). 22 arrived as a heading
    size and took heading tracking, but the tier now holds prose - the hero descriptor runs 6 lines
    and .lnote 9 - and today's other two moves on it (500 -> 400, 1.15 -> 1.25) were both toward
@@ -3326,15 +3271,15 @@ body.menu-open{overflow:hidden}
    prose settings 15/1.30/400 rather than mobile's 15/1.40/400, and the unit stays mono 13. */
 /* descendant, not `.sys .row>` - on desktop the block stays inside .lcol so it is a grandchild of
    .row. The mobile rule can use the child combinator because mobile lifts it onto the rail. */
-.sys .pricemoved{background:var(--c-1000);padding:calc(42 * var(--u)) calc(42 * var(--u));margin-top:calc(42 * var(--u))}
-.sys .pricemoved .v11-stat{display:flex;align-items:baseline;gap:calc(14 * var(--u));
+.sys .pricemoved{background:var(--c-1000);padding:calc(40 * var(--u)) calc(40 * var(--u));margin-top:calc(50 * var(--u))}
+.sys .pricemoved .v11-stat{display:flex;align-items:baseline;gap:calc(20 * var(--u));
   font-size:34px;font-weight:500;line-height:1.15;letter-spacing:-0.069em;color:var(--c-white)}
 .sys .pricemoved .v11-unit{font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);
   line-height:1.5;letter-spacing:0.04em;color:var(--c-600)}
 .sys .pricemoved .pricehd,.sys .pricemoved .pricehd .nw{font-size:15px;font-weight:400;
   line-height:1.3;letter-spacing:0;color:var(--c-400)}
 .sys .pricemoved .pricehd{margin-top:calc(14 * var(--u))}
-.sys .pricemoved .fee{margin-top:calc(28 * var(--u))}
+.sys .pricemoved .fee{margin-top:calc(24 * var(--u))}
 
 /* Changelog shows THREE on desktop, not four (Inkyung 2026-08-17). Four 216-wide cards read as a
    spec table; at three the card is 294 - the same width as the feature image - so the section

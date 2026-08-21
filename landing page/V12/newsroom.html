@@ -93,7 +93,11 @@ a{color:inherit;}
    shares its 544px equally across them - label, headline and link drift apart by 125px.
    Content-size the first two and let the last absorb the remainder. */
 .nr-list .row .nr-plate{display:none}
-.nr-list .row.first .nr-plate{grid-column:1 / span 5;grid-row:1 / span 4;width:100%;aspect-ratio:1/1;object-fit:cover;display:block;}
+.nr-list .row.first .nr-plate{grid-column:1 / span 5;grid-row:1 / span 4;width:100%;aspect-ratio:1605/1338;object-fit:cover;display:block;}
+/* 1/1 -> the asset's own ratio (2026-08-21, Inkyung: "같은 비율로"). The square was chosen against
+   the old 5552x6243 portrait mockup; the re-made plate is 1605x1338, so at 1:1 it lost 17% of its
+   width to the crop. The home's feature and changelog art carry the same ratio - one proportion
+   for every picture on both surfaces. */
 /* grid-row span 3, or the plate owns row 1 alone and its 544px height pushes the
    headline down to the plate's baseline while the label sits at the top */
 .nr-list .row.first .k{grid-column:7 / span 2;}
@@ -239,6 +243,19 @@ body.menu-open{overflow:hidden}
   .nr-list .row.first .s{margin-top:0} /* .rbody already pays the 24; the row's own
      .s margin would stack on top of it and the gap under the plate came out 40 */
   .nr-list .row.first .go{order:4;margin-top:24px}
+
+  /* ---- THE LIST STAYS TEXT-ONLY; ONLY THE FEATURE CARRIES A PICTURE (2026-08-21) ----
+     Tried the home's 88px side thumbnail on these rows first, and it does not transfer. The home's
+     list is changelog ONLY, so every row is guaranteed art and the pattern is consistent by
+     construction (Inkyung: "체인지로그는 항상 이미지가 있어서 홈페이지에서 일관성이 있는데").
+     This list is mixed - press releases, changelog, In the Press - and two of those can never
+     promise a picture: an unwritten release has none, and coverage by another outlet is linked,
+     never reproduced, so its art is not ours to show. A thumbnail column would therefore be filled
+     on some rows and empty on others forever, which is the ragged result we just measured
+     ("섬네일이 없는 케이스 때문에 디자인이 들쑥날쑥").
+     So of the two list patterns this site uses - small thumbnail, or none - a mixed index takes
+     NONE. The per-item changelog art still does its work on the home list and on the article page.
+     The feature row keeps its plate: it is the page's lede, not a list item. */
   .nr-note{margin-top:48px;padding-top:24px;font-size:11px}
   .nr-tabs button,.nr-list .row .k{font-size:11px}
   .nr-close{padding:72px 0;}
@@ -340,7 +357,7 @@ body.menu-open{overflow:hidden}
 <section class="nr-list" aria-live="polite" aria-atomic="false">
 
   <div class="row ri" data-type="press-release">
-    <img class="nr-plate" alt="" src="Images/v5-images/press-release-light-clean.png">
+    <img class="nr-plate" alt="" src="press release/press release light.png">
     <span class="k">Press Release<span class="d">JUL 27, 2026</span></span>
     <a class="t" href="press-release.html">Orion Digital Commercially Launches Intelligent Investing</a>
     <div class="rbody">
@@ -350,7 +367,6 @@ body.menu-open{overflow:hidden}
   </div>
 
   <div class="row ri" data-type="changelog">
-    <img class="nr-plate" alt="" src="Images/v5-images/press-release-light-clean.png"><!-- placeholder art, to be replaced per item (2026-08-20) -->
     <span class="k">Changelog<span class="d">AUG 17, 2026</span></span>
     <div class="rbody">
       <a class="t" href="changelog-2026-08-17.html">The stock page: the memo at the sell decision</a>
@@ -360,7 +376,6 @@ body.menu-open{overflow:hidden}
   </div>
 
   <div class="row ri" data-type="changelog">
-    <img class="nr-plate" alt="" src="Images/v5-images/press-release-light-clean.png"><!-- placeholder art, to be replaced per item (2026-08-20) -->
     <span class="k">Changelog<span class="d">JUL 27, 2026</span></span>
     <div class="rbody">
       <a class="t" href="changelog-2026-07-27.html">Writing the investment case</a>
@@ -374,7 +389,7 @@ body.menu-open{overflow:hidden}
        [brackets], matching how the changelog and in-the-press rows are stubbed on this page.
        ⬜ Website copy is Dave canon - replace with the real release or delete before any public build. -->
   <div class="row ri" data-type="press-release">
-    <img class="nr-plate" alt="" src="Images/v5-images/press-release-light-clean.png"><!-- placeholder art, to be replaced per item (2026-08-20) -->
+    <img class="nr-plate" alt="" src="press release/press release light.png"><!-- placeholder art, to be replaced per item (2026-08-20) -->
     <span class="k">Press Release<span class="d">[MMM DD], 2026</span></span>
     <div class="rbody">
       <a class="t" href="press-release.html">[Second press release headline]</a>
@@ -384,7 +399,6 @@ body.menu-open{overflow:hidden}
   </div>
 
   <div class="row ri" data-type="changelog">
-    <img class="nr-plate" alt="" src="Images/v5-images/press-release-light-clean.png"><!-- placeholder art, to be replaced per item (2026-08-20) -->
     <span class="k">Changelog<span class="d">JUL 17, 2026</span></span>
     <div class="rbody">
       <a class="t" href="changelog-2026-07-17.html">Investment memos</a>
@@ -394,7 +408,6 @@ body.menu-open{overflow:hidden}
   </div>
 
   <div class="row ri" data-type="changelog">
-    <img class="nr-plate" alt="" src="Images/v5-images/press-release-light-clean.png"><!-- placeholder art, to be replaced per item (2026-08-20) -->
     <span class="k">Changelog<span class="d">JUN 15, 2026</span></span>
     <div class="rbody">
       <a class="t" href="changelog-2026-06-15.html">S&amp;P 500 comparison</a>
@@ -404,7 +417,7 @@ body.menu-open{overflow:hidden}
   </div>
 
   <div class="row ri" data-type="in-the-press">
-    <img class="nr-plate" alt="" src="Images/v5-images/press-release-light-clean.png"><!-- placeholder art, to be replaced per item (2026-08-20) -->
+    <img class="nr-plate" alt="" src="press release/press release light.png"><!-- placeholder art, to be replaced per item (2026-08-20) -->
     <span class="k">In the Press<span class="d">[MMM DD], 2026</span></span>
     <div class="rbody">
       <a class="t" href="#" onclick="return false">[Coverage headline as published]</a><!-- inert placeholder: clicking used to jump to the top of the page. Swap href + drop the onclick when the coverage URL exists (2026-08-20) -->

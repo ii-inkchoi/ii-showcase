@@ -1148,22 +1148,6 @@ body.menu-open{overflow:hidden}
 }
 </style>
 
-<style id="loop-mobile-relayout">
-/* ---- Operating Loop, mobile relayout (2026-08-20). Euan: station labels overlapped on phones.
-   The canvas keeps the ring, the S&P core and the NUMBERS; names, sublines and the bias words
-   move into .loop-mlist below it. Desktop draws everything on the canvas as before. ---- */
-@media(min-width:901px){.loop-mlist{display:none}}
-@media(max-width:900px){
-  .loop-mlist{position:relative;z-index:3;margin:412px 16px 0;display:flex;flex-direction:column}
-  .loop-mlist .ml-s{display:flex;gap:12px;padding:12px 0;border-top:0.667px solid rgba(28,28,28,0.16)}
-  .loop-mlist .ml-s:first-child{border-top:0;padding-top:0}
-  .loop-mlist .ml-s .n{font-family:var(--mono);font-size:11px;line-height:1.4;letter-spacing:0.04em;color:#565b5e;padding-top:4px}
-  .loop-mlist .ml-s b{display:block;font-weight:500;font-size:17px;line-height:1.3;color:#1c1c1c}
-  .loop-mlist .ml-s .s{display:block;margin-top:4px;font-family:var(--mono);font-size:11px;line-height:1.4;letter-spacing:0.04em;color:#565b5e}
-  .loop-mlist .ml-loop{padding:12px 0 0;border-top:0.667px solid rgba(28,28,28,0.16);font-family:var(--mono);font-size:9px;line-height:1.4;letter-spacing:0.04em;color:#565b5e}
-  .loopfig .sys-legend{margin:24px 16px 0}
-}
-</style>
 </head>
 <body class="p-home">
 
@@ -1243,13 +1227,6 @@ body.menu-open{overflow:hidden}
     </div>
     <div class="loopfig rv">
       <canvas id="sysLoopCanvas" aria-hidden="true"></canvas>
-      <div class="loop-mlist"><!-- mobile only: the ring keeps its numbers, the words live here (Euan 2026-08-20, "needs a new mobile layout") -->
-        <div class="ml-s"><span class="n">01</span><div><b>Research &amp; Analysis</b><span class="s">Fiscal.ai + your AI tools</span></div></div>
-        <div class="ml-s"><span class="n">02</span><div><b>Memo</b><span class="s">classify, size, conviction, record</span></div></div>
-        <div class="ml-s"><span class="n">03</span><div><b>Review</b><span class="s">the research, run again</span></div></div>
-        <div class="ml-s"><span class="n">04</span><div><b>Calibration</b><span class="s">conviction, scored against outcome</span></div></div>
-        <div class="ml-loop">&#8635;&nbsp; BACK TO 01 &middot; THE LOOP REPEATS</div>
-      </div>
       <div class="sys-legend">
         <div class="leg-group">
           <span class="leg-cap">Nodes</span>
@@ -1479,25 +1456,25 @@ body.menu-open{overflow:hidden}
     <div class="clog">
       <h2 class="streamhd rv">Changelog</h2>
       <div class="cstrip rv">
-        <a class="ci" href="changelog-2026-08-17.html">
-          <span class="ct">The stock page: the memo at the sell decision</span>
-          <span class="cd">The memo now shows in the sell flow. Selling or reducing a position that has one surfaces it first, read&nbsp;only.</span>
-          <span class="cdate">AUG 17, 2026</span>
+        <a class="ci" href="changelog-entry.html">
+          <span class="ct">[July improvement title]</span>
+          <span class="cd">[Two line note on what changed and what it means.]</span>
+          <span class="cdate">JUL [DD], 2026</span>
         </a>
-        <a class="ci" href="changelog-2026-07-27.html">
-          <span class="ct">Writing the investment case</span>
-          <span class="cd">The editor now behaves like a proper notes editor, not a form field, and a memo opens to the full investment&nbsp;case.</span>
-          <span class="cdate">JUL 27, 2026</span>
+        <a class="ci" href="changelog-entry.html">
+          <span class="ct">[Second improvement title]</span>
+          <span class="cd">[Two line note on what changed and what it means.]</span>
+          <span class="cdate">JUL [DD], 2026</span>
         </a>
-        <a class="ci" href="changelog-2026-07-17.html">
-          <span class="ct">Investment memos</span>
-          <span class="cd">A memo is now required before an order, covering classification, role, the case, idea origin, and a&nbsp;prediction.</span>
-          <span class="cdate">JUL 17, 2026</span>
+        <a class="ci" href="changelog-entry.html">
+          <span class="ct">[June improvement title]</span>
+          <span class="cd">[Two line note on what changed and what it means.]</span>
+          <span class="cdate">JUN [DD], 2026</span>
         </a>
-        <a class="ci" href="changelog-2026-06-15.html">
-          <span class="ct">S&amp;P 500 comparison</span>
-          <span class="cd">Self-directed performance is now shown against the S&amp;P 500, mirroring your own deposits and&nbsp;withdrawals.</span>
-          <span class="cdate">JUN 15, 2026</span>
+        <a class="ci" href="changelog-entry.html">
+          <span class="ct">[Fourth improvement title]</span>
+          <span class="cd">[Two line note on what changed and what it means.]</span>
+          <span class="cdate">JUN [DD], 2026</span>
         </a>
       </div>
       <div class="cfoot rv">
@@ -1865,7 +1842,7 @@ body.menu-open{overflow:hidden}
         }else{ctx.textAlign=right?'left':'right';lx=ox2+(right?4:-4);ly=oy2;}
         ctx.strokeStyle='rgba(24,24,24,0.32)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(p.sx+dx/len*6,p.sy+dy/len*6);ctx.lineTo(ox2,oy2);ctx.stroke();
         ctx.save();ctx.shadowColor='rgba(236,234,229,0.95)';ctx.shadowBlur=8;
-        ctx.letterSpacing='0.1em';ctx.font='10px "IBM Plex Mono",ui-monospace,Menlo,monospace';ctx.fillStyle='rgba(92,86,76,0.95)';ctx.fillText(String(i+1).padStart(2,'0'),lx,MB?(p.sy<cy?p.sy-14:p.sy+20):ly-8);ctx.letterSpacing='0px';if(!MB){ /* mobile: numbers only - the words live in .loop-mlist (2026-08-20) */
+        ctx.letterSpacing='0.1em';ctx.font='10px "IBM Plex Mono",ui-monospace,Menlo,monospace';ctx.fillStyle='rgba(92,86,76,0.95)';ctx.fillText(String(i+1).padStart(2,'0'),lx,ly-8);ctx.letterSpacing='0px';
         ctx.font='500 '+LF+'px "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif';ctx.fillStyle=isR?'rgba(26,23,20,1)':'rgba(30,27,24,0.97)';ctx.fillText(ST[i],lx,ly+9);
         ctx.letterSpacing='0.02em';
         const SUB=[['Fiscal.ai + your AI tools'],['classify, size, conviction, record'],['the research, run again'],['conviction, scored against outcome']][i];
@@ -1873,7 +1850,7 @@ body.menu-open{overflow:hidden}
         SUB.forEach((ln,li)=>ctx.fillText(ln,lx,ly+(MB?25:29)+li*(MB?11:13)));
         ctx.letterSpacing='0px';
         const _by=ly+(MB?25:29)+SUB.length*(MB?11:13)+2;
-        if(i===biasIdx&&bEmph>0.02){ctx.letterSpacing='0.04em';ctx.font='10px "IBM Plex Mono",ui-monospace,Menlo,monospace';ctx.fillStyle=`rgba(150,110,38,${(0.62*bEmph).toFixed(3)})`;ctx.fillText('Guards Against',lx,_by);ctx.letterSpacing='0px';ctx.font='500 13px "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif';ctx.fillStyle=`rgba(150,110,38,${(0.68+0.32*bEmph).toFixed(3)})`;ctx.fillText(BIAS[i],lx,_by+14);}}
+        if(i===biasIdx&&bEmph>0.02){ctx.letterSpacing='0.04em';ctx.font='10px "IBM Plex Mono",ui-monospace,Menlo,monospace';ctx.fillStyle=`rgba(150,110,38,${(0.62*bEmph).toFixed(3)})`;ctx.fillText('Guards Against',lx,_by);ctx.letterSpacing='0px';ctx.font='500 13px "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif';ctx.fillStyle=`rgba(150,110,38,${(0.68+0.32*bEmph).toFixed(3)})`;ctx.fillText(BIAS[i],lx,_by+14);}
         ctx.restore()}
       const stp=sp[biasIdx],ring=(bp<0.66?Math.min(1,bp/0.18):Math.max(0,1-(bp-0.66)/0.34));
       ctx.strokeStyle=`rgba(150,110,38,${0.42*ring})`;ctx.lineWidth=1.4;
@@ -1882,8 +1859,8 @@ body.menu-open{overflow:hidden}
       { const gw=54, gx=(W<600)?Math.max(gw/2+8,Math.min(W-gw/2-8,sp[CAL].sx)):sp[CAL].sx, gy=sp[CAL].sy+46;
         ctx.save();ctx.shadowColor='rgba(236,234,229,0.92)';ctx.shadowBlur=6;ctx.textAlign='center';
         ctx.strokeStyle='rgba(24,24,24,0.30)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(gx-gw/2,gy);ctx.lineTo(gx+gw/2,gy);ctx.stroke();
-        if(!MB){ctx.letterSpacing='0.04em';ctx.font='10px "IBM Plex Mono",ui-monospace,Menlo,monospace';ctx.textBaseline='bottom';ctx.fillStyle='rgba(80,75,68,0.85)';ctx.fillText('Calibrated',gx,gy-3);
-        ctx.textBaseline='top';ctx.fillStyle='rgba(98,92,84,0.7)';ctx.fillText('Overconfident',gx,gy+18);ctx.letterSpacing='0px';}
+        ctx.letterSpacing='0.04em';ctx.font='10px "IBM Plex Mono",ui-monospace,Menlo,monospace';ctx.textBaseline='bottom';ctx.fillStyle='rgba(80,75,68,0.85)';ctx.fillText('Calibrated',gx,gy-3);
+        ctx.textBaseline='top';ctx.fillStyle='rgba(98,92,84,0.7)';ctx.fillText('Overconfident',gx,gy+18);ctx.letterSpacing='0px';
         for(const d of scored){const fade=Math.min(1,d.l/0.28)*Math.max(0,1-(d.l-2.6)/1.0);
           const dxx=gx+(d.x-0.5)*gw, dyy=gy+d.over*15;
           ctx.fillStyle=d.hit?`rgba(${SIG.green},${0.92*fade})`:`rgba(${SIG.red},${0.92*fade})`;
@@ -2221,15 +2198,12 @@ body.menu-open{overflow:hidden}
      ("no image that the desktop does not have"). Opened on Inkyung's instruction, recorded here
      rather than done quietly. Two different things, on purpose:
 
-     1. The featured release gets its OWN plate - "press release light.png" (swapped from
-        press-release-light-clean.png 2026-08-21, same art re-rendered light at 1605x1338) is the
-        image the press-release page already runs, so this is that article's picture in that article's slot,
+     1. The featured release gets its OWN plate - press-release-light-clean.png is the image the
+        press-release page already runs, so this is that article's picture in that article's slot,
         not a new photo pulled from the library. 210 tall, not the 360 the section bands use: a band
         opens a beat, this is a figure attached to a story, and the tiers should not read alike.
-     2. The changelog rows get an 88x56 wordmark tile. There were no product screenshots then, so a
-        photo would have to be invented; Anduril solves the same gap with a plain ANDURIL tile.
-        (2026-08-21: real screenshots exist now - the builder swaps in per-item art keyed by href,
-        see CLOG_ART below; the wordmark stays as the fallback for unmapped rows.) All four
+     2. The changelog rows get an 88x56 wordmark tile. There are no product screenshots, so a photo
+        would have to be invented; Anduril solves the same gap with a plain ANDURIL tile. All four
         rows carry the same tile - if that reads as repetition, the fallback is to keep the tile on
         the newest row only. */
   /* .lt-feat is a flex column and .lt-meta carries order:-1 (V10, line ~1007), so inserting the
@@ -2241,7 +2215,7 @@ body.menu-open{overflow:hidden}
   .latest .lt-feat .lt-body{display:contents}
   /* 1:1, not the old fixed 210 (2026-08-17). Same reason as desktop: the source is a 5552x6243
      portrait, so a 335x210 landscape frame was cropping away more than half of it. */
-  .latest .lt-plate{order:-2;display:block;width:100%;aspect-ratio:1605/1338;height:auto;object-fit:cover;margin:0} /* 1/1 -> asset ratio 2026-08-21, see the desktop note */
+  .latest .lt-plate{order:-2;display:block;width:100%;aspect-ratio:1/1;height:auto;object-fit:cover;margin:0}
   .latest .lt-feat .lt-meta{margin-top:24px}   /* image -> date */
   .latest .ltgrid{margin-top:0}             /* was 24 twice (here and again at the streamrow block below): it stacked with the date row's own 24, so Press Releases sat 48 under its rule while Changelog sat 24. The rule gets 24 on both faces now (Inkyung 2026-08-20) */
 
@@ -2292,12 +2266,6 @@ body.menu-open{overflow:hidden}
   .clog .ci .cthumb{grid-column:2;grid-row:1 / span 3;align-self:start;
     width:88px;height:56px;background:var(--c-black);display:flex;align-items:center;justify-content:center}
   .clog .ci .cthumb img{width:56px;height:auto;display:block}
-  .clog .ci .cthumb.cart{height:auto;aspect-ratio:1605/1338}
-  .clog .ci .cthumb.cart img{width:100%;height:100%;object-fit:contain}
-  /* The art tile stays the 88px SIDE THUMBNAIL the wordmark used (2026-08-21, Inkyung: a thumbnail,
-     not a full picture). At list altitude the tile's job is to mark and separate the rows, not to be
-     read - the article page carries the readable figure. Only the ratio follows the asset, so the
-     art is not cropped inside the tile. */
 
   /* Changelog shows two rows on mobile, not four (2026-08-17, Inkyung).
      This is a list length, not a copy cut: the section is an index and VIEW ALL reaches the rest,
@@ -3136,25 +3104,13 @@ body.menu-open{overflow:hidden}
     if(feat && !feat.querySelector('.lt-plate')){
       var plate=document.createElement('img');
       plate.className='lt-plate'; plate.alt='';
-      plate.src='press release/press release light.png';
+      plate.src='Images/v5 images/press-release-light-clean.png';
       feat.insertBefore(plate, feat.firstChild);
     }
-    /* Per-item changelog art (2026-08-21). The wordmark tile below was a stand-in from the days
-       when no product screenshots existed; the real screens do now, keyed by the row's href.
-       Unmapped rows keep the wordmark, so a new changelog card degrades to the old tile, not a
-       broken image. The art is black-on-black like the tile itself, so contain (in CSS, via
-       .cart) letterboxes invisibly instead of cover cropping the screens. */
-    var CLOG_ART={
-      'changelog-2026-08-17.html':'changelog images/AUG 17, 2026 - The memo in the sell flow..png',
-      'changelog-2026-07-27.html':'changelog images/JUL 27, 2026 - Investment case.png',
-      'changelog-2026-07-17.html':'changelog images/JUL 17, 2026 - Investment memos.png',
-      'changelog-2026-06-15.html':'changelog images/JUN 15, 2026 - S&P 500 comparison.png'
-    };
     document.querySelectorAll('.clog .ci').forEach(function(row){
       if(row.querySelector('.cthumb')) return;
-      var art=CLOG_ART[row.getAttribute('href')];
-      var th=document.createElement('span'); th.className='cthumb'+(art?' cart':'');
-      var lg=document.createElement('img'); lg.src=art||'II word logo.svg'; lg.alt='';
+      var th=document.createElement('span'); th.className='cthumb';
+      var lg=document.createElement('img'); lg.src='II word logo.svg'; lg.alt='';
       th.appendChild(lg); row.appendChild(th);
     });
   }
@@ -3242,11 +3198,7 @@ body.menu-open{overflow:hidden}
    sparse: the image took row 1 / column 2, the cursor was then past column 2, and .lt-body - which
    comes later in the DOM - could not go back to column 1 of row 1, so it dropped to row 2. The two
    halves stopped being side by side and the block grew a screen of empty space. */
-.latest .lt-feat .lt-plate{grid-column:2;grid-row:1;width:100%;aspect-ratio:1605/1338;object-fit:cover;margin:0}
-/* 1/1 -> 1605/1338 (2026-08-21). The square was cut against the old 5552x6243 PORTRAIT asset
-   (see the SQUARE note above); the re-made "press release light.png" is 1605x1338, and at its own
-   ratio the crop is zero. Same ratio as the changelog art tiles below - one proportion per section
-   (Inkyung: "같은 비율로"). */
+.latest .lt-feat .lt-plate{grid-column:2;grid-row:1;width:100%;aspect-ratio:1/1;object-fit:cover;margin:0}
 .latest .lt-feat .lt-body{grid-column:1;grid-row:1;display:flex;flex-direction:column;align-items:flex-start}
 /* The stack's own rhythm has to be restated: it used to come from rules on .lt-feat's children, and
    moving them into .lt-body left every gap at 0. Same rendered values as before the rebuild
@@ -3267,11 +3219,6 @@ body.menu-open{overflow:hidden}
 .clog .ci .cthumb{order:-1;display:flex;align-items:center;justify-content:center;
   width:100%;aspect-ratio:335/210;background:var(--c-black);margin:0 0 calc(28 * var(--u))}
 .clog .ci .cthumb img{width:45%;height:auto;display:block}
-/* Art tiles take the screenshot's own ratio (2026-08-21, Inkyung: "같은 비율로"). 335/210 above
-   was sized for the wordmark; the per-item art is 1605x1338 and the feature plate now shares the
-   same ratio, so every image in the section renders un-cropped at one proportion. */
-.clog .ci .cthumb.cart{aspect-ratio:1605/1338}
-.clog .ci .cthumb.cart img{width:100%;height:100%;object-fit:contain}
 .clog .ci .cread{margin-top:calc(28 * var(--u));display:inline-flex;align-items:center;gap:6px;
   align-self:flex-start;font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);
   letter-spacing:0.04em;line-height:1.5;color:var(--c-1000)}

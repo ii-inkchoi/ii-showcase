@@ -1,0 +1,253 @@
+# -*- coding: utf-8 -*-
+"""
+check-v11.py - enforces the contract written at the top of shared/v11.css.
+
+Run from the V11_new folder:      python shared/check-v11.py
+Exit code 0 = clean, 1 = violations found.
+
+WHAT IT CATCHES, and why each rule exists:
+
+  A. A page that does not load the shared layer.
+     The whole point is that a new page inherits instead of copying.
+
+  B. The shared stylesheet is not the last one on the page.
+     It wins by source order at equal specificity. Put anything after it and
+     the page silently takes ownership back.
+
+  C. A page block sets a COMPONENT property on a class-only selector.
+     This is the exact failure this system was built to stop: on 2026-08-18
+     the ledger step title read 22/400/1.25 on Self-Directed and 17/500/1.15
+     on Managed from identical markup, because each page owned its own copy.
+     Size, weight, leading, tracking and border treatment belong to the
+     component, which means they belong to shared/v11.css.
+
+  D. A page block redefines a selector the shared file already owns.
+     Even when the value agrees today, it will not agree in a month.
+
+  E. A sub page missing <body class="p-sub">, which is what switches on the
+     sub-page hero.
+
+An intentional page exception is allowed - key it on #section-id, or on
+body.p-*, and write the reason on the line above. C and D only fire on
+class-only selectors, so a documented #id exception passes.
+"""
+import io, os, re, sys
+from html import unescape   # NOTE: the page source is also called `html` below - import the function, not the module
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(HERE)
+SHARED = os.path.join(HERE, 'v11.css')
+
+HOME = 'index.html'
+COMPONENT_PROPS = re.compile(
+    r'(^|;)\s*(font-size|font-weight|line-height|letter-spacing|font-family'
+    r'|text-transform|border(-(top|right|bottom|left))?-color)\s*:')
+
+
+def strip_comments(s):
+    out, i = [], 0
+    while True:
+        j = s.find('/*', i)
+        if j < 0:
+            out.append(s[i:])
+            break
+        out.append(s[i:j])
+        k = s.find('*/', j + 2)
+        if k < 0:
+            break
+        i = k + 2
+    return ''.join(out)
+
+
+def parse(css, media=None, out=None):
+    if out is None:
+        out = []
+    i, n = 0, len(css)
+    while i < n:
+        j = css.find('{', i)
+        if j < 0:
+            break
+        head = css[i:j].strip()
+        depth, k = 1, j + 1
+        while k < n and depth:
+            if css[k] == '{':
+                depth += 1
+            elif css[k] == '}':
+                depth -= 1
+            k += 1
+        body = css[j + 1:k - 1]
+        if head.startswith('@'):
+            if head.startswith('@media') or head.startswith('@supports'):
+                parse(body, (media + ' ' + head) if media else head, out)
+        else:
+            sel = ' '.join(head.split())
+            if sel:
+                out.append((re.sub(r'\s+', '', media or ''),
+                            re.sub(r'\s+', '', sel),
+                            ' '.join(body.split())))
+        i = k
+    return out
+
+
+def page_blocks(html):
+    """the v11 style blocks a page owns (not the base sheets)"""
+    for m in re.finditer(r'<style id="(v11[^"]*)"[^>]*>(.*?)</style>', html, re.S):
+        yield m.group(1), m.group(2)
+
+
+def classes_used(html):
+    """every class name that actually appears in the markup"""
+    out = set()
+    for m in re.finditer(r'class="([^"]*)"', html):
+        out.update(m.group(1).split())
+    return out
+
+
+def lead_class(sel):
+    """the component the selector hangs off - the first class token"""
+    m = re.match(r'\.([A-Za-z0-9_-]+)', sel.split(',')[0].strip())
+    return m.group(1) if m else None
+
+
+def main():
+    if not os.path.exists(SHARED):
+        print('FAIL  shared/v11.css is missing')
+        return 1
+
+    owned = {(md, sel) for md, sel, d in parse(strip_comments(io.open(SHARED, encoding='utf-8').read()))}
+    owned_sub = {(md, sel.replace('body.p-sub', '')) for md, sel in owned if 'body.p-sub' in sel}
+
+    pages = sorted(f for f in os.listdir(ROOT) if f.endswith('.html'))
+    src = {f: io.open(os.path.join(ROOT, f), encoding='utf-8').read() for f in pages}
+
+    # A component only has to be centrally owned once more than one page renders it.
+    # A component that lives on a single page (the home's .loop3, Self-Directed's
+    # .sheet) may keep its rules on that page - the moment a second page uses the
+    # class, this check starts asking for it to move.
+    seen = {}
+    for f in pages:
+        for c in classes_used(src[f]):
+            seen.setdefault(c, set()).add(f)
+    multi = {c for c, fs in seen.items() if len(fs) > 1}
+
+    problems = 0
+    notes = 0
+    print('shared layer owns %d selectors' % len(owned))
+    print('%d classes appear on more than one page - those are the ones that must be shared\n' % len(multi))
+
+    for fn in pages:
+        html = src[fn]
+        issues = []
+
+        # A - links the shared layer
+        if 'href="shared/v11.css"' not in html:
+            issues.append('A  does not link shared/v11.css')
+        else:
+            # B - it must be the last stylesheet
+            tail = html.split('href="shared/v11.css"')[-1]
+            if re.search(r'<style|rel="stylesheet"', tail):
+                issues.append('B  a stylesheet loads AFTER the shared layer - it will not win')
+
+        if fn != HOME:
+            # E - a sub page needs the body class only if it HAS the band hero. The content
+            # pages (pricing, manifesto, newsroom, press-release, changelog-entry,
+            # get-the-app) have no hero at all, so p-sub would switch on nothing. Asking for
+            # it there would train people to add a class that does not do anything.
+            if 'hero' in classes_used(html) and not re.search(r'<body[^>]*class="[^"]*\bp-sub\b', html):
+                issues.append('E  has a hero but no <body class="p-sub"> - the sub-page hero will not apply')
+            if 'src="shared/v11-sub.js"' not in html:
+                issues.append('A  does not load shared/v11-sub.js')
+            else:
+                # G - the burger handler is bound twice. v11-sub.js already binds it; a page
+                # that keeps its own copy toggles the overlay twice per click, so the menu
+                # opens and shuts in the same frame and the button looks dead. Seven pages
+                # shipped this way until 2026-08-20 - nothing in the CSS checks caught it
+                # because the bug is in JS, so it gets its own check.
+                if re.search(r"querySelector\(\s*['\"]\.nav \.burger['\"]\s*\)", html):
+                    issues.append('G  binds the burger itself AND loads shared/v11-sub.js - '
+                                  'two handlers per click cancel out. Delete the page copy.')
+
+        keys = owned | (owned_sub if fn != HOME else set())
+
+        for bid, css in page_blocks(html):
+            for md, sel, decls in parse(strip_comments(css)):
+                if '#' in sel or 'body.p-' in sel:
+                    continue                      # documented page exception
+                lc = lead_class(sel)
+                if (md, sel) in keys:
+                    # the page adds to a selector the shared file owns. Allowed when it
+                    # is a deliberate page pin, but it must be visible - this is where
+                    # the drift starts.
+                    issues.append('N  %s adds to a shared selector (intentional?):  %s'
+                                  % (bid, sel))
+                elif lc in multi and COMPONENT_PROPS.search(';' + decls):
+                    prop = COMPONENT_PROPS.search(';' + decls).group(2)
+                    issues.append('C  %s sets %s on .%s, a component used on %d pages:  %s'
+                                  % (bid, prop, lc, len(seen[lc]), sel))
+
+        seen_issue = set()
+        issues = [x for x in issues if not (x in seen_issue or seen_issue.add(x))]
+        # F - ALL CAPS belongs to the 13 mono tier only. 11 and 9 are sentence case,
+        # acronyms excepted. Checked on the label classes and on table headers, which
+        # are the elements that render at those two sizes.
+        ACRONYMS = {'YTD', 'FAQ', 'CIRO', 'CIPF', 'TFSA', 'RRSP', 'FX', 'US', 'CA',
+                    'ETF', 'ETFS', 'AI', 'IR', 'SP', 'MER', 'CELI', 'REER', 'TBD',
+                    'IISI', 'IIWMI', 'NO', 'PM',
+                    'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN',
+                    'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', 'DD', 'MMM'}
+        # 2026-08-19: 'k' and 'd' added after the newsroom review found five row
+        # labels (CHANGELOG, PRESS RELEASE, IN THE PRESS) rendering ALL CAPS at
+        # 11 with nothing catching them - the class list was the blind spot, not
+        # the rule. Month abbreviations inside .d (JUL 27, 2026) pass as acronyms.
+        LABEL_CLASSES = ('lim', 'sub', 'src', 'figcap', 'metaline', 'mmeta',
+                         'k', 'd', 'lt-meta', 's', 'cap')
+        caps = set()
+        for cls in LABEL_CLASSES:
+            for m in re.finditer(
+                    r'<(\w+)[^>]*class="[^"]*\b%s\b[^"]*"[^>]*>(.*?)</\1>' % cls, html, re.S):
+                txt = ' '.join(re.sub(r'<[^>]+>', '', m.group(2)).split())
+                caps.add((txt, cls))
+        for m in re.finditer(r'<th[^>]*>(.*?)</th>', html, re.S):
+            caps.add((' '.join(re.sub(r'<[^>]+>', '', m.group(1)).split()), 'th'))
+        for txt, where in sorted(caps):
+            # Entities first. "RESEARCH &amp; ANALYSIS" reduces to "RESEARCHampANALYSIS",
+            # whose lowercase "amp" made the string look mixed-case and slipped through
+            # on 2026-08-19. Same trap for &nbsp; and &middot;.
+            txt = unescape(txt)
+            # [DATE] / [MMM DD] are unfilled placeholders, not copy - they get
+            # replaced before publish, so they are not a casing decision.
+            txt = re.sub(r'\[[^\]]*\]', ' ', txt).strip()
+            letters = re.sub(r'[^A-Za-z]', '', txt)
+            if len(letters) < 2 or letters != letters.upper():
+                continue
+            words = [re.sub(r'[^A-Za-z]', '', w) for w in txt.split()]
+            if all((not w) or w in ACRONYMS for w in words):
+                continue                     # acronyms only - allowed
+            issues.append('F  ALL CAPS below the 13 tier (.%s): "%s" - 11 and 9 are '
+                          'sentence case, acronyms excepted' % (where, txt[:40]))
+
+        hard = [x for x in issues if not x.startswith('N ')]
+        if issues:
+            problems += len(hard)
+            notes += len(issues) - len(hard)
+            print('%s' % fn)
+            for x in issues:
+                print('   %s' % x)
+            print()
+        else:
+            print('%-24s OK' % fn)
+
+    print()
+    if problems:
+        print('%d violation(s), %d note(s).' % (problems, notes))
+        print('Move the rule into shared/v11.css, or key the page exception on')
+        print('#section-id / body.p-* with the reason on the line above.')
+        return 1
+    print('clean - every page inherits the shared layer and owns nothing it should not.')
+    if notes:
+        print('%d note(s) above: page rules that add to a shared selector. Read them once.' % notes)
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())
