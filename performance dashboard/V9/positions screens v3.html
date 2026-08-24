@@ -39,13 +39,14 @@
   header.app{position:relative;min-height:48px;display:flex;align-items:center;gap:8px;
     padding:0 20px;border-bottom:0.5px solid var(--c-900);}
   header.app .back{font-size:17px;color:var(--c-400);cursor:pointer;min-width:44px;min-height:44px;display:flex;align-items:center;}
-  header.app .title{font-size:11px;font-weight:500;color:var(--c-200);letter-spacing:-0.02em;}
-  header.app .back[style*="visibility:hidden"]{display:none;}
-  header.app .action{margin-left:auto;font-size:15px;letter-spacing:-0.02em;color:var(--c-400);cursor:pointer;}
-  header.app .title-group{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;}
-  .info-btn{width:12px;height:12px;border-radius:50%;border:0.5px solid var(--c-700);
+  header.app .hdr-status{position:absolute;left:50%;transform:translateX(-50%);
+    display:inline-flex;align-items:center;gap:8px;white-space:nowrap;
+    font-size:11px;color:var(--c-400);letter-spacing:-0.02em;}
+  header.app .action{margin-left:auto;}
+  header.app .action{font-size:13px;letter-spacing:-0.02em;color:var(--c-700);cursor:pointer;min-height:44px;display:inline-flex;align-items:center;}
+  .info-btn{margin-left:8px;vertical-align:1px;width:12px;height:12px;border-radius:50%;border:0.5px solid var(--c-700);
     display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--c-700);cursor:pointer;flex-shrink:0;}
-  .info-btn{position:relative;}
+  .info-btn{position:relative;display:inline-flex;}
   .info-btn::after{content:'';position:absolute;inset:-10px;}
   .info-btn:active{background:var(--c-1000);}
 
@@ -60,33 +61,28 @@
   .info-sheet-head{display:flex;align-items:center;justify-content:space-between;
     padding:16px 20px 12px;border-bottom:0.5px solid var(--c-900);flex-shrink:0;}
   .info-sheet-title{font-size:17px;color:var(--c-200);letter-spacing:-0.02em;line-height:1.2;}
-  .info-sheet-close{font-size:17px;color:var(--c-700);cursor:pointer;padding:2px 6px;line-height:1;}
+  .info-sheet-close{font-size:17px;color:var(--c-700);cursor:pointer;padding:8px;line-height:1;}
   .info-sheet-body{overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:24px;
     scrollbar-width:none;-ms-overflow-style:none;}
   .info-sheet-body::-webkit-scrollbar{display:none;}
   .info-block-title{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;margin-bottom:8px;}
   .info-p{font-size:13px;color:var(--c-400);line-height:1.4;letter-spacing:-0.02em;}
   .info-p + .info-p{margin-top:8px;}
-  .legend-row{display:flex;align-items:flex-start;gap:10px;padding:12px 0;border-bottom:0.5px solid var(--c-1000);}
-  .legend-row:last-child{border-bottom:none;padding-bottom:0;}
-  .legend-dot{width:8px;height:8px;border-radius:50%;margin-top:5px;flex-shrink:0;}
-  .legend-text .lname{font-size:13px;color:var(--c-white);letter-spacing:-0.02em;}
-  .legend-text .ldesc{font-size:13px;color:var(--c-700);line-height:1.4;margin-top:3px;letter-spacing:-0.02em;}
-  .info-sec-item{display:flex;flex-direction:column;gap:2px;padding:10px 0;border-bottom:0.5px solid var(--c-1000);}
+  .info-sec-item{display:flex;flex-direction:column;gap:2px;padding:12px 0;border-bottom:0.5px solid var(--c-900);}
   .info-sec-item:last-child{border-bottom:none;}
   .info-sec-item .k{font-size:13px;color:var(--c-white);letter-spacing:-0.02em;}
   .info-sec-item .d{font-size:13px;color:var(--c-700);line-height:1.4;letter-spacing:-0.02em;}
 
   /* ── decisions module (reproduces source dashboard's Decisions card) ── */
-  .dec-row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding-bottom:12px;border-bottom:0.5px solid var(--c-900);}
-  .dec-block{display:flex;flex-direction:column;gap:8px;padding-bottom:12px;border-bottom:0.5px solid var(--c-900);}
-  .dec-sub{display:flex;align-items:baseline;justify-content:space-between;gap:16px;}
-  .dec-tap{font-size:13px;letter-spacing:-0.02em;cursor:pointer;padding-bottom:1px;}
-  .dec-viewall{display:block;margin-top:2px;font-size:13px;color:var(--c-700);letter-spacing:-0.02em;text-align:right;cursor:pointer;}
+  .dec-row{display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding-bottom:12px;border-bottom:0.5px solid var(--c-900);}
+  .dec-block{display:flex;flex-direction:column;gap:12px;padding-bottom:12px;border-bottom:0.5px solid var(--c-900);}
+  .dec-sub{display:flex;align-items:baseline;justify-content:space-between;gap:24px;}
+  .dec-tap{font-size:13px;letter-spacing:-0.02em;cursor:pointer;padding:12px 2px;margin:-12px -2px;}
+  .dec-viewall{display:block;padding:12px 2px;margin-bottom:-12px;font-size:13px;color:var(--c-700);letter-spacing:-0.02em;text-align:right;cursor:pointer;}
   .dec-viewall:hover{color:var(--c-400);}
-  .dec-preview{padding:2px 0 8px 0;display:none;flex-direction:column;gap:8px;}
+  .dec-preview{padding:0;display:none;flex-direction:column;gap:12px;}
   .dec-preview.open{display:flex;}
-  .dec-prow{display:flex;align-items:baseline;justify-content:space-between;gap:16px;cursor:pointer;padding:2px 0;}
+  .dec-prow{display:flex;align-items:baseline;justify-content:space-between;gap:24px;cursor:pointer;padding:2px 0;}
   .dec-prow:hover .dec-ticker{color:var(--c-400);}
   .dec-ticker{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;transition:color 120ms;}
   .dec-note[hidden]{display:none;}
@@ -97,23 +93,27 @@
   .cf-head,.cf-row{display:contents;}
   .cf-head > span{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;padding-bottom:8px;border-bottom:0.5px solid var(--c-900);text-align:right;}
   .cf-head > span:first-child,.cf-head > span:nth-child(2){text-align:left;}
-  .cf-row > span{padding:10px 0;border-bottom:0.5px solid var(--c-900);font-size:13px;letter-spacing:-0.02em;font-feature-settings:'lnum' 1,'tnum' 1;}
+  .cf-row > span{padding:12px 0;border-bottom:0.5px solid var(--c-900);font-size:13px;letter-spacing:-0.02em;font-feature-settings:'lnum' 1,'tnum' 1;}
   .cf-date{color:var(--c-700);text-align:left;}
   .cf-type{color:var(--c-400);text-align:left;}
   .cf-amt{color:var(--c-white);text-align:right;}
   .cf-px{color:var(--c-700);text-align:right;}
   /* trend arrows (meeting 08-24: direction vs recent average, not vs S&P) */
   /* arrow hangs outside the text box so the number keeps its own alignment */
-  .trend{position:absolute;right:100%;top:50%;transform:translateY(-50%);
-    font-size:9px;line-height:1;letter-spacing:normal;padding-right:4px;}
+  .trend{display:inline-block;width:9px;font-size:9px;line-height:1;letter-spacing:normal;
+    margin-right:4px;vertical-align:2px;text-align:center;}
   .trend.up{color:var(--c-live-muted);}
   .trend.down{color:var(--c-urgent-muted);}
   .trend.neutral{color:var(--c-700);}
-  .stat-delta{position:relative;}
+  .trend.plain{color:var(--c-400);}
+  /* fixed value box so the hanging arrow lands in the same column on every row */
+  .stat-delta{display:inline-block;text-align:right;
+    font-size:15px;letter-spacing:-0.02em;font-feature-settings:'lnum' 1,'tnum' 1;}
+  .stat-delta{color:var(--c-400);}
+  .stat-delta.sub{font-size:15px;}
+  .statnum{display:inline-block;min-width:56px;text-align:right;}
   .cmp-val,.rowreturn{position:relative;}
   .tw{position:relative;display:inline-block;}
-  .dash-cta{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
-  .stat-delta{font-size:13px;letter-spacing:-0.02em;font-feature-settings:'lnum' 1,'tnum' 1;}
   .stat-delta.win{color:var(--win);}
   .stat-delta.loss{color:var(--loss);}
   .stat-delta.neutral{color:var(--c-700);}
@@ -122,12 +122,15 @@
   .eyebrow{font-size:17px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.2;}
   .count-line{font-size:17px;color:var(--c-white);letter-spacing:-0.02em;font-weight:400;line-height:1.2;margin-top:0;}
 
-  .filterbar{position:sticky;top:0;z-index:5;background:var(--c-black);border-bottom:0.5px solid var(--c-1000);
+  .filterbar{position:sticky;top:0;z-index:5;background:var(--c-black);border-bottom:0.5px solid var(--c-900);
     display:flex;align-items:center;justify-content:space-between;padding:16px 20px;margin-top:48px;}
   .chips{display:flex;gap:16px;}
   .chip{font-size:13px;letter-spacing:-0.02em;cursor:pointer;color:var(--c-700);
     padding:12px 4px;margin:-12px -4px;transition:color 200ms ease;}
+  .chip{position:relative;}
+  /* active indicator sits on the filter bar's own hairline, turning the strip into a tab control */
   .chip.on{color:var(--c-white);}
+  .chip.on::after{content:'';position:absolute;left:4px;right:4px;bottom:-4px;height:1.5px;background:var(--c-white);}
 
   .footnote{font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;padding:12px 20px 0;}
 
@@ -136,52 +139,24 @@
     padding:16px 0;border-bottom:0.5px solid var(--c-900);cursor:pointer;}
   .row:active{background:var(--c-elev);}
   .row-left{display:contents;}
-  .row-ticker-line{display:flex;align-items:center;gap:7px;}
   .ticker{grid-column:1;grid-row:1;font-size:15px;color:var(--c-400);letter-spacing:-0.02em;font-feature-settings:'lnum' 1;}
   .name{grid-column:1;grid-row:2;font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
   .meta{grid-column:1 / -1;grid-row:3;margin-top:2px;font-size:11px;color:var(--c-800);letter-spacing:-0.02em;}
   .row-right{display:contents;}
-  .alpha{font-size:13px;letter-spacing:-0.02em;font-feature-settings:'lnum' 1,'tnum' 1;}
-  .alpha.win{color:var(--win);}
-  .alpha.loss{color:var(--loss);}
-  .ret{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;font-feature-settings:'lnum' 1,'tnum' 1;}
-  .dollar{font-size:13px;letter-spacing:-0.02em;font-feature-settings:'lnum' 1,'tnum' 1;}
-  .dollar.win{color:var(--win);}
-  .dollar.loss{color:var(--loss);}
-  .vsline{font-size:11px;color:var(--c-400);letter-spacing:-0.02em;font-feature-settings:'lnum' 1,'tnum' 1;margin-top:2px;}
   .vsmuted{color:var(--c-800);margin-left:5px;}
-  .yourpct{font-size:13px;letter-spacing:-0.02em;font-feature-settings:'lnum' 1,'tnum' 1;}
-  .yourpct.win{color:var(--win);}
-  .yourpct.loss{color:var(--loss);}
-  .sppct{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;font-feature-settings:'lnum' 1,'tnum' 1;margin-top:2px;}
-  .dollaralpha{font-size:11px;letter-spacing:-0.02em;font-feature-settings:'lnum' 1,'tnum' 1;margin-top:3px;opacity:0.85;}
-  .dollaralpha.win{color:var(--win);}
-  .dollaralpha.loss{color:var(--loss);}
-  .valueline{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;font-feature-settings:'lnum' 1,'tnum' 1;}
-  .gainline{font-size:13px;letter-spacing:-0.02em;font-feature-settings:'lnum' 1,'tnum' 1;margin-top:2px;}
-  .gainline.win{color:var(--win);}
-  .gainline.loss{color:var(--loss);}
-  .alphaline{font-size:11px;letter-spacing:-0.02em;font-feature-settings:'lnum' 1,'tnum' 1;margin-top:3px;}
-  .alphaline.win{color:var(--win);}
-  .alphaline.loss{color:var(--loss);}
-  .alphapp{opacity:0.7;margin-left:5px;}
   /* V8 .muted suffix: neutral c-700, fixed column so the main number's end point never shifts */
-  .retsuf{display:inline-block;min-width:52px;text-align:right;white-space:nowrap;
-    color:var(--c-400);margin-left:8px;}
   .ppsuf{display:inline-block;min-width:62px;text-align:right;white-space:nowrap;
     margin-left:8px;}
-  .rowvalue{grid-column:2;grid-row:1;text-align:right;font-size:13px;color:var(--c-400);letter-spacing:-0.02em;font-feature-settings:'lnum' 1,'tnum' 1;}
-  .rowreturn{grid-column:2;grid-row:2;text-align:right;font-size:13px;letter-spacing:-0.02em;font-feature-settings:'lnum' 1,'tnum' 1;}
+  .rowvalue{grid-column:2;grid-row:1;text-align:right;font-size:13px;color:var(--c-700);letter-spacing:-0.02em;font-feature-settings:'lnum' 1,'tnum' 1;}
+  .rowreturn{grid-column:2;grid-row:2;text-align:right;font-size:15px;letter-spacing:-0.02em;font-feature-settings:'lnum' 1,'tnum' 1;}
   .rowreturn.win{color:var(--win);}
   .rowreturn.loss{color:var(--loss);}
-  .rowreturn .vstag{display:inline-block;min-width:78px;text-align:right;font-size:13px;letter-spacing:-0.02em;opacity:0.72;margin-left:8px;}
+  .rowreturn .vstag{display:inline-block;min-width:74px;text-align:right;font-size:13px;letter-spacing:-0.02em;margin-left:8px;}
   .dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
   .dot.live{background:var(--c-live);}
   .dot.muted{background:var(--c-800);}
   .chev{grid-column:3;grid-row:1 / 3;align-self:center;color:var(--c-graphite);font-size:13px;margin-left:2px;}
 
-  /* ── prediction / thesis-tracking badges (distinct axis from vs-S&P) ── */
-  .badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;letter-spacing:-0.02em;
     padding:3px 8px;border-radius:20px;width:fit-content;margin-top:5px;}
   .badge .bdot{width:4px;height:4px;border-radius:50%;flex-shrink:0;}
   .badge.hit{color:var(--c-live);border:0.5px solid rgba(48,209,88,0.35);}
@@ -207,60 +182,47 @@
   .badge.inconclusive{color:var(--c-800);border:0.5px solid var(--c-graphite);}
   .badge.inconclusive .bdot{background:var(--c-800);}
 
-  .empty{padding:48px 20px;text-align:center;}
-  .empty .glyph{font-size:17px;color:var(--c-graphite);margin-bottom:10px;}
-  .empty p{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;}
 
   /* ── detail screen ──────────────────────────────────── */
-  .hero-pad{padding:24px 20px 0;}
-  .hero-top{display:flex;align-items:flex-start;justify-content:space-between;}
-  .hero-ticker{font-size:34px;color:var(--c-white);letter-spacing:-0.02em;line-height:1.2;font-weight:400;}
-  .hero-name{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;margin-top:2px;}
-  .status-pill{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--c-700);letter-spacing:-0.02em;
-    background:var(--c-elev);border:0.5px solid var(--c-900);padding:5px 10px 5px 8px;border-radius:20px;white-space:nowrap;}
-  .hero-return{margin-top:16px;}
-  .hero-return .big{font-size:28px;letter-spacing:-0.02em;line-height:1.2;font-feature-settings:'lnum' 1,'tnum' 1;}
-  .hero-return .sub{font-size:13px;color:var(--c-700);margin-left:8px;letter-spacing:-0.02em;}
-  .hero-return .label{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;margin-bottom:4px;display:block;}
+  .hero-pad{padding:0 20px;}
+  .hero-return{margin-top:48px;}
+  .hero-return .big{font-size:17px;letter-spacing:-0.02em;line-height:1.2;font-feature-settings:'lnum' 1,'tnum' 1;}
+  .hero-return .sub{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;}
+  .hero-return .label{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;margin-bottom:8px;display:block;}
 
+  /* title-less fact block: same bracket as the dashboard's Annualized band */
   .kv-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:16px;row-gap:16px;
-    margin:48px 20px 0;}
+    margin:24px 20px 0;padding:24px 0 0;border-top:0.5px solid var(--c-900);}
   .kv .k{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
-  .kv .v{font-size:13px;color:var(--c-white);letter-spacing:-0.02em;margin-top:3px;font-feature-settings:'lnum' 1,'tnum' 1;}
+  .kv .v{font-size:15px;color:var(--c-white);letter-spacing:-0.02em;margin-top:4px;font-feature-settings:'lnum' 1,'tnum' 1;}
 
   .sec{padding:48px 20px 0;display:flex;flex-direction:column;gap:12px;}
-  .sec-title{font-size:17px;color:var(--c-200);letter-spacing:-0.02em;line-height:1.2;margin-bottom:12px;display:block;}
-  .cmp-row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+  .sec-title{font-size:17px;color:var(--c-200);letter-spacing:-0.02em;line-height:1.2;margin-bottom:4px;display:block;}
+  .cmp-row{display:flex;align-items:baseline;justify-content:space-between;gap:24px;
     padding-bottom:12px;border-bottom:0.5px solid var(--c-900);}
   
   .cmp-label{font-size:15px;color:var(--c-700);letter-spacing:-0.02em;}
-  .cmp-val{font-size:13px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;font-feature-settings:'lnum' 1,'tnum' 1;}
-  .cmp-val .pct{display:inline-block;min-width:54px;text-align:right;font-size:13px;color:var(--c-700);letter-spacing:-0.02em;margin-left:6px;}
+  /* descriptive rows: long label, quiet pair */
+  .cmp-row.wide .cmp-label,.cmp-row.wide .cmp-val{font-size:13px;}
+  .cmp-row.wide .cmp-val:not([style]){color:var(--c-400);}
+  .cmp-val{font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;font-feature-settings:'lnum' 1,'tnum' 1;}
+  .cmp-val .pct{display:inline-block;min-width:54px;text-align:right;font-size:13px;color:var(--c-700);letter-spacing:-0.02em;margin-left:8px;}
 
   .chartwrap{padding-bottom:8px;}
   /* legend chip: V8's outlined container, square corners (radius-0) */
   .legend{position:absolute;top:10px;left:64px;z-index:1;display:inline-flex;gap:16px;align-items:center;margin:0;
-    background:var(--c-black);border:0.5px solid var(--c-900);padding:5px 10px;}
-  .legend span{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
+    background:var(--c-black);border:0.5px solid var(--c-900);padding:4px 8px;}
+  .legend span{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
   .legend .ln{display:inline-block;width:20px;height:0;border-top:1.5px solid var(--c-400);}
   .legend .ln.dash{border-top:1.5px dashed var(--c-700);}
   .axis-end{display:flex;justify-content:space-between;font-size:13px;color:var(--c-700);letter-spacing:-0.02em;margin-top:8px;}
   .axis-end b{color:var(--c-200);font-weight:400;}
 
-  .impact-card{background:var(--c-elev);border:0.5px solid var(--c-900);padding:16px;margin-top:6px;}
-  .impact-row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;}
-  .impact-row + .impact-row{margin-top:12px;padding-top:12px;border-top:0.5px solid var(--c-900);}
-  .impact-k{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;}
-  .impact-v{font-size:13px;color:var(--c-400);letter-spacing:-0.02em;}
 
-  .foot-disclosure{padding:0 20px;margin:48px 0 40px;font-size:13px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;}
+  .foot-disclosure{padding:0 20px;margin:48px 0;font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;}
 
-  .call-card{background:var(--c-1000);border:0.5px solid var(--c-900);padding:16px;display:flex;flex-direction:column;gap:10px;}
-  .call-head{display:flex;align-items:center;gap:8px;font-size:15px;color:var(--c-white);letter-spacing:-0.02em;font-weight:400;}
-  .call-head .dot{width:5px;height:5px;}
-  .call-body{font-size:13px;color:var(--c-400);letter-spacing:-0.02em;line-height:1.4;}
-  .pd-why{font-size:11px;letter-spacing:-0.02em;cursor:pointer;color:var(--c-400);border-bottom:0.5px dotted var(--c-800);padding-bottom:1px;width:fit-content;transition:color 120ms ease,border-color 120ms ease;}
-  .pd-why.open{color:var(--c-white);border-bottom-color:var(--c-700);}
+  .pd-why{font-size:11px;letter-spacing:-0.02em;cursor:pointer;color:var(--c-400);text-decoration:underline dotted var(--c-800);text-decoration-thickness:0.5px;text-underline-offset:3px;padding:12px 2px;margin:-12px -2px;width:fit-content;transition:color 120ms ease,border-color 120ms ease;}
+  .pd-why.open{color:var(--c-white);text-decoration-color:var(--c-700);}
   .pd-signal-rationale{font-size:13px;color:var(--c-400);letter-spacing:-0.02em;line-height:1.4;}
   .pd-signal-rationale[hidden]{display:none;}
   .pd-signal-rationale p{margin:0;}
@@ -276,6 +238,7 @@
   <button class="proto-btn active" data-target="decisions">Dashboard</button>
   <button class="proto-btn" data-target="open">Open</button>
   <button class="proto-btn" data-target="closed">Closed</button>
+  <button class="proto-btn" data-target="detail">Detail</button>
 </div>
 
 <div class="proto-stage">
@@ -284,22 +247,18 @@
   <!-- ══════════════ SCREEN 0 · DECISIONS (source dashboard module, real data) ══════════════ -->
   <div class="screen active" id="screen-decisions">
     <header class="app">
-      <span class="back" style="visibility:hidden;">‹</span>
-      <span style="display:flex;align-items:center;gap:6px;">
-        <span class="dot live"></span>
-        <span style="font-size:11px;font-weight:500;color:var(--c-200);letter-spacing:-0.02em;">Market Open · 2:14 PM ET</span>
-        <span class="info-btn" onclick="openInfo('decisions')">i</span>
-      </span>
+      <span class="back" title="Back to the main dashboard">‹</span>
+      <span class="hdr-status"><span class="dot live"></span>Market Open · 2:14 PM ET</span>
       <span class="action">Exit</span>
     </header>
 
-    <div style="margin:24px 20px 0;display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
-      <span style="font-size:17px;letter-spacing:-0.02em;color:var(--c-700);line-height:1.2;">Performance</span>
+    <div class="subhead">
+      <span style="font-size:17px;letter-spacing:-0.02em;color:var(--c-700);line-height:1.2;">Performance<span class="info-btn" onclick="openInfo('decisions')">i</span></span>
       <span style="font-size:17px;letter-spacing:-0.02em;color:var(--c-white);line-height:1.2;">Active · Self-Directed</span>
       <span style="font-size:11px;letter-spacing:-0.02em;color:var(--c-700);">As of Aug 10, 2026</span>
     </div>
 
-    <section style="margin-top:32px;padding:0 20px;display:flex;flex-direction:column;gap:8px;">
+    <section style="margin-top:48px;padding:0 20px;display:flex;flex-direction:column;gap:8px;">
       <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;">Tracked since Mar 14, 2023</span>
       <div>
         <span style="font-size:17px;color:var(--c-white);letter-spacing:-0.02em;font-weight:400;line-height:1.2;font-feature-settings:'lnum' 1,'tnum' 1;">3 years 4 months</span>
@@ -307,14 +266,14 @@
     </section>
 
     <section style="margin:24px 20px 0;padding:24px 0 0;border-top:0.5px solid var(--c-900);display:flex;flex-direction:column;gap:24px;">
-      <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;">Annualized Since Inception · Preliminary</span>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:8px;row-gap:6px;">
+      <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;">Since Inception · Preliminary</span>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:8px;row-gap:8px;">
         <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;text-align:left;">Account</span>
         <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;text-align:center;">Alpha</span>
         <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;text-align:right;">S&amp;P</span>
-        <span style="font-size:17px;color:var(--c-white);letter-spacing:-0.02em;font-weight:400;line-height:1.2;text-align:left;">+18.2%</span>
+        <span style="font-size:17px;color:var(--c-white);letter-spacing:-0.02em;font-weight:400;line-height:1.2;text-align:left;">+39.4%</span>
         <span style="font-size:17px;color:var(--c-urgent-muted);letter-spacing:-0.02em;line-height:1.2;text-align:center;align-self:end;padding-bottom:2px;"><span class="tw">−5.8&nbsp;pp</span></span>
-        <span style="font-size:17px;color:var(--c-white);letter-spacing:-0.02em;font-weight:400;line-height:1.2;text-align:right;">+24.0%</span>
+        <span style="font-size:17px;color:var(--c-white);letter-spacing:-0.02em;font-weight:400;line-height:1.2;text-align:right;">+45.2%</span>
       </div>
     </section>
 
@@ -337,15 +296,15 @@
       <span class="sec-title">Performance vs S&amp;P</span>
       <div class="cmp-row">
         <span class="cmp-label">Account</span>
-        <span class="cmp-val">+8,420.50<span class="pct">+18.2%</span></span>
+        <span class="cmp-val">+16,142.02<span class="pct">+39.4%</span></span>
       </div>
       <div class="cmp-row">
         <span class="cmp-label">S&amp;P Benchmark</span>
-        <span class="cmp-val">+11,140.20<span class="pct">+24.0%</span></span>
+        <span class="cmp-val">+18,515.92<span class="pct">+45.2%</span></span>
       </div>
       <div class="cmp-row">
         <span class="cmp-label">Alpha</span>
-        <span class="cmp-val" style="color:var(--c-urgent-muted);">−2,719.70<span class="pct" style="color:var(--c-urgent-muted);">−5.8&nbsp;pp</span></span>
+        <span class="cmp-val" style="color:var(--c-urgent-muted);">−2,373.90<span class="pct" style="color:var(--c-urgent-muted);">−5.8&nbsp;pp</span></span>
       </div>
       <p style="font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">Total return, dividends reinvested, net of fees. S&amp;P 500 Benchmark applies the same deposit and withdrawal timing as the account, not a static index price return.</p>
 
@@ -357,14 +316,14 @@
             <span><span class="ln dash"></span>S&amp;P</span>
           </div>
           <svg style="width:100%;height:180px;display:block;overflow:visible;" viewBox="-40 0 360 180" preserveAspectRatio="none" aria-hidden="true">
-            <text x="-40" y="16" style="fill:var(--c-700)" font-size="11" text-anchor="start">$60k</text>
-            <text x="-40" y="96" style="fill:var(--c-700)" font-size="11" text-anchor="start">$30k</text>
-            <text x="-40" y="176" style="fill:var(--c-700)" font-size="11" text-anchor="start">$0</text>
+            <text x="-40" y="16" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">$60k</text>
+            <text x="-40" y="96" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">$30k</text>
+            <text x="-40" y="176" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">$0</text>
             <line x1="0" y1="92" x2="320" y2="92" style="stroke:var(--c-1000)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
             <line x1="0" y1="12" x2="0" y2="172" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
             <line x1="0" y1="172" x2="320" y2="172" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
-            <path d="M0,132 L70,110 L140,84 L210,58 L280,35 L320,22" fill="none" style="stroke:var(--c-700)" stroke-width="1.25" stroke-dasharray="4 4" vector-effect="non-scaling-stroke"/>
-            <path d="M0,132 L70,108 L140,81 L210,60 L280,40 L320,30" fill="none" style="stroke:var(--c-400)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+            <path d="M0,136 L47,110 L86,77 L156,48 L211,56 L273,28 L320,17" fill="none" style="stroke:var(--c-700)" stroke-width="1.25" stroke-dasharray="4 4" vector-effect="non-scaling-stroke"/>
+            <path d="M0,136 L47,112 L86,80 L156,52 L211,60 L273,33 L320,24" fill="none" style="stroke:var(--c-400)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
           </svg>
         </div>
         <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--c-700);letter-spacing:-0.02em;margin-top:8px;padding-left:11%;">
@@ -372,7 +331,7 @@
         </div>
         <div class="axis-end">
           <span>Start <b>$15.0k</b></span>
-          <span style="text-align:right;">Account <b>$53.4k</b> · S&amp;P <span style="color:var(--c-700);">$56.1k</span></span>
+          <span style="text-align:right;">Account <b>$57.1k</b> · S&amp;P <span style="color:var(--c-700);">$59.4k</span></span>
         </div>
       </div>
     </section>
@@ -380,64 +339,64 @@
     <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
       <span class="sec-title">External Cash Flows</span>
       <div class="dec-row">
-        <span class="dec-tap" style="font-size:15px;color:var(--c-400);border-bottom:0.5px dotted var(--c-800);" onclick="toggleDecPreview('cashflows')">All Flows</span>
-        <span style="font-size:13px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;font-feature-settings:'lnum' 1,'tnum' 1;">6</span>
+        <span class="dec-tap" style="font-size:15px;color:var(--c-400);text-decoration:underline dotted var(--c-800);text-decoration-thickness:0.5px;text-underline-offset:3px;" onclick="toggleDecPreview('cashflows',this)">All Flows</span>
+        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;font-feature-settings:'lnum' 1,'tnum' 1;">6</span>
       </div>
       <div class="dec-preview" id="dec-preview-cashflows">
         <div class="cf-table">
           <div class="cf-head"><span>Date</span><span>Type</span><span>Amount</span><span>VFV Close</span></div>
-          <div class="cf-row"><span class="cf-date">Feb 4, 2026</span><span class="cf-type">Deposit</span><span class="cf-amt">7,500.00</span><span class="cf-px">138.45</span></div>
+          <div class="cf-row"><span class="cf-date">Feb 4, 2026</span><span class="cf-type">Deposit</span><span class="cf-amt">6,000.00</span><span class="cf-px">138.45</span></div>
           <div class="cf-row"><span class="cf-date">Jun 17, 2025</span><span class="cf-type">Withdrawal</span><span class="cf-amt">−4,000.00</span><span class="cf-px">126.40</span></div>
-          <div class="cf-row"><span class="cf-date">Nov 5, 2024</span><span class="cf-type">Deposit</span><span class="cf-amt">8,500.00</span><span class="cf-px">118.60</span></div>
-          <div class="cf-row"><span class="cf-date">Feb 20, 2024</span><span class="cf-type">Transfer In</span><span class="cf-amt">10,000.00</span><span class="cf-px">101.20</span></div>
+          <div class="cf-row"><span class="cf-date">Nov 5, 2024</span><span class="cf-type">Deposit</span><span class="cf-amt">7,000.00</span><span class="cf-px">118.60</span></div>
+          <div class="cf-row"><span class="cf-date">Feb 20, 2024</span><span class="cf-type">Transfer In</span><span class="cf-amt">9,000.00</span><span class="cf-px">101.20</span></div>
           <div class="cf-row"><span class="cf-date">Sep 8, 2023</span><span class="cf-type">Deposit</span><span class="cf-amt">8,000.00</span><span class="cf-px">88.35</span></div>
           <div class="cf-row"><span class="cf-date">Mar 14, 2023</span><span class="cf-type">Deposit</span><span class="cf-amt">15,000.00</span><span class="cf-px">82.10</span></div>
         </div>
       </div>
       <div class="dec-row">
         <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Net Deposits</span>
-        <span style="font-size:13px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;font-feature-settings:'lnum' 1,'tnum' 1;">45,000.00</span>
+        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;font-feature-settings:'lnum' 1,'tnum' 1;">41,000.00</span>
       </div>
     </section>
 
-    <section class="dash-sec">
+    <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
       <span class="sec-title">Cash Drag</span>
       <div class="dec-row">
         <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Uninvested cash cost</span>
-        <span style="font-size:13px;color:var(--c-urgent-muted);letter-spacing:-0.02em;text-align:right;font-feature-settings:'lnum' 1,'tnum' 1;">−1,840.00</span>
+        <span style="font-size:15px;color:var(--c-urgent-muted);letter-spacing:-0.02em;text-align:right;font-feature-settings:'lnum' 1,'tnum' 1;">−4,128.00</span>
       </div>
-      <p style="font-size:13px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;margin-top:6px;">Avg 16% cash. S&amp;P 500 returned +24.0% over the same window.</p>
+      <p style="font-size:13px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;margin-top:0;">Avg 16% cash. S&amp;P 500 returned +45.2% over the same window.</p>
     </section>
 
     <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
       <span class="sec-title">Timing &amp; Risk</span>
       <div class="dec-row">
         <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Time-Weighted Return (TWR)</span>
-        <span class="stat-delta win" style="font-size:13px;text-align:right;">+18.2%</span>
+        <span class="stat-delta" style="text-align:right;"><span class="statnum">+39.4%</span></span>
       </div>
       <div class="dec-row">
         <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Money-Weighted Return (MWR)</span>
-        <span class="stat-delta win" style="font-size:13px;text-align:right;">+16.8%</span>
+        <span class="stat-delta" style="text-align:right;"><span class="statnum">+35.1%</span></span>
       </div>
       <div class="dec-row">
-        <span style="font-size:13px;color:var(--c-700);letter-spacing:-0.02em;">TWR − MWR Gap (timing skill)</span>
-        <span class="stat-delta loss" style="text-align:right;">−1.4&nbsp;pp</span>
+        <span style="font-size:15px;color:var(--c-800);letter-spacing:-0.02em;">TWR − MWR Gap (timing skill)</span>
+        <span class="stat-delta loss sub" style="text-align:right;"><span class="statnum">−4.3&nbsp;pp</span></span>
       </div>
       <div class="dec-row">
         <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Max Drawdown</span>
-        <span class="stat-delta loss" style="font-size:13px;text-align:right;"><span class="trend down">▼</span>−18.4%</span>
+        <span class="stat-delta loss" style="text-align:right;"><span class="trend down">▼</span><span class="statnum">−18.4%</span></span>
       </div>
       <div class="dec-row">
-        <span style="font-size:13px;color:var(--c-700);letter-spacing:-0.02em;">Max Drawdown, S&amp;P same window</span>
-        <span class="stat-delta neutral" style="text-align:right;">−12.1%</span>
+        <span style="font-size:15px;color:var(--c-800);letter-spacing:-0.02em;">Max Drawdown, S&amp;P same window</span>
+        <span class="stat-delta neutral sub" style="text-align:right;"><span class="statnum">−12.1%</span></span>
       </div>
       <div class="dec-row">
         <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Volatility (12M)</span>
-        <span class="stat-delta neutral" style="font-size:13px;text-align:right;"><span class="trend neutral">▲</span>17.2%</span>
+        <span class="stat-delta" style="text-align:right;"><span class="trend plain">▲</span><span class="statnum">17.2%</span></span>
       </div>
       <div class="dec-row">
-        <span style="font-size:13px;color:var(--c-700);letter-spacing:-0.02em;">Volatility (12M), S&amp;P</span>
-        <span class="stat-delta neutral" style="text-align:right;">15.4%</span>
+        <span style="font-size:15px;color:var(--c-800);letter-spacing:-0.02em;">Volatility (12M), S&amp;P</span>
+        <span class="stat-delta neutral sub" style="text-align:right;"><span class="statnum">15.4%</span></span>
       </div>
       <p style="font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin-top:2px;">Arrow means "vs. the S&amp;P figure directly below" and is shown only where that comparison exists on screen. TWR, MWR, and Gap don't have one here, so they're colored but arrow-free. Color is a separate verdict from direction: a deeper drawdown than S&amp;P is unfavorable (red); higher volatility than S&amp;P isn't inherently good or bad, so it stays neutral grey even though the arrow points up.</p>
     </section>
@@ -445,17 +404,17 @@
     <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
       <span class="sec-title">Decisions</span>
       <div class="dec-row">
-        <span style="font-size:15px;color:var(--c-400);letter-spacing:-0.02em;">Total Positions</span>
-        <span style="font-size:13px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;">20</span>
+        <span style="font-size:15px;color:var(--c-700);letter-spacing:-0.02em;">Total Positions</span>
+        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;">20</span>
       </div>
 
       <div class="dec-block">
         <div class="dec-row" style="border-bottom:none;padding-bottom:0;">
-          <span style="font-size:15px;color:var(--c-400);letter-spacing:-0.02em;">Open</span>
-          <span style="font-size:13px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;">11</span>
+          <span style="font-size:15px;color:var(--c-700);letter-spacing:-0.02em;">Open</span>
+          <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;">11</span>
         </div>
         <div class="dec-sub">
-          <span class="dec-tap" style="font-size:13px;color:var(--c-700);border-bottom:0.5px dotted var(--c-800);" onclick="toggleDecPreview('profOpen')">Profitable / Unprofitable</span>
+          <span class="dec-tap" style="font-size:13px;color:var(--c-700);text-decoration:underline dotted var(--c-800);text-decoration-thickness:0.5px;text-underline-offset:3px;" onclick="toggleDecPreview('profOpen',this)">Profitable / Unprofitable</span>
           <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">9 / 2</span>
         </div>
         <div class="dec-preview" id="dec-preview-profOpen">
@@ -474,7 +433,7 @@
         </div>
 
         <div class="dec-sub">
-          <span class="dec-tap" style="color:var(--c-400);border-bottom:0.5px dotted var(--c-800);" onclick="toggleDecPreview('openBeating')">Beating S&amp;P</span>
+          <span class="dec-tap" style="color:var(--c-400);text-decoration:underline dotted var(--c-800);text-decoration-thickness:0.5px;text-underline-offset:3px;" onclick="toggleDecPreview('openBeating',this)">Beating S&amp;P</span>
           <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">6</span>
         </div>
         <div class="dec-preview" id="dec-preview-openBeating">
@@ -487,7 +446,7 @@
         </div>
 
         <div class="dec-sub">
-          <span class="dec-tap" style="color:var(--c-400);border-bottom:0.5px dotted var(--c-800);" onclick="toggleDecPreview('openTrailing')">Trailing S&amp;P</span>
+          <span class="dec-tap" style="color:var(--c-400);text-decoration:underline dotted var(--c-800);text-decoration-thickness:0.5px;text-underline-offset:3px;" onclick="toggleDecPreview('openTrailing',this)">Trailing S&amp;P</span>
           <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">5</span>
         </div>
         <div class="dec-preview" id="dec-preview-openTrailing">
@@ -502,11 +461,11 @@
 
       <div class="dec-block">
         <div class="dec-row" style="border-bottom:none;padding-bottom:0;">
-          <span style="font-size:15px;color:var(--c-400);letter-spacing:-0.02em;">Closed</span>
-          <span style="font-size:13px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;">9</span>
+          <span style="font-size:15px;color:var(--c-700);letter-spacing:-0.02em;">Closed</span>
+          <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;">9</span>
         </div>
         <div class="dec-sub">
-          <span class="dec-tap" style="font-size:13px;color:var(--c-700);border-bottom:0.5px dotted var(--c-800);" onclick="toggleDecPreview('profClosed')">Profitable / Unprofitable</span>
+          <span class="dec-tap" style="font-size:13px;color:var(--c-700);text-decoration:underline dotted var(--c-800);text-decoration-thickness:0.5px;text-underline-offset:3px;" onclick="toggleDecPreview('profClosed',this)">Profitable / Unprofitable</span>
           <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">7 / 2</span>
         </div>
         <div class="dec-preview" id="dec-preview-profClosed">
@@ -523,7 +482,7 @@
         </div>
 
         <div class="dec-sub">
-          <span class="dec-tap" style="color:var(--c-400);border-bottom:0.5px dotted var(--c-800);" onclick="toggleDecPreview('winners')">Beat S&amp;P</span>
+          <span class="dec-tap" style="color:var(--c-400);text-decoration:underline dotted var(--c-800);text-decoration-thickness:0.5px;text-underline-offset:3px;" onclick="toggleDecPreview('winners',this)">Beat S&amp;P</span>
           <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">5</span>
         </div>
         <div class="dec-preview" id="dec-preview-winners">
@@ -535,7 +494,7 @@
         </div>
 
         <div class="dec-sub">
-          <span class="dec-tap" style="color:var(--c-400);border-bottom:0.5px dotted var(--c-800);" onclick="toggleDecPreview('losers')">Trailed</span>
+          <span class="dec-tap" style="color:var(--c-400);text-decoration:underline dotted var(--c-800);text-decoration-thickness:0.5px;text-underline-offset:3px;" onclick="toggleDecPreview('losers',this)">Trailed</span>
           <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">4</span>
         </div>
         <div class="dec-preview" id="dec-preview-losers">
@@ -549,46 +508,42 @@
 
       <div class="dec-row">
         <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Win Rate vs S&amp;P (Closed)</span>
-        <span style="font-size:13px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;">55.6%</span>
+        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;">55.6%</span>
       </div>
       <div class="dec-row">
         <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Avg Alpha-Win</span>
-        <span style="font-size:13px;color:var(--c-live-muted);letter-spacing:-0.02em;text-align:right;">+10.2&nbsp;pp</span>
+        <span style="font-size:15px;color:var(--c-live-muted);letter-spacing:-0.02em;text-align:right;">+10.2&nbsp;pp</span>
       </div>
       <div class="dec-row">
         <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Avg Alpha-Loss</span>
-        <span style="font-size:13px;color:var(--c-urgent-muted);letter-spacing:-0.02em;text-align:right;">−8.5&nbsp;pp</span>
+        <span style="font-size:15px;color:var(--c-urgent-muted);letter-spacing:-0.02em;text-align:right;">−8.5&nbsp;pp</span>
       </div>
     </section>
 
-    <section class="dash-sec" style="padding-bottom:32px;">
-      <span class="sec-title">Top Contributors</span>
+    <section class="dash-sec" style="padding-bottom:32px;display:flex;flex-direction:column;gap:12px;">
+      <span class="sec-title">Top Contributors (Closed)</span>
       <div class="cmp-row">
         <span class="cmp-label">NVDA</span>
-        <span class="cmp-val" style="color:var(--c-live-muted);">+3,840.00<span class="pct">+15.4%</span></span>
+        <span class="cmp-val" style="color:var(--c-live-muted);">+3,485.00<span class="pct" style="color:var(--c-live-muted);">+41.0%</span></span>
       </div>
       <div class="cmp-row">
         <span class="cmp-label">COST</span>
-        <span class="cmp-val" style="color:var(--c-live-muted);">+1,860.00<span class="pct">+7.9%</span></span>
+        <span class="cmp-val" style="color:var(--c-live-muted);">+1,537.60<span class="pct" style="color:var(--c-live-muted);">+24.8%</span></span>
       </div>
       <div class="cmp-row">
-        <span class="cmp-label">LLY</span>
-        <span class="cmp-val" style="color:var(--c-live-muted);">+1,420.00<span class="pct">+6.1%</span></span>
+        <span class="cmp-label">MSFT</span>
+        <span class="cmp-val" style="color:var(--c-live-muted);">+1,152.00<span class="pct" style="color:var(--c-live-muted);">+16.0%</span></span>
       </div>
-      <p style="font-size:17px;color:var(--c-200);letter-spacing:-0.02em;line-height:1.2;margin:32px 0 12px;">Top Detractors</p>
+      <p style="font-size:17px;color:var(--c-200);letter-spacing:-0.02em;line-height:1.2;margin:48px 0 16px;">Top Detractors (Closed)</p>
       <div class="cmp-row">
-        <span class="cmp-label">META</span>
-        <span class="cmp-val" style="color:var(--c-urgent-muted);">−2,180.00<span class="pct">−8.7%</span></span>
+        <span class="cmp-label">BA</span>
+        <span class="cmp-val" style="color:var(--c-urgent-muted);">−515.20<span class="pct" style="color:var(--c-urgent-muted);">−9.2%</span></span>
       </div>
       <div class="cmp-row">
         <span class="cmp-label">DIS</span>
-        <span class="cmp-val" style="color:var(--c-urgent-muted);">−1,640.00<span class="pct">−6.9%</span></span>
+        <span class="cmp-val" style="color:var(--c-urgent-muted);">−244.80<span class="pct" style="color:var(--c-urgent-muted);">−3.6%</span></span>
       </div>
-      <div class="cmp-row">
-        <span class="cmp-label">BA</span>
-        <span class="cmp-val" style="color:var(--c-urgent-muted);">−1,120.00<span class="pct">−4.6%</span></span>
-      </div>
-      <p style="font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin-top:16px;">"All" period · dividends reinvested, net of fees. Figures are preliminary and unaudited.</p>
+      <p style="font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin-top:16px;">Realised results, dividends reinvested, net of fees. Figures are preliminary and unaudited.</p>
     </section>
   </div>
 
@@ -596,31 +551,31 @@
   <div class="screen" id="screen-open">
     <header class="app">
       <span class="back" onclick="goTo('decisions')">‹</span>
-      <span class="title-group"><span class="title">Open Positions</span><span class="info-btn" onclick="openInfo('open')">i</span></span>
-      <span class="action">&nbsp;</span>
+      <span class="hdr-status"><span class="dot live"></span>Market Open · 2:14 PM ET</span>
+      <span class="action">Exit</span>
     </header>
 
     <div class="subhead">
-      <span class="eyebrow">Decisions · Open</span>
-      <div class="count-line">11 positions</div>
+      <span class="eyebrow">Open Positions<span class="info-btn" onclick="openInfo('open')">i</span></span>
+      <span class="count-line">11 positions</span>
     </div>
 
     <div class="filterbar">
       <div class="chips">
-        <span class="chip on">All</span>
-        <span class="chip">Beating 6</span>
-        <span class="chip">Trailing 5</span>
-        <span class="chip">Profitable 9</span>
-        <span class="chip">Unprofitable 2</span>
+        <span class="chip on" onclick="filterList('open','all',this)">All</span>
+        <span class="chip" onclick="filterList('open','beating',this)">Beating 6</span>
+        <span class="chip" onclick="filterList('open','trailing',this)">Trailing 5</span>
+        <span class="chip" onclick="filterList('open','profit',this)">Profitable 9</span>
+        <span class="chip" onclick="filterList('open','loss',this)">Unprofitable 2</span>
       </div>
     </div>
     <div style="padding:24px 20px 0;">
-      <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;">Beating S&amp;P / Trailing since entry</span>
+      <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;">Beating S&amp;P / Trailing since entry</span>
     </div>
 
     <div class="list">
       <!-- Beating -->
-      <div class="row">
+      <div class="row" onclick="positionTap('NVDA','open')">
         <div class="row-left">
           <span class="ticker">NVDA</span>
           <span class="name">NVIDIA Corp</span>
@@ -632,7 +587,7 @@
         </div>
         <span class="chev">›</span>
       </div>
-      <div class="row">
+      <div class="row" onclick="positionTap('MSFT','open')">
         <div class="row-left">
           <span class="ticker">MSFT</span>
           <span class="name">Microsoft Corp</span>
@@ -644,7 +599,7 @@
         </div>
         <span class="chev">›</span>
       </div>
-      <div class="row">
+      <div class="row" onclick="positionTap('COST','open')">
         <div class="row-left">
           <span class="ticker">COST</span>
           <span class="name">Costco Wholesale</span>
@@ -656,7 +611,7 @@
         </div>
         <span class="chev">›</span>
       </div>
-      <div class="row">
+      <div class="row" onclick="positionTap('LLY','open')">
         <div class="row-left">
           <span class="ticker">LLY</span>
           <span class="name">Eli Lilly and Co</span>
@@ -668,7 +623,7 @@
         </div>
         <span class="chev">›</span>
       </div>
-      <div class="row">
+      <div class="row" onclick="positionTap('AAPL','open')">
         <div class="row-left">
           <span class="ticker">AAPL</span>
           <span class="name">Apple Inc</span>
@@ -680,7 +635,7 @@
         </div>
         <span class="chev">›</span>
       </div>
-      <div class="row">
+      <div class="row" onclick="positionTap('V','open')">
         <div class="row-left">
           <span class="ticker">V</span>
           <span class="name">Visa Inc</span>
@@ -693,7 +648,7 @@
         <span class="chev">›</span>
       </div>
       <!-- Trailing -->
-      <div class="row">
+      <div class="row" onclick="positionTap('TSLA','open')">
         <div class="row-left">
           <span class="ticker">TSLA</span>
           <span class="name">Tesla Inc</span>
@@ -705,7 +660,7 @@
         </div>
         <span class="chev">›</span>
       </div>
-      <div class="row">
+      <div class="row" onclick="positionTap('META','open')">
         <div class="row-left">
           <span class="ticker">META</span>
           <span class="name">Meta Platforms Inc</span>
@@ -717,7 +672,7 @@
         </div>
         <span class="chev">›</span>
       </div>
-      <div class="row">
+      <div class="row" onclick="positionTap('DIS','open')">
         <div class="row-left">
           <span class="ticker">DIS</span>
           <span class="name">Walt Disney Co</span>
@@ -729,7 +684,7 @@
         </div>
         <span class="chev">›</span>
       </div>
-      <div class="row">
+      <div class="row" onclick="positionTap('BA','open')">
         <div class="row-left">
           <span class="ticker">BA</span>
           <span class="name">Boeing Co</span>
@@ -741,7 +696,7 @@
         </div>
         <span class="chev">›</span>
       </div>
-      <div class="row">
+      <div class="row" onclick="positionTap('NFLX','open')">
         <div class="row-left">
           <span class="ticker">NFLX</span>
           <span class="name">Netflix Inc</span>
@@ -755,7 +710,7 @@
       </div>
     </div>
 
-    <p class="footnote" style="padding-bottom:6px;">Top line is what the position is worth today. Bottom is your return next to S&amp;P's return over the identical window, both real numbers, so you never have to trust a pre-computed gap.</p>
+    <p class="footnote" style="padding-bottom:8px;">Top line is what the position is worth today. Bottom is your return next to S&amp;P's return over the identical window, both real numbers, so you never have to trust a pre-computed gap.</p>
     <p class="footnote" style="padding-bottom:32px;">A position can be red here even with a positive return, if the S&amp;P did better over the same window. The comparison is to the index, not to zero. Tap through for the full dollar breakdown, including raw gain and dollar alpha.</p>
   </div>
 
@@ -763,22 +718,22 @@
   <div class="screen" id="screen-closed">
     <header class="app">
       <span class="back" onclick="goTo('decisions')">‹</span>
-      <span class="title-group"><span class="title">Closed Positions</span><span class="info-btn" onclick="openInfo('closed')">i</span></span>
-      <span class="action">&nbsp;</span>
+      <span class="hdr-status"><span class="dot live"></span>Market Open · 2:14 PM ET</span>
+      <span class="action">Exit</span>
     </header>
 
     <div class="subhead">
-      <span class="eyebrow">Decisions · Closed</span>
-      <div class="count-line">9 positions</div>
+      <span class="eyebrow">Closed Positions<span class="info-btn" onclick="openInfo('closed')">i</span></span>
+      <span class="count-line">9 positions</span>
     </div>
 
     <div class="filterbar">
       <div class="chips">
-        <span class="chip on">All</span>
-        <span class="chip">Beat S&amp;P 5</span>
-        <span class="chip">Trailed 4</span>
-        <span class="chip">Profitable 7</span>
-        <span class="chip">Unprofitable 2</span>
+        <span class="chip on" onclick="filterList('closed','all',this)">All</span>
+        <span class="chip" onclick="filterList('closed','beating',this)">Beat 5</span>
+        <span class="chip" onclick="filterList('closed','trailing',this)">Trailed 4</span>
+        <span class="chip" onclick="filterList('closed','profit',this)">Profitable 7</span>
+        <span class="chip" onclick="filterList('closed','loss',this)">Unprofitable 2</span>
       </div>
     </div>
     <div style="padding:24px 20px 0;">
@@ -786,11 +741,11 @@
     </div>
 
     <div class="list">
-      <div class="row">
+      <div class="row" onclick="positionTap('NVDA','closed')">
         <div class="row-left">
           <span class="ticker">NVDA</span>
           <span class="name">NVIDIA Corp</span>
-          <span class="meta">Closed Jul 2, 2026 · held 226d</span>
+          <span class="meta">Closed Jul 2, 2026 · held 236d</span>
         </div>
         <div class="row-right">
           <span class="rowvalue">Exit value $11,985.00</span>
@@ -798,7 +753,7 @@
         </div>
         <span class="chev">›</span>
       </div>
-      <div class="row">
+      <div class="row" onclick="positionTap('COST','closed')">
         <div class="row-left">
           <span class="ticker">COST</span>
           <span class="name">Costco Wholesale</span>
@@ -810,7 +765,7 @@
         </div>
         <span class="chev">›</span>
       </div>
-      <div class="row">
+      <div class="row" onclick="positionTap('LLY','closed')">
         <div class="row-left">
           <span class="ticker">LLY</span>
           <span class="name">Eli Lilly and Co</span>
@@ -822,7 +777,7 @@
         </div>
         <span class="chev">›</span>
       </div>
-      <div class="row">
+      <div class="row" onclick="positionTap('MSFT','closed')">
         <div class="row-left">
           <span class="ticker">MSFT</span>
           <span class="name">Microsoft Corp</span>
@@ -834,7 +789,7 @@
         </div>
         <span class="chev">›</span>
       </div>
-      <div class="row">
+      <div class="row" onclick="positionTap('V','closed')">
         <div class="row-left">
           <span class="ticker">V</span>
           <span class="name">Visa Inc</span>
@@ -846,7 +801,7 @@
         </div>
         <span class="chev">›</span>
       </div>
-      <div class="row">
+      <div class="row" onclick="positionTap('BA','closed')">
         <div class="row-left">
           <span class="ticker">BA</span>
           <span class="name">Boeing Co</span>
@@ -858,7 +813,7 @@
         </div>
         <span class="chev">›</span>
       </div>
-      <div class="row">
+      <div class="row" onclick="positionTap('DIS','closed')">
         <div class="row-left">
           <span class="ticker">DIS</span>
           <span class="name">Walt Disney Co</span>
@@ -870,7 +825,7 @@
         </div>
         <span class="chev">›</span>
       </div>
-      <div class="row">
+      <div class="row" onclick="positionTap('META','closed')">
         <div class="row-left">
           <span class="ticker">META</span>
           <span class="name">Meta Platforms Inc</span>
@@ -882,7 +837,7 @@
         </div>
         <span class="chev">›</span>
       </div>
-      <div class="row">
+      <div class="row" onclick="positionTap('TSLA','closed')">
         <div class="row-left">
           <span class="ticker">TSLA</span>
           <span class="name">Tesla Inc</span>
@@ -896,18 +851,118 @@
       </div>
     </div>
 
-    <p class="footnote" style="padding-bottom:6px;">Profitable ≠ beat the benchmark. A position can make money and still trail S&amp;P.</p>
-    <p class="footnote" style="padding-bottom:6px;">Top line is the position's final value at close. Bottom is your return next to S&amp;P's return over the identical window, both real numbers, so you never have to trust a pre-computed gap.</p>
+    <p class="footnote" style="padding-bottom:8px;">Profitable ≠ beat the benchmark. A position can make money and still trail S&amp;P.</p>
+    <p class="footnote" style="padding-bottom:8px;">Top line is the position's final value at close. Bottom is your return next to S&amp;P's return over the identical window, both real numbers, so you never have to trust a pre-computed gap.</p>
     <p class="footnote" style="padding-bottom:32px;">META and TSLA both made money but are colored red here. Both trailed the S&amp;P over their holding window. Tap through for the full dollar breakdown, including raw gain and dollar alpha.</p>
   </div>
 
+
+  <!-- ══════════════ SCREEN 3 · POSITION DETAIL ══════════════ -->
+  <div class="screen" id="screen-detail">
+    <header class="app">
+      <span class="back" onclick="goTo(detailOrigin)">‹</span>
+      <span class="hdr-status"><span class="dot live"></span>Market Open · 2:14 PM ET</span>
+      <span class="action">Exit</span>
+    </header>
+
+    <div class="subhead">
+      <span class="eyebrow">Position<span class="info-btn" onclick="openInfo('detail')">i</span></span>
+      <span class="count-line">NVDA <span style="color:var(--c-700);">· NVIDIA Corp</span></span>
+      <span style="font-size:11px;letter-spacing:-0.02em;color:var(--c-700);">Closed · Beat S&amp;P</span>
+    </div>
+
+    <div class="hero-pad">
+      <div class="hero-return">
+        <span class="label">Total Gain</span>
+        <span class="big" style="color:var(--c-live-muted);">+$3,485.00</span>
+        <span class="sub" style="display:block;margin:8px 0 0;">+41.0% return · value $11,985.00</span>
+      </div>
+    </div>
+
+    <div class="kv-grid">
+      <div class="kv"><div class="k">Entered</div><div class="v">Nov 8, 2025</div></div>
+      <div class="kv"><div class="k">Closed</div><div class="v">Jul 2, 2026</div></div>
+      <div class="kv"><div class="k">Entry Price</div><div class="v">$138.42</div></div>
+      <div class="kv"><div class="k">Exit Price</div><div class="v">$195.17</div></div>
+      <div class="kv"><div class="k">Held</div><div class="v">236 days</div></div>
+      <div class="kv"><div class="k">Entry Weight</div><div class="v">15.9% of portfolio</div></div>
+    </div>
+
+    <div class="sec">
+      <span class="sec-title">Performance vs S&amp;P</span>
+      <div class="cmp-row">
+        <span class="cmp-label">Position</span>
+        <span class="cmp-val">$3,485.00<span class="pct">+41.0%</span></span>
+      </div>
+      <div class="cmp-row">
+        <span class="cmp-label">S&amp;P 500 (same window)</span>
+        <span class="cmp-val">$1,538.50<span class="pct">+18.1%</span></span>
+      </div>
+      <div class="cmp-row">
+        <span class="cmp-label">Alpha</span>
+        <span class="cmp-val" style="color:var(--c-live-muted);">$1,946.50<span class="pct" style="color:var(--c-live-muted);">+22.9&nbsp;pp</span></span>
+      </div>
+      <div class="cmp-row">
+        <span class="cmp-label">Max Alpha (during hold)</span>
+        <span class="cmp-val" style="color:var(--c-live-muted);">$2,310.00<span class="pct" style="color:var(--c-live-muted);">+27.2&nbsp;pp</span></span>
+      </div>
+    </div>
+
+    <div class="sec">
+      <span class="sec-title">Position vs Benchmark</span>
+      <div class="chartwrap">
+        <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;display:block;margin-bottom:8px;">NVDA vs. S&amp;P 500, % return since entry</span>
+        <div style="position:relative;">
+        <div class="legend">
+          <span><span class="ln"></span>NVDA</span>
+          <span><span class="ln dash"></span>S&amp;P 500</span>
+        </div>
+        <svg style="width:100%;height:180px;display:block;overflow:visible;" viewBox="-40 0 360 180" preserveAspectRatio="none" aria-hidden="true">
+          <text x="-40" y="16" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">+40%</text>
+          <text x="-40" y="96" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">+20%</text>
+          <text x="-40" y="176" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">0%</text>
+          <line x1="0" y1="92" x2="320" y2="92" style="stroke:var(--c-1000)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
+          <line x1="0" y1="12" x2="0" y2="176" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
+          <line x1="0" y1="176" x2="320" y2="176" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
+          <path d="M0,176 L45,152 L90,128 L135,140 L180,88 L225,56 L270,32 L320,12" fill="none" style="stroke:var(--c-400)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+          <path d="M0,176 L45,168 L90,160 L135,164 L180,152 L225,146 L270,140 L320,104" fill="none" style="stroke:var(--c-700)" stroke-width="1.25" stroke-dasharray="4 4" vector-effect="non-scaling-stroke"/>
+        </svg>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--c-700);letter-spacing:-0.02em;margin-top:8px;padding-left:11%;">
+          <span>Nov 25</span><span>Jan 26</span><span>Apr 26</span><span>Jul 26</span>
+        </div>
+        <div class="axis-end">
+          <span>Entry <b>Nov 8</b></span>
+          <span style="text-align:right;">Exit <b>+41.0%</b> · S&amp;P <span style="color:var(--c-700);">+18.1%</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <span class="sec-title">Portfolio Impact</span>
+      <div class="cmp-row wide">
+        <span class="cmp-label">Dollar contribution to account return</span>
+        <span class="cmp-val" style="color:var(--c-live-muted);">+$3,485.00</span>
+      </div>
+      <div class="cmp-row wide">
+        <span class="cmp-label">Share of total return this period</span>
+        <span class="cmp-val">41.4%</span>
+      </div>
+      <div class="cmp-row wide">
+        <span class="cmp-label">Rank among closed positions</span>
+        <span class="cmp-val">1 of 9 · largest winner</span>
+      </div>
+    </div>
+
+    <p class="foot-disclosure">Closed positions use past tense (Beat / Trailed). Alpha vs S&amp;P 500, dividends reinvested. Figures are preliminary and unaudited.</p>
+  </div>
 
 </div>
 </div>
 
 <!-- ══════════════ INFO SHEET · DECISIONS ══════════════ -->
 <div class="info-overlay" id="info-overlay-decisions" onclick="closeInfo('decisions')"></div>
-<div class="info-sheet" id="info-sheet-decisions">
+<div class="info-sheet" aria-hidden="true" id="info-sheet-decisions">
   <div class="info-sheet-head">
     <span class="info-sheet-title">Understanding This Page</span>
     <span class="info-sheet-close" onclick="closeInfo('decisions')">×</span>
@@ -944,7 +999,7 @@
 
 <!-- ══════════════ INFO SHEET · OPEN POSITIONS ══════════════ -->
 <div class="info-overlay" id="info-overlay-open" onclick="closeInfo('open')"></div>
-<div class="info-sheet" id="info-sheet-open">
+<div class="info-sheet" aria-hidden="true" id="info-sheet-open">
   <div class="info-sheet-head">
     <span class="info-sheet-title">Understanding This Page</span>
     <span class="info-sheet-close" onclick="closeInfo('open')">×</span>
@@ -967,7 +1022,7 @@
 
 <!-- ══════════════ INFO SHEET · CLOSED POSITIONS ══════════════ -->
 <div class="info-overlay" id="info-overlay-closed" onclick="closeInfo('closed')"></div>
-<div class="info-sheet" id="info-sheet-closed">
+<div class="info-sheet" aria-hidden="true" id="info-sheet-closed">
   <div class="info-sheet-head">
     <span class="info-sheet-title">Understanding This Page</span>
     <span class="info-sheet-close" onclick="closeInfo('closed')">×</span>
@@ -988,12 +1043,28 @@
   </div>
 </div>
 
+<div class="info-overlay" id="info-overlay-detail" onclick="closeInfo('detail')"></div>
+<div class="info-sheet" aria-hidden="true" id="info-sheet-detail">
+  <div class="info-sheet-head">
+    <span class="info-sheet-title">Understanding This Page</span>
+    <span class="info-sheet-close" onclick="closeInfo('detail')">×</span>
+  </div>
+  <div class="info-sheet-body">
+    <div>
+      <span class="info-block-title">What Each Section Shows</span>
+      <div class="info-sec-item"><div class="k">Hero</div><div class="d">Dollar alpha vs S&amp;P for this position, plus your return and S&amp;P's return over the identical window.</div></div>
+      <div class="info-sec-item"><div class="k">Performance vs S&amp;P</div><div class="d">Account, benchmark, and the resulting alpha, laid out as three plain numbers, never a delta shown alone.</div></div>
+      <div class="info-sec-item"><div class="k">Position vs Benchmark chart</div><div class="d">Visual comparison of the position's value path against the S&amp;P 500 over the same window.</div></div>
+      <div class="info-sec-item"><div class="k">Portfolio Impact</div><div class="d">How much this position moved the overall account: dollars, share of total return, and rank against other closed positions.</div></div>
+    </div>
+  </div>
+</div>
+
 <script>
   function goTo(id){
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
     document.getElementById('screen-'+id).classList.add('active');
     document.querySelectorAll('.proto-btn').forEach(b=>b.classList.toggle('active', b.dataset.target===id));
-    document.querySelector('.phone').scrollIntoView({block:'start', behavior:'smooth'});
   }
   document.querySelectorAll('.proto-btn').forEach(b=>{
     b.addEventListener('click', ()=>goTo(b.dataset.target));
@@ -1005,10 +1076,12 @@
     });
   });
   function openInfo(id){
+    document.getElementById('info-sheet-'+id).removeAttribute('aria-hidden');
     document.getElementById('info-overlay-'+id).classList.add('open');
     document.getElementById('info-sheet-'+id).classList.add('open');
   }
   function closeInfo(id){
+    document.getElementById('info-sheet-'+id).setAttribute('aria-hidden','true');
     document.getElementById('info-overlay-'+id).classList.remove('open');
     document.getElementById('info-sheet-'+id).classList.remove('open');
   }
@@ -1017,14 +1090,40 @@
     r.hidden = !r.hidden;
     el.classList.toggle('open', !r.hidden);
   }
-  function toggleDecPreview(which){
-    document.getElementById('dec-preview-'+which).classList.toggle('open');
+  function filterList(screen, key, el){
+    const scr = document.getElementById('screen-' + screen);
+    scr.querySelectorAll('.chips .chip').forEach(c => c.classList.remove('on'));
+    el.classList.add('on');
+    let shown = 0;
+    scr.querySelectorAll('.list .row').forEach(row => {
+      const ret = row.querySelector('.rowreturn');
+      const beating = ret.classList.contains('win');          // colour = verdict vs S&P
+      const profit  = !ret.textContent.trim().startsWith('−'); // sign = profit or loss
+      let ok = true;
+      if (key === 'beating') ok = beating;
+      else if (key === 'trailing') ok = !beating;
+      else if (key === 'profit') ok = profit;
+      else if (key === 'loss') ok = !profit;
+      row.style.display = ok ? '' : 'none';
+      if (ok) shown++;
+    });
+    const count = scr.querySelector('.count-line');
+    if (count) count.textContent = shown + (shown === 1 ? ' position' : ' positions');
+  }
+
+  function toggleDecPreview(which, el){
+    const panel = document.getElementById('dec-preview-' + which);
+    const open = panel.classList.toggle('open');
+    if (el) el.style.color = open ? 'var(--c-white)' : '';
+    return;
   }
   // Only NVDA has a fully built-out Detail screen in this mockup; every other
   // ticker tap routes to the relevant list screen as the honest fallback.
+  let detailOrigin = 'closed';
   function positionTap(ticker, fallbackScreen){
-    // detail screen pulled 2026-08-24 pending confirmation - see archvie/detail-screen-pending.html
-    goTo(fallbackScreen);
+    // only NVDA has a built-out detail in this mockup; everything else lands on its list
+    if (ticker === 'NVDA') { detailOrigin = fallbackScreen; goTo('detail'); }
+    else { goTo(fallbackScreen); }
   }
 </script>
 
