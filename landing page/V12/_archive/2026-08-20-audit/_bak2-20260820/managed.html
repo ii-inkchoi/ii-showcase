@@ -56,7 +56,7 @@ img{display:block;max-width:none}
 .nav .logo svg{height:100%;width:auto;display:block}
 .nav .logo path{fill:var(--c-white);transition:fill 0.35s ease}
 .nav.scrolled .logo path{fill:var(--c-1000)}
-.navmenu{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:calc(42 * var(--u))}
+.navmenu{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:calc(40 * var(--u))}
 /* 13/1.3, ported (home 08-17, SD 08-18): 14 is on no ladder and line-height fell to `normal`. */
 .navmenu a{font-weight:400;font-size:13px;line-height:1.3;color:var(--c-600);transition:color 0.35s ease}
 .navmenu a.on{color:var(--c-white)}
@@ -73,9 +73,9 @@ img{display:block;max-width:none}
 .cta-fill{min-width:max(160px, calc(196 * var(--u)));padding:0 22px;height:calc(48 * var(--u));min-height:38px;background:var(--c-black);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-white)}
 
 /* ---- flow section shell (guaranteed 220u top/bottom) ---- */
-.secpad{padding:calc(184 * var(--u)) 0}
+.secpad{padding:calc(220 * var(--u)) 0}
 .rail{margin:0 calc(450 * var(--u))}
-.eyeb{font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);margin-bottom:calc(71 * var(--u))}
+.eyeb{font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);margin-bottom:calc(70 * var(--u))}
 .bigh2{max-width:calc((100% + 30 * var(--u)) / 12 * 9 - 30 * var(--u));font-size:calc(64 * var(--u));line-height:1.05;letter-spacing:-0.02em}
 .bigh2.w10{max-width:calc((100% + 30 * var(--u)) / 12 * 10 - 30 * var(--u))}
 .bigh2 .a{display:block;font-weight:500;color:var(--c-white)}
@@ -88,14 +88,14 @@ img{display:block;max-width:none}
 .close9 .eyeb{color:var(--c-800)}
 .close9 .bigh2 .a{color:var(--c-1000)}
 .close9 .bigh2 .b{color:var(--c-1000)}
-.trust9{margin-top:calc(113 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(42 * var(--u))}
+.trust9{margin-top:calc(120 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(40 * var(--u))}
 .trust9 .tlead{font-weight:400;font-size:var(--t-small17);line-height:1.3;color:var(--c-1000)}
-.trust9 .tg{margin-top:calc(42 * var(--u));display:grid;grid-template-columns:repeat(4,calc(388.5 * var(--u)));column-gap:calc(28 * var(--u))}
-.trust9 .ti{border-left:0.667px solid rgba(28,28,28,0.16);padding-left:calc(14 * var(--u))}
+.trust9 .tg{margin-top:calc(50 * var(--u));display:grid;grid-template-columns:repeat(4,calc(388.5 * var(--u)));column-gap:calc(28 * var(--u))}
+.trust9 .ti{border-left:0.667px solid rgba(28,28,28,0.16);padding-left:calc(20 * var(--u))}
 .trust9 .tmore,#fee .fmore,#fee .fnmore{display:none} /* mobile-only fold controls */
 .trust9 .ti b{display:block;font-weight:500;font-size:var(--t-body);line-height:1.15;letter-spacing:0;color:var(--c-1000)} /* sub-heading tier (type audit 2026-07-31) */
 .trust9 .ti span{display:block;margin-top:calc(6 * var(--u));font-family:var(--mono);font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-800)}
-.foot9{margin-top:calc(113 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(28 * var(--u));display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-800)}
+.foot9{margin-top:calc(120 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(24 * var(--u));display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-800)}
 
 /* reveal */
 .rv{opacity:0;transform:translateY(14px);transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1)}
@@ -106,11 +106,11 @@ img{display:block;max-width:none}
 .top-hair{border-top:0.667px solid rgba(28,28,28,0.16)}
 /* .dim retired 2026-08-20 (Inkyung: "한톤으로 전체 다 유지") - the close-band second line no longer dims; the red payoff pairs are untouched */
 
-.content{margin-top:calc(113 * var(--u));display:flex;flex-direction:column;gap:calc(71 * var(--u))}
-.content.grpcol{gap:calc(113 * var(--u))}
-.grp{display:flex;flex-direction:column;gap:calc(42 * var(--u))}
-.grp.tight{gap:calc(14 * var(--u))}
-.grp.pay{gap:calc(28 * var(--u))}
+.content{margin-top:calc(120 * var(--u));display:flex;flex-direction:column;gap:calc(60 * var(--u))}
+.content.grpcol{gap:calc(120 * var(--u))}
+.grp{display:flex;flex-direction:column;gap:calc(40 * var(--u))}
+.grp.tight{gap:calc(20 * var(--u))}
+.grp.pay{gap:calc(32 * var(--u))}
 .content p.body{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200);max-width:calc(807 * var(--u))}
 .close9 .content p.body{color:var(--c-1000)}
 
@@ -118,7 +118,7 @@ img{display:block;max-width:none}
 .lead.mut{color:var(--c-700)}
 .close9 .lead{color:var(--c-1000)}
 .close9 .lead.mut{color:var(--c-800)}
-.content .tri + .lead{margin-top:calc(42 * var(--u))}
+.content .tri + .lead{margin-top:calc(40 * var(--u))}
 .content .lead + .lead{margin-top:0}
 .cta-fill.inv{background:var(--c-white);color:var(--c-black)}
 .close9 .cta-fill{background:var(--c-accent);color:var(--c-cream)}
@@ -143,17 +143,17 @@ img{display:block;max-width:none}
 .btnrow{display:flex;align-items:center;gap:calc(28 * var(--u));flex-wrap:wrap}
 
 /* close: two-column body + offer (index-H close9 idiom) */
-.close9 .cols{display:grid;grid-template-columns:calc(807 * var(--u)) calc(807 * var(--u));column-gap:calc(28 * var(--u));max-width:calc(1645 * var(--u))}
+.close9 .cols{display:grid;grid-template-columns:calc(807 * var(--u)) calc(807 * var(--u));column-gap:calc(24 * var(--u));max-width:calc(1645 * var(--u))}
 .close9 .cols .ccol > p{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-1000)}
-.close9 .cols .ccol{display:flex;flex-direction:column;gap:calc(71 * var(--u));align-items:flex-start}
-.close9 .offer{margin-top:0;display:flex;flex-direction:column;gap:calc(42 * var(--u));align-items:flex-start}
+.close9 .cols .ccol{display:flex;flex-direction:column;gap:calc(60 * var(--u));align-items:flex-start}
+.close9 .offer{margin-top:0;display:flex;flex-direction:column;gap:calc(40 * var(--u));align-items:flex-start}
 .close9 .pricehd9{font-weight:500;font-size:var(--t-lead24);line-height:1.3;letter-spacing:0;color:var(--c-1000);max-width:calc(807 * var(--u))}
 .close9 .pricegrp{display:flex;flex-direction:column;gap:calc(14 * var(--u))}
 
 /* 3-cell stat/number pattern, reuse of .stats3 tokens */
-.tri{display:grid;grid-template-columns:repeat(3,1fr);column-gap:calc(42 * var(--u))}
+.tri{display:grid;grid-template-columns:repeat(3,1fr);column-gap:calc(50 * var(--u))}
 .tri.one{grid-template-columns:1fr;max-width:calc(660 * var(--u))}
-.tri .cell{display:flex;flex-direction:column;gap:calc(14 * var(--u))}
+.tri .cell{display:flex;flex-direction:column;gap:calc(20 * var(--u))}
 .tri .v{font-weight:500;font-size:var(--t-h34);line-height:1.4;letter-spacing:-0.069em;color:var(--c-white)}
 .tri .v.gap{color:var(--c-urgent-muted)}
 .tri .rule{border-top:0.667px dashed var(--c-600);height:0}
@@ -164,23 +164,23 @@ img{display:block;max-width:none}
    the cream ground. Was rgba(28,28,28,0.16), a darker one-off, and it differed from the mobile value too
    (Inkyung 2026-08-01). Desktop and mobile now match. */
 .rows3{display:grid;grid-auto-rows:1fr;border-bottom:0.667px solid rgba(28,28,28,0.16)}
-.rows3 .row{display:grid;grid-template-columns:calc(249.2 * var(--u)) 1fr;column-gap:calc(28 * var(--u));align-items:start;border-top:0.667px solid rgba(28,28,28,0.16);padding:calc(71 * var(--u)) 0}
+.rows3 .row{display:grid;grid-template-columns:calc(249.2 * var(--u)) 1fr;column-gap:calc(28 * var(--u));align-items:start;border-top:0.667px solid rgba(28,28,28,0.16);padding:calc(60 * var(--u)) 0}
 .rows3 + .lead{margin-top:calc(28 * var(--u))}
 .rows3 .row b{grid-column:1;grid-row:1 / 3;font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-accent)}
 .rows3 .row .t{grid-column:2;font-weight:500;font-size:var(--t-read27);line-height:1.15;letter-spacing:0;color:var(--c-1000)}
-.rows3 .row .d{grid-column:2;margin-top:calc(28 * var(--u));max-width:calc(807.5 * var(--u));font-weight:400;font-size:var(--t-small17);line-height:1.3;color:var(--c-1000)}
+.rows3 .row .d{grid-column:2;margin-top:calc(24 * var(--u));max-width:calc(807.5 * var(--u));font-weight:400;font-size:var(--t-small17);line-height:1.3;color:var(--c-1000)}
 
 /* refusal list (dark), reuse of .suit5 border/token language */
 .refuse{display:grid;grid-template-columns:repeat(3,1fr);border:0.667px solid rgba(255,255,255,0.18)}
 .bandimg .refuse{background:rgba(0,0,0,0.55)}
-.refuse .r{padding:calc(42 * var(--u)) calc(42 * var(--u));border-right:0.667px solid rgba(255,255,255,0.18)}
+.refuse .r{padding:calc(40 * var(--u)) calc(50 * var(--u));border-right:0.667px solid rgba(255,255,255,0.18)}
 .refuse .r:last-child{border-right:0}
-.refuse .r b{display:block;font-weight:500;font-size:var(--t-read27);line-height:1.15;letter-spacing:0;color:var(--c-white);margin-bottom:calc(14 * var(--u))}
+.refuse .r b{display:block;font-weight:500;font-size:var(--t-read27);line-height:1.15;letter-spacing:0;color:var(--c-white);margin-bottom:calc(20 * var(--u))}
 .refuse .r p{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200)}
 
 /* account type cards (cream) */
 .acct3{display:grid;grid-template-columns:repeat(3,1fr);column-gap:calc(28 * var(--u))}
-.acct3 .a{border-top:0.667px solid rgba(255,255,255,0.18);padding-top:calc(14 * var(--u));display:flex;flex-direction:column;gap:calc(14 * var(--u))}
+.acct3 .a{border-top:0.667px solid rgba(255,255,255,0.18);padding-top:calc(20 * var(--u));display:flex;flex-direction:column;gap:calc(14 * var(--u))}
 .acct3 .a h3{font-weight:500;font-size:var(--t-h34);line-height:1.3;letter-spacing:-0.02em;color:var(--c-white)}
 .acct3 .a p{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200)}
 .acct3 .a .lim{font-family:var(--mono);font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-700)} /* mono is 1.5 - was inheriting 1.3 (type audit 2026-07-31) */
@@ -190,7 +190,7 @@ img{display:block;max-width:none}
 .hero{height:calc(1364 * var(--u));background:var(--c-black)}
 .hero>img,.hero>video{position:absolute;right:0;top:0;width:calc(836 * var(--u));min-width:280px;height:100%;object-fit:cover;filter:saturate(0.9) contrast(0.98) brightness(1.02)}
 .hero::after{content:'';position:absolute;top:0;right:0;width:calc(836 * var(--u));min-width:280px;height:100%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.13;mix-blend-mode:overlay;pointer-events:none;z-index:1}
-.hero .hgroup{position:absolute;left:calc(440 * var(--u));top:calc(415 * var(--u));width:calc(940 * var(--u));display:flex;flex-direction:column;align-items:flex-start;gap:calc(42 * var(--u));z-index:2}
+.hero .hgroup{position:absolute;left:calc(440 * var(--u));top:calc(415 * var(--u));width:calc(940 * var(--u));display:flex;flex-direction:column;align-items:flex-start;gap:calc(50 * var(--u));z-index:2}
 .hero .heyeb{font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-600)}
 .hbars{display:flex;flex-direction:column;align-items:flex-start;gap:0}
 .hbar{display:inline-block;white-space:nowrap;color:var(--c-white);font-weight:500;font-size:calc(64 * var(--u));line-height:1.05;letter-spacing:-0.02em}
@@ -210,8 +210,8 @@ br.mbr{display:none} /* mobile-only break: at 32px "The market, every week," wra
 .pflist,.sheet{display:none}
 .tbl{width:100%;border-collapse:collapse;min-width:calc(900 * var(--u))}
 .tbl.wide{min-width:calc(1300 * var(--u))}
-.tbl thead th{font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);text-align:left;white-space:nowrap;padding:0 calc(14 * var(--u)) calc(14 * var(--u)) 0;border-bottom:0.667px solid rgba(255,255,255,0.18)}
-.tbl tbody td{font-weight:400;font-size:var(--t-small17);line-height:1.3;letter-spacing:0;color:var(--c-200);white-space:nowrap;padding:calc(14 * var(--u)) calc(14 * var(--u)) calc(14 * var(--u)) 0;border-bottom:0.667px solid rgba(255,255,255,0.18)}
+.tbl thead th{font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);text-align:left;white-space:nowrap;padding:0 calc(20 * var(--u)) calc(14 * var(--u)) 0;border-bottom:0.667px solid rgba(255,255,255,0.18)}
+.tbl tbody td{font-weight:400;font-size:var(--t-small17);line-height:1.3;letter-spacing:0;color:var(--c-200);white-space:nowrap;padding:calc(14 * var(--u)) calc(20 * var(--u)) calc(14 * var(--u)) 0;border-bottom:0.667px solid rgba(255,255,255,0.18)}
 .tbl thead th:first-child,.tbl tbody td:first-child{padding-left:0;color:var(--c-white)}
 .tbl tbody tr.bench td{font-weight:500;color:var(--c-white);border-top:0.667px solid rgba(255,255,255,0.3)}
 .close9 .tbl thead th{color:var(--c-800);border-bottom-color:rgba(28,28,28,0.16)}
@@ -221,7 +221,7 @@ br.mbr{display:none} /* mobile-only break: at 32px "The market, every week," wra
 
 /* No.01 sphere + No.05 layer-stack canvases, ported from V4 Managed (2026-07-22) */
 .defgrid{display:grid;grid-template-columns:calc(807 * var(--u)) calc(528.3 * var(--u));justify-content:space-between;align-items:center}
-.sphwrap{display:flex;flex-direction:column;gap:calc(28 * var(--u))}
+.sphwrap{display:flex;flex-direction:column;gap:calc(24 * var(--u))}
 .sphwrap canvas{width:100%;aspect-ratio:1/1.15;display:block}
 .stackwrap canvas{width:100%;max-width:calc(807 * var(--u));aspect-ratio:1/1.2;display:block}
 .pfgrid{display:grid;grid-template-columns:calc(807 * var(--u)) calc(528.3 * var(--u));justify-content:space-between;align-items:start}
@@ -247,7 +247,7 @@ br.mbr{display:none} /* mobile-only break: at 32px "The market, every week," wra
 
 /* ---- site footer, identical on every page (2026-08-01). Ported verbatim from Pricing; the inner
    wrapper is scoped as `footer .container` so it cannot collide with the grid-overlay .container. ---- */
-footer{background:var(--c-black);color:var(--c-800);border-top:0.667px solid rgba(255,255,255,0.18);padding:64px 0 36px;font-size:11px;line-height:1.5;margin-top:calc(113 * var(--u))}
+footer{background:var(--c-black);color:var(--c-800);border-top:0.667px solid rgba(255,255,255,0.18);padding:64px 0 36px;font-size:11px;line-height:1.5;margin-top:calc(120 * var(--u))}
 footer .container{margin:0 calc(450 * var(--u))}
 .footer-copy{font-size:13px;line-height:1.4;color:var(--c-600)} /* meta tier 1.4, matching the doc pages (2026-08-20) */
 .footer-copy a{color:var(--c-600);text-decoration:underline}

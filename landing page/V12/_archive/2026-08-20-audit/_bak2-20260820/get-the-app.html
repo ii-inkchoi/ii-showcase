@@ -34,7 +34,7 @@ body{min-height:100vh;font-size:15px;line-height:1.4;/* was 1.55 - leaked into n
 .nav .logo path{fill:var(--c-white);transition:fill 0.35s ease}
 .nav.scrolled .logo path{fill:var(--c-1000)}
 .nav a{text-decoration:none}
-.navmenu{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:calc(42 * var(--u))}
+.navmenu{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:calc(40 * var(--u))}
 .navmenu a{font-weight:400;font-size:max(14px, calc(15 * var(--u)));color:var(--c-600);transition:color 0.35s ease}
 .navmenu a.on{color:var(--c-white)}
 .nav.scrolled .navmenu a{color:var(--c-800)}
@@ -81,7 +81,7 @@ body.menu-open .nav .ncta{border-color:var(--c-white);color:var(--c-white)} /* t
 .gta-store:hover{opacity:0.85;}
 .gta-badge{height:53px;width:auto;display:block;}
 .gta-sign-in{margin-top:48px;padding-top:48px;border-top:0.5px solid rgba(255,255,255,0.18);max-width:480px;width:100%;}
-.gta-sign-in-lbl{font-size:13px;line-height:1.4;color:var(--c-700);margin-bottom:16px;} /* small-copy tier 1.4, matching .gta-note on the same page (2026-08-20) */
+.gta-sign-in-lbl{font-size:13px;line-height:1.3;color:var(--c-700);margin-bottom:16px;} /* small-copy tier - was inheriting body 1.55 (type audit 2026-07-31) */
 .cta-button{display:inline-flex;align-items:center;gap:calc(6 * var(--u));font-family:var(--mono);font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-white);text-decoration:none;}
 .cta-button .arr{display:inline-flex;align-items:center;line-height:1;}
 .cta-button .arr-svg{width:13px;height:13px;display:block;}

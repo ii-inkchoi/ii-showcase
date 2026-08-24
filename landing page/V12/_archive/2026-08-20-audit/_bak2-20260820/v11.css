@@ -1,0 +1,820 @@
+/* ==========================================================================
+   v11.css - THE SHARED LAYER
+   2026-08-19. Owner of every rule that must be identical on every V11 page.
+   --------------------------------------------------------------------------
+   WHY THIS FILE EXISTS
+   Before this, each page carried its own <style id="v11-mobile-XX"> and the
+   same component was written three times. They drifted: on 2026-08-18 the
+   ledger step title read 22/400/1.25 on Self-Directed and 17/500/1.15 on
+   Managed, and the refuse list was a bordered box on one page and hairlines
+   on the other - from identical markup. Fixing that page by page is what
+   this file replaces.
+
+   THE CONTRACT
+   1. Size, weight, leading, tracking, and border treatment of a COMPONENT
+      live here, keyed on the component class. Never on a page, never on #id.
+   2. A page block may key on #section-id, and it may only carry SECTION
+      RHYTHM - the margins between beats. See Typography.md 6b.
+   3. A page-local exception must be a #id or body.p-* selector with a
+      one-line reason. No silent overrides.
+   4. Adding a page = link this file + <body class="p-sub">. No CSS copied.
+
+   LOAD POSITION
+   Linked as the LAST stylesheet on every page, after the page's own blocks,
+   so it wins on source order at equal specificity. The page base sheets have
+   already forked (Self-Directed's base says .acct3 .a h3 is 22px, Managed's
+   says 17px) - this file is what makes them agree again.
+
+   VERIFY AFTER EDITING: python shared/check-v11.py
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. MARKS  (all widths)
+   Doctrine 2-6: an arrow leaves the screen, a + opens in place, a box is its
+   own affordance, an underline is an inline link. Both directions must hold.
+   ========================================================================== */
+.mlink .arr{order:2;width:max(12px, calc(12 * var(--u)));height:max(12px, calc(12 * var(--u)))}
+.mlink span{text-decoration:underline;text-decoration-thickness:0.667px;text-underline-offset:5px}
+
+/* The same text link under two more names, on the content pages (2026-08-19).
+   .lnk on pricing and .cta-button on get-the-app are the same thing as .mlink -
+   a mono label with an arrow - but they were built without the two marks:
+     the arrow sat on the LEFT of the label, and the label had no underline.
+   An arrow reads as "this leaves the page", and it points the way out, so it
+   belongs after the words. The underline is what says "link" at all.
+   pricing's markup had the label as a bare text node with nothing to underline;
+   it is now wrapped in a span, the same shape as .mlink. */
+.lnk .arr-svg,.cta-button>.arr{order:2}
+.lnk>span,.cta-button .roll-in>span{text-decoration:underline;text-decoration-thickness:0.667px;text-underline-offset:5px}
+
+
+/* ==========================================================================
+   2. REVEAL ROLES  (all widths)  - see script v11-reveal
+   Three roles, not one animation. A label decodes, text rises, media wipes.
+   NOTE: media uses clip-path, which makes the element's visible area zero -
+   observe the WRAPPER, never the .rv itself, or the trigger never fires.
+   ========================================================================== */
+.rv{transition-duration:.8s;transition-timing-function:cubic-bezier(.16,1,.3,1)}
+.rv[data-rv="text"]{transform:translateY(24px)}
+/* The .in reset is restated because the global .rv.in{transform:none} is
+   (0,2,0) and .rv[data-rv="text"] is also (0,2,0) - the tie goes to source
+   order, so this must come after. */
+.rv[data-rv="text"].in{transform:none}
+.rv[data-rv="label"]{transform:none;opacity:1} /* the scramble IS the entrance */
+.rv[data-rv="media"]{transform:none;opacity:1;clip-path:inset(0 100% 0 0);
+  transition-property:clip-path;transition-duration:.9s}
+.rv[data-rv="media"].in{clip-path:inset(0 0 0 0)}
+
+
+/* ==========================================================================
+   3. COMPONENT TYPE  (all widths)
+   ========================================================================== */
+/* The 22 tier is 400, not 500 (Inkyung 2026-08-17, global change). These two
+   run their titles through <b>, which the base sheets set to 500. */
+.fgrid .f b,.refuse .r b{font-weight:500}
+.fgrid .f b{text-transform:capitalize}
+
+
+/* --------------------------------------------------------------------------
+   3a. THE HOME'S 22 TITLES ARE 500  (all widths)
+
+   The home groups six elements under one rule set to 400 - three titles and
+   three pieces of prose that happen to render at 22:
+
+     .sys .mode h3          Managed / Self-Directed / Fiscal.ai Max   TITLE
+     .latest .streamhd      Press Releases / Changelog               TITLE
+     .loop3 .step .t        Record / Benchmark / Review / Calibrate  TITLE
+     .loop3 .loopnote p, .lnote                                      prose
+     .qh2 .a / .b                                                    statement
+
+   Since 2026-08-19 weight tracks ROLE, not size: titles 500, prose 400. So the
+   three titles come out of that group and the three prose lines stay in it.
+   Selectors are matched to what the page declares - .loop3 .lstrip .step .t is
+   (0,4,0) inside the home's mobile block and a shorter form loses to it, which
+   is how this rule silently did nothing on its first two attempts. Written
+   outside the media queries because the home pins 400 at both widths.
+   -------------------------------------------------------------------------- */
+.sys .mode h3,.latest .streamhd,.loop3 .step .t,
+.loop3 .lstrip .step .t{font-weight:500}
+
+/* ==========================================================================
+   3b. THE MANIFESTO LIST MARK - a slash  (all widths)
+
+   WHY A MARK AT ALL. The items used to be held apart by space alone: 8px between
+   them against 6px between the lines inside one of them. Two pixels of
+   difference, so the second line of a two-line item read as a new item. Opening
+   the gap to 16 fixed that but pushed the list up against the paragraph spacing
+   above it. The mark separates instead, so the items can sit at pure line
+   spacing and the list reads as one tight block - a mark means a new item, no
+   mark means the line continues. No gap has to carry that meaning.
+
+   WHY A SLASH. Tried a dot (ordinary), then a 9px rule (a Swiss cliche, and at
+   the hairline value it was nearly invisible - Inkyung: "선색이 거의 안보이는데").
+   The site's logo is `//`. One of its strokes is the site's own mark, not a
+   symbol borrowed from outside, and the repeated diagonal gives the column a
+   rhythm without noise. Inkyung 2026-08-19: "뭔가 더 예술적인거 없나 선말고 점말고".
+
+   Colour is c-600, one step lighter than c-800 - present but behind the words.
+   Applies at BOTH widths; the desktop list had the same problem for the same
+   reason.
+   ========================================================================== */
+.m-body ul li{margin-bottom:0;padding-left:22px}
+.m-body ul li::before{content:'/';position:absolute;left:0;top:0;
+  font-family:var(--mono);font-weight:400;font-size:13px;line-height:inherit;
+  color:var(--c-600);border-top:0}
+
+
+/* ==========================================================================
+   4. MOBILE  (<=900px)
+   ========================================================================== */
+@media (max-width:900px){
+
+  /* ---- 4a. ON-BLACK HAIRLINES ------------------------------------------
+     A hairline drawn at 0.18 alpha measures 1.55:1 against pure black and
+     disappears on a phone. c-800 measures 3.05:1. This applies ONLY on dark
+     surfaces - on cream and white the 0.16 alpha line is correct and must be
+     left alone (#how-it-works, #portfolios, #track-record are all light).
+
+     ★ READ BEFORE PUTTING ONE OF THESE COMPONENTS ON A CREAM PAGE.
+     The colour below is unconditional, so it assumes the component sits on
+     black. That holds today - checked 2026-08-19 across all nine pages:
+       .tri .acct3 .refuse .v9band .rows3 .fgrid .close9 .trust9
+         appear ONLY on index / self-directed / managed, always over black
+       footer is black on all nine
+       pricing / manifesto / newsroom / press-release / changelog-entry /
+         get-the-app carry none of them - the cream pages cannot be hit
+     The moment a light-ground page reuses one, this block paints the wrong
+     line. The fix then is not an override on that page - it is a --hair
+     token declared by the surface and consumed here:
+         :root{--hair:rgba(28,28,28,0.16)}   .on-dark{--hair:var(--c-800)}
+     Deliberately NOT done yet: it needs every dark section marked, which is
+     a change to all nine pages for a case that does not exist. Do it with
+     the first light-ground use, not before.
+     Surface check to paste in the console after porting a page:
+       [...document.querySelectorAll('.tri,.acct3,.refuse,.v9band')]
+         .map(e=>{let n=e,bg='';while(n&&!bg){const c=getComputedStyle(n)
+           .backgroundColor;if(c!=='rgba(0, 0, 0, 0)')bg=c;n=n.parentElement}
+           return e.className+' on '+bg})                                   */
+  .top-hair-dark{border-top-color:var(--c-800)}
+  .v9band>img,.v9band>video{border-top-color:var(--c-800);border-bottom-color:var(--c-800)}
+  .tri .cell{border-top-color:var(--c-800)}
+  .tri .cell:last-child{border-bottom-color:var(--c-800)}
+  .acct3{border-top-color:var(--c-800);border-bottom-color:var(--c-800)}
+  .acct3 .a{border-top-color:var(--c-800)}
+  .refuse{border-top-color:var(--c-800);border-bottom-color:var(--c-800)}
+  .refuse .r{border-top-color:var(--c-800);border-bottom-color:var(--c-800)}
+  footer{border-top-color:var(--c-800)}
+
+  /* ---- 4b. BAND PHOTO ---------------------------------------------------
+     Inset 20 to the page gutter, no outline. A band photo is a plate, not a
+     framed picture; the gutter already separates it. */
+  .v9band>.ph1,.v9band>img,.v9band>video{
+    margin-left:20px!important;margin-right:20px!important;
+    width:calc(100% - 40px)!important;border:0!important}
+  .v9band .v9ovl{padding-bottom:48px}
+
+  /* ---- 4c. .rows3 - the numbered ledger ---------------------------------
+     Stacked, not two-column: at 375 the mono number column steals a third of
+     the measure. Step title is the 22 tier; the description drops to 13 so
+     the title stays the loudest thing in the row. */
+  .rows3 .row{display:block}
+  /* The number goes from accent red to c-800 (2026-08-18, Inkyung). The base sheets
+     set .rows3 .row b{color:var(--c-accent)} = #BE3C36. Counted against the accent's
+     other uses, red does exactly two jobs on this site: the turn in a band title
+     ("Including when it loses.") and a negative figure (-7.60%). Red is the colour of
+     the uncomfortable half of a sentence. A sequence number is neither - it just counts.
+     KNOWN COST, recorded so it can be reopened: the home logged that dropping its
+     numbers from 34px Inter to 11px mono left the mobile ledger "quieter, without a
+     visual anchor" (PORT 7-9), and the red number WAS that anchor on Managed. If the
+     ledger reads too quiet, the fix is the number's SIZE, one tier at a time - not
+     spending the accent on it. */
+  .rows3 .row>b{display:block;color:var(--c-800)}
+  .rows3 .row .t{font-size:22px;font-weight:500;line-height:1.25;letter-spacing:0;margin-top:8px}
+  /* The step description is 15, the site's prose size (Inkyung 2026-08-19, "바디텍스트가
+     작아보여. 일부러?"). It was 13, which skipped BOTH 17 and 15 under a 22 title - two
+     rungs at once, against the rule that the ladder steps one at a time. The same 13 was
+     also doing three different jobs: under a 22 title here, under a 17 title in
+     Self-Directed's research list, under a 15 title in the home's changelog notes. One
+     size cannot hold three relationships.
+     Ten places across the three pages: the home's loop steps (4), Self-Directed's ledger
+     (3), Managed's ledger (3). The research list and changelog notes keep 13 - their
+     titles are 17 and 15, so 13 is one rung there, not two. */
+  .rows3 .row .d,.loop3 .lstrip .step .d{font-size:15px;line-height:1.4;margin-top:16px;max-width:none}
+
+  /* ---- 4d. .tri - the stat trio ------------------------------------------
+     Hairline rows, one per cell, closing line on the last. 8 between the
+     figure and its label (inside one element), 24 padding inside the row.
+     .rule is a leftover divider element from V10 - the hairline replaced it,
+     and leaving it visible reads as a second line on the same boundary. */
+  .tri{row-gap:0}
+  .tri .cell{border-top:0.667px solid var(--c-800);padding:24px 0;margin:0}
+  .tri .cell:last-child{border-bottom:0.667px solid var(--c-800)}
+  /* Two V10 leftovers, both of them a SECOND line on a boundary that already has one
+     (Inkyung 2026-08-19, "하단에 점선 제거. 선이 많아"):
+       .rule           a dashed divider element between the figure and its label
+       .tri            a dashed bottom border 17px under the closing hairline
+     Self-Directed already renders without either - it is the reference here. Managed
+     carried both, which is what put a solid line and a dotted line on the same edge.
+     The base rule that draws them is written `.tri.one,.tri{...}`, so a trio carrying the
+     `one` modifier is matched at (0,2,0). Both forms are named here or the modifier keeps
+     its dashed line while the plain one loses it. */
+  .tri .cell .rule{display:none}
+  .tri,.tri.one{border-bottom:0;padding-bottom:0;row-gap:0}
+  .tri .v{font-size:34px;font-weight:500;line-height:1.15;letter-spacing:-0.069em;margin-top:0}
+  .tri .cell .t{font-family:var(--font);font-size:15px;line-height:1.4;margin-top:8px}
+
+  /* ---- 4e. .refuse - the dark list ---------------------------------------
+     LINES, NOT A BOX. The panel already has its own ground (a scrim over the
+     band photo, or solid black); a box around it plus hairlines inside reads
+     as two framing systems on one list. Self-Directed settled this; this
+     rule is what carries the decision to every other page. */
+  .refuse{border:0}
+  .refuse .r{padding-left:0;padding-right:0}
+  .refuse .r:first-child{border-top:0.667px solid var(--c-800)}
+
+  /* ---- 4f. .acct3 - account cards ----------------------------------------
+     Hairline above each card, none below the last - the container's own
+     bottom line closes the group. Symmetric: 24 under the last card matches
+     the 24 under the first hairline. */
+  .acct3{row-gap:0;padding-bottom:0}
+  .acct3 .a{padding-bottom:24px}
+  .acct3 .a h3{font-size:22px;font-weight:500;line-height:1.25;letter-spacing:0}
+
+  /* ---- 4g. A LINE GROUP CLOSES AT BOTH ENDS ------------------------------
+     THE RULE (Inkyung 2026-08-19, "기준이 뭐야"). A group held together by
+     hairlines gets a line above the first item and a line below the last: the
+     top line says the group starts here, the bottom line says it ended.
+     ONE EXCEPTION - a group that sits inside a filled panel WITH PADDING. The
+     panel edge already closes it, so the group takes no end lines; adding them
+     puts two boundaries on one edge. That is .fgrid, inset 24 inside the cream
+     .fpanel, and it is correct as it stands.
+     The test is "does this group have its own frame?" - not "is it on a
+     coloured background". A flush scrim with zero padding is not a frame.
+
+     Measured across the three pages: seven groups already close at both ends
+     (.tri .rows3 .acct3 .pflist .dstats .lstrip .suit5). These two did not:
+
+       .refuse   had a top line and no bottom. Its scrim is padding-0 and flush
+                 with the rows, so it reads as ground, not as a frame - and on
+                 Managed #projection it is solid black on a black page, where
+                 the panel edge is invisible and the list simply never ended.
+       .g2stat   the single-cell form of the stat block, had a bottom line and
+                 no top, while every .dstats/.tri cell has both. Matched to
+                 .dstats .cell exactly: hairline, then 24, then the figure.
+
+     .trust9 is outside this rule - it is one divider above a block, not a list.
+     .clog (home newsroom) is still open at both ends: it is a card strip, not a
+     list, and closing it would box the cards. Left as it is, deliberately. */
+  .refuse .r:last-child{border-bottom:0.667px solid var(--c-800)}
+  .gap2 .g2stat{border-top:0.667px solid var(--c-800);padding-top:24px}
+
+  /* ---- 4h. CLOSE - the offer block --------------------------------------
+     Inkyung 2026-08-19: "sd 페이지의 클로우즈 섹션이 여유로워 보여." Measured with
+     transitions suppressed, the two pages differ in exactly two places:
+
+                          home      Self-Directed   Managed (was)
+       price line -> fee    8              8              16
+       fee -> CTA button   48             48              24
+
+     8 binds the fee note to the price line - they are one statement, and 8 is an
+     INSIDE-an-element value, not a ladder step. 48 is the group boundary between
+     "what you are buying" and "what to do about it". Managed ran both at the same
+     24 step, so the whole column read as one undifferentiated list and never gave
+     the eye a place to stop before the button.
+
+     The cause is grammar, not taste: home and Self-Directed space this block with
+     MARGINS (gap 0), Managed used flex ROW-GAP. Typography 6b says margins only,
+     because a gap stacks on top of a margin and the intended value renders larger.
+     These rules move Managed onto the margin grammar; on home (.offer is a block)
+     and on Self-Directed (row-gap already 0, .btnrow already 48) they are no-ops.
+     .pricegrp exists on Managed alone. */
+  /* An exit link that ENDS a prose column gets a group boundary after it, not a
+     tighter one before it (Inkyung 2026-08-19). Managed closes its prose with
+     "The record will tell you whether you are the exception." and then SELF-DIRECTED,
+     which is that sentence's door - but at 24 above and 24 below it read as a free
+     floating control rather than the end of the paragraph.
+     The first instinct was to tighten the gap ABOVE to 16. That is wrong: 24 is the
+     site-wide value for prose -> inline control, measured on every instance -
+     #development MANAGED, #research PRICING, VIEW THE FULL MEMO, REGULATORY STANDING.
+     Belonging is shown by opening the gap AFTER, not by closing the one before.
+     Keyed on the link, not on .cols: home uses the same .cols grid with an EMPTY
+     .ccol, so raising that grid's row-gap would push its price line down 24 for no
+     reason. Self-Directed ends its .ccol with the .v11-sview button, not an a.mlink,
+     so this rule cannot reach it either. */
+  .close9 .ccol>a.mlink:last-child{margin-bottom:24px}
+
+  .close9 .offer{row-gap:0}
+  .close9 .offer .pricegrp{row-gap:0}
+  .close9 .offer .pricegrp>*+*{margin-top:8px}
+  .close9 .offer>.btnrow,.close9 .offer>.cta-row{margin-top:48px}
+
+  /* ---- 4i. REGULATORY STANDING fold --------------------------------------
+     COMPLIANCE UNCONFIRMED - see PORT-TO-PAGES 7-1. Whether these four items
+     may sit behind a tap is Dave's call, not a design decision. Deleting this
+     whole group restores them expanded; nothing else depends on it. */
+  .close9 .trust9{margin-top:48px;padding-top:48px}
+  .close9 .trust9 .ti span{margin-top:8px}
+  .close9 .trust9 .tmore{display:inline-flex;align-items:center;justify-content:space-between;
+    width:100%;margin-top:24px;background:none;border:0;padding:0;cursor:pointer;position:relative;
+    font-family:var(--mono);font-weight:400;font-size:13px;letter-spacing:0.04em;line-height:1.5;
+    color:var(--c-1000);text-align:left;outline:none}
+  .close9 .trust9 .tmore::after{content:'';position:absolute;inset:-14px 0} /* 44px tap target */
+  .close9 .trust9 .tmore:focus-visible{outline:0.667px solid var(--c-600);outline-offset:4px}
+  .close9 .trust9 .tmore .sign{font-size:15px;line-height:1;color:var(--c-800)}
+  /* The group is 48 below the control and 48 between items - the same group-boundary
+     step used everywhere else, so opening the fold does not introduce a rhythm the
+     page uses nowhere. Home carried these; Self-Directed and Managed did not, and
+     their open state was tighter. This is the shared layer settling it on home. */
+  .close9 .trust9 .tg{margin-top:48px;row-gap:48px}
+  .close9 .trust9 .tg{display:none}
+  .close9 .trust9.open .tg{display:grid}
+
+  /* ---- 4j. FOOTER --------------------------------------------------------
+     104 above the hairline: the footer is a section boundary like any other.
+     WORDING IS COMPLIANCE-APPROVED - design only, never the text. */
+  footer{padding-top:104px}
+
+  /* ---- ONE WEIGHT FOR EVERY TITLE = 500  (2026-08-19) --------------------
+     28, 22 and 17 are all 500. Body text at 16 / 15 / 13 is all 400. That is
+     the whole weight system, and the size alone says which title it is.
+
+     It ran 500 / 400 / 500 until today, because 22 was set to 400 on 2026-08-17
+     and 17 was meant to follow but never rendered (see 4j-3). Once 17 was fixed
+     the sequence read 28 heavy, 22 light, 17 heavy - going DOWN in size while
+     going UP in weight, which is the ladder contradicting itself. Rendered side
+     by side at 22 the two weights are nearly indistinguishable anyway, so 400
+     was buying an exception it could not even show. Inkyung: "17 22 28 다
+     500으로 할까?" - yes.
+
+     58 elements moved: manifesto 15, pricing 12, home 10, Self-Directed 6,
+     Managed 6, press-release 6, changelog 3.
+
+  ---- 4j-2. THE 22 TIER ON THE CONTENT PAGES ---------------------------
+     22 is 400 weight and 1.25 leading (Inkyung 2026-08-17, decided for the whole
+     site). Home, Self-Directed and Managed carry it; the content pages were
+     built before and still read 500 / 1.15 - manifesto 15 times, press-release
+     and changelog once each. Same tier, same three values.
+     Size is already 22 from each page's own rule; only weight, leading and
+     tracking are corrected here. */
+  .m-name,.pr-h2,.cl-name{font-weight:500;line-height:1.25;letter-spacing:0}
+
+  /* ---- 4j-3. THE 28 SECTION TITLE = 500, EVERYWHERE ----------------------
+     The same defect the desktop pass found, on the same elements: one class,
+     one role, three weights. Self-Directed 500, home 400, Managed 700 - and
+     Managed declared none at all, so the browser's bold h2 default showed
+     through. 500 is the section-title weight; Self-Directed was already there.
+     Inkyung approved both halves on 2026-08-19.
+     .sys h2 / .loop3 h2 are named because they sit at (0,1,1) and would
+     outrank a bare .bigh2. */
+  .bigh2,.hbar,.sys h2,.loop3 h2{font-weight:500}
+
+  /* ---- manifesto: the 15 entries are a list of peers ---------------------
+     NO. 001 .. NO. 015 are not fifteen beats in a row, they are fifteen items
+     of one document. The ladder value for parallel items is 48; the page was
+     rendering 80 (40 padding above + 40 below), which is on no ladder at all.
+     40 does exist, but its job is "prose -> card, table, figure" INSIDE a
+     section - not the space between sections.
+       .m-hero + .m-entry keeps 104: that seam is a real division, the page
+       title handing over to the list.
+     Sentences inside an entry go 24 -> 16. The number is the same on this page
+     and on Self-Directed, but Self-Directed's paragraphs run 3-7 lines while
+     these run 1-2, so at 24 the space between sentences was WIDER than the
+     sentences (24 against a 21px line). 16 is the inside-one-element value and
+     binds the statements of one entry into one thought.
+     The number itself goes 11 -> 13, the eyebrow tier every other page uses.
+     It stays red: Inkyung 2026-08-19, deliberately kept. */
+  /* SHORT RULE, not a full-width one (Inkyung 2026-08-19, "섹션마다 높이가 달라서 선이
+     있으니까 지저분해보여").
+     The section-hairline rule gave every .m-entry a line across the screen. On the other
+     pages that reads fine because their list rows are near-equal, but these fifteen run
+     206 to 501px - a 2.4x spread - and a full-width rule turns that unevenness into the
+     loudest thing on the page: the eye reads the lines as a grid and the grid is crooked.
+     A 40px mark does the same job without drawing the grid. It sits at x20, aligned with
+     the number below it, so it reads as "this entry starts here" rather than as a divider
+     between two blocks whose heights are being compared.
+     48 above and 48 below, symmetric per the hairline rule, so the mark has its own room
+     instead of hanging off the last sentence. Tried 24 (line too close to the text) and
+     40 before settling here.
+     This shape exists nowhere else on the site, and that is deliberate: every other list
+     is scanned, this page is read. Do not carry it to a scanning list without asking. */
+  /* body.p-doc is written on the selector so this outranks the section-hairline rule
+     above it, which is (0,2,1) - a bare .m-entry is (0,1,0) and loses. */
+  body.p-doc .m-entry{border-top:0;padding-top:48px;padding-bottom:48px}
+  /* The first entry starts at the section-boundary value, not the entry value.
+     The hero's rule is a page division; every other p-doc page opens its first
+     section 104 below that line (pricing, measured). Manifesto was opening at 48,
+     which read as a shorter page start (Inkyung: "선과 번호 사이 공간 틀려").
+
+     Keyed on the container child, NOT on .m-hero + .m-entry - the hero is a body
+     child and the entries live inside .container, so they are not siblings and
+     that selector matched nothing. body.p-doc is needed too, or it loses to the
+     .m-entry rule above at (0,2,1). */
+  body.p-doc .container > .m-entry:first-child{padding-top:104px}
+  /* Sentences are 24 apart, the site value, NOT 16 (Inkyung 2026-08-19).
+     I lowered it to 16 to stop the short statements drifting, and that broke the layer
+     underneath: the list items are 8 apart and the lines inside a paragraph are 6, so
+     6 / 8 / 16 put three different relationships within ten pixels of each other and
+     nothing read as a group. Inkyung: "이래서 큰 차이가 없어서 ... 그룹핑이 엉성해보여".
+     The three values have to stay distinct, and each already has a role:
+        8   between list items      - one block
+       16   title -> description    - two steps
+       24   sentence -> sentence    - the site standard
+     The lead-in sentence keeps 16 to its list, because the list belongs to it. */
+  .m-body p + p,.m-body ul + p{margin-top:24px}
+  .m-body p + ul{margin-top:16px}
+  /* The list carried margin 24 top AND bottom of its own. The bottom one landed
+     on top of the entry's padding and made three of the fifteen seams 72 instead
+     of 48 - the three entries that happen to end with a list. The entry's own
+     24 closes it; the list does not need a second closing space. */
+  .m-body ul{margin-bottom:0}
+  .m-no{font-size:13px}
+
+  /* pricing, same idea one tier up (Inkyung 2026-08-19, "여기도 같은 글자 크기랑
+     공간으로 하면 안돼?" / "managed도 크기 늘리고").
+       .p-lead  is the section masthead, the line right under NO. 01 · THE
+                MEMBERSHIP. Managed puts 28 / 500 / 1.1 there; pricing had 22.
+       .k       is an item title (Managed, Self-Directed, Fiscal.ai Max). The
+                ladder puts item titles at 17 / 500 / tracking 0; it had 15,
+                which made it the same size as its own description.
+     The eyebrow, the 24 under it, and the 48 between items were already right -
+     an earlier reading of 72 between the first two items was a measurement
+     error: these pages reveal with .ri, not .rv, so an un-revealed item still
+     sat 24 lower. Force .ri.in before measuring anything on a content page. */
+  .p-lead{font-size:28px;font-weight:500;line-height:1.1;letter-spacing:-0.02em}
+  /* .k is an item title, and an item title is 22 (Inkyung 2026-08-19, "여기도 22").
+     Same tier as Managed's ledger steps and the TFSA / RRSP / Non-Registered cards,
+     which already read 22 / 400 / 1.25. It was 15, briefly 17, now the tier value. */
+  .p-item .k{font-size:22px;font-weight:500;line-height:1.25;letter-spacing:0}
+  /* Title -> description is 16, not 8 (Inkyung 2026-08-19). The home carries the same
+     three items (Managed / Self-Directed / Fiscal.ai Max) and spaces them 16, as does
+     Managed's ledger. 8 is the inside-one-element value - a label against its own
+     value - and a title and its description are two steps, not one thing.
+     The gap BETWEEN the items stays 48 here against the home's 104: on the home those
+     three are the page's argument, one beat each; here they are the list of what the
+     $20 contains, and the list is worth more when all three fit on one screen. */
+  .p-item .d{margin-top:16px}
+  /* And 104 between them, the same as the home (Inkyung 2026-08-19). I argued for 48
+     first, on the grounds that 104 would leave only one item per screen - measured, that
+     was wrong: the three run 483px at 48 and 595px at 104, and BOTH fit inside 812. With
+     the reason for the exception gone, the same three items get the same value on both
+     pages. */
+  .p-item{margin-bottom:104px}
+  .p-item:last-of-type{margin-bottom:0}
+
+  /* ---- 4j-3. THE 17 TITLE IS 500 ----------------------------------------
+     WEIGHT DOES THE WORK SIZE CANNOT DO.
+
+     This rule said 400 from 2026-08-17, on the argument that a 17 at 500 reads
+     heavier than the 22 above it and the ladder goes backwards. It had never
+     once taken effect - it was written as `.lt-hd,.pflist .n` and every page it
+     aimed at outranks that (home declares .latest .lt-hd, Managed declares
+     #portfolios .pfrow .n, .pflist .n matched nothing because the rows are
+     .pfrow, and the newsroom title was never listed). Eleven elements went on
+     rendering 500 while the file said 400. Fixing the selectors on 2026-08-19
+     was the first time the rule's actual result was visible, and it was wrong:
+
+       home / newsroom news row   17 title over 15 summary   one rung apart
+       Self-Directed research     17 title over 16 body      one rung apart
+       Managed refusals           17 title over 16 body      one rung apart
+
+     One rung apart, size separates nothing - title and body read as one block.
+
+     So the site runs TWO weights, and which one a title gets is decided by the
+     gap to the body beside it, not by its own size:
+
+       22 title over 15 body   three rungs   400   size already separates them
+       17 title over 15-16     one rung      500   weight has to
+
+     22 stays 400 (2026-08-17, re-confirmed 2026-08-19: "17 제목만 500").
+     The #id is carried here to match what Managed declares, not as a new
+     pattern. */
+  .latest .lt-hd,#portfolios .pfrow .n,.nr-list .row .t,
+  .fgrid .f b,.refuse .r b{font-weight:500}
+
+  /* ...and 17 was the one rung where the leading ladder ran backwards:
+     28 / 1.10 - 22 / 1.25 - 17 / 1.15 - 15 / 1.40. Smaller type wants MORE
+     leading, not less, and a two-line 17 headline came out visibly squeezed
+     against the 15 summary under it (Inkyung 2026-08-19, on the newsroom
+     feature: "타이틀 과 텍스트 행간도 봐줘"). 1.3 sits where the ladder expects it.
+     The inline <b> lead-ins are deliberately NOT here - they sit inside 16
+     prose and a line-height of their own would tear that paragraph's rhythm. */
+  .latest .lt-hd,#portfolios .pfrow .n,.nr-list .row .t,
+  .pr-more .li .t{line-height:1.3}
+
+  /* The home's featured headline stays on the ROW value, 17, even though the
+     newsroom's feature takes 22. Not drift - the rule is "one rung under the
+     title above you", and on the home that title is the group heading
+     "Press Releases" at 22, which the newsroom has no equivalent of.
+     Raised to 22 on 2026-08-19 and reverted the same hour: it tied the
+     heading it sits under. */
+
+  /* The "more from the newsroom" list at the foot of press-release and
+     changelog-entry is the same component as the newsroom's own list, and it
+     rendered its headlines at 13 - SMALLER than the 15 body above them, the one
+     place on the site where a title was quieter than its own page. It reads
+     --t-small17, and that token only carries 17 inside the desktop block; on
+     mobile it falls to 13. Named explicitly here so the four article lists
+     agree: home .lt-hd, newsroom row, newsroom feature (22, one rung up on
+     purpose), and this one. 2026-08-19. */
+  .pr-more .li .t{font-size:17px}
+  /* ...and the label-to-headline gap was 8 against the newsroom list's 16, on the
+     same component. 8 is the value that joins two DIFFERENT kinds of thing inside
+     one element (the category and its date, right above); 16 is label -> title.
+     Using 8 for both flattened the two joins into one. */
+  .pr-more .li{row-gap:16px}
+
+  /* 22 titles the flip missed. These three are titles - a block name, a mode
+     name, a step name - so they take 500 like every other title. The 22s that
+     stay 400 are not titles: .hsub and .lnote are prose set large, and .qh2's
+     .a/.b are a display statement matched to the payoff line (2026-07-28). */
+
+  /* ---- 4j-4. NEWSROOM ROWS MATCH THE HOME'S NEWS BLOCK -------------------
+     The home's Latest block and the newsroom list carry the SAME articles -
+     same headline, same summary sentence. They rendered differently: summary
+     15 on home, 13 in the newsroom, and the title-to-summary gap 16 against 8.
+     The home is the reference (Inkyung 2026-08-19).
+     8 is not on the ladder for this join; 16 is the title -> description value
+     used on every other page. */
+  .nr-list .row .s{font-size:15px;margin-top:16px}
+
+  /* The filter tabs are controls, so they belong to the 13 mono tier, which is
+     also the only tier that keeps ALL CAPS. They were 11 - below the caps line
+     and under the 44px tap target. The row's .k label stays 11 and goes
+     sentence case instead; it is a label, not a control. */
+  .nr-tabs button{font-size:13px}
+
+  /* THE FILTER STRIP SCROLLS, IT DOES NOT WRAP.
+     Four labels at 13 measure 308 against 335 of usable width. They fit only if
+     the gap drops to 9, and 9 runs the words together - and the French labels
+     are longer than the English ones, so a 9px fit is not a fit at all, it is a
+     bug scheduled for the FR build. Wrapping was the other option and it landed
+     three-and-one, stranding "IN THE PRESS" under an active underline that
+     pointed at nothing (Inkyung: "두줄이야").
+
+     So it holds one line and scrolls sideways. The page already teaches this
+     gesture with .tbl, and the strip bleeds to both screen edges the same way,
+     so the cut-off right edge reads as "there is more" rather than as clipping.
+     Inkyung: "한줄로 오버플로우 하거나 아님 간격을 줄이거나". */
+  .nr-tabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;
+    scrollbar-width:none;margin-left:-20px;margin-right:-20px;
+    padding-left:20px;padding-right:20px}
+  .nr-tabs::-webkit-scrollbar{display:none}
+  .nr-tabs button{flex:0 0 auto;white-space:nowrap}
+
+  /* The row label carries two different things - what kind of post it is, and
+     when. They were the same size, weight and colour, stacked with no gap, so
+     they read as one four-word string. The kind is what you scan for, so it
+     takes the near-black; the date steps back to c-800, and 8 joins them, the
+     ladder value for two different kinds of thing. 2026-08-19. */
+  /* The list closed on the last row's own 24 and then hit the next section's
+     hairline - 25px between READ and the line, where every other section on the
+     content pages closes with 104 (pricing, measured). Inside the list 24 is
+     correct: it is the gap to the NEXT ROW's line, and the row above pays the
+     matching 24. The last row has no next row, so it must hand the section its
+     closing value instead. */
+  .nr-list{padding-bottom:104px}
+  .nr-list .row:last-child{padding-bottom:0}
+
+  .nr-list .row .k{color:var(--c-1000)}
+  .nr-list .row .k .d{display:block;margin-top:8px;color:var(--c-800)}
+
+  /* pricing NO.02 and NO.03 are lists of peers, so every one of them is an item
+     title at 22 (Inkyung 2026-08-19).
+     I first proposed lifting the FIRST one to 28 to give each section a title.
+     Opening the markup killed that: "Membership Structure" is not a heading over
+     the others, it is .p-block number one of four, exactly like "Trading & FX"
+     and "Fiscal.ai Max". Same for the questions in NO.03. Promoting one peer
+     would draw a hierarchy the content does not have.
+     These two sections simply have no section title, and that is allowed - the
+     eyebrow marks the section, and 28 is not required to exist. */
+  .p-block .t,.p-qa .q{font-size:22px;font-weight:500;line-height:1.25;letter-spacing:0}
+
+  /* ---- 4j-4. SECTION HAIRLINES ON THE CONTENT PAGES ---------------------
+     THE RULE (2026-08-19): two sections that meet on the SAME background need a
+     hairline between them. When the background changes, the colour change IS
+     the boundary and a line would be a second one on the same edge.
+
+     Measured on the reference pages, "same background -> line" holds 2 out of 2
+     (Self-Directed #development and #accounts, both black after black). Where
+     the ground changes it is mixed - 3 of 7 carry a line they do not need. Those
+     three are left alone for now; removing a line people are used to is a
+     separate decision.
+
+     The six content pages are white or cream from top to bottom, so EVERY seam
+     is a same-background seam and every one takes a line. press-release and
+     changelog already had most of them; pricing had one, newsroom none, which is
+     why pricing read as one undifferentiated column.
+     body.p-doc marks these pages; home / Self-Directed / Managed do not carry it
+     and are untouched.
+
+     Written as "every section, then clear the hero" rather than section + section:
+     on these pages some sections are wrapped in a div and some are not, so they are
+     not all adjacent siblings and the + combinator matches nothing.
+
+     A section hairline runs the full width of the screen, edge to edge - Managed's
+     three all measure x0 / 375. On these pages some sections sit inside a .container
+     that already carries the 20 gutter, so the section itself is only 335 wide and its
+     line came out inset while its neighbours' ran full width. The section is pulled
+     back out to the screen edges and takes the gutter as its own padding, so the line
+     spans 375 and the content stays on x20 exactly where it was. */
+  body.p-doc .container > section,
+  body.p-doc section > section{margin-left:-20px;margin-right:-20px;
+    padding-left:20px;padding-right:20px}
+  body.p-doc section{border-top:0.667px solid rgba(28,28,28,0.16)}
+  body.p-doc .p-hero,body.p-doc .m-hero,body.p-doc .nr-hero,
+  body.p-doc .pr-hero,body.p-doc .gta-section{border-top:0}
+
+  /* ---- 4k. THE RED BOX CTA, SECOND NAME ---------------------------------
+     The same button exists under two class names. Home, Self-Directed and
+     Managed call it .cta-fill; the six content pages call it .cta-button
+     inside .bottom-canon. Identical colour, font, weight and tracking - only
+     the box differed, because .cta-fill has a mobile rule and .cta-button
+     never got one, so those pages rendered the DESKTOP box on a phone:
+
+                        home / SD / Managed      the six pages (was)
+       height                    34                      38
+       side padding              16                      22
+       min-width                  0                     160
+       rendered at 375      157 x 34                169 x 38
+
+     Same three values, applied to the second name. get-the-app has no
+     .bottom-canon (it is the account page, so no button points at itself) and
+     its plain .cta-button link is untouched.
+     Renaming the class in the markup would be tidier, but that is six files of
+     edits for a styling difference - one rule is the smaller change. */
+  .bottom-canon .cta-button{min-width:0;padding:0 16px;height:34px;min-height:34px}
+
+  /* ---- 4l-2. THE BURGER --------------------------------------------------
+     Rescued from mobile-canon.css before that file was retired (2026-08-19).
+
+     mobile-canon.css was written 2026-08-17 with the same intent as this file -
+     one shared mobile layer, loaded after each page's own styles. It never got
+     there: home, Self-Directed and Managed do not link it, and the six content
+     pages that do carry almost none of the components it targets. Measured, it
+     changed exactly TWO computed values across all six pages, and they were
+     these lines. 51 of its 52 rules were aiming at components that were not on
+     the pages reading it.
+     Merging it wholesale would have been worse than useless: simulated against
+     the home it reverted 10 ledger descriptions to 13, 7 titles to weight 500,
+     and 12 sequence numbers back to red - two days of decisions undone, because
+     the file predates them.
+     So only the part that was doing work moves here, and it now reaches all nine
+     pages instead of six. */
+  .nav .burger{width:24px;height:7px;left:auto;right:20px}
+  .nav .burger span{width:24px;background:var(--c-400)}
+  .nav .burger span:first-child{top:0}
+  .nav .burger span:last-child{bottom:0}
+  .nav.scrolled .burger span{background:var(--c-800)}
+  body.menu-open .nav .burger span{background:var(--c-200)}
+
+  /* ---- 4l. NAV OVERLAY -------------------------------------------------- */
+  .menuov a{font-size:clamp(28px,7.4vw,40px);line-height:1.1}
+
+  /* ---- 4m. SUB-PAGE HERO  (body.p-sub) -----------------------------------
+     Two hero grammars exist. The home hero is a full-viewport video with the
+     title laid over it and stays in index.html. Every other page uses this
+     one: a band photo above, the title block on black below. Scoped to
+     .p-sub so the home hero cannot inherit any of it.
+     A NEW PAGE ONLY NEEDS <body class="p-sub"> TO GET THIS. */
+  body.p-sub .hero>video{order:-1;flex:1 1 auto;height:auto;min-height:0}
+  body.p-sub .hero .hgroup{margin:32px 20px 32px}
+  body.p-sub .hero .heyeb .heyeb-b{display:none}
+  body.p-sub .v11-hero2{background:var(--c-black);padding:72px 0 104px}
+  body.p-sub .v11-hero2 .h2rail{margin:0 20px;display:flex;flex-direction:column;align-items:flex-start}
+  body.p-sub .v11-hero2 .h2eyeb{margin:0 0 24px;font-family:var(--mono);font-weight:400;font-size:13px;
+    line-height:1.5;letter-spacing:0.04em;color:var(--c-600)}
+  body.p-sub .v11-hero2 .hsub{margin:0;max-width:none;font-size:15px;font-weight:400;line-height:1.4;
+    letter-spacing:0;color:var(--c-200)} /* was c-400; prose matches the desktop grey site-wide (Inkyung 2026-08-20) */
+  body.p-sub .v11-hero2 .htrust{margin:24px 0 0;max-width:none;font-family:var(--mono);font-weight:400;
+    font-size:11px;line-height:1.4;letter-spacing:0.04em;color:var(--c-600)}
+  body.p-sub .v11-hero2 .htrust>span{white-space:nowrap}
+  body.p-sub .v11-hero2 .htrust .heyeb-sep{display:inline;white-space:normal}
+  body.p-sub .v11-hero2 .htrust .heyeb-b{display:inline}
+  body.p-sub .v11-hero2 .btnrow{margin:48px 0 0;display:flex;flex-direction:column;align-items:flex-start;gap:0}
+  body.p-sub .v11-hero2 .btnrow .mlink{color:var(--c-white);margin-top:24px}
+
+  /* ---- 4n. .tbl - the horizontally scrolling data table -------------------
+     Inkyung 2026-08-19: "상단에 공간이 없어. 글자가 상단에 딱 붙었어" + "옆에도".
+     Both were the same omission - the header cells had padding 0 on top and the
+     sticky first column had padding 0 on the left, so the label sat hard against
+     the top and the left edge of its own cream ground.
+
+     TOP: 16, the value every body row already uses. The 40 above the table is the
+     block boundary between prose and figure and stays where it is; 16 is the
+     cell's own breathing, exactly like .tri .cell carries 24 inside its 104.
+
+     SIDE: the fix is NOT padding on the first column - that would push the label
+     off the 20 page gutter that every other line on the page aligns to. Instead
+     the scroll container goes full-bleed and the gutter moves inside the cells.
+     The label stays at x=20, the cream now starts at x=0 and runs 20 past the
+     text, and the scroll area gains 40px of visible data. This is the ordinary
+     mobile pattern for a scrolling table: full-bleed frame, gutter as padding.
+     The section already has overflow:hidden, so the negative margins cannot
+     produce a horizontal scrollbar on the page itself.
+
+     The selectors have to match the page's shape, not just its meaning: the base
+     sheet writes `.tbl thead th` and `.tbl.wide th:first-child`, so a shorter
+     `.tbl th:first-child` loses on specificity and silently does nothing. The
+     right edge already carries 20 from the cells' own padding-right. */
+  .tblwrap{margin-left:-20px;margin-right:-20px}
+  .tbl thead th{padding-top:16px}
+  .tbl thead th:first-child,.tbl tbody td:first-child,
+  .tbl.wide th:first-child,.tbl.wide td:first-child{padding-left:20px}
+}
+
+
+/* ==========================================================================
+   5. DESKTOP  (>=901px)
+   ========================================================================== */
+@media (min-width:901px){
+
+  /* ---- 5a. TYPE FLOORS  (HANDOFF 2-3b) -----------------------------------
+     --u is 100vw/2545, so below the crossover every token renders at its
+     max() floor. Those floors held the MOBILE numbers, which is why a 1512
+     laptop came out prose 15 / label 13 / stat 22 - the mobile ladder on a
+     desktop. --t-mono15 was floored below 2206px, i.e. every laptop.
+     Raised one rung here, giving 48 / 28 / 22 / 17 / 15 / 13 / 11 at 1512.
+     MUST stay inside this media query: mobile renders 16 elements through
+     these same tokens and would grow with them.
+     NEVER hardcode px in this block - a value written as 11px stops
+     following the floor and is left behind alone. */
+  :root{
+    --t-body:    max(17px, calc(22 * var(--u)));
+    --t-h34:     max(28px, calc(34 * var(--u)));
+    --t-mono15:  max(13px, calc(15 * var(--u)));
+    --t-mono13:  max(11px, calc(13 * var(--u)));
+    --t-mono11:  max(9px,  calc(11 * var(--u)));
+    /* Mono dropped one rung on desktop 2026-08-20 (Inkyung: "1440에서는 이런 ibm 폰트
+       한단계 작게"). At 1440 the mono ladder now reads 13 / 11 / 9 instead of
+       15 / 13 / 11 - the same three steps the phone uses. Mono is chrome: labels,
+       dates, captions. Against 17px prose the old 15 sat almost level with the
+       body it was annotating. The 2545 Figma frame is untouched - 15u/13u/11u all
+       beat these floors there. Serif/Inter tokens above are NOT changed. */
+    --t-read27:  max(22px, calc(27 * var(--u)));
+    --t-lead24:  max(22px, calc(24 * var(--u)));
+    --t-small17: max(15px, calc(17 * var(--u)));
+  }
+  /* ---- 5a-2. HERO FILLS THE VIEWPORT  (2026-08-20) ----------------------
+     The hero height was calc(1364 * var(--u)) - a share of WIDTH, so it never
+     knew how tall the window was. Measured, it fell short on every common
+     desktop and laptop: 1280x720 by 34, 1366x768 by 36, 1440x900 by 128,
+     1512x982 by 171, 1920x1080 by 51, 2560x1440 by 68. The side photo is
+     height:100% of the hero, so it stopped short of the fold every time - most
+     visible on Managed, whose next section is transparent, so the black behind
+     it read as the photo ending early.
+     max() keeps the 2545 Figma frame exact (1364u wins there on a short window)
+     and lets the viewport win whenever it is taller. Mobile already used 100svh.
+     svh, not vh: on mobile browsers vh counts the retracting toolbar. */
+  .hero{height:max(calc(1364 * var(--u)), 100svh)}
+  /* ...and the text block was pinned at a fixed distance from the top (415u /
+     515u), so every pixel the hero gained fell into the gap below it. As a
+     percentage of the hero it holds the same position at any height. */
+  body.p-sub .hero .hgroup{top:30.4%}
+  body.p-home .hero .hgroup{top:37.8%}
+
+  /* Display type had no floor at all. 48 is the largest value that keeps the
+     nowrap band on one line down to 1280 - measured, not chosen. */
+  .bigh2,.hbar,.sys h2,.loop3 h2{font-size:max(48px, calc(64 * var(--u)))}
+
+  /* ...and it had no weight either. Same class, same role, same colour, three
+     answers: home 400, Self-Directed 500, Managed 700 (Managed set none at all,
+     so the h2 default bold showed through). 500 is the section-title weight the
+     mobile ladder already uses, and Self-Directed was already there.
+     Inkyung 2026-08-19. .sys h2 / .loop3 h2 are listed because they sit at
+     (0,1,1) and a bare .bigh2 would lose to them. */
+  .bigh2,.hbar,.sys h2,.loop3 h2{font-weight:500}
+
+  /* The content pages' hero, same reasoning one size down: five of the six
+     declare 500 and get-the-app declared 400 (flagged in its own source as
+     "V8 verbatim, untouched - flag for the desktop pass"). This is that pass. */
+  .gta-title{font-weight:500}
+
+  /* ---- 5b. THE 22 TIER = 500 / 1.25 / tracking 0 -------------------------
+     One value, one role. Stat figures are excluded and keep 500 / -0.069em:
+     dropped to 400 a number flattens into prose.
+     Added 2026-08-19: pricing's .p-block .t, newsroom's row title and the home
+     ledger headline were all still 500 / 1.15 here, the desktop half of a tier
+     mobile had already unified. Same size, two weights, on pages that link. */
+  .lead,.rows3 .row .t,.refuse .r b,.acct3 .a h3,.fgrid .f b,.specimens .snote .cl,
+  .p-block .t,.p-qa .q,.nr-list .row .t,.latest .lt-hd,
+  .trust9 .ti b,.p-item .k,.clog .ci .ct,.pr-more .li .t{
+    font-weight:500;line-height:1.25;letter-spacing:0}
+  /* Doc-page section titles render 28 on desktop but carried 1.3 - LOOSER than the
+     22 tier's 1.25, so the leading ladder ran backwards at its top. 28 takes the
+     28 value, 1.10, the same one mobile 28 already uses (Inkyung 2026-08-20). */
+  .m-name,.pr-h2,.cl-name,.p-lead{line-height:1.1}
+
+  /* four more members joined 2026-08-20 (Inkyung: "17은 1.25"): the trust-fold
+     sub-headings were 1.15, pricing's item titles inherited body 1.4, and the
+     home changelog titles carried their mobile 1.3 up to desktop. One size, one
+     leading. Body-tier 500s (manifesto li/em - emphasis inside 1.3 prose) stay
+     on the prose leading; they are weight, not titles. */
+
+  /* ---- 5c. FOOTER LEGAL IN TWO COLUMNS -----------------------------------
+     One column measured 916px - roughly 150 characters a line, unreadable.
+     Two columns bring it to 449. Wrapper is built by script v11-footer; the
+     markup and the wording are untouched. */
+  .footer-legalwrap{column-count:2;column-gap:calc(28 * var(--u));column-fill:balance}
+  .footer-legalwrap .footer-legal{margin-top:16px;break-inside:avoid}
+}

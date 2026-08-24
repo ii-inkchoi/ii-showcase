@@ -56,7 +56,7 @@ img{display:block;max-width:none}
 .nav .logo svg{height:100%;width:auto;display:block}
 .nav .logo path{fill:var(--c-white);transition:fill 0.35s ease}
 .nav.scrolled .logo path{fill:var(--c-1000)}
-.navmenu{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:calc(42 * var(--u))}
+.navmenu{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:calc(40 * var(--u))}
 .navmenu a{font-weight:400;font-size:13px;line-height:1.3;color:var(--c-600);transition:color 0.35s ease} /* was max(14px,15u) with no line-height: 14 is not on the DS ladder and `normal` is not one of the DS leadings, so the six nav links were the only type on the page outside both. 13/1.3 = the mono label tier the rest of the chrome uses (home fix 2026-08-18, type audit) */
 .navmenu a.on{color:var(--c-white)}
 .nav.scrolled .navmenu a{color:var(--c-800)}
@@ -72,9 +72,9 @@ img{display:block;max-width:none}
 .cta-fill{min-width:max(160px, calc(196 * var(--u)));padding:0 22px;height:calc(48 * var(--u));min-height:38px;background:var(--c-black);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-white)}
 
 /* ---- flow section shell (guaranteed 220u top/bottom) ---- */
-.secpad{padding:calc(184 * var(--u)) 0}
+.secpad{padding:calc(220 * var(--u)) 0}
 .rail{margin:0 calc(450 * var(--u))}
-.eyeb{font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);margin-bottom:calc(71 * var(--u))}
+.eyeb{font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-600);margin-bottom:calc(70 * var(--u))}
 .bigh2{max-width:calc((100% + 30 * var(--u)) / 12 * 9 - 30 * var(--u));font-weight:500;font-size:calc(64 * var(--u));line-height:1.05;letter-spacing:-0.02em}
 .bigh2.w10{max-width:calc((100% + 30 * var(--u)) / 12 * 10 - 30 * var(--u))}
 #benchmark .bigh2,#development .bigh2,#refuses .bigh2{display:flex;flex-direction:column;align-items:flex-start;gap:calc(6 * var(--u));max-width:none}
@@ -91,13 +91,13 @@ img{display:block;max-width:none}
 .close9 .bigh2 .a{color:var(--c-1000)}
 .close9 .bigh2 .b{color:var(--c-1000)}
 .trust9 .tmore{display:none} /* mobile-only fold control */
-.trust9{margin-top:calc(113 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(42 * var(--u))}
+.trust9{margin-top:calc(120 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(40 * var(--u))}
 .trust9 .tlead{font-weight:400;font-size:var(--t-small17);line-height:1.3;color:var(--c-1000)}
-.trust9 .tg{margin-top:calc(42 * var(--u));display:grid;grid-template-columns:repeat(4,calc(388.5 * var(--u)));column-gap:calc(28 * var(--u))}
-.trust9 .ti{border-left:0.667px solid rgba(28,28,28,0.16);padding-left:calc(14 * var(--u))}
+.trust9 .tg{margin-top:calc(50 * var(--u));display:grid;grid-template-columns:repeat(4,calc(388.5 * var(--u)));column-gap:calc(28 * var(--u))}
+.trust9 .ti{border-left:0.667px solid rgba(28,28,28,0.16);padding-left:calc(20 * var(--u))}
 .trust9 .ti b{display:block;font-weight:500;font-size:var(--t-body);line-height:1.15;letter-spacing:0;color:var(--c-1000)} /* sub-heading tier (type audit 2026-07-31) */
 .trust9 .ti span{display:block;margin-top:calc(6 * var(--u));font-family:var(--mono);font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-800)}
-.foot9{margin-top:calc(113 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(28 * var(--u));display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-800)}
+.foot9{margin-top:calc(120 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(24 * var(--u));display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-800)}
 
 /* reveal */
 .rv{opacity:0;transform:translateY(14px);transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1)}
@@ -108,19 +108,19 @@ img{display:block;max-width:none}
 .top-hair{border-top:0.667px solid rgba(28,28,28,0.16)}
 /* .dim retired 2026-08-20 (Inkyung: "한톤으로 전체 다 유지") - the close-band second line no longer dims; the red payoff pairs are untouched */
 
-.content{margin-top:calc(113 * var(--u));display:flex;flex-direction:column;gap:calc(71 * var(--u))}
+.content{margin-top:calc(120 * var(--u));display:flex;flex-direction:column;gap:calc(60 * var(--u))}
 .content p.body{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200);max-width:calc(807 * var(--u))}
 .close9 .content p.body{color:var(--c-1000)}
 
 .lead{font-weight:500;font-size:var(--t-lead24);line-height:1.3;letter-spacing:0;color:var(--c-white);max-width:calc(807 * var(--u))}
-.content .specimens + .lead,.content .tri + .lead{margin-top:calc(42 * var(--u))}
+.content .specimens + .lead,.content .tri + .lead{margin-top:calc(40 * var(--u))}
 .content .lead + .lead{margin-top:0}
 .cta-fill.inv{background:var(--c-white);color:var(--c-black)}
 /* two-column body (loop3 l3grid idiom) */
 .close9 .cta-fill{background:var(--c-accent);color:var(--c-cream)}
 .close9 .cta-fill:hover{background:var(--c-accent-d);color:var(--c-cream)} /* closing CTA = the site's one saturated moment; the other 5 pages' .cta-button was already red and this was black, so the same label rendered two colours on the same light ground. Mid-body .cta-fill.inv stays as-is so red does not become common (2026-08-02) */
-.devgrid{display:grid;grid-template-columns:calc(798 * var(--u)) calc(796 * var(--u));column-gap:calc(28 * var(--u));align-items:start}
-.devgrid .dcol{display:flex;flex-direction:column;gap:calc(71 * var(--u))}
+.devgrid{display:grid;grid-template-columns:calc(798 * var(--u)) calc(796 * var(--u));column-gap:calc(32 * var(--u));align-items:start}
+.devgrid .dcol{display:flex;flex-direction:column;gap:calc(60 * var(--u))}
 .devgrid .lead{margin-top:0}
 .lead.mut{color:var(--c-700)}
 .close9 .lead{color:var(--c-1000)}
@@ -141,15 +141,15 @@ img{display:block;max-width:none}
 
 /* specimen: text-left (cols 1-6) / card-right (cols 9-12), mirrors home loop3 layout */
 .specimens{display:grid;grid-template-columns:calc((100% + 30 * var(--u)) / 12 * 6 - 30 * var(--u)) 1fr calc((100% + 30 * var(--u)) / 12 * 5 - 30 * var(--u));column-gap:calc(28 * var(--u));align-items:start} /* memo track 4col -> 5col (2026-08-20), same reason as index .loop3 .specimen; 6col would overflow this 6col+memo row */
-.specimens .snote{grid-column:1;display:flex;flex-direction:column;gap:calc(71 * var(--u))}
-.specimens .sfig{grid-column:3;display:flex;flex-direction:column;gap:calc(42 * var(--u));margin-top:0} /* the -258u pull-up put the card level with the NO.01 title; once the card went 4col -> 5col (2026-08-20) the 9col title ran into it. Card starts below the title now, title keeps its full width. */
+.specimens .snote{grid-column:1;display:flex;flex-direction:column;gap:calc(60 * var(--u))}
+.specimens .sfig{grid-column:3;display:flex;flex-direction:column;gap:calc(40 * var(--u));margin-top:0} /* the -258u pull-up put the card level with the NO.01 title; once the card went 4col -> 5col (2026-08-20) the 9col title ran into it. Card starts below the title now, title keeps its full width. */
 .specimens .snote .smore,.calcol .cmore,.devgrid .dmore{display:none} /* mobile-only fold controls */
 .specimens .snote .cl{font-weight:500;font-size:var(--t-read27);line-height:1.15;letter-spacing:0;color:var(--c-white)}
 .close9 .specimens .snote .cl{color:var(--c-1000)}
 /* close: two-column body + offer (index-H close9 idiom) */
-.close9 .cols{display:grid;grid-template-columns:calc(807 * var(--u)) calc(807 * var(--u));column-gap:calc(28 * var(--u));max-width:calc(1645 * var(--u))}
+.close9 .cols{display:grid;grid-template-columns:calc(807 * var(--u)) calc(807 * var(--u));column-gap:calc(24 * var(--u));max-width:calc(1645 * var(--u))}
 .close9 .cols p{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-1000)}
-.close9 .offer{margin-top:0;display:flex;flex-direction:column;gap:calc(42 * var(--u));align-items:flex-start}
+.close9 .offer{margin-top:0;display:flex;flex-direction:column;gap:calc(40 * var(--u));align-items:flex-start}
 .close9 .pricehd9{font-weight:500;font-size:var(--t-lead24);line-height:1.3;letter-spacing:0;color:var(--c-1000);max-width:calc(807 * var(--u))}
 /* fee disclosure under the membership line, ported from the homepage close (index-H L307) */
 .close9 .offer p.fee9{font-family:var(--mono);font-size:var(--t-mono15);line-height:1.5;letter-spacing:0.04em;color:var(--c-800);margin-top:calc(10 * var(--u))} /* mono is 1.5 (type audit 2026-07-31) */
@@ -202,8 +202,8 @@ img{display:block;max-width:none}
 .dr3-dot{width:6px;height:6px;border-radius:50%;background:var(--c-white);flex:none}
 
 /* 3-cell stat/number pattern, reuse of .stats3 tokens */
-.tri{display:grid;grid-template-columns:repeat(3,1fr);column-gap:calc(42 * var(--u))}
-.tri .cell{display:flex;flex-direction:column;gap:calc(14 * var(--u))}
+.tri{display:grid;grid-template-columns:repeat(3,1fr);column-gap:calc(50 * var(--u))}
+.tri .cell{display:flex;flex-direction:column;gap:calc(20 * var(--u))}
 .tri .v{font-weight:500;font-size:var(--t-h34);line-height:1.4;letter-spacing:-0.069em;color:var(--c-white)}
 .tri .v.gap{color:var(--c-urgent-muted)}
 .tri .rule{border-top:0.667px dashed var(--c-600);height:0}
@@ -211,12 +211,12 @@ img{display:block;max-width:none}
 
 /* No. 04 calibration scatter + Close constellation (ported from V4 Self-Directed, 2026-07-22) */
 .calgrid{display:grid;grid-template-columns:calc(807 * var(--u)) calc(528.3 * var(--u));justify-content:space-between;align-items:stretch}
-.calgrid + .tri{margin-top:calc(71 * var(--u))}
-.calgrid .calcol{display:flex;flex-direction:column;gap:calc(71 * var(--u))}
-.grp{display:flex;flex-direction:column;gap:calc(42 * var(--u))}
-.grp.tight{gap:calc(14 * var(--u))}
-.grp.pay{gap:calc(28 * var(--u))}
-.calgrid .calfig{display:flex;flex-direction:column;gap:calc(42 * var(--u))}
+.calgrid + .tri{margin-top:calc(60 * var(--u))}
+.calgrid .calcol{display:flex;flex-direction:column;gap:calc(60 * var(--u))}
+.grp{display:flex;flex-direction:column;gap:calc(40 * var(--u))}
+.grp.tight{gap:calc(20 * var(--u))}
+.grp.pay{gap:calc(32 * var(--u))}
+.calgrid .calfig{display:flex;flex-direction:column;gap:calc(40 * var(--u))}
 /* Calibration card - bible fig02 replica, verbatim (off-scale px intentional) */
 .cal-card{width:100%;max-width:624px;border:1px solid var(--c-900);border-radius:4px;background:var(--c-elev);font-family:'Inter',-apple-system,sans-serif;font-weight:400}
 .cal-cardhd{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:28px 28px 4px}
@@ -238,7 +238,7 @@ img{display:block;max-width:none}
 .cal-overtime{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:0 28px 26px}
 .cal-ot-k{font-size:13px;letter-spacing:-0.01em;line-height:1.5;color:var(--c-700)}
 .calcard{width:100%;background:var(--c-elev);border:0.5px solid var(--c-900);border-radius:28px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.05);overflow:hidden}
-.calcard .chd{display:flex;align-items:flex-start;justify-content:space-between;gap:calc(14 * var(--u));padding:calc(28 * var(--u)) calc(28 * var(--u)) calc(14 * var(--u))}
+.calcard .chd{display:flex;align-items:flex-start;justify-content:space-between;gap:calc(14 * var(--u));padding:calc(32 * var(--u)) calc(28 * var(--u)) calc(14 * var(--u))}
 .calcard .chd .l{font-size:var(--t-mono15);color:var(--c-200);letter-spacing:-0.01em}
 .calcard .chd .r{font-family:var(--mono);font-size:var(--t-mono11);letter-spacing:0.04em;color:var(--c-700);text-align:right;line-height:1.55}
 .calcard .calfilter{display:flex;flex-wrap:wrap;gap:calc(6 * var(--u));padding:0 calc(28 * var(--u)) calc(10 * var(--u))}
@@ -250,7 +250,7 @@ img{display:block;max-width:none}
 .calcard .chip.tk.active{border-style:solid}
 .calcard canvas{width:100%;aspect-ratio:1.5/1;display:block}
 .calcard .csum{display:grid;grid-template-columns:repeat(3,1fr);padding:0 calc(14 * var(--u));border-top:0.5px solid var(--c-1000)}
-.calcard .ci{padding:calc(14 * var(--u)) calc(14 * var(--u));display:flex;flex-direction:column}
+.calcard .ci{padding:calc(20 * var(--u)) calc(14 * var(--u));display:flex;flex-direction:column}
 .calcard .ci+.ci{border-left:0.5px solid var(--c-1000)}
 .calcard .ck{font-size:var(--t-mono13);color:var(--c-700);line-height:1.3}
 .calcard .cv{font-size:max(17px, calc(24 * var(--u)));color:var(--c-200);letter-spacing:-0.02em;margin-top:auto;padding-top:calc(10 * var(--u))}
@@ -259,41 +259,41 @@ img{display:block;max-width:none}
 .constfig .fig-caps{position:absolute;left:0;right:0;top:calc(100% + 14px)}
 .constfig .fig-leg{font-family:var(--mono);font-size:9px;line-height:1.4;color:var(--c-700);letter-spacing:0.04em} /* c-800 on the dark figure was 2.66:1 (WCAG AA fail); c-700 = 6.75:1 (2026-08-02) */
 .constfig .fig-note{margin-top:6px;font-family:var(--mono);font-size:var(--t-mono11);color:var(--c-700);letter-spacing:0.04em} /* hardcoded 12px -> the 11 token 2026-08-20: it was the last 12 on desktop, off the 13/11/9 mono ladder. Mobile keeps its own 9 below. */
-.close9 .cols .ccol{display:flex;flex-direction:column;gap:calc(71 * var(--u));align-items:flex-start}
+.close9 .cols .ccol{display:flex;flex-direction:column;gap:calc(60 * var(--u));align-items:flex-start}
 .close9 .cols .ccol .pricehd9{font-weight:500;font-size:var(--t-lead24);line-height:1.3;letter-spacing:0;color:var(--c-1000)}
 .close9 .cols .ccol .offer{margin-top:0}
 .constfig canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 
 /* 3-row step pattern (cream), reuse of .loop3 .step tokens */
 .rows3{display:grid;grid-auto-rows:1fr;border-bottom:0.667px solid rgba(28,28,28,0.16)}
-.rows3 .row{display:grid;grid-template-columns:calc(249.2 * var(--u)) 1fr;column-gap:calc(28 * var(--u));align-items:start;border-top:0.667px solid rgba(28,28,28,0.16);padding:calc(71 * var(--u)) 0}
+.rows3 .row{display:grid;grid-template-columns:calc(249.2 * var(--u)) 1fr;column-gap:calc(28 * var(--u));align-items:start;border-top:0.667px solid rgba(28,28,28,0.16);padding:calc(60 * var(--u)) 0}
 .rows3 .row b{grid-column:1;grid-row:1 / 3;font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-accent)}
 .rows3 .row .t{grid-column:2;font-weight:500;font-size:var(--t-read27);line-height:1.15;letter-spacing:0;color:var(--c-1000)}
-.rows3 .row .d{grid-column:2;margin-top:calc(28 * var(--u));max-width:calc(807.5 * var(--u));font-weight:400;font-size:var(--t-small17);line-height:1.3;color:var(--c-1000)}
+.rows3 .row .d{grid-column:2;margin-top:calc(24 * var(--u));max-width:calc(807.5 * var(--u));font-weight:400;font-size:var(--t-small17);line-height:1.3;color:var(--c-1000)}
 
 /* refusal list (dark), reuse of .suit5 border/token language */
 .refuse{display:grid;grid-template-columns:repeat(3,1fr);border:0.667px solid rgba(255,255,255,0.18)}
 .bandimg .refuse{background:rgba(0,0,0,0.55)}
-.refuse .r{padding:calc(42 * var(--u)) calc(42 * var(--u));border-right:0.667px solid rgba(255,255,255,0.18)}
+.refuse .r{padding:calc(40 * var(--u)) calc(50 * var(--u));border-right:0.667px solid rgba(255,255,255,0.18)}
 .refuse .r:last-child{border-right:0}
-.refuse .r b{display:block;font-weight:500;font-size:var(--t-read27);line-height:1.15;letter-spacing:0;color:var(--c-white);margin-bottom:calc(14 * var(--u))}
+.refuse .r b{display:block;font-weight:500;font-size:var(--t-read27);line-height:1.15;letter-spacing:0;color:var(--c-white);margin-bottom:calc(20 * var(--u))}
 .refuse .r p{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200)}
 
 /* research feature rows (cream) */
 /* research: Fiscal.ai terminal panel (specimen-document idiom) */
-.fpanel{background:var(--c-cream);padding:calc(42 * var(--u)) calc(42 * var(--u))}
-.fpanel .fhead{display:flex;justify-content:space-between;align-items:baseline;gap:calc(14 * var(--u));border-bottom:0.667px solid rgba(28,28,28,0.16);padding-bottom:calc(14 * var(--u));font-family:var(--mono);font-size:var(--t-mono11);line-height:1.6}
+.fpanel{background:var(--c-cream);padding:calc(40 * var(--u)) calc(50 * var(--u))}
+.fpanel .fhead{display:flex;justify-content:space-between;align-items:baseline;gap:calc(20 * var(--u));border-bottom:0.667px solid rgba(28,28,28,0.16);padding-bottom:calc(14 * var(--u));font-family:var(--mono);font-size:var(--t-mono11);line-height:1.6}
 .fpanel .fhead .l{color:var(--c-800);letter-spacing:0.04em} /* was 0.16em - mono tracking is 0.04em everywhere (2026-08-20) */
 .fpanel .fhead .r{color:var(--c-800);letter-spacing:0.04em} /* was 0.08em - mono tracking is 0.04em everywhere. c-800 kept: c-700 on this light panel was 2.78:1, a contrast fail (2026-08-02) */
-.fgrid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,auto);grid-auto-flow:column;column-gap:calc(85 * var(--u))}
-.fgrid .f{display:flex;flex-direction:column;gap:calc(6 * var(--u));padding:calc(28 * var(--u)) 0;border-bottom:0.667px solid rgba(28,28,28,0.16)}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,auto);grid-auto-flow:column;column-gap:calc(80 * var(--u))}
+.fgrid .f{display:flex;flex-direction:column;gap:calc(6 * var(--u));padding:calc(24 * var(--u)) 0;border-bottom:0.667px solid rgba(28,28,28,0.16)}
 .fgrid .f b{font-weight:500;font-size:var(--t-read27);line-height:1.15;letter-spacing:0;color:var(--c-1000)}
 .fgrid .f span{font-weight:400;font-size:var(--t-small17);line-height:1.3;color:var(--c-800)}
 .fgrid .f:nth-child(4),.fgrid .f:last-child{border-bottom:0}
 
 /* account type cards (cream) */
 .acct3{display:grid;grid-template-columns:repeat(3,1fr);column-gap:calc(28 * var(--u))}
-.acct3 .a{border-top:0.667px solid rgba(255,255,255,0.18);padding-top:calc(14 * var(--u));display:flex;flex-direction:column;gap:calc(14 * var(--u))}
+.acct3 .a{border-top:0.667px solid rgba(255,255,255,0.18);padding-top:calc(20 * var(--u));display:flex;flex-direction:column;gap:calc(14 * var(--u))}
 .acct3 .a h3{font-weight:500;font-size:var(--t-h34);line-height:1.3;letter-spacing:-0.02em;color:var(--c-white)}
 .acct3 .a p{font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-200)}
 .acct3 .a .lim{font-family:var(--mono);font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-700)} /* mono is 1.5 - was inheriting 1.3 (type audit 2026-07-31) */
@@ -312,7 +312,7 @@ br.dbr{display:none} /* hero break: OFF by default, so wide screens keep the two
 .hero{height:calc(1364 * var(--u));background:var(--c-black)}
 .hero>img,.hero>video{position:absolute;right:0;top:0;width:calc(836 * var(--u));min-width:280px;height:100%;object-fit:cover;filter:saturate(0.8) contrast(0.92) brightness(1.05)}
 .hero::after{content:'';position:absolute;top:0;right:0;width:calc(836 * var(--u));min-width:280px;height:100%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.13;mix-blend-mode:overlay;pointer-events:none;z-index:1}
-.hero .hgroup{position:absolute;left:calc(440 * var(--u));top:calc(415 * var(--u));width:calc(940 * var(--u));display:flex;flex-direction:column;align-items:flex-start;gap:calc(42 * var(--u));z-index:2}
+.hero .hgroup{position:absolute;left:calc(440 * var(--u));top:calc(415 * var(--u));width:calc(940 * var(--u));display:flex;flex-direction:column;align-items:flex-start;gap:calc(50 * var(--u));z-index:2}
 .hero .heyeb{font-family:var(--mono);font-weight:400;font-size:var(--t-mono15);letter-spacing:0.04em;color:var(--c-600)}
 .hbars{display:flex;flex-direction:column;align-items:flex-start;gap:0}
 .hbar{display:inline-block;white-space:nowrap;color:var(--c-white);font-weight:500;font-size:calc(64 * var(--u));line-height:1.05;letter-spacing:-0.02em}
@@ -366,7 +366,7 @@ body.menu-open{overflow:hidden}
 
 /* ---- site footer, identical on every page (2026-08-01). Ported verbatim from Pricing; the inner
    wrapper is scoped as `footer .container` so it cannot collide with the grid-overlay .container. ---- */
-footer{background:var(--c-black);color:var(--c-800);border-top:0.667px solid rgba(255,255,255,0.18);padding:64px 0 36px;font-size:11px;line-height:1.5;margin-top:calc(113 * var(--u))}
+footer{background:var(--c-black);color:var(--c-800);border-top:0.667px solid rgba(255,255,255,0.18);padding:64px 0 36px;font-size:11px;line-height:1.5;margin-top:calc(120 * var(--u))}
 footer .container{margin:0 calc(450 * var(--u))}
 .footer-copy{font-size:13px;line-height:1.4;color:var(--c-600)} /* meta tier 1.4, matching the doc pages (2026-08-20) */
 .footer-copy a{color:var(--c-600);text-decoration:underline}

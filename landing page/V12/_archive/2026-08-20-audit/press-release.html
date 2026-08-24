@@ -5,7 +5,7 @@
 <meta http-equiv="Cache-Control" content="no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The stock page: the memo at the sell decision · Changelog · Intelligent Investing</title>
+<title>Orion Digital Commercially Launches Intelligent Investing · Press Release</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -34,7 +34,7 @@ a{color:inherit;}
 /* ---- nav v2, ink on cream ---- */
 .nav{position:fixed;inset:0 0 auto;z-index:100;height:calc(78 * var(--u));min-height:54px;background:transparent;display:flex;align-items:center;transition:background 0.35s ease}
 .nav a{text-decoration:none}
-.nav .logo{position:absolute;left:calc(40 * var(--u));top:50%;transform:translateY(-50%);height:calc(20 * var(--u));min-height:16px;width:auto;display:block} /* 16u/13 -> 20u/16: the doc pages carried a smaller logo than home/SD/managed - one logo size site-wide (2026-08-20) */
+.nav .logo{position:absolute;left:calc(40 * var(--u));top:50%;transform:translateY(-50%);height:calc(16 * var(--u));min-height:13px;width:auto;display:block}
 .nav .logo svg{height:100%;width:auto;display:block}
 .nav .logo path{fill:var(--c-1000)}
 .navmenu{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:calc(42 * var(--u))}
@@ -63,32 +63,28 @@ a{color:inherit;}
 .pr-crumb .cur{color:var(--c-1000);}
 .pr-title{font-weight:500;font-size:calc(64 * var(--u));line-height:1.05;letter-spacing:-0.02em;color:var(--c-1000);max-width:calc((100% + var(--gutter)) / 12 * 10 - var(--gutter));}
 .pr-dateline{margin-top:calc(42 * var(--u));font-family:var(--mono);font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-800);}
-.pr-title + .pr-deck{margin-top:calc(42 * var(--u));}
 .pr-deck{margin-top:calc(28 * var(--u));font-weight:400;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-1000);max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));}
 
 /* ---- release body ---- */
-.pr-doc{padding:calc(184 * var(--u)) 0 calc(184 * var(--u));} /* bottom was 0: the ALL UPDATES underline sat ON the next section's border. The line now gets the same air above as pr-close gives it below (2026-08-20) */
+.pr-doc{padding:calc(184 * var(--u)) 0 0;}
 .pr-body{font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-1000);max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));}
 .pr-body p+p{margin-top:calc(28 * var(--u));}
 .pr-body em{font-style:normal;font-weight:500;color:var(--c-1000);}
 .pr-body a.pr-link{color:var(--c-1000);text-decoration:none;border-bottom:1px solid rgba(28,28,28,0.3);transition:border-color 0.2s ease;}
 .pr-body a.pr-link:hover{border-bottom-color:var(--c-1000);}
+.pr-h2{margin-top:calc(113 * var(--u));margin-bottom:calc(28 * var(--u)); /* was 24u - unified with manifesto/changelog at 28u = 16px (2026-08-20) */font-weight:500;font-size:var(--t-h34);line-height:1.3;letter-spacing:-0.02em;color:var(--c-1000);max-width:calc((100% + var(--gutter)) / 12 * 8 - var(--gutter));}
+.pr-steps{margin-top:calc(42 * var(--u));list-style:none;max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));}
+.pr-steps li{display:grid;grid-template-columns:calc(70 * var(--u)) 1fr;column-gap:calc(28 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding:calc(14 * var(--u)) 0;font-size:var(--t-body);line-height:1.3;letter-spacing:0;color:var(--c-1000);}
+.pr-steps li .n{font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-800);}
 .pr-quote{margin:calc(71 * var(--u)) 0;font-weight:500;font-size:var(--t-read27);line-height:1.15;letter-spacing:0;color:var(--c-1000);max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));}
-.pr-attrib{margin-top:calc(14 * var(--u));font-family:var(--mono);font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-800);}
+.pr-attrib{display:block;margin-top:calc(14 * var(--u));font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-800);} /* mono is 400 everywhere; it inherited the quote's 500 (2026-08-20) */
 
 /* ---- figure (product screenshot) ---- */
-.pr-fig{margin:0 0 calc(113 * var(--u));max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));} /* 6col, the press-release figure width (2026-08-20) */
+.pr-fig{margin:0 0 calc(113 * var(--u));max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));}
 .pr-doc .pr-fig-mark+.pr-fig,.pr-doc .pr-fig-mark+.pr-body{margin-top:0;}
 .pr-body+.pr-fig-mark,.pr-quote+.pr-fig-mark{margin-top:calc(113 * var(--u));}
 .pr-fig img{display:block;width:100%;height:auto;border:0.667px solid rgba(28,28,28,0.16);}
 .pr-fig figcaption{margin-top:calc(14 * var(--u));font-family:var(--mono);font-size:var(--t-mono11);line-height:1.4;/* mono tier audit 2026-08-02: figcap/legend/stamp = 9 at 1.4, not the 13 label token */ letter-spacing:0.04em;color:var(--c-800);}
-
-/* ---- changelog items ---- */
-.cl-item{border-top:0;padding-top:0;}
-.cl-item+.cl-item{margin-top:calc(113 * var(--u));} /* hairlines between entries retired 2026-08-20 - the press-release page separates its sections with the 113u beat, and this page follows its design */
-.cl-item+.cl-item{margin-top:calc(113 * var(--u));}
-.cl-name{font-weight:500;font-size:var(--t-h34);line-height:1.3;letter-spacing:-0.02em;color:var(--c-1000);margin-bottom:calc(28 * var(--u)); /* was 24u - unified at 28u = 16px (2026-08-20) */max-width:calc((100% + var(--gutter)) / 12 * 8 - var(--gutter));}
-.cl-item .pr-fig{margin-top:calc(42 * var(--u));}
 
 /* ---- boilerplate + contact ---- */
 .pr-block{margin-top:calc(113 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(28 * var(--u));}
@@ -99,8 +95,13 @@ a{color:inherit;}
 /* ---- legal ---- */
 .pr-legal{padding:calc(85 * var(--u)) 0 calc(113 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);margin-top:calc(113 * var(--u));}
 .pr-legal h2{font-family:var(--mono);font-weight:400;font-size:var(--t-mono13);line-height:1.5;letter-spacing:0.04em;color:var(--c-800);margin-bottom:calc(28 * var(--u));}
-.pr-legal p{font-family:var(--mono);font-size:var(--t-mono12);line-height:1.5;letter-spacing:0.04em;color:var(--c-800);max-width:calc((100% + var(--gutter)) / 12 * 6 - var(--gutter));} /* 8col -> 6col: the fine print ran wider than the body it annotates (2026-08-20) */
+.pr-legal p{font-family:var(--mono);font-size:var(--t-mono12);line-height:1.5;letter-spacing:0.04em;color:var(--c-800);max-width:calc((100% + var(--gutter)) / 12 * 8 - var(--gutter));}
 .pr-legal p+p{margin-top:calc(14 * var(--u));}
+
+/* desktop equivalents of the former inline styles */
+.pr-after-steps{margin-top:calc(71 * var(--u));}
+.pr-mark-block{margin-top:calc(113 * var(--u));}
+.pr-legal-2{margin-top:0;padding-top:calc(85 * var(--u));}
 
 /* ---- more updates ---- */
 .pr-more{margin-top:calc(113 * var(--u));border-top:0.667px solid rgba(28,28,28,0.16);padding-top:calc(28 * var(--u));}
@@ -157,12 +158,10 @@ body.menu-open .nav .ncta{border-color:var(--c-white);color:var(--c-white)}
 body.menu-open{overflow:hidden}
 
 /* ---- leading canon, same two values as the other pages (2026-08-01): 1.5 label + CTA, 1.4 meta ---- */
-/* .cl-name is NOT in this list. It is a 28 title, not a label - the desktop 28
-   tier is 1.3 (pricing .p-lead, measured). The same slip was found and fixed on
-   manifesto the same day (2026-08-19). */
-.cl-eyeb,.mlink,.mlink span,.cta-button,.nav .ncta,.nav .lang a,.navmenu a,
+.pr-eyeb,.mlink,.mlink span,.cta-button,.nav .ncta,.nav .lang a,.navmenu a,
+/* .pr-link is an inline anchor inside 15/1.4 prose - it inherits the paragraph leading, it is not chrome (2026-08-01) */
 .menuov .menuov-cta,.menuov .mlang a,.k{line-height:1.5}
-.cl-item .d,.footer-legal,.footer-reset,.footer-copy,.menuov .mfoot,.menuov .mfoot span{line-height:1.4}
+.pr-attrib,.d,.footer-legal,.footer-reset,.footer-copy,.menuov .mfoot,.menuov .mfoot span{line-height:1.4}
 
 @media(max-width:900px){
   html,body{max-width:100%;overflow-x:hidden;}
@@ -185,9 +184,10 @@ body.menu-open{overflow:hidden}
   .nav .ncta::after{content:'';position:absolute;inset:-6px}
   .nav .burger::after{content:'';position:absolute;inset:-16px -9px}
   .nav .logo::after{content:'';position:absolute;inset:-16px}
-  .pr-crumb a,.mlink,.cta-button,.li .t,.cl-item a,footer a,.footer-reset{position:relative}
-  .pr-crumb a::after{content:'';position:absolute;inset:-14px 0}
-  .mlink::after,.li .t::after,.cl-item a::after{content:'';position:absolute;inset:-13px 0}
+  .pr-link,.mlink,.cta-button,.li .t,footer a,.footer-reset,.pr-body a{position:relative}
+  .pr-link::after,.mlink::after,.li .t::after,.pr-body a::after{content:'';position:absolute;inset:-13px 0}
+  .pr-crumb a{position:relative}
+  .pr-crumb a::after{content:'';position:absolute;inset:-14px 0} /* breadcrumb links were 17 tall */
   .cta-button::after{content:'';position:absolute;inset:-3px}
   footer a::after,.footer-reset::after{content:'';position:absolute;inset:-16px 0}
   .footer-social a{position:relative}
@@ -198,20 +198,22 @@ body.menu-open{overflow:hidden}
   .pr-hero{padding:120px 0 72px;}
   .pr-title{font-size:clamp(26px,6.92vw,40px);line-height:1.1;max-width:none;}
   .pr-crumb{margin-bottom:24px;gap:8px;font-size:11px} /* breadcrumb = meta tier; mobile mono is 9/11/13 (type audit 2026-07-31) */
+  .pr-dateline{margin-top:24px}
   .pr-title + .pr-deck,.pr-deck{margin-top:24px}
-  .pr-deck,.pr-body,.pr-block p,.pr-quote,.pr-fig,.pr-legal p,.pr-more .li .t,.cl-name{max-width:none;}
+  .pr-deck,.pr-body,.pr-block p,.pr-quote,.pr-fig,.pr-h2,.pr-steps,.pr-legal p,.pr-more .li .t{max-width:none;}
   .pr-more .li .t{line-height:1.4} /* mobile small-copy tier (type audit 2026-07-31) */
+  .pr-h2{font-size:22px;line-height:1.15;margin-top:64px;margin-bottom:16px;} /* 24 -> 16 (2026-08-20) */
+  .pr-steps{margin-top:24px}
+  .pr-steps li{grid-template-columns:1fr;row-gap:8px;padding:16px 0;line-height:1.4;}
   .pr-body,.pr-deck,.pr-block p{line-height:1.4;}
   .pr-body p+p{margin-top:24px}
+  .pr-quote{margin:40px 0;font-size:17px;line-height:1.3} /* mobile 17 ladder (desktop keeps read-tier 24/1.15) (2026-08-20) */
+  .pr-attrib{margin-top:16px}
   .pr-fig{margin-bottom:40px}
   .pr-fig figcaption{margin-top:16px}
   .pr-fig-mark{margin-bottom:16px}
+  .pr-body+.pr-fig-mark,.pr-quote+.pr-fig-mark{margin-top:64px}
   .pr-doc{padding-top:72px;}
-  .cl-item{padding-top:24px}
-  .cl-item+.cl-item{margin-top:64px}
-  .cl-name{font-size:22px;line-height:1.15;margin-bottom:16px}
-  .cl-item .pr-fig{margin-top:24px}
-  .cl-item+.cl-item{margin-top:64px} /* PR mobile beat (2026-08-20) */
   .pr-block,.pr-more{margin-top:64px;padding-top:24px}
   .pr-legal{margin-top:64px;padding:24px 0 0}
   .pr-block h2,.pr-legal h2,.pr-more h2{margin-bottom:16px}
@@ -221,6 +223,9 @@ body.menu-open{overflow:hidden}
   .pr-more .li{grid-column:1/-1;grid-template-columns:1fr;row-gap:8px} /* was the desktop grid unconverted: parent 12col x span 8, then 8 cols inside -> meta 84px (date broke mid-value) + title 143px, 118px of the rail unused. Stacked full width, same as the Newsroom list (2026-08-02) */
   .pr-more .li .k,.pr-more .li .t{grid-column:1}
   .pr-more .allupdates{margin-top:24px}
+  .pr-after-steps{margin-top:40px}
+  .pr-mark-block{margin-top:64px}
+  .pr-legal-2{margin-top:0;padding-top:48px}
   .pr-close{padding:72px 0;}
   .pr-close .cc-line{font-size:clamp(26px,6.92vw,40px);line-height:1.1;max-width:none}
   .pr-close .cta-button{margin-top:32px;font-size:13px;line-height:1.5} /* CTA tier 13 (type audit 2026-07-31) */
@@ -295,67 +300,127 @@ body.menu-open{overflow:hidden}
     <nav class="pr-crumb ri" aria-label="Breadcrumb">
       <a href="newsroom.html">NEWSROOM</a>
       <span class="sep" aria-hidden="true">/</span>
-      <a href="newsroom.html#changelog">CHANGELOG</a>
+      <a href="newsroom.html#press-release">PRESS RELEASE</a>
       <span class="sep" aria-hidden="true">/</span>
-      <span class="cur">AUG 17, 2026</span>
+      <span class="cur">JUL 27, 2026</span>
     </nav>
-    <h1 class="pr-title ri" style="--d:0.08s">The stock page: the memo at the sell decision</h1>
-    <p class="pr-deck ri" style="--d:0.18s">The memo now shows in the sell flow. Selling or reducing a position that has one surfaces it first, read only: classification, role, prediction, source, investment case.</p>
+    <h1 class="pr-title ri" style="--d:0.08s">Orion Digital Commercially Launches Intelligent&nbsp;Investing</h1>
+    <p class="pr-dateline ri" style="--d:0.14s">VANCOUVER, BRITISH COLUMBIA</p>
+    <p class="pr-deck ri" style="--d:0.18s">The investing industry solved access. In an AI world, Intelligent Investing is built to help investors make better investment decisions.</p>
   </div>
 </section>
 
 <div class="container">
 <section class="pr-doc">
-  <div class="cl-item ri">
-    <h2 class="cl-name">The memo at the sell decision</h2>
-    <div class="pr-body">
-      <p>The memo now shows in the sell flow. Selling or reducing a position that has one surfaces it first, read only: classification, role, prediction, source, investment case.</p>
-      <p>Professional investors re-read their own reasoning before they act against it. Retail platforms rarely give you the chance - the price is in front of you, the memo isn’t. We show it before the order, not after, because the decision deserves the same reference point a professional would have. It does not hold up the order.</p>
-    </div>
-    <div class="pr-fig-mark ri">FIG. 01</div>
-    <figure class="pr-fig">
-      <img src="changelog images/AUG 17, 2026 - The memo in the sell flow..png" alt="The sell flow surfacing the investment memo before the order is confirmed">
-      <figcaption>Illustrative. Figures and positions shown are examples, not a client record and not a recommendation.</figcaption>
-    </figure>
+  <div class="pr-fig-mark ri">FIG. 01</div>
+  <div class="pr-body ri">
+    <p>Orion Digital Corp. (NASDAQ: ORIO) (TSX: ORIO) (&ldquo;Orion Digital&rdquo; or the &ldquo;Company&rdquo;), today announced the commercial launch of Intelligent Investing, an investing platform built for an AI world in which information is increasingly abundant and long-term success depends less on access to information and more on the quality of investment decisions.</p>
+    <p>The investing industry spent two decades making investing easier. Orion Digital believes the next generation of investing platforms will compete on decision quality. Intelligent Investing is the Company&rsquo;s answer to that shift.</p>
+    <p>Most investing platforms are organized around the transaction. They record what you bought and rarely capture why. Intelligent Investing is organized around the decision - and around a question the industry seldom asks its customers to answer: how are you actually doing?</p>
   </div>
 
-  <div class="cl-item ri">
-    <h2 class="cl-name">A new layout</h2>
-    <div class="pr-body">
-      <p>The stock page is now organised into sections, each showing a summary and opening into full detail: memo, position, profile, news, history, research. Position shows market value, portfolio weight, and unrealised gain or loss. News shows the four most recent articles and hides itself when there are none. History shows the six most recent transactions, and a new order appears there immediately - no refresh required.</p>
-    </div>
+  <h2 class="pr-h2 ri">The Number Most Investors Never See</h2>
+  <div class="pr-body ri">
+    <p>Most investors can see what their portfolio is worth. Far fewer have a clear view of how it has performed against an appropriate benchmark - and fewer still can measure whether the judgment behind their individual investment decisions was sound.</p>
+    <p>Benchmarking is not one-size-fits-all. A portfolio designed for income, lower volatility or global diversification should be assessed against measures relevant to its objective. But Intelligent Investing believes every investor should be able to see clearly how their results compare with the market and with the goals they set for themselves.</p>
+    <p>Intelligent Investing puts those comparisons in plain view. It shows members their performance against the S&amp;P 500 and other relevant measures, while also preserving the expectations, assumptions and confidence behind individual decisions. Over time, members can see not only what they earned, but whether their original judgment was well founded.</p>
   </div>
 
-  <div class="cl-item ri">
-    <h2 class="cl-name">A clock</h2>
-    <div class="pr-body">
-      <p>A clock has been added to the page: Eastern time, and whether the exchange that stock trades on is open right now.</p>
-    </div>
+  <h2 class="pr-h2 ri">A Capital Allocation System for Individual Investors</h2>
+  <div class="pr-body ri">
+    <p>Most investing platforms are designed around the transaction. Intelligent Investing is designed around the decision.</p>
+    <p>Rather than treating investing as a series of isolated trades, Intelligent Investing organizes the entire investment process into a structured capital allocation system. Every investment begins before capital is committed. Every investment can follow the same disciplined process:</p>
+  </div>
+  <ol class="pr-steps ri">
+    <li><span class="n">01</span><span>Research the opportunity using professional research tools, including <a class="pr-link" href="https://fiscal.ai" target="_blank" rel="noopener">Fiscal.ai Max</a>.</span></li>
+    <li><span class="n">02</span><span>Develop the investment case by documenting the thesis, position size, investment classification, key assumptions, expected investment horizon, probability assessment and the evidence that would change the investor's view (&ldquo;kill criteria&rdquo;), at the time of investment or later.</span></li>
+    <li><span class="n">03</span><span>Invest through commission-free self-directed investing.</span></li>
+    <li><span class="n">04</span><span>Benchmark performance against the S&amp;P 500 and other relevant measures.</span></li>
+    <li><span class="n">05</span><span>Review the original reasoning against actual outcomes.</span></li>
+  </ol>
+  <div class="pr-body pr-after-steps ri">
+    <p>Over many decisions, this builds something most investors never develop: calibration - a measured understanding of where judgment is strong, where it is weak and whether confidence has been earned.</p>
+    <p>Most people own positions. Capital allocators own decisions.</p>
   </div>
 
-  <div class="cl-item ri">
-    <h2 class="cl-name">Also changed</h2>
-    <div class="pr-body">
-      <p>S&amp;P 500 benchmark is now S&amp;P 500 comparison, throughout. The core and managed section on the dashboard can be collapsed. Order filled status appears on position rows. The investment case can be copied from a memo. Login is faster. S&amp;P 500 company, sector, and historical performance figures updated to July 2026.</p>
-    </div>
+  <div class="pr-fig-mark ri">FIG. 02</div>
+  <figure class="pr-fig ri">
+    <img src="Images/v5 images/press-release-light-clean.png" alt="The Intelligent Investing app on a phone">
+    <figcaption>Illustrative. Figures and positions shown are examples, not a client record and not a recommendation.</figcaption>
+  </figure>
+
+  <h2 class="pr-h2 ri" style="margin-top:0">The Environment is the Product</h2>
+  <div class="pr-body ri">
+    <p>Behavior follows environment. Build a platform for engagement and you tend to get engagement; build one around decision quality and you get something else. Many investing platforms have historically optimized for activity and engagement. Intelligent Investing is designed to help investors improve decision quality over time.</p>
+    <p>It is also asset-neutral. It does not tell members what to own - the Company believes investors should be able to access a broad range of asset classes - and focuses instead on the environment in which decisions are made and measured.</p>
+    <p>The platform and the business model are built around the same objective: helping investors become better long-term capital allocators. Members pay a $20 monthly subscription; trading is commission-free. Intelligent Investing does not charge a separately stated currency-conversion fee, although it earns a disclosed spread when members convert currency, and it earns a 0.10% management fee on managed portfolios. Those revenue lines do vary with member activity so the alignment is not absolute, but the core of the business is a subscription, not trading activity, and the company grows by being worth keeping rather than by encouraging members to trade more.</p>
   </div>
 
-    <section class="pr-block ri">
-    <h2>MEMBERS RECEIVE THIS BY EMAIL</h2>
-    <p>Every changelog goes to members as a monthly note. Nothing here is a recommendation to buy, sell, or hold any security.</p>
+  <h2 class="pr-h2 ri">Built for an AI World</h2>
+  <div class="pr-body ri">
+    <p>Every membership includes access to Fiscal.ai Max (normally $99 per month), an independent, AI-powered research and analysis platform that specializes in financial analysis and data. Its role is bounded by design: it supports research and analysis; it does not make investment decisions.</p>
+    <p>That boundary reflects how Intelligent Investing views AI in investing. General-purpose AI is powerful for direction but can be unreliable on specific figures, so members receive access to dependable, purpose-built research. As capable AI reaches more investors, Intelligent Investing believes the advantage shifts to those who can turn good analysis into disciplined decisions - and to platforms built to help them do it, working alongside AI models rather than trying to compete with them.</p>
+  </div>
+
+  <h2 class="pr-h2 ri">Built on an Established Wealth Business</h2>
+  <div class="pr-body ri">
+    <p>Intelligent Investing is commercializing from Orion Digital's established Canadian wealth business, operated through its wholly owned, registered subsidiaries IntelligentInvesting Securities Inc. and IntelligentInvesting Wealth Management Inc., which together administer approximately C$500 million in client assets across managed and self-directed investing. While those assets pre-date the new investing experience, the existing business provides the regulatory, operating and technology foundation on which Intelligent Investing is built.</p>
+  </div>
+
+  <h2 class="pr-h2 ri">What Comes Next</h2>
+  <div class="pr-body ri">
+    <p>This is the beginning of Intelligent Investing's commercial rollout. Through the remainder of 2026 Orion Digital intends to introduce the platform to more investors, learn from how they use it, improve it continuously and invest behind what works.</p>
+  </div>
+
+  <blockquote class="pr-quote ri">Commercial launch marks the transition from product development to commercialization. Our focus now is straightforward: introduce Intelligent Investing to customers, learn quickly from how they use it, continuously improve the platform and allocate capital with discipline. We believe that approach gives us the best opportunity to build a large and enduring wealth business over time.
+    <span class="pr-attrib">GREG FELLER, PRESIDENT &amp; CFO</span>
+  </blockquote>
+
+  <blockquote class="pr-quote ri">The investing industry spent twenty years making investing easier. We believe the next decade will be about helping investors invest better. Most investors can tell you what they own. Far fewer can explain why they own it - or whether the reasoning behind the decision was sound. Professional investors have long relied on written theses, explicit assumptions and disciplined review. Intelligent Investing brings those disciplines directly into the investing experience for people who believe investing is a skill that can be developed over a lifetime.
+    <span class="pr-attrib">DAVID FELLER, FOUNDER &amp; CEO</span>
+  </blockquote>
+
+  <div class="pr-body ri">
+    <p>Orion Digital believes the future of investing belongs to platforms that help investors become better decision-makers over time. Commercial launch marks the beginning of that journey.</p>
+  </div>
+
+  <div class="pr-fig-mark pr-mark-block ri">FIG. 03</div>
+  <section class="pr-block ri" style="margin-top:0">
+    <h2>ABOUT INTELLIGENT INVESTING</h2>
+    <p>Intelligent Investing is Orion Digital's Canadian wealth business built for people who believe investing is a skill that can be developed over a lifetime.</p>
+    <p>It combines commission-free investing, independent AI-powered research and a structured capital allocation system designed to help investors document, benchmark, review and continuously improve the quality of their decisions over time.</p>
+    <p>Intelligent Investing services are provided in Canada through Orion Digital's wholly owned subsidiaries, IntelligentInvesting Securities Inc., an investment dealer and member of the Canadian Investment Regulatory Organization (CIRO), and IntelligentInvesting Wealth Management Inc., a registered portfolio manager. Orion Digital Corp. is a holding company and does not itself provide regulated financial services. For more information, visit: <a class="pr-link" href="https://intelligentinvesting.ai">intelligentinvesting.ai</a>.</p>
+  </section>
+
+  <section class="pr-block ri">
+    <h2>ABOUT ORION DIGITAL</h2>
+    <p>Orion Digital Corp. (NASDAQ: ORIO; TSX: ORIO) is building platforms for the AI-driven financial system. The Company operates Intelligent Investing, its licensed and regulated Canadian wealth platform; Carta Worldwide, a European payments infrastructure platform; and a consumer lending portfolio that generates operating cash flow.</p>
+  </section>
+
+  <section class="pr-block ri">
+    <h2>FOR FURTHER INFORMATION</h2>
+    <p>Investor Relations<br>investors@oriondigitalcorp.com</p>
+    <p>US Investor Relations Contact<br>Lytham Partners, LLC<br>Ben Shamsian<br>New York | Phoenix<br>646-829-9701<br>shamsian@lythampartners.com</p>
   </section>
 
   <section class="pr-legal ri">
     <h2>IMPORTANT INFORMATION</h2>
+    <p>IntelligentInvesting Securities Inc. is an investment dealer and a member of the Canadian Investment Regulatory Organization (CIRO) and the Canadian Investor Protection Fund (CIPF). [Confirm registration and membership before publication.]</p>
+    <p>Self-directed (order-execution-only) accounts are not subject to a suitability assessment. You make your own investment decisions. IntelligentInvesting Securities Inc. does not provide recommendations or investment advice.</p>
+    <p>Investing involves risk, including the possible loss of the money you invest. There is no guarantee of any particular outcome, and past results do not guarantee future results. Nothing in this release is a recommendation to buy, sell, or hold any security or to follow any strategy.</p>
     <p>Product images are illustrative. Figures, positions, and tickers shown are examples and do not represent a client account or actual performance.</p>
-    <p>Self-directed (order-execution-only) accounts are not subject to a suitability assessment. You make your own investment decisions. [Legal Entity Name] does not provide recommendations or investment advice.</p>
-    <p>Investing involves risk, including the possible loss of the money you invest. There is no guarantee of any particular outcome, and past results do not guarantee future results.</p>
+  </section>
+
+  <section class="pr-legal pr-legal-2 ri">
+    <h2>FORWARD-LOOKING STATEMENTS</h2>
+    <p>This news release contains &ldquo;forward-looking statements&rdquo; within the meaning of applicable securities legislation, including statements regarding the commercial launch and rollout of the Intelligent Investing platform; the Company&rsquo;s plans through the remainder of 2026, including to increase customer awareness, continue refining the product, expand capabilities and increase marketing investment; the Company&rsquo;s capital allocation strategy and the pace at which it invests behind the Intelligent Investing opportunity; the Company&rsquo;s expectation that the operating evidence generated through commercialization will inform its investment decisions; Orion Digital's strategic initiatives in respect of its wealth business; the anticipated benefits of the platform, including its ability to help investors improve decision quality over time; the alignment of the Company's subscription-based model with member outcomes; and Orion Digital's beliefs regarding the future of digital wealth and the evolving role of artificial intelligence and investor judgment. Forward-looking statements are typically identified by words such as "may", "will", "could", "would", "anticipate", "believe", "expect", "intend", "potential", "estimate", "budget", "scheduled", "plans", "planned", "forecasts", "goals" and similar expressions. Forward-looking statements are necessarily based upon a number of estimates and assumptions that, while considered reasonable by management at the time of preparation, are inherently subject to significant business, economic and competitive uncertainties and contingencies, and may prove to be incorrect. Forward-looking statements involve known and unknown risks, uncertainties and other factors that may cause actual financial results, performance or achievements to be materially different from the estimated future results, performance or achievements expressed or implied by those forward-looking statements and the forward-looking statements are not guarantees of future performance. Orion Digital&rsquo;s growth, its ability to expand into new products and markets and its expectations for its future financial performance are subject to a number of conditions, many of which are outside of Orion Digital&rsquo;s control, including the receipt of any required regulatory approval. For a description of the risks associated with Orion Digital&rsquo;s business please refer to the &ldquo;Risk Factors&rdquo; section of Orion Digital&rsquo;s current annual information form, which is available at www.sedarplus.com and www.sec.gov. Except as required by law, Orion Digital disclaims any obligation to update or revise any forward-looking statements, whether as a result of new information, events or otherwise.</p>
   </section>
   <section class="pr-more ri">
     <h2>MORE UPDATES</h2>
     <div class="mlist2">
-      <div class="li"><span class="k">Press Release<span class="d">JUL 27, 2026</span></span><a class="t" href="press-release.html">Orion Digital Commercially Launches Intelligent Investing</a></div>
-      <div class="li"><span class="k">Changelog<span class="d">JUL 27, 2026</span></span><a class="t" href="changelog-2026-07-27.html">Writing the investment case</a></div>
+      <div class="li"><span class="k">Changelog<span class="d">[MMM DD], 2026</span></span><a class="t" href="changelog-entry.html">[July changelog title, one line]</a></div>
+      <div class="li"><span class="k">Changelog<span class="d">JUN 30, 2026</span></span><a class="t" href="changelog-entry.html">[June changelog title, one line]</a></div>
+      <div class="li"><span class="k">In the Press<span class="d">[MMM DD], 2026</span></span><a class="t" href="#" onclick="return false" target="_blank" rel="noopener">[Coverage headline as published]</a><!-- inert placeholder, see newsroom (2026-08-20) --></div>
     </div>
     <a class="mlink allupdates" href="newsroom.html"><svg class="arr" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.5 11.5L11.5 4.5" stroke="currentColor" stroke-width="1.1"/><path d="M5.5 4.5H11.5V10.5" stroke="currentColor" stroke-width="1.1"/></svg><span>ALL UPDATES</span></a>
   </section>
@@ -399,16 +464,15 @@ body.menu-open{overflow:hidden}
 <!-- burger + overlay handler lives in shared/v11-sub.js - one binding only (2026-08-20) -->
 
 <style id="v9-mobile">
-/* ============ V10 mobile layer - Changelog Entry (2026-08-16). Sits on top of the V8 mobile block
-   above. Desktop is V8 verbatim.
+/* ============ V10 mobile layer - Press Release (2026-08-16). Sits on top of the V8 mobile block
+   above. Desktop is V8 verbatim. Cream family (.ri, .pr-hero / .pr-doc / .pr-block / .pr-close),
+   2,211 words, no horizontal strips, no tables, no dtonly cuts - content parity was already whole.
 
-   Same class system as Press Release (.pr-hero / .pr-doc / .pr-block / .pr-legal / .pr-more /
-   .pr-close) plus the changelog-only .cl-item / .cl-name, so the delta is identical: three section
-   paddings. No images beyond the shared document plate, no strips, no tables, no dtonly cuts.
+   The §7-3 two-tier warning applies here and both tiers are already correct: .pr-h2 is the 22/1.15
+   stream opener and .pr-more .li .t is 13/1.4 small copy. Do NOT raise the list items.
 
-   Tier check (§7-3): this page has no .pr-h2 - .cl-name (22/1.15, same on desktop) carries the
-   release entries and .pr-more .li .t stays 13. Both tiers are present, so nothing to fix. Do not
-   "normalise" .cl-name down to the 17 item tier: it is the page's only heading below the hero. */
+   The one image is a document plate - <figure class="pr-fig"> + <figcaption>, 335x377 at 375 - not
+   a full-bleed section photo, so the .v9band grammar does not apply to it. ============ */
 @media (max-width:900px){
   /* burger geometry unified to the home/SD value (2026-08-16, Inkyung). V8 shipped 26x12 with an
      8px gap; home/SD were tightened to 24x7 / 5px during the V9 build and the rest were never
@@ -420,11 +484,15 @@ body.menu-open{overflow:hidden}
   .nav .burger span:last-child{bottom:0}
 
   .pr-hero{padding:120px 0 104px} /* top stays 120 - fixed-nav clearance, not a section rhythm */
-  .pr-doc{padding-top:104px;padding-bottom:104px} /* mirror of the desktop fix (2026-08-20) */
+  .pr-doc{padding-top:104px}
   .pr-close{padding:104px 0}
-  /* .pr-block / .pr-legal / .pr-more keep margin-top:64 - the ladder's layer break. */
+  /* .pr-block / .pr-legal / .pr-more keep margin-top:64 - that is the ladder's layer break, not a
+     section boundary, and the doc reads as one continuous release. */
 
-  /* type sweep (2026-08-16, Inkyung: 전 페이지 행간·자간 통일) - same three as Press Release */
+  /* type sweep (2026-08-16, Inkyung: 전 페이지 행간·자간 통일):
+     - display clamp raised to the DS v16 canon 28/7.4vw (= 29 at 390); was the stale 26/6.92vw
+     - dateline is the 11 meta tier: mono meta leads at 1.4, not 1.5 (Inkyung 2026-08-01, all pages).
+       The crumb stays 1.5 - it is a nav label, and its 11 size is a dated decision (2026-07-31). */
   .pr-title,.pr-close .cc-line{font-size:clamp(28px,7.4vw,40px);letter-spacing:-0.02em}
   .pr-dateline{line-height:1.4}
 }
