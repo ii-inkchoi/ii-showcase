@@ -40,16 +40,21 @@
   header.app{position:relative;min-height:48px;display:flex;align-items:center;gap:8px;
     padding:0 20px;border-bottom:0.5px solid var(--c-900);}
   header.app .back{font-size:17px;color:var(--c-400);cursor:pointer;min-width:44px;min-height:44px;display:flex;align-items:center;}
-  header.app .hdr-status{position:absolute;left:50%;transform:translateX(-50%);
-    display:inline-flex;align-items:center;gap:8px;white-space:nowrap;
-    font-size:11px;color:var(--c-400);letter-spacing:-0.02em;}
-  header.app .action{margin-left:auto;}
-  header.app .action{font-size:13px;letter-spacing:-0.02em;color:var(--c-700);cursor:pointer;min-height:44px;display:inline-flex;align-items:center;}
+  /* Market state is app chrome, not a page title: it gets its own strip under
+     the nav hairline instead of competing for the nav's centre. */
+  .mkt-strip{display:flex;align-items:center;gap:12px;padding:11px 20px;}
+  .mkt-clock{font-size:13px;font-weight:500;color:var(--c-200);letter-spacing:-0.02em;
+    font-feature-settings:'tnum' 1,'lnum' 1;}
+  .mkt-div{width:0.5px;height:12px;background:var(--c-800);}
+  .mkt-flag{display:inline-flex;align-items:center;gap:5px;
+    font-size:13px;color:var(--c-700);letter-spacing:-0.02em;}
+  header.app .info-btn.hdr{margin-left:auto;vertical-align:0;}
   .info-btn{margin-left:8px;vertical-align:1px;width:12px;height:12px;border-radius:50%;border:0.5px solid var(--c-700);
     display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--c-700);cursor:pointer;flex-shrink:0;}
   .info-btn{position:relative;display:inline-flex;}
   .info-btn::after{content:'';position:absolute;inset:-10px;}
   .info-btn:active{background:var(--c-1000);}
+  header.app .info-btn.hdr{margin-left:auto;vertical-align:0;}
 
   .info-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:200;
     opacity:0;pointer-events:none;transition:opacity 220ms ease;}
@@ -78,7 +83,14 @@
   .dec-row{display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding-bottom:12px;border-bottom:0.5px solid var(--c-900);}
   .dec-block{display:flex;flex-direction:column;gap:12px;padding-bottom:12px;border-bottom:0.5px solid var(--c-900);}
   .dec-sub{display:flex;align-items:baseline;justify-content:space-between;gap:24px;}
-  .dec-tap{font-size:13px;letter-spacing:-0.02em;cursor:pointer;padding:12px 2px;margin:-12px -2px;}
+  .dec-tap{font-size:13px;letter-spacing:-0.02em;cursor:pointer;padding:12px 2px;margin:-12px -2px;
+    text-decoration:underline dotted var(--c-800);text-decoration-thickness:0.5px;text-underline-offset:3px;}
+  /* a whole section that opens and closes reads as a chevron, not an underline */
+  .dec-exp{display:inline-flex;align-items:center;gap:6px;cursor:pointer;
+    padding:12px 2px;margin:-12px -2px;letter-spacing:-0.02em;}
+  .dec-exp .chev-svg{width:9px;height:9px;transition:transform 180ms ease;}
+  .dec-exp.open .chev-svg{transform:rotate(180deg);}
+  .pos-tag{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;margin-left:8px;}
   .dec-viewall{display:block;padding:12px 2px;margin-bottom:-12px;font-size:13px;color:var(--c-700);letter-spacing:-0.02em;text-align:right;cursor:pointer;}
   .dec-viewall:hover{color:var(--c-400);}
   .dec-preview{padding:0;display:none;flex-direction:column;gap:12px;}
@@ -87,6 +99,10 @@
   .dec-prow:hover .dec-ticker{color:var(--c-400);}
   .dec-ticker{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;transition:color 120ms;}
   .dec-note[hidden]{display:none;}
+  .dec-def{padding-bottom:12px;border-bottom:0.5px solid var(--c-900);}
+  .dec-def[hidden]{display:none;}
+  .dec-def p{font-size:13px;color:var(--c-400);letter-spacing:-0.02em;line-height:1.4;margin:0;}
+  .dec-def p.formula{color:var(--c-800);margin-top:8px;}
   .dec-note{font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:-2px 0 0 0;}
   .dash-sec{margin:48px 20px 0;}
   /* external cash flows (content: external cashflow.html · design: Performance Dashboard v8 tiers) */
@@ -125,13 +141,26 @@
 
   /* period / benchmark group: sticks to the top and governs every section below */
   .pd-period-group{position:sticky;top:var(--proto-h,0px);z-index:8;background:var(--c-black);
-    border-bottom:0.5px solid var(--c-900);margin-top:48px;}
-  .pd-period-row{display:flex;gap:20px;align-items:baseline;padding:16px 20px 8px;}
-  .pd-bm-row{display:flex;gap:16px;align-items:baseline;padding:0 20px 12px;}
-  .pd-period-opt,.pd-bm-opt{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;cursor:pointer;
-    transition:color 200ms ease;padding:12px 2px;margin:-12px -2px;}
-  .pd-period-opt.active,.pd-bm-opt.active{color:var(--c-white);}
-  .pd-bm-static-label{font-size:11px;color:var(--c-800);letter-spacing:-0.02em;}
+    border-bottom:0.5px solid var(--c-900);margin-top:48px;
+    display:flex;align-items:baseline;justify-content:space-between;padding:14px 20px;}
+  .pd-period-row{display:flex;gap:20px;align-items:baseline;}
+  .pd-period-opt{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;cursor:pointer;
+    transition:color 200ms ease;padding:12px 2px;margin:-12px -2px;position:relative;}
+  .pd-period-opt.active{color:var(--c-white);}
+  .pd-period-opt.active::after{content:'';position:absolute;left:2px;right:2px;
+    bottom:10px;height:1.5px;background:var(--c-white);}
+  /* the benchmark reads as the current setting, not as a third of a toggle row */
+  .pd-bm-current{display:inline-flex;align-items:center;gap:6px;font-size:13px;
+    color:var(--c-white);letter-spacing:-0.02em;cursor:pointer;
+    padding:12px 2px;margin:-12px -2px;}
+  .pd-bm-current .chev-svg{width:9px;height:9px;color:var(--c-700);}
+  .bm-pick{display:flex;align-items:center;justify-content:space-between;
+    padding:16px 0;border-bottom:0.5px solid var(--c-900);cursor:pointer;
+    font-size:15px;color:var(--c-400);letter-spacing:-0.02em;}
+  .bm-pick:last-child{border-bottom:none;}
+  .bm-pick.on{color:var(--c-white);}
+  .bm-pick .tick{font-size:13px;color:var(--c-white);visibility:hidden;}
+  .bm-pick.on .tick{visibility:visible;}
   /* yearly breakdown */
   .yt-table{display:grid;grid-template-columns:1fr 62px 62px 62px;column-gap:12px;}
   .yt-head,.yt-row,#ytRows{display:contents;}
@@ -179,6 +208,7 @@
   .dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
   .dot.live{background:var(--c-live);}
   .dot.muted{background:var(--c-800);}
+  .dot.urgent{background:var(--c-urgent);}
   .chev{grid-column:3;grid-row:1 / 3;align-self:center;color:var(--c-graphite);font-size:13px;margin-left:2px;}
 
     padding:3px 8px;border-radius:20px;width:fit-content;margin-top:5px;}
@@ -233,6 +263,11 @@
   .cmp-val .pct{display:inline-block;min-width:54px;text-align:right;font-size:13px;color:var(--c-700);letter-spacing:-0.02em;margin-left:8px;}
 
   .chartwrap{padding-bottom:8px;}
+  .chartwrap svg{touch-action:none;}
+  .scrub-read{display:flex;gap:0;font-size:13px;color:var(--c-700);letter-spacing:-0.02em;
+    margin-top:4px;font-variant-numeric:tabular-nums;}
+  .scrub-read b{color:var(--c-200);font-weight:400;}
+  .scrub-read .on{color:var(--c-white);}
   /* legend chip: V8's outlined container, square corners (radius-0) */
   .legend{position:absolute;top:10px;left:64px;z-index:1;display:inline-flex;gap:16px;align-items:center;margin:0;
     background:var(--c-black);border:0.5px solid var(--c-900);padding:4px 8px;}
@@ -272,27 +307,26 @@
   <div class="screen active" id="screen-decisions">
     <header class="app">
       <span class="back" title="Back to the main dashboard">‹</span>
-      <span class="hdr-status"><span class="dot live"></span>Market Open · 2:14 PM ET</span>
-      <span class="action">Exit</span>
+      <span class="info-btn hdr" onclick="openInfo('decisions')">i</span>
     </header>
 
-    <div class="subhead">
-      <span style="font-size:17px;letter-spacing:-0.02em;color:var(--c-700);line-height:1.2;">Performance<span class="info-btn" onclick="openInfo('decisions')">i</span></span>
-      <span style="font-size:17px;letter-spacing:-0.02em;color:var(--c-white);line-height:1.2;">Active · Self-Directed</span>
-      <span style="font-size:11px;letter-spacing:-0.02em;color:var(--c-700);">As of Aug 10, 2026</span>
+    <div class="mkt-strip">
+      <span class="mkt-clock" data-clock>00:00:00 ET</span>
+      <span class="mkt-div"></span>
+      <span class="mkt-flag"><span class="dot" data-mkt="us"></span>US</span>
+      <span class="mkt-flag"><span class="dot" data-mkt="ca"></span>CA</span>
     </div>
 
-    <section style="margin-top:48px;padding:0 20px;display:flex;flex-direction:column;gap:8px;">
-      <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;">Tracked since Mar 14, 2023</span>
-      <div>
-        <span style="font-size:17px;color:var(--c-white);letter-spacing:-0.02em;font-weight:400;line-height:1.2;font-feature-settings:'lnum' 1,'tnum' 1;">3 years 4 months</span>
-      </div>
-    </section>
+    <div class="subhead">
+      <span style="font-size:17px;letter-spacing:-0.02em;color:var(--c-700);line-height:1.2;">Performance</span>
+      <span style="font-size:17px;letter-spacing:-0.02em;color:var(--c-white);line-height:1.2;">Active · Self-Directed</span>
+      <span style="font-size:11px;letter-spacing:-0.02em;color:var(--c-700);">Currency in CAD</span>
+    </div>
 
     <section style="margin:24px 20px 0;padding:24px 0 0;border-top:0.5px solid var(--c-900);display:flex;flex-direction:column;gap:24px;">
       <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;"><span data-period-label>Since Inception</span> · Preliminary</span>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:8px;row-gap:8px;">
-        <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;text-align:left;">Account</span>
+        <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;text-align:left;">Portfolio</span>
         <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;text-align:center;">Alpha</span>
         <span data-bm-short style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;text-align:right;">S&amp;P</span>
         <span data-acct-pct style="font-size:17px;color:var(--c-white);letter-spacing:-0.02em;font-weight:400;line-height:1.2;text-align:left;">+39.4%</span>
@@ -302,6 +336,10 @@
     </section>
 
     <div style="margin:32px 20px 0;background:color-mix(in srgb, var(--c-1000) 60%, transparent);border:0.5px solid var(--c-900);padding:16px;display:flex;flex-direction:column;gap:12px;">
+      <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:16px;">
+        <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;">Tracked since Mar 14, 2023</span>
+        <span style="font-size:17px;color:var(--c-white);letter-spacing:-0.02em;line-height:1.2;font-feature-settings:'lnum' 1,'tnum' 1;">3 years 4 months</span>
+      </div>
       <p style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;line-height:1.4;margin:0;">1 year 7 months to go. That's when a track record against the S&amp;P starts to carry statistical weight. Before that, strong or weak results are mostly noise, not skill.</p>
       <div class="call-bar" style="height:4px;">
         <div class="fill" style="background:var(--c-live-muted);width:68%;"></div>
@@ -321,37 +359,35 @@
         <span class="pd-period-opt" data-period="ytd">YTD</span>
         <span class="pd-period-opt" data-period="1y">1Y</span>
         <span class="pd-period-opt" data-period="3y">3Y</span>
-        <span class="pd-period-opt active" data-period="all">All</span>
+        <span class="pd-period-opt active" data-period="all">Max</span>
       </div>
-      <div class="pd-bm-row" role="tablist" aria-label="Benchmark">
-        <span class="pd-bm-static-label">Benchmark</span>
-        <span class="pd-bm-opt active" data-bm="sp">S&amp;P 500</span>
-        <span class="pd-bm-opt" data-bm="nasdaq">Nasdaq</span>
-        <span class="pd-bm-opt" data-bm="tsx">TSX</span>
-      </div>
+      <span class="pd-bm-current" onclick="openInfo('bm')" role="button"
+        aria-label="Change benchmark"><span data-bm-long>S&amp;P 500</span><svg class="chev-svg" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.3"/></svg></span>
     </div>
 
     <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
       <span class="sec-title">Performance vs <span data-bm-long>S&amp;P 500</span></span>
       <div class="cmp-row">
-        <span class="cmp-label">Account</span>
+        <span class="cmp-label">Portfolio</span>
         <span class="cmp-val"><span data-acct-dollars>+16,142.02</span><span class="pct" data-acct-pct>+39.4%</span></span>
       </div>
       <div class="cmp-row">
-        <span class="cmp-label"><span data-bm-long>S&amp;P 500</span> Benchmark</span>
+        <span class="cmp-label"><span data-bm-long>S&amp;P 500</span> (same window)</span>
         <span class="cmp-val"><span data-bm-dollars>+18,515.92</span><span class="pct" data-bm-pct>+45.2%</span></span>
       </div>
       <div class="cmp-row">
         <span class="cmp-label">Alpha</span>
         <span class="cmp-val" data-alpha-cell style="color:var(--c-urgent-muted);"><span data-alpha-dollars>−2,373.90</span><span class="pct" data-alpha-pp style="color:var(--c-urgent-muted);">−5.8&nbsp;pp</span></span>
       </div>
-      <p style="font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">Total return, dividends reinvested, net of fees. <span data-bm-long>S&amp;P 500</span> Benchmark applies the same deposit and withdrawal timing as the account, not a static index price return.</p>
+      <p style="font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">Total return, dividends reinvested, net of fees. The <span data-bm-long>S&amp;P 500</span> mirror applies the same deposit and withdrawal timing as the account, not a static index price return.</p>
 
-      <div class="chartwrap" style="margin-top:12px;">
-        <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;display:block;margin-bottom:8px;">Account value vs. <span data-bm-short>S&amp;P</span>, $ CAD</span>
+      <div class="scrub-read" style="margin-top:20px;">
+        <span><span id="acctScrubDate">Aug 26</span> · Portfolio <b data-acct-end>57.1k</b> · <span data-bm-short>S&amp;P</span> <b data-bm-end style="color:var(--c-700);">59.5k</b></span>
+      </div>
+      <div class="chartwrap" style="margin-top:0;">
         <div style="position:relative;">
           <div class="legend">
-            <span><span class="ln"></span>Account</span>
+            <span><span class="ln"></span>Portfolio</span>
             <span><span class="ln dash"></span><span data-bm-short>S&amp;P</span></span>
           </div>
           <svg style="width:100%;height:180px;display:block;overflow:visible;" viewBox="-40 0 360 180" preserveAspectRatio="none" aria-hidden="true">
@@ -363,15 +399,15 @@
             <line x1="0" y1="172" x2="320" y2="172" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
             <path id="curveBm" d="" fill="none" style="stroke:var(--c-700)" stroke-width="1.25" stroke-dasharray="4 4" vector-effect="non-scaling-stroke"/>
             <path id="curveAcct" d="" fill="none" style="stroke:var(--c-400)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+            <line class="scrub-line" x1="0" y1="12" x2="0" y2="172" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke" visibility="hidden"/>
+            <circle class="scrub-dot-b" r="2.5" style="fill:var(--c-700)" visibility="hidden"/>
+            <circle class="scrub-dot-a" r="2.5" style="fill:var(--c-400)" visibility="hidden"/>
           </svg>
         </div>
         <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--c-700);letter-spacing:-0.02em;margin-top:8px;padding-left:11%;">
           <span id="ax1">Mar 23</span><span id="ax2">Apr 24</span><span id="ax3">Jun 25</span><span id="ax4">Aug 26</span>
         </div>
-        <div class="axis-end">
-          <span>Start <b data-start-val>$15.0k</b></span>
-          <span style="text-align:right;">Account <b data-acct-end>$57.1k</b> · <span data-bm-short>S&amp;P</span> <span style="color:var(--c-700);" data-bm-end>$59.5k</span></span>
-        </div>
+
       </div>
     </section>
 
@@ -379,17 +415,17 @@
       <span class="sec-title">Yearly Breakdown</span>
       <div class="yt-table">
         <div class="yt-head">
-          <span>Year</span><span>Account</span><span data-bm-short>S&amp;P</span><span>Alpha</span>
+          <span>Year</span><span>Portfolio</span><span data-bm-short>S&amp;P</span><span>Alpha</span>
         </div>
         <div id="ytRows"></div>
       </div>
-      <p style="font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">2026 is year-to-date, not a full-year figure. 2027 and 2028 are shown for reference, 2028 being the earliest date a 5-year track record exists.</p>
+      <p style="font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">2026 is year-to-date, not a full-year figure. 2027 and 2028 are shown for reference, 2028 being the earliest date a 5-year track record exists. The bottom row is the average annual rate over the tracked period, not the sum of the years above.</p>
     </section>
 
     <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
       <span class="sec-title">External Cash Flows</span>
       <div class="dec-row">
-        <span class="dec-tap" style="font-size:15px;color:var(--c-400);text-decoration:underline dotted var(--c-800);text-decoration-thickness:0.5px;text-underline-offset:3px;" onclick="toggleDecPreview('cashflows',this)">All Flows</span>
+        <span class="dec-exp" style="font-size:15px;color:var(--c-400);" onclick="toggleDecPreview('cashflows',this)">All Transactions<svg class="chev-svg" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.3"/></svg></span>
         <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;font-feature-settings:'lnum' 1,'tnum' 1;">6</span>
       </div>
       <div class="dec-preview" id="dec-preview-cashflows">
@@ -421,29 +457,34 @@
     <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
       <span class="sec-title">Timing &amp; Risk</span>
       <div class="dec-row">
-        <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Time-Weighted Return (TWR)</span>
+        <span class="dec-tap" style="font-size:15px;color:var(--c-700);" onclick="toggleDef('twr',this)">Time-Weighted Return (TWR)</span>
         <span class="stat-delta" style="text-align:right;"><span class="statnum">+39.4%</span></span>
       </div>
+      <div class="dec-def" id="def-twr" hidden><p>Time-Weighted Return isolates stock-picking skill from deposit and withdrawal timing. Industry standard for comparing managers.</p><p class="formula">Geometric link of period returns. Deposits and withdrawals do not affect TWR.</p></div>
       <div class="dec-row">
-        <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Money-Weighted Return (MWR)</span>
+        <span class="dec-tap" style="font-size:15px;color:var(--c-700);" onclick="toggleDef('mwr',this)">Money-Weighted Return (MWR)</span>
         <span class="stat-delta" style="text-align:right;"><span class="statnum">+35.1%</span></span>
       </div>
+      <div class="dec-def" id="def-mwr" hidden><p>Money-Weighted Return reflects timing of capital deployment. A negative gap to TWR indicates deposits were poorly timed.</p><p class="formula">XIRR over all cash flows.</p></div>
       <div class="dec-row">
-        <span style="font-size:15px;color:var(--c-800);letter-spacing:-0.02em;">TWR − MWR Gap (timing skill)</span>
+        <span class="dec-tap" style="font-size:15px;color:var(--c-800);" onclick="toggleDef('gap',this)">TWR − MWR Gap (timing skill)</span>
         <span class="stat-delta loss sub" style="text-align:right;"><span class="statnum">−4.3&nbsp;pp</span></span>
       </div>
+      <div class="dec-def" id="def-gap" hidden><p>The gap between the two is your timing. Negative means cash arrived at the wrong moments relative to the picks; positive means it arrived at the right ones.</p><p class="formula">TWR &minus; MWR, in percentage points.</p></div>
       <div class="dec-row">
-        <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Max Drawdown</span>
+        <span class="dec-tap" style="font-size:15px;color:var(--c-700);" onclick="toggleDef('dd',this)">Max Drawdown</span>
         <span class="stat-delta loss" style="text-align:right;"><span class="trend down">▼</span><span class="statnum">−18.4%</span></span>
       </div>
+      <div class="dec-def" id="def-dd" hidden><p>Worst peak-to-trough decline over the period. Daily marks.</p><p class="formula">min(equity_t / peak_t &minus; 1) over period.</p></div>
       <div class="dec-row">
         <span style="font-size:15px;color:var(--c-800);letter-spacing:-0.02em;">Max Drawdown, <span data-bm-short>S&amp;P</span> same window</span>
         <span class="stat-delta neutral sub" style="text-align:right;"><span class="statnum">−12.1%</span></span>
       </div>
       <div class="dec-row">
-        <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Volatility (12M)</span>
+        <span class="dec-tap" style="font-size:15px;color:var(--c-700);" onclick="toggleDef('vol',this)">Volatility (12M)</span>
         <span class="stat-delta" style="text-align:right;"><span class="trend plain">▲</span><span class="statnum">17.2%</span></span>
       </div>
+      <div class="dec-def" id="def-vol" hidden><p>Annualized standard deviation of daily returns. Higher figures indicate wider daily swings.</p><p class="formula">stdev(daily returns) &times; &radic;252.</p></div>
       <div class="dec-row">
         <span style="font-size:15px;color:var(--c-800);letter-spacing:-0.02em;">Volatility (12M), <span data-bm-short>S&amp;P</span></span>
         <span class="stat-delta neutral sub" style="text-align:right;"><span class="statnum">15.4%</span></span>
@@ -464,12 +505,12 @@
           <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;">11</span>
         </div>
         <div class="dec-sub">
-          <span class="dec-tap" style="font-size:13px;color:var(--c-700);text-decoration:underline dotted var(--c-800);text-decoration-thickness:0.5px;text-underline-offset:3px;" onclick="toggleDecPreview('profOpen',this)">Profitable / Unprofitable</span>
+          <span class="dec-exp" style="font-size:13px;color:var(--c-700);" onclick="toggleDecPreview('profOpen',this)">Profitable / Unprofitable<svg class="chev-svg" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.3"/></svg></span>
           <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">9 / 2</span>
         </div>
         <div class="dec-preview" id="dec-preview-profOpen">
           <p class="dec-note">Profitable ≠ beat the benchmark, a position can make money and still trail S&amp;P 500.</p>
-          <div class="dec-prow" onclick="positionTap('NVDA','open')"><span class="dec-ticker">NVDA</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+64.2%</span></div>
+          <div class="dec-prow" onclick="positionTap('AVGO','open')"><span class="dec-ticker">AVGO</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+64.2%</span></div>
           <div class="dec-prow" onclick="positionTap('AAPL','open')"><span class="dec-ticker">AAPL</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+31.8%</span></div>
           <div class="dec-prow" onclick="positionTap('MSFT','open')"><span class="dec-ticker">MSFT</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+22.7%</span></div>
           <div class="dec-prow" onclick="positionTap('COST','open')"><span class="dec-ticker">COST</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+19.3%</span></div>
@@ -483,11 +524,11 @@
         </div>
 
         <div class="dec-sub">
-          <span class="dec-tap" style="color:var(--c-400);text-decoration:underline dotted var(--c-800);text-decoration-thickness:0.5px;text-underline-offset:3px;" onclick="toggleDecPreview('openBeating',this)">Beating S&amp;P</span>
+          <span class="dec-exp" style="font-size:13px;color:var(--c-400);" onclick="toggleDecPreview('openBeating',this)">Beating S&amp;P<svg class="chev-svg" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.3"/></svg></span>
           <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">6</span>
         </div>
         <div class="dec-preview" id="dec-preview-openBeating">
-          <div class="dec-prow" onclick="positionTap('NVDA','open')"><span class="dec-ticker">NVDA</span><span style="font-size:13px;color:var(--c-live-muted);letter-spacing:-0.02em;text-align:right;">+18.4&nbsp;pp</span></div>
+          <div class="dec-prow" onclick="positionTap('AVGO','open')"><span class="dec-ticker">AVGO</span><span style="font-size:13px;color:var(--c-live-muted);letter-spacing:-0.02em;text-align:right;">+18.4&nbsp;pp</span></div>
           <div class="dec-prow" onclick="positionTap('MSFT','open')"><span class="dec-ticker">MSFT</span><span style="font-size:13px;color:var(--c-live-muted);letter-spacing:-0.02em;text-align:right;">+9.1&nbsp;pp</span></div>
           <div class="dec-prow" onclick="positionTap('COST','open')"><span class="dec-ticker">COST</span><span style="font-size:13px;color:var(--c-live-muted);letter-spacing:-0.02em;text-align:right;">+7.8&nbsp;pp</span></div>
           <div class="dec-prow" onclick="positionTap('LLY','open')"><span class="dec-ticker">LLY</span><span style="font-size:13px;color:var(--c-live-muted);letter-spacing:-0.02em;text-align:right;">+6.2&nbsp;pp</span></div>
@@ -496,7 +537,7 @@
         </div>
 
         <div class="dec-sub">
-          <span class="dec-tap" style="color:var(--c-400);text-decoration:underline dotted var(--c-800);text-decoration-thickness:0.5px;text-underline-offset:3px;" onclick="toggleDecPreview('openTrailing',this)">Trailing S&amp;P</span>
+          <span class="dec-exp" style="font-size:13px;color:var(--c-400);" onclick="toggleDecPreview('openTrailing',this)">Trailing S&amp;P<svg class="chev-svg" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.3"/></svg></span>
           <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">5</span>
         </div>
         <div class="dec-preview" id="dec-preview-openTrailing">
@@ -515,43 +556,43 @@
           <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;">9</span>
         </div>
         <div class="dec-sub">
-          <span class="dec-tap" style="font-size:13px;color:var(--c-700);text-decoration:underline dotted var(--c-800);text-decoration-thickness:0.5px;text-underline-offset:3px;" onclick="toggleDecPreview('profClosed',this)">Profitable / Unprofitable</span>
+          <span class="dec-exp" style="font-size:13px;color:var(--c-700);" onclick="toggleDecPreview('profClosed',this)">Profitable / Unprofitable<svg class="chev-svg" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.3"/></svg></span>
           <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">7 / 2</span>
         </div>
         <div class="dec-preview" id="dec-preview-profClosed">
           <p class="dec-note">Profitable ≠ beat the benchmark, a position can make money and still trail S&amp;P 500.</p>
           <div class="dec-prow" onclick="positionTap('NVDA','closed')"><span class="dec-ticker">NVDA</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+41.0%</span></div>
-          <div class="dec-prow" onclick="positionTap('COST','closed')"><span class="dec-ticker">COST</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+24.8%</span></div>
-          <div class="dec-prow" onclick="positionTap('LLY','closed')"><span class="dec-ticker">LLY</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+18.1%</span></div>
-          <div class="dec-prow" onclick="positionTap('MSFT','closed')"><span class="dec-ticker">MSFT</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+16.0%</span></div>
+          <div class="dec-prow" onclick="positionTap('UNH','closed')"><span class="dec-ticker">UNH</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+24.8%</span></div>
+          <div class="dec-prow" onclick="positionTap('ADBE','closed')"><span class="dec-ticker">ADBE</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+18.1%</span></div>
+          <div class="dec-prow" onclick="positionTap('TXN','closed')"><span class="dec-ticker">TXN</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+16.0%</span></div>
           <div class="dec-prow" onclick="positionTap('V','closed')"><span class="dec-ticker">V</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+7.4%</span></div>
-          <div class="dec-prow" onclick="positionTap('META','closed')"><span class="dec-ticker">META</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+2.4%</span></div>
-          <div class="dec-prow" onclick="positionTap('TSLA','closed')"><span class="dec-ticker">TSLA</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+1.0%</span></div>
-          <div class="dec-prow" onclick="positionTap('DIS','closed')"><span class="dec-ticker">DIS</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">−3.6%</span></div>
+          <div class="dec-prow" onclick="positionTap('KO','closed')"><span class="dec-ticker">KO</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+2.4%</span></div>
+          <div class="dec-prow" onclick="positionTap('VZ','closed')"><span class="dec-ticker">VZ</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+1.0%</span></div>
+          <div class="dec-prow" onclick="positionTap('PYPL','closed')"><span class="dec-ticker">PYPL</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">−3.6%</span></div>
           <div class="dec-prow" onclick="positionTap('BA','closed')"><span class="dec-ticker">BA</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">−9.2%</span></div>
         </div>
 
         <div class="dec-sub">
-          <span class="dec-tap" style="color:var(--c-400);text-decoration:underline dotted var(--c-800);text-decoration-thickness:0.5px;text-underline-offset:3px;" onclick="toggleDecPreview('winners',this)">Beat S&amp;P</span>
+          <span class="dec-exp" style="font-size:13px;color:var(--c-400);" onclick="toggleDecPreview('winners',this)">Beat S&amp;P<svg class="chev-svg" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.3"/></svg></span>
           <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">5</span>
         </div>
         <div class="dec-preview" id="dec-preview-winners">
           <div class="dec-prow" onclick="positionTap('NVDA','closed')"><span class="dec-ticker">NVDA</span><span style="font-size:13px;color:var(--c-live-muted);letter-spacing:-0.02em;text-align:right;">+1,946.50<span class="ppsuf">+22.9&nbsp;pp</span></span></div>
-          <div class="dec-prow" onclick="positionTap('COST','closed')"><span class="dec-ticker">COST</span><span style="font-size:13px;color:var(--c-live-muted);letter-spacing:-0.02em;text-align:right;">+694.40<span class="ppsuf">+11.2&nbsp;pp</span></span></div>
-          <div class="dec-prow" onclick="positionTap('LLY','closed')"><span class="dec-ticker">LLY</span><span style="font-size:13px;color:var(--c-live-muted);letter-spacing:-0.02em;text-align:right;">+556.80<span class="ppsuf">+9.6&nbsp;pp</span></span></div>
-          <div class="dec-prow" onclick="positionTap('MSFT','closed')"><span class="dec-ticker">MSFT</span><span style="font-size:13px;color:var(--c-live-muted);letter-spacing:-0.02em;text-align:right;">+388.80<span class="ppsuf">+5.4&nbsp;pp</span></span></div>
+          <div class="dec-prow" onclick="positionTap('UNH','closed')"><span class="dec-ticker">UNH</span><span style="font-size:13px;color:var(--c-live-muted);letter-spacing:-0.02em;text-align:right;">+694.40<span class="ppsuf">+11.2&nbsp;pp</span></span></div>
+          <div class="dec-prow" onclick="positionTap('ADBE','closed')"><span class="dec-ticker">ADBE</span><span style="font-size:13px;color:var(--c-live-muted);letter-spacing:-0.02em;text-align:right;">+556.80<span class="ppsuf">+9.6&nbsp;pp</span></span></div>
+          <div class="dec-prow" onclick="positionTap('TXN','closed')"><span class="dec-ticker">TXN</span><span style="font-size:13px;color:var(--c-live-muted);letter-spacing:-0.02em;text-align:right;">+388.80<span class="ppsuf">+5.4&nbsp;pp</span></span></div>
           <div class="dec-prow" onclick="positionTap('V','closed')"><span class="dec-ticker">V</span><span style="font-size:13px;color:var(--c-live-muted);letter-spacing:-0.02em;text-align:right;">+88.20<span class="ppsuf">+2.1&nbsp;pp</span></span></div>
         </div>
 
         <div class="dec-sub">
-          <span class="dec-tap" style="color:var(--c-400);text-decoration:underline dotted var(--c-800);text-decoration-thickness:0.5px;text-underline-offset:3px;" onclick="toggleDecPreview('losers',this)">Trailed</span>
+          <span class="dec-exp" style="font-size:13px;color:var(--c-400);" onclick="toggleDecPreview('losers',this)">Trailed<svg class="chev-svg" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.3"/></svg></span>
           <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">4</span>
         </div>
         <div class="dec-preview" id="dec-preview-losers">
           <div class="dec-prow" onclick="positionTap('BA','closed')"><span class="dec-ticker">BA</span><span style="font-size:13px;color:var(--c-urgent-muted);letter-spacing:-0.02em;text-align:right;">−823.20<span class="ppsuf">−14.7&nbsp;pp</span></span></div>
-          <div class="dec-prow" onclick="positionTap('DIS','closed')"><span class="dec-ticker">DIS</span><span style="font-size:13px;color:var(--c-urgent-muted);letter-spacing:-0.02em;text-align:right;">−673.20<span class="ppsuf">−9.9&nbsp;pp</span></span></div>
-          <div class="dec-prow" onclick="positionTap('META','closed')"><span class="dec-ticker">META</span><span style="font-size:13px;color:var(--c-urgent-muted);letter-spacing:-0.02em;text-align:right;">−429.20<span class="ppsuf">−5.8&nbsp;pp</span></span></div>
-          <div class="dec-prow" onclick="positionTap('TSLA','closed')"><span class="dec-ticker">TSLA</span><span style="font-size:13px;color:var(--c-urgent-muted);letter-spacing:-0.02em;text-align:right;">−312.80<span class="ppsuf">−3.4&nbsp;pp</span></span></div>
+          <div class="dec-prow" onclick="positionTap('PYPL','closed')"><span class="dec-ticker">PYPL</span><span style="font-size:13px;color:var(--c-urgent-muted);letter-spacing:-0.02em;text-align:right;">−673.20<span class="ppsuf">−9.9&nbsp;pp</span></span></div>
+          <div class="dec-prow" onclick="positionTap('KO','closed')"><span class="dec-ticker">KO</span><span style="font-size:13px;color:var(--c-urgent-muted);letter-spacing:-0.02em;text-align:right;">−429.20<span class="ppsuf">−5.8&nbsp;pp</span></span></div>
+          <div class="dec-prow" onclick="positionTap('VZ','closed')"><span class="dec-ticker">VZ</span><span style="font-size:13px;color:var(--c-urgent-muted);letter-spacing:-0.02em;text-align:right;">−312.80<span class="ppsuf">−3.4&nbsp;pp</span></span></div>
         </div>
         <a class="dec-viewall" onclick="goTo('closed')">View All →</a>
       </div>
@@ -571,29 +612,33 @@
     </section>
 
     <section class="dash-sec" style="padding-bottom:32px;display:flex;flex-direction:column;gap:12px;">
-      <span class="sec-title">Top Contributors (Closed)</span>
-      <div class="cmp-row">
-        <span class="cmp-label">NVDA</span>
-        <span class="cmp-val" style="color:var(--c-live-muted);">+3,485.00<span class="pct" style="color:var(--c-live-muted);">+41.0%</span></span>
+      <span class="sec-title" id="alpha-up">Top Contributors to Alpha</span>
+      <div class="cmp-row" onclick="positionTap('NVDA','closed')" style="cursor:pointer;">
+        <span class="cmp-label">NVDA<span class="pos-tag">Closed</span></span>
+        <span class="cmp-val" style="color:var(--c-live-muted);">+1,946.50<span class="pct" style="color:var(--c-live-muted);">+22.9&nbsp;pp</span></span>
       </div>
-      <div class="cmp-row">
-        <span class="cmp-label">COST</span>
-        <span class="cmp-val" style="color:var(--c-live-muted);">+1,537.60<span class="pct" style="color:var(--c-live-muted);">+24.8%</span></span>
+      <div class="cmp-row" onclick="positionTap('AVGO','open')" style="cursor:pointer;">
+        <span class="cmp-label">AVGO<span class="pos-tag">Open</span></span>
+        <span class="cmp-val" style="color:var(--c-live-muted);">+1,292.00<span class="pct" style="color:var(--c-live-muted);">+18.4&nbsp;pp</span></span>
       </div>
-      <div class="cmp-row">
-        <span class="cmp-label">MSFT</span>
-        <span class="cmp-val" style="color:var(--c-live-muted);">+1,152.00<span class="pct" style="color:var(--c-live-muted);">+16.0%</span></span>
+      <div class="cmp-row" onclick="positionTap('UNH','closed')" style="cursor:pointer;">
+        <span class="cmp-label">UNH<span class="pos-tag">Closed</span></span>
+        <span class="cmp-val" style="color:var(--c-live-muted);">+694.40<span class="pct" style="color:var(--c-live-muted);">+11.2&nbsp;pp</span></span>
       </div>
-      <p style="font-size:17px;color:var(--c-200);letter-spacing:-0.02em;line-height:1.2;margin:48px 0 16px;">Top Detractors (Closed)</p>
-      <div class="cmp-row">
-        <span class="cmp-label">BA</span>
-        <span class="cmp-val" style="color:var(--c-urgent-muted);">−515.20<span class="pct" style="color:var(--c-urgent-muted);">−9.2%</span></span>
+      <p style="font-size:17px;color:var(--c-200);letter-spacing:-0.02em;line-height:1.2;margin:48px 0 16px;" id="alpha-down">Top Detractors from Alpha</p>
+      <div class="cmp-row" onclick="positionTap('BA','closed')" style="cursor:pointer;">
+        <span class="cmp-label">BA<span class="pos-tag">Closed</span></span>
+        <span class="cmp-val" style="color:var(--c-urgent-muted);">−823.20<span class="pct" style="color:var(--c-urgent-muted);">−14.7&nbsp;pp</span></span>
       </div>
-      <div class="cmp-row">
-        <span class="cmp-label">DIS</span>
-        <span class="cmp-val" style="color:var(--c-urgent-muted);">−244.80<span class="pct" style="color:var(--c-urgent-muted);">−3.6%</span></span>
+      <div class="cmp-row" onclick="positionTap('PYPL','closed')" style="cursor:pointer;">
+        <span class="cmp-label">PYPL<span class="pos-tag">Closed</span></span>
+        <span class="cmp-val" style="color:var(--c-urgent-muted);">−673.20<span class="pct" style="color:var(--c-urgent-muted);">−9.9&nbsp;pp</span></span>
       </div>
-      <p style="font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin-top:16px;">Realised results, dividends reinvested, net of fees. Figures are preliminary and unaudited.</p>
+      <div class="cmp-row" onclick="positionTap('KO','closed')" style="cursor:pointer;">
+        <span class="cmp-label">KO<span class="pos-tag">Closed</span></span>
+        <span class="cmp-val" style="color:var(--c-urgent-muted);">−429.20<span class="pct" style="color:var(--c-urgent-muted);">−5.8&nbsp;pp</span></span>
+      </div>
+      <p style="font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin-top:16px;">Full tracked period, open and closed positions together. Ranked by dollar alpha, so position size is already in the number: a wide margin over the S&amp;P on a small holding moves the account less than a thin margin on a large one. Dividends reinvested, net of fees. Figures are preliminary and unaudited.</p>
     </section>
   </div>
 
@@ -601,12 +646,18 @@
   <div class="screen" id="screen-open">
     <header class="app">
       <span class="back" onclick="goTo('decisions')">‹</span>
-      <span class="hdr-status"><span class="dot live"></span>Market Open · 2:14 PM ET</span>
-      <span class="action">Exit</span>
+      <span class="info-btn hdr" onclick="openInfo('open')">i</span>
     </header>
 
+    <div class="mkt-strip">
+      <span class="mkt-clock" data-clock>00:00:00 ET</span>
+      <span class="mkt-div"></span>
+      <span class="mkt-flag"><span class="dot" data-mkt="us"></span>US</span>
+      <span class="mkt-flag"><span class="dot" data-mkt="ca"></span>CA</span>
+    </div>
+
     <div class="subhead">
-      <span class="eyebrow">Open Positions<span class="info-btn" onclick="openInfo('open')">i</span></span>
+      <span class="eyebrow">Open Positions</span>
       <span class="count-line">11 positions</span>
     </div>
 
@@ -625,10 +676,10 @@
 
     <div class="list">
       <!-- Beating -->
-      <div class="row" onclick="positionTap('NVDA','open')">
+      <div class="row" onclick="positionTap('AVGO','open')">
         <div class="row-left">
-          <span class="ticker">NVDA</span>
-          <span class="name">NVIDIA Corp</span>
+          <span class="ticker">AVGO</span>
+          <span class="name">Broadcom Inc</span>
           <span class="meta">Held 412d · entered Jun 24, 2025</span>
         </div>
         <div class="row-right">
@@ -768,12 +819,18 @@
   <div class="screen" id="screen-closed">
     <header class="app">
       <span class="back" onclick="goTo('decisions')">‹</span>
-      <span class="hdr-status"><span class="dot live"></span>Market Open · 2:14 PM ET</span>
-      <span class="action">Exit</span>
+      <span class="info-btn hdr" onclick="openInfo('closed')">i</span>
     </header>
 
+    <div class="mkt-strip">
+      <span class="mkt-clock" data-clock>00:00:00 ET</span>
+      <span class="mkt-div"></span>
+      <span class="mkt-flag"><span class="dot" data-mkt="us"></span>US</span>
+      <span class="mkt-flag"><span class="dot" data-mkt="ca"></span>CA</span>
+    </div>
+
     <div class="subhead">
-      <span class="eyebrow">Closed Positions<span class="info-btn" onclick="openInfo('closed')">i</span></span>
+      <span class="eyebrow">Closed Positions</span>
       <span class="count-line">9 positions</span>
     </div>
 
@@ -803,10 +860,10 @@
         </div>
         <span class="chev">›</span>
       </div>
-      <div class="row" onclick="positionTap('COST','closed')">
+      <div class="row" onclick="positionTap('UNH','closed')">
         <div class="row-left">
-          <span class="ticker">COST</span>
-          <span class="name">Costco Wholesale</span>
+          <span class="ticker">UNH</span>
+          <span class="name">UnitedHealth Group</span>
           <span class="meta">Closed Jun 14, 2026 · held 340d</span>
         </div>
         <div class="row-right">
@@ -815,10 +872,10 @@
         </div>
         <span class="chev">›</span>
       </div>
-      <div class="row" onclick="positionTap('LLY','closed')">
+      <div class="row" onclick="positionTap('ADBE','closed')">
         <div class="row-left">
-          <span class="ticker">LLY</span>
-          <span class="name">Eli Lilly and Co</span>
+          <span class="ticker">ADBE</span>
+          <span class="name">Adobe Inc</span>
           <span class="meta">Closed May 29, 2026 · held 168d</span>
         </div>
         <div class="row-right">
@@ -827,10 +884,10 @@
         </div>
         <span class="chev">›</span>
       </div>
-      <div class="row" onclick="positionTap('MSFT','closed')">
+      <div class="row" onclick="positionTap('TXN','closed')">
         <div class="row-left">
-          <span class="ticker">MSFT</span>
-          <span class="name">Microsoft Corp</span>
+          <span class="ticker">TXN</span>
+          <span class="name">Texas Instruments</span>
           <span class="meta">Closed Apr 11, 2026 · held 512d</span>
         </div>
         <div class="row-right">
@@ -863,10 +920,10 @@
         </div>
         <span class="chev">›</span>
       </div>
-      <div class="row" onclick="positionTap('DIS','closed')">
+      <div class="row" onclick="positionTap('PYPL','closed')">
         <div class="row-left">
-          <span class="ticker">DIS</span>
-          <span class="name">Walt Disney Co</span>
+          <span class="ticker">PYPL</span>
+          <span class="name">PayPal Holdings</span>
           <span class="meta">Closed Dec 18, 2025 · held 275d</span>
         </div>
         <div class="row-right">
@@ -875,10 +932,10 @@
         </div>
         <span class="chev">›</span>
       </div>
-      <div class="row" onclick="positionTap('META','closed')">
+      <div class="row" onclick="positionTap('KO','closed')">
         <div class="row-left">
-          <span class="ticker">META</span>
-          <span class="name">Meta Platforms Inc</span>
+          <span class="ticker">KO</span>
+          <span class="name">Coca-Cola Co</span>
           <span class="meta">Closed Nov 3, 2025 · held 190d</span>
         </div>
         <div class="row-right">
@@ -887,10 +944,10 @@
         </div>
         <span class="chev">›</span>
       </div>
-      <div class="row" onclick="positionTap('TSLA','closed')">
+      <div class="row" onclick="positionTap('VZ','closed')">
         <div class="row-left">
-          <span class="ticker">TSLA</span>
-          <span class="name">Tesla Inc</span>
+          <span class="ticker">VZ</span>
+          <span class="name">Verizon Communications</span>
           <span class="meta">Closed Sep 9, 2025 · held 128d</span>
         </div>
         <div class="row-right">
@@ -903,7 +960,7 @@
 
     <p class="footnote" style="padding-bottom:8px;">Profitable ≠ beat the benchmark. A position can make money and still trail S&amp;P.</p>
     <p class="footnote" style="padding-bottom:8px;">Top line is the position's final value at close. Bottom is your return next to S&amp;P's return over the identical window, both real numbers, so you never have to trust a pre-computed gap.</p>
-    <p class="footnote" style="padding-bottom:32px;">META and TSLA both made money but are colored red here. Both trailed the S&amp;P over their holding window. Tap through for the full dollar breakdown, including raw gain and dollar alpha.</p>
+    <p class="footnote" style="padding-bottom:32px;">KO and VZ both made money but are colored red here. Both trailed the S&amp;P over their holding window. Tap through for the full dollar breakdown, including raw gain and dollar alpha.</p>
   </div>
 
 
@@ -911,14 +968,20 @@
   <div class="screen" id="screen-detail">
     <header class="app">
       <span class="back" onclick="goTo(detailOrigin)">‹</span>
-      <span class="hdr-status"><span class="dot live"></span>Market Open · 2:14 PM ET</span>
-      <span class="action">Exit</span>
+      <span class="info-btn hdr" onclick="openInfo('detail')">i</span>
     </header>
 
+    <div class="mkt-strip">
+      <span class="mkt-clock" data-clock>00:00:00 ET</span>
+      <span class="mkt-div"></span>
+      <span class="mkt-flag"><span class="dot" data-mkt="us"></span>US</span>
+      <span class="mkt-flag"><span class="dot" data-mkt="ca"></span>CA</span>
+    </div>
+
     <div class="subhead">
-      <span class="eyebrow">Position<span class="info-btn" onclick="openInfo('detail')">i</span></span>
+      <span class="eyebrow">Position</span>
       <span class="count-line">NVDA <span style="color:var(--c-700);">· NVIDIA Corp</span></span>
-      <span style="font-size:11px;letter-spacing:-0.02em;color:var(--c-700);">Closed · Beat S&amp;P</span>
+      <span style="font-size:11px;letter-spacing:-0.02em;color:var(--c-700);"><span style="color:var(--c-200);">Closed</span> · Beat S&amp;P</span>
     </div>
 
     <div class="hero-pad">
@@ -931,13 +994,12 @@
 
     <div class="kv-grid">
       <div class="kv"><div class="k">Entered</div><div class="v">Nov 8, 2025</div></div>
-      <div class="kv"><div class="k">Closed</div><div class="v">Jul 2, 2026</div></div>
+      <div class="kv"><div class="k">Exited</div><div class="v">Jul 2, 2026</div></div>
       <div class="kv"><div class="k">Entry Price</div><div class="v">$138.42</div></div>
-      <div class="kv"><div class="k">Exit Price</div><div class="v">$195.17</div></div>
+      <div class="kv"><div class="k">Exit Price</div><div class="v">$195.15</div></div>
       <div class="kv"><div class="k">Held</div><div class="v">236 days</div></div>
-      <div class="kv"><div class="k">Entry Weight</div><div class="v">15.9% of portfolio</div></div>
+      <div class="kv"><div class="k">Entry Weight</div><div class="v">17.9% of portfolio</div></div>
       <div class="kv"><div class="k">Shares Sold</div><div class="v">61.41</div></div>
-      <div class="kv"><div class="k">Sold</div><div class="v">All shares</div></div>
     </div>
 
     <div class="sec">
@@ -962,8 +1024,11 @@
 
     <div class="sec">
       <span class="sec-title">Position vs Benchmark</span>
-      <div class="chartwrap">
+      <div class="chartwrap" style="margin-top:4px;">
         <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;display:block;margin-bottom:8px;">NVDA vs. S&amp;P 500, % return since entry</span>
+        <div class="scrub-read" style="margin:0 0 12px;">
+          <span><span id="posScrubDate">Jul 2, 2026</span> · NVDA <b id="posScrubA">+41.0%</b> · S&amp;P <b id="posScrubB" style="color:var(--c-700);">+18.1%</b> · Alpha <b id="posScrubAlpha" style="color:var(--c-live-muted);">+22.9&nbsp;pp</b></span>
+        </div>
         <div style="position:relative;">
         <div class="legend">
           <span><span class="ln"></span>NVDA</span>
@@ -976,17 +1041,17 @@
           <line x1="0" y1="92" x2="320" y2="92" style="stroke:var(--c-1000)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
           <line x1="0" y1="12" x2="0" y2="176" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
           <line x1="0" y1="176" x2="320" y2="176" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
-          <path d="M0,176 L45,152 L90,128 L135,140 L180,88 L225,56 L270,32 L320,12" fill="none" style="stroke:var(--c-400)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
-          <path d="M0,176 L45,168 L90,160 L135,164 L180,152 L225,146 L270,140 L320,104" fill="none" style="stroke:var(--c-700)" stroke-width="1.25" stroke-dasharray="4 4" vector-effect="non-scaling-stroke"/>
+          <path id="posAcct" d="M0,176 L45,152 L90,128 L135,140 L180,88 L225,56 L270,32 L320,12" fill="none" style="stroke:var(--c-400)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+          <path id="posBm" d="M0,176 L45,168 L90,160 L135,164 L180,152 L225,146 L270,140 L320,103.6" fill="none" style="stroke:var(--c-700)" stroke-width="1.25" stroke-dasharray="4 4" vector-effect="non-scaling-stroke"/>
+          <line class="scrub-line" x1="0" y1="12" x2="0" y2="176" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke" visibility="hidden"/>
+          <circle class="scrub-dot-b" r="2.5" style="fill:var(--c-700)" visibility="hidden"/>
+          <circle class="scrub-dot-a" r="2.5" style="fill:var(--c-400)" visibility="hidden"/>
         </svg>
         </div>
         <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--c-700);letter-spacing:-0.02em;margin-top:8px;padding-left:11%;">
           <span>Nov 25</span><span>Jan 26</span><span>Apr 26</span><span>Jul 26</span>
         </div>
-        <div class="axis-end">
-          <span>Entry <b>Nov 8</b></span>
-          <span style="text-align:right;">Exit <b>+41.0%</b> · S&amp;P <span style="color:var(--c-700);">+18.1%</span></span>
-        </div>
+
       </div>
     </div>
 
@@ -998,7 +1063,7 @@
       </div>
       <div class="cmp-row wide">
         <span class="cmp-label">Share of total return this period</span>
-        <span class="cmp-val">41.4%</span>
+        <span class="cmp-val">21.6%</span>
       </div>
       <div class="cmp-row wide">
         <span class="cmp-label">Rank among closed positions</span>
@@ -1031,6 +1096,22 @@
   </div>
 
 </div>
+</div>
+
+<!-- ══════════════ BOTTOM SHEET · BENCHMARK PICKER ══════════════ -->
+<div class="info-overlay" id="info-overlay-bm" onclick="closeInfo('bm')"></div>
+<div class="info-sheet" aria-hidden="true" id="info-sheet-bm">
+  <div class="info-sheet-head">
+    <span class="info-sheet-title">Benchmark</span>
+    <span class="info-sheet-close" onclick="closeInfo('bm')">&times;</span>
+  </div>
+  <div class="info-sheet-body">
+    <div>
+      <div class="bm-pick" data-pick="sp" onclick="pickBm('sp')"><span>S&amp;P 500</span><span class="tick">&#10003;</span></div>
+      <div class="bm-pick" data-pick="nasdaq" onclick="pickBm('nasdaq')"><span>Nasdaq</span><span class="tick">&#10003;</span></div>
+      <div class="bm-pick" data-pick="tsx" onclick="pickBm('tsx')"><span>TSX</span><span class="tick">&#10003;</span></div>
+    </div>
+  </div>
 </div>
 
 <!-- ══════════════ INFO SHEET · DECISIONS ══════════════ -->
@@ -1111,7 +1192,7 @@
     </div>
     <div>
       <span class="info-block-title">Color</span>
-      <p class="info-p">Color always means beat or trailed the index, never just profit or loss. META and TSLA both made money but read red here, because both trailed the S&amp;P. Tap into any position for the full dollar breakdown: cost basis, raw gain, and dollar alpha.</p>
+      <p class="info-p">Color always means beat or trailed the index, never just profit or loss. KO and VZ both made money but read red here, because both trailed the S&amp;P. Tap into any position for the full dollar breakdown: cost basis, raw gain, and dollar alpha.</p>
     </div>
   </div>
 </div>
@@ -1126,7 +1207,7 @@
     <div>
       <span class="info-block-title">What Each Section Shows</span>
       <div class="info-sec-item"><div class="k">Hero</div><div class="d">Dollar alpha vs S&amp;P for this position, plus your return and S&amp;P's return over the identical window.</div></div>
-      <div class="info-sec-item"><div class="k">Performance vs S&amp;P</div><div class="d">Account, benchmark, and the resulting alpha, laid out as three plain numbers, never a delta shown alone.</div></div>
+      <div class="info-sec-item"><div class="k">Performance vs S&amp;P</div><div class="d">Portfolio, benchmark, and the resulting alpha, laid out as three plain numbers, never a delta shown alone.</div></div>
       <div class="info-sec-item"><div class="k">Position vs Benchmark chart</div><div class="d">Visual comparison of the position's value path against the S&amp;P 500 over the same window.</div></div>
       <div class="info-sec-item"><div class="k">Portfolio Impact</div><div class="d">How much this position moved the overall account: dollars, share of total return, and rank against other closed positions.</div></div>
     </div>
@@ -1165,6 +1246,11 @@
   }
   // Account is fixed; each benchmark carries its own compounded yearly series.
   // Alpha is always account minus benchmark, so nothing can drift.
+  // Tracked Mar 14 2023 -> Aug 10 2026. The years table reads one calendar year
+  // per row, so its total row has to be the same unit: the average annual rate,
+  // not the cumulative return (which the signal block above already carries).
+  const TRACKED_YEARS = (new Date(2026,7,10) - new Date(2023,2,14)) / 31557600000;
+  const annualize = cum => Math.round((Math.pow(1 + cum/100, 1/TRACKED_YEARS) - 1) * 1000) / 10;
   const ACCOUNT_YEARS = [12.0, 4.4, 15.0, 3.7];          // 2023 (from Mar) · 2024 · 2025 · 2026 YTD
   const BM = {
     sp:     {short:'S&P',    long:'S&P 500', years:[14.0, 12.0, 10.0, 3.4],
@@ -1231,6 +1317,7 @@
     return out.map((val,i)=> dep[i] + (val - dep[i]) * k);
   }
   const WINDOW = {all:[0,41], '3y':[5,41], '1y':[29,41], ytd:[34,41]};
+  let ACCT_CURVE = null;
   function drawCurve(bm, periodKey){
     const base = PERIOD.all.base;
     const acct = series(ACCOUNT_YEARS, base * PERIOD.all.ret/100);
@@ -1257,21 +1344,21 @@
     };
     document.getElementById('curveAcct').setAttribute('d', path(av));
     document.getElementById('curveBm').setAttribute('d', path(bv));
-    const k = v => '$' + (v/1000).toFixed(1) + 'k';
+    const k = v => (v/1000).toFixed(1) + 'k';
     document.getElementById('tickTop').textContent = k(top);
     document.getElementById('tickMid').textContent = k((top+bot)/2);
-    document.getElementById('tickBot').textContent = bot === 0 ? '$0' : k(bot);
+    document.getElementById('tickBot').textContent = bot === 0 ? '0' : k(bot);
     [1,2,3,4].forEach(n=>{
       const m = am + Math.round((bm2-am) * (n-1)/3);
       document.getElementById('ax'+n).textContent = monthLabel(m);
     });
-    document.querySelectorAll('[data-start-val]').forEach(el=>el.textContent = k(av[0]));
+    ACCT_CURVE = {av:av, bv:bv, y:y, fromM:am, toM:bm2};
     return {acctEnd:av[av.length-1], bmEnd:bv[bv.length-1]};
   }
 
   function render(){
     const bm = BM[state.benchmark], per = PERIOD[state.period];
-    document.querySelectorAll('.pd-bm-opt').forEach(el=>el.classList.toggle('active', el.dataset.bm===state.benchmark));
+    document.querySelectorAll('.bm-pick').forEach(el=>el.classList.toggle('on', el.dataset.pick===state.benchmark));
     document.querySelectorAll('.pd-period-opt').forEach(el=>el.classList.toggle('active', el.dataset.period===state.period));
     document.querySelectorAll('[data-period-label]').forEach(el=>el.textContent = per.label);
     document.querySelectorAll('[data-bm-short]').forEach(el=>el.textContent = bm.short);
@@ -1293,8 +1380,8 @@
       el.querySelectorAll('.pct').forEach(x=>x.style.color = col);
     });
     const ends = drawCurve(bm, state.period);
-    document.querySelectorAll('[data-acct-end]').forEach(el=>el.textContent = '$' + (ends.acctEnd/1000).toFixed(1) + 'k');
-    document.querySelectorAll('[data-bm-end]').forEach(el=>el.textContent = '$' + (ends.bmEnd/1000).toFixed(1) + 'k');
+    document.querySelectorAll('[data-acct-end]').forEach(el=>el.textContent = (ends.acctEnd/1000).toFixed(1) + 'k');
+    document.querySelectorAll('[data-bm-end]').forEach(el=>el.textContent = (ends.bmEnd/1000).toFixed(1) + 'k');
     // yearly rows
     const rows = YEARS.map((y,i)=>{
       const future = i >= ACCOUNT_YEARS.length;
@@ -1307,18 +1394,24 @@
         '<span class="yt-val">'+pct(a)+'</span><span class="yt-val">'+pct(b)+'</span>'+
         '<span class="yt-val" style="color:'+dc+'">'+pp(d)+'</span></div>';
     }).join('');
-    const allPp = Math.round((PERIOD.all.ret - bm.ret.all)*10)/10;
-    const totalCol = allPp < 0 ? 'var(--c-urgent-muted)' : 'var(--c-live-muted)';
+    const annAcct = annualize(PERIOD.all.ret), annBm = annualize(bm.ret.all);
+    const annPp = Math.round((annAcct - annBm)*10)/10;
+    const totalCol = annPp < 0 ? 'var(--c-urgent-muted)' : 'var(--c-live-muted)';
     document.getElementById('ytRows').innerHTML = rows +
-      '<div class="yt-row total"><span class="yt-year">Since Inception</span>'+
-      '<span class="yt-val">'+pct(PERIOD.all.ret)+'</span><span class="yt-val">'+pct(bm.ret.all)+'</span>'+
-      '<span class="yt-val" style="color:'+totalCol+'">'+pp(allPp)+'</span></div>';
+      '<div class="yt-row total"><span class="yt-year">Annualized</span>'+
+      '<span class="yt-val">'+pct(annAcct)+'</span><span class="yt-val">'+pct(annBm)+'</span>'+
+      '<span class="yt-val" style="color:'+totalCol+'">'+pp(annPp)+'</span></div>';
   }
-  document.querySelectorAll('.pd-bm-opt').forEach(el=>
-    el.addEventListener('click',()=>{ state.benchmark = el.dataset.bm; render(); }));
+  function pickBm(key){ state.benchmark = key; closeInfo('bm'); render(); }
   document.querySelectorAll('.pd-period-opt').forEach(el=>
     el.addEventListener('click',()=>{ state.period = el.dataset.period; render(); }));
   render();
+
+  function toggleDef(key, el){
+    const d = document.getElementById('def-' + key);
+    d.hidden = !d.hidden;
+    el.style.color = d.hidden ? '' : 'var(--c-white)';
+  }
 
   function filterList(screen, key, el){
     const scr = document.getElementById('screen-' + screen);
@@ -1344,9 +1437,116 @@
   function toggleDecPreview(which, el){
     const panel = document.getElementById('dec-preview-' + which);
     const open = panel.classList.toggle('open');
-    if (el) el.style.color = open ? 'var(--c-white)' : '';
-    return;
+    if (el) { el.classList.toggle('open', open); el.style.color = open ? 'var(--c-white)' : ''; }
   }
+  // Drag across a chart to read both series at that date. Release returns to
+  // the latest values, so the resting state is always "today".
+  function svgUnitX(svg, clientX){
+    const pt = svg.createSVGPoint(); pt.x = clientX; pt.y = 0;
+    return pt.matrixTransform(svg.getScreenCTM().inverse()).x;
+  }
+  function marker(svg, on, x, ya, yb){
+    const set = (sel, attrs) => {
+      const el = svg.querySelector(sel); if (!el) return;
+      el.setAttribute('visibility', on ? 'visible' : 'hidden');
+      for (const k in attrs) el.setAttribute(k, attrs[k]);
+    };
+    set('.scrub-line', on ? {x1:x, x2:x} : {});
+    set('.scrub-dot-a', on ? {cx:x, cy:ya} : {});
+    set('.scrub-dot-b', on ? {cx:x, cy:yb} : {});
+  }
+  function attachScrub(svg, atIndex, count, reset){
+    let live = false;
+    const move = ev => {
+      const ux = Math.max(0, Math.min(320, svgUnitX(svg, ev.clientX)));
+      const i = Math.round(ux / 320 * (count() - 1));
+      atIndex(i, ux);
+      ev.preventDefault();
+    };
+    const end = () => { if (!live) return; live = false; marker(svg, false); reset(); };
+    svg.addEventListener('pointerdown', ev => { live = true; try { svg.setPointerCapture(ev.pointerId); } catch(e){} move(ev); });
+    svg.addEventListener('pointermove', ev => { if (live) move(ev); });
+    svg.addEventListener('pointerup', end);
+    svg.addEventListener('pointercancel', end);
+    svg.addEventListener('pointerleave', end);
+  }
+
+  // chart 1: portfolio against the benchmark, in dollars
+  (function(){
+    const svg = document.querySelector('#screen-decisions .chartwrap svg');
+    if (!svg) return;
+    const kk = v => (v/1000).toFixed(1) + 'k';
+    const dateEl = document.getElementById('acctScrubDate');
+    const setRow = (label, a, b) => {
+      dateEl.textContent = label;
+      document.querySelectorAll('[data-acct-end]').forEach(el=>el.textContent = kk(a));
+      document.querySelectorAll('[data-bm-end]').forEach(el=>el.textContent = kk(b));
+    };
+    attachScrub(svg,
+      (i, ux) => {
+        const c = ACCT_CURVE; if (!c) return;
+        const a = c.av[i], b = c.bv[i];
+        setRow(monthLabel(c.fromM + Math.round((c.toM - c.fromM) * i / (c.av.length - 1))), a, b);
+        marker(svg, true, ux, c.y(a), c.y(b));
+      },
+      () => ACCT_CURVE ? ACCT_CURVE.av.length : 1,
+      () => { const c = ACCT_CURVE; if (!c) return;
+        setRow(monthLabel(c.toM), c.av[c.av.length-1], c.bv[c.bv.length-1]); });
+  })();
+
+  // chart 2: the closed position against the benchmark, in percent
+  (function(){
+    const svg = document.querySelector('#screen-detail .chartwrap svg');
+    if (!svg) return;
+    const pts = sel => document.getElementById(sel).getAttribute('d')
+      .split(/[ML]/).filter(Boolean).map(pair => pair.split(',').map(Number));
+    const A = pts('posAcct'), B = pts('posBm');
+    const pct = y => (176 - y) / 4;                       // 0% at y=176, +40% at y=16
+    const ENTRY = new Date(2025, 10, 8), DAYS = 236;      // Nov 8 2025 + 236 days = Jul 2 2026
+    const dayLabel = f => {
+      const d = new Date(ENTRY.getTime() + Math.round(DAYS * f) * 86400000);
+      return d.toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'});
+    };
+    const sign = v => (v < 0 ? '\u2212' : '+') + Math.abs(v).toFixed(1);
+    const el = id => document.getElementById(id);
+    const setRow = (f, a, b) => {
+      el('posScrubDate').textContent = dayLabel(f);
+      el('posScrubA').textContent = sign(a) + '%';
+      el('posScrubB').textContent = sign(b) + '%';
+      const d = Math.round((a - b) * 10) / 10;
+      el('posScrubAlpha').textContent = sign(d) + '\u00a0pp';
+      el('posScrubAlpha').style.color = d < 0 ? 'var(--c-urgent-muted)' : 'var(--c-live-muted)';
+    };
+    attachScrub(svg,
+      (i, ux) => {
+        setRow(i / (A.length - 1), pct(A[i][1]), pct(B[i][1]));
+        marker(svg, true, ux, A[i][1], B[i][1]);
+      },
+      () => A.length,
+      () => setRow(1, pct(A[A.length-1][1]), pct(B[B.length-1][1])));
+  })();
+
+  // 24h ET clock, ticks every second. Open window is Mon-Fri 09:30-16:00 ET for
+  // both NYSE and TSX. No holiday calendar, so a market holiday reads as open.
+  function marketOpen(tz){
+    const parts = new Intl.DateTimeFormat('en-US',{timeZone:tz,hour:'numeric',minute:'numeric',
+      hour12:false,weekday:'short'}).formatToParts(new Date());
+    const get = t => (parts.find(x=>x.type===t)||{}).value || '';
+    let h = parseInt(get('hour'),10); if (h === 24) h = 0;
+    const mins = h*60 + parseInt(get('minute'),10);
+    return !['Sat','Sun'].includes(get('weekday')) && mins >= 570 && mins < 960;
+  }
+  function tickClock(){
+    const t = new Date().toLocaleTimeString('en-US',{timeZone:'America/New_York',
+      hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+    document.querySelectorAll('[data-clock]').forEach(el=>el.textContent = t + ' ET');
+    const open = {us:marketOpen('America/New_York'), ca:marketOpen('America/Toronto')};
+    document.querySelectorAll('[data-mkt]').forEach(el=>
+      el.className = 'dot ' + (open[el.dataset.mkt] ? 'live' : 'urgent'));
+  }
+  tickClock();
+  setInterval(tickClock, 1000);
+
   // Only NVDA has a fully built-out Detail screen in this mockup; every other
   // ticker tap routes to the relevant list screen as the honest fallback.
   let detailOrigin = 'closed';
