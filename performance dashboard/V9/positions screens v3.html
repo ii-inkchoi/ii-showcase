@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
+    --proto-h:59px;   /* prototype chrome height; 0 in the product */
     --c-black:#000000; --c-elev:#0A0A0A; --c-1000:#1C1C1C; --c-900:#232627;
     --c-graphite:#3A3A37;
     --c-800:#565B5E; --c-700:#929292; --c-600:#A7A7A7; --c-400:#C7C7C7;
@@ -31,7 +32,7 @@
   .proto-btn.active{color:var(--c-black);background:var(--c-200);border-color:var(--c-200);}
   .proto-stage{display:flex;justify-content:center;padding:36px 16px 80px;}
   .phone{width:390px;max-width:100%;background:var(--c-black);border:1px solid var(--c-1000);
-    border-radius:34px;overflow:hidden;box-shadow:0 40px 80px -20px rgba(0,0,0,0.8);}
+    border-radius:34px;box-shadow:0 40px 80px -20px rgba(0,0,0,0.8);}
   .screen{display:none;min-height:780px;}
   .screen.active{display:block;}
 
@@ -122,7 +123,30 @@
   .eyebrow{font-size:17px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.2;}
   .count-line{font-size:17px;color:var(--c-white);letter-spacing:-0.02em;font-weight:400;line-height:1.2;margin-top:0;}
 
-  .filterbar{position:sticky;top:0;z-index:5;background:var(--c-black);border-bottom:0.5px solid var(--c-900);
+  /* period / benchmark group: sticks to the top and governs every section below */
+  .pd-period-group{position:sticky;top:var(--proto-h,0px);z-index:8;background:var(--c-black);
+    border-bottom:0.5px solid var(--c-900);margin-top:48px;}
+  .pd-period-row{display:flex;gap:20px;align-items:baseline;padding:16px 20px 8px;}
+  .pd-bm-row{display:flex;gap:16px;align-items:baseline;padding:0 20px 12px;}
+  .pd-period-opt,.pd-bm-opt{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;cursor:pointer;
+    transition:color 200ms ease;padding:12px 2px;margin:-12px -2px;}
+  .pd-period-opt.active,.pd-bm-opt.active{color:var(--c-white);}
+  .pd-bm-static-label{font-size:11px;color:var(--c-800);letter-spacing:-0.02em;}
+  /* yearly breakdown */
+  .yt-table{display:grid;grid-template-columns:1fr 62px 62px 62px;column-gap:12px;}
+  .yt-head,.yt-row,#ytRows{display:contents;}
+  .yt-head > span{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;text-align:right;
+    padding-bottom:12px;border-bottom:0.5px solid var(--c-900);}
+  .yt-head > span:first-child{text-align:left;}
+  .yt-row > span{padding:12px 0;border-bottom:0.5px solid var(--c-900);font-size:15px;letter-spacing:-0.02em;
+    font-feature-settings:'lnum' 1,'tnum' 1;}
+  .yt-year{text-align:left;color:var(--c-700);}
+  .yt-val{text-align:right;color:var(--c-400);}
+  .yt-row.future .yt-year,.yt-row.future .yt-val{color:var(--c-800);}
+  .yt-row.total > span{border-bottom:none;padding-top:16px;border-top:0.5px solid var(--c-900);}
+  .yt-row.total .yt-year{color:var(--c-200);}
+  .yt-tag{font-size:11px;letter-spacing:-0.02em;color:var(--c-800);margin-left:4px;}
+  .filterbar{position:sticky;top:var(--proto-h,0px);z-index:5;background:var(--c-black);border-bottom:0.5px solid var(--c-900);
     display:flex;align-items:center;justify-content:space-between;padding:16px 20px;margin-top:48px;}
   .chips{display:flex;gap:16px;}
   .chip{font-size:13px;letter-spacing:-0.02em;cursor:pointer;color:var(--c-700);
@@ -266,14 +290,14 @@
     </section>
 
     <section style="margin:24px 20px 0;padding:24px 0 0;border-top:0.5px solid var(--c-900);display:flex;flex-direction:column;gap:24px;">
-      <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;">Since Inception · Preliminary</span>
+      <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;"><span data-period-label>Since Inception</span> · Preliminary</span>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:8px;row-gap:8px;">
         <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;text-align:left;">Account</span>
         <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;text-align:center;">Alpha</span>
-        <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;text-align:right;">S&amp;P</span>
-        <span style="font-size:17px;color:var(--c-white);letter-spacing:-0.02em;font-weight:400;line-height:1.2;text-align:left;">+39.4%</span>
-        <span style="font-size:17px;color:var(--c-urgent-muted);letter-spacing:-0.02em;line-height:1.2;text-align:center;align-self:end;padding-bottom:2px;"><span class="tw">−5.8&nbsp;pp</span></span>
-        <span style="font-size:17px;color:var(--c-white);letter-spacing:-0.02em;font-weight:400;line-height:1.2;text-align:right;">+45.2%</span>
+        <span data-bm-short style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;text-align:right;">S&amp;P</span>
+        <span data-acct-pct style="font-size:17px;color:var(--c-white);letter-spacing:-0.02em;font-weight:400;line-height:1.2;text-align:left;">+39.4%</span>
+        <span data-alpha-cell style="font-size:17px;color:var(--c-urgent-muted);letter-spacing:-0.02em;line-height:1.2;text-align:center;align-self:end;padding-bottom:2px;"><span class="tw" data-alpha-pp>−5.8&nbsp;pp</span></span>
+        <span data-bm-pct style="font-size:17px;color:var(--c-white);letter-spacing:-0.02em;font-weight:400;line-height:1.2;text-align:right;">+45.2%</span>
       </div>
     </section>
 
@@ -292,48 +316,74 @@
       </div>
     </div>
 
+    <div class="pd-period-group">
+      <div class="pd-period-row" role="tablist" aria-label="Time period">
+        <span class="pd-period-opt" data-period="ytd">YTD</span>
+        <span class="pd-period-opt" data-period="1y">1Y</span>
+        <span class="pd-period-opt" data-period="3y">3Y</span>
+        <span class="pd-period-opt active" data-period="all">All</span>
+      </div>
+      <div class="pd-bm-row" role="tablist" aria-label="Benchmark">
+        <span class="pd-bm-static-label">Benchmark</span>
+        <span class="pd-bm-opt active" data-bm="sp">S&amp;P 500</span>
+        <span class="pd-bm-opt" data-bm="nasdaq">Nasdaq</span>
+        <span class="pd-bm-opt" data-bm="tsx">TSX</span>
+      </div>
+    </div>
+
     <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
-      <span class="sec-title">Performance vs S&amp;P</span>
+      <span class="sec-title">Performance vs <span data-bm-long>S&amp;P 500</span></span>
       <div class="cmp-row">
         <span class="cmp-label">Account</span>
-        <span class="cmp-val">+16,142.02<span class="pct">+39.4%</span></span>
+        <span class="cmp-val"><span data-acct-dollars>+16,142.02</span><span class="pct" data-acct-pct>+39.4%</span></span>
       </div>
       <div class="cmp-row">
-        <span class="cmp-label">S&amp;P Benchmark</span>
-        <span class="cmp-val">+18,515.92<span class="pct">+45.2%</span></span>
+        <span class="cmp-label"><span data-bm-long>S&amp;P 500</span> Benchmark</span>
+        <span class="cmp-val"><span data-bm-dollars>+18,515.92</span><span class="pct" data-bm-pct>+45.2%</span></span>
       </div>
       <div class="cmp-row">
         <span class="cmp-label">Alpha</span>
-        <span class="cmp-val" style="color:var(--c-urgent-muted);">−2,373.90<span class="pct" style="color:var(--c-urgent-muted);">−5.8&nbsp;pp</span></span>
+        <span class="cmp-val" data-alpha-cell style="color:var(--c-urgent-muted);"><span data-alpha-dollars>−2,373.90</span><span class="pct" data-alpha-pp style="color:var(--c-urgent-muted);">−5.8&nbsp;pp</span></span>
       </div>
-      <p style="font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">Total return, dividends reinvested, net of fees. S&amp;P 500 Benchmark applies the same deposit and withdrawal timing as the account, not a static index price return.</p>
+      <p style="font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">Total return, dividends reinvested, net of fees. <span data-bm-long>S&amp;P 500</span> Benchmark applies the same deposit and withdrawal timing as the account, not a static index price return.</p>
 
       <div class="chartwrap" style="margin-top:12px;">
-        <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;display:block;margin-bottom:8px;">Account value vs. S&amp;P, $ CAD</span>
+        <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;display:block;margin-bottom:8px;">Account value vs. <span data-bm-short>S&amp;P</span>, $ CAD</span>
         <div style="position:relative;">
           <div class="legend">
             <span><span class="ln"></span>Account</span>
-            <span><span class="ln dash"></span>S&amp;P</span>
+            <span><span class="ln dash"></span><span data-bm-short>S&amp;P</span></span>
           </div>
           <svg style="width:100%;height:180px;display:block;overflow:visible;" viewBox="-40 0 360 180" preserveAspectRatio="none" aria-hidden="true">
-            <text x="-40" y="16" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">$60k</text>
-            <text x="-40" y="96" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">$30k</text>
-            <text x="-40" y="176" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">$0</text>
+            <text id="tickTop" x="-40" y="16" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">$60k</text>
+            <text id="tickMid" x="-40" y="96" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">$30k</text>
+            <text id="tickBot" x="-40" y="176" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">$0</text>
             <line x1="0" y1="92" x2="320" y2="92" style="stroke:var(--c-1000)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
             <line x1="0" y1="12" x2="0" y2="172" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
             <line x1="0" y1="172" x2="320" y2="172" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
-            <path d="M0,136 L47,110 L86,77 L156,48 L211,56 L273,28 L320,17" fill="none" style="stroke:var(--c-700)" stroke-width="1.25" stroke-dasharray="4 4" vector-effect="non-scaling-stroke"/>
-            <path d="M0,136 L47,112 L86,80 L156,52 L211,60 L273,33 L320,24" fill="none" style="stroke:var(--c-400)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+            <path id="curveBm" d="" fill="none" style="stroke:var(--c-700)" stroke-width="1.25" stroke-dasharray="4 4" vector-effect="non-scaling-stroke"/>
+            <path id="curveAcct" d="" fill="none" style="stroke:var(--c-400)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
           </svg>
         </div>
         <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--c-700);letter-spacing:-0.02em;margin-top:8px;padding-left:11%;">
-          <span>Mar 23</span><span>Apr 24</span><span>Jun 25</span><span>Aug 26</span>
+          <span id="ax1">Mar 23</span><span id="ax2">Apr 24</span><span id="ax3">Jun 25</span><span id="ax4">Aug 26</span>
         </div>
         <div class="axis-end">
-          <span>Start <b>$15.0k</b></span>
-          <span style="text-align:right;">Account <b>$57.1k</b> · S&amp;P <span style="color:var(--c-700);">$59.4k</span></span>
+          <span>Start <b data-start-val>$15.0k</b></span>
+          <span style="text-align:right;">Account <b data-acct-end>$57.1k</b> · <span data-bm-short>S&amp;P</span> <span style="color:var(--c-700);" data-bm-end>$59.5k</span></span>
         </div>
       </div>
+    </section>
+
+    <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
+      <span class="sec-title">Yearly Breakdown</span>
+      <div class="yt-table">
+        <div class="yt-head">
+          <span>Year</span><span>Account</span><span data-bm-short>S&amp;P</span><span>Alpha</span>
+        </div>
+        <div id="ytRows"></div>
+      </div>
+      <p style="font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">2026 is year-to-date, not a full-year figure. 2027 and 2028 are shown for reference, 2028 being the earliest date a 5-year track record exists.</p>
     </section>
 
     <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
@@ -365,7 +415,7 @@
         <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Uninvested cash cost</span>
         <span style="font-size:15px;color:var(--c-urgent-muted);letter-spacing:-0.02em;text-align:right;font-feature-settings:'lnum' 1,'tnum' 1;">−4,128.00</span>
       </div>
-      <p style="font-size:13px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;margin-top:0;">Avg 16% cash. S&amp;P 500 returned +45.2% over the same window.</p>
+      <p style="font-size:13px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;margin-top:0;">Avg 16% cash. <span data-bm-long>S&amp;P 500</span> returned <span data-bm-pct>+45.2%</span> over the same window.</p>
     </section>
 
     <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
@@ -387,7 +437,7 @@
         <span class="stat-delta loss" style="text-align:right;"><span class="trend down">▼</span><span class="statnum">−18.4%</span></span>
       </div>
       <div class="dec-row">
-        <span style="font-size:15px;color:var(--c-800);letter-spacing:-0.02em;">Max Drawdown, S&amp;P same window</span>
+        <span style="font-size:15px;color:var(--c-800);letter-spacing:-0.02em;">Max Drawdown, <span data-bm-short>S&amp;P</span> same window</span>
         <span class="stat-delta neutral sub" style="text-align:right;"><span class="statnum">−12.1%</span></span>
       </div>
       <div class="dec-row">
@@ -395,7 +445,7 @@
         <span class="stat-delta" style="text-align:right;"><span class="trend plain">▲</span><span class="statnum">17.2%</span></span>
       </div>
       <div class="dec-row">
-        <span style="font-size:15px;color:var(--c-800);letter-spacing:-0.02em;">Volatility (12M), S&amp;P</span>
+        <span style="font-size:15px;color:var(--c-800);letter-spacing:-0.02em;">Volatility (12M), <span data-bm-short>S&amp;P</span></span>
         <span class="stat-delta neutral sub" style="text-align:right;"><span class="statnum">15.4%</span></span>
       </div>
       <p style="font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin-top:2px;">Arrow means "vs. the S&amp;P figure directly below" and is shown only where that comparison exists on screen. TWR, MWR, and Gap don't have one here, so they're colored but arrow-free. Color is a separate verdict from direction: a deeper drawdown than S&amp;P is unfavorable (red); higher volatility than S&amp;P isn't inherently good or bad, so it stays neutral grey even though the arrow points up.</p>
@@ -886,6 +936,8 @@
       <div class="kv"><div class="k">Exit Price</div><div class="v">$195.17</div></div>
       <div class="kv"><div class="k">Held</div><div class="v">236 days</div></div>
       <div class="kv"><div class="k">Entry Weight</div><div class="v">15.9% of portfolio</div></div>
+      <div class="kv"><div class="k">Shares Sold</div><div class="v">61.41</div></div>
+      <div class="kv"><div class="k">Sold</div><div class="v">All shares</div></div>
     </div>
 
     <div class="sec">
@@ -952,6 +1004,27 @@
         <span class="cmp-label">Rank among closed positions</span>
         <span class="cmp-val">1 of 9 · largest winner</span>
       </div>
+    </div>
+
+    <div class="sec">
+      <span class="sec-title">Had You Held</span>
+      <div class="cmp-row">
+        <span class="cmp-label">NVDA today</span>
+        <span class="cmp-val">$228.40</span>
+      </div>
+      <div class="cmp-row">
+        <span class="cmp-label">Value if still held</span>
+        <span class="cmp-val">$14,025.59<span class="pct">+65.0%</span></span>
+      </div>
+      <div class="cmp-row">
+        <span class="cmp-label">What you realised</span>
+        <span class="cmp-val">$11,985.00<span class="pct">+41.0%</span></span>
+      </div>
+      <div class="cmp-row">
+        <span class="cmp-label">Selling early cost you</span>
+        <span class="cmp-val" style="color:var(--c-urgent-muted);">−2,040.59<span class="pct" style="color:var(--c-urgent-muted);">−24.0&nbsp;pp</span></span>
+      </div>
+      <p style="font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">Priced at Aug 10, 2026 on the 61.41 shares sold. Assumes the shares were kept and does not count what the proceeds earned after the sale.</p>
     </div>
 
     <p class="foot-disclosure">Closed positions use past tense (Beat / Trailed). Alpha vs S&amp;P 500, dividends reinvested. Figures are preliminary and unaudited.</p>
@@ -1090,6 +1163,163 @@
     r.hidden = !r.hidden;
     el.classList.toggle('open', !r.hidden);
   }
+  // Account is fixed; each benchmark carries its own compounded yearly series.
+  // Alpha is always account minus benchmark, so nothing can drift.
+  const ACCOUNT_YEARS = [12.0, 4.4, 15.0, 3.7];          // 2023 (from Mar) · 2024 · 2025 · 2026 YTD
+  const BM = {
+    sp:     {short:'S&P',    long:'S&P 500', years:[14.0, 12.0, 10.0, 3.4],
+             ret:{ytd:3.4, '1y':9.8,  '3y':28.4, all:45.2}},
+    nasdaq: {short:'Nasdaq', long:'Nasdaq',  years:[20.0, 15.0, 12.0, 2.6],
+             ret:{ytd:2.6, '1y':10.4, '3y':33.2, all:58.6}},
+    tsx:    {short:'TSX',    long:'TSX',     years:[8.0, 6.0, 7.0, 3.2],
+             ret:{ytd:3.2, '1y':7.1,  '3y':17.6, all:26.4}}
+  };
+  // account return and the capital it was earned on, per period
+  const PERIOD = {
+    ytd:  {label:'Year to Date',      ret:3.7,  base:50000},
+    '1y': {label:'Trailing 1 Year',   ret:11.2, base:47000},
+    '3y': {label:'Trailing 3 Years',  ret:25.6, base:38000},
+    all:  {label:'Since Inception',   ret:39.4, base:40969.6}
+  };
+  let state = {period:'all', benchmark:'sp'};
+  const money = v => (v < 0 ? '\u2212' : '+') + Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:2, maximumFractionDigits:2});
+  const pct  = v => (v < 0 ? '\u2212' : '+') + Math.abs(v).toFixed(1) + '%';
+  const pp   = v => (v < 0 ? '\u2212' : '+') + Math.abs(v).toFixed(1) + '&nbsp;pp';
+  const YEARS = ['2023','2024','2025','2026','2027','2028'];
+  const TAGS  = {'2026':'YTD','2028':'Signal'};
+
+  // one monthly series, generated once per benchmark: deposits on their real dates,
+  // growth at that calendar year's rate. Windows are slices of it, so nothing can disagree.
+  const DEPOSITS = {0:15000, 6:8000, 11:9000, 20:7000, 27:-4000, 35:6000};   // months from Mar 2023
+  const MONTHS = 41;                                                          // Mar 2023 -> Aug 2026
+  const YEAR_SPAN = [[0,9,0],[10,21,1],[22,33,2],[34,41,3]];                  // month range -> year index
+  const MONTH_NAMES = ['Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb'];
+  function monthLabel(m){
+    const d = new Date(2023, 2 + m, 1);
+    return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]
+      + ' ' + String(d.getFullYear()).slice(2);
+  }
+  function rateFor(m, years){
+    for (const [a,b,i] of YEAR_SPAN) if (m>=a && m<=b) {
+      const months = b - a + 1;
+      return Math.pow(1 + years[i]/100, 1/months) - 1;
+    }
+    return 0;
+  }
+  const SUB = 4, SPREAD = 3;                       // samples per month · months a deposit eases in over
+  function series(years, targetGain){
+    const out = [], dep = [];
+    let v = 0, d = 0;
+    for (let i = 0; i <= MONTHS * SUB; i++){
+      const m = Math.floor(i / SUB);
+      // opening deposit lands at once; later ones ease in over SPREAD months so the
+      // line reads as a slope rather than a stair (end values are unaffected)
+      let add = 0;
+      if (i === 0) add = DEPOSITS[0] || 0;
+      for (const key in DEPOSITS){
+        const dm = +key; if (dm === 0) continue;
+        const from = dm * SUB, to = from + SPREAD * SUB;
+        if (i > from && i <= to) add += DEPOSITS[dm] / (SPREAD * SUB);
+      }
+      v += add; d += add;
+      if (i > 0) v *= Math.pow(1 + rateFor(m, years), 1 / SUB);
+      out.push(v); dep.push(d);
+    }
+    // keep the shape, land the end on the figure the page states
+    const endGain = out[out.length-1] - dep[dep.length-1];
+    const k = endGain === 0 ? 1 : targetGain / endGain;
+    return out.map((val,i)=> dep[i] + (val - dep[i]) * k);
+  }
+  const WINDOW = {all:[0,41], '3y':[5,41], '1y':[29,41], ytd:[34,41]};
+  function drawCurve(bm, periodKey){
+    const base = PERIOD.all.base;
+    const acct = series(ACCOUNT_YEARS, base * PERIOD.all.ret/100);
+    const mirror = series(bm.years, base * bm.ret.all/100);
+    const [am,bm2] = WINDOW[periodKey];
+    const a = am*SUB, b = bm2*SUB;
+    const av = acct.slice(a,b+1), bv = mirror.slice(a,b+1);
+    const lo = Math.min(...av, ...bv), hi = Math.max(...av, ...bv);
+    const step = hi - lo < 12000 ? 2000 : 10000;
+    const bot = Math.floor(lo/step)*step, top = Math.ceil(hi/step)*step;
+    const y = v => 176 - (v - bot)/(top - bot) * 164;
+    // same data, drawn as a smooth curve (Catmull-Rom converted to cubic Béziers)
+    const path = arr => {
+      const pts = arr.map((v,i)=>[i/(arr.length-1)*320, y(v)]);
+      let d = 'M' + pts[0][0].toFixed(1) + ',' + pts[0][1].toFixed(1);
+      for (let i = 0; i < pts.length - 1; i++){
+        const p0 = pts[i-1] || pts[i], p1 = pts[i], p2 = pts[i+1], p3 = pts[i+2] || p2;
+        const c1 = [p1[0] + (p2[0]-p0[0])/6, p1[1] + (p2[1]-p0[1])/6];
+        const c2 = [p2[0] - (p3[0]-p1[0])/6, p2[1] - (p3[1]-p1[1])/6];
+        d += ' C' + c1[0].toFixed(1)+','+c1[1].toFixed(1)+' '+c2[0].toFixed(1)+','+c2[1].toFixed(1)
+           + ' ' + p2[0].toFixed(1)+','+p2[1].toFixed(1);
+      }
+      return d;
+    };
+    document.getElementById('curveAcct').setAttribute('d', path(av));
+    document.getElementById('curveBm').setAttribute('d', path(bv));
+    const k = v => '$' + (v/1000).toFixed(1) + 'k';
+    document.getElementById('tickTop').textContent = k(top);
+    document.getElementById('tickMid').textContent = k((top+bot)/2);
+    document.getElementById('tickBot').textContent = bot === 0 ? '$0' : k(bot);
+    [1,2,3,4].forEach(n=>{
+      const m = am + Math.round((bm2-am) * (n-1)/3);
+      document.getElementById('ax'+n).textContent = monthLabel(m);
+    });
+    document.querySelectorAll('[data-start-val]').forEach(el=>el.textContent = k(av[0]));
+    return {acctEnd:av[av.length-1], bmEnd:bv[bv.length-1]};
+  }
+
+  function render(){
+    const bm = BM[state.benchmark], per = PERIOD[state.period];
+    document.querySelectorAll('.pd-bm-opt').forEach(el=>el.classList.toggle('active', el.dataset.bm===state.benchmark));
+    document.querySelectorAll('.pd-period-opt').forEach(el=>el.classList.toggle('active', el.dataset.period===state.period));
+    document.querySelectorAll('[data-period-label]').forEach(el=>el.textContent = per.label);
+    document.querySelectorAll('[data-bm-short]').forEach(el=>el.textContent = bm.short);
+    document.querySelectorAll('[data-bm-long]').forEach(el=>el.textContent = bm.long);
+    const bmRet  = bm.ret[state.period];
+    const gain   = per.base * per.ret/100;
+    const mirror = per.base * bmRet/100;
+    const alpha  = gain - mirror;
+    const alphaPp = Math.round((per.ret - bmRet)*10)/10;
+    document.querySelectorAll('[data-acct-dollars]').forEach(el=>el.textContent = money(gain));
+    document.querySelectorAll('[data-acct-pct]').forEach(el=>el.textContent = pct(per.ret));
+    document.querySelectorAll('[data-bm-dollars]').forEach(el=>el.textContent = money(mirror));
+    document.querySelectorAll('[data-bm-pct]').forEach(el=>el.textContent = pct(bmRet));
+    document.querySelectorAll('[data-alpha-dollars]').forEach(el=>el.textContent = money(alpha));
+    document.querySelectorAll('[data-alpha-pp]').forEach(el=>el.innerHTML = pp(alphaPp));
+    const col = alpha < 0 ? 'var(--c-urgent-muted)' : 'var(--c-live-muted)';
+    document.querySelectorAll('[data-alpha-cell]').forEach(el=>{
+      el.style.color = col;
+      el.querySelectorAll('.pct').forEach(x=>x.style.color = col);
+    });
+    const ends = drawCurve(bm, state.period);
+    document.querySelectorAll('[data-acct-end]').forEach(el=>el.textContent = '$' + (ends.acctEnd/1000).toFixed(1) + 'k');
+    document.querySelectorAll('[data-bm-end]').forEach(el=>el.textContent = '$' + (ends.bmEnd/1000).toFixed(1) + 'k');
+    // yearly rows
+    const rows = YEARS.map((y,i)=>{
+      const future = i >= ACCOUNT_YEARS.length;
+      const tag = TAGS[y] ? ' <span class="yt-tag">'+TAGS[y]+'</span>' : '';
+      if (future) return '<div class="yt-row future"><span class="yt-year">'+y+tag+'</span>'+
+        '<span class="yt-val">\u2013</span><span class="yt-val">\u2013</span><span class="yt-val">\u2013</span></div>';
+      const a = ACCOUNT_YEARS[i], b = bm.years[i], d = Math.round((a-b)*10)/10;
+      const dc = d < 0 ? 'var(--c-urgent-muted)' : 'var(--c-live-muted)';
+      return '<div class="yt-row"><span class="yt-year">'+y+tag+'</span>'+
+        '<span class="yt-val">'+pct(a)+'</span><span class="yt-val">'+pct(b)+'</span>'+
+        '<span class="yt-val" style="color:'+dc+'">'+pp(d)+'</span></div>';
+    }).join('');
+    const allPp = Math.round((PERIOD.all.ret - bm.ret.all)*10)/10;
+    const totalCol = allPp < 0 ? 'var(--c-urgent-muted)' : 'var(--c-live-muted)';
+    document.getElementById('ytRows').innerHTML = rows +
+      '<div class="yt-row total"><span class="yt-year">Since Inception</span>'+
+      '<span class="yt-val">'+pct(PERIOD.all.ret)+'</span><span class="yt-val">'+pct(bm.ret.all)+'</span>'+
+      '<span class="yt-val" style="color:'+totalCol+'">'+pp(allPp)+'</span></div>';
+  }
+  document.querySelectorAll('.pd-bm-opt').forEach(el=>
+    el.addEventListener('click',()=>{ state.benchmark = el.dataset.bm; render(); }));
+  document.querySelectorAll('.pd-period-opt').forEach(el=>
+    el.addEventListener('click',()=>{ state.period = el.dataset.period; render(); }));
+  render();
+
   function filterList(screen, key, el){
     const scr = document.getElementById('screen-' + screen);
     scr.querySelectorAll('.chips .chip').forEach(c => c.classList.remove('on'));
