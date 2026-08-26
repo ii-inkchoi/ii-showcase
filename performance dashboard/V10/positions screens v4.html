@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Positions · Open / Closed / Detail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --proto-h:59px;   /* prototype chrome height; 0 in the product */
+    --c-black:#000000; --c-elev:#0A0A0A; --c-1000:#1C1C1C; --c-900:#232627;
+    --c-graphite:#3A3A37;
+    --c-800:#565B5E; --c-700:#929292; --c-600:#A7A7A7; --c-400:#C7C7C7;
+    --c-200:#E3E2E2; --c-white:#FFFFFF;
+    --c-live:#30D158; --c-review:#FBC308; --c-warning:#FF7A00; --c-urgent:#FF3533;
+    /* data-value sign pair (muted): numbers use these; vivid is for dots only */
+    --c-live-muted:#288752; --c-urgent-muted:#BE3C36;
+    --win:var(--c-live-muted); --loss:var(--c-urgent-muted);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:var(--c-black);}
+  body{font-family:'Inter',system-ui,-apple-system,sans-serif;color:var(--c-600);}
+
+  /* ── prototype chrome (not part of the product) ───────── */
+  .proto-bar{position:sticky;top:0;z-index:50;display:flex;justify-content:center;gap:6px;
+    padding:14px 10px;background:var(--c-elev);border-bottom:1px solid var(--c-1000);}
+  .proto-btn{font-family:'Inter';font-size:11px;letter-spacing:-0.02em;color:var(--c-700);
+    background:var(--c-1000);border:1px solid var(--c-900);padding:7px 14px;border-radius:20px;cursor:pointer;
+    transition:all 150ms ease;}
+  .proto-btn.active{color:var(--c-black);background:var(--c-200);border-color:var(--c-200);}
+  .proto-stage{display:flex;justify-content:center;padding:36px 16px 80px;}
+  .phone{width:390px;max-width:100%;background:var(--c-black);border:1px solid var(--c-1000);
+    border-radius:34px;box-shadow:0 40px 80px -20px rgba(0,0,0,0.8);}
+  .screen{display:none;min-height:780px;}
+  .screen.active{display:block;}
+
+  /* ── shared product primitives ─────────────────────────── */
+  header.app{position:relative;min-height:48px;display:flex;align-items:center;gap:8px;
+    padding:0 20px;border-bottom:0.5px solid var(--c-900);}
+  header.app .back{font-size:17px;color:var(--c-400);cursor:pointer;min-width:44px;min-height:44px;display:flex;align-items:center;}
+  /* Market state is app chrome, not a page title: it gets its own strip under
+     the nav hairline instead of competing for the nav's centre. */
+  .mkt-strip{display:flex;align-items:center;gap:12px;padding:11px 20px;}
+  .mkt-clock{font-size:13px;font-weight:500;color:var(--c-200);letter-spacing:-0.02em;
+    font-feature-settings:'tnum' 1,'lnum' 1;}
+  .mkt-div{width:0.5px;height:12px;background:var(--c-800);}
+  .mkt-flag{display:inline-flex;align-items:center;gap:5px;
+    font-size:13px;color:var(--c-700);letter-spacing:-0.02em;}
+  header.app .info-btn.hdr{margin-left:auto;vertical-align:0;}
+  .info-btn{margin-left:8px;vertical-align:1px;width:12px;height:12px;border-radius:50%;border:0.5px solid var(--c-700);
+    display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--c-700);cursor:pointer;flex-shrink:0;}
+  .info-btn{position:relative;display:inline-flex;}
+  .info-btn::after{content:'';position:absolute;inset:-10px;}
+  .info-btn:active{background:var(--c-1000);}
+  header.app .info-btn.hdr{margin-left:auto;vertical-align:0;}
+
+  .info-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:200;
+    opacity:0;pointer-events:none;transition:opacity 220ms ease;}
+  .info-overlay.open{opacity:1;pointer-events:auto;}
+  .info-sheet{position:fixed;left:50%;bottom:0;transform:translate(-50%,100%);
+    transition:transform 300ms cubic-bezier(.22,.9,.3,1);width:390px;max-width:calc(100% - 20px);
+    max-height:82vh;background:var(--c-elev);border:1px solid var(--c-900);border-bottom:none;
+    border-radius:20px 20px 0 0;z-index:201;display:flex;flex-direction:column;}
+  .info-sheet.open{transform:translate(-50%,0);}
+  .info-sheet-head{display:flex;align-items:center;justify-content:space-between;
+    padding:16px 20px 12px;border-bottom:0.5px solid var(--c-900);flex-shrink:0;}
+  .info-sheet-title{font-size:17px;color:var(--c-200);letter-spacing:-0.02em;line-height:1.2;}
+  .info-sheet-close{font-size:17px;color:var(--c-700);cursor:pointer;padding:8px;line-height:1;}
+  .info-sheet-body{overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:24px;
+    scrollbar-width:none;-ms-overflow-style:none;}
+  .info-sheet-body::-webkit-scrollbar{display:none;}
+  .info-block-title{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;margin-bottom:8px;}
+  .info-p{font-size:13px;color:var(--c-400);line-height:1.4;letter-spacing:-0.02em;}
+  .info-p + .info-p{margin-top:8px;}
+  .info-sec-item{display:flex;flex-direction:column;gap:2px;padding:12px 0;border-bottom:0.5px solid var(--c-900);}
+  .info-sec-item:last-child{border-bottom:none;}
+  .info-sec-item .k{font-size:13px;color:var(--c-white);letter-spacing:-0.02em;}
+  .info-sec-item .d{font-size:13px;color:var(--c-700);line-height:1.4;letter-spacing:-0.02em;}
+
+  /* ── decisions module (reproduces source dashboard's Decisions card) ── */
+  .dec-row{display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding-bottom:12px;border-bottom:0.5px solid var(--c-900);}
+  .dec-block{display:flex;flex-direction:column;gap:12px;padding-bottom:12px;border-bottom:0.5px solid var(--c-900);}
+  .dec-sub{display:flex;align-items:baseline;justify-content:space-between;gap:24px;}
+  .dec-tap{font-size:13px;letter-spacing:-0.02em;cursor:pointer;padding:12px 2px;margin:-12px -2px;
+    text-decoration:underline dotted var(--c-800);text-decoration-thickness:0.5px;text-underline-offset:3px;}
+  /* a whole section that opens and closes reads as a chevron, not an underline */
+  .dec-exp{display:inline-flex;align-items:center;gap:6px;cursor:pointer;
+    padding:12px 2px;margin:-12px -2px;letter-spacing:-0.02em;}
+  .dec-exp .chev-svg{width:9px;height:9px;transition:transform 180ms ease;}
+  .dec-exp.open .chev-svg{transform:rotate(180deg);}
+  .pos-tag{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;margin-left:8px;}
+  .dec-viewall{display:block;padding:12px 2px;margin-bottom:-12px;font-size:13px;color:var(--c-700);letter-spacing:-0.02em;text-align:right;cursor:pointer;}
+  .dec-viewall:hover{color:var(--c-400);}
+  .dec-preview{padding:0;display:none;flex-direction:column;gap:12px;}
+  .dec-preview.open{display:flex;}
+  .dec-prow{display:flex;align-items:baseline;justify-content:space-between;gap:24px;cursor:pointer;padding:2px 0;}
+  .dec-prow:hover .dec-ticker{color:var(--c-400);}
+  .dec-ticker{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;transition:color 120ms;}
+  .dec-note[hidden]{display:none;}
+  .dec-def{padding-bottom:12px;border-bottom:0.5px solid var(--c-900);}
+  .dec-def[hidden]{display:none;}
+  .dec-def p{font-size:13px;color:var(--c-400);letter-spacing:-0.02em;line-height:1.4;margin:0;}
+  .dec-def p.formula{color:var(--c-800);margin-top:8px;}
+  .dec-note{font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:-2px 0 0 0;}
+  .dash-sec{margin:48px 20px 0;}
+  /* external cash flows (content: external cashflow.html · design: Performance Dashboard v8 tiers) */
+  .cf-table{display:grid;grid-template-columns:88px 82px 1fr 64px;column-gap:12px;padding-right:15px;}
+  .cf-head,.cf-row{display:contents;}
+  .cf-head > span{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;padding-bottom:8px;border-bottom:0.5px solid var(--c-900);text-align:right;}
+  .cf-head > span:first-child,.cf-head > span:nth-child(2){text-align:left;}
+  .cf-row > span{padding:12px 0;border-bottom:0.5px solid var(--c-900);font-size:13px;letter-spacing:-0.02em;font-feature-settings:'lnum' 1,'tnum' 1;}
+  .cf-date{color:var(--c-700);text-align:left;}
+  .cf-type{color:var(--c-400);text-align:left;}
+  .cf-amt{color:var(--c-white);text-align:right;}
+  .cf-px{color:var(--c-700);text-align:right;}
+  /* trend arrows (meeting 08-24: direction vs recent average, not vs S&P) */
+  /* arrow hangs outside the text box so the number keeps its own alignment */
+  .trend{display:inline-block;width:9px;font-size:9px;line-height:1;letter-spacing:normal;
+    margin-left:6px;vertical-align:2px;text-align:center;}
+  .trend.lead{margin-left:0;margin-right:4px;}
+  /* fact rows reserve the arrow slot so the numeric column stays flush */
+  .arw-slot{display:inline-block;width:15px;}
+  /* load motion: the data draws itself, nothing else moves */
+  @media (prefers-reduced-motion: no-preference){
+    .sig-fill{transform:scaleX(0);transform-origin:left;}
+    .sig-fill.inview{animation:sigfill 700ms cubic-bezier(.22,.9,.3,1) 150ms forwards;}
+    .live-pt{animation:breathe 2.4s ease-in-out infinite;}
+  }
+  @keyframes sigfill{to{transform:scaleX(1);}}
+  @keyframes breathe{0%,100%{opacity:1;}50%{opacity:0.3;}}
+  .trend.up{color:var(--c-live-muted);}
+  .trend.down{color:var(--c-urgent-muted);}
+  .trend.neutral{color:var(--c-700);}
+  .trend.plain{color:var(--c-400);}
+  .trend.lg{font-size:14px;width:14px;vertical-align:5px;margin-left:8px;}
+  /* fixed number boxes so every arrow lands on one vertical axis */
+  .anum{display:inline-block;min-width:74px;text-align:right;}
+  .anum-s{display:inline-block;min-width:62px;text-align:right;}
+  .anum-r{display:inline-block;min-width:58px;text-align:right;}
+  /* fixed value box so the hanging arrow lands in the same column on every row */
+  .stat-delta{display:inline-block;text-align:right;
+    font-size:15px;letter-spacing:-0.02em;font-feature-settings:'lnum' 1,'tnum' 1;}
+  .stat-delta{color:var(--c-400);}
+  .stat-delta.sub{font-size:15px;}
+  .statnum{display:inline-block;min-width:56px;text-align:right;}
+  .cmp-val,.rowreturn{position:relative;}
+  .tw{position:relative;display:inline-block;}
+  .stat-delta.win{color:var(--c-400);}
+  .stat-delta.loss{color:var(--c-400);}
+  .stat-delta.neutral{color:var(--c-700);}
+
+  .subhead{margin-top:32px;padding:0 20px;display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
+  .eyebrow{font-size:17px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.2;}
+  .count-line{font-size:17px;color:var(--c-white);letter-spacing:-0.02em;font-weight:400;line-height:1.2;margin-top:0;}
+
+  /* period / benchmark group: sticks to the top and governs every section below */
+  .pd-period-group{position:sticky;top:var(--proto-h,0px);z-index:8;background:var(--c-black);
+    border-bottom:0.5px solid var(--c-900);margin-top:48px;
+    display:flex;align-items:baseline;justify-content:space-between;padding:14px 20px;}
+  .pd-period-row{display:flex;gap:20px;align-items:baseline;}
+  .pd-period-opt{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;cursor:pointer;
+    transition:color 200ms ease;padding:12px 2px;margin:-12px -2px;position:relative;}
+  .pd-period-opt.active{color:var(--c-white);}
+  .pd-period-opt.active::after{content:'';position:absolute;left:2px;right:2px;
+    bottom:10px;height:1.5px;background:var(--c-white);}
+  /* the benchmark reads as the current setting, not as a third of a toggle row */
+  .pd-bm-current{display:inline-flex;align-items:center;gap:6px;font-size:13px;
+    color:var(--c-white);letter-spacing:-0.02em;cursor:pointer;
+    padding:12px 2px;margin:-12px -2px;}
+  .pd-bm-current .chev-svg{width:9px;height:9px;color:var(--c-700);}
+  .bm-pick{display:flex;align-items:center;justify-content:space-between;
+    padding:16px 0;border-bottom:0.5px solid var(--c-900);cursor:pointer;
+    font-size:15px;color:var(--c-400);letter-spacing:-0.02em;}
+  .bm-pick:last-child{border-bottom:none;}
+  .bm-pick.on{color:var(--c-white);}
+  .bm-pick .tick{font-size:13px;color:var(--c-white);visibility:hidden;}
+  .bm-pick.on .tick{visibility:visible;}
+  /* yearly breakdown */
+  .yt-table{display:grid;grid-template-columns:1fr 56px 56px 76px;column-gap:12px;}
+  .yt-head,.yt-row,#ytRows{display:contents;}
+  .yt-head > span{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;text-align:right;
+    padding-bottom:12px;border-bottom:0.5px solid var(--c-900);}
+  .yt-head > span:first-child{text-align:left;}
+  .yt-row > span{padding:12px 0;border-bottom:0.5px solid var(--c-900);font-size:15px;letter-spacing:-0.02em;
+    font-feature-settings:'lnum' 1,'tnum' 1;}
+  .yt-year{text-align:left;color:var(--c-700);}
+  .yt-val{text-align:right;color:var(--c-400);white-space:nowrap;}
+  .yt-row.future .yt-year,.yt-row.future .yt-val{color:var(--c-800);}
+  .yt-row.total > span{border-bottom:none;padding-top:16px;border-top:0.5px solid var(--c-900);}
+  .yt-row.total .yt-year{color:var(--c-200);}
+  .yt-tag{font-size:11px;letter-spacing:-0.02em;color:var(--c-800);margin-left:4px;}
+  .filterbar{position:sticky;top:var(--proto-h,0px);z-index:5;background:var(--c-black);border-bottom:0.5px solid var(--c-900);
+    display:flex;align-items:center;justify-content:space-between;padding:16px 20px;margin-top:48px;}
+  .chips{display:flex;gap:16px;}
+  .chip{font-size:13px;letter-spacing:-0.02em;cursor:pointer;color:var(--c-700);
+    padding:12px 4px;margin:-12px -4px;transition:color 200ms ease;}
+  .chip{position:relative;}
+  /* active indicator sits on the filter bar's own hairline, turning the strip into a tab control */
+  .chip.on{color:var(--c-white);}
+  .chip.on::after{content:'';position:absolute;left:4px;right:4px;bottom:-4px;height:1.5px;background:var(--c-white);}
+
+  .footnote{font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;padding:12px 20px 0;}
+
+  .list{padding:16px 20px 24px;}
+  .row{display:grid;grid-template-columns:1fr auto auto;column-gap:12px;row-gap:4px;align-items:baseline;
+    padding:16px 0;border-bottom:0.5px solid var(--c-900);cursor:pointer;}
+  .row:active{background:var(--c-elev);}
+  .row-left{display:contents;}
+  .ticker{grid-column:1;grid-row:1;font-size:15px;color:var(--c-400);letter-spacing:-0.02em;font-feature-settings:'lnum' 1;}
+  .name{grid-column:1;grid-row:2;font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
+  .meta{grid-column:1 / -1;grid-row:3;margin-top:2px;font-size:11px;color:var(--c-800);letter-spacing:-0.02em;}
+  .row-right{display:contents;}
+  .vsmuted{color:var(--c-800);margin-left:5px;}
+  /* V8 .muted suffix: neutral c-700, fixed column so the main number's end point never shifts */
+  .ppsuf{display:inline-block;min-width:62px;text-align:right;white-space:nowrap;
+    margin-left:8px;}
+  .rowvalue{grid-column:2;grid-row:1;text-align:right;font-size:13px;color:var(--c-700);letter-spacing:-0.02em;font-feature-settings:'lnum' 1,'tnum' 1;padding-right:15px;}
+  .rowreturn{grid-column:2;grid-row:2;text-align:right;font-size:15px;letter-spacing:-0.02em;font-feature-settings:'lnum' 1,'tnum' 1;}
+  /* verdict lives in the arrow; the number stays white */
+  .rowreturn.win,.rowreturn.loss{color:var(--c-white);}
+  .rowreturn .vstag{display:inline-block;min-width:78px;text-align:right;font-size:13px;letter-spacing:-0.02em;margin-left:8px;}
+  .dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+  .dot.live{background:var(--c-live);}
+  .dot.muted{background:var(--c-800);}
+  .dot.urgent{background:var(--c-urgent);}
+  .chev{grid-column:3;grid-row:1 / 3;align-self:center;color:var(--c-graphite);font-size:13px;margin-left:2px;}
+
+    padding:3px 8px;border-radius:20px;width:fit-content;margin-top:5px;}
+  .badge .bdot{width:4px;height:4px;border-radius:50%;flex-shrink:0;}
+  .badge.hit{color:var(--c-live);border:0.5px solid rgba(48,209,88,0.35);}
+  .badge.hit .bdot{background:var(--c-live);}
+  .badge.pace{color:var(--c-700);border:0.5px solid var(--c-graphite);}
+  .badge.pace .bdot{background:var(--c-800);}
+  .badge.review{color:var(--c-review);border:0.5px solid rgba(251,195,8,0.35);}
+  .badge.review .bdot{background:var(--c-review);}
+  .badge.missed{color:var(--c-warning);border:0.5px solid rgba(255,122,0,0.35);}
+  .badge.missed .bdot{background:var(--c-warning);}
+  .badge.early{color:var(--c-live);border:0.5px solid rgba(48,209,88,0.35);}
+  .badge.early .bdot{background:transparent;border:1px solid var(--c-live);}
+  .badge.ahead{color:var(--c-live);border:0.5px solid rgba(48,209,88,0.35);}
+  .badge.ahead .bdot{background:transparent;border:1px solid var(--c-live);}
+  .badge.exceeded{color:var(--c-live);border:0.5px solid rgba(48,209,88,0.35);}
+  .badge.exceeded .bdot{background:var(--c-live);}
+  .badge.offpace{color:var(--c-warning);border:0.5px solid rgba(255,122,0,0.35);}
+  .badge.offpace .bdot{background:var(--c-warning);}
+  .badge.missedfinal{color:var(--c-urgent);border:0.5px solid rgba(255,53,51,0.4);}
+  .badge.missedfinal .bdot{background:var(--c-urgent);}
+  .badge.earlystage{color:var(--c-800);border:0.5px solid var(--c-graphite);}
+  .badge.earlystage .bdot{background:transparent;border:1px solid var(--c-800);}
+  .badge.inconclusive{color:var(--c-800);border:0.5px solid var(--c-graphite);}
+  .badge.inconclusive .bdot{background:var(--c-800);}
+
+
+  /* ── detail screen ──────────────────────────────────── */
+  .hero-pad{padding:0 20px;}
+  .hero-return{margin-top:48px;}
+  .hero-return .big{font-size:17px;letter-spacing:-0.02em;line-height:1.2;font-feature-settings:'lnum' 1,'tnum' 1;}
+  .hero-return .sub{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;}
+  .hero-return .label{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;margin-bottom:8px;display:block;}
+
+  /* title-less fact block: same bracket as the dashboard's Annualized band */
+  .kv-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:16px;row-gap:16px;
+    margin:24px 20px 0;padding:24px 0 0;border-top:0.5px solid var(--c-900);}
+  .kv .k{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
+  .kv .v{font-size:15px;color:var(--c-white);letter-spacing:-0.02em;margin-top:4px;font-feature-settings:'lnum' 1,'tnum' 1;}
+
+  .sec{padding:48px 20px 0;display:flex;flex-direction:column;gap:12px;}
+  .sec-title{font-size:17px;color:var(--c-200);letter-spacing:-0.02em;line-height:1.2;margin-bottom:4px;display:block;}
+  .cmp-row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+    padding-bottom:12px;border-bottom:0.5px solid var(--c-900);}
+  
+  .cmp-label{font-size:15px;color:var(--c-700);letter-spacing:-0.02em;white-space:nowrap;}
+  /* descriptive rows: long label, quiet pair */
+  .cmp-row.wide .cmp-label,.cmp-row.wide .cmp-val{font-size:13px;}
+  .cmp-row.wide .cmp-val:not([style]){color:var(--c-400);}
+  .cmp-val{font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;font-feature-settings:'lnum' 1,'tnum' 1;white-space:nowrap;}
+  .cmp-val .pct{display:inline-block;min-width:56px;text-align:right;font-size:13px;color:var(--c-700);letter-spacing:-0.02em;margin-left:8px;}
+
+  .chartwrap{padding-bottom:8px;}
+  .chartwrap svg{touch-action:none;}
+  .scrub-read{display:flex;gap:0;font-size:13px;color:var(--c-700);letter-spacing:-0.02em;
+    margin-top:4px;font-variant-numeric:tabular-nums;}
+  .scrub-read b{color:var(--c-200);font-weight:400;}
+  .scrub-read .on{color:var(--c-white);}
+  /* legend chip: V8's outlined container, square corners (radius-0) */
+  .legend{position:absolute;top:10px;left:64px;z-index:1;display:inline-flex;gap:16px;align-items:center;margin:0;
+    background:var(--c-black);border:0.5px solid var(--c-900);padding:4px 8px;}
+  .legend span{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
+  .legend .ln{display:inline-block;width:20px;height:0;border-top:1.5px solid var(--c-400);}
+  .legend .ln.dash{border-top:1.5px dashed var(--c-700);}
+  .axis-end{display:flex;justify-content:space-between;font-size:13px;color:var(--c-700);letter-spacing:-0.02em;margin-top:8px;}
+  .axis-end b{color:var(--c-200);font-weight:400;}
+
+
+  .foot-disclosure{padding:0 20px;margin:48px 0;font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;}
+
+  .pd-why{font-size:11px;letter-spacing:-0.02em;cursor:pointer;color:var(--c-400);text-decoration:underline dotted var(--c-800);text-decoration-thickness:0.5px;text-underline-offset:3px;padding:12px 2px;margin:-12px -2px;width:fit-content;transition:color 120ms ease,border-color 120ms ease;}
+  .pd-why.open{color:var(--c-white);text-decoration-color:var(--c-700);}
+  .pd-signal-rationale{font-size:13px;color:var(--c-400);letter-spacing:-0.02em;line-height:1.4;}
+  .pd-signal-rationale[hidden]{display:none;}
+  .pd-signal-rationale p{margin:0;}
+  .pd-signal-rationale .ip-note{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;margin-top:8px;}
+  .call-bar{margin-top:2px;width:100%;height:3px;background:var(--c-900);position:relative;}
+  .call-bar .fill{position:absolute;top:0;left:0;bottom:0;}
+  .call-bar-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
+</style>
+</head>
+<body>
+
+<div class="proto-bar">
+  <button class="proto-btn active" data-target="decisions">Dashboard</button>
+  <button class="proto-btn" data-target="open">Open</button>
+  <button class="proto-btn" data-target="closed">Closed</button>
+  <button class="proto-btn" data-target="detail">Detail</button>
+</div>
+
+<div class="proto-stage">
+<div class="phone">
+
+  <!-- ══════════════ SCREEN 0 · DECISIONS (source dashboard module, real data) ══════════════ -->
+  <div class="screen active" id="screen-decisions">
+    <header class="app">
+      <span class="back" title="Back to the main dashboard">‹</span>
+      <span class="info-btn hdr" onclick="openInfo('decisions')">i</span>
+    </header>
+
+    <div class="mkt-strip">
+      <span class="mkt-clock" data-clock>00:00:00 ET</span>
+      <span class="mkt-div"></span>
+      <span class="mkt-flag"><span class="dot" data-mkt="us"></span>US</span>
+      <span class="mkt-flag"><span class="dot" data-mkt="ca"></span>CA</span>
+    </div>
+
+    <div class="subhead">
+      <span style="font-size:17px;letter-spacing:-0.02em;color:var(--c-700);line-height:1.2;">Performance</span>
+      <span style="font-size:17px;letter-spacing:-0.02em;color:var(--c-white);line-height:1.2;">Active · Self-Directed</span>
+      <span style="font-size:11px;letter-spacing:-0.02em;color:var(--c-700);">Currency in CAD</span>
+    </div>
+
+    <section style="margin:24px 20px 0;padding:24px 0 0;border-top:0.5px solid var(--c-900);display:flex;flex-direction:column;gap:24px;">
+      <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;"><span data-period-label>Since Inception</span> · Preliminary</span>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:8px;row-gap:8px;">
+        <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;text-align:left;">Portfolio</span>
+        <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;text-align:center;">Alpha</span>
+        <span data-bm-short style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;text-align:right;">S&amp;P</span>
+        <span data-acct-pct style="font-size:17px;color:var(--c-white);letter-spacing:-0.02em;font-weight:400;line-height:1.2;text-align:left;">+39.4%</span>
+        <span data-alpha-cell style="font-size:17px;color:var(--c-white);letter-spacing:-0.02em;line-height:1.2;text-align:center;align-self:end;padding-bottom:2px;"><span class="tw" data-alpha-pp>−5.8&nbsp;pp</span><span class="trend down" data-alpha-arrow>▼</span></span>
+        <span data-bm-pct style="font-size:17px;color:var(--c-white);letter-spacing:-0.02em;font-weight:400;line-height:1.2;text-align:right;">+45.2%</span>
+      </div>
+    </section>
+
+    <div style="margin:32px 20px 0;background:color-mix(in srgb, var(--c-1000) 60%, transparent);border:0.5px solid var(--c-900);padding:16px;display:flex;flex-direction:column;gap:12px;">
+      <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:16px;">
+        <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;">Tracked since Mar 14, 2023</span>
+        <span style="font-size:17px;color:var(--c-white);letter-spacing:-0.02em;line-height:1.2;font-feature-settings:'lnum' 1,'tnum' 1;">3 years 4 months</span>
+      </div>
+      <p style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;line-height:1.4;margin:0;">1 year 7 months to go. That's when a track record against the S&amp;P starts to carry statistical weight. Before that, strong or weak results are mostly noise, not skill.</p>
+      <div class="call-bar" style="height:4px;">
+        <div class="fill sig-fill" style="background:var(--c-live-muted);width:68%;"></div>
+      </div>
+      <div class="call-bar-labels">
+        <span>Start</span>
+        <span class="pd-why" onclick="toggleWhy(this)">5-year benchmark · Mar 2028</span>
+      </div>
+      <div class="pd-signal-rationale" id="signal-rationale" hidden>
+        <p>Single-manager track records need enough time for skill to separate from noise. 3&ndash;5 years is the accepted minimum window for a benchmark comparison; 5 years is the conservative threshold.</p>
+        <p class="ip-note">Figures shown for windows under 5 years are directional only, not a skill conclusion.</p>
+      </div>
+    </div>
+
+    <div class="pd-period-group">
+      <div class="pd-period-row" role="tablist" aria-label="Time period">
+        <span class="pd-period-opt" data-period="ytd">YTD</span>
+        <span class="pd-period-opt" data-period="1y">1Y</span>
+        <span class="pd-period-opt" data-period="3y">3Y</span>
+        <span class="pd-period-opt active" data-period="all">Max</span>
+      </div>
+      <span class="pd-bm-current" onclick="openInfo('bm')" role="button"
+        aria-label="Change benchmark"><span data-bm-long>S&amp;P 500</span><svg class="chev-svg" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.3"/></svg></span>
+    </div>
+
+    <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
+      <span class="sec-title">Performance vs <span data-bm-long>S&amp;P 500</span></span>
+      <div class="cmp-row">
+        <span class="cmp-label">Portfolio</span>
+        <span class="cmp-val"><span data-acct-dollars>+16,142.02</span><span class="pct" data-acct-pct>+39.4%</span><span class="arw-slot"></span></span>
+      </div>
+      <div class="cmp-row">
+        <span class="cmp-label"><span data-bm-long>S&amp;P 500</span> (same window)</span>
+        <span class="cmp-val"><span data-bm-dollars>+18,515.92</span><span class="pct" data-bm-pct>+45.2%</span><span class="arw-slot"></span></span>
+      </div>
+      <div class="cmp-row">
+        <span class="cmp-label">Alpha</span>
+        <span class="cmp-val" data-alpha-cell><span data-alpha-dollars>−2,373.90</span><span class="pct" data-alpha-pp>−5.8&nbsp;pp</span><span class="trend down" data-alpha-arrow>▼</span></span>
+      </div>
+      <p style="font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">Total return, dividends reinvested, net of fees. The <span data-bm-long>S&amp;P 500</span> mirror applies the same deposit and withdrawal timing as the account, not a static index price return.</p>
+
+      <div class="scrub-read" style="margin-top:20px;">
+        <span><span id="acctScrubDate">Aug 26</span> · Portfolio <b data-acct-end>57.1k</b> · <span data-bm-short>S&amp;P</span> <b data-bm-end style="color:var(--c-700);">59.5k</b></span>
+      </div>
+      <div class="chartwrap" style="margin-top:0;">
+        <div style="position:relative;">
+          <div class="legend">
+            <span><span class="ln"></span>Portfolio</span>
+            <span><span class="ln dash"></span><span data-bm-short>S&amp;P</span></span>
+          </div>
+          <svg style="width:100%;height:180px;display:block;overflow:visible;" viewBox="-40 0 360 180" preserveAspectRatio="none" aria-hidden="true">
+            <text id="tickTop" x="-40" y="16" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">$60k</text>
+            <text id="tickMid" x="-40" y="96" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">$30k</text>
+            <text id="tickBot" x="-40" y="176" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">$0</text>
+            <line x1="0" y1="92" x2="320" y2="92" style="stroke:var(--c-1000)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
+            <line x1="0" y1="12" x2="0" y2="172" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
+            <line x1="0" y1="172" x2="320" y2="172" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
+            <defs><clipPath id="acctClip"><rect id="acctClipRect" x="-2" y="0" width="330" height="180"/></clipPath></defs>
+            <g clip-path="url(#acctClip)">
+              <path id="curveBm" d="" fill="none" style="stroke:var(--c-700)" stroke-width="1.25" stroke-dasharray="2 2" vector-effect="non-scaling-stroke"/>
+              <path id="curveAcct" d="" fill="none" style="stroke:var(--c-400)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+              <circle id="acctEndDot" class="live-pt" r="2.5" cx="320" cy="20" style="fill:var(--c-700)"/>
+            </g>
+            <line class="scrub-line" x1="0" y1="12" x2="0" y2="172" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke" visibility="hidden"/>
+            <circle class="scrub-dot-b" r="2.5" style="fill:var(--c-700)" visibility="hidden"/>
+            <circle class="scrub-dot-a" r="2.5" style="fill:var(--c-400)" visibility="hidden"/>
+          </svg>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--c-700);letter-spacing:-0.02em;margin-top:8px;padding-left:11%;">
+          <span id="ax1">Mar 23</span><span id="ax2">Apr 24</span><span id="ax3">Jun 25</span><span id="ax4">Aug 26</span>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
+      <span class="sec-title">Yearly Breakdown</span>
+      <div class="yt-table">
+        <div class="yt-head">
+          <span>Year</span><span>Portfolio</span><span data-bm-short>S&amp;P</span><span>Alpha</span>
+        </div>
+        <div id="ytRows"></div>
+      </div>
+      <p style="font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">2026 is year-to-date, not a full-year figure. 2027 and 2028 are shown for reference, 2028 being the earliest date a 5-year track record exists. The bottom row is the average annual rate over the tracked period, not the sum of the years above.</p>
+    </section>
+
+    <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
+      <span class="sec-title">External Cash Flows</span>
+      <div class="dec-row">
+        <span class="dec-exp" style="font-size:15px;color:var(--c-400);" onclick="toggleDecPreview('cashflows',this)">All Transactions<svg class="chev-svg" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.3"/></svg></span>
+        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;font-feature-settings:'lnum' 1,'tnum' 1;">6<span class="arw-slot"></span></span>
+      </div>
+      <div class="dec-preview" id="dec-preview-cashflows">
+        <div class="cf-table">
+          <div class="cf-head"><span>Date</span><span>Type</span><span>Amount</span><span>VFV Close</span></div>
+          <div class="cf-row"><span class="cf-date">Feb 4, 2026</span><span class="cf-type">Deposit</span><span class="cf-amt">6,000.00</span><span class="cf-px">138.45</span></div>
+          <div class="cf-row"><span class="cf-date">Jun 17, 2025</span><span class="cf-type">Withdrawal</span><span class="cf-amt">−4,000.00</span><span class="cf-px">126.40</span></div>
+          <div class="cf-row"><span class="cf-date">Nov 5, 2024</span><span class="cf-type">Deposit</span><span class="cf-amt">7,000.00</span><span class="cf-px">118.60</span></div>
+          <div class="cf-row"><span class="cf-date">Feb 20, 2024</span><span class="cf-type">Transfer In</span><span class="cf-amt">9,000.00</span><span class="cf-px">101.20</span></div>
+          <div class="cf-row"><span class="cf-date">Sep 8, 2023</span><span class="cf-type">Deposit</span><span class="cf-amt">8,000.00</span><span class="cf-px">88.35</span></div>
+          <div class="cf-row"><span class="cf-date">Mar 14, 2023</span><span class="cf-type">Deposit</span><span class="cf-amt">15,000.00</span><span class="cf-px">82.10</span></div>
+        </div>
+      </div>
+      <div class="dec-row">
+        <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Net Deposits</span>
+        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;font-feature-settings:'lnum' 1,'tnum' 1;">41,000.00<span class="arw-slot"></span></span>
+      </div>
+    </section>
+
+    <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
+      <span class="sec-title">Cash Drag</span>
+      <div class="dec-row">
+        <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Uninvested cash cost</span>
+        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;font-feature-settings:'lnum' 1,'tnum' 1;">−4,128.00<span class="trend down">▼</span></span>
+      </div>
+      <p style="font-size:13px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;margin-top:0;">Avg 16% cash. <span data-bm-long>S&amp;P 500</span> returned <span data-bm-pct>+45.2%</span> over the same window.</p>
+    </section>
+
+    <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
+      <span class="sec-title">Timing &amp; Risk</span>
+      <div class="dec-row">
+        <span class="dec-tap" style="font-size:15px;color:var(--c-700);" onclick="toggleDef('twr',this)">Time-Weighted Return (TWR)</span>
+        <span class="stat-delta" style="text-align:right;"><span class="statnum">+39.4%</span><span class="arw-slot"></span></span>
+      </div>
+      <div class="dec-def" id="def-twr" hidden><p>Time-Weighted Return isolates stock-picking skill from deposit and withdrawal timing. Industry standard for comparing managers.</p><p class="formula">Geometric link of period returns. Deposits and withdrawals do not affect TWR.</p></div>
+      <div class="dec-row">
+        <span class="dec-tap" style="font-size:15px;color:var(--c-700);" onclick="toggleDef('mwr',this)">Money-Weighted Return (MWR)</span>
+        <span class="stat-delta" style="text-align:right;"><span class="statnum">+35.1%</span><span class="arw-slot"></span></span>
+      </div>
+      <div class="dec-def" id="def-mwr" hidden><p>Money-Weighted Return reflects timing of capital deployment. A negative gap to TWR indicates deposits were poorly timed.</p><p class="formula">XIRR over all cash flows.</p></div>
+      <div class="dec-row">
+        <span class="dec-tap" style="font-size:15px;color:var(--c-800);" onclick="toggleDef('gap',this)">TWR − MWR Gap (timing skill)</span>
+        <span class="stat-delta loss sub" style="text-align:right;"><span class="statnum">−4.3&nbsp;pp</span><span class="trend down">▼</span></span>
+      </div>
+      <div class="dec-def" id="def-gap" hidden><p>The gap between the two is your timing. Negative means cash arrived at the wrong moments relative to the picks; positive means it arrived at the right ones.</p><p class="formula">TWR &minus; MWR, in percentage points.</p></div>
+      <div class="dec-row">
+        <span class="dec-tap" style="font-size:15px;color:var(--c-700);" onclick="toggleDef('dd',this)">Max Drawdown</span>
+        <span class="stat-delta loss" style="text-align:right;"><span class="statnum">−18.4%</span><span class="trend down">▼</span></span>
+      </div>
+      <div class="dec-def" id="def-dd" hidden><p>Worst peak-to-trough decline over the period. Daily marks.</p><p class="formula">min(equity_t / peak_t &minus; 1) over period.</p></div>
+      <div class="dec-row">
+        <span style="font-size:15px;color:var(--c-800);letter-spacing:-0.02em;">Max Drawdown, <span data-bm-short>S&amp;P</span> same window</span>
+        <span class="stat-delta neutral sub" style="text-align:right;"><span class="statnum">−12.1%</span><span class="arw-slot"></span></span>
+      </div>
+      <div class="dec-row">
+        <span class="dec-tap" style="font-size:15px;color:var(--c-700);" onclick="toggleDef('vol',this)">Volatility (12M)</span>
+        <span class="stat-delta" style="text-align:right;"><span class="statnum">17.2%</span><span class="trend plain">▲</span></span>
+      </div>
+      <div class="dec-def" id="def-vol" hidden><p>Annualized standard deviation of daily returns. Higher figures indicate wider daily swings.</p><p class="formula">stdev(daily returns) &times; &radic;252.</p></div>
+      <div class="dec-row">
+        <span style="font-size:15px;color:var(--c-800);letter-spacing:-0.02em;">Volatility (12M), <span data-bm-short>S&amp;P</span></span>
+        <span class="stat-delta neutral sub" style="text-align:right;"><span class="statnum">15.4%</span><span class="arw-slot"></span></span>
+      </div>
+      <p style="font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin-top:2px;">The arrow carries the verdict: green means favorable against the S&amp;P line below it, red unfavorable. TWR and MWR are plain facts, so they carry no arrow. Volatility isn't inherently good or bad, so its arrow only shows direction and stays grey.</p>
+    </section>
+
+    <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
+      <span class="sec-title">Decisions</span>
+      <div class="dec-row">
+        <span style="font-size:15px;color:var(--c-700);letter-spacing:-0.02em;">Total Positions</span>
+        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;">20<span class="arw-slot"></span></span>
+      </div>
+
+      <div class="dec-block">
+        <div class="dec-row" style="border-bottom:none;padding-bottom:0;">
+          <span style="font-size:15px;color:var(--c-700);letter-spacing:-0.02em;">Open</span>
+          <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;">11<span class="arw-slot"></span></span>
+        </div>
+        <div class="dec-sub">
+          <span class="dec-exp" style="font-size:13px;color:var(--c-700);" onclick="toggleDecPreview('profOpen',this)">Profitable / Unprofitable<svg class="chev-svg" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.3"/></svg></span>
+          <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">9 / 2<span class="arw-slot"></span></span>
+        </div>
+        <div class="dec-preview" id="dec-preview-profOpen">
+          <p class="dec-note">Profitable ≠ beat the benchmark, a position can make money and still trail S&amp;P 500.</p>
+          <div class="dec-prow" onclick="positionTap('AVGO','open')"><span class="dec-ticker">AVGO</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+64.2%<span class="arw-slot"></span></span></div>
+          <div class="dec-prow" onclick="positionTap('AAPL','open')"><span class="dec-ticker">AAPL</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+31.8%<span class="arw-slot"></span></span></div>
+          <div class="dec-prow" onclick="positionTap('MSFT','open')"><span class="dec-ticker">MSFT</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+22.7%<span class="arw-slot"></span></span></div>
+          <div class="dec-prow" onclick="positionTap('COST','open')"><span class="dec-ticker">COST</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+19.3%<span class="arw-slot"></span></span></div>
+          <div class="dec-prow" onclick="positionTap('LLY','open')"><span class="dec-ticker">LLY</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+14.5%<span class="arw-slot"></span></span></div>
+          <div class="dec-prow" onclick="positionTap('META','open')"><span class="dec-ticker">META</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+8.4%<span class="arw-slot"></span></span></div>
+          <div class="dec-prow" onclick="positionTap('V','open')"><span class="dec-ticker">V</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+6.9%<span class="arw-slot"></span></span></div>
+          <div class="dec-prow" onclick="positionTap('TSLA','open')"><span class="dec-ticker">TSLA</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+3.1%<span class="arw-slot"></span></span></div>
+          <div class="dec-prow" onclick="positionTap('NFLX','open')"><span class="dec-ticker">NFLX</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+2.0%<span class="arw-slot"></span></span></div>
+          <div class="dec-prow" onclick="positionTap('BA','open')"><span class="dec-ticker">BA</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">−0.4%<span class="arw-slot"></span></span></div>
+          <div class="dec-prow" onclick="positionTap('DIS','open')"><span class="dec-ticker">DIS</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">−1.9%<span class="arw-slot"></span></span></div>
+        </div>
+
+        <div class="dec-sub">
+          <span class="dec-exp" style="font-size:13px;color:var(--c-400);" onclick="toggleDecPreview('openBeating',this)">Beating S&amp;P<svg class="chev-svg" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.3"/></svg></span>
+          <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">6<span class="arw-slot"></span></span>
+        </div>
+        <div class="dec-preview" id="dec-preview-openBeating">
+          <div class="dec-prow" onclick="positionTap('AVGO','open')"><span class="dec-ticker">AVGO</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;"><span class="anum-s">+18.4&nbsp;pp</span><span class="trend up">▲</span></span></div>
+          <div class="dec-prow" onclick="positionTap('MSFT','open')"><span class="dec-ticker">MSFT</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;"><span class="anum-s">+9.1&nbsp;pp</span><span class="trend up">▲</span></span></div>
+          <div class="dec-prow" onclick="positionTap('COST','open')"><span class="dec-ticker">COST</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;"><span class="anum-s">+7.8&nbsp;pp</span><span class="trend up">▲</span></span></div>
+          <div class="dec-prow" onclick="positionTap('LLY','open')"><span class="dec-ticker">LLY</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;"><span class="anum-s">+6.2&nbsp;pp</span><span class="trend up">▲</span></span></div>
+          <div class="dec-prow" onclick="positionTap('AAPL','open')"><span class="dec-ticker">AAPL</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;"><span class="anum-s">+4.0&nbsp;pp</span><span class="trend up">▲</span></span></div>
+          <div class="dec-prow" onclick="positionTap('V','open')"><span class="dec-ticker">V</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;"><span class="anum-s">+1.6&nbsp;pp</span><span class="trend up">▲</span></span></div>
+        </div>
+
+        <div class="dec-sub">
+          <span class="dec-exp" style="font-size:13px;color:var(--c-400);" onclick="toggleDecPreview('openTrailing',this)">Trailing S&amp;P<svg class="chev-svg" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.3"/></svg></span>
+          <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">5<span class="arw-slot"></span></span>
+        </div>
+        <div class="dec-preview" id="dec-preview-openTrailing">
+          <div class="dec-prow" onclick="positionTap('TSLA','open')"><span class="dec-ticker">TSLA</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;"><span class="anum-s">−11.3&nbsp;pp</span><span class="trend down">▼</span></span></div>
+          <div class="dec-prow" onclick="positionTap('META','open')"><span class="dec-ticker">META</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;"><span class="anum-s">−6.7&nbsp;pp</span><span class="trend down">▼</span></span></div>
+          <div class="dec-prow" onclick="positionTap('DIS','open')"><span class="dec-ticker">DIS</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;"><span class="anum-s">−4.2&nbsp;pp</span><span class="trend down">▼</span></span></div>
+          <div class="dec-prow" onclick="positionTap('BA','open')"><span class="dec-ticker">BA</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;"><span class="anum-s">−3.0&nbsp;pp</span><span class="trend down">▼</span></span></div>
+          <div class="dec-prow" onclick="positionTap('NFLX','open')"><span class="dec-ticker">NFLX</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;"><span class="anum-s">−1.1&nbsp;pp</span><span class="trend down">▼</span></span></div>
+        </div>
+        <a class="dec-viewall" onclick="goTo('open')">View All →</a>
+      </div>
+
+      <div class="dec-block">
+        <div class="dec-row" style="border-bottom:none;padding-bottom:0;">
+          <span style="font-size:15px;color:var(--c-700);letter-spacing:-0.02em;">Closed</span>
+          <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;">9<span class="arw-slot"></span></span>
+        </div>
+        <div class="dec-sub">
+          <span class="dec-exp" style="font-size:13px;color:var(--c-700);" onclick="toggleDecPreview('profClosed',this)">Profitable / Unprofitable<svg class="chev-svg" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.3"/></svg></span>
+          <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">7 / 2<span class="arw-slot"></span></span>
+        </div>
+        <div class="dec-preview" id="dec-preview-profClosed">
+          <p class="dec-note">Profitable ≠ beat the benchmark, a position can make money and still trail S&amp;P 500.</p>
+          <div class="dec-prow" onclick="positionTap('NVDA','closed')"><span class="dec-ticker">NVDA</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+41.0%<span class="arw-slot"></span></span></div>
+          <div class="dec-prow" onclick="positionTap('UNH','closed')"><span class="dec-ticker">UNH</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+24.8%<span class="arw-slot"></span></span></div>
+          <div class="dec-prow" onclick="positionTap('ADBE','closed')"><span class="dec-ticker">ADBE</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+18.1%<span class="arw-slot"></span></span></div>
+          <div class="dec-prow" onclick="positionTap('TXN','closed')"><span class="dec-ticker">TXN</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+16.0%<span class="arw-slot"></span></span></div>
+          <div class="dec-prow" onclick="positionTap('V','closed')"><span class="dec-ticker">V</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+7.4%<span class="arw-slot"></span></span></div>
+          <div class="dec-prow" onclick="positionTap('KO','closed')"><span class="dec-ticker">KO</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+2.4%<span class="arw-slot"></span></span></div>
+          <div class="dec-prow" onclick="positionTap('VZ','closed')"><span class="dec-ticker">VZ</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">+1.0%<span class="arw-slot"></span></span></div>
+          <div class="dec-prow" onclick="positionTap('PYPL','closed')"><span class="dec-ticker">PYPL</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">−3.6%<span class="arw-slot"></span></span></div>
+          <div class="dec-prow" onclick="positionTap('BA','closed')"><span class="dec-ticker">BA</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">−9.2%<span class="arw-slot"></span></span></div>
+        </div>
+
+        <div class="dec-sub">
+          <span class="dec-exp" style="font-size:13px;color:var(--c-400);" onclick="toggleDecPreview('winners',this)">Beat S&amp;P<svg class="chev-svg" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.3"/></svg></span>
+          <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">5<span class="arw-slot"></span></span>
+        </div>
+        <div class="dec-preview" id="dec-preview-winners">
+          <div class="dec-prow" onclick="positionTap('NVDA','closed')"><span class="dec-ticker">NVDA</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;"><span class="anum-s">+1,946.50</span><span class="ppsuf">+22.9&nbsp;pp</span><span class="trend up">▲</span></span></div>
+          <div class="dec-prow" onclick="positionTap('UNH','closed')"><span class="dec-ticker">UNH</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;"><span class="anum-s">+694.40</span><span class="ppsuf">+11.2&nbsp;pp</span><span class="trend up">▲</span></span></div>
+          <div class="dec-prow" onclick="positionTap('ADBE','closed')"><span class="dec-ticker">ADBE</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;"><span class="anum-s">+556.80</span><span class="ppsuf">+9.6&nbsp;pp</span><span class="trend up">▲</span></span></div>
+          <div class="dec-prow" onclick="positionTap('TXN','closed')"><span class="dec-ticker">TXN</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;"><span class="anum-s">+388.80</span><span class="ppsuf">+5.4&nbsp;pp</span><span class="trend up">▲</span></span></div>
+          <div class="dec-prow" onclick="positionTap('V','closed')"><span class="dec-ticker">V</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;"><span class="anum-s">+88.20</span><span class="ppsuf">+2.1&nbsp;pp</span><span class="trend up">▲</span></span></div>
+        </div>
+
+        <div class="dec-sub">
+          <span class="dec-exp" style="font-size:13px;color:var(--c-400);" onclick="toggleDecPreview('losers',this)">Trailed<svg class="chev-svg" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.3"/></svg></span>
+          <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">4<span class="arw-slot"></span></span>
+        </div>
+        <div class="dec-preview" id="dec-preview-losers">
+          <div class="dec-prow" onclick="positionTap('BA','closed')"><span class="dec-ticker">BA</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;"><span class="anum-s">−823.20</span><span class="ppsuf">−14.7&nbsp;pp</span><span class="trend down">▼</span></span></div>
+          <div class="dec-prow" onclick="positionTap('PYPL','closed')"><span class="dec-ticker">PYPL</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;"><span class="anum-s">−673.20</span><span class="ppsuf">−9.9&nbsp;pp</span><span class="trend down">▼</span></span></div>
+          <div class="dec-prow" onclick="positionTap('KO','closed')"><span class="dec-ticker">KO</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;"><span class="anum-s">−429.20</span><span class="ppsuf">−5.8&nbsp;pp</span><span class="trend down">▼</span></span></div>
+          <div class="dec-prow" onclick="positionTap('VZ','closed')"><span class="dec-ticker">VZ</span><span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;"><span class="anum-s">−312.80</span><span class="ppsuf">−3.4&nbsp;pp</span><span class="trend down">▼</span></span></div>
+        </div>
+        <a class="dec-viewall" onclick="goTo('closed')">View All →</a>
+      </div>
+
+      <div class="dec-row">
+        <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Win Rate vs S&amp;P (Closed)</span>
+        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;">55.6%<span class="arw-slot"></span></span>
+      </div>
+      <div class="dec-row">
+        <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Avg Alpha-Win</span>
+        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;"><span class="anum-s">+10.2&nbsp;pp</span><span class="trend up">▲</span></span>
+      </div>
+      <div class="dec-row">
+        <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Avg Alpha-Loss</span>
+        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;"><span class="anum-s">−8.5&nbsp;pp</span><span class="trend down">▼</span></span>
+      </div>
+    </section>
+
+    <section class="dash-sec" style="padding-bottom:32px;display:flex;flex-direction:column;gap:12px;">
+      <span class="sec-title" id="alpha-up">Top Contributors to Alpha</span>
+      <div class="cmp-row" onclick="positionTap('NVDA','closed')" style="cursor:pointer;">
+        <span class="cmp-label">NVDA<span class="pos-tag">Closed</span></span>
+        <span class="cmp-val"><span class="anum">+1,946.50</span><span class="pct">+22.9&nbsp;pp</span><span class="trend up">▲</span></span>
+      </div>
+      <div class="cmp-row" onclick="positionTap('AVGO','open')" style="cursor:pointer;">
+        <span class="cmp-label">AVGO<span class="pos-tag">Open</span></span>
+        <span class="cmp-val"><span class="anum">+1,292.00</span><span class="pct">+18.4&nbsp;pp</span><span class="trend up">▲</span></span>
+      </div>
+      <div class="cmp-row" onclick="positionTap('UNH','closed')" style="cursor:pointer;">
+        <span class="cmp-label">UNH<span class="pos-tag">Closed</span></span>
+        <span class="cmp-val"><span class="anum">+694.40</span><span class="pct">+11.2&nbsp;pp</span><span class="trend up">▲</span></span>
+      </div>
+      <p style="font-size:17px;color:var(--c-200);letter-spacing:-0.02em;line-height:1.2;margin:48px 0 16px;" id="alpha-down">Top Detractors from Alpha</p>
+      <div class="cmp-row" onclick="positionTap('BA','closed')" style="cursor:pointer;">
+        <span class="cmp-label">BA<span class="pos-tag">Closed</span></span>
+        <span class="cmp-val"><span class="anum">−823.20</span><span class="pct">−14.7&nbsp;pp</span><span class="trend down">▼</span></span>
+      </div>
+      <div class="cmp-row" onclick="positionTap('PYPL','closed')" style="cursor:pointer;">
+        <span class="cmp-label">PYPL<span class="pos-tag">Closed</span></span>
+        <span class="cmp-val"><span class="anum">−673.20</span><span class="pct">−9.9&nbsp;pp</span><span class="trend down">▼</span></span>
+      </div>
+      <div class="cmp-row" onclick="positionTap('KO','closed')" style="cursor:pointer;">
+        <span class="cmp-label">KO<span class="pos-tag">Closed</span></span>
+        <span class="cmp-val"><span class="anum">−429.20</span><span class="pct">−5.8&nbsp;pp</span><span class="trend down">▼</span></span>
+      </div>
+      <p style="font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin-top:16px;">Full tracked period, open and closed positions together. Ranked by dollar alpha, so position size is already in the number: a wide margin over the S&amp;P on a small holding moves the account less than a thin margin on a large one. Dividends reinvested, net of fees. Figures are preliminary and unaudited.</p>
+    </section>
+  </div>
+
+  <!-- ══════════════ SCREEN 1 · OPEN POSITIONS ══════════════ -->
+  <div class="screen" id="screen-open">
+    <header class="app">
+      <span class="back" onclick="goTo('decisions')">‹</span>
+      <span class="info-btn hdr" onclick="openInfo('open')">i</span>
+    </header>
+
+    <div class="mkt-strip">
+      <span class="mkt-clock" data-clock>00:00:00 ET</span>
+      <span class="mkt-div"></span>
+      <span class="mkt-flag"><span class="dot" data-mkt="us"></span>US</span>
+      <span class="mkt-flag"><span class="dot" data-mkt="ca"></span>CA</span>
+    </div>
+
+    <div class="subhead">
+      <span class="eyebrow">Open Positions</span>
+      <span class="count-line">11 positions</span>
+    </div>
+
+    <div class="filterbar">
+      <div class="chips">
+        <span class="chip on" onclick="filterList('open','all',this)">All</span>
+        <span class="chip" onclick="filterList('open','beating',this)">Beating 6</span>
+        <span class="chip" onclick="filterList('open','trailing',this)">Trailing 5</span>
+        <span class="chip" onclick="filterList('open','profit',this)">Profitable 9</span>
+        <span class="chip" onclick="filterList('open','loss',this)">Unprofitable 2</span>
+      </div>
+    </div>
+    <div style="padding:24px 20px 0;">
+      <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;">Beating S&amp;P / Trailing since entry</span>
+    </div>
+
+    <div class="list">
+      <!-- Beating -->
+      <div class="row" onclick="positionTap('AVGO','open')">
+        <div class="row-left">
+          <span class="ticker">AVGO</span>
+          <span class="name">Broadcom Inc</span>
+          <span class="meta">Held 412d · entered Jun 24, 2025</span>
+        </div>
+        <div class="row-right">
+          <span class="rowvalue">$11,530.00</span>
+          <span class="rowreturn win"><span class="anum-r">+64.2%</span><span class="vstag">S&amp;P +45.8%</span><span class="trend up">▲</span></span>
+        </div>
+        <span class="chev">›</span>
+      </div>
+      <div class="row" onclick="positionTap('MSFT','open')">
+        <div class="row-left">
+          <span class="ticker">MSFT</span>
+          <span class="name">Microsoft Corp</span>
+          <span class="meta">Held 296d · entered Oct 18, 2025</span>
+        </div>
+        <div class="row-right">
+          <span class="rowvalue">$5,740.00</span>
+          <span class="rowreturn win"><span class="anum-r">+22.7%</span><span class="vstag">S&amp;P +13.6%</span><span class="trend up">▲</span></span>
+        </div>
+        <span class="chev">›</span>
+      </div>
+      <div class="row" onclick="positionTap('COST','open')">
+        <div class="row-left">
+          <span class="ticker">COST</span>
+          <span class="name">Costco Wholesale</span>
+          <span class="meta">Held 578d · entered Jan 9, 2025</span>
+        </div>
+        <div class="row-right">
+          <span class="rowvalue">$4,650.00</span>
+          <span class="rowreturn win"><span class="anum-r">+19.3%</span><span class="vstag">S&amp;P +11.5%</span><span class="trend up">▲</span></span>
+        </div>
+        <span class="chev">›</span>
+      </div>
+      <div class="row" onclick="positionTap('LLY','open')">
+        <div class="row-left">
+          <span class="ticker">LLY</span>
+          <span class="name">Eli Lilly and Co</span>
+          <span class="meta">Held 185d · entered Feb 6, 2026</span>
+        </div>
+        <div class="row-right">
+          <span class="rowvalue">$3,570.00</span>
+          <span class="rowreturn win"><span class="anum-r">+14.5%</span><span class="vstag">S&amp;P +8.3%</span><span class="trend up">▲</span></span>
+        </div>
+        <span class="chev">›</span>
+      </div>
+      <div class="row" onclick="positionTap('AAPL','open')">
+        <div class="row-left">
+          <span class="ticker">AAPL</span>
+          <span class="name">Apple Inc</span>
+          <span class="meta">Held 879d · entered Mar 14, 2024</span>
+        </div>
+        <div class="row-right">
+          <span class="rowvalue">$7,200.00</span>
+          <span class="rowreturn win"><span class="anum-r">+31.8%</span><span class="vstag">S&amp;P +27.8%</span><span class="trend up">▲</span></span>
+        </div>
+        <span class="chev">›</span>
+      </div>
+      <div class="row" onclick="positionTap('V','open')">
+        <div class="row-left">
+          <span class="ticker">V</span>
+          <span class="name">Visa Inc</span>
+          <span class="meta">Held 91d · entered May 11, 2026</span>
+        </div>
+        <div class="row-right">
+          <span class="rowvalue">$2,500.00</span>
+          <span class="rowreturn win"><span class="anum-r">+6.9%</span><span class="vstag">S&amp;P +5.3%</span><span class="trend up">▲</span></span>
+        </div>
+        <span class="chev">›</span>
+      </div>
+      <!-- Trailing -->
+      <div class="row" onclick="positionTap('TSLA','open')">
+        <div class="row-left">
+          <span class="ticker">TSLA</span>
+          <span class="name">Tesla Inc</span>
+          <span class="meta">Held 352d · entered Aug 23, 2025</span>
+        </div>
+        <div class="row-right">
+          <span class="rowvalue">$3,620.00</span>
+          <span class="rowreturn loss"><span class="anum-r">+3.1%</span><span class="vstag">S&amp;P +14.4%</span><span class="trend down">▼</span></span>
+        </div>
+        <span class="chev">›</span>
+      </div>
+      <div class="row" onclick="positionTap('META','open')">
+        <div class="row-left">
+          <span class="ticker">META</span>
+          <span class="name">Meta Platforms Inc</span>
+          <span class="meta">Held 526d · entered Mar 2, 2025</span>
+        </div>
+        <div class="row-right">
+          <span class="rowvalue">$4,060.00</span>
+          <span class="rowreturn loss"><span class="anum-r">+8.4%</span><span class="vstag">S&amp;P +15.1%</span><span class="trend down">▼</span></span>
+        </div>
+        <span class="chev">›</span>
+      </div>
+      <div class="row" onclick="positionTap('DIS','open')">
+        <div class="row-left">
+          <span class="ticker">DIS</span>
+          <span class="name">Walt Disney Co</span>
+          <span class="meta">Held 314d · entered Sep 30, 2025</span>
+        </div>
+        <div class="row-right">
+          <span class="rowvalue">$1,680.00</span>
+          <span class="rowreturn loss"><span class="anum-r">−1.9%</span><span class="vstag">S&amp;P +2.3%</span><span class="trend down">▼</span></span>
+        </div>
+        <span class="chev">›</span>
+      </div>
+      <div class="row" onclick="positionTap('BA','open')">
+        <div class="row-left">
+          <span class="ticker">BA</span>
+          <span class="name">Boeing Co</span>
+          <span class="meta">Held 142d · entered Mar 21, 2026</span>
+        </div>
+        <div class="row-right">
+          <span class="rowvalue">$1,400.00</span>
+          <span class="rowreturn loss"><span class="anum-r">−0.4%</span><span class="vstag">S&amp;P +2.6%</span><span class="trend down">▼</span></span>
+        </div>
+        <span class="chev">›</span>
+      </div>
+      <div class="row" onclick="positionTap('NFLX','open')">
+        <div class="row-left">
+          <span class="ticker">NFLX</span>
+          <span class="name">Netflix Inc</span>
+          <span class="meta">Held 59d · entered Jun 12, 2026</span>
+        </div>
+        <div class="row-right">
+          <span class="rowvalue">$1,990.00</span>
+          <span class="rowreturn loss"><span class="anum-r">+2.0%</span><span class="vstag">S&amp;P +3.1%</span><span class="trend down">▼</span></span>
+        </div>
+        <span class="chev">›</span>
+      </div>
+    </div>
+
+    <p class="footnote" style="padding-bottom:8px;">Top line is what the position is worth today. Bottom is your return next to S&amp;P's return over the identical window, both real numbers, so you never have to trust a pre-computed gap.</p>
+    <p class="footnote" style="padding-bottom:32px;">A position can be red here even with a positive return, if the S&amp;P did better over the same window. The comparison is to the index, not to zero. Tap through for the full dollar breakdown, including raw gain and dollar alpha.</p>
+  </div>
+
+  <!-- ══════════════ SCREEN 2 · CLOSED POSITIONS ══════════════ -->
+  <div class="screen" id="screen-closed">
+    <header class="app">
+      <span class="back" onclick="goTo('decisions')">‹</span>
+      <span class="info-btn hdr" onclick="openInfo('closed')">i</span>
+    </header>
+
+    <div class="mkt-strip">
+      <span class="mkt-clock" data-clock>00:00:00 ET</span>
+      <span class="mkt-div"></span>
+      <span class="mkt-flag"><span class="dot" data-mkt="us"></span>US</span>
+      <span class="mkt-flag"><span class="dot" data-mkt="ca"></span>CA</span>
+    </div>
+
+    <div class="subhead">
+      <span class="eyebrow">Closed Positions</span>
+      <span class="count-line">9 positions</span>
+    </div>
+
+    <div class="filterbar">
+      <div class="chips">
+        <span class="chip on" onclick="filterList('closed','all',this)">All</span>
+        <span class="chip" onclick="filterList('closed','beating',this)">Beat 5</span>
+        <span class="chip" onclick="filterList('closed','trailing',this)">Trailed 4</span>
+        <span class="chip" onclick="filterList('closed','profit',this)">Profitable 7</span>
+        <span class="chip" onclick="filterList('closed','loss',this)">Unprofitable 2</span>
+      </div>
+    </div>
+    <div style="padding:24px 20px 0;">
+      <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;">Win rate 55.6% · settled outcomes only</span>
+    </div>
+
+    <div class="list">
+      <div class="row" onclick="positionTap('NVDA','closed')">
+        <div class="row-left">
+          <span class="ticker">NVDA</span>
+          <span class="name">NVIDIA Corp</span>
+          <span class="meta">Closed Jul 2, 2026 · held 236d</span>
+        </div>
+        <div class="row-right">
+          <span class="rowvalue">Exit value $11,985.00</span>
+          <span class="rowreturn win"><span class="anum-r">+41.0%</span><span class="vstag">S&amp;P +18.1%</span><span class="trend up">▲</span></span>
+        </div>
+        <span class="chev">›</span>
+      </div>
+      <div class="row" onclick="positionTap('UNH','closed')">
+        <div class="row-left">
+          <span class="ticker">UNH</span>
+          <span class="name">UnitedHealth Group</span>
+          <span class="meta">Closed Jun 14, 2026 · held 340d</span>
+        </div>
+        <div class="row-right">
+          <span class="rowvalue">Exit value $7,737.60</span>
+          <span class="rowreturn win"><span class="anum-r">+24.8%</span><span class="vstag">S&amp;P +13.6%</span><span class="trend up">▲</span></span>
+        </div>
+        <span class="chev">›</span>
+      </div>
+      <div class="row" onclick="positionTap('ADBE','closed')">
+        <div class="row-left">
+          <span class="ticker">ADBE</span>
+          <span class="name">Adobe Inc</span>
+          <span class="meta">Closed May 29, 2026 · held 168d</span>
+        </div>
+        <div class="row-right">
+          <span class="rowvalue">Exit value $6,849.80</span>
+          <span class="rowreturn win"><span class="anum-r">+18.1%</span><span class="vstag">S&amp;P +8.5%</span><span class="trend up">▲</span></span>
+        </div>
+        <span class="chev">›</span>
+      </div>
+      <div class="row" onclick="positionTap('TXN','closed')">
+        <div class="row-left">
+          <span class="ticker">TXN</span>
+          <span class="name">Texas Instruments</span>
+          <span class="meta">Closed Apr 11, 2026 · held 512d</span>
+        </div>
+        <div class="row-right">
+          <span class="rowvalue">Exit value $8,352.00</span>
+          <span class="rowreturn win"><span class="anum-r">+16.0%</span><span class="vstag">S&amp;P +10.6%</span><span class="trend up">▲</span></span>
+        </div>
+        <span class="chev">›</span>
+      </div>
+      <div class="row" onclick="positionTap('V','closed')">
+        <div class="row-left">
+          <span class="ticker">V</span>
+          <span class="name">Visa Inc</span>
+          <span class="meta">Closed Feb 27, 2026 · held 90d</span>
+        </div>
+        <div class="row-right">
+          <span class="rowvalue">Exit value $4,510.80</span>
+          <span class="rowreturn win"><span class="anum-r">+7.4%</span><span class="vstag">S&amp;P +5.3%</span><span class="trend up">▲</span></span>
+        </div>
+        <span class="chev">›</span>
+      </div>
+      <div class="row" onclick="positionTap('BA','closed')">
+        <div class="row-left">
+          <span class="ticker">BA</span>
+          <span class="name">Boeing Co</span>
+          <span class="meta">Closed Jan 30, 2026 · held 402d</span>
+        </div>
+        <div class="row-right">
+          <span class="rowvalue">Exit value $5,084.80</span>
+          <span class="rowreturn loss"><span class="anum-r">−9.2%</span><span class="vstag">S&amp;P +5.5%</span><span class="trend down">▼</span></span>
+        </div>
+        <span class="chev">›</span>
+      </div>
+      <div class="row" onclick="positionTap('PYPL','closed')">
+        <div class="row-left">
+          <span class="ticker">PYPL</span>
+          <span class="name">PayPal Holdings</span>
+          <span class="meta">Closed Dec 18, 2025 · held 275d</span>
+        </div>
+        <div class="row-right">
+          <span class="rowvalue">Exit value $6,555.20</span>
+          <span class="rowreturn loss"><span class="anum-r">−3.6%</span><span class="vstag">S&amp;P +6.3%</span><span class="trend down">▼</span></span>
+        </div>
+        <span class="chev">›</span>
+      </div>
+      <div class="row" onclick="positionTap('KO','closed')">
+        <div class="row-left">
+          <span class="ticker">KO</span>
+          <span class="name">Coca-Cola Co</span>
+          <span class="meta">Closed Nov 3, 2025 · held 190d</span>
+        </div>
+        <div class="row-right">
+          <span class="rowvalue">Exit value $7,577.60</span>
+          <span class="rowreturn loss"><span class="anum-r">+2.4%</span><span class="vstag">S&amp;P +8.2%</span><span class="trend down">▼</span></span>
+        </div>
+        <span class="chev">›</span>
+      </div>
+      <div class="row" onclick="positionTap('VZ','closed')">
+        <div class="row-left">
+          <span class="ticker">VZ</span>
+          <span class="name">Verizon Communications</span>
+          <span class="meta">Closed Sep 9, 2025 · held 128d</span>
+        </div>
+        <div class="row-right">
+          <span class="rowvalue">Exit value $9,292.00</span>
+          <span class="rowreturn loss"><span class="anum-r">+1.0%</span><span class="vstag">S&amp;P +4.4%</span><span class="trend down">▼</span></span>
+        </div>
+        <span class="chev">›</span>
+      </div>
+    </div>
+
+    <p class="footnote" style="padding-bottom:8px;">Profitable ≠ beat the benchmark. A position can make money and still trail S&amp;P.</p>
+    <p class="footnote" style="padding-bottom:8px;">Top line is the position's final value at close. Bottom is your return next to S&amp;P's return over the identical window, both real numbers, so you never have to trust a pre-computed gap.</p>
+    <p class="footnote" style="padding-bottom:32px;">KO and VZ both made money but carry a red arrow here. Both trailed the S&amp;P over their holding window. Tap through for the full dollar breakdown, including raw gain and dollar alpha.</p>
+  </div>
+
+
+  <!-- ══════════════ SCREEN 3 · POSITION DETAIL ══════════════ -->
+  <div class="screen" id="screen-detail">
+    <header class="app">
+      <span class="back" onclick="goTo(detailOrigin)">‹</span>
+      <span class="info-btn hdr" onclick="openInfo('detail')">i</span>
+    </header>
+
+    <div class="mkt-strip">
+      <span class="mkt-clock" data-clock>00:00:00 ET</span>
+      <span class="mkt-div"></span>
+      <span class="mkt-flag"><span class="dot" data-mkt="us"></span>US</span>
+      <span class="mkt-flag"><span class="dot" data-mkt="ca"></span>CA</span>
+    </div>
+
+    <div class="subhead">
+      <span class="eyebrow">Position</span>
+      <span class="count-line">NVDA <span style="color:var(--c-700);">· NVIDIA Corp</span></span>
+      <span style="font-size:11px;letter-spacing:-0.02em;color:var(--c-700);"><span style="color:var(--c-200);">Closed</span> · Beat S&amp;P</span>
+    </div>
+
+    <div class="hero-pad">
+      <div class="hero-return">
+        <span class="label">Total Gain</span>
+        <span class="big" style="color:var(--c-white);">+$3,485.00<span class="trend up lg">▲</span></span>
+        <span class="sub" style="display:block;margin:8px 0 0;">+41.0% return · value $11,985.00</span>
+      </div>
+    </div>
+
+    <div class="kv-grid">
+      <div class="kv"><div class="k">Entered</div><div class="v">Nov 8, 2025</div></div>
+      <div class="kv"><div class="k">Exited</div><div class="v">Jul 2, 2026</div></div>
+      <div class="kv"><div class="k">Entry Price</div><div class="v">$138.42</div></div>
+      <div class="kv"><div class="k">Exit Price</div><div class="v">$195.15</div></div>
+      <div class="kv"><div class="k">Held</div><div class="v">236 days</div></div>
+      <div class="kv"><div class="k">Entry Weight</div><div class="v">17.9% of portfolio</div></div>
+      <div class="kv"><div class="k">Shares Sold</div><div class="v">61.41</div></div>
+    </div>
+
+    <div class="sec">
+      <span class="sec-title">Performance vs S&amp;P</span>
+      <div class="cmp-row">
+        <span class="cmp-label">Position</span>
+        <span class="cmp-val">$3,485.00<span class="pct">+41.0%</span><span class="arw-slot"></span></span>
+      </div>
+      <div class="cmp-row">
+        <span class="cmp-label">S&amp;P 500 (same window)</span>
+        <span class="cmp-val">$1,538.50<span class="pct">+18.1%</span><span class="arw-slot"></span></span>
+      </div>
+      <div class="cmp-row">
+        <span class="cmp-label">Alpha</span>
+        <span class="cmp-val"><span class="anum">$1,946.50</span><span class="pct">+22.9&nbsp;pp</span><span class="trend up">▲</span></span>
+      </div>
+      <div class="cmp-row">
+        <span class="cmp-label">Max Alpha (during hold)</span>
+        <span class="cmp-val"><span class="anum">$2,310.00</span><span class="pct">+27.2&nbsp;pp</span><span class="trend up">▲</span></span>
+      </div>
+    </div>
+
+    <div class="sec">
+      <span class="sec-title">Position vs Benchmark</span>
+      <div class="chartwrap" style="margin-top:4px;">
+        <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;display:block;margin-bottom:8px;">NVDA vs. S&amp;P 500, % return since entry</span>
+        <div class="scrub-read" style="margin:0 0 12px;">
+          <span><span id="posScrubDate">Jul 2, 2026</span> · NVDA <b id="posScrubA">+41.0%</b> · S&amp;P <b id="posScrubB" style="color:var(--c-700);">+18.1%</b> · Alpha <span class="trend up lead" id="posScrubArrow">▲</span><b id="posScrubAlpha">+22.9&nbsp;pp</b></span>
+        </div>
+        <div style="position:relative;">
+        <div class="legend">
+          <span><span class="ln"></span>NVDA</span>
+          <span><span class="ln dash"></span>S&amp;P 500</span>
+        </div>
+        <svg style="width:100%;height:180px;display:block;overflow:visible;" viewBox="-40 0 360 180" preserveAspectRatio="none" aria-hidden="true">
+          <text x="-40" y="16" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">+40%</text>
+          <text x="-40" y="96" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">+20%</text>
+          <text x="-40" y="176" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">0%</text>
+          <line x1="0" y1="92" x2="320" y2="92" style="stroke:var(--c-1000)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
+          <line x1="0" y1="12" x2="0" y2="176" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
+          <line x1="0" y1="176" x2="320" y2="176" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
+          <defs><clipPath id="posClip"><rect id="posClipRect" x="-2" y="0" width="330" height="180"/></clipPath></defs>
+          <g clip-path="url(#posClip)">
+            <path id="posAcct" d="M0,176 L45,152 L90,128 L135,140 L180,88 L225,56 L270,32 L320,12" fill="none" style="stroke:var(--c-400)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+            <path id="posBm" d="M0,176 L45,168 L90,160 L135,164 L180,152 L225,146 L270,140 L320,103.6" fill="none" style="stroke:var(--c-700)" stroke-width="1.25" stroke-dasharray="2 2" vector-effect="non-scaling-stroke"/>
+          </g>
+          <line class="scrub-line" x1="0" y1="12" x2="0" y2="176" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke" visibility="hidden"/>
+          <circle class="scrub-dot-b" r="2.5" style="fill:var(--c-700)" visibility="hidden"/>
+          <circle class="scrub-dot-a" r="2.5" style="fill:var(--c-400)" visibility="hidden"/>
+        </svg>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--c-700);letter-spacing:-0.02em;margin-top:8px;padding-left:11%;">
+          <span>Nov 25</span><span>Jan 26</span><span>Apr 26</span><span>Jul 26</span>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="sec">
+      <span class="sec-title">Portfolio Impact</span>
+      <div class="cmp-row wide">
+        <span class="cmp-label">Dollar contribution to account return</span>
+        <span class="cmp-val">+$3,485.00<span class="trend up">▲</span></span>
+      </div>
+      <div class="cmp-row wide">
+        <span class="cmp-label">Share of total return this period</span>
+        <span class="cmp-val">21.6%<span class="arw-slot"></span></span>
+      </div>
+      <div class="cmp-row wide">
+        <span class="cmp-label">Rank among closed positions</span>
+        <span class="cmp-val">1 of 9 · largest winner<span class="arw-slot"></span></span>
+      </div>
+    </div>
+
+    <div class="sec">
+      <span class="sec-title">Had You Held</span>
+      <div class="cmp-row">
+        <span class="cmp-label">NVDA today</span>
+        <span class="cmp-val">$228.40<span class="arw-slot"></span></span>
+      </div>
+      <div class="cmp-row">
+        <span class="cmp-label">Value if still held</span>
+        <span class="cmp-val">$14,025.59<span class="pct">+65.0%</span><span class="arw-slot"></span></span>
+      </div>
+      <div class="cmp-row">
+        <span class="cmp-label">What you realised</span>
+        <span class="cmp-val">$11,985.00<span class="pct">+41.0%</span><span class="arw-slot"></span></span>
+      </div>
+      <div class="cmp-row">
+        <span class="cmp-label">Selling early cost you</span>
+        <span class="cmp-val"><span class="anum">−2,040.59</span><span class="pct">−24.0&nbsp;pp</span><span class="trend down">▼</span></span>
+      </div>
+      <p style="font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">Priced at Aug 10, 2026 on the 61.41 shares sold. Assumes the shares were kept and does not count what the proceeds earned after the sale.</p>
+    </div>
+
+    <p class="foot-disclosure">Closed positions use past tense (Beat / Trailed). Alpha vs S&amp;P 500, dividends reinvested. Figures are preliminary and unaudited.</p>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════ BOTTOM SHEET · BENCHMARK PICKER ══════════════ -->
+<div class="info-overlay" id="info-overlay-bm" onclick="closeInfo('bm')"></div>
+<div class="info-sheet" aria-hidden="true" id="info-sheet-bm">
+  <div class="info-sheet-head">
+    <span class="info-sheet-title">Benchmark</span>
+    <span class="info-sheet-close" onclick="closeInfo('bm')">&times;</span>
+  </div>
+  <div class="info-sheet-body">
+    <div>
+      <div class="bm-pick" data-pick="sp" onclick="pickBm('sp')"><span>S&amp;P 500</span><span class="tick">&#10003;</span></div>
+      <div class="bm-pick" data-pick="nasdaq" onclick="pickBm('nasdaq')"><span>Nasdaq</span><span class="tick">&#10003;</span></div>
+      <div class="bm-pick" data-pick="tsx" onclick="pickBm('tsx')"><span>TSX</span><span class="tick">&#10003;</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ INFO SHEET · DECISIONS ══════════════ -->
+<div class="info-overlay" id="info-overlay-decisions" onclick="closeInfo('decisions')"></div>
+<div class="info-sheet" aria-hidden="true" id="info-sheet-decisions">
+  <div class="info-sheet-head">
+    <span class="info-sheet-title">Understanding This Page</span>
+    <span class="info-sheet-close" onclick="closeInfo('decisions')">×</span>
+  </div>
+  <div class="info-sheet-body">
+    <div>
+      <span class="info-block-title">What This Page Shows</span>
+      <p class="info-p">Your full account performance for the "All" period since inception: return vs. S&amp;P, timing skill (TWR vs MWR), risk (drawdown, volatility), every open and closed decision, and which positions drove the result.</p>
+    </div>
+    <div>
+      <span class="info-block-title">Why 5 Years</span>
+      <p class="info-p">A short track record can't separate skill from luck. A good year or two can easily be variance. Five years is roughly the point where a return series starts to say something statistically meaningful about an active manager versus an index. The progress bar at the top tracks how close this account is to that mark, not to any performance goal.</p>
+    </div>
+    <div>
+      <span class="info-block-title">TWR vs. MWR</span>
+      <p class="info-p">Time-weighted return measures stock-picking skill. Money-weighted return reflects the timing of your deposits and withdrawals. The gap between them is timing skill, separate from picking skill.</p>
+    </div>
+    <div>
+      <span class="info-block-title">The Decisions Module</span>
+      <p class="info-p">Every position is split into Open (still running) and Closed (settled), each with a Beating/Trailing or Beat/Trailed breakdown. Tap either label to expand a preview of the top names; tap any name to open its detail.</p>
+    </div>
+    <div>
+      <span class="info-block-title">Profitable vs. Beat the Benchmark</span>
+      <p class="info-p">These are two different bars. A position can be profitable and still trail the S&amp;P 500: 7 of 9 closed positions made money, but only 5 actually beat the index over the same window.</p>
+    </div>
+    <div>
+      <span class="info-block-title">Where This Leads</span>
+      <div class="info-sec-item"><div class="k">View All (Open)</div><div class="d">Full list of the 11 open positions, each scored vs. S&amp;P over its holding window.</div></div>
+      <div class="info-sec-item"><div class="k">View All (Closed)</div><div class="d">Full list of the 9 settled positions and their final results vs. S&amp;P.</div></div>
+      <div class="info-sec-item"><div class="k">Tapping a name</div><div class="d">Opens that position's full detail: original call, pace verdict, and portfolio impact.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ INFO SHEET · OPEN POSITIONS ══════════════ -->
+<div class="info-overlay" id="info-overlay-open" onclick="closeInfo('open')"></div>
+<div class="info-sheet" aria-hidden="true" id="info-sheet-open">
+  <div class="info-sheet-head">
+    <span class="info-sheet-title">Understanding This Page</span>
+    <span class="info-sheet-close" onclick="closeInfo('open')">×</span>
+  </div>
+  <div class="info-sheet-body">
+    <div>
+      <span class="info-block-title">What This Page Shows</span>
+      <p class="info-p">Every open position measured one way: how it's doing against the S&amp;P 500 over the same holding window. Present tense, because these positions haven't settled yet.</p>
+    </div>
+    <div>
+      <span class="info-block-title">Reading a Row</span>
+      <p class="info-p">Two lines: what the position is worth today, and your return next to S&amp;P's return over the same window, both real numbers, colored by whether you beat or trailed.</p>
+    </div>
+    <div>
+      <span class="info-block-title">Color</span>
+      <p class="info-p">The arrow always means beat or trailed the index, never just profit or loss. A position can carry a red arrow even with a positive return, if the S&amp;P did better over the same window. Tap into any position for the full dollar breakdown: cost basis, raw gain, and dollar alpha.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ INFO SHEET · CLOSED POSITIONS ══════════════ -->
+<div class="info-overlay" id="info-overlay-closed" onclick="closeInfo('closed')"></div>
+<div class="info-sheet" aria-hidden="true" id="info-sheet-closed">
+  <div class="info-sheet-head">
+    <span class="info-sheet-title">Understanding This Page</span>
+    <span class="info-sheet-close" onclick="closeInfo('closed')">×</span>
+  </div>
+  <div class="info-sheet-body">
+    <div>
+      <span class="info-block-title">What This Page Shows</span>
+      <p class="info-p">Every closed position measured against the S&amp;P 500 over its full holding period, now settled. Profitable ≠ beat the benchmark. A position can make money and still trail the S&amp;P.</p>
+    </div>
+    <div>
+      <span class="info-block-title">Reading a Row</span>
+      <p class="info-p">Two lines: the position's final value at close, and your return next to S&amp;P's return over its holding window, both real numbers, colored by whether you beat or trailed.</p>
+    </div>
+    <div>
+      <span class="info-block-title">Color</span>
+      <p class="info-p">The arrow always means beat or trailed the index, never just profit or loss. KO and VZ both made money but carry a red arrow here, because both trailed the S&amp;P. Tap into any position for the full dollar breakdown: cost basis, raw gain, and dollar alpha.</p>
+    </div>
+  </div>
+</div>
+
+<div class="info-overlay" id="info-overlay-detail" onclick="closeInfo('detail')"></div>
+<div class="info-sheet" aria-hidden="true" id="info-sheet-detail">
+  <div class="info-sheet-head">
+    <span class="info-sheet-title">Understanding This Page</span>
+    <span class="info-sheet-close" onclick="closeInfo('detail')">×</span>
+  </div>
+  <div class="info-sheet-body">
+    <div>
+      <span class="info-block-title">What Each Section Shows</span>
+      <div class="info-sec-item"><div class="k">Hero</div><div class="d">Dollar alpha vs S&amp;P for this position, plus your return and S&amp;P's return over the identical window.</div></div>
+      <div class="info-sec-item"><div class="k">Performance vs S&amp;P</div><div class="d">Portfolio, benchmark, and the resulting alpha, laid out as three plain numbers, never a delta shown alone.</div></div>
+      <div class="info-sec-item"><div class="k">Position vs Benchmark chart</div><div class="d">Visual comparison of the position's value path against the S&amp;P 500 over the same window.</div></div>
+      <div class="info-sec-item"><div class="k">Portfolio Impact</div><div class="d">How much this position moved the overall account: dollars, share of total return, and rank against other closed positions.</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function goTo(id){
+    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+    document.getElementById('screen-'+id).classList.add('active');
+    document.querySelectorAll('.proto-btn').forEach(b=>b.classList.toggle('active', b.dataset.target===id));
+  }
+  document.querySelectorAll('.proto-btn').forEach(b=>{
+    b.addEventListener('click', ()=>goTo(b.dataset.target));
+  });
+  document.querySelectorAll('.chip').forEach(c=>{
+    c.addEventListener('click', function(){
+      this.parentElement.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));
+      this.classList.add('on');
+    });
+  });
+  function openInfo(id){
+    document.getElementById('info-sheet-'+id).removeAttribute('aria-hidden');
+    document.getElementById('info-overlay-'+id).classList.add('open');
+    document.getElementById('info-sheet-'+id).classList.add('open');
+  }
+  function closeInfo(id){
+    document.getElementById('info-sheet-'+id).setAttribute('aria-hidden','true');
+    document.getElementById('info-overlay-'+id).classList.remove('open');
+    document.getElementById('info-sheet-'+id).classList.remove('open');
+  }
+  function toggleWhy(el){
+    const r = document.getElementById('signal-rationale');
+    r.hidden = !r.hidden;
+    el.classList.toggle('open', !r.hidden);
+  }
+  // Account is fixed; each benchmark carries its own compounded yearly series.
+  // Alpha is always account minus benchmark, so nothing can drift.
+  // Tracked Mar 14 2023 -> Aug 10 2026. The years table reads one calendar year
+  // per row, so its total row has to be the same unit: the average annual rate,
+  // not the cumulative return (which the signal block above already carries).
+  const TRACKED_YEARS = (new Date(2026,7,10) - new Date(2023,2,14)) / 31557600000;
+  const annualize = cum => Math.round((Math.pow(1 + cum/100, 1/TRACKED_YEARS) - 1) * 1000) / 10;
+  const ACCOUNT_YEARS = [12.0, 4.4, 15.0, 3.7];          // 2023 (from Mar) · 2024 · 2025 · 2026 YTD
+  const BM = {
+    sp:     {short:'S&P',    long:'S&P 500', years:[14.0, 12.0, 10.0, 3.4],
+             ret:{ytd:3.4, '1y':9.8,  '3y':28.4, all:45.2}},
+    nasdaq: {short:'Nasdaq', long:'Nasdaq',  years:[20.0, 15.0, 12.0, 2.6],
+             ret:{ytd:2.6, '1y':10.4, '3y':33.2, all:58.6}},
+    tsx:    {short:'TSX',    long:'TSX',     years:[8.0, 6.0, 7.0, 3.2],
+             ret:{ytd:3.2, '1y':7.1,  '3y':17.6, all:26.4}}
+  };
+  // account return and the capital it was earned on, per period
+  const PERIOD = {
+    ytd:  {label:'Year to Date',      ret:3.7,  base:50000},
+    '1y': {label:'Trailing 1 Year',   ret:11.2, base:47000},
+    '3y': {label:'Trailing 3 Years',  ret:25.6, base:38000},
+    all:  {label:'Since Inception',   ret:39.4, base:40969.6}
+  };
+  let state = {period:'all', benchmark:'sp'};
+  const money = v => (v < 0 ? '\u2212' : '+') + Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:2, maximumFractionDigits:2});
+  const pct  = v => (v < 0 ? '\u2212' : '+') + Math.abs(v).toFixed(1) + '%';
+  const pp   = v => (v < 0 ? '\u2212' : '+') + Math.abs(v).toFixed(1) + '&nbsp;pp';
+  const YEARS = ['2023','2024','2025','2026','2027','2028'];
+  const TAGS  = {'2026':'YTD','2028':'Signal'};
+
+  // one monthly series, generated once per benchmark: deposits on their real dates,
+  // growth at that calendar year's rate. Windows are slices of it, so nothing can disagree.
+  const DEPOSITS = {0:15000, 6:8000, 11:9000, 20:7000, 27:-4000, 35:6000};   // months from Mar 2023
+  const MONTHS = 41;                                                          // Mar 2023 -> Aug 2026
+  const YEAR_SPAN = [[0,9,0],[10,21,1],[22,33,2],[34,41,3]];                  // month range -> year index
+  const MONTH_NAMES = ['Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb'];
+  function monthLabel(m){
+    const d = new Date(2023, 2 + m, 1);
+    return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]
+      + ' ' + String(d.getFullYear()).slice(2);
+  }
+  function rateFor(m, years){
+    for (const [a,b,i] of YEAR_SPAN) if (m>=a && m<=b) {
+      const months = b - a + 1;
+      return Math.pow(1 + years[i]/100, 1/months) - 1;
+    }
+    return 0;
+  }
+  const SUB = 6;                                   // samples per month
+  // Deterministic noise: a real account is marked to market daily, so the line
+  // must wiggle between deposits. Seeded PRNG keeps the same line every load.
+  function mulberry32(seed){
+    return function(){
+      seed = (seed + 0x6D2B79F5) | 0;
+      let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function gaussians(seed, n){
+    const rand = mulberry32(seed), out = [];
+    for (let i = 0; i < n; i++){
+      const u = Math.max(rand(), 1e-9), v = rand();
+      out.push(Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v));
+    }
+    return out;
+  }
+  const N_STEPS = MONTHS * SUB;
+  const Z_MKT = gaussians(20230314, N_STEPS);      // market shocks, shared
+  const Z_OWN = gaussians(20260810, N_STEPS);      // account-specific shocks
+  // Per-step log returns: noise first, then each calendar year is re-centred so
+  // its compound lands exactly on that year's stated return.
+  function stepReturns(years, vol, corr){
+    const perStep = vol * 0.65 / Math.sqrt(12 * SUB);   // damped: legible at 320px wide
+    const logs = [];
+    for (let i = 0; i < N_STEPS; i++)
+      logs.push((corr * Z_MKT[i] + Math.sqrt(1 - corr * corr) * Z_OWN[i]) * perStep);
+    for (const [a, b, yi] of YEAR_SPAN){
+      const from = a * SUB, to = Math.min(b * SUB + SUB, N_STEPS);
+      let sum = 0;
+      for (let i = from; i < to; i++) sum += logs[i];
+      const fix = (Math.log(1 + years[yi] / 100) - sum) / (to - from);
+      for (let i = from; i < to; i++) logs[i] += fix;
+    }
+    return logs.map(Math.exp);
+  }
+  function series(years, targetGain, vol, corr){
+    const factors = stepReturns(years, vol, corr);
+    const out = [], dep = [];
+    let v = 0, d = 0;
+    for (let i = 0; i <= N_STEPS; i++){
+      const add = DEPOSITS[i / SUB] || 0;           // deposits land on their day, as a step
+      v += add; d += add;
+      if (i > 0) v *= factors[i - 1];
+      out.push(v); dep.push(d);
+    }
+    // keep the shape, land the end on the figure the page states
+    const endGain = out[out.length-1] - dep[dep.length-1];
+    const k = endGain === 0 ? 1 : targetGain / endGain;
+    return out.map((val, i) => dep[i] + (val - dep[i]) * k);
+  }
+  const WINDOW = {all:[0,41], '3y':[5,41], '1y':[29,41], ytd:[34,41]};
+  let ACCT_CURVE = null;
+  // The curves sweep in left to right by widening a clip rect. rAF, eased,
+  // instant under prefers-reduced-motion. Toggles re-sweep fast.
+  const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function sweep(rectId, dur){
+    const rect = document.getElementById(rectId);
+    if (!rect) return;
+    if (REDUCED || dur === 0){ rect.setAttribute('width', 330); return; }
+    rect.setAttribute('width', 0);
+    const t0 = performance.now();
+    const ease = x => 1 - Math.pow(1 - x, 3);
+    (function step(now){
+      const p = Math.min(1, (now - t0) / dur);
+      rect.setAttribute('width', (ease(p) * 330).toFixed(1));
+      if (p < 1) requestAnimationFrame(step);
+    })(t0);
+  }
+  let acctSwept = false;
+  // below-the-fold motion plays when first scrolled into view, not at load
+  function onFirstView(el, run){
+    if (!el) return;
+    if (REDUCED){ run(); return; }
+    const io = new IntersectionObserver(entries => entries.forEach(e => {
+      if (e.isIntersecting){ io.disconnect(); run(); }
+    }), {threshold: 0.35});
+    io.observe(el);
+  }
+
+  function drawCurve(bm, periodKey){
+    const base = PERIOD.all.base;
+    const acct = series(ACCOUNT_YEARS, base * PERIOD.all.ret/100, 0.172, 0.85);
+    const mirror = series(bm.years, base * bm.ret.all/100, 0.154, 1);
+    const [am,bm2] = WINDOW[periodKey];
+    const a = am*SUB, b = bm2*SUB;
+    const av = acct.slice(a,b+1), bv = mirror.slice(a,b+1);
+    const lo = Math.min(...av, ...bv), hi = Math.max(...av, ...bv);
+    const step = hi - lo < 12000 ? 2000 : 10000;
+    const bot = Math.floor(lo/step)*step, top = Math.ceil(hi/step)*step;
+    const y = v => 176 - (v - bot)/(top - bot) * 164;
+    // straight segments: a marked-to-market line is a polyline, not a spline
+    const path = arr => arr.map((v,i) =>
+      (i ? 'L' : 'M') + (i/(arr.length-1)*320).toFixed(1) + ',' + y(v).toFixed(1)).join(' ');
+    document.getElementById('curveAcct').setAttribute('d', path(av));
+    document.getElementById('curveBm').setAttribute('d', path(bv));
+    const k = v => (v/1000).toFixed(1) + 'k';
+    document.getElementById('tickTop').textContent = k(top);
+    document.getElementById('tickMid').textContent = k((top+bot)/2);
+    document.getElementById('tickBot').textContent = bot === 0 ? '0' : k(bot);
+    [1,2,3,4].forEach(n=>{
+      const m = am + Math.round((bm2-am) * (n-1)/3);
+      document.getElementById('ax'+n).textContent = monthLabel(m);
+    });
+    const dot = document.getElementById('acctEndDot');
+    dot.setAttribute('cy', y(av[av.length-1]).toFixed(1));
+    if (acctSwept) sweep('acctClipRect', 350);
+    else if (!REDUCED) document.getElementById('acctClipRect').setAttribute('width', 0);
+    ACCT_CURVE = {av:av, bv:bv, y:y, fromM:am, toM:bm2};
+    return {acctEnd:av[av.length-1], bmEnd:bv[bv.length-1]};
+  }
+
+  function render(){
+    const bm = BM[state.benchmark], per = PERIOD[state.period];
+    document.querySelectorAll('.bm-pick').forEach(el=>el.classList.toggle('on', el.dataset.pick===state.benchmark));
+    document.querySelectorAll('.pd-period-opt').forEach(el=>el.classList.toggle('active', el.dataset.period===state.period));
+    document.querySelectorAll('[data-period-label]').forEach(el=>el.textContent = per.label);
+    document.querySelectorAll('[data-bm-short]').forEach(el=>el.textContent = bm.short);
+    document.querySelectorAll('[data-bm-long]').forEach(el=>el.textContent = bm.long);
+    const bmRet  = bm.ret[state.period];
+    const gain   = per.base * per.ret/100;
+    const mirror = per.base * bmRet/100;
+    const alpha  = gain - mirror;
+    const alphaPp = Math.round((per.ret - bmRet)*10)/10;
+    document.querySelectorAll('[data-acct-dollars]').forEach(el=>el.textContent = money(gain));
+    document.querySelectorAll('[data-acct-pct]').forEach(el=>el.textContent = pct(per.ret));
+    document.querySelectorAll('[data-bm-dollars]').forEach(el=>el.textContent = money(mirror));
+    document.querySelectorAll('[data-bm-pct]').forEach(el=>el.textContent = pct(bmRet));
+    document.querySelectorAll('[data-alpha-dollars]').forEach(el=>el.textContent = money(alpha));
+    document.querySelectorAll('[data-alpha-pp]').forEach(el=>el.innerHTML = pp(alphaPp));
+    const down = alpha < 0;
+    document.querySelectorAll('[data-alpha-arrow]').forEach(el=>{
+      el.className = 'trend ' + (down ? 'down' : 'up');
+      el.textContent = down ? '\u25bc' : '\u25b2';
+    });
+    const ends = drawCurve(bm, state.period);
+    document.querySelectorAll('[data-acct-end]').forEach(el=>el.textContent = (ends.acctEnd/1000).toFixed(1) + 'k');
+    document.querySelectorAll('[data-bm-end]').forEach(el=>el.textContent = (ends.bmEnd/1000).toFixed(1) + 'k');
+    // yearly rows
+    const rows = YEARS.map((y,i)=>{
+      const future = i >= ACCOUNT_YEARS.length;
+      const tag = TAGS[y] ? ' <span class="yt-tag">'+TAGS[y]+'</span>' : '';
+      if (future) return '<div class="yt-row future"><span class="yt-year">'+y+tag+'</span>'+
+        '<span class="yt-val">\u2013</span><span class="yt-val">\u2013</span><span class="yt-val">\u2013</span></div>';
+      const a = ACCOUNT_YEARS[i], b = bm.years[i], d = Math.round((a-b)*10)/10;
+      const arw = d < 0 ? '<span class="trend down">\u25bc</span>' : '<span class="trend up">\u25b2</span>';
+      return '<div class="yt-row"><span class="yt-year">'+y+tag+'</span>'+
+        '<span class="yt-val">'+pct(a)+'</span><span class="yt-val">'+pct(b)+'</span>'+
+        '<span class="yt-val">'+pp(d)+arw+'</span></div>';
+    }).join('');
+    const annAcct = annualize(PERIOD.all.ret), annBm = annualize(bm.ret.all);
+    const annPp = Math.round((annAcct - annBm)*10)/10;
+    const totArw = annPp < 0 ? '<span class="trend down">\u25bc</span>' : '<span class="trend up">\u25b2</span>';
+    document.getElementById('ytRows').innerHTML = rows +
+      '<div class="yt-row total"><span class="yt-year">Annualized</span>'+
+      '<span class="yt-val">'+pct(annAcct)+'</span><span class="yt-val">'+pct(annBm)+'</span>'+
+      '<span class="yt-val">'+pp(annPp)+totArw+'</span></div>';
+  }
+  function pickBm(key){ state.benchmark = key; closeInfo('bm'); render(); }
+  document.querySelectorAll('.pd-period-opt').forEach(el=>
+    el.addEventListener('click',()=>{ state.period = el.dataset.period; render(); }));
+  render();
+
+  function toggleDef(key, el){
+    const d = document.getElementById('def-' + key);
+    d.hidden = !d.hidden;
+    el.style.color = d.hidden ? '' : 'var(--c-white)';
+  }
+
+  function filterList(screen, key, el){
+    const scr = document.getElementById('screen-' + screen);
+    scr.querySelectorAll('.chips .chip').forEach(c => c.classList.remove('on'));
+    el.classList.add('on');
+    let shown = 0;
+    scr.querySelectorAll('.list .row').forEach(row => {
+      const ret = row.querySelector('.rowreturn');
+      const beating = ret.classList.contains('win');          // colour = verdict vs S&P
+      const profit  = !ret.textContent.trim().startsWith('−'); // sign = profit or loss
+      let ok = true;
+      if (key === 'beating') ok = beating;
+      else if (key === 'trailing') ok = !beating;
+      else if (key === 'profit') ok = profit;
+      else if (key === 'loss') ok = !profit;
+      row.style.display = ok ? '' : 'none';
+      if (ok) shown++;
+    });
+    const count = scr.querySelector('.count-line');
+    if (count) count.textContent = shown + (shown === 1 ? ' position' : ' positions');
+  }
+
+  function toggleDecPreview(which, el){
+    const panel = document.getElementById('dec-preview-' + which);
+    const open = panel.classList.toggle('open');
+    if (el) { el.classList.toggle('open', open); el.style.color = open ? 'var(--c-white)' : ''; }
+  }
+  // Drag across a chart to read both series at that date. Release returns to
+  // the latest values, so the resting state is always "today".
+  function svgUnitX(svg, clientX){
+    const pt = svg.createSVGPoint(); pt.x = clientX; pt.y = 0;
+    return pt.matrixTransform(svg.getScreenCTM().inverse()).x;
+  }
+  function marker(svg, on, x, ya, yb){
+    const set = (sel, attrs) => {
+      const el = svg.querySelector(sel); if (!el) return;
+      el.setAttribute('visibility', on ? 'visible' : 'hidden');
+      for (const k in attrs) el.setAttribute(k, attrs[k]);
+    };
+    set('.scrub-line', on ? {x1:x, x2:x} : {});
+    set('.scrub-dot-a', on ? {cx:x, cy:ya} : {});
+    set('.scrub-dot-b', on ? {cx:x, cy:yb} : {});
+  }
+  function attachScrub(svg, atIndex, count, reset){
+    let live = false;
+    const move = ev => {
+      const ux = Math.max(0, Math.min(320, svgUnitX(svg, ev.clientX)));
+      const i = Math.round(ux / 320 * (count() - 1));
+      atIndex(i, ux);
+      ev.preventDefault();
+    };
+    const end = () => { if (!live) return; live = false; marker(svg, false); reset(); };
+    svg.addEventListener('pointerdown', ev => { live = true; try { svg.setPointerCapture(ev.pointerId); } catch(e){} move(ev); });
+    svg.addEventListener('pointermove', ev => { if (live) move(ev); });
+    svg.addEventListener('pointerup', end);
+    svg.addEventListener('pointercancel', end);
+    svg.addEventListener('pointerleave', end);
+  }
+
+  // chart 1: portfolio against the benchmark, in dollars
+  (function(){
+    const svg = document.querySelector('#screen-decisions .chartwrap svg');
+    if (!svg) return;
+    const kk = v => (v/1000).toFixed(1) + 'k';
+    const dateEl = document.getElementById('acctScrubDate');
+    const setRow = (label, a, b) => {
+      dateEl.textContent = label;
+      document.querySelectorAll('[data-acct-end]').forEach(el=>el.textContent = kk(a));
+      document.querySelectorAll('[data-bm-end]').forEach(el=>el.textContent = kk(b));
+    };
+    attachScrub(svg,
+      (i, ux) => {
+        const c = ACCT_CURVE; if (!c) return;
+        const a = c.av[i], b = c.bv[i];
+        setRow(monthLabel(c.fromM + Math.round((c.toM - c.fromM) * i / (c.av.length - 1))), a, b);
+        marker(svg, true, ux, c.y(a), c.y(b));
+      },
+      () => ACCT_CURVE ? ACCT_CURVE.av.length : 1,
+      () => { const c = ACCT_CURVE; if (!c) return;
+        setRow(monthLabel(c.toM), c.av[c.av.length-1], c.bv[c.bv.length-1]); });
+  })();
+
+  // chart 2: the closed position against the benchmark, in percent
+  (function(){
+    const svg = document.querySelector('#screen-detail .chartwrap svg');
+    if (!svg) return;
+    const pts = sel => document.getElementById(sel).getAttribute('d')
+      .split(/[ML]/).filter(Boolean).map(pair => pair.split(',').map(Number));
+    const A = pts('posAcct'), B = pts('posBm');
+    const pct = y => (176 - y) / 4;                       // 0% at y=176, +40% at y=16
+    const ENTRY = new Date(2025, 10, 8), DAYS = 236;      // Nov 8 2025 + 236 days = Jul 2 2026
+    const dayLabel = f => {
+      const d = new Date(ENTRY.getTime() + Math.round(DAYS * f) * 86400000);
+      return d.toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'});
+    };
+    const sign = v => (v < 0 ? '\u2212' : '+') + Math.abs(v).toFixed(1);
+    const el = id => document.getElementById(id);
+    const setRow = (f, a, b) => {
+      el('posScrubDate').textContent = dayLabel(f);
+      el('posScrubA').textContent = sign(a) + '%';
+      el('posScrubB').textContent = sign(b) + '%';
+      const d = Math.round((a - b) * 10) / 10;
+      el('posScrubAlpha').textContent = sign(d) + '\u00a0pp';
+      el('posScrubArrow').className = 'trend lead ' + (d < 0 ? 'down' : 'up');
+      el('posScrubArrow').textContent = d < 0 ? '\u25bc' : '\u25b2';
+    };
+    attachScrub(svg,
+      (i, ux) => {
+        setRow(i / (A.length - 1), pct(A[i][1]), pct(B[i][1]));
+        marker(svg, true, ux, A[i][1], B[i][1]);
+      },
+      () => A.length,
+      () => setRow(1, pct(A[A.length-1][1]), pct(B[B.length-1][1])));
+  })();
+
+  // 24h ET clock, ticks every second. Open window is Mon-Fri 09:30-16:00 ET for
+  // both NYSE and TSX. No holiday calendar, so a market holiday reads as open.
+  function marketOpen(tz){
+    const parts = new Intl.DateTimeFormat('en-US',{timeZone:tz,hour:'numeric',minute:'numeric',
+      hour12:false,weekday:'short'}).formatToParts(new Date());
+    const get = t => (parts.find(x=>x.type===t)||{}).value || '';
+    let h = parseInt(get('hour'),10); if (h === 24) h = 0;
+    const mins = h*60 + parseInt(get('minute'),10);
+    return !['Sat','Sun'].includes(get('weekday')) && mins >= 570 && mins < 960;
+  }
+  function tickClock(){
+    const t = new Date().toLocaleTimeString('en-US',{timeZone:'America/New_York',
+      hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+    document.querySelectorAll('[data-clock]').forEach(el=>el.textContent = t + ' ET');
+    const open = {us:marketOpen('America/New_York'), ca:marketOpen('America/Toronto')};
+    document.querySelectorAll('[data-mkt]').forEach(el=>
+      el.className = 'dot ' + (open[el.dataset.mkt] ? 'live' : 'urgent'));
+    const endDot = document.getElementById('acctEndDot');
+    if (endDot){
+      endDot.style.fill = open.us ? 'var(--c-live)' : 'var(--c-700)';
+      endDot.classList.toggle('live-pt', open.us);
+    }
+  }
+  tickClock();
+  setInterval(tickClock, 1000);
+
+  onFirstView(document.querySelector('.sig-fill'),
+    () => document.querySelector('.sig-fill').classList.add('inview'));
+  onFirstView(document.querySelector('#screen-decisions .chartwrap'),
+    () => { sweep('acctClipRect', 800); acctSwept = true; });
+  onFirstView(document.querySelector('#screen-detail .chartwrap'),
+    () => sweep('posClipRect', 600));
+
+  // Only NVDA has a fully built-out Detail screen in this mockup; every other
+  // ticker tap routes to the relevant list screen as the honest fallback.
+  let detailOrigin = 'closed';
+  function positionTap(ticker, fallbackScreen){
+    // only NVDA has a built-out detail in this mockup; everything else lands on its list
+    if (ticker === 'NVDA') { detailOrigin = fallbackScreen; goTo('detail'); }
+    else { goTo(fallbackScreen); }
+  }
+</script>
+
+</body>
+</html>
