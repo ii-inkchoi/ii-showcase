@@ -27,7 +27,7 @@
   .proto-bar{position:sticky;top:0;z-index:50;display:flex;justify-content:center;gap:6px;
     padding:14px 10px;background:var(--c-elev);border-bottom:1px solid var(--c-1000);}
   .proto-btn{font-family:'Inter';font-size:11px;letter-spacing:-0.02em;color:var(--c-700);
-    background:var(--c-1000);border:1px solid var(--c-900);padding:7px 14px;border-radius:20px;cursor:pointer;
+    background:var(--c-1000);border:1px solid var(--c-graphite);padding:7px 14px;border-radius:20px;cursor:pointer;
     transition:all 150ms ease;}
   .proto-btn.active{color:var(--c-black);background:var(--c-200);border-color:var(--c-200);}
   .proto-stage{display:flex;justify-content:center;padding:36px 16px 80px;}
@@ -38,7 +38,7 @@
 
   /* ── shared product primitives ─────────────────────────── */
   header.app{position:relative;min-height:48px;display:flex;align-items:center;gap:8px;
-    padding:0 20px;border-bottom:0.5px solid var(--c-900);}
+    padding:0 20px;border-bottom:0.5px solid var(--c-graphite);}
   header.app .back{font-size:17px;color:var(--c-400);cursor:pointer;min-width:44px;min-height:44px;display:flex;align-items:center;}
   /* Market state is app chrome, not a page title: it gets its own strip under
      the nav hairline instead of competing for the nav's centre. */
@@ -61,11 +61,11 @@
   .info-overlay.open{opacity:1;pointer-events:auto;}
   .info-sheet{position:fixed;left:50%;bottom:0;transform:translate(-50%,100%);
     transition:transform 300ms cubic-bezier(.22,.9,.3,1);width:390px;max-width:calc(100% - 20px);
-    max-height:82vh;background:var(--c-elev);border:1px solid var(--c-900);border-bottom:none;
+    max-height:82vh;background:var(--c-elev);border:1px solid var(--c-graphite);border-bottom:none;
     border-radius:20px 20px 0 0;z-index:201;display:flex;flex-direction:column;}
   .info-sheet.open{transform:translate(-50%,0);}
   .info-sheet-head{display:flex;align-items:center;justify-content:space-between;
-    padding:16px 20px 12px;border-bottom:0.5px solid var(--c-900);flex-shrink:0;}
+    padding:16px 20px 12px;border-bottom:0.5px solid var(--c-graphite);flex-shrink:0;}
   .info-sheet-title{font-size:17px;color:var(--c-200);letter-spacing:-0.02em;line-height:1.2;}
   .info-sheet-close{font-size:17px;color:var(--c-700);cursor:pointer;padding:8px;line-height:1;}
   .info-sheet-body{overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:24px;
@@ -74,14 +74,14 @@
   .info-block-title{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;margin-bottom:8px;}
   .info-p{font-size:13px;color:var(--c-400);line-height:1.4;letter-spacing:-0.02em;}
   .info-p + .info-p{margin-top:8px;}
-  .info-sec-item{display:flex;flex-direction:column;gap:2px;padding:12px 0;border-bottom:0.5px solid var(--c-900);}
+  .info-sec-item{display:flex;flex-direction:column;gap:2px;padding:12px 0;border-bottom:0.5px solid var(--c-graphite);}
   .info-sec-item:last-child{border-bottom:none;}
   .info-sec-item .k{font-size:13px;color:var(--c-white);letter-spacing:-0.02em;}
   .info-sec-item .d{font-size:13px;color:var(--c-700);line-height:1.4;letter-spacing:-0.02em;}
 
   /* ── decisions module (reproduces source dashboard's Decisions card) ── */
-  .dec-row{display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding-bottom:12px;border-bottom:0.5px solid var(--c-900);}
-  .dec-block{display:flex;flex-direction:column;gap:12px;padding-bottom:12px;border-bottom:0.5px solid var(--c-900);}
+  .dec-row{display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding-bottom:12px;border-bottom:0.5px solid var(--c-graphite);}
+  .dec-block{display:flex;flex-direction:column;gap:12px;padding-bottom:12px;border-bottom:0.5px solid var(--c-graphite);}
   .dec-sub{display:flex;align-items:baseline;justify-content:space-between;gap:24px;}
   .dec-tap{font-size:13px;letter-spacing:-0.02em;cursor:pointer;padding:12px 2px;margin:-12px -2px;
     text-decoration:underline dotted var(--c-800);text-decoration-thickness:0.5px;text-underline-offset:3px;}
@@ -99,7 +99,7 @@
   .dec-prow:hover .dec-ticker{color:var(--c-400);}
   .dec-ticker{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;transition:color 120ms;}
   .dec-note[hidden]{display:none;}
-  .dec-def{padding-bottom:12px;border-bottom:0.5px solid var(--c-900);}
+  .dec-def{padding-bottom:12px;border-bottom:0.5px solid var(--c-graphite);}
   .dec-def[hidden]{display:none;}
   .dec-def p{font-size:13px;color:var(--c-400);letter-spacing:-0.02em;line-height:1.4;margin:0;}
   .dec-def p.formula{color:var(--c-800);margin-top:8px;}
@@ -108,9 +108,9 @@
   /* external cash flows (content: external cashflow.html · design: Performance Dashboard v8 tiers) */
   .cf-table{display:grid;grid-template-columns:88px 82px 1fr 64px;column-gap:12px;padding-right:15px;}
   .cf-head,.cf-row{display:contents;}
-  .cf-head > span{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;padding-bottom:8px;border-bottom:0.5px solid var(--c-900);text-align:right;}
+  .cf-head > span{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;padding-bottom:8px;border-bottom:0.5px solid var(--c-graphite);text-align:right;}
   .cf-head > span:first-child,.cf-head > span:nth-child(2){text-align:left;}
-  .cf-row > span{padding:12px 0;border-bottom:0.5px solid var(--c-900);font-size:13px;letter-spacing:-0.02em;font-feature-settings:'lnum' 1,'tnum' 1;}
+  .cf-row > span{padding:12px 0;border-bottom:0.5px solid var(--c-graphite);font-size:13px;letter-spacing:-0.02em;font-feature-settings:'lnum' 1,'tnum' 1;}
   .cf-date{color:var(--c-700);text-align:left;}
   .cf-type{color:var(--c-400);text-align:left;}
   .cf-amt{color:var(--c-white);text-align:right;}
@@ -134,7 +134,6 @@
   .trend.down{color:var(--c-urgent-muted);}
   .trend.neutral{color:var(--c-700);}
   .trend.plain{color:var(--c-400);}
-  .trend.lg{font-size:14px;width:14px;vertical-align:5px;margin-left:8px;}
   /* fixed number boxes so every arrow lands on one vertical axis */
   .anum{display:inline-block;min-width:74px;text-align:right;}
   .anum-s{display:inline-block;min-width:62px;text-align:right;}
@@ -157,7 +156,7 @@
 
   /* period / benchmark group: sticks to the top and governs every section below */
   .pd-period-group{position:sticky;top:var(--proto-h,0px);z-index:8;background:var(--c-black);
-    border-bottom:0.5px solid var(--c-900);margin-top:48px;
+    border-bottom:0.5px solid var(--c-graphite);margin-top:48px;
     display:flex;align-items:baseline;justify-content:space-between;padding:14px 20px;}
   .pd-period-row{display:flex;gap:20px;align-items:baseline;}
   .pd-period-opt{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;cursor:pointer;
@@ -171,7 +170,7 @@
     padding:12px 2px;margin:-12px -2px;}
   .pd-bm-current .chev-svg{width:9px;height:9px;color:var(--c-700);}
   .bm-pick{display:flex;align-items:center;justify-content:space-between;
-    padding:16px 0;border-bottom:0.5px solid var(--c-900);cursor:pointer;
+    padding:16px 0;border-bottom:0.5px solid var(--c-graphite);cursor:pointer;
     font-size:15px;color:var(--c-400);letter-spacing:-0.02em;}
   .bm-pick:last-child{border-bottom:none;}
   .bm-pick.on{color:var(--c-white);}
@@ -181,21 +180,26 @@
   .yt-table{display:grid;grid-template-columns:1fr 56px 56px 76px;column-gap:12px;}
   .yt-head,.yt-row,#ytRows{display:contents;}
   .yt-head > span{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;text-align:right;
-    padding-bottom:12px;border-bottom:0.5px solid var(--c-900);}
+    padding-bottom:12px;border-bottom:0.5px solid var(--c-graphite);}
   .yt-head > span:first-child{text-align:left;}
-  .yt-row > span{padding:12px 0;border-bottom:0.5px solid var(--c-900);font-size:15px;letter-spacing:-0.02em;
+  .yt-row > span{padding:12px 0;border-bottom:0.5px solid var(--c-graphite);font-size:15px;letter-spacing:-0.02em;
     font-feature-settings:'lnum' 1,'tnum' 1;}
   .yt-year{text-align:left;color:var(--c-700);}
   .yt-val{text-align:right;color:var(--c-400);white-space:nowrap;}
   .yt-row.future .yt-year,.yt-row.future .yt-val{color:var(--c-800);}
-  .yt-row.total > span{border-bottom:none;padding-top:16px;border-top:0.5px solid var(--c-900);}
+  .yt-row.total > span{border-bottom:none;padding-top:16px;border-top:0.5px solid var(--c-graphite);}
   .yt-row.total .yt-year{color:var(--c-200);}
   .yt-tag{font-size:11px;letter-spacing:-0.02em;color:var(--c-800);margin-left:4px;}
-  .filterbar{position:sticky;top:var(--proto-h,0px);z-index:5;background:var(--c-black);border-bottom:0.5px solid var(--c-900);
-    display:flex;align-items:center;justify-content:space-between;padding:16px 20px;margin-top:48px;}
-  .chips{display:flex;gap:16px;}
+  .filterbar{position:sticky;top:var(--proto-h,0px);z-index:5;background:var(--c-black);border-bottom:0.5px solid var(--c-graphite);
+    display:flex;align-items:center;padding:16px 0 16px 20px;margin-top:48px;position:relative;}
+  /* one line, scrolls sideways; the right fade says there is more */
+  .chips{display:flex;gap:16px;overflow-x:auto;white-space:nowrap;flex:1;
+    padding-right:36px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+  .chips::-webkit-scrollbar{display:none;}
+  .filterbar::after{content:'';position:absolute;top:0;right:0;bottom:0;width:36px;
+    pointer-events:none;background:linear-gradient(to right, transparent, var(--c-black) 80%);}
   .chip{font-size:13px;letter-spacing:-0.02em;cursor:pointer;color:var(--c-700);
-    padding:12px 4px;margin:-12px -4px;transition:color 200ms ease;}
+    padding:12px 4px;margin:-12px -4px;transition:color 200ms ease;flex-shrink:0;}
   .chip{position:relative;}
   /* active indicator sits on the filter bar's own hairline, turning the strip into a tab control */
   .chip.on{color:var(--c-white);}
@@ -205,7 +209,7 @@
 
   .list{padding:16px 20px 24px;}
   .row{display:grid;grid-template-columns:1fr auto auto;column-gap:12px;row-gap:4px;align-items:baseline;
-    padding:16px 0;border-bottom:0.5px solid var(--c-900);cursor:pointer;}
+    padding:16px 0;border-bottom:0.5px solid var(--c-graphite);cursor:pointer;}
   .row:active{background:var(--c-elev);}
   .row-left{display:contents;}
   .ticker{grid-column:1;grid-row:1;font-size:15px;color:var(--c-400);letter-spacing:-0.02em;font-feature-settings:'lnum' 1;}
@@ -262,14 +266,14 @@
 
   /* title-less fact block: same bracket as the dashboard's Annualized band */
   .kv-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:16px;row-gap:16px;
-    margin:24px 20px 0;padding:24px 0 0;border-top:0.5px solid var(--c-900);}
+    margin:24px 20px 0;padding:24px 0 0;border-top:0.5px solid var(--c-graphite);}
   .kv .k{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
   .kv .v{font-size:15px;color:var(--c-white);letter-spacing:-0.02em;margin-top:4px;font-feature-settings:'lnum' 1,'tnum' 1;}
 
   .sec{padding:48px 20px 0;display:flex;flex-direction:column;gap:12px;}
   .sec-title{font-size:17px;color:var(--c-200);letter-spacing:-0.02em;line-height:1.2;margin-bottom:4px;display:block;}
   .cmp-row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
-    padding-bottom:12px;border-bottom:0.5px solid var(--c-900);}
+    padding-bottom:12px;border-bottom:0.5px solid var(--c-graphite);}
   
   .cmp-label{font-size:15px;color:var(--c-700);letter-spacing:-0.02em;white-space:nowrap;}
   /* descriptive rows: long label, quiet pair */
@@ -286,7 +290,7 @@
   .scrub-read .on{color:var(--c-white);}
   /* legend chip: V8's outlined container, square corners (radius-0) */
   .legend{position:absolute;top:10px;left:64px;z-index:1;display:inline-flex;gap:16px;align-items:center;margin:0;
-    background:var(--c-black);border:0.5px solid var(--c-900);padding:4px 8px;}
+    background:var(--c-black);border:0.5px solid var(--c-graphite);padding:4px 8px;}
   .legend span{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
   .legend .ln{display:inline-block;width:20px;height:0;border-top:1.5px solid var(--c-400);}
   .legend .ln.dash{border-top:1.5px dashed var(--c-700);}
@@ -339,7 +343,7 @@
       <span style="font-size:11px;letter-spacing:-0.02em;color:var(--c-700);">Currency in CAD</span>
     </div>
 
-    <section style="margin:24px 20px 0;padding:24px 0 0;border-top:0.5px solid var(--c-900);display:flex;flex-direction:column;gap:24px;">
+    <section style="margin:24px 20px 0;padding:24px 0 0;border-top:0.5px solid var(--c-graphite);display:flex;flex-direction:column;gap:24px;">
       <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;"><span data-period-label>Since Inception</span> · Preliminary</span>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:8px;row-gap:8px;">
         <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;text-align:left;">Portfolio</span>
@@ -351,7 +355,7 @@
       </div>
     </section>
 
-    <div style="margin:32px 20px 0;background:color-mix(in srgb, var(--c-1000) 60%, transparent);border:0.5px solid var(--c-900);padding:16px;display:flex;flex-direction:column;gap:12px;">
+    <div style="margin:32px 20px 0;background:var(--c-1000);border:0.5px solid var(--c-graphite);padding:16px;display:flex;flex-direction:column;gap:12px;">
       <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:16px;">
         <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;">Tracked since Mar 14, 2023</span>
         <span style="font-size:17px;color:var(--c-white);letter-spacing:-0.02em;line-height:1.2;font-feature-settings:'lnum' 1,'tnum' 1;">3 years 4 months</span>
@@ -1007,7 +1011,7 @@
     <div class="hero-pad">
       <div class="hero-return">
         <span class="label">Total Gain</span>
-        <span class="big" style="color:var(--c-white);">+$3,485.00<span class="trend up lg">▲</span></span>
+        <span class="big" style="color:var(--c-white);">+$3,485.00<span class="trend up">▲</span></span>
         <span class="sub" style="display:block;margin:8px 0 0;">+41.0% return · value $11,985.00</span>
       </div>
     </div>
@@ -1045,9 +1049,12 @@
     <div class="sec">
       <span class="sec-title">Position vs Benchmark</span>
       <div class="chartwrap" style="margin-top:4px;">
-        <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;display:block;margin-bottom:8px;">NVDA vs. S&amp;P 500, % return since entry</span>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:8px;">
+          <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;">NVDA vs. S&amp;P 500, % return since entry</span>
+          <span id="posScrubDate" style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;white-space:nowrap;">Jul 2, 2026</span>
+        </div>
         <div class="scrub-read" style="margin:0 0 12px;">
-          <span><span id="posScrubDate">Jul 2, 2026</span> · NVDA <b id="posScrubA">+41.0%</b> · S&amp;P <b id="posScrubB" style="color:var(--c-700);">+18.1%</b> · Alpha <span class="trend up lead" id="posScrubArrow">▲</span><b id="posScrubAlpha">+22.9&nbsp;pp</b></span>
+          <span style="white-space:nowrap;">NVDA <b id="posScrubA">+41.0%</b> · S&amp;P <b id="posScrubB" style="color:var(--c-700);">+18.1%</b> · Alpha <b id="posScrubAlpha">+22.9&nbsp;pp</b><span class="trend up" id="posScrubArrow">▲</span></span>
         </div>
         <div style="position:relative;">
         <div class="legend">
@@ -1588,7 +1595,7 @@
       el('posScrubB').textContent = sign(b) + '%';
       const d = Math.round((a - b) * 10) / 10;
       el('posScrubAlpha').textContent = sign(d) + '\u00a0pp';
-      el('posScrubArrow').className = 'trend lead ' + (d < 0 ? 'down' : 'up');
+      el('posScrubArrow').className = 'trend ' + (d < 0 ? 'down' : 'up');
       el('posScrubArrow').textContent = d < 0 ? '\u25bc' : '\u25b2';
     };
     attachScrub(svg,
