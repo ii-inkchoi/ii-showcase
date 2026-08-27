@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tracked Since, 5-Year Threshold Comparison</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --c-black:#000000; --c-1000:#1C1C1C; --c-900:#232627;
+    --c-graphite:#3A3A37;
+    --c-800:#565B5E; --c-700:#929292; --c-400:#C7C7C7;
+    --c-200:#E3E2E2; --c-white:#FFFFFF;
+    --c-urgent:#FF3533; --c-live:#30D158;
+    --c-live-muted:#288752; --c-urgent-muted:#BE3C36;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--c-900);font-family:'Inter',sans-serif;padding:48px 20px 80px;}
+  .grid{display:flex;flex-wrap:wrap;gap:40px;justify-content:center;align-items:flex-start;max-width:1900px;margin:0 auto;}
+  .variant{width:400px;}
+  .compare-label{font-size:13px;color:var(--c-400);letter-spacing:0.02em;margin:0 0 10px;}
+  .note{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;margin:10px 0 0;max-width:390px;}
+
+  /* phone frame */
+  .frame{width:400px;background:var(--c-black);border:0.5px solid var(--c-graphite);
+    padding-bottom:40px;}
+  header.app{display:flex;align-items:center;justify-content:space-between;height:48px;
+    padding:0 20px;border-bottom:0.5px solid var(--c-graphite);}
+  .back{font-size:17px;color:var(--c-400);}
+  .info-btn{width:12px;height:12px;border-radius:50%;border:0.5px solid var(--c-700);
+    display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--c-700);}
+  .mkt-strip{display:flex;align-items:center;gap:12px;padding:11px 20px;}
+  .mkt-clock{font-size:13px;font-weight:500;color:var(--c-200);letter-spacing:-0.02em;
+    font-feature-settings:'tnum' 1,'lnum' 1;}
+  .mkt-div{width:0.5px;height:12px;background:var(--c-800);}
+  .mkt-flag{display:inline-flex;align-items:center;gap:5px;font-size:13px;color:var(--c-700);letter-spacing:-0.02em;}
+  .dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;background:var(--c-urgent);}
+  .subhead{display:flex;flex-direction:column;align-items:flex-end;gap:2px;padding:32px 20px 0;}
+  .subhead .kicker{font-size:17px;letter-spacing:-0.02em;color:var(--c-700);line-height:1.2;}
+  .subhead .name{font-size:17px;letter-spacing:-0.02em;color:var(--c-white);line-height:1.2;}
+  .hero{margin:24px 20px 0;padding:24px 0 0;border-top:0.5px solid var(--c-graphite);
+    display:flex;flex-direction:column;gap:24px;}
+  .hero .eyebrow{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
+  .hero-grid{display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:8px;row-gap:8px;}
+  .hero-grid .h{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
+  .hero-grid .v{font-size:17px;color:var(--c-white);letter-spacing:-0.02em;line-height:1.2;
+    font-feature-settings:'lnum' 1,'tnum' 1;}
+  .ta-l{text-align:left;} .ta-c{text-align:center;} .ta-r{text-align:right;}
+  .trend{font-size:11px;margin-left:6px;}
+  .trend.down{color:var(--c-urgent-muted);}
+  .trend.up{color:var(--c-live-muted);}
+
+  /* tracked-since card */
+  .card{margin:32px 20px 0;background:var(--c-1000);border:0.5px solid var(--c-graphite);
+    padding:16px;display:flex;flex-direction:column;gap:12px;}
+  .card-head{display:flex;flex-direction:column;gap:4px;margin-bottom:4px;}
+  .card-since{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
+  .card-elapsed{font-size:17px;color:var(--c-white);letter-spacing:-0.02em;line-height:1.2;
+    font-feature-settings:'lnum' 1,'tnum' 1;}
+  .card-body{font-size:13px;color:var(--c-400);letter-spacing:-0.02em;line-height:1.4;margin:0;}
+  .call-bar{margin-top:2px;width:100%;height:4px;background:var(--c-900);position:relative;}
+  .call-bar .fill{position:absolute;top:0;left:0;bottom:0;background:var(--c-200);}
+  .call-bar-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
+  .pd-why{text-decoration:underline dotted var(--c-800);text-decoration-thickness:0.5px;text-underline-offset:3px;}
+  .card-grid{display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:8px;row-gap:6px;}
+  .card-grid .h{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
+  .card-grid .v{font-size:17px;color:var(--c-white);letter-spacing:-0.02em;line-height:1.2;
+    font-feature-settings:'lnum' 1,'tnum' 1;}
+</style>
+</head>
+<body>
+<div class="grid">
+
+  <!-- ── 1 · UNDER 5 YEARS ────────────────────────────── -->
+  <div class="variant">
+    <p class="compare-label">1. Under 5 years (current state)</p>
+    <div class="frame">
+      <header class="app"><span class="back">&#8249;</span><span class="info-btn">i</span></header>
+      <div class="mkt-strip">
+        <span class="mkt-clock">17:05:55 ET</span><span class="mkt-div"></span>
+        <span class="mkt-flag"><span class="dot"></span>US</span>
+        <span class="mkt-flag"><span class="dot"></span>CA</span>
+      </div>
+      <div class="subhead"><span class="kicker">Performance</span><span class="name">Active &middot; Self-Directed</span></div>
+      <div class="hero">
+        <span class="eyebrow">Since Inception &middot; Preliminary</span>
+        <div class="hero-grid">
+          <span class="h ta-l">Account</span><span class="h ta-c">Alpha</span><span class="h ta-r">S&amp;P</span>
+          <span class="v ta-l">+39.4%</span>
+          <span class="v ta-c">&minus;5.8&nbsp;pp<span class="trend down">&#9660;</span></span>
+          <span class="v ta-r">+45.2%</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <span class="card-since">Tracked since Mar 14, 2023</span>
+          <span class="card-elapsed">3 years 4 months</span>
+        </div>
+        <p class="card-body">1 year 7 months to go. That's when a track record against the S&amp;P starts to carry statistical weight. Before that, strong or weak results are mostly noise, not skill.</p>
+        <div class="call-bar"><div class="fill" style="width:68%;"></div></div>
+        <div class="call-bar-labels">
+          <span>Start</span>
+          <span class="pd-why">5-year benchmark &middot; Mar 2028</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 2 · AT 5 YEARS ───────────────────────────────── -->
+  <div class="variant">
+    <p class="compare-label">2. At 5 years (threshold just reached)</p>
+    <div class="frame">
+      <header class="app"><span class="back">&#8249;</span><span class="info-btn">i</span></header>
+      <div class="mkt-strip">
+        <span class="mkt-clock">17:05:55 ET</span><span class="mkt-div"></span>
+        <span class="mkt-flag"><span class="dot"></span>US</span>
+        <span class="mkt-flag"><span class="dot"></span>CA</span>
+      </div>
+      <div class="subhead"><span class="kicker">Performance</span><span class="name">Active &middot; Self-Directed</span></div>
+      <div class="hero">
+        <span class="eyebrow">Since Inception &middot; Preliminary</span>
+        <div class="hero-grid">
+          <span class="h ta-l">Account</span><span class="h ta-c">Alpha</span><span class="h ta-r">S&amp;P</span>
+          <span class="v ta-l">+58.3%</span>
+          <span class="v ta-c">+3.2&nbsp;pp<span class="trend up">&#9650;</span></span>
+          <span class="v ta-r">+55.1%</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <span class="card-since">Tracked since Mar 14, 2023</span>
+          <span class="card-elapsed">5 years 0 months</span>
+        </div>
+        <p class="card-body">This track record now carries statistical weight. Five years is the accepted minimum window for comparing skill against a benchmark, not just noise.</p>
+        <div class="call-bar"><div class="fill" style="width:100%;"></div></div>
+        <div class="call-bar-labels">
+          <span>Start</span>
+          <span class="pd-why">5-year benchmark reached &middot; Mar 2028</span>
+        </div>
+      </div>
+    </div>
+    <p class="note">This state exists for roughly one month, then it is identical to state 3. In product logic the crossing moment is better handled as a one-time notification than as a card state.</p>
+  </div>
+
+  <!-- ── 3 · BEYOND 5 YEARS, STATIC ───────────────────── -->
+  <div class="variant">
+    <p class="compare-label">3. Beyond 5 years (established, static)</p>
+    <div class="frame">
+      <header class="app"><span class="back">&#8249;</span><span class="info-btn">i</span></header>
+      <div class="mkt-strip">
+        <span class="mkt-clock">17:05:55 ET</span><span class="mkt-div"></span>
+        <span class="mkt-flag"><span class="dot"></span>US</span>
+        <span class="mkt-flag"><span class="dot"></span>CA</span>
+      </div>
+      <div class="subhead"><span class="kicker">Performance</span><span class="name">Active &middot; Self-Directed</span></div>
+      <div class="hero">
+        <span class="eyebrow">Since Inception &middot; Preliminary</span>
+        <div class="hero-grid">
+          <span class="h ta-l">Account</span><span class="h ta-c">Alpha</span><span class="h ta-r">S&amp;P</span>
+          <span class="v ta-l">+74.6%</span>
+          <span class="v ta-c">+8.4&nbsp;pp<span class="trend up">&#9650;</span></span>
+          <span class="v ta-r">+66.2%</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <span class="card-since">Tracked since Mar 14, 2023</span>
+          <span class="card-elapsed">6 years 8 months</span>
+        </div>
+        <p class="card-body">This track record has carried statistical weight since Mar 2028. Results from this point reflect skill more than short-term variance.</p>
+        <div class="call-bar"><div class="fill" style="width:100%;"></div></div>
+        <div class="call-bar-labels">
+          <span>Start</span>
+          <span>Established &middot; Mar 2028</span>
+        </div>
+      </div>
+    </div>
+    <p class="note">The bar stays full forever, so from this point the card occupies space without saying anything new.</p>
+  </div>
+
+  <!-- ── 4 · BEYOND 5 YEARS, ROLLING RECORD ───────────── -->
+  <div class="variant">
+    <p class="compare-label">4. Beyond 5 years, card becomes the rolling 5-year record (recommended)</p>
+    <div class="frame">
+      <header class="app"><span class="back">&#8249;</span><span class="info-btn">i</span></header>
+      <div class="mkt-strip">
+        <span class="mkt-clock">17:05:55 ET</span><span class="mkt-div"></span>
+        <span class="mkt-flag"><span class="dot"></span>US</span>
+        <span class="mkt-flag"><span class="dot"></span>CA</span>
+      </div>
+      <div class="subhead"><span class="kicker">Performance</span><span class="name">Active &middot; Self-Directed</span></div>
+      <div class="hero">
+        <span class="eyebrow">Since Inception &middot; Preliminary</span>
+        <div class="hero-grid">
+          <span class="h ta-l">Account</span><span class="h ta-c">Alpha</span><span class="h ta-r">S&amp;P</span>
+          <span class="v ta-l">+74.6%</span>
+          <span class="v ta-c">+8.4&nbsp;pp<span class="trend up">&#9650;</span></span>
+          <span class="v ta-r">+66.2%</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <span class="card-since">Tracked since Mar 14, 2023</span>
+          <span class="card-elapsed">6 years 8 months</span>
+        </div>
+        <div class="card-grid">
+          <span class="h ta-l">Trailing 5Y</span><span class="h ta-c">Alpha</span><span class="h ta-r">S&amp;P</span>
+          <span class="v ta-l">+61.2%</span>
+          <span class="v ta-c">+12.3&nbsp;pp<span class="trend up">&#9650;</span></span>
+          <span class="v ta-r">+48.9%</span>
+        </div>
+        <p class="card-body">A rolling five-year window is the standard this card was counting down to. It moves forward every month, so this comparison never goes stale.</p>
+      </div>
+    </div>
+    <p class="note">The card's job changes at the threshold: from managing expectations to stating the five-year record itself. No frozen bar, and the crossing moment is a one-time notification rather than a card state.</p>
+  </div>
+
+</div>
+</body>
+</html>
