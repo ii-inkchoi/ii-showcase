@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Positions · Open / Closed / Detail</title>
+<title>Positions · Open / Closed / Detail (MVP · S&amp;P only)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
@@ -173,17 +173,6 @@
   .pd-period-opt.active::after{content:'';position:absolute;left:2px;right:2px;
     bottom:10px;height:1.5px;background:var(--c-white);}
   /* the benchmark reads as the current setting, not as a third of a toggle row */
-  .pd-bm-current{display:inline-flex;align-items:center;gap:6px;font-size:13px;
-    color:var(--c-white);letter-spacing:-0.02em;cursor:pointer;
-    padding:12px 2px;margin:-12px -2px;}
-  .pd-bm-current .chev-svg{width:9px;height:9px;color:var(--c-700);}
-  .bm-pick{display:flex;align-items:center;justify-content:space-between;
-    padding:16px 0;border-bottom:0.5px solid var(--c-graphite);cursor:pointer;
-    font-size:15px;color:var(--c-400);letter-spacing:-0.02em;}
-  .bm-pick:last-child{border-bottom:none;}
-  .bm-pick.on{color:var(--c-white);}
-  .bm-pick .tick{font-size:13px;color:var(--c-white);visibility:hidden;}
-  .bm-pick.on .tick{visibility:visible;}
   /* yearly breakdown */
   .yt-table{display:grid;grid-template-columns:1fr 56px 56px 76px;column-gap:12px;}
   .yt-head,.yt-row,#ytRows{display:contents;}
@@ -399,8 +388,6 @@
         <span class="pd-period-opt" data-period="3y">3Y</span>
         <span class="pd-period-opt active" data-period="all">Max</span>
       </div>
-      <span class="pd-bm-current" onclick="openInfo('bm')" role="button"
-        aria-label="Change benchmark"><span data-bm-long>S&amp;P 500</span><svg class="chev-svg" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.3"/></svg></span>
     </div>
 
     <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
@@ -503,45 +490,6 @@
           <div class="cf-row"><span class="cf-date">Mar 14, 2023</span><span class="cf-type">Deposit</span><span class="cf-amt">15,000.00</span><span class="cf-px">82.10</span></div>
         </div>
       </div>
-    </section>
-
-    <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
-      <span class="sec-title">Timing &amp; Risk</span>
-      <div class="dec-row">
-        <span class="dec-tap" style="font-size:15px;color:var(--c-700);" onclick="toggleDef('twr',this)">Time-Weighted Return (TWR)</span>
-        <span class="stat-delta" style="text-align:right;"><span class="statnum">+39.4%</span><span class="arw-slot"></span></span>
-      </div>
-      <div class="dec-def" id="def-twr" hidden><p>Time-Weighted Return isolates stock-picking skill from deposit and withdrawal timing. Industry standard for comparing managers.</p><p class="formula">Geometric link of period returns. Deposits and withdrawals do not affect TWR.</p></div>
-      <div class="dec-row">
-        <span class="dec-tap" style="font-size:15px;color:var(--c-700);" onclick="toggleDef('mwr',this)">Money-Weighted Return (MWR)</span>
-        <span class="stat-delta" style="text-align:right;"><span class="statnum">+35.1%</span><span class="arw-slot"></span></span>
-      </div>
-      <div class="dec-def" id="def-mwr" hidden><p>Money-Weighted Return reflects timing of capital deployment. A negative gap to TWR indicates deposits were poorly timed.</p><p class="formula">XIRR over all cash flows.</p></div>
-      <div class="dec-row">
-        <span class="dec-tap" style="font-size:15px;color:var(--c-700);" onclick="toggleDef('gap',this)">TWR − MWR Gap (timing skill)</span>
-        <span class="stat-delta loss sub" style="text-align:right;"><span class="statnum">−4.3&nbsp;pp</span><span class="trend down">▼</span></span>
-      </div>
-      <div class="dec-def" id="def-gap" hidden><p>The gap between the two is your timing. Negative means cash arrived at the wrong moments relative to the picks; positive means it arrived at the right ones.</p><p class="formula">TWR &minus; MWR, in percentage points.</p></div>
-      <div class="dec-row">
-        <span class="dec-tap" style="font-size:15px;color:var(--c-700);" onclick="toggleDef('dd',this)">Max Drawdown</span>
-        <span class="stat-delta loss" style="text-align:right;"><span class="statnum">−18.4%</span><span class="trend down">▼</span></span>
-      </div>
-      <div class="dec-def" id="def-dd" hidden><p>Worst peak-to-trough decline over the period. Daily marks.</p><p class="formula">min(equity_t / peak_t &minus; 1) over period.</p></div>
-      <div class="dec-row">
-        <span style="font-size:15px;color:var(--c-800);letter-spacing:-0.02em;">Max Drawdown, <span data-bm-short>S&amp;P</span> same window</span>
-        <span class="stat-delta neutral sub" style="text-align:right;"><span class="statnum">−12.1%</span><span class="arw-slot"></span></span>
-      </div>
-      <div class="dec-row">
-        <span class="dec-tap" style="font-size:15px;color:var(--c-700);" onclick="toggleDef('vol',this)">Volatility (12M)</span>
-        <span class="stat-delta" style="text-align:right;"><span class="statnum">17.2%</span><span class="trend plain">▲</span></span>
-      </div>
-      <div class="dec-def" id="def-vol" hidden><p>Annualized standard deviation of daily returns. Higher figures indicate wider daily swings.</p><p class="formula">stdev(daily returns) &times; &radic;252.</p></div>
-      <div class="dec-row">
-        <span style="font-size:15px;color:var(--c-800);letter-spacing:-0.02em;">Volatility (12M), <span data-bm-short>S&amp;P</span></span>
-        <span class="stat-delta neutral sub" style="text-align:right;"><span class="statnum">15.4%</span><span class="arw-slot"></span></span>
-      </div>
-      <span class="dec-tap" style="font-size:13px;color:var(--c-700);" onclick="toggleDef('notetr',this)">Notes</span>
-      <div class="dec-def" id="def-notetr" hidden><p>The arrow carries the verdict: green means favorable against the S&amp;P line below it, red unfavorable. TWR and MWR are plain facts, so they carry no arrow. Volatility isn't inherently good or bad, so its arrow only shows direction and stays grey.</p></div>
     </section>
 
     <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
@@ -1166,22 +1114,6 @@
 </div>
 </div>
 
-<!-- ══════════════ BOTTOM SHEET · BENCHMARK PICKER ══════════════ -->
-<div class="info-overlay" id="info-overlay-bm" onclick="closeInfo('bm')"></div>
-<div class="info-sheet" aria-hidden="true" id="info-sheet-bm">
-  <div class="info-sheet-head">
-    <span class="info-sheet-title">Benchmark</span>
-    <span class="info-sheet-close" onclick="closeInfo('bm')">&times;</span>
-  </div>
-  <div class="info-sheet-body">
-    <div>
-      <div class="bm-pick" data-pick="sp" onclick="pickBm('sp')"><span>S&amp;P 500</span><span class="tick">&#10003;</span></div>
-      <div class="bm-pick" data-pick="nasdaq" onclick="pickBm('nasdaq')"><span>Nasdaq</span><span class="tick">&#10003;</span></div>
-      <div class="bm-pick" data-pick="tsx" onclick="pickBm('tsx')"><span>TSX</span><span class="tick">&#10003;</span></div>
-    </div>
-  </div>
-</div>
-
 <!-- ══════════════ INFO SHEET · DECISIONS ══════════════ -->
 <div class="info-overlay" id="info-overlay-decisions" onclick="closeInfo('decisions')"></div>
 <div class="info-sheet" aria-hidden="true" id="info-sheet-decisions">
@@ -1192,19 +1124,15 @@
   <div class="info-sheet-body">
     <div>
       <span class="info-block-title">What This Page Shows</span>
-      <p class="info-p">Your full account performance for the "All" period since inception: return vs. S&amp;P, timing skill (TWR vs MWR), risk (drawdown, volatility), every open and closed decision, and which positions drove the result.</p>
+      <p class="info-p">Your full account performance for the "All" period since inception: return vs. S&amp;P, every open and closed decision, and which positions drove the result.</p>
     </div>
     <div>
       <span class="info-block-title">Why 5 Years</span>
       <p class="info-p">A short track record can't separate skill from luck. A good year or two can easily be variance. Five years is roughly the point where a return series starts to say something statistically meaningful about an active manager versus an index. The progress bar at the top tracks how close this account is to that mark, not to any performance goal.</p>
     </div>
     <div>
-      <span class="info-block-title">TWR vs. MWR</span>
-      <p class="info-p">Time-weighted return measures stock-picking skill. Money-weighted return reflects the timing of your deposits and withdrawals. The gap between them is timing skill, separate from picking skill.</p>
-    </div>
-    <div>
       <span class="info-block-title">The Decisions Module</span>
-      <p class="info-p">Every position is split into Open (still running) and Closed (settled), each with a Beating/Trailing or Beat/Trailed breakdown. Tap either label to expand a preview of the top names; tap any name to open its detail.</p>
+      <p class="info-p">Every position is split into Open (still running) and Closed (settled), each with a Beating/Trailing or Beat/Trailed count. Tap either block to open that list in full.</p>
     </div>
     <div>
       <span class="info-block-title">Profitable vs. Beat the Benchmark</span>
@@ -1322,11 +1250,7 @@
   const ACCOUNT_YEARS = [12.0, 4.4, 15.0, 3.7];          // 2023 (from Mar) · 2024 · 2025 · 2026 YTD
   const BM = {
     sp:     {short:'S&P',    long:'S&P 500', years:[14.0, 12.0, 10.0, 3.4],
-             ret:{ytd:3.4, '1y':9.8,  '3y':28.4, all:45.2}},
-    nasdaq: {short:'Nasdaq', long:'Nasdaq',  years:[20.0, 15.0, 12.0, 2.6],
-             ret:{ytd:2.6, '1y':10.4, '3y':33.2, all:58.6}},
-    tsx:    {short:'TSX',    long:'TSX',     years:[8.0, 6.0, 7.0, 3.2],
-             ret:{ytd:3.2, '1y':7.1,  '3y':17.6, all:26.4}}
+             ret:{ytd:3.4, '1y':9.8,  '3y':28.4, all:45.2}}
   };
   // account return and the capital it was earned on, per period
   const PERIOD = {
@@ -1477,7 +1401,6 @@
 
   function render(){
     const bm = BM[state.benchmark], per = PERIOD[state.period];
-    document.querySelectorAll('.bm-pick').forEach(el=>el.classList.toggle('on', el.dataset.pick===state.benchmark));
     document.querySelectorAll('.pd-period-opt').forEach(el=>el.classList.toggle('active', el.dataset.period===state.period));
     document.querySelectorAll('[data-period-label]').forEach(el=>el.textContent = per.label);
     document.querySelectorAll('[data-bm-short]').forEach(el=>el.textContent = bm.short);
@@ -1519,7 +1442,6 @@
     document.getElementById('annBm').textContent = pct(annBm);
     document.getElementById('annAlpha').innerHTML = pp(annPp) + totArw;
   }
-  function pickBm(key){ state.benchmark = key; closeInfo('bm'); render(); }
   document.querySelectorAll('.pd-period-opt').forEach(el=>
     el.addEventListener('click',()=>{ state.period = el.dataset.period; render(); }));
   render();
