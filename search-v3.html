@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search, v3</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* ── Core neutral scale ─────────────────────────────── */
+  --c-black: #000000;   /* page background */
+  --c-elev:  #0A0A0A;   /* deep elevation */
+  --c-1000:  #1C1C1C;   /* elevated surface */
+  --c-900:   #232627;   /* hairlines, borders */
+  --c-graphite: #3A3A37; /* container outlines */
+  --c-800:   #565B5E;   /* muted text */
+  --c-700:   #929292;   /* secondary text · AI mark */
+  --c-600:   #A7A7A7;   /* default body text */
+  --c-400:   #C7C7C7;   /* primary label / value emphasis */
+  --c-200:   #E3E2E2;   /* near-white */
+  --c-white: #FFFFFF;   /* primary values */
+
+  /* ── Badge / Alert, neutral tier (see design-system Badge / Alert) ── */
+  --badge-neutral:    var(--c-white);
+  --badge-neutral-bg: #242424;
+
+  /* ── Severity / status (open-questions dot system) ──── */
+  --c-urgent:  #FF3533; /* Big Move */
+  --c-warning: #FF7A00; /* Material Move */
+  --c-review:  #FBC308; /* Thesis Review */
+  --c-live:    #30D158; /* live status */
+
+  /* ── Semantic aliases ───────────────────────────────── */
+  --surface-page:     var(--c-black);
+  --surface-deep:     var(--c-elev);
+  --surface-elevated: var(--c-1000);
+  --border-hairline:  var(--c-900);
+  --border-strong:    var(--c-800);
+
+  --text-value:     var(--c-white);
+  --text-primary:   var(--c-white);
+  --text-emphasis:  var(--c-400);
+  --text-body:      var(--c-600);
+  --text-secondary: var(--c-700);
+  --text-muted:     var(--c-800);
+
+  /* ── Families ───────────────────────────────────────── */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --font-mono-display: 'Chakra Petch', var(--font-mono);
+
+  /* ── Weights ────────────────────────────────────────── */
+  --fw-light:   300;
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-semibold:600;
+
+  /* ── Product · headings (Inter, tight tracking) ─────── */
+  --text-hero:  34px;
+  --text-h1:    22px;
+  --text-h2:    18px;
+
+  /* ── Product · body & typing ─────────────────────────── */
+  --text-xl: 17px;
+  --text-lg: 15px;
+  --text-md: 14px;
+  --text-sm: 13px;
+  --text-xs: 11px;
+  --text-meta: 12px;
+
+  /* line-heights */
+  --lh-heading: 1.2;
+  --lh-typing:  1.3;
+  --lh-body:    1.4;
+
+  /* tracking */
+  --ls-tight:   -0.06em;
+  --ls-snug:    -0.02em;
+  --ls-mono:     0.04em;
+
+  /* ── Product · numbers ($) — tabular lining ─────────── */
+  --num-2xl: 40px;
+  --num-xl:  28px;
+  --num-lg:  24px;
+  --num-md:  18px;
+  --num-sm:  15px;
+  --num-xs:  13px;
+
+  /* ── Spacing ──────────────────────────────────────────── */
+  --space-xxxs: 2px;
+  --space-xxs:  4px;
+  --space-xs:   8px;
+  --space-s:    12px;
+  --space-m:    16px;
+  --space-l:    20px;
+  --space-xl:   24px;
+  --space-xxl:  32px;
+  --space-half-section: 40px;
+  --space-xxxl: 48px;
+  --space-section: 80px;
+
+  /* ── Borders & radius ───────────────────────────────── */
+  --hairline: 0.5px;
+  --radius-0: 0px;
+  --radius-sm: 6px;
+  --radius-md: 7px;
+  --radius-lg: 8px;
+
+  /* ── Managed portfolio identity (large fills only, never small dots) ── */
+  --pf-equity: #FF451C;
+  --pf-income: #BEFDCF;
+  --pf-numeral: 57px;  /* decorative graphic, not type */
+
+  /* ── Motion ─────────────────────────────────────────── */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 100ms;
+  --dur-quick: 150ms;
+  --dur-in: 240ms;
+  --dur-out: 200ms;
+  --press-opacity: 0.6;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--c-black); font-family: var(--font-sans); }
+a { color: var(--c-400); }
+a:hover { color: var(--c-white); }
+input::placeholder { color: var(--c-700); }
+
+/* ── Two-tier label hierarchy ─────────────────────────── */
+/* Section titles step off white (Inkyung 2026-08-11): white is values only.
+   Size (17 vs 15) carries the structural rank, brightness is shared with the
+   row names so nothing on the page competes with a number. */
+.sect {
+  font-family: var(--font-sans);
+  font-size: var(--text-xl);
+  color: var(--c-200);
+  letter-spacing: var(--ls-snug);
+  font-weight: var(--fw-regular);
+}
+.lbl {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  color: var(--c-700);
+  letter-spacing: var(--ls-snug);
+  font-weight: var(--fw-regular);
+}
+.num {
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.frame {
+  min-height: 100vh;
+  background: var(--c-black);
+  display: flex;
+  justify-content: center;
+  font-family: var(--font-sans);
+}
+.frame-inner { width: 395px; max-width: 100%; }
+
+.hdr {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--c-black);
+  padding: 28px 20px 16px;
+}
+/* Left aligned like the app portfolio screen. The row holds a fixed height
+   so the header does not jump between states. */
+.hdr-top { display: flex; align-items: center; justify-content: flex-start; gap: 4px; min-height: 44px; }
+/* 44px tap target that grows to the right, so the chevron's own left edge sits
+   on the 20px content edge instead of being centred 7px inside the box. */
+.hdr-back {
+  min-width: 44px; min-height: 44px;
+  display: flex; align-items: center; justify-content: flex-start;
+  background: transparent; border: 0; padding: 0; cursor: pointer;
+}
+.hdr-back .back-chevron { font-size: var(--text-xl); }
+.hdr-back:hover .back-chevron { color: var(--c-white); }
+.hdr-back:active { opacity: var(--press-opacity); }
+/* Status line (2026-08-11, app portfolio screen ref): left aligned clock,
+   divider, one open flag per market. The dot carries the signal, the label
+   stays neutral gray, typed CAPS. */
+.hdr-status { display: flex; align-items: center; gap: 10px; }
+.hdr-clock { font-size: var(--text-sm); font-weight: var(--fw-medium); color: var(--c-200); letter-spacing: var(--ls-snug); }
+.hdr-status-div { width: var(--hairline); height: 12px; background: var(--c-800); }
+.mkt-flag { display: inline-flex; align-items: center; gap: 5px; }
+.mkt-flag .lbl { color: var(--c-600); }
+/* Closed reads red against the live green, the traffic-light pair operators
+   expect. Vivid tier because dots are vivid (numbers take the muted pair).
+   It does not breathe: motion is what says a session is live. */
+.dot-closed { width: 6px; height: 6px; background: var(--c-urgent); }
+@media (prefers-reduced-motion: no-preference) {
+  .mkt-flag .dot-live { animation: flag-breathe 2.4s ease-in-out infinite; }
+}
+@keyframes flag-breathe {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.search-block { margin-top: 20px; display: flex; align-items: center; gap: 12px; }
+.search-field { position: relative; flex: 1; display: flex; min-width: 0; }
+.search-x { position: absolute; right: 2px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: transparent; border: 0; padding: 0; cursor: pointer; color: var(--c-700); font-size: var(--text-xl); font-family: var(--font-sans); line-height: 1; }
+.search-x:hover { color: var(--c-white); }
+.search-x:active { opacity: var(--press-opacity); }
+.search-cancel { background: transparent; border: 0; padding: 0; cursor: pointer; font-family: var(--font-sans); font-size: var(--text-sm); color: var(--c-700); letter-spacing: var(--ls-snug); flex-shrink: 0; }
+.search-cancel:hover { color: var(--c-white); }
+.back-control { display: flex; align-items: center; gap: var(--space-xxs); background: transparent; border: 0; padding: 0; cursor: pointer; font-family: var(--font-sans); }
+.back-chevron { font-size: var(--text-sm); color: var(--c-700); }
+.search-input {
+  width: 100%;
+  flex: 1;
+  background: transparent;
+  border: var(--hairline) solid var(--c-800);
+  border-radius: 0;
+  color: var(--c-white);
+  font-family: var(--font-sans);
+  font-size: var(--text-xl);
+  letter-spacing: var(--ls-snug);
+  padding: 12px 44px 12px 14px;
+  outline: none;
+}
+.search-input:focus { border-color: var(--c-400); }
+
+/* Recent (Moomoo top-strip structure, II grammar): a title row with an inline
+   Clear, then chips that wrap over multiple lines. Sits above the content it
+   does not displace; browseView stays visible underneath. */
+.recent-strip-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+/* Section-header tier: in search mode Recent is the screen's only section,
+   so it carries the same .sect size as Earnings or Market do in browse. */
+.recent-strip-title { font-size: var(--text-xl); color: var(--c-200); letter-spacing: var(--ls-snug); }
+.recent-clear { background: transparent; border: 0; padding: 0; cursor: pointer; font-family: var(--font-sans); font-size: var(--text-sm); color: var(--c-700); letter-spacing: var(--ls-snug); }
+.recent-clear:hover { color: var(--c-white); }
+.recent-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+/* Outline, not a pill fill: chip grammar stays hairline + flat, no radius. */
+/* Badge tier fill, not an outline: an outlined chip reads like a tiny input
+   next to the search box. Fill = pick-up token, outline = type-here. */
+.recent-chip { border: 0; border-radius: 0; background: var(--badge-neutral-bg); padding: 11px 16px; font: inherit; font-family: var(--font-sans); font-size: var(--text-sm); color: var(--c-200); cursor: pointer; }
+.recent-chip:active { opacity: var(--press-opacity); }
+
+.content { padding: 0 20px 60px; }
+
+/* top-level browse sections are separated by space alone, no rule */
+/* 64px. The scale jumps 48 -> 80 with nothing between, so this composes two
+   existing tokens rather than inventing a value. Needs a real token if kept. */
+.sect-block { margin-top: calc(var(--space-xxxl) + var(--space-m)); }
+
+/* status dot */
+.dot { display: inline-block; border-radius: 50%; flex-shrink: 0; }
+.dot-live { width: 6px; height: 6px; background: var(--c-live); }
+.dot-urgent { width: 5px; height: 5px; background: var(--c-urgent); }
+.dot-material { width: 5px; height: 5px; background: var(--c-warning); }
+.dot-review { width: 5px; height: 5px; background: var(--c-review); }
+/* Memo Pending: held without a written thesis, Doctrine's neutral gray tier */
+.dot-pending { width: 5px; height: 5px; background: var(--c-800); }
+.dot-row { display: inline-flex; align-items: center; gap: 6px; }
+.dot-row-label { font-size: var(--text-sm); color: var(--c-700); }
+
+/* market (E layout, 2026-08-11): every index a collapsible row in one box,
+   the lead index open by default. Same in-place grammar as Earnings Show all. */
+.market-box { border: var(--hairline) solid var(--c-graphite); background: var(--c-elev); }
+/* Row-primary tier like every other row name: white is values only. */
+.market-index { font-size: var(--text-lg); color: var(--c-200); letter-spacing: var(--ls-snug); }
+.idx-row { width: 100%; border: 0; border-bottom: var(--hairline) solid var(--c-graphite); background: transparent; padding: var(--space-m); display: flex; align-items: center; justify-content: space-between; gap: var(--space-s); font: inherit; font-family: var(--font-sans); text-align: left; cursor: pointer; }
+.idx-row:active { opacity: var(--press-opacity); }
+.idx-box .idx-wrap:last-child .idx-row { border-bottom: 0; }
+.idx-main { display: flex; flex-direction: column; gap: 4px; }
+.idx-meta { display: flex; flex-direction: column; gap: 4px; align-items: flex-end; text-align: right; }
+/* The one white value per index row: where this market sits in its cycle is
+   the answer the section exists to give (Dave, Howard Marks framing). */
+.idx-since { font-size: var(--text-sm); color: var(--c-white); }
+.idx-since-note { font-size: var(--text-xs); color: var(--c-700); }
+.idx-detail { display: none; padding: 0 var(--space-m) var(--space-m); border-bottom: var(--hairline) solid var(--c-graphite); }
+.idx-wrap.open .idx-detail { display: block; }
+.idx-wrap.open .idx-row { border-bottom: 0; }
+.idx-wrap:last-child .idx-detail { border-bottom: 0; }
+.idx-chev { color: var(--c-700); font-size: var(--text-lg); margin-left: 8px; }
+.metric-group-label { margin-bottom: var(--space-xs); font-weight: var(--fw-medium); color: var(--c-600); }
+/* 4 items per group: fixed 2x2, a 3-col flow always strands an orphan row */
+.metric-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px 14px; }
+.metric-item { min-width: 0; }
+.metric-label { font-size: var(--text-xs); color: var(--c-700); margin-bottom: 4px; }
+/* nowrap keeps every item at two lines; the longest case (value + range date)
+   spills into the 14px column gap at worst, never past the card padding */
+.metric-value { font-size: var(--text-xs); color: var(--c-200); white-space: nowrap; }
+/* date rides the value line: every metric item stays two lines (label/value) */
+.metric-date { font-size: var(--text-xs); color: var(--c-700); margin-left: 5px; }
+.metric-group-second { border-top: var(--hairline) solid var(--c-900); padding-top: var(--space-m); margin-top: var(--space-m); }
+.disclaimer, .as-of { font-size: 9px; color: var(--c-700); line-height: var(--lh-body); }
+.disclaimer { margin-top: var(--space-m); }
+/* freshness caption, shared by Market and Corporate Actions — rides the V1 disclaimer micro tier, no new size */
+.as-of { margin-top: var(--space-xxs); }
+
+/* screens */
+.screens-head { margin-bottom: var(--space-s); }
+.screen-row {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; padding: 13px 0; border: 0; border-bottom: var(--hairline) solid var(--c-900);
+  background: transparent; cursor: pointer; font: inherit; font-family: var(--font-sans); text-align: left;
+}
+.screen-row:hover { opacity: 0.7; }
+.screen-label { font-size: var(--text-lg); color: var(--c-200); letter-spacing: var(--ls-snug); }
+.screen-meta { display: flex; align-items: center; gap: 10px; }
+.screen-count { font-size: var(--text-sm); color: var(--c-700); }
+.screen-chevron { color: var(--c-700); font-size: var(--text-sm); }
+
+/* data table */
+.dtable { width: 100%; border-collapse: collapse; }
+.dtable th { text-align: left; padding-bottom: 8px; border-bottom: var(--hairline) solid var(--c-900); font-weight: var(--fw-regular); }
+.dtable td { padding: 10px 0; border-bottom: var(--hairline) solid var(--c-900); font-size: var(--text-sm); }
+.dtable .col-first { color: var(--c-200); }
+.dtable .col-rest { color: var(--c-700); }
+.dtable .align-right { text-align: right; }
+.dtable td.align-right { color: var(--c-200); }
+
+/* news pills */
+.pill-list { display: flex; flex-direction: column; }
+.pill {
+  border: 0;
+  border-bottom: var(--hairline) solid var(--c-900);
+  background: transparent;
+  padding: 13px 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  width: 100%;
+  cursor: pointer;
+  font: inherit;
+  font-family: var(--font-sans);
+  text-align: left;
+}
+.pill-body  { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--space-xxs); }
+.pill-label { font-size: var(--text-sm); color: var(--c-400); min-width: 0; line-height: var(--lh-body); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pill-meta  { display: flex; align-items: baseline; gap: var(--space-xxs); min-width: 0; }
+.pill-ticker { font-size: var(--text-xs); color: var(--c-700); flex-shrink: 0; }
+.pill-sep   { font-size: var(--text-xs); color: var(--c-800); flex-shrink: 0; }
+.pill-date  { font-size: var(--text-xs); color: var(--c-700); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* reading list rows (Doctrine): same pill body as News, but not a link out to
+   a source, so no button chrome and no pointer. */
+.content-row { border: 0; border-bottom: var(--hairline) solid var(--c-900); background: transparent; padding: 13px 0; display: flex; align-items: center; gap: var(--space-s); width: 100%; text-align: left; font-family: var(--font-sans); }
+.content-row:last-child { border-bottom: 0; }
+
+/* macro calendar + corporate actions: same row shape as earnings, but the
+   right column is a fixed date/time or action label, not a price/move pair.
+   Macro is a plain row (nothing to tap into); Corporate Actions is a button
+   on a held name, so it carries the stock page's tap target. */
+.week-row { border: 0; border-bottom: var(--hairline) solid var(--c-900); background: transparent; padding: 13px 0; display: flex; align-items: center; justify-content: space-between; gap: var(--space-s); width: 100%; text-align: left; font-family: var(--font-sans); }
+.week-row:last-child { border-bottom: 0; }
+.week-row-main { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.week-row-title { font-size: var(--text-lg); color: var(--c-200); letter-spacing: var(--ls-snug); }
+.week-row-sub { font-size: var(--text-sm); color: var(--c-700); }
+.week-row-meta { flex-shrink: 0; display: flex; flex-direction: column; gap: 4px; align-items: flex-end; text-align: right; font-size: var(--text-sm); color: var(--c-400); }
+.week-row-when { color: var(--c-700); }
+
+/* 3M T-Bill reference, pinned under the Macro This Week heading */
+.risk-free-box { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border: var(--hairline) solid var(--c-800); background: var(--c-elev); }
+.risk-free-label { font-size: var(--text-xs); color: var(--c-700); }
+.risk-free-value { font-size: var(--text-sm); color: var(--c-white); }
+
+/* earnings rows. Same component as a search result row, because it is the same
+   object: a stock the member has a stake in. The two extra values ride the
+   right edge, date on the name line and Est. Move on the state line. */
+/* The date is what calls for an action: read the memo before it lands. The
+   estimate cannot say which way the price goes, so it supports rather than
+   competes. At the same tier the pair read as one blob. */
+/* Marks where the member's own names end. Without it the date appears to
+   restart mid-list for no stated reason. */
+.earn-when { margin-left: auto; font-size: var(--text-sm); color: var(--c-400); flex-shrink: 0; }
+/* Implied move is why the row is on this week's list, so it reads at the
+   row-primary tier, not the meta tier it was buried in. */
+.earn-move { font-size: var(--text-sm); color: var(--c-200); flex-shrink: 0; }
+
+.earn-more {
+  display: block; width: 100%; margin-top: var(--space-s); padding: var(--space-s) 0;
+  border: 0; background: transparent; cursor: pointer;
+  font: inherit; font-family: var(--font-sans);
+  font-size: var(--text-sm); color: var(--c-700); text-align: left;
+}
+.earn-more:hover { color: var(--c-white); }
+.earn-more:active { opacity: var(--press-opacity); }
+
+/* managed */
+.managed-head { margin-bottom: var(--space-xl); }
+
+/* managed block text */
+.managed-intro { font-size: var(--text-sm); color: var(--c-700); letter-spacing: var(--ls-snug); line-height: var(--lh-body); }
+/* Fee and legal read as one caption group under the cards: same 9px tier,
+   4px apart. The rate keeps the value colour so it stays findable. */
+.mg-fine { margin-top: var(--space-m); font-size: 9px; color: var(--c-700); letter-spacing: var(--ls-snug); line-height: var(--lh-body); }
+.mg-fine .num { color: var(--c-400); }
+.mg-fine div + div { margin-top: var(--space-xxs); }
+
+/* managed family cards */
+/* Managed family cards. The look comes from the Explore Portfolios screen:
+   a huge numeral turned on its side and cropped by the card's left edge, a
+   large thin arrow sunk into the fill, and a two line caps label clear of both.
+   The numeral is the number that defines the family, 500 for the S&P and 263
+   for the 2.63% yield. */
+.mg-cards { display: flex; flex-direction: column; gap: var(--space-l); margin-top: var(--space-xl); }
+.mg-card {
+  position: relative; overflow: hidden;
+  width: 100%; height: 112px; padding: 0;
+  display: flex; align-items: flex-end;
+  border: 0; border-radius: var(--radius-0);
+  cursor: pointer; font: inherit; font-family: var(--font-sans); text-align: left;
+}
+.mg-card-equity { background: var(--pf-equity); }
+.mg-card-income { background: var(--pf-income); }
+
+.mg-card-numeral {
+  /* Rotated about the card's top-left corner, so the digits read downward and
+     run off the left edge. Only the last 36px of their height stays on the
+     card; overflow:hidden does the cutting. The translate is applied before
+     the rotation, so its values are in the card's own axes. */
+  position: absolute; left: 0; top: 0;
+  transform-origin: 0 0;
+  transform: translate(32px, 7px) rotate(90deg);
+  white-space: nowrap;
+  /* Display numbers are operator type, so they take the mono face, not Inter.
+     Design system, Typography: Inter for reading type, IBM Plex Mono for
+     operator type (eyebrows, labels, CTA, dates, captions, display numbers). */
+  font-family: 'IBM Plex Mono', var(--font-mono);
+  font-size: var(--pf-numeral);
+  /* Regular, not semibold. The numeral is clipped to its middle band, and a
+     clipped stroke reads heavier than the full glyph does. */
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--ls-tight);
+  line-height: 1;
+  color: var(--c-black);
+  pointer-events: none;
+}
+.mg-card-arrow {
+  /* Wider than tall, and its bottom edge lands on the label's bottom edge. */
+  position: absolute; top: var(--space-s); right: var(--space-m);
+  width: 103px; height: 80px;
+  color: var(--c-black); opacity: 0.38;
+  pointer-events: none;
+}
+.mg-card-label {
+  position: relative;
+  margin-left: 56px; margin-bottom: var(--space-l);
+  font-size: var(--text-lg); font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-snug); line-height: var(--lh-heading);
+  color: var(--c-black);
+}
+
+/* results view */
+.results-head { display: flex; align-items: center; justify-content: space-between; padding-bottom: 10px; border-bottom: var(--hairline) solid var(--c-900); }
+/* An inline dismiss, not a CTA, so no box and the small secondary tier.
+   This rule was present in search-scenarios.html but missing here, which left
+   the button rendering as a browser default. */
+.clear-btn { background: transparent; border: 0; padding: 0; cursor: pointer; font-family: var(--font-sans); font-size: var(--text-xs); color: var(--c-700); letter-spacing: var(--ls-snug); }
+.clear-btn:hover { color: var(--c-white); }
+
+/* Sits close under the heading it belongs to, but clear of the list it
+   describes. Without the bottom margin the note was 12px from the first row
+   while rows are 24px apart, so the group label read as tighter than its
+   own members. */
+.results-note { padding: 10px 0 0; margin-bottom: var(--space-m); color: var(--c-700); font-size: var(--text-sm); letter-spacing: var(--ls-snug); line-height: var(--lh-body); }
+.no-results { padding: var(--space-xl) 0; color: var(--c-700); font-size: var(--text-sm); letter-spacing: var(--ls-snug); }
+.result-row {
+  display: flex; align-items: center; gap: var(--space-s); width: 100%; padding: var(--space-s) 0;
+  border: 0; border-bottom: var(--hairline) solid var(--c-900); background: transparent;
+  cursor: pointer; font: inherit; font-family: var(--font-sans); text-align: left;
+}
+.result-row:hover { opacity: 0.7; }
+.result-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--space-xxs); }
+.result-top { display: flex; align-items: baseline; gap: var(--space-s); min-width: 0; }
+/* The company name answers "what is this", so it holds the bright tier. The
+   ticker is a label you scan past, and the price is context, not the point. */
+.result-t { font-size: var(--text-sm); color: var(--c-700); width: 48px; flex-shrink: 0; }
+.result-name { min-width: 0; flex: 1; font-size: var(--text-lg); color: var(--c-200); letter-spacing: var(--ls-snug); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.result-meta { display: flex; align-items: center; gap: var(--space-xs); padding-left: calc(48px + var(--space-s)); }
+.result-measure { font-size: var(--text-sm); color: var(--c-700); }
+.result-why { margin-left: auto; flex-shrink: 0; font-size: var(--text-sm); color: var(--c-400); }
+.result-sep { font-size: var(--text-sm); color: var(--c-700); }
+.result-state-plain { font-size: var(--text-sm); color: var(--c-700); }
+.result-state-current { font-size: var(--text-sm); color: var(--c-700); }
+.result-held { font-size: var(--text-sm); color: var(--c-700); }
+
+/* section heading that leads somewhere: identical to .sect, chevron appended */
+.sect-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-xxs);
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: var(--text-xl);
+  color: var(--c-200);
+  letter-spacing: var(--ls-snug);
+  font-weight: var(--fw-regular);
+}
+
+/* pressed state (shared, tappable elements only) */
+.screen-row:active,
+.result-row:active,
+.pill:active,
+.mg-card:active,
+.market-card:active,
+.back-control:active,
+.clear-btn:active,
+.sect-link:active,
+.week-row[data-ticker]:active {
+  opacity: var(--press-opacity);
+}
+</style>
+</head>
+<body>
+
+<div class="frame">
+  <div class="frame-inner">
+
+    <div class="hdr">
+      <div id="hdrBrowse">
+        <div class="hdr-top">
+          <!-- Screen-exit only: closes an open Screen result. Same slot as the
+               Stock Page appbar's back control, on the status line so it
+               costs no extra row. -->
+          <button class="hdr-back" id="hdrBack" style="display: none;" aria-label="Back">
+            <span class="back-chevron">&lsaquo;</span>
+          </button>
+          <span class="hdr-status">
+            <span class="hdr-clock num" id="clockLine">00:00:00 ET</span>
+            <span class="hdr-status-div"></span>
+            <!-- Filled by tickClock from real ET session hours. -->
+            <span id="marketFlags" style="display: inline-flex; align-items: center; gap: 10px;"></span>
+          </span>
+        </div>
+        <div class="search-block">
+          <div class="search-field">
+            <input id="queryInput" type="text" placeholder="Ticker or company" class="search-input" autocomplete="off">
+            <!-- Always-there query control while text exists (app parity):
+                 clears the field in place, keeps focus. -->
+            <button class="search-x" id="searchX" aria-label="Clear Query" style="display: none;">&times;</button>
+          </div>
+          <button class="search-cancel" id="searchCancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <div id="browseView">
+
+        <!-- A standing section, not a focus-triggered strip: the mode
+             transitions were the source of every surprise (Inkyung
+             2026-08-11). Renders only while history exists. -->
+        <div id="recentSection" style="margin-top: 24px; display: none;">
+          <div class="recent-strip-head">
+            <span class="recent-strip-title">Recent</span>
+            <button class="recent-clear" id="recentClear">Clear</button>
+          </div>
+          <div class="recent-chips" id="recentChips"></div>
+        </div>
+
+        <div class="sect-block" id="earningsSection">
+          <!-- No chevron. Everything hidden by the cap opens in place below,
+               so there is no separate page for it to promise. Leads the page:
+               the one section with a deadline (held/watched names reporting
+               this week) outranks passive market context. -->
+          <div class="sect" style="margin-bottom: 12px;">Earnings This Week</div>
+          <div id="earningsList"></div>
+          <button class="earn-more" id="earningsMore"></button>
+        </div>
+
+        <div class="sect-block" id="macroSection">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+            <span class="sect">Macro This Week</span>
+            <span id="riskFreeLine"></span>
+          </div>
+          <div id="macroList"></div>
+        </div>
+
+        <div class="sect-block" id="corpActionsSection">
+          <div class="sect" style="margin-bottom: 12px;">Corporate Actions</div>
+          <div id="corpActionsList"></div>
+          <div class="as-of" id="corpAsOf"></div>
+        </div>
+
+        <div class="sect-block">
+          <div class="sect screens-head">Screens</div>
+          <div id="screensBox"></div>
+        </div>
+
+        <div class="sect-block">
+          <div style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 12px;">
+            <span class="sect">Market</span>
+          </div>
+          <div class="market-box idx-box" id="marketBox"></div>
+          <div class="lbl disclaimer">Proxied via listed ETFs, not the index. Avg return = trailing annualized, price only (ex-dividends).</div>
+          <div class="as-of" id="marketAsOf"></div>
+        </div>
+
+        <div class="sect-block">
+          <button class="sect-link" id="newsHeading"><span id="newsHeadingText">News · 4</span><span class="screen-chevron">&rsaquo;</span></button>
+          <div class="pill-list" id="newsList" style="margin-top: 12px;"></div>
+        </div>
+
+        <div class="sect-block">
+          <div class="sect" style="margin-bottom: 12px;">Doctrine</div>
+          <div class="pill-list" id="contentList"></div>
+        </div>
+
+        <div class="sect-block">
+          <div class="sect managed-head">Managed</div>
+
+          <div class="managed-intro">Our Equity portfolios are designed for long-term wealth creation, while our Income portfolios are best suited for savings and capital preservation.</div>
+
+                    <div class="mg-cards">
+            <button class="mg-card mg-card-equity">
+              <span class="mg-card-numeral" aria-hidden="true">500</span>
+              <svg class="mg-card-arrow" viewBox="0 0 144 112" fill="none" aria-hidden="true"><path d="M0 112L144 0" stroke="currentColor" stroke-width="1.4"/><path d="M87 0H144V57" stroke="currentColor" stroke-width="1.4"/></svg>
+              <span class="mg-card-label">EQUITY<br>PORTFOLIOS</span>
+            </button>
+            <button class="mg-card mg-card-income">
+              <span class="mg-card-numeral" aria-hidden="true">263</span>
+              <svg class="mg-card-arrow" viewBox="0 0 144 112" fill="none" aria-hidden="true"><path d="M0 112L144 0" stroke="currentColor" stroke-width="1.4"/><path d="M87 0H144V57" stroke="currentColor" stroke-width="1.4"/></svg>
+              <span class="mg-card-label">INCOME<br>PORTFOLIOS</span>
+            </button>
+          </div>
+
+          <!-- 0.10% carried over from the original reference, which labelled its
+               own mandate copy "Placeholder." The rate is unverified. -->
+          <div class="mg-fine">
+            <div>Management fee <span class="num">0.10%</span>, both families.</div>
+            <div>Managed separately from self-directed holdings, at member pricing.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="resultsView" style="display: none; margin-top: 24px;">
+        <!-- No Clear here (app parity, Inkyung 2026-08-11): the query is
+             cleared by the in-field x; the Clear word belongs to Recent. -->
+        <div class="results-head" id="resultsHead">
+          <span class="sect" id="resultsHeaderLabel"></span>
+        </div>
+        <div class="results-note" id="resultsNote" style="display: none;"></div>
+        <div class="no-results" id="noResults" style="display: none;">No matches. Try a different ticker or company name.</div>
+        <div id="resultRows"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// price/day and role/weight borrowed from the Stock Page (2026-08-07 decision):
+// rows with no memo show price and day move; held rows carry role · weight.
+// Position axis (§56): a held row ALWAYS ends with role · weight; no weight
+// chunk means not held. Held with no memo is Memo Pending, never a price row.
+const TICKERS = [
+  // 55 names. 50 qualify for Earnings This Week: held, or a memo written
+  // with no position. The other 5 are plain rows, so search still shows the
+  // price/day form. `earnings` is set only on the 15 reporting this week.
+  { t: 'TSM', name: 'Taiwan Semi', state: 'current', role: 'Core', weight: '8.4%', price: '244.60', day: '+0.4%' },
+  { t: 'NVDA', name: 'NVIDIA Corp', state: 'review', role: 'Core', weight: '6.2%', price: '87.59', day: '+1.1%', earnings: { date: 'Wed · AMC', move: '±7.4%' } },
+  { t: 'COST', name: 'Costco', state: 'urgent', role: 'Core', weight: '5.2%', price: '928.14', day: '−6.9%' },
+  { t: 'MSFT', name: 'Microsoft', state: 'current', role: 'Core', weight: '4.9%', price: '402.11', day: '+0.9%' },
+  { t: 'BRK.B', name: 'Berkshire H.', state: 'current', role: 'Core', weight: '4.6%', price: '512.08', day: '+0.2%' },
+  { t: 'GOOGL', name: 'Alphabet', state: 'current', role: 'Core', weight: '4.1%', price: '196.40', day: '+0.7%' },
+  { t: 'AMZN', name: 'Amazon', state: 'current', role: 'Core', weight: '3.8%', price: '218.70', day: '+1.2%', earnings: { date: 'Thu · AMC', move: '±6.8%' } },
+  { t: 'V', name: 'Visa', state: 'current', role: 'Core', weight: '3.4%', price: '318.25', day: '+0.3%' },
+  { t: 'UNH', name: 'UnitedHealth', state: 'review', role: 'Core', weight: '3.1%', price: '556.80', day: '−0.9%' },
+  { t: 'ASML', name: 'ASML Holding', state: 'material', role: 'Conviction', weight: '2.9%', price: '812.30', day: '−0.8%', earnings: { date: 'Thu · BMO', move: '±4.4%' } },
+  { t: 'AVGO', name: 'Broadcom', state: 'current', role: 'Conviction', weight: '2.7%', price: '171.20', day: '+1.4%' },
+  { t: 'LRCX', name: 'Lam Research', state: 'none', role: 'Conviction', weight: '2.5%', price: '98.40', day: '−0.3%' },
+  { t: 'AMD', name: 'Advanced Micro', state: 'material', role: 'Capped', weight: '2.3%', price: '142.70', day: '+2.4%' },
+  { t: 'MU', name: 'Micron Tech', state: 'none', role: 'Capped', weight: '2.2%', price: '104.55', day: '+3.1%', earnings: { date: 'Fri · AMC', move: '±5.6%' } },
+  { t: 'CRM', name: 'Salesforce', state: 'current', role: 'Conviction', weight: '2.0%', price: '284.90', day: '+0.5%' },
+  { t: 'ADBE', name: 'Adobe', state: 'review', role: 'Conviction', weight: '1.9%', price: '512.40', day: '−1.6%' },
+  { t: 'AAPL', name: 'Apple', state: 'none', role: 'Starter', weight: '1.9%', price: '228.90', day: '+0.6%', earnings: { date: 'Thu · AMC', move: '±3.1%' } },
+  { t: 'NOW', name: 'ServiceNow', state: 'current', role: 'Conviction', weight: '1.8%', price: '942.10', day: '+0.8%' },
+  { t: 'PANW', name: 'Palo Alto Netw', state: 'none', role: 'Conviction', weight: '1.7%', price: '188.30', day: '+1.9%' },
+  { t: 'SNPS', name: 'Synopsys', state: 'current', role: 'Conviction', weight: '1.6%', price: '486.20', day: '−0.4%', earnings: { date: 'Wed · AMC', move: '±7.2%' } },
+  { t: 'KLAC', name: 'KLA Corp', state: 'none', role: 'Capped', weight: '1.5%', price: '712.40', day: '+0.2%' },
+  { t: 'INTU', name: 'Intuit', state: 'current', role: 'Conviction', weight: '1.4%', price: '638.90', day: '−0.7%' },
+  { t: 'ISRG', name: 'Intuitive Surg', state: 'current', role: 'Conviction', weight: '1.3%', price: '498.60', day: '+1.0%' },
+  { t: 'LIN', name: 'Linde', state: 'current', role: 'Conviction', weight: '1.3%', price: '442.10', day: '+0.1%' },
+  { t: 'TXN', name: 'Texas Instrum', state: 'review', role: 'Conviction', weight: '1.2%', price: '198.70', day: '−0.5%' },
+  { t: 'ACN', name: 'Accenture', state: 'none', role: 'Conviction', weight: '1.2%', price: '352.80', day: '+0.4%' },
+  { t: 'QCOM', name: 'Qualcomm', state: 'none', role: 'Capped', weight: '1.1%', price: '164.20', day: '+1.7%', earnings: { date: 'Thu · AMC', move: '±5.4%' } },
+  { t: 'HON', name: 'Honeywell', state: 'current', role: 'Conviction', weight: '1.1%', price: '212.50', day: '+0.3%' },
+  { t: 'CAT', name: 'Caterpillar', state: 'current', role: 'Conviction', weight: '1.0%', price: '388.40', day: '+0.6%' },
+  { t: 'DE', name: 'Deere', state: 'none', role: 'Conviction', weight: '1.0%', price: '446.90', day: '−0.2%' },
+  { t: 'NKE', name: 'Nike', state: 'urgent', role: 'Starter', weight: '0.9%', price: '72.30', day: '−8.1%' },
+  { t: 'SBUX', name: 'Starbucks', state: 'material', role: 'Starter', weight: '0.9%', price: '94.60', day: '−5.2%' },
+  { t: 'DIS', name: 'Walt Disney', state: 'none', role: 'Starter', weight: '0.8%', price: '88.05', day: '+0.5%' },
+  { t: 'PYPL', name: 'PayPal Holdings', state: 'none', role: 'Starter', weight: '0.8%', price: '61.42', day: '−1.2%' },
+  { t: 'INTC', name: 'Intel', state: 'review', role: 'Starter', weight: '0.7%', price: '19.86', day: '−2.1%' },
+  { t: 'SHOP', name: 'Shopify', state: 'current', role: 'Starter', weight: '0.7%', price: '112.40', day: '+2.2%' },
+  { t: 'F', name: 'Ford Motor', state: 'none', role: 'Starter', weight: '0.7%', price: '11.24', day: '−0.4%' },
+  { t: 'UBER', name: 'Uber Technol', state: 'current', role: 'Starter', weight: '0.6%', price: '78.90', day: '+1.5%' },
+  { t: 'SQ', name: 'Block', state: 'material', role: 'Starter', weight: '0.6%', price: '68.20', day: '−4.8%' },
+  { t: 'ABNB', name: 'Airbnb', state: 'none', role: 'Starter', weight: '0.6%', price: '132.70', day: '+0.9%' },
+  // memo written, no position (watchlist with a view)
+  { t: 'LLY', name: 'Eli Lilly', state: 'current', price: '784.20', day: '+1.3%' },
+  { t: 'NVO', name: 'Novo Nordisk', state: 'review', price: '102.60', day: '−0.6%' },
+  { t: 'TSLA', name: 'Tesla', state: 'material', price: '342.80', day: '−5.4%' },
+  { t: 'NFLX', name: 'Netflix', state: 'current', price: '892.30', day: '+0.8%', earnings: { date: 'Thu · AMC', move: '±7.9%' } },
+  { t: 'META', name: 'Meta Platforms', state: 'current', price: '612.40', day: '+1.1%' },
+  { t: 'JPM', name: 'JPMorgan Chase', state: 'current', price: '242.10', day: '+0.2%', earnings: { date: 'Fri · BMO', move: '±3.4%' } },
+  { t: 'XOM', name: 'Exxon Mobil', state: 'review', price: '118.60', day: '−0.9%' },
+  { t: 'WMT', name: 'Walmart', state: 'current', price: '92.40', day: '+0.5%' },
+  { t: 'PG', name: 'Procter & Gamble', state: 'current', price: '168.20', day: '+0.1%' },
+  { t: 'JNJ', name: 'Johnson & J.', state: 'material', price: '154.80', day: '−3.2%' },
+  // no position and no memo
+  { t: 'RIVN', name: 'Rivian Auto', state: 'none', price: '11.40', day: '−2.4%' },
+  { t: 'WBA',  name: 'Walgreens', state: 'none', price: '9.12',  day: '−0.8%' },
+  { t: 'ETSY', name: 'Etsy', state: 'none', price: '48.60', day: '+0.6%' },
+  { t: 'PARA', name: 'Paramount', state: 'none', price: '11.86', day: '−1.1%' },
+  { t: 'OXY',  name: 'Occidental Pet', state: 'none', price: '48.20', day: '+1.2%' },
+  { t: 'DELL', name: 'Dell Technol', state: 'none', price: '118.40', day: '+2.1%', earnings: { date: 'Thu · AMC', move: '±7.1%' } },
+  { t: 'ZM',   name: 'Zoom Communic', state: 'none', price: '72.30', day: '+0.4%' },
+  { t: 'MCD',  name: 'McDonalds', state: 'none', price: '296.80', day: '+0.3%', earnings: { date: 'Thu · BMO', move: '±3.2%' } },
+  { t: 'TGT',  name: 'Target', state: 'none', price: '132.40', day: '−0.5%', earnings: { date: 'Wed · BMO', move: '±6.3%' } },
+  { t: 'SOFI', name: 'SoFi Technol', state: 'none', price: '14.28', day: '+6.2%', earnings: { date: 'Wed · AMC', move: '±8.6%' } },
+  { t: 'PLTR', name: 'Palantir', state: 'none', price: '68.90', day: '+4.8%', earnings: { date: 'Wed · AMC', move: '±10.2%' } },
+  { t: 'HOOD', name: 'Robinhood', state: 'none', price: '42.10', day: '+3.9%', earnings: { date: 'Fri · AMC', move: '±9.1%' } },
+  { t: 'BAC', name: 'Bank of America', state: 'none', price: '46.20', day: '+0.4%', earnings: { date: 'Fri · BMO', move: '±3.1%' } },
+  { t: 'T', name: 'AT&T', state: 'none', price: '22.80', day: '−0.3%' },
+  { t: 'KO', name: 'Coca-Cola', state: 'none', price: '68.40', day: '+0.2%', earnings: { date: 'Wed · BMO', move: '±2.8%' } },
+  { t: 'PFE', name: 'Pfizer', state: 'none', price: '26.10', day: '−1.4%', earnings: { date: 'Thu · BMO', move: '±4.2%' } },
+  { t: 'GE', name: 'GE Aerospace', state: 'none', price: '196.80', day: '+1.6%', earnings: { date: 'Thu · BMO', move: '±5.3%' } },
+];
+
+// `measure` is what this screen actually measured for each ticker, so a row can
+// say why it qualified and by how much. Figures are placeholder demo data.
+const SCREENS = [
+  { key: 'near_low', label: 'Near 52-Week Low', note: 'Trading within 5% of its 52-week low.',
+    tickers: ['WBA', 'RIVN', 'INTC', 'PARA', 'ETSY'],
+    measure: { WBA: '0.9%', RIVN: '1.4%', INTC: '2.1%', PARA: '3.6%', ETSY: '4.8%' } },
+  { key: 'insider_buying', label: 'Insider Buying', note: 'An officer or director bought shares on the open market in the last 30 days.',
+    tickers: ['OXY', 'LRCX', 'DELL', 'ZM'],
+    measure: { OXY: 'CEO · 4d', LRCX: 'CFO · 12d', DELL: 'Director · 19d', ZM: 'Director · 26d' } },
+  { key: 'dividend_growth', label: 'Dividend Growth Streak', note: 'Has raised its dividend for 10+ consecutive years.',
+    tickers: ['PG', 'TGT', 'MCD', 'COST', 'AAPL'],
+    measure: { PG: '68 yr', TGT: '53 yr', MCD: '48 yr', COST: '21 yr', AAPL: '13 yr' } },
+  { key: 'unusual_volume', label: 'Unusual Volume, No News', note: 'Trading volume 2x+ its 20-day average with no scheduled catalyst.',
+    tickers: ['SOFI', 'AMD', 'PLTR', 'HOOD', 'AVGO'],
+    measure: { SOFI: '4.1x', AMD: '3.1x', PLTR: '2.8x', HOOD: '2.4x', AVGO: '2.1x' } },
+  { key: 'most_active', label: 'Most Active', note: 'Highest dollar trading volume today, market-wide.',
+    tickers: ['NVDA', 'TSLA', 'AAPL', 'PLTR', 'AMD'],
+    measure: { NVDA: '$42.1B', TSLA: '$18.6B', AAPL: '$14.2B', PLTR: '$9.8B', AMD: '$8.4B' } },
+];
+
+// ytd: S&P 500 and Nasdaq 100 figures are placeholders and need real data.
+// S&P/TSX figure (+14.0%) came from the 2026-08-07 meeting.
+// maxDD50: worst trailing peak-to-trough drawdown over ~50 years. Approximate
+// historical figures (S&P 2007-09, Nasdaq 100 2000-02, TSX 2008); placeholder
+// pending verified data, same status as ytd above. Nasdaq 100 launched Jan
+// 1985, so it shows its longest available window (~41 yr) instead of a dash.
+const MARKET_DATA = [
+  { index: 'S&P 500', proxy: 'SPY', today: '+0.2%', offHigh: '−0.3%', maxDD: '−10.0%', maxDDDate: "Apr '25", since10: '1.4 yr', ytd: '+9.4%', since20: '3.9 yr', ret5: '+14.2%', ret10: '+12.8%', ret25: '+10.1%', longRunYears: 50, ret50: '+10.4%', maxDD50: '−57.0%', maxDD50Date: "Oct '07–Mar '09" },
+  { index: 'Nasdaq 100', proxy: 'QQQ', today: '+0.4%', offHigh: '−0.6%', maxDD: '−12.4%', maxDDDate: "Apr '25", since10: '1.4 yr', ytd: '+12.1%', since20: '3.9 yr', ret5: '+18.9%', ret10: '+17.1%', ret25: '+13.6%', longRunYears: 41, ret50: '+15.8%', maxDD50: '−83.0%', maxDD50Date: "Mar '00–Oct '02" },
+  { index: 'S&P/TSX', proxy: 'XIC.TO', today: '+0.1%', offHigh: '−1.1%', maxDD: '−8.4%', maxDDDate: "Apr '25", since10: '1.6 yr', ytd: '+14.0%', since20: '4.6 yr', ret5: '+9.6%', ret10: '+7.9%', ret25: '+7.2%', longRunYears: 50, ret50: '+8.1%', maxDD50: '−50.0%', maxDD50Date: "Jun '08–Mar '09" },
+];
+
+const RISK_FREE_RATE = { label: '3M T-Bill', value: '4.3%' };
+
+const MACRO_EVENTS = [
+  { title: 'FOMC Rate Decision', sub: 'Consensus: hold · Prior: hold', when: 'Wed · 2:00 PM ET' },
+  { title: 'CPI (July)', sub: 'Consensus: +0.2% m/m · Prior: +0.3%', when: 'Tue · 8:30 AM ET' },
+  { title: 'Nonfarm Payrolls', sub: 'Consensus: +165K · Prior: +206K', when: 'Fri · 8:30 AM ET' },
+];
+
+const CORP_ACTIONS = [
+  { ticker: 'MSFT', action: 'Ex-Dividend', when: 'Thu · 4:00 PM ET' },
+  { ticker: 'V', action: 'Ex-Dividend', when: 'Tue · 4:00 PM ET' },
+  { ticker: 'HON', action: 'Ex-Dividend', when: 'Wed · 4:00 PM ET' },
+];
+
+const CONTENT = [
+  { title: 'Munger on the Circle of Competence', category: 'Primary Source', source: 'Charlie Munger', age: '2d' },
+  { title: "Buffett's 1987 Letter: Mr. Market as a Business Partner", category: 'Primary Source', source: 'Warren Buffett', age: '5d' },
+  { title: 'Position Sizing After a Large Drawdown', category: 'Field Notes', source: 'II Research', age: '1w' },
+  { title: 'Reading a 10-K in Twenty Minutes', category: 'Field Notes', source: 'II Research', age: '2w' },
+];
+
+// Timeline (decided 2026-08-09). Calendar week, not a rolling window:
+//   appears   Monday of the week it reports in
+//   leaves    the moment it reports. BMO drops at that day's open, AMC at
+//             that day's close. Nothing already reported stays here.
+//   after     the dashboard picks it up as Thesis Review, which is defined in
+//             the IA as the "earnings released / re-underwriting trigger".
+// The weekday-only date label (Wed, Thu) is what forces the calendar week: it
+// cannot say whether Wed means this week or next. A rolling window would need
+// real dates, which read slower. Advance warning before the member opens the
+// app is a push notification's job, not this section's.
+//
+// Selection rule (revised 2026-08-09): every company reporting this week over
+// the tradable universe, not only the member's own. Search is the market
+// surface and the dashboard is the member's, so scoping this to holdings
+// duplicated Open Questions and removed the only place a new name could
+// surface. Held names still read their memo state, role and weight on line
+// two, so what is yours is visible without reordering the list.
+//
+// Cost to cover elsewhere: the dashboard's Thesis Review fires on "earnings
+// released", so nothing warns a member BEFORE their own report lands. That
+// belongs to a push notification, not to this section.
+//
+// Sort: date, then BMO before AMC, then largest expected move first.
+const DAY_ORDER = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5 };
+// CEO ruling (Dave, Slack 2026-08-10): Screens and Earnings run on the entire
+// market and show the same content to every user every time. "This section is
+// about the market regardless of what you personally own. Customized content
+// is on the main dashboard related to stocks they own and under review."
+// So: no personal scope, no personal sort, no personal filter on this page.
+// A held name still renders memo state / role / weight on line two. CEO
+// endorsed this in the 2026-08-10 meeting: "I guess you could say you own
+// it... that's kinda cool. Why wouldn't we if we have the info?" The list is
+// identical for everyone; only your own rows read differently to you.
+
+function earningsRows() {
+  return TICKERS
+    .filter((x) => x.earnings)
+    .slice()
+    .sort((a, b) => {
+      const byDay = DAY_ORDER[a.earnings.date.slice(0, 3)] - DAY_ORDER[b.earnings.date.slice(0, 3)];
+      if (byDay) return byDay;
+      // BMO lands before the open, AMC after the close.
+      const bySlot = (a.earnings.date.endsWith('BMO') ? 0 : 1) - (b.earnings.date.endsWith('BMO') ? 0 : 1);
+      if (bySlot) return bySlot;
+      // Last, the largest expected move.
+      return parseFloat(b.earnings.move.replace(/[^\d.]/g, '')) - parseFloat(a.earnings.move.replace(/[^\d.]/g, ''));
+    });
+}
+
+// Four rows fit without the section dominating the page. In earnings season a
+// 50-position member can have a dozen in one week, so the rest expand in place.
+const EARNINGS_VISIBLE = 4;
+let earningsExpanded = false;
+
+// ── search state ──
+// No focus tracking: Recent is a standing browse section, not a focus-
+// triggered strip, so nothing about the page changes on focus or blur.
+// Typing history is never pushed; length-blind history walks were the source
+// of the Clear exits. The in-field x owns the query, Recent's Clear owns the
+// history list (app parity, 2026-08-11).
+// Session-only, seeded so the prototype shows the state. A real build persists.
+// Open question (2026-08-11 meeting): recents by result ticker (current) vs
+// by typed keyword (Moomoo/Yahoo). Awaiting Dave's call.
+const RECENT = ['COST', 'NVDA', 'SHOP'];
+const RECENT_MAX = 5;
+function addRecent(t) {
+  const i = RECENT.indexOf(t);
+  if (i !== -1) RECENT.splice(i, 1);
+  RECENT.unshift(t);
+  if (RECENT.length > RECENT_MAX) RECENT.length = RECENT_MAX;
+}
+
+const MANAGED_COLUMNS = [
+  { key: 'name', label: 'Series' },
+  { key: 'mandate', label: 'Mandate' },
+  { key: 'fee', label: 'Fee', align: 'right', width: '56px' },
+];
+
+const NEWS = [
+  { ticker: 'NVDA', headline: 'Supply-chain checks point to steady data-center demand into Q3', source: 'Bloomberg', age: '1h' },
+  { ticker: 'MU', headline: 'Micron guides above consensus on DRAM pricing as data-center demand tightens supply', source: 'Reuters', age: '4h' },
+  { ticker: 'ASML', headline: 'Export-control update targets EUV service parts and could delay China shipments', source: 'Financial Times', age: '1d' },
+  { ticker: 'COST', headline: 'August comparable sales figures due next week with membership renewal rates in focus', source: "Barron's", age: '2d' },
+];
+
+const SEV = { urgent: 'Big Move', material: 'Material Move', review: 'Thesis Review' };
+
+// Ported from row-states.html (source of truth). Position axis (§56): a held
+// row ALWAYS ends with role · weight; no weight chunk means not held. Held
+// with no memo is Memo Pending, never a price row.
+function heldChunkHTML(row) {
+  if (!row.weight) return '';
+  // Every separator is its own flex child. Writing "Core · 6.2%" as one string
+  // put a 3.7px text space next to an 8px flex gap on the same line.
+  const sep = '<span class="result-sep">·</span>';
+  const role = row.role ? `<span class="result-held">${row.role}</span>${sep}` : '';
+  return `${sep}${role}<span class="result-held num">${row.weight}</span>`;
+}
+
+function stateSlotHTML(row) {
+  if (SEV[row.state]) {
+    return `<span class="dot-row"><span class="dot dot-${row.state}"></span><span class="dot-row-label">${SEV[row.state]}</span></span>${heldChunkHTML(row)}`;
+  }
+  if (row.state === 'current') {
+    return `<span class="result-state-current">Thesis Current</span>${heldChunkHTML(row)}`;
+  }
+  if (row.weight) {
+    return `<span class="dot-row"><span class="dot dot-pending"></span><span class="dot-row-label">Memo Pending</span></span>${heldChunkHTML(row)}`;
+  }
+  return `<span class="result-measure num">${row.price}</span><span class="result-sep">·</span><span class="result-state-plain num">${row.day}</span>`;
+}
+
+const state = { query: '', activeScreen: null };
+
+// Sign colour (CEO 2026-08-10): Market values only, existing product tokens,
+// not the reference's oklch pair. Unsigned strings ("1.4 yr") stay neutral.
+function signStyle(v) {
+  if (typeof v !== 'string') return '';
+  const s = v.trim();
+  if (s.startsWith('+')) return ' style="color:var(--c-live)"';
+  if (s.startsWith('−')) return ' style="color:var(--c-urgent)"';
+  return '';
+}
+
+function renderMarket() {
+  const box = document.getElementById('marketBox');
+  // Lead index (S&P 500) opens by default; every row folds with the same tap.
+  box.innerHTML = MARKET_DATA.map((m, i) => `
+    <div class="idx-wrap${i === 0 ? ' open' : ''}">
+      <button class="idx-row">
+        <span class="idx-main">
+          <span class="market-index">${m.index}</span>
+          <span class="lbl num">${m.proxy} · <span${signStyle(m.today)}>${m.today}</span></span>
+        </span>
+        <span style="display:flex;align-items:center;">
+          <span class="idx-meta"><span class="idx-since num">${m.since20}</span><span class="idx-since-note">Since last ${'−20%'}</span></span>
+          <span class="idx-chev">&rsaquo;</span>
+        </span>
+      </button>
+      <div class="idx-detail">
+        <div>
+          <div class="lbl metric-group-label">Position in Cycle</div>
+          <div class="metric-row">
+            <div class="metric-item"><div class="lbl metric-label">Off High</div><div class="metric-value num"${signStyle(m.offHigh)}>${m.offHigh}</div></div>
+            <div class="metric-item"><div class="lbl metric-label">12M Max DD</div><div class="metric-value num"${signStyle(m.maxDD)}>${m.maxDD}<span class="metric-date">${m.maxDDDate}</span></div></div>
+            <div class="metric-item"><div class="lbl metric-label">Since −10%</div><div class="metric-value num"${signStyle(m.since10)}>${m.since10}</div></div>
+            <div class="metric-item"><div class="lbl metric-label">YTD</div><div class="metric-value num"${signStyle(m.ytd)}>${m.ytd}</div></div>
+          </div>
+        </div>
+        <div class="metric-group-second">
+          <div class="lbl metric-group-label">Long-Run</div>
+          <div class="metric-row">
+            <div class="metric-item"><div class="lbl metric-label">10Y Avg Return</div><div class="metric-value num"${signStyle(m.ret10)}>${m.ret10}</div></div>
+            <div class="metric-item"><div class="lbl metric-label">25Y Avg Return</div><div class="metric-value num"${signStyle(m.ret25)}>${m.ret25}</div></div>
+            <div class="metric-item"><div class="lbl metric-label">${m.longRunYears}Y Avg Return</div><div class="metric-value num"${signStyle(m.ret50)}>${m.ret50}</div></div>
+            <div class="metric-item"><div class="lbl metric-label">${m.longRunYears}Y Max DD</div><div class="metric-value num"${signStyle(m.maxDD50)}>${m.maxDD50}<span class="metric-date">${m.maxDD50Date}</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  box.querySelectorAll('.idx-row').forEach((btn) => {
+    btn.addEventListener('click', () => btn.parentElement.classList.toggle('open'));
+  });
+}
+
+function renderScreens() {
+  const box = document.getElementById('screensBox');
+  box.innerHTML = SCREENS.map((s) => `
+    <button class="screen-row" data-screen-key="${s.key}">
+      <span class="screen-label">${s.label}</span>
+      <span class="screen-meta">
+        <span class="screen-count num">${s.tickers.length}</span>
+        <span class="screen-chevron">&rsaquo;</span>
+      </span>
+    </button>
+  `).join('');
+  box.querySelectorAll('[data-screen-key]').forEach((btn) => {
+    btn.addEventListener('click', () => selectScreen(btn.getAttribute('data-screen-key')));
+  });
+}
+
+// Upcoming only. A report that has already landed has nothing left to prepare
+// for, and the dashboard's Open Questions picks it up as Thesis Review
+// ("earnings released / re-underwriting trigger") with its own Start Review
+// action. Keeping a reported row here would say the same thing twice.
+function earningsRowHTML(row) {
+  const e = row.earnings;
+  return `
+    <button class="result-row" data-ticker="${row.t}">
+      <span class="result-body">
+        <span class="result-top">
+          <span class="result-t">${row.t}</span>
+          <span class="result-name">${row.name}</span>
+          <span class="earn-when">${e.date}</span>
+          <span class="earn-move num">${e.move}</span>
+        </span>
+        <span class="result-meta">${stateSlotHTML(row)}</span>
+      </span>
+    </button>`;
+}
+
+function renderEarnings() {
+  const rows = earningsRows();
+  // Nothing reporting this week means no section at all.
+  document.getElementById('earningsSection').style.display = rows.length ? '' : 'none';
+
+  const shown = earningsExpanded ? rows : rows.slice(0, EARNINGS_VISIBLE);
+  const list = document.getElementById('earningsList');
+  list.innerHTML = shown.map(earningsRowHTML).join('');
+  list.querySelectorAll('[data-ticker]').forEach((btn) => {
+    btn.addEventListener('click', () => openStock(btn.getAttribute('data-ticker')));
+  });
+
+  const hidden = rows.length - shown.length;
+  const more = document.getElementById('earningsMore');
+  more.style.display = (hidden > 0 || earningsExpanded) ? '' : 'none';
+  more.textContent = earningsExpanded ? 'Show less' : 'Show all ' + rows.length;
+}
+
+// Non-interactive: no destination exists for a macro release, so no chevron
+// and no click handler, unlike the held names in Corporate Actions below.
+function renderMacro() {
+  // A week with nothing on the calendar is a real state (quiet-week
+  // scenario), not just a scenario-sheet artifact, so the section vanishes
+  // like Earnings already does above rather than showing an empty box.
+  document.getElementById('macroSection').style.display = MACRO_EVENTS.length ? '' : 'none';
+  const list = document.getElementById('macroList');
+  list.innerHTML = MACRO_EVENTS.map((e) => `
+    <div class="week-row">
+      <div class="week-row-main">
+        <span class="week-row-title">${e.title}</span>
+        <span class="week-row-sub num">${e.sub}</span>
+      </div>
+      <span class="week-row-meta num">${e.when}</span>
+    </div>`).join('');
+  document.getElementById('riskFreeLine').innerHTML = '<span class="risk-free-box"><span class="risk-free-label">' + RISK_FREE_RATE.label + '</span><span class="risk-free-value num">' + RISK_FREE_RATE.value + '</span></span>';
+}
+
+// Held names only, so every row carries role · weight on line two and opens
+// the stock page like an earnings or result row does.
+function renderCorpActions() {
+  // No positions, or a week with no ex-dividend dates (quiet-week / no
+  // holdings): the section disappears rather than sitting empty.
+  document.getElementById('corpActionsSection').style.display = CORP_ACTIONS.length ? '' : 'none';
+  const list = document.getElementById('corpActionsList');
+  list.innerHTML = CORP_ACTIONS.map((a) => {
+    const row = TICKERS.find((x) => x.t === a.ticker);
+    return `
+    <button class="week-row" data-ticker="${a.ticker}" style="cursor: pointer; border: 0; border-bottom: var(--hairline) solid var(--c-900);">
+      <div class="week-row-main">
+        <span class="week-row-title">${row.name}</span>
+        <span class="week-row-sub num">${a.ticker} · ${row.role} · ${row.weight}</span>
+      </div>
+      <span class="week-row-meta"><span class="num">${a.action}</span><span class="week-row-when num">${a.when}</span></span>
+    </button>`;
+  }).join('');
+  list.querySelectorAll('[data-ticker]').forEach((btn) => {
+    btn.addEventListener('click', () => openStock(btn.getAttribute('data-ticker')));
+  });
+}
+
+// Reading list: pieces worth digging into, not a feed and not a link out, so
+// it reuses the pill body layout but not the pill's button chrome.
+function renderContent() {
+  const list = document.getElementById('contentList');
+  list.innerHTML = CONTENT.map((item) => `
+    <div class="content-row">
+      <span class="pill-body">
+        <span class="pill-label">${item.title}</span>
+        <span class="pill-meta">
+          <span class="pill-ticker">${item.category}</span>
+          <span class="pill-sep">&middot;</span>
+          <span class="pill-date">${item.source} &middot; ${item.age}</span>
+        </span>
+      </span>
+    </div>`).join('');
+}
+
+function renderNews() {
+  document.getElementById('newsHeadingText').textContent = 'News · ' + NEWS.length;
+  const list = document.getElementById('newsList');
+  list.innerHTML = NEWS.map((item) => {
+    return `
+    <button class="pill">
+      <span class="pill-body">
+        <span class="pill-label">${item.headline}</span>
+        <span class="pill-meta">
+          <span class="pill-ticker">${item.ticker}</span>
+          <span class="pill-sep">&middot;</span>
+          <span class="pill-date">${item.source} &middot; ${item.age}</span>
+        </span>
+      </span>
+    </button>`;
+  }).join('');
+}
+
+function resultRowHTML(row, measure) {
+  // On a screen result the measure says why the row qualified. It rides the
+  // right edge of the name line, the slot the earnings date uses, instead of
+  // crowding the state line. On that line it needed 277px of a 277px box, so
+  // every screen row wrapped to two.
+  const measureHTML = measure ? `<span class="result-why">${measure}</span>` : '';
+  return `
+    <button class="result-row" data-ticker="${row.t}">
+      <span class="result-body">
+        <span class="result-top">
+          <span class="result-t">${row.t}</span>
+          <span class="result-name">${row.name}</span>
+          ${measureHTML}
+        </span>
+        <span class="result-meta">${stateSlotHTML(row)}</span>
+      </span>
+    </button>
+  `;
+}
+
+// Condensed strip (CEO 2026-08-11, Moomoo pattern): recents sit above the
+// content instead of replacing it, so browseView is never swapped out for
+// them. Independent of renderResults' browse/query/screen mode.
+function renderRecentSection() {
+  const show = RECENT.length > 0;
+  const sec = document.getElementById('recentSection');
+  sec.style.display = show ? '' : 'none';
+  // First-section top margin moves with visibility: Recent carries the 24px
+  // page-top when shown and Earnings falls back to it when Recent is empty.
+  document.getElementById('earningsSection').style.marginTop = show ? '' : '24px';
+  if (!show) return;
+  const chips = document.getElementById('recentChips');
+  chips.innerHTML = RECENT.map((t) => `<button class="recent-chip" data-ticker="${t}">${t}</button>`).join('');
+  // Tappable affordance only (Inkyung 2026-08-11): the archived stock mock is
+  // hardcoded to KSTL, so landing there from a COST chip reads as a wrong
+  // destination. Real destination returns when the reworked stock page lands.
+  chips.querySelectorAll('[data-ticker]').forEach((btn) => {
+    btn.addEventListener('click', () => {});
+  });
+}
+
+function renderResults() {
+  const q = state.query.trim().toLowerCase();
+  const mode = q ? 'query' : (state.activeScreen ? 'screen' : 'browse');
+
+  renderRecentSection();
+  renderSearchX();
+
+  const browseView = document.getElementById('browseView');
+  const resultsView = document.getElementById('resultsView');
+  // The rowstates scenario removes the header outright, taking the back
+  // control with it. Guarded so the render never dies mid-way on that frame.
+  const hdrBack = document.getElementById('hdrBack');
+
+  if (mode === 'browse') {
+    browseView.style.display = '';
+    resultsView.style.display = 'none';
+    if (hdrBack) hdrBack.style.display = 'none';
+    return;
+  }
+
+  browseView.style.display = 'none';
+  resultsView.style.display = '';
+
+  let rows = [];
+  let headerLabel = '';
+  let headerNote = '';
+
+  let measures = null;
+  if (mode === 'query') {
+    rows = TICKERS.filter((x) => x.t.toLowerCase().includes(q) || x.name.toLowerCase().includes(q));
+    headerLabel = 'Results for "' + state.query.trim() + '"';
+  } else {
+    const screen = SCREENS.find((s) => s.key === state.activeScreen);
+    // The screen's metric order, untouched. No lift and no Yours/Others labels
+    // here: those are for capped lists (Earnings), where yours would hide
+    // behind the overflow. A screen result is fully visible and a held row
+    // already reads differently (dot + role · weight), so on a five-row list
+    // the labels were more chrome than the list they explained.
+    rows = screen.tickers.map((t) => TICKERS.find((x) => x.t === t)).filter(Boolean);
+    headerLabel = screen.label;
+    headerNote = screen.note;
+    measures = screen.measure;
+  }
+
+  // A screen was picked from a list, so back closes it. A query was typed,
+  // so the exit is clear.
+  const isScreen = mode === 'screen';
+  if (hdrBack) hdrBack.style.display = isScreen ? '' : 'none';
+
+  // Same head for a query and a screen.
+  const resultsHead = document.getElementById('resultsHead');
+  resultsHead.style.display = '';
+  document.getElementById('resultsHeaderLabel').innerHTML = mode === 'screen'
+    ? headerLabel + '<span class="screen-count"> · ' + rows.length + '</span>'
+    : headerLabel.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+
+  const noteEl = document.getElementById('resultsNote');
+  if (headerNote) {
+    noteEl.textContent = headerNote;
+    noteEl.style.display = '';
+  } else {
+    noteEl.style.display = 'none';
+  }
+
+  const noResultsEl = document.getElementById('noResults');
+  noResultsEl.style.display = rows.length === 0 ? '' : 'none';
+
+  const rowsEl = document.getElementById('resultRows');
+  rowsEl.innerHTML = rows.map((r) => resultRowHTML(r, measures && measures[r.t])).join('');
+  rowsEl.querySelectorAll('[data-ticker]').forEach((btn) => {
+    btn.addEventListener('click', () => openStock(btn.getAttribute('data-ticker')));
+  });
+}
+
+// Tracks whether THIS page pushed the screen entry. Loaded straight into a
+// screen (deep link, scenario sheet) there is nothing of ours to unwind, and
+// a blind history.back() would leave the page instead of closing the screen.
+let screenPushed = false;
+
+function selectScreen(key) {
+  state.activeScreen = key;
+  state.query = '';
+  document.getElementById('queryInput').value = '';
+  history.pushState({ screen: key }, '', '#' + key);
+  screenPushed = true;
+  renderResults();
+}
+
+// Tap affordance only for now (Inkyung 2026-08-11): the archived stock mock
+// is hardcoded to KSTL, so every row destination reads as the wrong page.
+// Still records Recent so the section stays live. Navigation returns when
+// the reworked stock page lands.
+function openStock(t) {
+  addRecent(t);
+  renderRecentSection();
+}
+
+// The in-field x: wipes the typed query in place, keeps focus so the user
+// can retype. The page returns to browse with Recent standing at the top.
+function clearQuery() {
+  state.query = '';
+  const inp = document.getElementById('queryInput');
+  inp.value = '';
+  inp.focus();
+  renderResults();
+}
+
+function renderSearchX() {
+  const x = document.getElementById('searchX');
+  if (x) x.style.display = state.query.trim().length > 0 ? '' : 'none';
+}
+
+document.getElementById('queryInput').addEventListener('input', (e) => {
+  state.query = e.target.value;
+  state.activeScreen = null;
+  renderResults();
+});
+
+// mousedown instead of click, so the tap cannot be swallowed by the field
+// losing focus first on some devices.
+document.getElementById('searchX').addEventListener('mousedown', (e) => { e.preventDefault(); clearQuery(); });
+
+// Screen-exit only, and it never leaves the page: with our own pushed entry it
+// unwinds it (same path as the system back gesture), otherwise it just closes
+// the screen in place. Search itself is dismissed with Cancel, not this.
+document.getElementById('hdrBack').addEventListener('click', () => {
+  if (!state.activeScreen) return;
+  if (screenPushed) { screenPushed = false; history.back(); return; }
+  state.activeScreen = null;
+  renderResults();
+});
+
+// Cancel always leaves the page, in one tap, from any state (Dave 2026-08-11:
+// Cancel, not back). It never closes a screen or clears a query: that overlap
+// with the chevron is what made the control read as random, and with no
+// referrer it took two taps to get out (Inkyung 2026-08-11).
+//
+// Search is only ever summoned from another page in the real app, so there is
+// always somewhere to return to. Opened directly, or from a tool page like the
+// scenario sheet, the prototype substitutes the stock page mock rather than
+// inheriting whatever the browser happens to hold as referrer.
+const SUMMONED_FROM = '../V1/archive/Stock Page Polish 2/index.html';
+document.getElementById('searchCancel').addEventListener('click', () => {
+  const ref = document.referrer;
+  const fromApp = ref && !ref.includes('scenarios.html') && !ref.includes('search-v3.html');
+  location.href = fromApp ? ref : SUMMONED_FROM;
+});
+
+document.getElementById('recentClear').addEventListener('click', () => {
+  RECENT.length = 0;
+  renderRecentSection();
+});
+
+document.getElementById('earningsMore').addEventListener('click', () => {
+  earningsExpanded = !earningsExpanded;
+  renderEarnings();
+});
+
+
+window.addEventListener('popstate', () => {
+  screenPushed = false;
+  state.activeScreen = null;
+  state.query = '';
+  document.getElementById('queryInput').value = '';
+  renderResults();
+});
+
+// Regular sessions, in ET minutes from midnight. NYSE/Nasdaq and the TSX both
+// run 9:30 to 16:00, so the two flags flip together on a normal day. They are
+// kept as separate entries because the holiday calendars do NOT match (July 4
+// vs Canada Day, Boxing Day), and holidays are not modelled here: that needs a
+// real exchange calendar. Flagged in SPEC-data-sources.md.
+const SESSIONS = [
+  { code: 'US', open: 9 * 60 + 30, close: 16 * 60 },
+  { code: 'CA', open: 9 * 60 + 30, close: 16 * 60 },
+];
+
+// The line says ET, so it is read in ET rather than in whatever zone the
+// device happens to sit in. h23 keeps midnight at 00, not 24.
+function etNow() {
+  const parts = {};
+  new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York', hourCycle: 'h23',
+    weekday: 'short', hour: '2-digit', minute: '2-digit', second: '2-digit',
+  }).formatToParts(new Date()).forEach((p) => { parts[p.type] = p.value; });
+  return parts;
+}
+
+function tickClock() {
+  const et = etNow();
+  // The rowstates scenario removes the header outright, so the clock and the
+  // session flags may not exist. The as-of captions below still update.
+  const clockLine = document.getElementById('clockLine');
+  const marketFlags = document.getElementById('marketFlags');
+  if (clockLine) clockLine.textContent = et.hour + ':' + et.minute + ':' + et.second + ' ET';
+
+  const weekend = et.weekday === 'Sat' || et.weekday === 'Sun';
+  const mins = Number(et.hour) * 60 + Number(et.minute);
+  if (marketFlags) marketFlags.innerHTML = SESSIONS.map((s) => {
+    const open = !weekend && mins >= s.open && mins < s.close;
+    return '<span class="mkt-flag"><span class="dot ' + (open ? 'dot-live' : 'dot-closed') + '"></span>'
+      + '<span class="lbl">' + s.code + (open ? ' OPEN' : ' CLOSED') + '</span></span>';
+  }).join('');
+
+  const h = Number(et.hour);
+  const asOf = 'As of ' + (h % 12 === 0 ? 12 : h % 12) + ':' + et.minute + ' ' + (h < 12 ? 'AM' : 'PM') + ' ET';
+  document.getElementById('marketAsOf').textContent = asOf;
+  document.getElementById('corpAsOf').textContent = asOf;
+}
+
+if (location.hash) {
+  history.replaceState(null, '', location.pathname + location.search);
+}
+
+// ── Scenario driver (scenario sheet only, scenarios.html) ───────────────
+// Seeds a handful of data/state mutations on the existing constants right
+// before the very first render, so none of the render or interaction logic
+// above needs to know a scenario is running. With no `?s=` parameter (or
+// `?s=default`) this block changes nothing and the page behaves exactly as
+// it did before this driver existed.
+const SCENARIO = new URLSearchParams(location.search).get('s') || '';
+
+function applyScenario() {
+  if (!SCENARIO || SCENARIO === 'default') return;
+
+  const noHoldings = SCENARIO === 'no-holdings' || SCENARIO === 'query-no-holdings';
+  if (noHoldings) {
+    TICKERS.forEach((row) => { delete row.state; delete row.role; delete row.weight; });
+    CORP_ACTIONS.length = 0;
+  }
+
+  // Session scenarios pin the clock so the sheet reads the same at any hour.
+  // Without pinning the open state, the default column and the closed column
+  // look identical every evening, which is when the sheet is usually read.
+  if (SCENARIO === 'open') {
+    etNow = function () {
+      return { weekday: 'Tue', hour: '10', minute: '18', second: '04' };
+    };
+  }
+
+  if (SCENARIO === 'closed') {
+    // Reassigns the ET-clock source so tickClock (already on a 1s interval)
+    // renders a fixed closed-market time instead of the live one.
+    etNow = function () {
+      return { weekday: 'Tue', hour: '19', minute: '42', second: '10' };
+    };
+  }
+
+  if (SCENARIO === 'no-recent') {
+    RECENT.length = 0;
+  }
+
+  if (SCENARIO === 'recent-full') {
+    RECENT.length = 0;
+    ['COST', 'NVDA', 'SHOP', 'AAPL', 'MSFT'].forEach((t) => RECENT.push(t));
+  }
+
+  if (SCENARIO === 'earnings-expanded') {
+    earningsExpanded = true;
+  }
+
+  if (SCENARIO === 'quiet-week') {
+    TICKERS.forEach((row) => { delete row.earnings; });
+    MACRO_EVENTS.length = 0;
+    CORP_ACTIONS.length = 0;
+  }
+
+  if (SCENARIO === 'query' || SCENARIO === 'query-no-holdings') {
+    state.query = 'a';
+    document.getElementById('queryInput').value = 'a';
+  }
+
+  if (SCENARIO === 'no-match') {
+    state.query = 'zzzz';
+    document.getElementById('queryInput').value = 'zzzz';
+  }
+
+  if (SCENARIO === 'screen') {
+    state.activeScreen = 'near_low';
+  }
+
+  // One key per screen, so the board can show every screen's own result.
+  const SCREEN_SCENARIOS = {
+    'screen-insider': 'insider_buying',
+    'screen-dividend': 'dividend_growth',
+    'screen-volume': 'unusual_volume',
+    'screen-active': 'most_active',
+  };
+  if (SCREEN_SCENARIOS[SCENARIO]) {
+    state.activeScreen = SCREEN_SCENARIOS[SCENARIO];
+  }
+
+  if (SCENARIO === 'screen-empty') {
+    const s = SCREENS.find((x) => x.key === 'near_low');
+    s.tickers = [];
+    s.measure = {};
+    state.activeScreen = 'near_low';
+  }
+
+  // Every memo-state x position combination on one screen (ported from
+  // V1/row-states.html, source of truth). Replaces TICKERS entirely so the
+  // synthetic screen below is the only data on the page; Corporate Actions is
+  // cleared because it looks up its rows by ticker against TICKERS and would
+  // otherwise resolve to nothing.
+  if (SCENARIO === 'rowstates') {
+    TICKERS.length = 0;
+    TICKERS.push(
+      { t: 'RS01', name: 'No Memo, Not Held', state: 'none', price: '87.59', day: '+1.1%' },
+      { t: 'RS02', name: 'No Memo, Held', state: 'none', role: 'Starter', weight: '1.9%' },
+      { t: 'RS03', name: 'Thesis Current, Not Held', state: 'current', price: '87.59', day: '+1.1%' },
+      { t: 'RS04', name: 'Thesis Current, Held', state: 'current', role: 'Core', weight: '8.4%' },
+      { t: 'RS05', name: 'Thesis Review, Not Held', state: 'review', price: '87.59', day: '+1.1%' },
+      { t: 'RS06', name: 'Thesis Review, Held', state: 'review', role: 'Core', weight: '6.2%' },
+      { t: 'RS07', name: 'Material Move, Not Held', state: 'material', price: '87.59', day: '+1.1%' },
+      { t: 'RS08', name: 'Material Move, Held', state: 'material', role: 'Capped', weight: '4.1%' },
+      { t: 'RS09', name: 'Big Move, Not Held', state: 'urgent', price: '87.59', day: '+1.1%' },
+      { t: 'RS10', name: 'Big Move, Held', state: 'urgent', role: 'Core', weight: '5.2%' },
+      { t: 'RS11', name: 'Role, Core', state: 'current', role: 'Core', weight: '8.4%' },
+      { t: 'RS12', name: 'Role, Conviction', state: 'current', role: 'Conviction', weight: '2.9%' },
+      { t: 'RS13', name: 'Role, Capped', state: 'current', role: 'Capped', weight: '2.3%' },
+      { t: 'RS14', name: 'Role, Starter', state: 'current', role: 'Starter', weight: '0.7%' }
+    );
+    SCREENS.push({
+      key: 'row_states', label: 'Row States',
+      note: 'Memo state and position are separate axes (Doctrine section 56). A held row always ends with role and weight; no weight means not held.',
+      tickers: TICKERS.map((r) => r.t),
+      measure: {},
+    });
+    state.activeScreen = 'row_states';
+    CORP_ACTIONS.length = 0;
+    // This frame is a reference matrix, not a screen a user reaches. The app
+    // chrome (status line, search box, screen-exit back) made it read as a
+    // real page in the handoff, so it renders bare: matrix and heading only.
+    // Removed, not hidden: a display:none header would still ride into the
+    // Figma capture as hidden text layers.
+    document.querySelector('.hdr').remove();
+  }
+}
+applyScenario();
+
+renderMarket();
+renderScreens();
+renderEarnings();
+renderMacro();
+renderCorpActions();
+renderNews();
+renderContent();
+renderResults();
+
+// The lead index is already open in the base render; the two states worth
+// their own frames are the ends of the fold range. Collapsed is the compact
+// form, expanded is every index open at once.
+if (SCENARIO === 'market-collapsed') {
+  document.querySelectorAll('.idx-wrap.open').forEach((w) => w.classList.remove('open'));
+}
+if (SCENARIO === 'market-expanded') {
+  document.querySelectorAll('.idx-wrap').forEach((w) => w.classList.add('open'));
+}
+// The step between the default and fully open: each index row toggles on its
+// own, so opening everything is two taps, not one. This is tap one.
+if (SCENARIO === 'market-two-open') {
+  document.querySelectorAll('.idx-wrap')[1].classList.add('open');
+}
+
+tickClock();
+setInterval(tickClock, 1000);
+
+// Entry is the search icon, so the cursor is ready to type. The page itself
+// does not change on focus: Recent already stands at the top of browse.
+// Scenario columns skip autofocus: with 13 iframes on one sheet, each one
+// stealing focus from the last made the whole page jump on load.
+if (!SCENARIO) document.getElementById('queryInput').focus();
+</script>
+
+</body>
+</html>
