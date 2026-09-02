@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sort Control, Options</title>
+<!-- Variant sheet for the list sort control in "positions screens v5.html"
+     (same folder). Change one, change both, always in the same pass. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --c-black:#000000; --c-1000:#1C1C1C; --c-900:#232627;
+    --c-graphite:#3A3A37;
+    --c-800:#565B5E; --c-700:#929292; --c-400:#C7C7C7;
+    --c-200:#E3E2E2; --c-white:#FFFFFF;
+    --c-live-muted:#288752; --c-urgent-muted:#BE3C36;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--c-900);font-family:'Inter',sans-serif;padding:48px 20px 96px;
+    -webkit-font-smoothing:antialiased;}
+  .page-head{max-width:840px;margin:0 auto 40px;}
+  .page-title{font-size:17px;color:var(--c-white);letter-spacing:-0.02em;margin:0 0 8px;}
+  .page-sub{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;margin:0;}
+  .grid{display:flex;flex-wrap:wrap;gap:40px;justify-content:center;align-items:flex-start;max-width:1900px;margin:0 auto;}
+  .variant{width:390px;}
+  .compare-label{font-size:13px;color:var(--c-400);letter-spacing:-0.02em;margin:0 0 4px;}
+  .compare-verdict{font-size:11px;letter-spacing:-0.02em;margin:0 0 10px;}
+  .compare-verdict.rec{color:var(--c-live-muted);}
+  .compare-verdict.no{color:var(--c-urgent-muted);}
+  .compare-verdict.ok{color:var(--c-700);}
+  .note{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.45;margin:10px 0 0;}
+  .measure{font-size:11px;color:var(--c-800);letter-spacing:-0.02em;margin:6px 0 0;
+    font-feature-settings:'tnum' 1,'lnum' 1;}
+
+  /* ---- real screen chrome, copied from positions screens v5 ---- */
+  .frame{width:390px;background:var(--c-black);border:0.5px solid var(--c-graphite);}
+  header.app{display:flex;align-items:center;height:48px;padding:0 20px;
+    border-bottom:0.5px solid var(--c-graphite);}
+  .back{font-size:17px;color:var(--c-400);}
+  .info-btn{margin-left:auto;width:12px;height:12px;border-radius:50%;
+    border:0.5px solid var(--c-700);display:flex;align-items:center;justify-content:center;
+    font-size:9px;color:var(--c-700);}
+  .subhead{display:flex;flex-direction:column;align-items:flex-end;gap:2px;padding:32px 20px 0;}
+  .subhead .kicker{font-size:17px;letter-spacing:-0.02em;color:var(--c-700);line-height:1.2;}
+  .subhead .name{font-size:17px;letter-spacing:-0.02em;color:var(--c-white);line-height:1.2;}
+
+  .filterbar{display:flex;align-items:center;padding:16px 0 16px 20px;margin-top:48px;
+    border-bottom:0.5px solid var(--c-graphite);position:relative;}
+  .chips{display:flex;gap:16px;overflow-x:auto;white-space:nowrap;flex:1;min-width:0;
+    padding-right:24px;scrollbar-width:none;}
+  .chips::-webkit-scrollbar{display:none;}
+  .sort-btn{flex-shrink:0;padding-right:20px;position:relative;}
+  .sort-btn::before{content:'';position:absolute;left:-24px;top:0;bottom:0;width:24px;
+    pointer-events:none;background:linear-gradient(to right, transparent, var(--c-black));}
+  .chip{font-size:13px;letter-spacing:-0.02em;color:var(--c-700);padding:12px 4px;margin:-12px -4px;
+    flex-shrink:0;position:relative;}
+  .chip.on{color:var(--c-white);}
+  .chip.on::after{content:'';position:absolute;left:4px;right:4px;bottom:-4px;height:1.5px;background:var(--c-white);}
+
+  .pd-bm-current{display:inline-flex;align-items:center;gap:6px;font-size:13px;
+    color:var(--c-white);letter-spacing:-0.02em;padding:12px 2px;margin:-12px -2px;}
+  .pd-bm-current .chev-svg{width:9px;height:9px;color:var(--c-700);}
+  .pd-bm-current .sort-svg{width:10px;height:10px;color:var(--c-700);flex:none;}
+  /* same rule the market strip uses between the clock and the flags, and the same
+     one the Monthly grid uses to fence off Annual */
+  .sort-div{width:0.5px;height:12px;background:var(--c-800);flex:none;margin-right:12px;}
+
+  /* list rows, enough of them to read the sort in context */
+  .list{padding:16px 20px 8px;}
+  .row{display:grid;grid-template-columns:1fr auto auto;column-gap:12px;row-gap:4px;
+    align-items:baseline;padding:16px 0;border-bottom:0.5px solid var(--c-graphite);}
+  .tk{font-size:15px;color:var(--c-200);letter-spacing:-0.02em;}
+  .val{font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;
+    font-feature-settings:'tnum' 1,'lnum' 1;}
+  .arw{font-size:11px;width:17px;text-align:right;}
+  .arw.up{color:var(--c-live-muted);} .arw.down{color:var(--c-urgent-muted);}
+  .sub{grid-column:1/2;font-size:13px;color:var(--c-700);letter-spacing:-0.02em;}
+  .cmp{font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;
+    font-feature-settings:'tnum' 1,'lnum' 1;}
+
+  /* option D only: a sorted-by column header above the list */
+  .listhead{display:grid;grid-template-columns:1fr auto 17px;column-gap:12px;align-items:baseline;
+    padding:12px 20px;border-bottom:0.5px solid var(--c-graphite);}
+  .listhead .h{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
+  .listhead .h.right{text-align:right;display:inline-flex;align-items:center;gap:5px;
+    justify-content:flex-end;color:var(--c-200);}
+</style>
+</head>
+<body>
+
+<div class="page-head">
+  <p class="page-title">Sort control, five options</p>
+  <p class="page-sub">The word "Sort:" costs width in a filter bar that already overflows, and it is the
+    only control on the page that names its own function instead of showing its state. Each option below is
+    the real filter bar at 390px, with the real chips beside it, so the width it frees is visible too.</p>
+</div>
+
+<div class="grid">
+
+  <!-- ============ 1. current ============ -->
+  <div class="variant">
+    <p class="compare-label">1. Current</p>
+    <p class="compare-verdict no">Names the function, not the state</p>
+    <div class="frame">
+      <header class="app"><span class="back">&#8249;</span><span class="info-btn">i</span></header>
+      <div class="subhead"><span class="kicker">Closed Positions</span><span class="name">10 positions</span></div>
+      <div class="filterbar">
+        <div class="chips">
+          <span class="chip on">All</span><span class="chip">Beat (5)</span>
+          <span class="chip">Trailed (4)</span><span class="chip">Profitable (7)</span><span class="chip">Unprofitable (2)</span>
+        </div>
+        <span class="sort-btn"><span class="pd-bm-current" id="opt1">Sort:&nbsp;Return<svg class="chev-svg" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.3"/></svg></span></span>
+      </div>
+      <div class="list">
+        <div class="row"><span class="tk">NVDA</span><span class="val">+41.0%</span><span class="arw up">&#9650;</span><span class="sub">NVIDIA Corp</span><span class="cmp">S&amp;P +18.1%</span><span></span></div>
+        <div class="row"><span class="tk">UNH</span><span class="val">+22.4%</span><span class="arw up">&#9650;</span><span class="sub">UnitedHealth</span><span class="cmp">S&amp;P +11.2%</span><span></span></div>
+        <div class="row" style="border-bottom:none;"><span class="tk">ADBE</span><span class="val">+18.1%</span><span class="arw up">&#9650;</span><span class="sub">Adobe Inc</span><span class="cmp">S&amp;P +8.5%</span><span></span></div>
+      </div>
+    </div>
+    <p class="note">Every other control on this page shows its value and lets a chevron say it opens
+      (<span style="color:var(--c-400);">S&amp;P 500 &#8964;</span>, <span style="color:var(--c-400);">All Transactions · 6 &#8964;</span>).
+      This one alone announces its job.</p>
+    <p class="measure" data-measure="opt1">control width</p>
+  </div>
+
+  <!-- ============ 2. sort glyph ============ -->
+  <div class="variant">
+    <p class="compare-label">2. Sort glyph &#183; value &#183; chevron</p>
+    <p class="compare-verdict ok">Works, but adds a glyph</p>
+    <div class="frame">
+      <header class="app"><span class="back">&#8249;</span><span class="info-btn">i</span></header>
+      <div class="subhead"><span class="kicker">Closed Positions</span><span class="name">10 positions</span></div>
+      <div class="filterbar">
+        <div class="chips">
+          <span class="chip on">All</span><span class="chip">Beat (5)</span>
+          <span class="chip">Trailed (4)</span><span class="chip">Profitable (7)</span><span class="chip">Unprofitable (2)</span>
+        </div>
+        <span class="sort-btn"><span class="pd-bm-current" id="opt2"><svg class="sort-svg" viewBox="0 0 10 10" fill="none"><path d="M2.6 1.2V8.8M2.6 8.8L0.9 7.1M2.6 8.8L4.3 7.1M7.4 8.8V1.2M7.4 1.2L5.7 2.9M7.4 1.2L9.1 2.9" stroke="currentColor" stroke-width="1"/></svg>Return<svg class="chev-svg" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.3"/></svg></span></span>
+      </div>
+      <div class="list">
+        <div class="row"><span class="tk">NVDA</span><span class="val">+41.0%</span><span class="arw up">&#9650;</span><span class="sub">NVIDIA Corp</span><span class="cmp">S&amp;P +18.1%</span><span></span></div>
+        <div class="row"><span class="tk">UNH</span><span class="val">+22.4%</span><span class="arw up">&#9650;</span><span class="sub">UnitedHealth</span><span class="cmp">S&amp;P +11.2%</span><span></span></div>
+        <div class="row" style="border-bottom:none;"><span class="tk">ADBE</span><span class="val">+18.1%</span><span class="arw up">&#9650;</span><span class="sub">Adobe Inc</span><span class="cmp">S&amp;P +8.5%</span><span></span></div>
+      </div>
+    </div>
+    <p class="note">The two-headed glyph is the platform sign for "sorted by" (iOS
+      <span style="color:var(--c-400);">arrow.up.arrow.down</span>, Material <span style="color:var(--c-400);">sort</span>).
+      It is deliberately not a single arrow: &#9650;&#9660; already mean beat / trailed on this page, and
+      &#8250; already means drill in. Each part does distinct work. Glyph = sorted by, word = by what,
+      chevron = tap to change.</p>
+    <p class="measure" data-measure="opt2">control width</p>
+  </div>
+
+  <!-- ============ 3. value only ============ -->
+  <div class="variant">
+    <p class="compare-label">3. Value only</p>
+    <p class="compare-verdict no">Reads as a fifth filter</p>
+    <div class="frame">
+      <header class="app"><span class="back">&#8249;</span><span class="info-btn">i</span></header>
+      <div class="subhead"><span class="kicker">Closed Positions</span><span class="name">10 positions</span></div>
+      <div class="filterbar">
+        <div class="chips">
+          <span class="chip on">All</span><span class="chip">Beat (5)</span>
+          <span class="chip">Trailed (4)</span><span class="chip">Profitable (7)</span><span class="chip">Unprofitable (2)</span>
+        </div>
+        <span class="sort-btn"><span class="pd-bm-current" id="opt3">Return<svg class="chev-svg" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.3"/></svg></span></span>
+      </div>
+      <div class="list">
+        <div class="row"><span class="tk">NVDA</span><span class="val">+41.0%</span><span class="arw up">&#9650;</span><span class="sub">NVIDIA Corp</span><span class="cmp">S&amp;P +18.1%</span><span></span></div>
+        <div class="row"><span class="tk">UNH</span><span class="val">+22.4%</span><span class="arw up">&#9650;</span><span class="sub">UnitedHealth</span><span class="cmp">S&amp;P +11.2%</span><span></span></div>
+        <div class="row" style="border-bottom:none;"><span class="tk">ADBE</span><span class="val">+18.1%</span><span class="arw up">&#9650;</span><span class="sub">Adobe Inc</span><span class="cmp">S&amp;P +8.5%</span><span></span></div>
+      </div>
+    </div>
+    <p class="note">The narrowest option, and the one that frees the most room for the chips. But it sits
+      in the same row as four filter chips and now looks like a fifth one.
+      <span style="color:var(--c-400);">Return &#8964;</span> could plausibly mean "show only returns".
+      Cleanliness here costs meaning.</p>
+    <p class="measure" data-measure="opt3">control width</p>
+  </div>
+
+  <!-- ============ 4. column header ============ -->
+  <div class="variant">
+    <p class="compare-label">4. Sorted column header</p>
+    <p class="compare-verdict ok">Clearest, costs a row</p>
+    <div class="frame">
+      <header class="app"><span class="back">&#8249;</span><span class="info-btn">i</span></header>
+      <div class="subhead"><span class="kicker">Closed Positions</span><span class="name">10 positions</span></div>
+      <div class="filterbar">
+        <div class="chips" style="padding-right:0;">
+          <span class="chip on">All</span><span class="chip">Beat (5)</span>
+          <span class="chip">Trailed (4)</span><span class="chip">Profitable (7)</span><span class="chip">Unprofitable (2)</span>
+        </div>
+      </div>
+      <div class="listhead">
+        <span class="h">Position</span>
+        <span class="h right" id="opt4">Return<svg class="sort-svg" viewBox="0 0 10 10" fill="none"><path d="M2.6 1.2V8.8M2.6 8.8L0.9 7.1M2.6 8.8L4.3 7.1M7.4 8.8V1.2M7.4 1.2L5.7 2.9M7.4 1.2L9.1 2.9" stroke="currentColor" stroke-width="1"/></svg></span>
+        <span></span>
+      </div>
+      <div class="list" style="padding-top:8px;">
+        <div class="row"><span class="tk">NVDA</span><span class="val">+41.0%</span><span class="arw up">&#9650;</span><span class="sub">NVIDIA Corp</span><span class="cmp">S&amp;P +18.1%</span><span></span></div>
+        <div class="row"><span class="tk">UNH</span><span class="val">+22.4%</span><span class="arw up">&#9650;</span><span class="sub">UnitedHealth</span><span class="cmp">S&amp;P +11.2%</span><span></span></div>
+        <div class="row" style="border-bottom:none;"><span class="tk">ADBE</span><span class="val">+18.1%</span><span class="arw up">&#9650;</span><span class="sub">Adobe Inc</span><span class="cmp">S&amp;P +8.5%</span><span></span></div>
+      </div>
+    </div>
+    <p class="note">Moves sorting out of the filter bar entirely and onto the column it orders, the way a
+      terminal does it. The chips finally get the full width and stop overflowing. Cost: a new 41px header
+      row this list has never had, and the sort key must always be a visible column, which rules out
+      sorting by anything the row does not print.</p>
+    <p class="measure" data-measure="opt4">control width</p>
+  </div>
+
+  <!-- ============ 5. divider + value ============ -->
+  <div class="variant">
+    <p class="compare-label">5. Divider &#183; value</p>
+    <p class="compare-verdict rec">Recommended</p>
+    <div class="frame">
+      <header class="app"><span class="back">&#8249;</span><span class="info-btn">i</span></header>
+      <div class="subhead"><span class="kicker">Closed Positions</span><span class="name">10 positions</span></div>
+      <div class="filterbar">
+        <div class="chips">
+          <span class="chip on">All</span><span class="chip">Beat (5)</span>
+          <span class="chip">Trailed (4)</span><span class="chip">Profitable (7)</span><span class="chip">Unprofitable (2)</span>
+        </div>
+        <span class="sort-btn" style="display:inline-flex;align-items:center;"><span class="sort-div"></span><span class="pd-bm-current" id="opt5">Return<svg class="chev-svg" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.3"/></svg></span></span>
+      </div>
+      <div class="list">
+        <div class="row"><span class="tk">NVDA</span><span class="val">+41.0%</span><span class="arw up">&#9650;</span><span class="sub">NVIDIA Corp</span><span class="cmp">S&amp;P +18.1%</span><span></span></div>
+        <div class="row"><span class="tk">UNH</span><span class="val">+22.4%</span><span class="arw up">&#9650;</span><span class="sub">UnitedHealth</span><span class="cmp">S&amp;P +11.2%</span><span></span></div>
+        <div class="row" style="border-bottom:none;"><span class="tk">ADBE</span><span class="val">+18.1%</span><span class="arw up">&#9650;</span><span class="sub">Adobe Inc</span><span class="cmp">S&amp;P +8.5%</span><span></span></div>
+      </div>
+    </div>
+    <p class="note">Option 3 failed only because the value sat in the same run as the chips and read as a
+      sixth filter. A rule fixes exactly that, and it is already this file's device for "a different kind of
+      thing starts here": the market strip sets the clock off from the flags with it, and the Monthly grid
+      fences off Annual with it. So the separation gets made without inventing a glyph, and the value can
+      stand alone the way every other control on the page does.</p>
+    <p class="measure" data-measure="opt5">control width</p>
+  </div>
+
+</div>
+
+<script>
+  // print the real rendered widths, so the space each option frees is a measured number
+  document.querySelectorAll('[data-measure]').forEach(el => {
+    const inner = document.getElementById(el.dataset.measure);
+    const target = inner && (inner.closest('.sort-btn') || inner);
+    if (!target) return;
+    const w = target.getBoundingClientRect().width;
+    const b1 = document.getElementById('opt1');
+    const base = (b1.closest('.sort-btn') || b1).getBoundingClientRect().width;
+    const delta = w - base;
+    el.textContent = 'control width: ' + w.toFixed(0) + 'px'
+      + (delta === 0 ? ' (baseline)' : (delta < 0 ? '  ·  frees ' + Math.abs(delta).toFixed(0) + 'px for the chips'
+                                                  : '  ·  ' + delta.toFixed(0) + 'px wider'));
+  });
+  // and how much the chip strip still overflows in each case
+  document.querySelectorAll('.chips').forEach(c => {
+    const hidden = c.scrollWidth - c.clientWidth;
+    const m = c.closest('.variant').querySelector('.measure');
+    if (m) m.textContent += hidden > 1 ? '  ·  chips still cut by ' + hidden.toFixed(0) + 'px' : '  ·  chips fit';
+  });
+</script>
+
+</body>
+</html>

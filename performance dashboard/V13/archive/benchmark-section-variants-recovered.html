@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Benchmark Section, Variants</title>
+<!-- Variant sheet for the S&P 500 Benchmark section of index.html (same folder).
+     Hierarchy reference: CEO mock 2026-08-28 (content direction only; visual
+     grammar is the design system's). Change one, change both, same pass. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --c-black:#000000; --c-1000:#1C1C1C; --c-900:#232627;
+    --c-graphite:#3A3A37;
+    --c-800:#565B5E; --c-700:#929292; --c-400:#C7C7C7;
+    --c-200:#E3E2E2; --c-white:#FFFFFF;
+    --c-live-muted:#288752; --c-urgent-muted:#BE3C36;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--c-900);font-family:'Inter',sans-serif;padding:48px 20px 96px;
+    -webkit-font-smoothing:antialiased;}
+  .page-head{max-width:840px;margin:0 auto 40px;}
+  .page-title{font-size:17px;color:var(--c-white);letter-spacing:-0.02em;margin:0 0 8px;}
+  .page-sub{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.45;margin:0;}
+  .grid{display:flex;flex-wrap:wrap;gap:40px;justify-content:center;align-items:flex-start;max-width:1400px;margin:0 auto;}
+  .variant{width:393px;}
+  .compare-label{font-size:13px;color:var(--c-400);letter-spacing:-0.02em;margin:0 0 4px;}
+  .compare-verdict{font-size:11px;letter-spacing:-0.02em;margin:0 0 10px;}
+  .compare-verdict.rec{color:var(--c-live-muted);}
+  .compare-verdict.ok{color:var(--c-700);}
+  .note{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.45;margin:10px 0 0;}
+
+  .frame{width:393px;background:var(--c-black);border:0.5px solid var(--c-graphite);
+    padding:28px 16px 24px;}
+
+  /* section header, as it exists on the dashboard today */
+  .sec-head{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 4px;}
+  .sec-title{font-size:15px;color:var(--c-white);letter-spacing:-0.02em;}
+  .sec-title .dim{color:var(--c-800);}
+  .sec-title .mid{color:var(--c-700);}
+  .chev{color:var(--c-800);font-size:15px;}
+
+  .hero-label{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;}
+  .hero-value{font-size:28px;color:var(--c-white);letter-spacing:-0.02em;line-height:1.15;
+    font-feature-settings:'lnum' 1,'tnum' 1;margin:6px 0 0;}
+  .ann-pair{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;margin:8px 0 0;
+    font-feature-settings:'lnum' 1,'tnum' 1;}
+  .ann-pair .me{color:var(--c-400);}
+
+  /* tracked-since bar: c-200 fill, team rule forbids green bars */
+  .bar-wrap{margin:20px 0 0;}
+  .bar{width:100%;height:3px;background:var(--c-1000);position:relative;}
+  .bar .fill{position:absolute;top:0;left:0;bottom:0;width:63.3%;background:var(--c-200);}
+  .bar-labels{display:flex;justify-content:space-between;margin-top:8px;
+    font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
+
+  /* chart */
+  .chart{display:block;width:100%;height:auto;margin:20px 0 0;overflow:visible;}
+  .legend{display:inline-flex;gap:16px;align-items:center;margin:20px 0 0;}
+  .legend span{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
+  .legend .ln{display:inline-block;width:20px;height:0;border-top:1.5px solid var(--c-400);}
+  .legend .ln.dash{border-top:1.5px dashed var(--c-700);}
+
+  /* stat grid (2x2, hairline fenced) */
+  .stat-grid{display:grid;grid-template-columns:1fr 1fr;margin:24px 0 0;
+    border-top:0.5px solid var(--c-graphite);border-left:0.5px solid var(--c-graphite);}
+  .stat-cell{padding:14px 16px 16px;border-right:0.5px solid var(--c-graphite);
+    border-bottom:0.5px solid var(--c-graphite);}
+  .stat-cell .k{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
+  .stat-cell .v{font-size:17px;color:var(--c-white);letter-spacing:-0.02em;margin-top:6px;
+    font-feature-settings:'lnum' 1,'tnum' 1;}
+  .stat-cell .v.down{color:var(--c-urgent-muted);}
+  .trend{font-size:11px;margin-left:6px;}
+  .trend.down{color:var(--c-urgent-muted);}
+
+  /* CTA: square, hairline, DS button grammar */
+  .cta{display:flex;align-items:center;justify-content:space-between;margin:24px 0 0;
+    border:0.5px solid var(--c-graphite);padding:16px;}
+  .cta .t{font-size:15px;color:var(--c-white);letter-spacing:-0.02em;}
+  .cta .s{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;margin-top:4px;}
+  .cta .go{color:var(--c-700);font-size:15px;}
+
+  /* variant 2: three-up hero row, the performance dashboard's grammar */
+  .hero3{display:grid;grid-template-columns:1fr 1fr 1fr;margin:20px 0 0;column-gap:8px;}
+  .hero3 .h{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
+  .hero3 .v{font-size:17px;color:var(--c-white);letter-spacing:-0.02em;margin-top:6px;
+    font-feature-settings:'lnum' 1,'tnum' 1;white-space:nowrap;}
+  .hero3 .ta-c{text-align:center;} .hero3 .ta-r{text-align:right;}
+  .hero3 .v.down{color:var(--c-urgent-muted);}
+
+  .statline{display:flex;justify-content:space-between;margin:20px 0 0;
+    font-size:13px;color:var(--c-700);letter-spacing:-0.02em;
+    font-feature-settings:'lnum' 1,'tnum' 1;}
+  .statline b{color:var(--c-400);font-weight:400;}
+
+  .rowlink{display:flex;align-items:center;justify-content:space-between;margin:20px 0 0;
+    padding-top:16px;border-top:0.5px solid var(--c-graphite);
+    font-size:13px;color:var(--c-400);letter-spacing:-0.02em;}
+
+  /* variant D: the whole section is the door; a contents line replaces the CTA box */
+  .score-line{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;margin:10px 0 0;
+    font-feature-settings:'lnum' 1,'tnum' 1;}
+  .score-line .me{color:var(--c-400);}
+  .score-line .alpha{color:var(--c-urgent-muted);}
+  .toc{display:flex;align-items:center;justify-content:space-between;margin:20px 0 0;
+    padding-top:14px;border-top:0.5px solid var(--c-graphite);}
+  .toc .items{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
+  .toc .items i{font-style:normal;color:var(--c-800);padding:0 6px;}
+  .toc .go{color:var(--c-700);font-size:13px;flex:none;}
+</style>
+</head>
+<body>
+
+<div class="page-head">
+  <p class="page-title">Benchmark section, four variants</p>
+  <p class="page-sub">Cut of the main dashboard's S&amp;P 500 Benchmark section. Hierarchy per the CEO
+    mock (2026-08-28): the see-first facts are the value, the annualized pair against the index, how far
+    into the 5-year window the record is, and a door that says what is behind it. Visual grammar is the
+    design system's: bars are c-200 (green bars are banned), corners are square, signed values use the
+    muted pair. Data follows the CEO mock.</p>
+</div>
+
+<div class="grid">
+
+  <!-- ============ A. full teaser, CEO hierarchy ============ -->
+  <div class="variant">
+    <p class="compare-label">A. Full teaser, CEO hierarchy</p>
+    <p class="compare-verdict ok">CEO structure, translated</p>
+    <div class="frame">
+      <span class="hero-label">Total Account Value</span>
+      <div class="hero-value">86,400.00</div>
+      <p class="ann-pair"><span class="me">+18.2%/yr</span> &middot; S&amp;P +24.0%/yr</p>
+
+      <div class="bar-wrap">
+        <div class="bar"><div class="fill"></div></div>
+        <div class="bar-labels"><span>3y 2m invested</span><span>5-year benchmark</span></div>
+      </div>
+
+      <div class="legend"><span><span class="ln"></span>Account</span><span><span class="ln dash"></span>S&amp;P</span></div>
+      <svg class="chart" viewBox="0 0 361 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="14" font-size="11" fill="#565b5e" font-family="Inter">$90k</text>
+        <text x="0" y="76" font-size="11" fill="#565b5e" font-family="Inter">$65k</text>
+        <text x="0" y="138" font-size="11" fill="#565b5e" font-family="Inter">$40k</text>
+        <line x1="34" y1="134" x2="361" y2="134" stroke="#232627" stroke-width="0.5"/>
+        <path d="M34,128 L88,125 L143,116 L197,104 L252,84 L306,52 L361,22" fill="none"
+              stroke="#929292" stroke-width="1.25" stroke-dasharray="2 2"/>
+        <path d="M34,128 L88,127 L143,121 L197,113 L252,101 L306,86 L361,68" fill="none"
+              stroke="#c7c7c7" stroke-width="1.5"/>
+        <text x="34" y="156" font-size="11" fill="#565b5e" font-family="Inter">Mar 23</text>
+        <text x="143" y="156" font-size="11" fill="#565b5e" font-family="Inter" text-anchor="middle">Jan 24</text>
+        <text x="252" y="156" font-size="11" fill="#565b5e" font-family="Inter" text-anchor="middle">Sep 25</text>
+        <text x="361" y="156" font-size="11" fill="#565b5e" font-family="Inter" text-anchor="end">May 26</text>
+      </svg>
+
+      <div class="stat-grid">
+        <div class="stat-cell"><div class="k">Alpha, Ann.</div><div class="v down">&minus;5.8&nbsp;pp<span class="trend down">&#9660;</span></div></div>
+        <div class="stat-cell"><div class="k">Sharpe Ratio</div><div class="v">0.71</div></div>
+        <div class="stat-cell"><div class="k">Open Positions</div><div class="v">16</div></div>
+        <div class="stat-cell"><div class="k">Closed Positions</div><div class="v">16</div></div>
+      </div>
+
+      <div class="cta">
+        <div><div class="t">View Full Dashboard</div>
+          <div class="s">Risk, monthly returns, decisions &amp; more</div></div>
+        <span class="go">&#8250;</span>
+      </div>
+    </div>
+    <p class="note">The CEO structure, translated: bar fill c-200 not green, square corners, alpha in the
+      muted pair. Value leads, the annualized pair states the score, the bar says how much of the 5-year
+      window is behind it, the grid previews the dashboard's kinds of content, and the CTA names what is
+      inside. The most complete promise of depth, and the tallest.</p>
+  </div>
+
+  <!-- ============ B. comparison leads ============ -->
+  <div class="variant">
+    <p class="compare-label">B. Comparison leads</p>
+    <p class="compare-verdict ok">No duplicated value</p>
+    <div class="frame">
+      <div class="sec-head">
+        <span class="sec-title">S&amp;P 500 Benchmark <span class="mid">&middot;</span> <span class="dim">All Accounts &middot; 3y 2m</span></span>
+        <span class="chev">&#8250;</span>
+      </div>
+
+      <div class="hero3">
+        <div><div class="h">Account</div><div class="v">+18.2%/yr</div></div>
+        <div class="ta-c"><div class="h">Alpha</div><div class="v down">&minus;5.8&nbsp;pp<span class="trend down">&#9660;</span></div></div>
+        <div class="ta-r"><div class="h">S&amp;P</div><div class="v">+24.0%/yr</div></div>
+      </div>
+
+      <svg class="chart" viewBox="0 0 361 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="14" font-size="11" fill="#565b5e" font-family="Inter">$90k</text>
+        <text x="0" y="76" font-size="11" fill="#565b5e" font-family="Inter">$65k</text>
+        <text x="0" y="138" font-size="11" fill="#565b5e" font-family="Inter">$40k</text>
+        <line x1="34" y1="134" x2="361" y2="134" stroke="#232627" stroke-width="0.5"/>
+        <path d="M34,128 L88,125 L143,116 L197,104 L252,84 L306,52 L361,22" fill="none"
+              stroke="#929292" stroke-width="1.25" stroke-dasharray="2 2"/>
+        <path d="M34,128 L88,127 L143,121 L197,113 L252,101 L306,86 L361,68" fill="none"
+              stroke="#c7c7c7" stroke-width="1.5"/>
+        <text x="34" y="156" font-size="11" fill="#565b5e" font-family="Inter">Mar 23</text>
+        <text x="361" y="156" font-size="11" fill="#565b5e" font-family="Inter" text-anchor="end">May 26</text>
+      </svg>
+
+      <div class="statline">
+        <span>Sharpe <b>0.71</b></span>
+        <span>Open <b>16</b></span>
+        <span>Closed <b>16</b></span>
+        <span>Tracked <b>3y 2m / 5y</b></span>
+      </div>
+
+      <div class="cta">
+        <div><div class="t">View Full Dashboard</div>
+          <div class="s">Risk, monthly returns, decisions &amp; more</div></div>
+        <span class="go">&#8250;</span>
+      </div>
+    </div>
+    <p class="note">On the main dashboard the account value already sits one section above, so a value hero
+      here prints the same number twice. This variant keeps the section header and leads with the thing
+      only this section knows: the score against the index, in the performance dashboard's own three-up
+      hero grammar. The stat strip trades the grid's presence for one quiet line.</p>
+  </div>
+
+  <!-- ============ C. compact ============ -->
+  <div class="variant">
+    <p class="compare-label">C. Compact, chart and score only</p>
+    <p class="compare-verdict ok">Shortest</p>
+    <div class="frame">
+      <div class="sec-head">
+        <span class="sec-title">S&amp;P 500 Benchmark <span class="mid">&middot;</span> <span class="dim">All Accounts &middot; 3y 2m</span></span>
+        <span class="chev">&#8250;</span>
+      </div>
+      <p class="ann-pair" style="margin-top:10px;"><span class="me">+18.2%/yr</span> &middot; S&amp;P +24.0%/yr &middot; Alpha <span style="color:var(--c-urgent-muted);">&minus;5.8&nbsp;pp&nbsp;&#9660;</span></p>
+
+      <svg class="chart" viewBox="0 0 361 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="14" font-size="11" fill="#565b5e" font-family="Inter">$90k</text>
+        <text x="0" y="76" font-size="11" fill="#565b5e" font-family="Inter">$65k</text>
+        <text x="0" y="138" font-size="11" fill="#565b5e" font-family="Inter">$40k</text>
+        <line x1="34" y1="134" x2="361" y2="134" stroke="#232627" stroke-width="0.5"/>
+        <path d="M34,128 L88,125 L143,116 L197,104 L252,84 L306,52 L361,22" fill="none"
+              stroke="#929292" stroke-width="1.25" stroke-dasharray="2 2"/>
+        <path d="M34,128 L88,127 L143,121 L197,113 L252,101 L306,86 L361,68" fill="none"
+              stroke="#c7c7c7" stroke-width="1.5"/>
+        <text x="34" y="156" font-size="11" fill="#565b5e" font-family="Inter">Mar 23</text>
+        <text x="361" y="156" font-size="11" fill="#565b5e" font-family="Inter" text-anchor="end">May 26</text>
+      </svg>
+
+      <div class="bar-wrap">
+        <div class="bar"><div class="fill"></div></div>
+        <div class="bar-labels"><span>3y 2m invested</span><span>5-year benchmark</span></div>
+      </div>
+
+      <div class="rowlink"><span>View Full Dashboard &middot; risk, monthly returns, decisions</span><span class="go">&#8250;</span></div>
+    </div>
+    <p class="note">Everything in one screen-glance: score line, chart, progress to the 5-year mark, door.
+      No stat grid, so it stays close to the dashboard's current rhythm and costs the least height. The
+      price is that nothing here previews the dashboard's breadth beyond the CTA copy.</p>
+  </div>
+
+  <!-- ============ D. section as the door ============ -->
+  <div class="variant">
+    <p class="compare-label">D. The section is the door</p>
+    <p class="compare-verdict rec">Recommended</p>
+    <div class="frame">
+      <div class="sec-head">
+        <span class="sec-title">S&amp;P 500 Benchmark <span class="mid">&middot;</span> <span class="dim">All Accounts &middot; 3y 2m</span></span>
+        <span class="chev">&#8250;</span>
+      </div>
+      <p class="score-line"><span class="me">+18.2%/yr</span> &middot; S&amp;P +24.0%/yr &middot; <span class="alpha">&minus;5.8&nbsp;pp&nbsp;&#9660;</span></p>
+
+      <!-- endpoint labels replace the legend, the y-axis, and the two value rows:
+           each line ends in its own name and today's value, and the bracket between
+           the endpoints is the difference, measured where it actually exists -->
+      <svg class="chart" viewBox="0 0 361 168" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="140" x2="286" y2="140" stroke="#232627" stroke-width="0.5"/>
+        <path d="M0,134 L48,131 L95,122 L143,110 L190,90 L238,58 L286,28" fill="none"
+              stroke="#929292" stroke-width="1.25" stroke-dasharray="2 2"/>
+        <path d="M0,134 L48,133 L95,127 L143,119 L190,107 L238,92 L286,74" fill="none"
+              stroke="#c7c7c7" stroke-width="1.5"/>
+        <circle cx="286" cy="74" r="2.5" fill="#c7c7c7"/>
+        <text x="296" y="25" font-size="11" fill="#929292" font-family="Inter">S&amp;P</text>
+        <text x="296" y="38" font-size="11" fill="#929292" font-family="Inter">97.6k</text>
+        <text x="296" y="74" font-size="11" fill="#c7c7c7" font-family="Inter">Account</text>
+        <text x="296" y="87" font-size="11" fill="#c7c7c7" font-family="Inter">86.4k</text>
+        <line x1="290" y1="44" x2="290" y2="64" stroke="#3A3A37" stroke-width="0.5"/>
+        <text x="296" y="57" font-size="11" fill="#BE3C36" font-family="Inter">&minus;11.2k</text>
+        <text x="0" y="162" font-size="11" fill="#565b5e" font-family="Inter">Mar 23</text>
+        <text x="286" y="162" font-size="11" fill="#565b5e" font-family="Inter" text-anchor="end">May 26</text>
+      </svg>
+
+      <div class="bar-wrap">
+        <div class="bar"><div class="fill"></div></div>
+        <div class="bar-labels"><span>3y 2m invested</span><span>5-year benchmark</span></div>
+      </div>
+
+      <div class="toc">
+        <span class="items">Risk-Adjusted<i>&middot;</i>Monthly Returns<i>&middot;</i>Decisions<i>&middot;</i>Contributors</span>
+        <span class="go">&#8250;</span>
+      </div>
+    </div>
+    <p class="note">No CTA box: in this product nothing else asks to be pressed, blocks are doors
+      (the V11 rule is block tap = navigate, with a quiet &#8250; in the gutter), so a boxed button is
+      the one element on the page speaking another product's language. Instead the last line is a
+      contents line, it names the actual dashboard sections waiting behind the tap, which is the honest
+      version of "&amp; more". And the chart carries the whole table: each line ends in its own name and
+      value, so the legend, the y-axis, and the Portfolio / S&amp;P Equivalent rows all collapse into two
+      labels, and the bracket between the endpoints prints the difference at the only place it physically
+      exists, the gap between the lines.</p>
+  </div>
+
+</div>
+
+</body>
+</html>

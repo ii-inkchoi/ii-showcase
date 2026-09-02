@@ -1,0 +1,719 @@
+
+Speaker 1 00:00 
+It costs an additional 500, but the value is there, right? So, so it's not that, you know, people can't spend more money on tokens. Obviously, that's gonna happen. It's that there's gonna be a, an ROI, and you're doing it knowingly, right? And thoughtfully, right? Not you're shocked and found out that, you know, "Shit, I, had I known, I would have done it differently," right?
+
+But start, start with going and figuring out, you know, by going to AI and just saying, "Here's what happened." So Aiden, we're talking about Ink had no idea that she had any extra charges. Okay? So obviously that's the biggest flag. 
+
+Speaker 2 00:40 
+Yeah, I'm not surprised by that. 
+
+Speaker 1 00:41 
+No, I know, but that's the biggest flag is that literally, and presumably that's not the first month, right? So this has already been happening, right?
+
+Where there's extra charges for people like Ink, and she actually didn't even know. So she's like, "Okay, well, what am I supposed to do? How do I do this? How do I control it?" I'm like, "Well, first thing you do is go to AI and say, 'Here's exactly... I just found this out. How do I manage this? How do I... You know, help, help me think through this.'" Right? Um, and you know, so let's, let's start there. I don't know if there's any oth- other information or context that you, you have that you think is important to share. 
+
+Speaker 2 01:19 
+No, I don't. 
+
+Speaker 3 01:19 
+Well, I know the engineers can also-- Well, they're looking into setting obviously, like, limits onto certain ones. 
+
+Speaker 2 01:25 
+Yeah. 
+
+Speaker 3 01:25 
+So it's- 
+
+Speaker 2 01:25 
+It just came up. We were talking about it. We need to have a- 
+
+Speaker 1 01:28 
+Yeah 
+
+Speaker 2 01:28 
+... another call to- 
+
+Speaker 1 01:29 
+Right 
+
+Speaker 2 01:29 
+... get into the details and make sure we're managing that appropriately. 
+
+Speaker 1 01:31 
+But let's start there. I mean, for example, I don't know, am I being charged anything extra? Right? 
+
+Speaker 3 01:37 
+No. Not, not last month at least. 
+
+Speaker 1 01:40 
+Okay. Well, so there you go. And I'm on this all the time. I'm doing prototypes all the time, right?
+
+And I'm working directly with Claude, and obviously, um, I stopped using design 'cause I actually prefer... Increasingly, I preferred the design that I was getting through, uh, through Claude directly versus Claude Design. So, and I found it way more better context, you know, 'cause it's not just the design that I care about. Obviously, visually, I care about the, the content and the context, and therefore the quality of the content I seem to do better working with Claude than Claude Design. If I use Claude Design, I'd have to bring that design into Claude to pressure test it, right? Um, does that make sense to you guys? 
+
+Speaker 2 02:31 
+Yeah. 
+
+Speaker 1 02:32 
+Right? Like... So on that note, Ink and Leo, do you guys ever use Claude for design, or you just do it all in Claude Design? Uh, I use Claude Code. Okay. 
+
+Speaker 2 02:55 
+Well, yeah, there's no use in you trying to look around. You should just ask, ask Claude.
+
+But anyways, the engineers can help give more details on that, and we can talk through how to better manage that. 
+
+Speaker 3 03:19 
+Hmm. Oh, this is good. Okay. Um- 
+
+Speaker 1 03:24 
+Here, let me share screen here. Just wanna share this. Share screen. Can you guys see this? 
+
+Speaker 3 03:45 
+Mm-hmm. 
+
+Speaker 1 03:45 
+Yeah. Okay. Um, so I've just been pressure testing, adding some other elements to the performance dashboard. Um, so this-- You can see this risk-adjusted performance, beta versus S&P, Sharpe ratio, Sortino ratio, Information ratio, tracking error, up and down capture. And again, I can't explain to you, uh, what this information is, but it, it's related to what professional investors track.
+
+And so adding some of those elements, also some visual elements. So in this case, your yearly return, this is showing monthly. So you can see it, uh, also with some kinda heat map or some colors, right? Um, so then you see-
+
+Speaker 2 04:32 
+Yeah 
+
+Speaker 1 04:32 
+... your yearly return, but it's also broken down to monthly. Um, this is again, a graph for cumulative alpha. Um, I, I haven't spent-- It's obviously got some detail here, but in particular this one I just pressure tested it with some... saying from a behavioral perspective, it came up with this new one, holding pattern. "A well-known bias in investing is holding losers longer than winners, selling what's working to lock it in, and holding what isn't, hoping it recovers.
+
+Here's what this account, account's own 16 closed positions show. Your winners held 227 days, your losers 306 days." I thought, "Wow, that's cool." Now, that only came up because I said, "This is meant to help retail investors," right? Be bet- become better investors and get-
+
+Speaker 2 05:16 
+Sorry, but isn't this just the, is this just the average holding period? 
+
+Speaker 1 05:20 
+Yeah, but not-- But look at it. It's showing winners versus losers. It's specific to the, the bias in holding losers longer than winners. So, right? Um, there's nothing- 
+
+Speaker 2 05:30 
+Don't we have that in the app right now, though? 
+
+Speaker 1 05:32 
+Well, if we do, the difference was it wasn't done visually, and it didn't, didn't hit like this. Like, I would've-- I bypassed it. 
+
+Speaker 2 05:39 
+No. 
+
+Speaker 1 05:39 
+I went to- 
+
+Speaker 2 05:41 
+Yeah, no. Yeah, so we do, but and I- 
+
+Speaker 1 05:42 
+Right 
+
+Speaker 2 05:42 
+... I pointed this out too. It, it literally looks like a disclaimer text. 
+
+Speaker 1 05:47 
+Right. 
+
+Speaker 2 05:47 
+It's just one small sentence of text. 
+
+Speaker 1 05:48 
+Yeah, and so, uh, but, but my only point is I said, like, I wanna add, I want visuals that help make this more engaging for users, that get, gets them to look at information, and it's more effective to drive the behavior. And here's what it came up with.
+
+Now, whether or not this is the exact data we had before, but is just presented differently Um, it actually proves the point. If this information was one of many data points, but now when you show it like this, it's completely different. Like, there's no way you're gonna miss it, right? 
+
+Speaker 4 06:20 
+Yeah. 
+
+Speaker 2 06:21 
+Right. 
+
+Speaker 4 06:22 
+Yeah, and also, I mean, it doesn't have kind of that anchoring messaging saying that losers held longer than winners- 
+
+Speaker 1 06:28 
+Mm-hmm 
+
+Speaker 4 06:28 
+... in order to actually reassess that. 
+
+Speaker 1 06:29 
+Right. Like, that one right away, I'm like, "Wow, I'd really like to see," you know, 'cause I guarantee that's what's gonna show on mine right now, right? Um, uh, position size. 
+
+Speaker 2 06:45 
+Yeah, you see that now. It shows at the bottom right now. 
+
+Speaker 4 06:49 
+Right, just your average hold time, though. 
+
+Speaker 2 06:54 
+Right, but that's exactly what this is. It's just displayed visually in a much better way. 
+
+Speaker 1 06:59 
+Average hold, winners, 10 months. Losers, 23 months, nine positions . Oh, so I hadn't seen that before. Is that new? 
+
+Speaker 2 07:09 
+No, it's been there. It's just obviously, again- 
+
+Speaker 1 07:11 
+Hmm 
+
+Speaker 2 07:11 
+... very small text, so it's like you wouldn't even really notice it. 
+
+Speaker 1 07:14 
+No, but I didn't even know there was a graph. I didn't see the graph before. 
+
+Speaker 2 07:18 
+Sorry, a graph? I don't see- 
+
+Speaker 4 07:19 
+There's no graph. Aiden drew a line. 
+
+Speaker 1 07:22 
+Oh. I thought that's the graph.
+
+So I'm saying it's the visual all of a sudden in that red is really kinda sh- um, bringing... Like, I hadn't seen that before. Got it. I didn't realize there was copy there, so-
+
+Speaker 4 07:34 
+Mm-hmm. 
+
+Speaker 2 07:34 
+Yeah. 
+
+Speaker 1 07:34 
+Um, but th- that just shows the difference right there. The visual is, is everything, right? 
+
+Speaker 4 07:40 
+Yeah. 
+
+Speaker 2 07:45 
+Yeah. 
+
+Speaker 1 07:45 
+And then concentration, Aiden, and sector exposure, right? 
+
+Speaker 2 07:48 
+Yeah, that's cool. Mm-hmm. 
+
+Speaker 1 07:50 
+Right? And then look at this, overall closed, uh, close average return alpha, and this is by weight. It'll tell you here, too. Weighted by position size. See this? 
+
+Speaker 4 08:09 
+Weighted by months. Oh, I see in that small text. 
+
+Speaker 2 08:14 
+Mm-hmm. 
+
+Speaker 1 08:17 
+And then it goes by position and secondary. So you're let-- It's letting you know that the primary is by size, right? And then you can see, uh, position and secondary. 
+
+Speaker 2 08:30 
+It still has the average alpha win and loss. 
+
+Speaker 1 08:36 
+Mm-hmm. Yeah. Overall average return, and then alpha. Um, average alpha win, average alpha loss, right? Average return. Average annual return, so this is new. Av- same S&P window, right? 
+
+Speaker 2 08:56 
+What's the profit factor and the batting average? Profit factor is gross profit divided by gross loss. It was L16. 
+
+Speaker 1 09:09 
+What I like, though, and this is where I find there's an element of engagement, is I like the experience where the more I go through, through it, and the more times I spend, the more I'm seeing and noticing things that otherwise I wouldn't have, have noticed, right? Versus, you know, 'cause you can go two ways.
+
+You can say, "There's too much information. I don't know what to look at." Right? 
+
+Speaker 2 09:34 
+Mm-hmm. 
+
+Speaker 1 09:35 
+Okay. Um, but what I find is if for the curious, right, for the... So our target customer, with the curious operator, right? The serious operator, right? And again, it's, it's like in, um, you know, personal performance. It's all about what's your, the level of your curiosity. So, you know, everybody on this call, to the degree that you are really curious about leveraging AI, right, becoming a more effective product designer, right, product manager, building great products, your level of curiosity is gonna determine your growth, right? Your growth slope, right? So how steep is your slope? How, how quickly are you progressing in your, you know, in your area of, you know, of competence, right? So for, you know, Inc and Leo, as product designers, how steep is your growth curve individually, right? Which means how quickly are you progressing as a product designer? How quickly are you going from a two out of 10 towards a 10 out of 10 world-class, like the best product designer on the planet? How quickly are you progressing? What drives that progression, the speed of that progression, is your level of curiosity.
+
+Your level of curiosity, obviously, in terms of, like, I'm so... Like, all I care about is how do I become a better, right, product designer. I'm so curious to learn how to become a world-class product designer. If I'm got a, you know, if I have a two out of 10, obviously I'm, I don't really care, and so my growth curve is probably pretty flat, right? If I'm a 10 out of 10, right, I mean, I'm literally any spare moment I have, that's what I'm, I'm looking into, right? Well, it's the same thing, obviously, in investing. To the level of your curiosity becoming a great investor, right, you're gonna be figuring this stuff out. And, and that then, Aiden, translates in the experience, right? You wanna optimize the experience, right, for the curious, right? Now, you also wanna design it in a way that it draws people in, 'cause... But again, that curiosity is, is there. Just like that information screen is there, and the, the detail and infor- any, all the information you want is, is available there. But that's only gonna be useful for the curious. If you have very little curiosity, you might not even tap on that thing, and you're like, "I can't even be bothered to read it."
+
+Speaker 4 12:06 
+Right. 
+
+Speaker 1 12:07 
+Right? Like, I just don't care that much about being a great investor, right? But the more curious you are, and the more you care about becoming a great investor, the more content is here for you, right? And that's what is optimized.
+
+Now, again, what we're trying to do with our marketing communication design is to increase that curiosity, right? Get people more intrigued and passionate about becoming a, a great investor, right? So you can, through design, you, you know, design of the marketing, the communication, and the experience, you can increase the curiosity factor, right? Because you make it so engaging. It's like, "Huh, well, that's interesting. What is that?" Right? Like, I just wanna check that out. Like, all of a sudden, I wanna start, again, like gamification. I wanna start seeing that thing fill in, right? You know, in absence of that graph, um, I wouldn't have cared. You guys put a graph in there, and all of a sudden I cared more. I was more curious to see that thing being filled in, right? So, you know, uh, the, the point I'm making there is that the curiosity, obviously just like stories. It's like stories, right? In communication. The-- The better the story you tell, like, it's like, like you might say you don't even care about certain things, then somebody... You meet somebody who's really passionate about... It's like, remember that hero makes sushi, right? 
+
+Speaker 2 13:24 
+Yeah. 
+
+Speaker 1 13:25 
+And then all of a sudden it's like, you know, the guy's, you know, seven years to learn how to make rice, right? Right?
+
+And until-- 'Cause-- And rice is the most important part of sushi, you know, they say. So all of a sudden it's like, well, shit, I would've, uh, and had no thought about it. All of-- But all of a sudden you hear, hear a story about something, and all of a go-- Because the story's good, you actually start caring more about something that you thought you'd never even care about, right? 
+
+Speaker 2 13:50 
+Yeah. 
+
+Speaker 1 13:53 
+So anyway, the... So what we're trying to do with the design here, and, and the reason, um, what I find is the, the more content is available here. And so let's say there's, you know, 30 data points on here, you know, and initially, you know, you might initially care about five or 10. The value is in the other 20 that you haven't yet discovered and figured out. And that becomes part of the value proposition, which is that you are constantly going in here and discovering, right, new pieces of information that, you know, that obviously you find interesting, right? That makes you more engaged to it.
+
+And that part of that engagement is I'm always-- I always will like to explore, you know, this app because I'm kinda... You know, it's drawing me in to figure this out, and there's a bunch of stuff in there that I haven't figured out yet, but I wanna figure out. So you could, you could talk about some of these things as a negative, right? Or for the right audience as a positive, right? 'Cause there's, you know, unlimited things to continue to explore in this app, right? For the curious, right? For the people that are curious about becoming a great investor, right? And then it's designed in a way that obviously, um, helps to drive that curiosity. But there's an innate-- But there is an innate curiosity. We expect that nobody's gonna sign up for this that already doesn't have a level of curiosity towards becoming a great investor. Our marketing and communication is meant to help to drive that curiosity by increasing the perceived status of somebody that's a great investor, right? And that understanding that, again, we all buy a better version of ourselves. So if we successfully, you know, communicate that being a great investor is, and a more thoughtful, you know, disciplined long-term investor is much higher status than, you know, the, the trading. Um, now ultimately, we're gonna most likely be connecting to people that are already invested, already interested in investing at some level, right? Right? But we're drawing them away from the WealthSimples of the world towards our, our approach, right? And that's because it's a higher status than that, and they see that and they're like, "Okay, I wanna get more engaged in that." Now, obviously, you already start with some level of interest and curiosity around this topic, right? Versus, you know... Um, so does that make sense? 
+
+Speaker 2 16:35 
+Yeah. Yeah. No, it does. Yeah, I agree.
+
+Yeah, I think it's an important way to look at it versus where just like, uh, you don't wanna overwhelm the person with too much information, so let's hide a bunch of this. It's like, yeah. Yeah, the depth- So- ... the depth makes sense, and obviously how everything's presented. You could take the same data that we're showing in the latest broad build, but if you, you know, not change the way it's being presented, it can make it feel way more compelling and actually interesting. 
+
+Speaker 1 17:07 
+So Ink, I just sent that to you, okay? Um, and you can obviously... When you, when you get that, right, um, presumably you put it into Quad to help you understand it, right? Um, and then, uh, now remember, don't... Forget about the design of the rest of the stuff there. This is just these additional elements.
+
+So the rest of the design is meant to be the new design. Obviously, you know, you've already got the arrows in that, um, and you know, for example, in this one, you can't click into the, the winners and losers or the top contributors. But I wanna make sure... On yours, can you actually? Let's bring yours up. Let's go to your latest performance dashboard. So go down to the biggest contributors. Oh, actually first let's go to the cash flow part. Where's the cash flow? Yeah. Okay, and how many do you have showing here? Do you have any? Yeah. Okay. No, no, no, but you, you had three and then you expand it, right? Okay, so that's fine. Yeah. Okay. So that's it. So it might say 100, right? Transactions, right? 
+
+Speaker 2 18:39 
+Yeah. 
+
+Speaker 1 18:40 
+Okay, and then you're gonna show three. Go to your top contributors.
+
+Yeah, and then you've got... Yeah, the view all. Okay, so on that note, Aiden, what about the one, the data that we're looking at today that we want, um, to add in there on these top contributors from what we currently have versus this version? 
+
+Speaker 2 19:06 
+Yeah, I mean, the only one that sounded like we were aligned on was just the holding, um, the holding period. 
+
+Speaker 1 19:14 
+Okay. 
+
+Speaker 2 19:15 
+So yeah, I mean, take a look, Ink. Like obviously- 
+
+Speaker 1 19:21 
+But, but wasn't it showing other stuff like percentage return? 
+
+Speaker 2 19:24 
+Yeah, it was, but there was none of that that we actually thought was worth adding. 
+
+Speaker 1 19:27 
+Okay. 
+
+Speaker 2 19:27 
+I mean, we could look at it again. But Ink, obviously the point is with, with this stuff, I mean, you have to look at what the latest build is showing, the what's currently in the app to see... 'Cause your latest prototype is removing elements while it's also adding. So the question is, do some of those actually, you know, deserve to be removed or should they be kept?
+
+So I just shared a screenshot of the top contributors and top detractors from what's in the app today. So scroll back down to y- your version. Scroll back down to the bottom. 
+
+Speaker 1 19:58 
+So but it-- before you get into that, uh, A- um, so Ink and Leo, this is a really important point, and it has to be-- we have to improve how we're doing from a design process. So what's h- what Aiden is, um, highlighting is part of this design process is, and this is how it should be. 
+
+Speaker 2 20:20 
+Mm-hmm. 
+
+Speaker 1 20:20 
+You guys, the designers, are designing things. Well, A- first of all, we're initially, I'm initially a lot of the stuff designing with Quad and prototyping. You guys are then taking it and then polishing it.
+
+In parallel, um, the engineer is building it out, okay? Um, as the engineer builds it out, um, they're not building it out just from the polished design that you get. They're building it out from the prototype, right? And/or some back and forth, you know, conversations from us, right? From any of us to them. Um, and in, and in many cases, the engineer then, um, does their own design, most likely with Quad, right? They're not waiting for a design from a-
+
+Speaker 2 21:09 
+Yeah 
+
+Speaker 1 21:09 
+... designer, right? And that's how it, how it should be, right?
+
+The increasingly the engineer should be able to design something as well and do that. And so what the, what, what that also does though, is it expands the, um, the testing and discovery of potentially improved elements that we otherwise wouldn't have discovered. 'Cause now you've got multiple people coming at it with a bunch of different perspectives, so... And we don't wanna miss that. And so if you don't also see the latest version that comes out in the-
+
+Speaker 2 21:48 
+Yeah 
+
+Speaker 1 21:48 
+... app, which includes elements that have come from the engineer, which, which sometimes is just based on feedback they've gotten, then you're missing, we're missing things that go, "Actually, that's actually pretty cool. I like that." Right? And what I-- And so we wanna incorporate that. We don't wanna dismiss that.
+
+Now, when you see that, you might say, you know, "Hey, what about this? What about that? I included it. I didn't include it." Right? Um, but I, I just wanna highlight that that's a really important part of this design process. So at the end of the day, the final, uh, version that ends up being in the app obviously is a combined version of everybody that has contributed, right? And all those different perspectives and approach help get to that final piece. In fact, if you're missing any one of those, the final design wouldn't, wouldn't have as been as good as if you'd just gone down a more... You only build out exactly what comes from the designer, right? See what I'm saying? 
+
+Speaker 2 22:45 
+Yeah. 
+
+Speaker 1 22:48 
+So the point, that's the point A- Aiden's making here. You must always look at the latest version.
+
+Otherwise, what's gonna happen, you send the polish and then the engineer says, "Oh, okay, I guess, you know, take all of that other stuff out."
+
+Speaker 2 23:01 
+I guess we don't need all those items, yeah. 
+
+Speaker 1 23:02 
+They, they might not even question it. Some might say, "Hey, are you sure you wanna take that out?" Sometimes that happens, but we don't wanna rely on that. 
+
+Speaker 2 23:12 
+Yeah, so if you're only going off of the last prototype, you're, there's, there could be a whole bunch of stuff, changes that you're now missing that are being overwritten or missed. So it's- 
+
+Speaker 1 23:21 
+Mm-hmm. 
+
+Speaker 2 23:21 
+... critical that as part of this, you're just going, "Okay, what's the latest one?" Yeah. 
+
+Speaker 1 23:24 
+Right. And so when I do this version and I send the, the version I just sent to you, Ink, I'm not looking at the latest prototype and everything else. I'm just exploring some other elements, and then we're trying to say, "Okay, those elements, let's bring those in and incorporate those alongside, you know, the other elements." Right? Um, right?
+
+But some of the ones in there, I'm like, "Don't go with that one. Like, go with the, the version we already have." I'm not saying, "Okay, every single piece of this is the updated version." Right? 
+
+Speaker 2 23:57 
+Yeah. 
+
+Speaker 1 23:59 
+So Ink, I just wanna make sure you're following me. Does that make sense, or is there any part of that that wasn't clear? Or maybe all of it was. I said maybe all of it was.
+
+Mm-hmm. Well, if you'll, you'll look at-- There's elements in there, data points that I showed that actually we don't even have, including visual elements. So I'm saying focus on the stuff that's new in there that we don't have. Don't focus on, on things that are adjustments to what we do have, right? So, uh, and, and obviously the whole point is just like when I give you this content too, I'm also-- you're also gonna add in your own views as well. That's kind of the whole point.
+
+It's like I'm gonna give you something, um, you know. We've-- You've got what I send you. You've got the existing latest version that's in the app, right? And then you have whatever adjustments that you might come up with. Now, you might say... So for example, let's say that there's, um, in the app right now, um, on the, in, in particular, on the, um, you know, biggest impact winners and detractors. It's got this, this additional element. Um, you may not have a view on that, right? You may not know what to do with that. You may say, "Hey, you know, I don't know," um, or I ran it through Claude. It suggests that we only-- we don't have any of it, right? Um, or we have all of it. But then you can bring that up, right? So you can, you know, you can say, "Hey, the current, uh, prototype that we have live in the app has all of this. My updated version, you know, suggested, you know, and I think makes sense that we just narrow it down to this." And that's how we make sure that we don't miss something, right?
+
+But that allows you to still come up with whatever you want. And it's no different than, again, when I send you creative content. I don't want you to follow exactly what it's saying. I'm just trying to give you inspiration, and you then, you know, will, will do whatever you think, right? Versus you're in this narrow box, you're just trying to create exactly what it is, right, that I sent you. You know what I'm saying? But obviously, like, the, the visuals, there's nothing, there's no version of that in the current one. So you add that. There's also new data points. There's none of that in the current one, those new data points. Those are easy ones, right?
+
+Existing elements that are already there, you would default to what is cur- I think currently in the app, right? And then, you know, you could, you know, pressure test that versus, and, and then you could make whatever suggested adjustments. Okay. Does that make sense, Leo, to you too? 
+
+Speaker 5 27:35 
+Yeah. 
+
+Speaker 2 27:38 
+Okay. So then on this specific piece, like the other piece, I think I like the look of the labels that are currently in the app on the open, closed versus... Well, I think it needs a bit of a treatment, but the one on the left where it says closed and open, I think there needs to be a label treatment or something. They're the same color, and the text is just a bit smaller. I just don't think that really looks as good as like having a, a box around it or something that makes it more like a, a label.
+
+But then otherwise, that three year, nine month, the one month, like we wanna add that. That's the time held. We wanna add that on these top contributors and detractors. So that's already currently in the app implementation, so we don't want to revert that change. Uh, and then, yeah, the versus S&P one on the right, uh, again, I don't think that one was really worth adding here. It just made it a bit noisier, so I feel like that shouldn't be... Yeah, I'm talking about the, on the screenshot, not on that prototype. Oh. Yeah. So anyways, just the, the, the labeling for the open, close, and then the time held on the contributors and detractors. And what else is on here? Nine p- So average hold winners, losers, so we're gonna have that new one in the prototype, the new design on the right. And then nine positions aren't ranked here, 1.3% of your holdings by cost, so total gain can be established. All-time dividends. What's at the bottom of the latest prototype if you scroll down? Left. Is there anything? What's the note? Full tracked. Right. Mm-hmm. Yeah, Ewan, what did you think about the disclaimer? So go back to the screenshot, I think, 'cause Ewan, this, this new prototype is removing this content at the bottom. We're gonna have the average hold winners and losers, but this nine positions aren't ranked, and then this all-time disclaimer, that's going away in the prototype. 
+
+Speaker 1 30:11 
+So those positions that aren't ranked, is that gonna be communicated anywhere? I don't think that all-time- 
+
+Speaker 2 30:15 
+Well, there already is communicated in the app. Like if you go into your app right now, you'll see it.
+
+One not comparable, seven not comparable. Like it says not comparable. You see that? Are you following what I'm saying again? 
+
+Speaker 4 30:40 
+No, I don't see it. 
+
+Speaker 2 30:43 
+Are you looking in your live app? 
+
+Speaker 4 30:45 
+Yep. 
+
+Speaker 2 30:48 
+And you're in the open close section where it says profitable/unprofitable beating S&P trailing? 
+
+Speaker 4 30:54 
+Yeah. Okay, yeah. I only have it for my closed then I see, yeah. 
+
+Speaker 2 31:00 
+Yeah, I just sent you that too, Ink, but that is, that is something that needs to be factored into this design as well. Like, look at the screenshot that I just sent. Just close this one and open the latest one I just sent. 
+
+Speaker 4 31:14 
+Yeah, I mean, I think that makes sense then just removing that there. I mean, we even essentially measure it or mention it within the closed or open positions as well then, like in text. 
+
+Speaker 2 31:28 
+I'm texting somebody else right now. On that screenshot you're looking at right now, it says one not comparable, seven not comparable. Do you see that?
+
+Yeah, so, so that's missing from the prototype. This is, uh, it's kind of a legacy user scenario. Basically, there's certain positions right now that w-we're not able to track. That's why it has that. 
+
+Speaker 4 32:16 
+We even need to say that too, not-- or like not comparable on the main dash before you enter it. The password field's not working? 
+
+Speaker 2 32:56 
+Sorry, it doesn't let you type in your password. Okay, so can you report that as a bug?
+
+Like... Yeah, so share a video of that and post it on the team channel. What were you saying again? You don't think what? 
+
+Speaker 4 33:34 
+Yeah, I don't think we even need to say like seven not comparable here on the closed- 
+
+Speaker 2 33:38 
+You think it should just be at the bottom? 
+
+Speaker 4 33:42 
+Or, or the user, I mean, when-- once they tap into it, they'll see those two that are N/A, and then they'll have that messaging at the bottom. 
+
+Speaker 2 33:49 
+Yeah. 
+
+Speaker 4 33:51 
+I just don't think it looks very good here. 
+
+Speaker 2 33:53 
+Yeah, that's true. Yeah. Yeah, I agree. So maybe we just remove it from there and you only see it when you tap in. 
+
+Speaker 4 33:58 
+Yeah, 'cause I don't think it's really relevant there. 
+
+Speaker 2 34:03 
+Mm-hmm. What are you trying to check right now, Ink? Right. Yeah. So you can, you can do that after, though. In the meantime, let's look at... So as you were just saying, let's forget about adding the not comparable to the open and close. So that can just-- that information can just live in, in the actual close page and open page when you tap on it. But then tap on the open or close page on the prototype. Let's just see what, what that looks like. Yeah, either one, open or closed.
+
+Yeah, and so here is what... Here's what's in it right now. Yeah, so the profitable, unprofitable being missed is definitely a miss. That needs to be added. Um, but here's a screenshot of what the open page looks like right now. I definitely prefer the bracketed numbers too over what it looks like right now. Beating six without the bracket doesn't look as good. The bracket definitely is, is the better way to go. I also like what Bruin's done, where if you notice in the screenshot, it underlines the section when you tap on it as well. That definitely looks better too. Like, you see, you see what I'm saying? Like, look at the screenshot that I sent. Yeah, I just sent the most recent. Yeah. So that looks better as well, so we definitely shouldn't change that. Um, there's also this filter. You can sort by return or, or value. 
+
+Speaker 4 36:30 
+And then beating S&P slash- 
+
+Speaker 2 36:31 
+So, uh, Ink, before I forget, that, that new prototype that I sent with the month, okay? Right
+
+Speaker 1 36:43 
+It's got the annualized return in month, right? 
+
+Speaker 2 36:47 
+Yeah, that's what we're looking at. 
+
+Speaker 1 36:49 
+Yeah. 
+
+Speaker 2 36:49 
+The heat map, yeah. 
+
+Speaker 1 36:49 
+So, um, now I'm not sure we should do it exactly like this. So the question is, do we make that just a view, right? So you can see the way we currently have it, and then you can click on by month as an optional view. See what I'm saying?
+
+Or do we make that the default view? Now, what's kinda cool about this as a default view, so I'm just thinking through it, is it'll be-- I think it'll be a, an easier activation path for a new user, Aiden, because now you, you're breaking it down by month. You know what I'm saying? Versus year. 
+
+Speaker 2 37:22 
+Yeah. 
+
+Speaker 1 37:23 
+Right? So you get to see a green month or a red month. 
+
+Speaker 2 37:27 
+Yeah, this one. 
+
+Speaker 1 37:29 
+Right? So, so maybe, yeah, maybe we experiment with, uh, just doing exactly like this. I mean, you can polish it up, but this idea.
+
+So the only view is the month and annual together. Um, so again, back to the biggest, uh, thing that I'm trying to, uh, think about in particular is our single biggest challenge right now is getting somebody to be activated, right? So a new user comes in, right? We're trying to get them to wanna place their first trade, and all of a sudden start seeing their, their dashboards kinda come to life with a position, right? So right now, um, if you're currently in a certain month and you're up or down, it'll show green or red, right? 
+
+Speaker 2 38:12 
+Mm-hmm. 
+
+Speaker 1 38:13 
+In that month. So you'll be in, you know, August, and it'll go green. You see what I'm saying? Like already, boom, you got an active square in there, right? 
+
+Speaker 2 38:22 
+Mm-hmm. 
+
+Speaker 1 38:23 
+Which is kinda cool, and then you can see all the blank months ahead, right? 
+
+Speaker 2 38:28 
+Yeah. No, I agree. 
+
+Speaker 1 38:29 
+And blank years. And so again, it's like gamifying, it's like a streak, right? I mean, that's a version of a streak, right? I'm trying to see every single month filled in, right?
+
+And obviously in any of the, my other apps, I'm not gonna get this, right? Is it? Is it showing only the alpha? No, it should be showing the returns. Shouldn't be showing the alpha. Should be just showing your actual returns. Yeah, so that would be your, your monthly performance. So you're either, you know, 'cause it, it's showing your, your, you're either you had a positive month or a negative month, okay? And then it's showing your annual return, okay? So, um, what is the... Where it's not green or red, what is that? Count returns by month, heat map by magnitude. Only three years, two months of history exists. The blank cells are-
+
+Speaker 2 39:29 
+I don't think any of them are not green or red. Or you mean the blank ones? 
+
+Speaker 1 39:32 
+Well, what's minus 1.0? 
+
+Speaker 2 39:35 
+They're just, they're just- 
+
+Speaker 1 39:36 
+Oh, oh 
+
+Speaker 2 39:36 
+... different shades depending on how impactful it was. 
+
+Speaker 1 39:38 
+Ah. 
+
+Speaker 2 39:38 
+So it's a theme- 
+
+Speaker 1 39:39 
+Okay, well there you go. So that's even better 
+
+Speaker 2 39:40 
+... it's a theme. 
+
+Speaker 1 39:41 
+Yeah, yeah. That's even better. Good. Yeah, so that is the heat map idea. Okay. So it's just- 
+
+Speaker 2 39:45 
+Yeah, it's just by the magnitude. 
+
+Speaker 1 39:47 
+Yeah. Okay, cool. 
+
+Speaker 2 39:51 
+Mm-hmm. 
+
+Speaker 1 39:57 
+But that is-- The, the point is, that is how a professional would, would be managing it too, right? Um, so when I was trading, I obviously tracked my performance every single day, so I knew every single day my P&L, how many profitable days, negative days.
+
+Obviously, you know, literally I tracked it by, by day, but obviously this is a version, you know, by month, which is, is more appropriate for, uh, for this. 
+
+Speaker 2 40:26 
+More appropriate. Yeah. 
+
+Speaker 1 40:27 
+Exactly. Uh, but anyway, again, back to, I was just trying to debate whether or not do we still want the yearly view without the months, but actually I think for now, no.
+
+Because I think this as the default view is gonna be more engaging, right? And, you know, more likely to help drive-
+
+Speaker 2 40:47 
+Sorry, so you're saying that we should get rid of the annualized? Or sorry, the other view. 
+
+Speaker 1 40:49 
+Well, the annualized is still there, but we only have this view. So we don't have a view where you can get rid of this and just see your annual, 'cause this is annual, right? 
+
+Speaker 2 40:57 
+Right. 
+
+Speaker 1 40:57 
+And I think for now, like let's just, let's try this because, but I think because it will... Versus, 'cause normally what you do is you default to the annual, then you can tap in to see this detail, right? 
+
+Speaker 2 41:07 
+Yeah, yeah, yeah. No. 
+
+Speaker 1 41:09 
+And I'm like, well, no, I think we're better off right now defaulting to this and therefore why would I allow somebody to close it? 'Cause I think this is gonna be more engaging to get somebody to fill it in, right? 
+
+Speaker 2 41:20 
+Mm-hmm. Yeah, I agree. 
+
+Speaker 1 41:23 
+And now, 'cause one of the biggest challenges is like, well, you need five years of history, um, but there is no... Well, no, every month is another box you're checking, right? 
+
+Speaker 2 41:32 
+Yeah. 
+
+Speaker 1 41:35 
+Okay. 
+
+Speaker 2 41:35 
+Yeah, makes sense. 
+
+Speaker 1 41:37 
+But obviously that, Inc, is kind of the point that when you're, when you're going through this, part of what we're trying to design is what do we think will be more engaging to get people to want to, you know, fill this stuff in, you know, get active. Like I say, as soon as you get one position, um, and that's why I like that calibration, uh, graph on our main dashboard. As soon as you add a, your first position, boom, you're gonna see a dot, um, on that, uh, dashboard. And otherwise you won't see, you know, you won't see anything kind of visually. You'll see obviously a position in your active positions, but you know, this is just another, another element.
+
+And same thing here. With this, you're gonna see, with these new graphs, you're gonna see the position show up here as well. Right? On this note, let's go to the main dashboard and let's just... 'Cause obviously I think that's the piece, Aiden, we were talking about too, what updates we wanna make to that S&P performance part there. So maybe, Inc, why don't you do that as a takeaway as part of this when you update this? Come up with what you think the updated recommended, um, S&P performance Dashboard. So if, yeah, so go to the main dashboard. Right now we just show your portfolio and then S&P, right? And then you gotta tap into it. 
+
+Speaker 2 43:02 
+Leo, do you have that latest design? 
+
+Speaker 1 43:04 
+Yeah, I have it here. 
+
+Speaker 2 43:04 
+Like the main dashboard. 
+
+Speaker 1 43:06 
+I, I have it. 
+
+Speaker 2 43:06 
+Yeah, so just share the link in. 
+
+Speaker 1 43:08 
+Yeah. 
+
+Speaker 2 43:08 
+Oh, it's there, yeah. 
+
+Speaker 1 43:09 
+Oh. Oh, yeah, yeah. 
+
+Speaker 2 43:17 
+I really like... I like those green. 
+
+Speaker 1 43:20 
+Oh, yeah, I changed those to arrow head. 
+
+Speaker 2 43:22 
+You like the what? 
+
+Speaker 1 43:24 
+I changed them from number being green to arrow being green. Yeah, the green arrow- 
+
+Speaker 2 43:29 
+Yeah 
+
+Speaker 1 43:29 
+... I think works 
+
+Speaker 2 43:29 
+I like those 
+
+Speaker 1 43:30 
+... works for this, too. So you should update this calibration. Um... 
+
+Speaker 2 43:42 
+Yeah. This calibration design is great. 
+
+Speaker 1 43:44 
+But on, on that note, I do like seeing 17 predictions, right? Um, I don't think we have... So actually, that is the other thing we're gonna wanna upd- uh, start polishing the calibration feature. 
+
+Speaker 2 43:59 
+Mm-hmm. 
+
+Speaker 1 44:00 
+'Cause I think it needs a lot of polish. 
+
+Speaker 2 44:03 
+Yeah, it does. 
+
+Speaker 1 44:03 
+So on that note, maybe Leo, you could start working on that. 
+
+Speaker 2 44:08 
+Mm-hmm. 
+
+Speaker 1 44:09 
+Um, and you gotta w- use the latest. 
+
+Speaker 2 44:13 
+Yeah, you gotta look at what's in the latest app build. 
+
+Speaker 1 44:15 
+Mm-hmm. But that includes, you know, what are we gonna show on the main dashboard?
+
+But getting back to this one, so the S&P 500 benchmark. First of all, it's not supposed to say benchmark. I thought we eliminated that. 
+
+Speaker 2 44:28 
+Yeah, we have, and it, it, it is already updated in the app, so- 
+
+Speaker 1 44:32 
+Right 
+
+Speaker 2 44:32 
+... that's a progression issue. 
+
+Speaker 1 44:36 
+Okay. 
+
+Speaker 2 44:37 
+So yeah, that should not say benchmark, Leo. That should be saying- 
+
+Speaker 1 44:39 
+So- 
+
+Speaker 2 44:40 
+... S&P benchmark comparison like it is in the app. 
+
+Speaker 1 44:42 
+So, Ink- Yeah. It is ... your, your goal is to come up with a new version of this. What are we gonna show here? Okay? Correct. 
+
+Speaker 2 44:50 
+Yeah. 
+
+Speaker 1 44:50 
+Yeah, which is where you then tap in to go into the full detail. Right now, this just feels... It, it, it would be shocking to me that all that data is hidden behind this. If this doesn't- 
+
+Speaker 2 45:02 
+No, I know. It feels very, too, way too simplistic. Like, this is all I'm gonna see, and then you click into it like, "Holy shit, there's all this information-" 
+
+Speaker 1 45:08 
+Yeah. No, no, exactly 
+
+Speaker 2 45:09 
+"... I would never have seen." 
+
+Speaker 1 45:09 
+So anyway, I don't even wanna... You just need to, um, you know, explore, you know, possible design improvements to, to this. So let's not spend too much time trying to figure that out.
+
+Ink, you've, you kind of explore that. I, I think the, the main, uh, point though here is that the, what we do see here, your overall portfolio value and your difference versus the S&P, I think generally is still a really good kinda big picture view, right? Um, but I definitely think that, you know, there's some more, probably more data points in there, and maybe, maybe a visual element. Don't know, right? But I am thinking maybe a, a visual graph element might be appropriate here. But regardless, I'll, I'll let you do that as a takeaway.
+
+Um, so now first just, uh, update the, the detailed portion based on the latest one, and then once you've done that, then you can work on the updated main dashboard portion. Okay? Does that make sense? 
+
+Speaker 2 46:16 
+Ink, you're on mute. Still on mute. 
+
+Speaker 1 46:25 
+Okay. Um, and then going-

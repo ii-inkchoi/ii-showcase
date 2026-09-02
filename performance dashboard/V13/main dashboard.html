@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Portfolio + The Record — Mobile Frame</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+
+  /* Tokens for the account-switcher sheet added below. The rest of this file
+     predates them and still carries literal hex; not touched here. */
+  :root {
+    --c-1000: #1C1C1C;
+    --c-900: #232627;
+    --c-800: #565B5E;
+    --c-700: #929292;
+    --c-400: #C7C7C7;
+    --c-200: #E3E2E2;
+    --c-white: #FFFFFF;
+    --c-elev: #0A0A0A;
+    /* the muted pair used for signs: the number stays neutral, only the arrow carries colour */
+    --c-live-muted: #288752;
+    --c-urgent-muted: #BE3C36;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0a0a0a;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    padding: 40px 20px;
+  }
+
+  /* ---------- Phone chrome ---------- */
+  .phone {
+    position: relative;
+    width: 421px;
+    padding: 12px;
+    background: #060606;
+    border-radius: 58px;
+    box-shadow: 0 0 0 2px #1f1f1f, 0 0 0 8px #0d0d0d, 0 40px 80px rgba(0,0,0,.7);
+  }
+  .phone .side-btn { position: absolute; background: #1a1a1a; border-radius: 3px; }
+  .phone .side-btn.mute { left: -3px; top: 118px; width: 3px; height: 28px; }
+  .phone .side-btn.vol-up { left: -3px; top: 165px; width: 3px; height: 48px; }
+  .phone .side-btn.vol-down { left: -3px; top: 222px; width: 3px; height: 48px; }
+  .phone .side-btn.power { right: -3px; top: 190px; width: 3px; height: 70px; }
+
+  .screen {
+    position: relative;
+    width: 397px;
+    height: 852px;
+    background: #000;
+    border-radius: 46px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .screen::-webkit-scrollbar { width: 0; height: 0; }
+
+  .dynamic-island {
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 26px;
+    background: #000;
+    border-radius: 16px;
+    z-index: 50;
+  }
+
+  .home-indicator {
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 110px;
+    height: 4px;
+    background: #3a3a3a;
+    border-radius: 3px;
+    z-index: 50;
+  }
+
+  /* ---------- Design frame (393px, matches Figma root) ---------- */
+  .frame {
+    position: relative;
+    width: 393px;
+    min-height: 2592px;
+    background: #000;
+    border: none;
+    box-sizing: border-box;
+    color: #ffffff;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow: hidden;
+    transition: min-height .35s ease;
+  }
+
+  .abs { position: absolute; white-space: nowrap; line-height: normal; }
+  .divider { position: absolute; background: #1c1c1c; height: 1px; }
+  .dot { position: absolute; border-radius: 50%; }
+
+  .tags-row {
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: 8px;
+    column-gap: 14px;
+    max-width: 361px;
+  }
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    font-weight: 500;
+    color: #ffffff;
+    white-space: nowrap;
+  }
+  .tag .tag-dot {
+    width: 4.65px;
+    height: 4.65px;
+    border-radius: 50%;
+    flex: none;
+  }
+
+  .row-divider {
+    position: absolute;
+    left: 16px;
+    width: 360.79px;
+    height: 1px;
+    background: #1c1c1c;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+  .pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+
+  /* ================= TOP-BAR EXPERIMENT PANELS ================= */
+  /* Each .tbx is a complete, mutually-exclusive layout of the area between
+     the logo and the right-side icons. Only one is displayed at a time, so
+     variants can never bleed into each other. */
+  .tbx {
+    position: absolute; inset: 0;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .tb-col { display: flex; flex-direction: column; gap: 7px; }
+  .tb-r1  { font-size: 11.5px; color: #fff; letter-spacing: -0.19px; font-variant-numeric: tabular-nums; line-height: 1; white-space: nowrap; }
+  .tb-r1v { font-size: 12.5px; color: #fff; letter-spacing: -0.3px; font-variant-numeric: tabular-nums; line-height: 1; white-space: nowrap; }
+  .tb-sm  { font-size: 10px; color: #929292; letter-spacing: 0.28px; }
+  .tb-dot { width: 4.65px; height: 4.65px; border-radius: 50%; background: #30d158; display: inline-block; vertical-align: 0.5px; }
+  .num    { font-variant-numeric: tabular-nums; }
+  /* rotating cell: fixed-size box, cards stacked in place — neighbours never move */
+  .tb-rotate { position: relative; display: block; }
+  .tb-card {
+    position: absolute; left: 0; top: 0; line-height: 1; white-space: nowrap;
+    font-size: 10px;
+    opacity: 0; transform: translateY(5px);
+    transition: opacity .7s cubic-bezier(0.32, 0.72, 0, 1), transform .7s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .tb-card.on { opacity: 1; transform: none; }
+  #tbx-line .tb-card { font-size: 12px; letter-spacing: -0.19px; }
+  /* money cells appear only after the big Total Value scrolls past */
+  .tb-gated { opacity: 0; transition: opacity .3s ease; }
+
+  /* ================= STATE SWITCHER (outside the phone) ================= */
+  .iter-wrap { position: fixed; top: 20px; left: 20px; z-index: 600; }
+  .iter-burger {
+    width: 42px; height: 42px; border: 1px solid #262626; border-radius: 9px;
+    background: rgba(17,17,17,0.85); backdrop-filter: blur(8px);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 4.5px; cursor: pointer;
+  }
+  .iter-burger:hover { border-color: #3a3a3a; }
+  .iter-burger span { display: block; width: 16px; height: 1.5px; background: #c7c7c7; border-radius: 1px; }
+  .iter-menu {
+    position: absolute; top: 50px; left: 0; min-width: 258px;
+    background: #111; border: 1px solid #262626; border-radius: 10px; padding: 6px;
+    opacity: 0; transform: translateY(-6px); pointer-events: none;
+    transition: opacity .16s ease, transform .16s ease;
+    box-shadow: 0 20px 50px rgba(0,0,0,.6);
+  }
+  .iter-menu.open { opacity: 1; transform: translateY(0); pointer-events: all; }
+  .iter-head { padding: 9px 12px 7px; font-size: 10px; letter-spacing: .14em; color: #565b5e; font-weight: 500; }
+  .iter-item { padding: 10px 12px; border-radius: 7px; cursor: pointer; display: flex; flex-direction: column; gap: 3px; }
+  .iter-item:hover { background: rgba(255,255,255,.05); }
+  .iter-item.on { background: rgba(255,255,255,.04); }
+  .iter-item .ttl { font-size: 13px; color: #929292; letter-spacing: -0.01em; }
+  .iter-item.on .ttl { color: #fff; }
+  .iter-item .sub { font-size: 11px; color: #565b5e; letter-spacing: -0.01em; }
+
+  /* ================= THE RECORD (V2 · elevated list) ================= */
+  /* Second in-phone page — slides in over the dashboard when the user taps
+     the Calibration section. Same design tokens as the dashboard greys. */
+  #records-screen {
+    position: absolute;
+    top: 12px; left: 12px;
+    width: 397px; height: 852px;
+    background: #000;
+    border-radius: 46px;
+    /* above the dashboard's sticky nav (z 40), below the phone chrome
+       (dynamic island / home indicator at z 50) */
+    z-index: 45;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    transform: translateX(104%);
+    visibility: hidden;
+    transition: transform 340ms cubic-bezier(0.32, 0.72, 0, 1), visibility 0s linear 340ms;
+  }
+  #records-screen.open {
+    transform: translateX(0);
+    visibility: visible;
+    transition: transform 340ms cubic-bezier(0.32, 0.72, 0, 1), visibility 0s linear 0s;
+  }
+
+  /* top nav — same spec as the dashboard's fixed bar (71px, hairline bottom) */
+  .rec-head {
+    flex: none; position: relative; height: 71px;
+    display: flex; align-items: center; gap: 15px;
+    padding: 20px 16px 0 24px;
+    border-bottom: 1px solid #1c1c1c;
+    background: #000;
+  }
+  .rec-back {
+    background: none; border: none; padding: 4px 8px 4px 0;
+    display: flex; align-items: center;
+    cursor: pointer;
+  }
+  .rec-back:active svg path { stroke: #565b5e; }
+  .rec-title { font-size: 17px; font-weight: 600; letter-spacing: -0.4px; color: #fff; flex: 1; }
+  .rec-count { font-size: 11px; color: #565b5e; }
+  .rec-body { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 0 26px; scrollbar-width: none; }
+  .rec-body::-webkit-scrollbar { display: none; }
+  .rec-intro { padding: 17px 0 6px; font-size: 11px; line-height: 1.6; color: #565b5e; }
+
+  .e2-row {
+    display: flex; justify-content: space-between; align-items: center; gap: 18px;
+    padding: 27px 0; border-bottom: 1px solid #1c1c1c;
+  }
+  .e2-row:last-child { border-bottom: none; }
+  .e2-left { display: flex; flex-direction: column; gap: 9px; min-width: 0; }
+  .e2-nm { font-size: 15px; font-weight: 500; color: #fff; letter-spacing: -0.01em; display: flex; align-items: center; gap: 9px; }
+  .e2-dot { width: 6px; height: 6px; border-radius: 50%; flex: none; animation: pulse-dot 2.6s ease-in-out infinite; }
+  .e2-meta { font-size: 11px; color: #565b5e; letter-spacing: -0.01em; }
+  .e2-right { text-align: right; flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; }
+  .e2-val { font-size: 15px; font-weight: 300; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; line-height: 1; }
+  .e2-val .u { font-size: 9.5px; color: #565b5e; font-weight: 400; margin-left: 4px; letter-spacing: 0; }
+  .e2-sub { font-size: 10px; letter-spacing: 0.05em; }
+
+  /* invisible tap target over the Calibration section on the dashboard */
+  #cal-link, #bench-link, #acct-link { position: absolute; cursor: pointer; }
+  #cal-link:active, #bench-link:active, #acct-link:active { background: rgba(255,255,255,0.03); border-radius: 8px; }
+
+  /* ================= ACCOUNT SWITCHER SHEET =================
+     An overlay only. It sits above the absolute-positioned frame and adds
+     nothing to it, so no coordinate on the dashboard moves. */
+  #sheet-account {
+    position: absolute; top: 12px; left: 12px;
+    width: 397px; height: 852px;
+    border-radius: 46px; overflow: hidden;
+    z-index: 46; pointer-events: none;
+  }
+  .sa-scrim { position: absolute; inset: 0; background: rgba(0,0,0,0.6); opacity: 0; transition: opacity 220ms ease; }
+  .sa-panel {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    background: var(--c-elev); border-top: 1px solid var(--c-900);
+    border-radius: 20px 20px 0 0;
+    transform: translateY(100%);
+    transition: transform 300ms cubic-bezier(.22,.9,.3,1);
+  }
+  #sheet-account.open { pointer-events: auto; }
+  #sheet-account.open .sa-scrim { opacity: 1; }
+  #sheet-account.open .sa-panel { transform: translateY(0); }
+  .sa-head { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px 12px; border-bottom: 1px solid var(--c-900); }
+  .sa-head-txt { display: flex; flex-direction: column; gap: 2px; }
+  .sa-title { font-size: 17px; color: var(--c-200); letter-spacing: -0.34px; line-height: 1.2; }
+  .sa-sub { font-size: 13px; color: var(--c-700); letter-spacing: -0.26px; line-height: 1.2; }
+  .sa-close { font-size: 17px; color: var(--c-700); cursor: pointer; padding: 8px; line-height: 1; }
+  .sa-body { padding: 20px 20px 36px; }
+  .sa-pick {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 0; border-bottom: 1px solid var(--c-1000); cursor: pointer;
+    font-size: 15px; color: var(--c-400); letter-spacing: -0.3px;
+  }
+  .sa-pick:last-child { border-bottom: none; }
+  .sa-pick.on { color: var(--c-white); }
+  .sa-tick { font-size: 13px; color: var(--c-white); visibility: hidden; }
+  .sa-pick.on .sa-tick { visibility: visible; }
+</style>
+</head>
+<body>
+
+<div class="iter-wrap">
+  <button class="iter-burger" onclick="toggleStateMenu(event)" aria-label="States">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="iter-menu" id="stateMenuPanel">
+    <div class="iter-head">MARKET · STATES</div>
+    <div class="iter-item on" id="state-item-market" onclick="setMarketState('market')">
+      <span class="ttl">Market hours</span>
+      <span class="sub">Everything live · green market dots</span>
+    </div>
+    <div class="iter-item" id="state-item-pre" onclick="setMarketState('pre')">
+      <span class="ttl">Pre-market</span>
+      <span class="sub">Sunrise line per position · red dots · daily moves frozen</span>
+    </div>
+    <div class="iter-item" id="state-item-after" onclick="setMarketState('after')">
+      <span class="ttl">After hours</span>
+      <span class="sub">Moon line per position · red dots · daily moves frozen</span>
+    </div>
+  </div>
+</div>
+
+<div class="phone">
+  <div class="side-btn mute"></div>
+  <div class="side-btn vol-up"></div>
+  <div class="side-btn vol-down"></div>
+  <div class="side-btn power"></div>
+
+  <div class="screen" id="screen">
+    <div class="dynamic-island"></div>
+
+    <div id="sticky-header" style="position:sticky; top:0; left:0; width:100%; height:0; z-index:40;">
+      <div id="sticky-topbar" style="position:absolute; top:0; left:0; width:100%; height:71px; background:#000; box-sizing:border-box;">
+        <div id="topbar-hairline" style="position:absolute; left:0; bottom:0; width:100%; height:1px; background:#1c1c1c; transition:opacity .3s ease;"></div>
+        <div style="position:absolute; left:31px; top:25px; font-size:23px; font-weight:700; letter-spacing:-1px; color:#fff;">//</div>
+        <!-- Iteration 2: market status folds into the bar itself, no added height -->
+        <!-- two-line stack on the left (timer over markets), total value on the
+             right — nothing renders under the dynamic island (bottom y≈40) -->
+        <div id="topbar-inline" style="position:absolute; left:60px; right:102px; top:0; height:71px; opacity:0; transition:opacity .3s ease; pointer-events:none;">
+          <!-- single-line nav: clock + session icon + market dots, nothing else.
+               padding-top drops the line to the logo/search icons' optical center -->
+          <div class="tbx" id="tbx-simple" style="padding-top:7px;">
+            <span class="tb-r1" style="display:flex; align-items:center;">
+              <span class="tb-clock num">13:14:26</span>&nbsp;ET
+              <span class="tb-session-icon" style="margin-left:7px; display:inline-flex; align-items:center;"></span>
+              <span style="color:#565b5e; margin:0 12px; font-size:11px; font-weight:300;">|</span>
+              <span class="mkt-dot tb-dot"></span><span class="tb-sm" style="margin-left:5px;">US</span>
+              <span class="mkt-dot tb-dot" style="margin-left:10px;"></span><span class="tb-sm" style="margin-left:5px;">CA</span>
+            </span>
+          </div>
+        </div>
+        <svg style="position:absolute; left:298px; top:31px;" width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 13C10.3137 13 13 10.3137 13 7C13 3.68629 10.3137 1 7 1C3.68629 1 1 3.68629 1 7C1 10.3137 3.68629 13 7 13Z" stroke="white" stroke-width="1.3"/>
+          <path d="M11.2 11.2L16 16" stroke="white" stroke-width="1.3"/>
+        </svg>
+        <svg style="position:absolute; left:347px; top:34px;" width="17" height="13" viewBox="0 0 17 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 1H17" stroke="white" stroke-width="1.3"/>
+          <path d="M0 6.5H17" stroke="white" stroke-width="1.3"/>
+          <path d="M0 12H17" stroke="white" stroke-width="1.3"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="frame">
+
+      <!-- ============ HEADER ============ -->
+      <div class="abs" style="left:31px; top:26px; font-size:23px; font-weight:700; letter-spacing:-1px;">//</div>
+
+      <svg class="abs" style="left:298px; top:31px;" width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7 13C10.3137 13 13 10.3137 13 7C13 3.68629 10.3137 1 7 1C3.68629 1 1 3.68629 1 7C1 10.3137 3.68629 13 7 13Z" stroke="white" stroke-width="1.3"/>
+        <path d="M11.2 11.2L16 16" stroke="white" stroke-width="1.3"/>
+      </svg>
+
+      <svg class="abs" style="left:347px; top:34px;" width="17" height="13" viewBox="0 0 17 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 1H17" stroke="white" stroke-width="1.3"/>
+        <path d="M0 6.5H17" stroke="white" stroke-width="1.3"/>
+        <path d="M0 12H17" stroke="white" stroke-width="1.3"/>
+      </svg>
+
+      <div class="divider" style="left:1px; top:71px; width:391px;"></div>
+
+      <!-- ============ MARKET STATUS ============ -->
+      <div id="orig-market-status" class="abs" style="left:15.6px; top:87.4px; width:200px; height:11px;">
+        <div class="abs" style="left:0px; top:0px; font-size:12px; color:#ffffff; letter-spacing:-0.19px;"><span id="stat-clock">13:14:26</span> ET</div>
+        <div class="abs" style="left:73.5px; top:0px; font-size:11.2px; color:#565b5e;">|</div>
+        <div class="dot mkt-dot" style="left:86.6px; top:5.1px; width:4.65px; height:4.65px; background:#30d158;"></div>
+        <div class="abs" style="left:95.9px; top:2.8px; font-size:10px; color:#929292; letter-spacing:0.28px; text-transform:uppercase;">US</div>
+        <div class="dot mkt-dot" style="left:120.4px; top:5.1px; width:4.65px; height:4.65px; background:#30d158;"></div>
+        <div class="abs" style="left:129.7px; top:2.8px; font-size:10px; color:#929292; letter-spacing:0.28px; text-transform:uppercase;">CA</div>
+        <!-- S&P 500 daily change — ambient market context beside/below the clock
+             (position set from SP500_PLACEMENT at boot). Non-interactive. -->
+        <div class="abs sp500-slot" id="sp500-page" style="font-size:10px; letter-spacing:0.28px; white-space:nowrap;"><span class="sp500-inner"><span style="color:#929292;">S&amp;P 500</span> <span class="sp500-val num" style="color:#fff;">+0.52%</span></span></div>
+      </div>
+
+      <!-- ============ ACTIVITY TICKER 1 (severity order: red > orange > yellow > green) ============ -->
+      <div class="dot" style="left:16.1px; top:138.2px; width:4.65px; height:4.65px; background:#ff3533;"></div>
+      <div class="abs" style="left:26.8px; top:135px; font-size:10px; font-weight:500;">
+        Kill criteria 2 triggered: margin below 68%
+      </div>
+
+      <div class="dot" style="left:16.1px; top:169.2px; width:4.65px; height:4.65px; background:#fbc308;"></div>
+      <div class="abs" style="left:26.8px; top:166px; font-size:10px; font-weight:500;">
+        Earnings <span style="color:#929292;">(3)</span>
+      </div>
+      <svg class="abs" style="left:88.8px; top:170px;" width="6" height="3" viewBox="0 0 6.70711 4.06066" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0.353553 0.353553L3.35355 3.35355L6.35355 0.353553" stroke="#C7C7C7"/>
+      </svg>
+      <div class="abs" style="left:16.1px; top:182px; font-size:10px; font-weight:500; color:#929292;">BWEN</div>
+      <div class="abs" style="left:16.1px; top:198px; font-size:10px; font-weight:500; color:#929292;">MSFT</div>
+      <div class="abs" style="left:16.1px; top:214px; font-size:10px; font-weight:500; color:#929292;">TSLA</div>
+
+      <div class="dot" style="left:16.1px; top:248.2px; width:4.65px; height:4.65px; background:#fbc308;"></div>
+      <div class="abs" style="left:26.8px; top:245px; font-size:10px; font-weight:500;">
+        Contribution missed: no deposit this cycle <span style="color:#929292;">04.28.26</span>
+      </div>
+
+      <div class="dot" style="left:16.1px; top:279.2px; width:4.65px; height:4.65px; background:#30d158;"></div>
+      <div class="abs" style="left:26.8px; top:276px; font-size:10px; font-weight:500;">
+        BWEN Filled <span style="font-weight:500;">1000 @ 87.00</span> <span style="color:#929292;">05.06.26</span>
+      </div>
+
+      <div class="dot" style="left:16.1px; top:310.2px; width:4.65px; height:4.65px; background:#30d158;"></div>
+      <div class="abs" style="left:26.8px; top:307px; font-size:10px; font-weight:500;">
+        Contribution processed: $500 <span style="color:#929292;">05.06.26</span>
+      </div>
+
+      <div id="shifted-content" style="position:absolute; top:0; left:0; width:100%;">
+
+      <!-- ============ TOTAL VALUE ============ -->
+      <div class="abs" style="right:16px; top:332.4px; font-size:13px; color:#929292; letter-spacing:-0.22px;">Total Value</div>
+      <div class="abs" style="right:16px; top:356.3px; font-size:28px; letter-spacing:-0.56px;">
+        <span id="stat-total-value">173,249.00</span> <span style="color:#565b5e;">CAD</span>
+      </div>
+
+      <!-- ============ CORE SECTION (collapsible) ============ -->
+      <div class="divider" style="left:14.5px; top:461px; width:366px;"></div>
+      <div class="abs" style="left:14.5px; top:492px; font-size:18px; color:#c7c7c7; letter-spacing:-0.36px;">Core</div>
+      <div class="abs" style="left:14.5px; top:522.7px; font-size:15px; color:#565b5e; letter-spacing:-0.3px;">Managed</div>
+      <div id="core-toggle" class="abs" style="right:6px; top:489px; width:24px; height:24px; display:flex; align-items:center; justify-content:center; cursor:pointer;">
+        <svg id="core-chevron-svg" style="transition:transform .3s ease;" width="6" height="3" viewBox="0 0 6.70711 4.06066" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0.353553 0.353553L3.35355 3.35355L6.35355 0.353553" stroke="#C7C7C7"/>
+        </svg>
+      </div>
+
+      <div id="core-value-label" class="abs" style="right:16px; top:736px; font-size:13px; color:#929292; letter-spacing:-0.22px; transition:top .35s ease, right .35s ease;">Value</div>
+      <div id="stat-core-value" class="abs" style="right:16px; top:758.3px; font-size:22px; letter-spacing:-0.44px; transition:top .35s ease, right .35s ease;">126,471.77</div>
+      <div class="abs core-detail" style="left:205.8px; top:790.3px; font-size:13px; letter-spacing:-0.26px; color:#929292;">
+        All Time <span id="stat-core-allchg" style="color:#c7c7c7;">+6,365.65</span> <span id="stat-core-allpct" style="color:#c7c7c7;">(+5.3%)</span>
+      </div>
+
+      <div class="abs core-detail" style="left:321.6px; top:856.3px; font-size:13px; color:#929292; letter-spacing:-0.22px;">Projection</div>
+      <div class="abs core-detail" style="left:336px; top:878.5px; font-size:15px; color:#c7c7c7; letter-spacing:-0.3px;">1.68M</div>
+
+      <!-- ============ ALLOCATION ============ -->
+      <div class="abs core-detail" style="left:244px; top:929.2px; font-size:13px; color:#929292; letter-spacing:-0.24px;">Equity (S&amp;P 500)</div>
+      <div class="abs core-detail" style="left:352.8px; top:929.2px; font-size:13px; color:#c7c7c7; letter-spacing:-0.24px;">50%</div>
+      <div class="abs core-detail" style="left:265.2px; top:949.7px; font-size:13px; color:#929292; letter-spacing:-0.24px;">Fixed Income</div>
+      <div class="abs core-detail" style="left:352.8px; top:949.7px; font-size:13px; color:#c7c7c7; letter-spacing:-0.24px;">25%</div>
+      <div class="abs core-detail" style="left:259.5px; top:970.1px; font-size:13px; color:#929292; letter-spacing:-0.24px;">Money Market</div>
+      <div class="abs core-detail" style="left:352.8px; top:970.1px; font-size:13px; color:#c7c7c7; letter-spacing:-0.24px;">25%</div>
+
+      <div id="below-core" style="position:absolute; top:0; left:0; width:100%; transition:transform .35s ease;">
+
+      <!-- ============ ACTIVE SECTION ============ -->
+      <div class="divider" style="left:14.5px; top:1078.97px; width:366px;"></div>
+      <div class="abs" style="left:14.5px; top:1109.97px; font-size:18px; color:#c7c7c7; letter-spacing:-0.36px;">Active</div>
+      <div class="abs" style="left:14.5px; top:1140.67px; font-size:15px; color:#565b5e; letter-spacing:-0.3px;">Self-Directed</div>
+      <!-- Right-anchored, not left-anchored: the account name is now variable
+           length. right:24px reproduces the original RRSP position to within a
+           pixel, and longer names grow left instead of off the 393px frame. -->
+      <div id="acct-label" class="abs" style="right:24px; top:1109.97px; font-size:15px; color:var(--c-400); letter-spacing:-0.3px;">All Accounts</div>
+      <svg class="abs" style="left:374px; top:1118.6px;" width="6" height="3" viewBox="0 0 6.70711 4.06066" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0.353553 0.353553L3.35355 3.35355L6.35355 0.353553" stroke="#C7C7C7"/>
+      </svg>
+      <div id="acct-link" style="left:245px; top:1100px; width:142px; height:40px;" onclick="openAccountSheet()"></div>
+
+      <div class="abs" style="right:16px; top:1208.67px; font-size:13px; color:#929292; letter-spacing:-0.22px;">Value</div>
+      <div id="stat-active-value" class="abs" style="right:16px; top:1230.92px; font-size:22px; letter-spacing:-0.44px;">57,142.02</div>
+      <div class="abs" style="left:205.8px; top:1262.92px; font-size:13px; letter-spacing:-0.26px; color:#929292;">
+        All Time <span id="stat-active-allchg" style="color:#c7c7c7;">+16,142.02</span> <span id="stat-active-allpct" style="color:#c7c7c7;">(+39.4%)</span>
+      </div>
+
+      <!-- ============ CASH ============ -->
+      <div class="abs" style="left:309.6px; top:1331.92px; font-size:13px; color:#929292; letter-spacing:-0.26px;">Cash (10%)</div>
+      <div class="abs" style="left:317.6px; top:1353.92px; font-size:15px; color:#c7c7c7; letter-spacing:-0.3px;">4,677.72</div>
+
+      <!-- ============ BENCHMARK ============ -->
+      <div class="abs" style="left:14.5px; top:1442.92px; font-size:15px; letter-spacing:-0.3px;">
+        S&amp;P 500 Comparison <span style="color:var(--c-700);">·</span> <span id="bench-scope" style="color:var(--c-800);">All Accounts</span>
+      </div>
+      <svg class="abs" style="left:374.5px; top:1447.4px;" width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 1L5 5L1 9" stroke="#565B5E" stroke-width="1.2"/>
+      </svg>
+
+      <div class="abs" style="left:14.5px; top:1486.92px; font-size:13px; color:#929292; letter-spacing:-0.26px;">Portfolio Value</div>
+      <div class="abs" style="left:14.5px; top:1519.92px; font-size:13px; color:#929292; letter-spacing:-0.26px;">S&amp;P 500 Equivalent Value</div>
+      <div id="stat-bench-portfolio" class="abs" style="right:16px; top:1484.92px; font-size:13px; color:#c7c7c7; letter-spacing:-0.3px;">57,142.02</div>
+      <div id="stat-bench-sp500" class="abs" style="right:16px; top:1517.92px; font-size:13px; color:#c7c7c7; letter-spacing:-0.3px;">59,515.92</div>
+
+      <!-- ============ DIFFERENCE ============ -->
+      <div class="divider" style="left:16px; top:1550.92px; width:361px;"></div>
+      <div class="divider" style="left:16px; top:1600.92px; width:361px;"></div>
+      <div class="abs" style="left:16px; top:1567.58px; font-size:13px; color:#929292; letter-spacing:-0.26px;">Difference</div>
+      <div id="stat-diff-value" class="abs" style="right:76px; top:1566.51px; font-size:15px; letter-spacing:-0.3px; color:#ffffff;"><span id="stat-diff-value-num">−2,373.90</span> <span id="stat-diff-tri" style="font-size:10px; vertical-align:1.5px; color:var(--c-urgent-muted);">▼</span></div>
+      <div id="stat-diff-pct" class="abs" style="right:16px; top:1568.51px; font-size:13px; color:#ffffff; letter-spacing:-0.26px;">−3.99%</div>
+
+      <div id="bench-link" style="left:8px; top:1434px; width:377px; height:174px;" onclick="goBench()"></div>
+
+      <!-- ============ CALIBRATION ============ -->
+      <div class="abs" style="left:300.3px; top:1647.92px; font-size:15px; color:#c7c7c7; letter-spacing:-0.3px;">Calibration</div>
+      <div class="abs" style="left:283px; top:1674.88px; font-size:13px; color:#929292; letter-spacing:-0.24px;">Accuracy</div>
+      <div class="abs" style="left:348.7px; top:1674.88px; font-size:13px; color:#c7c7c7; letter-spacing:-0.24px;">54%</div>
+      <div class="abs" style="left:278.5px; top:1695.75px; font-size:13px; color:#929292; letter-spacing:-0.24px;">Predictions</div>
+      <div class="abs" style="left:360.3px; top:1696.26px; font-size:13px; color:#c7c7c7; letter-spacing:-0.24px;">17</div>
+      <div class="abs" style="left:205.3px; top:1717.64px; font-size:13px; color:#929292; letter-spacing:-0.24px;">Next Judgment</div>
+      <div class="abs" style="left:309px; top:1717.64px; font-size:13px; color:#c7c7c7; letter-spacing:-0.24px;">Apr 1, 2027</div>
+      <div id="cal-link" style="left:180px; top:1638px; width:210px; height:102px;" onclick="openRecords()"></div>
+
+      <!-- ============ ACTIVE POSITIONS HEADER ============ -->
+      <div class="abs" style="left:14.5px; top:1814.4px; font-size:15px; letter-spacing:-0.3px;">Active Positions</div>
+      <div class="abs" style="left:133px; top:1813.5px; font-size:15px; letter-spacing:-0.3px;">24</div>
+      <svg class="abs" style="left:162.2px; top:1819.5px;" width="11" height="7" viewBox="0 0 11 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 1.5L5.5 6L10 1.5" stroke="#929292" stroke-width="1.2"/>
+      </svg>
+      <div class="abs" style="left:273.4px; top:1813.5px; font-size:15px; color:#929292; letter-spacing:-0.3px;">Open Orders</div>
+      <div class="abs" style="left:367.1px; top:1813.5px; font-size:15px; color:#929292; letter-spacing:-0.3px;">2</div>
+
+      <!-- ============ POSITIONS LIST ============ -->
+      <div id="positions-list"></div>
+
+      </div><!-- /below-core -->
+
+      </div><!-- /shifted-content -->
+
+    </div>
+  </div>
+
+  <!-- ============ THE RECORD (slides in over the dashboard) ============ -->
+  <div id="records-screen">
+    <div class="dynamic-island"></div>
+    <div class="rec-head">
+      <button class="rec-back" onclick="closeRecords()" aria-label="Back">
+        <svg width="11" height="19" viewBox="0 0 11 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9.5 1.5L2 9.5L9.5 17.5" stroke="#C7C7C7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <span class="rec-title">The record</span>
+      <span class="rec-count" id="rec-count">—</span>
+    </div>
+    <div class="rec-body">
+      <div class="rec-intro">Every sealed forecast — the append-only ledger. A sale, a re-underwrite, or a killed thesis each gets its own status; nothing is ever overwritten.</div>
+      <div id="rec-list" style="padding-bottom:56px"></div>
+    </div>
+  </div>
+
+  <!-- ============ ACCOUNT SWITCHER (Self-Directed scope) ============ -->
+  <div id="sheet-account">
+    <div class="sa-scrim" onclick="closeAccountSheet()"></div>
+    <div class="sa-panel">
+      <div class="sa-head">
+        <span class="sa-head-txt">
+          <span class="sa-title">Self-Directed</span>
+          <span class="sa-sub">Accounts</span>
+        </span>
+        <span class="sa-close" onclick="closeAccountSheet()">&times;</span>
+      </div>
+      <div class="sa-body">
+        <div class="sa-pick on" data-acct="all" onclick="setAccount('all')"><span>All Accounts</span><span class="sa-tick">&#10003;</span></div>
+        <div class="sa-pick" data-acct="non-reg" onclick="setAccount('non-reg')"><span>Non-Registered</span><span class="sa-tick">&#10003;</span></div>
+        <div class="sa-pick" data-acct="tfsa" onclick="setAccount('tfsa')"><span>TFSA</span><span class="sa-tick">&#10003;</span></div>
+        <div class="sa-pick" data-acct="rrsp" onclick="setAccount('rrsp')"><span>RRSP</span><span class="sa-tick">&#10003;</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="home-indicator"></div>
+</div>
+
+<script>
+  const TAG_COLORS = {
+    "Earnings": "#fdad00",
+    "Open Order": "#fdad00",
+    "Reverse Split": "#fd6900",
+    "Stock Split": "#fd6900",
+    "Investment Case": "#fd6900",
+    "52 Week High": "#ffffff",
+    "52 Week Low": "#ffffff",
+    "Delisted": "#fd0200",
+    "Stock Halted": "#fd0200",
+    "Order Complete": "#02cb45",
+    "No Thesis/Kill Criteria": "#fbc308"
+  };
+
+  const positions = [
+    { ticker: "ORIO.TO", weight: "25% WT", category: "Emerging Compounder", value: "18,950.00 CAD", pct: "+42.6%", price: "87.60 CAD", change: "+7.8%",
+      desc: "Parent moat compounding; the NASDAQ listing re-rates it over 3–5 years.", tags: ["Earnings", "Reverse Split"] },
+    { ticker: "BWEN", weight: "25% WT", category: "Emerging Compounder", value: "12,950.00 CAD", pct: "+22.6%", price: "82.40 USD", change: "-2.8%",
+      desc: "Delisting risk — watching the appeal. No add until it clears.", tags: ["Delisted"] },
+    { ticker: "EOSCR", weight: "15% WT", category: "Emerging Compounder", value: "12,950.00 CAD", pct: "+22.6%", price: "82.40 USD", change: "-2.8%",
+      desc: "", tags: ["No Thesis/Kill Criteria"] },
+    { ticker: "BWEN", weight: "25% WT", category: "Emerging Compounder", value: "12,950.00 CAD", pct: "+22.6%", price: "82.40 USD", change: "-2.8%",
+      desc: "Delisting risk — watching the appeal. No add until it clears.", tags: ["Delisted"] },
+    { ticker: "AMD", weight: "25% WT", category: "Emerging Compounder", value: "12,950.00 CAD", pct: "+22.6%", price: "82.40 USD", change: "-2.8%",
+      desc: "Trimmed into strength — revisit after the next print.", tags: ["Order Complete"] },
+    { ticker: "MSFT", weight: "8% WT", category: "Core Compounder", value: "22,150.00 CAD", pct: "+18.4%", price: "410.20 USD", change: "+1.2%",
+      desc: "Cloud and AI capex compounding; sizing up on pullbacks.", tags: ["Earnings"] },
+    { ticker: "TSLA", weight: "6% WT", category: "Special Situation", value: "9,840.00 CAD", pct: "-8.1%", price: "245.60 USD", change: "-3.4%",
+      desc: "Delivery miss last quarter; watching margin trend.", tags: ["No Thesis/Kill Criteria", "52 Week Low"] },
+    { ticker: "NVDA", weight: "12% WT", category: "Core Compounder", value: "31,200.00 CAD", pct: "+64.2%", price: "118.30 USD", change: "+2.9%",
+      desc: "AI infrastructure buildout still early; core position.", tags: ["52 Week High"] },
+    { ticker: "GOOGL", weight: "7% WT", category: "Core Compounder", value: "15,600.00 CAD", pct: "+9.7%", price: "172.40 USD", change: "+0.6%",
+      desc: "", tags: [] },
+    { ticker: "AAPL", weight: "5% WT", category: "Index Anchor", value: "11,300.00 CAD", pct: "+4.2%", price: "228.90 USD", change: "-0.3%",
+      desc: "", tags: [] },
+    { ticker: "SHOP.TO", weight: "4% WT", category: "Emerging Compounder", value: "8,450.00 CAD", pct: "+31.5%", price: "118.75 CAD", change: "+5.1%",
+      desc: "Merchant GMV reacceleration; margin expansion story intact.", tags: ["Stock Split", "Open Order"] },
+    { ticker: "ENB.TO", weight: "3% WT", category: "Index Anchor", value: "6,200.00 CAD", pct: "+6.8%", price: "58.30 CAD", change: "+0.4%",
+      desc: "", tags: [] },
+    { ticker: "CNQ.TO", weight: "3% WT", category: "Cyclical Value", value: "5,980.00 CAD", pct: "-2.4%", price: "47.15 CAD", change: "-1.1%",
+      desc: "Oil price weakness weighing on the name.", tags: ["No Thesis/Kill Criteria"] },
+    { ticker: "BAM", weight: "4% WT", category: "Core Compounder", value: "7,650.00 CAD", pct: "+14.9%", price: "52.80 USD", change: "+0.9%",
+      desc: "", tags: ["Open Order"] },
+    { ticker: "CP.TO", weight: "3% WT", category: "Index Anchor", value: "5,540.00 CAD", pct: "+7.3%", price: "112.60 CAD", change: "-0.2%",
+      desc: "", tags: [] },
+    { ticker: "ATD.TO", weight: "3% WT", category: "Core Compounder", value: "5,120.00 CAD", pct: "+11.2%", price: "78.40 CAD", change: "+0.5%",
+      desc: "", tags: ["Investment Case"] },
+    { ticker: "TD.TO", weight: "2% WT", category: "Index Anchor", value: "4,300.00 CAD", pct: "-3.6%", price: "82.10 CAD", change: "-0.7%",
+      desc: "Litigation overhang capping re-rating near term.", tags: ["No Thesis/Kill Criteria", "Investment Case"] },
+    { ticker: "RY.TO", weight: "2% WT", category: "Index Anchor", value: "4,150.00 CAD", pct: "+5.9%", price: "148.30 CAD", change: "+0.3%",
+      desc: "", tags: [] },
+    { ticker: "BNS.TO", weight: "2% WT", category: "Turnaround Bet", value: "3,880.00 CAD", pct: "-6.7%", price: "62.90 CAD", change: "-1.8%",
+      desc: "Latin America exposure still a drag on ROE.", tags: ["No Thesis/Kill Criteria", "52 Week Low"] },
+    { ticker: "WCN", weight: "3% WT", category: "Core Compounder", value: "6,010.00 CAD", pct: "+19.3%", price: "245.70 USD", change: "+1.0%",
+      desc: "", tags: ["52 Week High"] },
+    { ticker: "FTS.TO", weight: "2% WT", category: "Index Anchor", value: "3,600.00 CAD", pct: "+3.1%", price: "61.20 CAD", change: "+0.1%",
+      desc: "", tags: [] },
+    { ticker: "L.TO", weight: "2% WT", category: "Index Anchor", value: "3,420.00 CAD", pct: "+8.4%", price: "78.90 CAD", change: "+0.4%",
+      desc: "", tags: [] },
+    { ticker: "DOL.TO", weight: "3% WT", category: "Core Compounder", value: "5,760.00 CAD", pct: "+22.7%", price: "152.40 CAD", change: "+0.8%",
+      desc: "Discount retail resilient through the cycle.", tags: ["Earnings"] },
+    { ticker: "CSU.TO", weight: "4% WT", category: "Core Compounder", value: "8,900.00 CAD", pct: "+45.6%", price: "4,320.00 CAD", change: "+1.4%",
+      desc: "Serial acquirer compounding at a steady clip.", tags: ["Earnings", "52 Week High"] }
+  ];
+
+  const ROW_GAP = 20;
+  const LIST_TOP = 1867.67;
+
+  // Section rhythm within a row (matches the original design's spacing):
+  // header group -> 16px gap -> description -> 16px gap -> tags -> 16px gap -> divider.
+  // Rows without a description (or without tags) simply skip that block and its
+  // gap. In the after-hours state the header grows by one extra right-aligned
+  // line (moon icon + post-market move).
+  const HEADER_H = 36.45, SECTION_GAP = 16, DESC_H = 17, TAGS_H = 16.64, AH_H = 20.45;
+
+  const listEl = document.getElementById('positions-list');
+  const frameEl = document.querySelector('.frame');
+  // Extra breathing room above "Total Value" (between it and the alert feed)
+  const TOP_SPACING_EXTRA = 32;
+  // 'market' | 'pre' | 'after' — pre/after freeze daily moves, show the
+  // extended-session line (sunrise / moon) and turn the market dots red.
+  let MARKET_STATE = 'market';
+  let fullMinHeight = 0;
+  let positionLive = [];
+
+  function buildPositions() {
+  const extended = MARKET_STATE !== 'market';
+  const headerH = HEADER_H + (extended ? AH_H : 0);
+  // outlined session icons — sunrise for pre-market, moon for after hours
+  const extIcon = MARKET_STATE === 'pre'
+    ? '<svg width="12" height="11" viewBox="0 0 14 12" fill="none" stroke="#fbc308" stroke-width="1.1" stroke-linecap="round" style="vertical-align:-1px; margin-right:5px;"><path d="M3.6 9.2a3.4 3.4 0 0 1 6.8 0"/><path d="M1 9.2h12"/><path d="M7 1.2v1.7"/><path d="M2.9 3.1l1.2 1.2"/><path d="M11.1 3.1l-1.2 1.2"/></svg>'
+    : '<svg width="11" height="11" viewBox="0 0 13 13" fill="none" style="vertical-align:-1px; margin-right:5px;"><path d="M11.2 8.3A5 5 0 0 1 4.7 1.8a5.4 5.4 0 1 0 6.5 6.5Z" stroke="#4a7dff" stroke-width="1.1" stroke-linejoin="round"/></svg>';
+  let html = '';
+  let cursorTop = LIST_TOP;
+  positions.forEach((r, i) => {
+    const top = cursorTop;
+    const changePositive = r.change.trim().startsWith('+');
+    const hasDesc = r.desc.length > 0;
+    const hasTags = r.tags.length > 0;
+
+    // vs S&P as percentage points beside the ticker — white text, with a
+    // small triangle carrying the direction color (▲ green / ▼ red)
+    const spRet = 6 + ((i * 37) % 25);
+    r._spRet = spRet;
+    const pp = parsePct(r.pct) - spRet;
+    const ppTxt = (pp >= 0 ? '+' : '−') + Math.abs(pp).toFixed(1) + ' pp vs S&P';
+    const ppTri = pp >= 0 ? '▲' : '▼';
+    const ppCol = pp >= 0 ? '#30d158' : '#ff3533';
+
+    // extended-session move — stable per position
+    const ah = (((i * 13) % 30) - 12) / 10;
+    r._ext = ah;
+    const ahTxt = fmtPct(ah, 2);
+
+    let localCursor = headerH;
+    let descTop = null, tagsTop = null;
+    if (hasDesc) { localCursor += SECTION_GAP; descTop = localCursor; localCursor += DESC_H; }
+    if (hasTags) { localCursor += SECTION_GAP; tagsTop = localCursor; localCursor += TAGS_H; }
+    localCursor += SECTION_GAP;
+    const rowHeight = localCursor;
+
+    html += `
+      <div class="abs" style="left:16px; top:${top + 0.93}px; font-size:13px;"><span style="font-weight:500; text-transform:uppercase;">${r.ticker}</span><span id="pos-pp-${i}" style="font-size:11.5px; color:#ffffff; margin-left:7px; letter-spacing:-0.1px; font-variant-numeric:tabular-nums;"><span class="pp-num">${ppTxt}</span><span class="pp-tri" style="font-size:8px; vertical-align:1.5px; color:${ppCol}; margin-left:4px;">${ppTri}</span></span></div>
+      <div class="abs" style="left:16px; top:${top + 21.95}px; font-size:10px; color:#929292;">${r.category}<span style="color:#c7c7c7; margin-left:6px; text-transform:uppercase;">${r.weight}</span></div>
+      <div id="pos-value-${i}" class="abs" style="left:167px; top:${top}px; font-size:13px; font-weight:300; letter-spacing:-0.28px; text-align:right; width:150px;">${r.value}</div>
+      <div id="pos-pct-${i}" class="abs" style="left:327px; top:${top}px; font-size:13px; color:#929292; letter-spacing:-0.24px; text-align:right; width:50px;">${r.pct}</div>
+      <div id="pos-price-${i}" class="abs" style="left:167px; top:${top + 20.45}px; font-size:13px; font-weight:300; letter-spacing:-0.28px; text-align:right; width:150px;">${r.price}</div>
+      <div id="pos-change-${i}" class="abs" style="left:327px; top:${top + 20.45}px; font-size:13px; font-weight:${changePositive ? 700 : 400}; color:${changePositive ? '#ffffff' : '#929292'}; letter-spacing:-0.24px; text-align:right; width:50px;">${r.change}</div>
+      ${extended ? `<div class="abs" style="left:167px; top:${top + 41.9}px; width:210px; text-align:right; font-size:12px; color:#ffffff; letter-spacing:-0.24px; font-variant-numeric:tabular-nums;">${extIcon}<span id="pos-ext-${i}">${ahTxt}</span></div>` : ''}
+      ${hasDesc ? `<div class="abs" style="left:16px; top:${top + descTop}px; font-size:12px; color:#c7c7c7; letter-spacing:-0.19px; max-width:361px; overflow:hidden; text-overflow:ellipsis;">${r.desc}</div>` : ''}
+      ${hasTags ? `<div class="tags-row" style="left:16px; top:${top + tagsTop}px;">${r.tags.map(label => `<span class="tag"><span class="tag-dot" style="background:${TAG_COLORS[label]};"></span>${label}</span>`).join('')}</div>` : ''}
+      <div class="row-divider" style="top:${top + rowHeight}px;"></div>
+    `;
+    cursorTop += rowHeight + ROW_GAP;
+  });
+  listEl.innerHTML = html;
+  const lastRowBottom = cursorTop - ROW_GAP;
+  fullMinHeight = lastRowBottom + 40 + TOP_SPACING_EXTRA;
+  frameEl.style.minHeight = fullMinHeight + 'px';
+
+  // live-sim bindings for the freshly built rows
+  positionLive = positions.map((r, i) => {
+    const value = parseMoney(r.value);
+    const price = parseMoney(r.price);
+    return {
+      valueEl: document.getElementById(`pos-value-${i}`),
+      pctEl: document.getElementById(`pos-pct-${i}`),
+      priceEl: document.getElementById(`pos-price-${i}`),
+      changeEl: document.getElementById(`pos-change-${i}`),
+      ppEl: document.getElementById(`pos-pp-${i}`),
+      extEl: document.getElementById(`pos-ext-${i}`),
+      ext: r._ext,
+      spRet: r._spRet,
+      valueBase: value.num, value: value.num, valueCcy: value.ccy,
+      priceBase: price.num, price: price.num, priceCcy: price.ccy,
+      pctBase: parsePct(r.pct), pct: parsePct(r.pct),
+      changeBase: parsePct(r.change), change: parsePct(r.change),
+    };
+  });
+  if (window.__applyCore) window.__applyCore();
+  }
+
+  document.getElementById('shifted-content').style.transform = `translateY(${TOP_SPACING_EXTRA}px)`;
+  buildPositions();
+
+  // ---- Core section: collapsible ----
+  (function () {
+    const CORE_COLLAPSE_DELTA = 507.27;
+    const belowCoreEl = document.getElementById('below-core');
+    const chevron = document.getElementById('core-chevron-svg');
+    const valueLabel = document.getElementById('core-value-label');
+    const valueNum = document.getElementById('stat-core-value');
+    let collapsed = false;
+
+    function apply() {
+      document.querySelectorAll('.core-detail').forEach(el => { el.style.display = collapsed ? 'none' : ''; });
+      belowCoreEl.style.transform = collapsed ? `translateY(-${CORE_COLLAPSE_DELTA}px)` : 'translateY(0)';
+      frameEl.style.minHeight = (fullMinHeight - (collapsed ? CORE_COLLAPSE_DELTA : 0)) + 'px';
+      chevron.style.transform = collapsed ? 'rotate(-90deg)' : 'rotate(0deg)';
+      if (collapsed) {
+        valueLabel.style.top = '493px'; valueLabel.style.right = '34px';
+        valueNum.style.top = '517px'; valueNum.style.right = '16px';
+      } else {
+        valueLabel.style.top = '736px'; valueLabel.style.right = '16px';
+        valueNum.style.top = '758.3px'; valueNum.style.right = '16px';
+      }
+    }
+    document.getElementById('core-toggle').addEventListener('click', () => {
+      collapsed = !collapsed;
+      apply();
+    });
+    // let buildPositions() re-apply the collapse offset after a rebuild
+    window.__applyCore = apply;
+  })();
+
+  // ================= LIVE "REAL-TIME" DATA SIMULATION =================
+  function fmtMoney(v, decimals = 2) {
+    return v.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+  }
+  function fmtSignedMoney(v, decimals = 2) {
+    return (v >= 0 ? '+' : '-') + Math.abs(v).toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+  }
+  function fmtPct(v, decimals = 1) {
+    return (v >= 0 ? '+' : '-') + Math.abs(v).toFixed(decimals) + '%';
+  }
+  function parseMoney(str) {
+    const m = str.match(/^([\d,]+\.\d+)\s*(\w+)$/);
+    return m ? { num: parseFloat(m[1].replace(/,/g, '')), ccy: m[2] } : { num: 0, ccy: '' };
+  }
+  function parsePct(str) {
+    return parseFloat(str.replace('%', '').replace('+', ''));
+  }
+  function flash(el, up, settleColor) {
+    el.style.color = settleColor;
+  }
+
+  // ---- Top-level portfolio stats ----
+  function makeLiveStat(id, baseValue, opts = {}) {
+    const el = document.getElementById(id);
+    if (!el) return null;
+    const settleColor = opts.settleColor || getComputedStyle(el).color;
+    const mirrorEl = opts.mirrorId ? document.getElementById(opts.mirrorId) : null;
+    const mirrorEl2 = opts.mirrorId2 ? document.getElementById(opts.mirrorId2) : null;
+    return Object.assign({ el, mirrorEl, mirrorEl2, base: baseValue, value: baseValue, kind: 'money', decimals: 2,
+      volatility: 0.0012, reversion: 0.05, wrap: null, settleColor }, opts);
+  }
+  function tickLiveStat(s) {
+    const magnitude = Math.max(Math.abs(s.value), 1);
+    const noise = (Math.random() * 2 - 1) * s.volatility * magnitude;
+    const revert = (s.base - s.value) * s.reversion;
+    const delta = noise + revert;
+    s.value += delta;
+    let text = s.kind === 'pct' ? fmtPct(s.value, s.decimals)
+      : s.kind === 'signedMoney' ? fmtSignedMoney(s.value, s.decimals)
+      : fmtMoney(s.value, s.decimals);
+    if (s.wrap) text = s.wrap(text);
+    s.el.textContent = text;
+    flash(s.el, delta >= 0, s.settleColor);
+    if (s.mirrorEl) s.mirrorEl.textContent = text;
+    if (s.mirrorEl2) s.mirrorEl2.textContent = text;
+    if (s.mirrorClass) document.querySelectorAll('.' + s.mirrorClass).forEach(x => { x.textContent = text; });
+    // direction color: on the dashboard body the text stays white and a small
+    // triangle carries the color; the pinned top bar keeps its colored text
+    if (s.colorBySign || s.colorClass || s.signTriangleId) {
+      const c = s.value >= 0 ? '#30d158' : '#ff3533';
+      if (s.colorBySign) {
+        s.el.style.color = c;
+        if (s.mirrorEl) s.mirrorEl.style.color = c;
+      }
+      if (s.colorClass) document.querySelectorAll('.' + s.colorClass).forEach(x => { x.style.color = c; });
+      if (s.signTriangleId) {
+        const t = document.getElementById(s.signTriangleId);
+        if (t) { t.textContent = s.value >= 0 ? '▲' : '▼'; t.style.color = c; }
+      }
+    }
+  }
+
+  const liveStats = [
+    makeLiveStat('stat-total-value', 173249.00, { volatility: 0.0006, reversion: 0.06, mirrorClass: 'tb-total' }),
+    // Core is managed index funds — nothing trades outside market hours
+    makeLiveStat('stat-core-value', 126471.77, { volatility: 0.0012, reversion: 0.05, frozenExtended: true }),
+    makeLiveStat('stat-core-allchg', 6365.65, { kind: 'signedMoney', volatility: 0.012, reversion: 0.06, frozenExtended: true }),
+    makeLiveStat('stat-core-allpct', 5.3, { kind: 'pct', volatility: 0.02, reversion: 0.08, wrap: t => `(${t})`, frozenExtended: true }),
+    makeLiveStat('stat-active-value', 57142.02, { volatility: 0.0012, reversion: 0.05 }),
+    makeLiveStat('stat-active-allchg', 2353.46, { kind: 'signedMoney', volatility: 0.012, reversion: 0.06 }),
+    makeLiveStat('stat-active-allpct', 5.3, { kind: 'pct', volatility: 0.02, reversion: 0.08, wrap: t => `(${t})` }),
+    makeLiveStat('stat-bench-portfolio', 57142.02, { volatility: 0.0012, reversion: 0.05 }),
+    // the S&P index itself stops moving when the market closes
+    makeLiveStat('stat-bench-sp500', 59515.92, { volatility: 0.0008, reversion: 0.05, frozenExtended: true }),
+    makeLiveStat('stat-diff-value-num', -2373.90, { kind: 'signedMoney', volatility: 0.02, reversion: 0.06, mirrorClass: 'tb-diffval', colorClass: 'tb-diffsign', signTriangleId: 'stat-diff-tri' }),
+    makeLiveStat('stat-diff-pct', -3.99, { kind: 'pct', decimals: 2, volatility: 0.02, reversion: 0.08, mirrorClass: 'tb-diffpct' }),
+  ].filter(Boolean);
+
+  // ================= ACCOUNT SWITCHER (Self-Directed scope) =================
+  // Value and the S&P card are one statement. Both move together and the card's
+  // suffix always names the account its numbers belong to, so the label and the
+  // figures under it can never disagree.
+  // Per-account figures are current open holdings: value, the S&P mirror on the
+  // same cost basis, and the dollar difference between them. "All Accounts" keeps
+  // the values this page already carried.
+  const DASH_ACCOUNTS = {
+    // All Accounts is the lifetime, deposit-adjusted set, taken from the performance
+    // dashboard so both pages tell the same story: 41,000 deposited, account +16,142.02,
+    // the S&P mirror +18,515.92 on the same timing, so the account trails by 2,373.90.
+    all:       { label: 'All Accounts',   value: 57142.02, sp: 59515.92, diff: -2373.90 },
+    'non-reg': { label: 'Non-Registered', value: 36930.75, sp: 35225.38, diff: 1705.37 },
+    tfsa:      { label: 'TFSA',           value: 15201.17, sp: 15292.04, diff: -90.86 },
+    rrsp:      { label: 'RRSP',           value: 4979.69,  sp: 5882.30,  diff: -902.61 }
+  };
+  let dashAccount = 'all';
+  function setLiveBase(id, v) {
+    const s = liveStats.find(x => x.el && x.el.id === id);
+    if (!s) return;
+    s.base = v; s.value = v;
+    tickLiveStat(s);
+  }
+  function setAccount(key) {
+    const A = DASH_ACCOUNTS[key];
+    if (!A) return;
+    dashAccount = key;
+    document.getElementById('acct-label').textContent = A.label;
+    document.getElementById('bench-scope').textContent = A.label;
+    document.querySelectorAll('#sheet-account .sa-pick').forEach(el =>
+      el.classList.toggle('on', el.dataset.acct === key));
+    setLiveBase('stat-active-value', A.value);
+    setLiveBase('stat-bench-portfolio', A.value);
+    setLiveBase('stat-bench-sp500', A.sp);
+    setLiveBase('stat-diff-value-num', A.diff);
+    // the card's own formula: dollar difference over the S&P equivalent value
+    setLiveBase('stat-diff-pct', A.diff / A.sp * 100);
+    closeAccountSheet();
+  }
+  function openAccountSheet() {
+    document.querySelectorAll('#sheet-account .sa-pick').forEach(el =>
+      el.classList.toggle('on', el.dataset.acct === dashAccount));
+    document.getElementById('sheet-account').classList.add('open');
+  }
+  function closeAccountSheet() {
+    document.getElementById('sheet-account').classList.remove('open');
+  }
+  // the destination opens pre-scoped to the account this card was showing
+  function goBench() {
+    location.href = 'positions%20screens.html?account=' + dashAccount;
+  }
+
+  // ================= S&P 500 DAILY-CHANGE INDICATOR =================
+  // Ambient market context beside the clock. In production this value must
+  // come from a US-LISTED S&P 500 ETF quote (e.g. SPY) — NOT a Canadian-
+  // listed S&P 500 ETF (VFV/ZSP/XUS): those embed CAD/USD currency movement
+  // and would display a materially different number than the index.
+  // In this prototype it is simulated like every other quote on the page.
+  // It reads ZERO portfolio/holdings state — index only.
+  const SP500_PLACEMENT = 'below';   // 'beside' | 'below'  (expanded clock row)
+  const SP500_COLOR = 'mono';        // 'mono' | 'semantic'
+  const sp500 = { value: 0.52, lastClose: 0.52, base: 0.52 };
+
+  function fmtSp500(v) {
+    const r = Math.round(v * 100) / 100;
+    if (Math.abs(r) < 0.005) return '0.00%';           // zero: unsigned, neutral
+    return (r > 0 ? '+' : '−') + Math.abs(r).toFixed(2) + '%';
+  }
+  function updateSp500() {
+    const closed = MARKET_STATE !== 'market';
+    const v = closed ? sp500.lastClose : sp500.value;
+    const txt = fmtSp500(v);
+    let col = '#ffffff'; // mono — matches the clock's color exactly
+    if (SP500_COLOR === 'semantic') {
+      col = Math.abs(v) < 0.005 ? '#c7c7c7'
+        : v > 0 ? 'rgba(48,209,88,0.75)' : 'rgba(255,53,51,0.75)';
+    }
+    document.querySelectorAll('.sp500-slot').forEach(el => {
+      // closed markets: keep the last close mounted (no layout shift),
+      // visually de-emphasized. Dim the INNER wrapper so the slot's own
+      // opacity stays free for the rotor cross-fades.
+      const inner = el.querySelector('.sp500-inner') || el;
+      inner.style.opacity = closed ? '0.55' : '1';
+      const val = el.querySelector('.sp500-val');
+      if (val) { val.textContent = txt; val.style.color = col; }
+    });
+  }
+
+  // (top-bar experiments removed — the pinned nav is a single line:
+  //  clock + session icon + market dots)
+  // expanded-state placement — one-line switch between the two variants
+  (function initSp500Placement() {
+    const el = document.getElementById('sp500-page');
+    if (!el) return;
+    if (SP500_PLACEMENT === 'beside') { el.style.left = '158px'; el.style.top = '2.8px'; }
+    else { el.style.left = '0px'; el.style.top = '23px'; }
+    updateSp500();
+  })();
+
+  setInterval(() => {
+    const extended = MARKET_STATE !== 'market';
+    liveStats.forEach(s => {
+      if (extended && s.frozenExtended) return;
+      if (Math.random() < 0.55) tickLiveStat(s);
+    });
+    // S&P 500 ticks only while the US market is open; closed sessions hold
+    // the last close (the index itself does not print outside RTH)
+    if (!extended) {
+      sp500.value += (Math.random() - 0.5) * 0.05;
+      sp500.value += (sp500.base - sp500.value) * 0.03;
+      updateSp500();
+    }
+  }, 1200);
+
+  // ---- Header clock (drives both the in-page clock and the sticky-nav mirror) ----
+  (function () {
+    const el = document.getElementById('stat-clock');
+    if (!el) return;
+    let h = 13, m = 14, sec = 26;
+    window.__setClock = (hh, mm, ss) => { h = hh; m = mm; sec = ss; };
+    setInterval(() => {
+      sec++; if (sec >= 60) { sec = 0; m++; }
+      if (m >= 60) { m = 0; h++; }
+      if (h >= 24) h = 0;
+      const text = `${h}:${String(m).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+      el.textContent = text;
+      document.querySelectorAll('.tb-clock').forEach(x => { x.textContent = text; });
+    }, 1000);
+  })();
+
+  // ---- Sticky nav: once the in-page market status scrolls up behind the
+  // pinned 71px bar, its compact copy fades into the bar itself (no added
+  // height). The total value joins it only after the big number is passed. ----
+  (function () {
+    const target = document.getElementById('orig-market-status');
+    const screenEl = document.getElementById('screen');
+    const inlineBar = document.getElementById('topbar-inline');
+    const totalValueEl = document.getElementById('stat-total-value');
+    if (!target || !screenEl || !inlineBar) return;
+    const STICKY_HEADER_H = 71;
+    let ticking = false;
+    function update() {
+      ticking = false;
+      const screenTop = screenEl.getBoundingClientRect().top;
+      const targetBottom = target.getBoundingClientRect().bottom - screenTop;
+      const show = targetBottom < STICKY_HEADER_H;
+      let totalPast = false;
+      if (totalValueEl) {
+        const totalBottom = totalValueEl.parentElement.getBoundingClientRect().bottom - screenTop;
+        totalPast = totalBottom < STICKY_HEADER_H;
+      }
+      inlineBar.style.opacity = show ? '1' : '0';
+    }
+    screenEl.addEventListener('scroll', () => {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    });
+    update();
+  })();
+
+  // ---- Position rows: price / value / all-time % / today's change ----
+  // (positionLive is built inside buildPositions so the after-hours toggle
+  // can rebuild the list and re-bind in one place)
+  function tickPosition(row) {
+    const extended = MARKET_STATE !== 'market';
+    // extended sessions trade thin — quotes drift at a fraction of RTH pace
+    const deltaFrac = (Math.random() * 2 - 1) * 0.003 * (extended ? 0.35 : 1);
+    row.price += row.price * deltaFrac;
+    row.value += row.value * deltaFrac;
+    row.pct += deltaFrac * 100 * 0.4;
+    row.price += (row.priceBase - row.price) * 0.03;
+    row.value += (row.valueBase - row.value) * 0.03;
+    row.pct += (row.pctBase - row.pct) * 0.05;
+
+    const up = deltaFrac >= 0;
+    row.valueEl.textContent = `${fmtMoney(row.value)} ${row.valueCcy}`;
+    row.priceEl.textContent = `${fmtMoney(row.price)} ${row.priceCcy}`;
+    row.pctEl.textContent = fmtPct(row.pct);
+    flash(row.valueEl, up, '#ffffff');
+    flash(row.priceEl, up, '#ffffff');
+    flash(row.pctEl, up, '#929292');
+
+    if (!extended) {
+      // today's move only exists while the market is open
+      row.change += deltaFrac * 100;
+      row.change += (row.changeBase - row.change) * 0.05;
+      const changePositive = row.change >= 0;
+      row.changeEl.textContent = fmtPct(row.change);
+      row.changeEl.style.fontWeight = changePositive ? '700' : '400';
+      flash(row.changeEl, up, changePositive ? '#ffffff' : '#929292');
+    } else if (row.extEl) {
+      // ...while pre/post market, the session line is the live number
+      row.ext += (Math.random() - 0.5) * 0.05;
+      row.extEl.textContent = fmtPct(row.ext, 2);
+    }
+
+    // vs S&P in percentage points, beside the ticker — white text, the
+    // triangle alone carries the direction color
+    if (row.ppEl) {
+      const pp = row.pct - row.spRet;
+      const tri = row.ppEl.querySelector('.pp-tri');
+      const numEl = row.ppEl.querySelector('.pp-num');
+      if (tri) {
+        tri.textContent = pp >= 0 ? '▲' : '▼';
+        tri.style.color = pp >= 0 ? '#30d158' : '#ff3533';
+      }
+      if (numEl) numEl.textContent = (pp >= 0 ? '+' : '−') + Math.abs(pp).toFixed(1) + ' pp vs S&P';
+    }
+  }
+
+  setInterval(() => {
+    positionLive.forEach(row => { if (Math.random() < 0.18) tickPosition(row); });
+  }, 900);
+
+  // ================= THE RECORD — data engine + navigation =================
+  // Ported from the calibration prototype (V2 · elevated list).
+  // Semantics: the hurdle IS the excess-over-S&P target; hit ⟺ vs S&P ≥ hurdle.
+  // Open calls tick like a quote feed and resolve at their horizon
+  // (demo-scaled: 1y ≈ 2 min, 3y ≈ 4 min, 5y ≈ 6 min), then shift down
+  // into the judged section of the ledger. Sold-early keeps shadow-tracking.
+  const REC_COLORS = { hit: '#6E9179', miss: '#AE574F', seal: '#C99AD0', gold: '#C9A24B', t: '#929292', d: '#565b5e', p: '#ffffff' };
+  const REC_STATUS = {
+    open:       ['Open',       REC_COLORS.p],
+    hit:        ['Hit',        REC_COLORS.hit],
+    miss:       ['Miss',       REC_COLORS.miss],
+    superseded: ['Superseded', REC_COLORS.seal],
+    sold:       ['Sold-early', REC_COLORS.gold],
+    void:       ['Void',       REC_COLORS.t]
+  };
+  const REC_DUR = { 1: 120, 3: 240, 5: 360 }; // seconds per horizon (demo)
+  const REC_NAMES = ['NVDA','POWL','CELH','V','SHOP','ODD','COST','AEHR','MSFT','IESC','HRMY','SMCI','ANET','VRT'];
+  const recStep = (v, lo, hi) => Math.max(lo, Math.min(hi, Math.round(v / 5) * 5));
+  const recRnd = a => a[Math.floor(Math.random() * a.length)];
+
+  function recMkClosed() {
+    const hz = recRnd([1, 3, 5]);
+    const conf = recStep(35 + Math.random() * 55, 0, 100);
+    const ret = recStep(15 + Math.random() * 35, 15, 100);
+    const clear = Math.random() < (conf / 100) * 0.76;
+    let ex = clear ? ret + Math.random() * 14 : ret - (3 + Math.random() * 45);
+    ex = Math.max(-42, Math.min(58, ex));
+    return { name: recRnd(REC_NAMES), hz, conf, ret, ex, status: ex >= ret ? 'hit' : 'miss' };
+  }
+  function recMkOpen() {
+    const hz = recRnd([1, 3, 5]);
+    const conf = recStep(45 + Math.random() * 40, 0, 100);
+    const ret = recStep(20 + Math.random() * 25, 15, 100);
+    const clear = Math.random() < (conf / 100) * 0.8;
+    let fin = clear ? ret + Math.random() * 14 : ret - (3 + Math.random() * 45);
+    fin = Math.max(-40, Math.min(56, fin));
+    const dur = REC_DUR[hz];
+    const born = Date.now() - (0.25 + Math.random() * 0.4) * dur * 1000;
+    return { name: recRnd(REC_NAMES), hz, conf, ret, fin, perf: 0, born, status: 'open' };
+  }
+  // 17 entries — matches "Predictions 17" on the dashboard's Calibration block
+  const REC = {
+    open: [recMkOpen(), recMkOpen(), recMkOpen(), recMkOpen()],
+    closed: [
+      { name: 'SHOP', hz: 3, conf: 65, ret: 30, status: 'superseded' },
+      { name: 'AEHR', hz: 1, conf: 60, ret: 25, status: 'sold',
+        perf: 6.4, fin: 14, born: Date.now() - 0.17 * REC_DUR[1] * 1000, settled: false },
+      { name: 'SMCI', hz: 3, conf: 70, ret: 35, status: 'void' },
+      ...Array.from({ length: 10 }, recMkClosed)
+    ]
+  };
+
+  const recEntries = () => [...REC.open, ...REC.closed];
+  const recIsLive = p => p.status === 'open' || (p.status === 'sold' && !p.settled);
+  const recValOf = p => p.perf != null && (p.status === 'open' || p.status === 'sold') ? p.perf : p.ex;
+  const recExTxt = v => v == null ? '—' : (v >= 0 ? '+' : '−') + Math.abs(v).toFixed(1) + '%';
+  const recExCol = v => v == null ? REC_COLORS.d : (v >= 0 ? REC_COLORS.hit : REC_COLORS.miss);
+  const recDescOf = p =>
+    p.status === 'superseded' ? 're-underwritten' :
+    p.status === 'void' ? 'thesis killed' :
+    p.status === 'sold' ? 'exited early · tracked to horizon' : 'scored at horizon';
+
+  let recordsOpen = false;
+  setInterval(() => {
+    const nowMs = Date.now();
+    for (let i = REC.open.length - 1; i >= 0; i--) {
+      const d = REC.open[i];
+      const dur = REC_DUR[d.hz];
+      const age = (nowMs - d.born) / 1000;
+      if (age >= dur) {
+        d.status = d.fin >= d.ret ? 'hit' : 'miss';
+        d.ex = d.fin;
+        REC.open.splice(i, 1); REC.closed.unshift(d);
+        continue;
+      }
+      const settle = Math.pow(age / dur, 1.2);
+      d.perf += ((d.fin * settle) - d.perf) * 0.12 + (Math.random() - 0.5) * 1.6 * (1 - settle * 0.7);
+    }
+    for (const d of REC.closed) {
+      if (d.status !== 'sold' || d.settled) continue;
+      const dur = REC_DUR[d.hz];
+      const age = (nowMs - d.born) / 1000;
+      if (age >= dur) { d.settled = true; d.perf = d.fin; d.ex = d.fin; continue; }
+      const settle = Math.pow(age / dur, 1.2);
+      d.perf += ((d.fin * settle) - d.perf) * 0.12 + (Math.random() - 0.5) * 1.6 * (1 - settle * 0.7);
+      d.ex = d.perf;
+    }
+    if (recordsOpen) renderRecords();
+  }, 1200);
+
+  function renderRecords() {
+    const all = recEntries();
+    document.getElementById('rec-count').textContent = all.length + ' entries';
+    document.getElementById('rec-list').innerHTML = all.map(p => {
+      const v = recValOf(p), st = REC_STATUS[p.status];
+      const live = recIsLive(p);
+      const col = recExCol(v);
+      const dot = live ? '<span class="e2-dot" style="background:' + col + '"></span>' : '';
+      const right = live
+        ? '<span class="e2-val" style="color:' + col + '">' + recExTxt(v) + '<span class="u">vs S&P</span></span>' +
+          (p.status === 'sold'
+            ? '<span class="e2-sub" style="color:' + REC_COLORS.gold + '">Sold-early</span>'
+            : '<span class="e2-sub" style="color:' + col + '">Tracking</span>')
+        : '<span class="e2-val" style="color:' + st[1] + '">' + st[0] + '</span>' +
+          '<span class="e2-sub" style="color:' + REC_COLORS.d + '">' + recDescOf(p) + '</span>';
+      return '<div class="e2-row">' +
+        '<div class="e2-left">' +
+          '<span class="e2-nm">' + dot + p.name + '</span>' +
+          '<span class="e2-meta">' + p.conf + '% conf · +' + p.ret + '% hurdle · ' + p.hz + '-year</span>' +
+        '</div>' +
+        '<div class="e2-right">' + right + '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  // ---- Market-state switcher (burger menu outside the phone) ----
+  function toggleStateMenu(e) {
+    if (e) e.stopPropagation();
+    document.getElementById('stateMenuPanel').classList.toggle('open');
+  }
+  document.addEventListener('click', e => {
+    const p = document.getElementById('stateMenuPanel');
+    if (p && p.classList.contains('open') && !e.target.closest('.iter-wrap')) p.classList.remove('open');
+  });
+  function setMarketState(s) {
+    // capture the S&P last close at the moment the market closes
+    if (s !== 'market' && MARKET_STATE === 'market' && typeof sp500 !== 'undefined') {
+      sp500.lastClose = sp500.value;
+    }
+    MARKET_STATE = s;
+    document.getElementById('stateMenuPanel').classList.remove('open');
+    document.getElementById('state-item-market').classList.toggle('on', s === 'market');
+    document.getElementById('state-item-pre').classList.toggle('on', s === 'pre');
+    document.getElementById('state-item-after').classList.toggle('on', s === 'after');
+    // market dots (in-page row + top bar): green while open, red while closed
+    const dotCol = s === 'market' ? '#30d158' : '#ff3533';
+    document.querySelectorAll('.mkt-dot').forEach(d => { d.style.background = dotCol; });
+    // clock jumps to a time that matches the session, then keeps ticking
+    if (window.__setClock) {
+      if (s === 'pre') window.__setClock(7, 46, 12);
+      else if (s === 'after') window.__setClock(17, 32, 5);
+      else window.__setClock(13, 14, 26);
+    }
+    // session icon beside the top-bar clocks — sunrise pre-market, moon after
+    const sessionSvg =
+      s === 'pre' ? '<svg width="11" height="10" viewBox="0 0 14 12" fill="none" stroke="#fbc308" stroke-width="1.1" stroke-linecap="round" style="vertical-align:-1px;"><path d="M3.6 9.2a3.4 3.4 0 0 1 6.8 0"/><path d="M1 9.2h12"/><path d="M7 1.2v1.7"/><path d="M2.9 3.1l1.2 1.2"/><path d="M11.1 3.1l-1.2 1.2"/></svg>'
+      : s === 'after' ? '<svg width="10" height="10" viewBox="0 0 13 13" fill="none" style="vertical-align:-1px;"><path d="M11.2 8.3A5 5 0 0 1 4.7 1.8a5.4 5.4 0 1 0 6.5 6.5Z" stroke="#4a7dff" stroke-width="1.1" stroke-linejoin="round"/></svg>'
+      : '';
+    document.querySelectorAll('.tb-session-icon').forEach(el => { el.innerHTML = sessionSvg; });
+    buildPositions();
+    if (typeof updateSp500 === 'function') updateSp500();
+  }
+
+  function openRecords() {
+    recordsOpen = true;
+    renderRecords();
+    document.getElementById('records-screen').classList.add('open');
+  }
+  function closeRecords() {
+    recordsOpen = false;
+    document.getElementById('records-screen').classList.remove('open');
+  }
+  renderRecords();
+</script>
+
+</body>
+</html>

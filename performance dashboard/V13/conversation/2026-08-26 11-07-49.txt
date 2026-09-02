@@ -1,0 +1,707 @@
+
+Speaker 1 00:11 
+Right. Um, so yeah, I like that, uh, carousel you put together. I mean, where's your head at on it? Why don't you pull it up? Let's, let's show Aidan and Euan. They're gonna come on here shortly.
+
+But, um... What-- I mean, obviously you did it, so presumably you like it. Um, but was there anything particular on this design that you liked that... Okay. Mm-hmm. Yeah. Yeah. Right. Mm-hmm. But it also had copy a little bit more unformatted. You've got it all formatted center. Well, I guess, um, at least with these, but then go to the orange one. I guess your, the orange one looked more like that. Um, so pull up the reference one. Can you do that? So look at how much copy is in, in there, and then I guess it's formatted on the, it's not centered, it's to the left, top left corner. Well, yeah, I just thought that was particularly noticeable, interesting, right? Um, versus always being, you know, kind of more centered and formatted, right?
+
+So Euan and what this is, I've asked Ink to, inspired by this other post, to design, do a carousel post. So this is-
+
+Speaker 2 02:57 
+The delusion- 
+
+Speaker 1 02:58 
+Carousel 
+
+Speaker 2 02:58 
+... the delusion one? 
+
+Speaker 1 03:03 
+Um, is this the delusion one? 
+
+Speaker 2 03:07 
+What I'm saying is that what it was inspired by, that delusion one, like the long form one you sent. 
+
+Speaker 1 03:14 
+No. No, no, no. So it's this one, that Vanity Fair one. 
+
+Speaker 2 03:19 
+Oh. Yeah, yeah. 
+
+Speaker 1 03:20 
+Right? So, 'cause I ran these through chat from a design perspective, which one's more elevated, ours or this? And it said this for a bunch of reasons. Um, and ours felt more like a template, and this feels more, you know. So that's part of it too.
+
+Um, so part of this is, um, you know, some of the photos are just a photo and nothing else. So as Ink said, you know, the, that's in this other version. But the-- And then obviously you have different color kind of backgrounds in this case. Um, but I thought the copy, you know, and also, yeah, so that formatting, I thought that was kinda cool. Um-
+
+Speaker 2 04:03 
+I think that's cool, yeah. 
+
+Speaker 1 04:05 
+And, and even that just feels a little more, just a little more unique, a little more quirky, right? Doesn't feel- 
+
+Speaker 2 04:14 
+Versus what? What was the other one? 
+
+Speaker 1 04:17 
+Well, ours is more centered. 
+
+Speaker 2 04:19 
+Right. 
+
+Speaker 1 04:19 
+Right? Um, which was inspired by the Mercer. Now, my view is I, I just wanna have more variety. I just don't like it where we just have one. 
+
+Speaker 2 04:28 
+Yeah. Same. 
+
+Speaker 1 04:29 
+So it's not that we wouldn't do others. So, you know, like we, you know, you do-- What I was saying is let's do half like this and half like the other, and then there's more diversification, and then it feels it's less like you just perfect template each time, right? 
+
+Speaker 2 04:43 
+Mm-hmm. 
+
+Speaker 1 04:44 
+So, I am liking, I think our Instagram grid is looking solid, right? 
+
+Speaker 2 04:51 
+Yeah. 
+
+Speaker 1 04:51 
+I think these are elevated and it's definitely a, a good direction. But I think, again, like everything, you continue to refine and polish and... But when I bump into a new design, I'm like, "Okay, well actually this feels a little more elevated, a little more unique," you know?
+
+And then I run ours through and it's, you know, side by side and say, "Hey, you know, two designs, which one's more elevated, higher?" Blah, blah, blah. And it's like, "Okay, and here's why." So then, okay, well then let's potentially we slightly evolve ours and/or we, you know. 
+
+Speaker 2 05:23 
+I mean- 
+
+Speaker 1 05:24 
+Um... So, okay. Yeah, so this is, uh, this obviously has also more colors and-- Which actually this starts to look like some of those previous ones you just looked at, some of our older ones.
+
+So like obviously all this stuff could, could fit in. 
+
+Speaker 2 05:51 
+I like the look of, yeah, just seeing the grid right now of our, um, channel or- 
+
+Speaker 1 05:58 
+Mm-hmm 
+
+Speaker 2 05:58 
+... account. Looks cool.
+
+Speaker 3 06:01 
+Just the visuals and the- 
+
+Speaker 1 06:02 
+Yeah 
+
+Speaker 3 06:02 
+... stuff like that. 
+
+Speaker 1 06:03 
+Well, it, it, it definitely feels a little high status versus any other fintech financial brand, that's for sure. 
+
+Speaker 3 06:11 
+Yeah. 
+
+Speaker 1 06:11 
+Right? Um, doesn't look anything like if you compare that to like a Wealthsimple or a Questrade or a... Right? 
+
+Speaker 3 06:19 
+Moomoo. 
+
+Speaker 1 06:20 
+Moomoo. Um, okay, Ink, so that's good. So yeah, I want to, um... And, and then, uh, I s- I reminded you of a previous one. I don't think you did do it, did you? 
+
+Speaker 3 06:34 
+Look at how bad this... 
+
+Speaker 1 06:44 
+Yeah, no, that's fine. That's fine. Yeah, so, um, okay. Okay, so let's look at this. 
+
+Speaker 3 06:54 
+Yeah, let's look. 
+
+Speaker 1 07:01 
+Mm-hmm. 
+
+Speaker 3 07:09 
+Yeah, let's look at this one right now. 
+
+Speaker 1 07:18 
+I don't like the green line, so- 
+
+Speaker 3 07:32 
+Yeah 
+
+Speaker 1 07:32 
+... yeah, what we're using in another one is gray, and then it only goes green if it's done it, right? But otherwise it's a, a gray. 
+
+Speaker 3 07:44 
+The currency and CAD- 
+
+Speaker 1 07:44 
+So is the red- 
+
+Speaker 3 07:47 
+Yeah. I'd say the currency and CAD placement looks a little odd when it's all percentages at the top.
+
+It might be-- I think it makes more sense to maybe place it then beneath the performance versus S&P 500 header where we actually show like monetary figures. 
+
+Speaker 1 08:01 
+Yeah. Like close to the actual first dollar amount, which is lower. 
+
+Speaker 3 08:06 
+Yeah. 
+
+Speaker 1 08:07 
+It's the, it's the performance versus S&P where the first actually shows a dollar amount. Now, again, the, the red and green arrow, in this case, this is just where we chose to color things. But, um, what is a little odd-
+
+Speaker 3 08:28 
+What's odd about it is it has the negative as well. 
+
+Speaker 1 08:34 
+But, but I think that was... Yeah, that is, that's right. Um, and that's consistent, um, I think with what we did before. It wasn't instead of, um, it, it's in addition to. I think, um- 
+
+Speaker 3 08:56 
+Yeah, to me, I just interpret this like the whoop, where I think it's trending down, not that the reason why there's a red arrow is because it's negative. 
+
+Speaker 1 09:06 
+Right. Yeah. 
+
+Speaker 3 09:10 
+That, that to me, maybe it's just the way I saw it. 
+
+Speaker 1 09:12 
+So, but if you go like I'm on CNBC, Aiden, and they do the same, they'll do, um, down arrows, up arrows, and minus and plus. So it's- 
+
+Speaker 3 09:24 
+Yeah 
+
+Speaker 1 09:24 
+... you know, um, it's not something that hasn't, that isn't being used elsewhere, right? So- 
+
+Speaker 3 09:35 
+Yeah. 
+
+Speaker 1 09:39 
+And they'll, like in certain cases, they'll, again, they'll use red coloring minus and the arrow. 
+
+Speaker 3 09:49 
+Hmm. 
+
+Speaker 1 09:49 
+Right? So all we're doing is the same, but instead of putting the actual numbers in the color as well. So we'll still, you still need the plus or minus, but then you add the, the arrow in addition. But I think maybe try the arrow a little bigger. Um... 
+
+Speaker 3 10:20 
+Are you saying we'd keep it red? 
+
+Speaker 1 10:24 
+What do you mean? 
+
+Speaker 3 10:26 
+You're saying we're doing the same, we're just keeping the arrow in addition. As in like the number will still be in red? 
+
+Speaker 1 10:33 
+No. 
+
+Speaker 3 10:33 
+With the alpha? 
+
+Speaker 1 10:34 
+No, I'm saying, um, it-- we're trying to do this instead of have the number in red, try to go subtler. 
+
+Speaker 3 10:41 
+Mm-hmm. 
+
+Speaker 1 10:41 
+Right? But still red. 
+
+Speaker 3 10:42 
+But what if just the dollar amount was red and then the percentage has the arrow? Dollar amount is red, but the percent... I feel like that's a bit odd.
+
+Why, why are there two different styles? Same thing. 
+
+Speaker 1 10:57 
+I mean, that's how we have it right now kinda. It seems like the dollar amount's in white and then the, the PP has the red arrow. 
+
+Speaker 3 11:04 
+Yeah, but that's... I mean, that just hasn't been nailed down. I, I didn't think that that made sense, honestly. 
+
+Speaker 1 11:11 
+I'm just saying when I'm in my actual account now with the red, um, you know, and/or the green, it seems sometimes just a little much. 
+
+Speaker 3 11:24 
+Yeah, no, I agree. 
+
+Speaker 1 11:25 
+Maybe only on closed positions. 
+
+Speaker 3 11:28 
+Sorry? 
+
+Speaker 1 11:30 
+Maybe only on closed positions. 
+
+Speaker 3 11:31 
+It just feels a bit, uh, almost, I don't know if cheesy is the right word, but it just feels a bit like too much. Yeah. Especially, I mean, you scroll down to like the top contributors and the top detractors, look at that. Like it's just like a sea of green and red right now.
+
+Yeah, like that. Mine's just green, so... 
+
+Speaker 1 11:54 
+Exactly. 
+
+Speaker 3 11:56 
+Yeah. Yeah. 
+
+Speaker 1 11:57 
+Um- 
+
+Speaker 3 11:57 
+So keep it here, Ink. Let's just look at the difference between these two
+
+Speaker 4 12:02 
+Like obviously the right one looks-- The right one to me definitely looks more like professional versus having the color fully green, like, and red like that. 
+
+Speaker 1 12:10 
+What do you think, Ink? Where's your head at? Yeah, definitely the other one feels cleaner. It feels less, um... It just feels, yeah, cleaner, um, calmer. 
+
+Speaker 4 12:25 
+Less pinky most. 
+
+Speaker 1 12:27 
+Yeah, exactly. Yeah, I definitely like the- 
+
+Speaker 4 12:32 
+Ink, what do you think? 
+
+Speaker 1 12:32 
+I like the green and the red arrow definitely over the colored... Yeah, sorry, what are you thinking? I find it's easier to read. It just feels more con-- It, it feels like I wanna read it more. The other one's like, huh, all of a sudden I'm now jar- reading all this white and all of a sudden it's a little jarring, like-
+
+Speaker 4 12:57 
+No, I, I agree. It's like it's all red or all green- 
+
+Speaker 1 12:59 
+I just found it's not as pleasant. It's not as pleasant to wanna view it, whereas this actually just loo- looks more inviting, feels more inviting.
+
+I find it more, um... Yeah. Now I think the debate is, the debate is, um... 
+
+Speaker 4 13:23 
+Do you ever use the full color? Is that- 
+
+Speaker 1 13:26 
+Well, no, but when do you use the arrow versus you, you don't use it, right? 
+
+Speaker 4 13:32 
+Right. 
+
+Speaker 3 13:32 
+For locked in positions? 
+
+Speaker 1 13:34 
+Pardon me? 
+
+Speaker 3 13:35 
+Or closed? What about for, like, realized? 
+
+Speaker 1 13:42 
+Only for realized position? No, but then... Well, I don't know about that- 
+
+Speaker 4 13:48 
+What about beat versus- 
+
+Speaker 1 13:49 
+'Cause then it goes into the performance business. 
+
+Speaker 4 13:50 
+What about beat versus trailed, for example? Why would beat not have, you know, green arrow and trail the red arrow, right? As an example. Right? 
+
+Speaker 3 14:04 
+What do you mean? 
+
+Speaker 4 14:04 
+Yeah, maybe it's only-- Well, maybe if it's only there's a plus next to it, like it's actually an amount or something, like a value versus... Yeah, I wouldn't put it next to the, the beat and the trail. 
+
+Speaker 1 14:23 
+Yeah, but there's no question I prefer this, right? I definitely prefer it. 
+
+Speaker 4 14:27 
+No, I agree. Seeing it, seeing it especially down here with, with all the green and red definitely solidified it for me that I prefer it as well. 
+
+Speaker 1 14:36 
+It just feels more elevated. No question, it feels more polished, more elevated. 
+
+Speaker 4 14:40 
+Yeah, it does. 
+
+Speaker 1 14:41 
+It also feels more differentiated, right? The other one starts to look like, well, you know, we've seen that. Again, what we're trying to do is, uh, have kind of a more polished Moomoo, right? More elevated, polished Moomoo. Like, we might have some of the same data information, but people just, just feel like, "Okay, I just like this design more." Right?
+
+It, it feels more elevated. Just feels more sophisticated, more elevated. Not as trying to be as noisy, but still very information dense, right? Where they're, they're just going for the, the colors, the lights, the graphs, all of that stuff, right? 
+
+Speaker 4 15:14 
+Mm-hmm. 
+
+Speaker 1 15:15 
+And we're trying to do a more, you know, modern, you know, I don't know what the right word is from a design perspective. 
+
+Speaker 4 15:25 
+Yeah. Yeah, but I agree. This feels more serious. So, so yeah, I agree.
+
+I think we should move towards changing this stuff. It'd be interesting to see if, if in other areas maybe it looks odd, but let's see. Like, what about that tracking versus the S&P right on the main dashboard, like with that right now? Like, it'd be interesting to see what that looks like-
+
+Speaker 1 15:45 
+Mm-hmm 
+
+Speaker 4 15:45 
+... 'cause it's a sentence kind of with the arrows. Um, but before we move to that, so, so co- sorry, expand those again, Ink, 'cause, 'cause this was one thing that I wanted to review. Yeah, so right now in the current app implementation, when you tap on the whole section, it takes you into the page, which goes into more details. I feel, I feel like I prefer that.
+
+I don't know. To, to, to... Yeah, instead of having these little sections be collapsible, and then you have to specifically tap the "view all" at the bottom to get into it. Yeah, and I just feel like people aren't really gonna click the "view all" otherwise with this expand. I don't know. Like, I'm just like... Yeah. I, I feel, yeah. You agree? Yeah. Well, I mean, what do you guys think? Ewan, are you following what I'm saying? 
+
+Speaker 3 16:54 
+Sorry, say that again. 
+
+Speaker 4 16:56 
+So I'm saying go into your app right now and go into the performance dashboard and scroll down- 
+
+Speaker 3 17:00 
+Yeah 
+
+Speaker 4 17:00 
+... to this total position section that we're looking at on the screen. Are, are you there? 
+
+Speaker 3 17:10 
+Mm-hmm. 
+
+Speaker 4 17:12 
+Yeah. So notice how if you tap anywhere in the section, it takes you in.
+
+Whereas... So you tap anywhere in the open section, it'll take you into that page. Whereas this, this new design has it so the profitable, the beating, the trailing are all dropdowns that you can see, like if you click on one, Ink, the-
+
+Speaker 3 17:31 
+Mm-hmm. 
+
+Speaker 4 17:31 
+There are dropdowns that if you click, it shows you all the items. 
+
+Speaker 3 17:34 
+Right. 
+
+Speaker 4 17:34 
+And then you have to tap specifically "view all." I'm saying I, I prefer it in the way that it is in the app right now, where you tap the section, it takes you into it, versus you have all these- 
+
+Speaker 1 17:44 
+I agree 
+
+Speaker 4 17:45 
+... new dropdowns. 
+
+Speaker 1 17:45 
+I, I agree 100%. 
+
+Speaker 4 17:47 
+Yeah. 
+
+Speaker 1 17:47 
+I just wanna go tap into it, and then I, you know, versus I gotta decide what I'm looking at here. 
+
+Speaker 4 17:52 
+Yeah. 
+
+Speaker 1 17:52 
+No, 100%. 
+
+Speaker 4 17:54 
+Okay. 
+
+Speaker 1 18:03 
+No, we can remove that text
+
+Speaker 4 18:07 
+I, I don't think we need to just explain the difference between profitable and unprofitable versus beating the S&P and trailing, at least on this page. Uh, and go up to the cash flows, 'cause we were just talking about that too. And I think this adjustment there needs to be made. Yeah, so for this external cash flows, want to adjust that. You just added the cash, uh, external cash flows. Yeah, so want to adjust that so it actually is showing the first couple transactions, like the first, like most... Like maybe the five most recent or three most recent transactions. And then if you want to, you could expand it further, but rather than hiding the whole section. Um, okay, and then maybe just scroll up a bit on this page.
+
+Let's just look at the rest of this, and start from the top again. Yeah, so performance active. So we said the currency since inception, preliminary. Yeah, so, so for this one, why is the portfolio and the S&P, um, why do those not have the arrows? I guess we're just, I guess we're just trying to highlight the alpha. Okay. Yeah, I guess... Yeah, so I guess to a certain extent it makes sense. It's like, hey, here's, this is the value that ultimately matters here, is like are you outperforming or underperforming? Um, hmm, okay. So maybe that's left, but I, I do find it odd the alpha is in the middle. That's odd to me. No, the one above. You have portfolio, and then you have alpha, and then you have S&P. 
+
+Speaker 3 20:03 
+I kinda like it. 
+
+Speaker 4 20:05 
+Why? 
+
+Speaker 3 20:07 
+'Cause it like splits them up, 'cause obviously like that's the difference between those, those two things, right? 
+
+Speaker 4 20:14 
+Yeah, it's the difference between them. That's, that's what I, I find kinda odd is that the alpha's in the middle.
+
+When you're saying the portfolio and the S&P, if you take the difference between those, you get the alpha. 
+
+Speaker 3 20:29 
+Yeah. I mean, I like both ways, I guess. 
+
+Speaker 4 20:34 
+I'd just ask... I would just ask Claude about that one. 
+
+Speaker 3 20:36 
+Because the alpha is the, is the main takeaway, right? 
+
+Speaker 4 20:40 
+Yeah, it is. Yeah, which is why- 
+
+Speaker 3 20:41 
+So it should- 
+
+Speaker 4 20:42 
+... it had the color on it. 
+
+Speaker 3 20:44 
+Right. So I feel like having it centered makes sense here. I mean, we don't like center it everywhere, but... 
+
+Speaker 4 20:51 
+I just, I just find it a bit odd that you're subtracting the left value and the right value, and the middle value is the, is the calculation there. 
+
+Speaker 3 20:59 
+Yeah. 
+
+Speaker 4 21:04 
+Well, I, I would just ask Claude. Just ask Claude what it, what it thinks about that, and if a serious investor would respect this layout over the other one. Then when it's, when it's stacked like that, the performance versus like that would make sense, where it's like you got the portfolio, the S&P, and then the difference between them is the alpha. Uh, and then I like how, I like how when you scroll actually that YTD and that, that information follows. That makes sense to me.
+
+Uh, and then... Right. Mm-hmm. Yeah, no, I like that. I like how it follows it when you're scrolling. I think the graph and how the information is displayed there is a bit odd, and it's different than... Like if you get-- Actually pull up Leo's, uh, stock page, the latest one that he had shared on the design channel. Yeah, so scroll down to the graph. No, further. Yeah, that one. Yeah, so notice the overlay where there's this box that comes up. I feel like maybe we should try that same style for the graph on the, uh, performance page, where you have a box that comes up that has the information. Obviously, there's a lot less information, but yeah, I just find it kinda weird how it's got the date and then the portfolio. Yeah, that, how that information's just up there at the top left. I think we should try it like this, yeah, in that box. But then, uh, just go back to it though, 'cause then if you do that, then you don't see the value when you're not scrolling. Well, let's, let's try that. Um, and then with the dates and the vertical, how does the, how does the current... Go back to the stock one. How does it handle that, the X and the Y-axis? Right, so it actually doesn't show that unless you're scrolling on it. Hmm. Yeah, so go back to the performance one. Hmm. Yeah, it's just a different style where like it has the months and the years. I mean, maybe we just try this and see what it looks like. But like our current, our current stock page one is obviously a lot more minimalist, where it doesn't show the Y-axis and the X-axis. But I mean, let's just-
+
+Speaker 3 24:17 
+Oh, great. 
+
+Speaker 4 24:24 
+Yeah, 'cause what does that new calibration one look like too? Yeah. Yeah, maybe we just try it like this for now. Okay, and then the yearly- 
+
+Speaker 3 24:37 
+Sorry, could you scroll on it, I think 
+
+Speaker 4 24:39 
+... yeah, you can scroll. But I'm saying we're changing the, the way that that information displays when you're scrolling, so it's like the stock page.
+
+It's like, so it comes up like that, 'cause I find it odd that it's just the top left. 
+
+Speaker 3 24:50 
+Mm-hmm. And then... Okay, yeah. 
+
+Speaker 4 24:58 
+For the yearly breakdown too, I'm wondering if, if that should be collapsible. I mean, most people are, most people are only gonna see the first, you know, year right now or two years. But in my case, it goes back to twenty twenty-two. I mean, it's not that much to scroll. Maybe for now, let's not collapse it and just see what it looks like.
+
+Um, and then you have the YTD. Is that YTD and signal clear to you, Ewan? Do you see this, uh, on the twenty twenty-six is YTD and then twenty twenty-eight signal? Do you see that? 
+
+Speaker 3 25:36 
+Yeah. When you've achieved signal in twenty twenty-eight? 
+
+Speaker 4 25:39 
+Yeah, and then the YTD. 
+
+Speaker 3 25:41 
+Yes. Like where you are now. 
+
+Speaker 4 25:45 
+Yeah. I found that a bit odd at first to me, but then I read the bottom and that made sense.
+
+On that note, that information probably should be like within a, you know, tappable, like expandable section or something like how some of the other information is done. Where I can like tap on... Yeah, or maybe I tap on the yearly breakdown and then it shows that or something, versus it's just always there. 
+
+Speaker 3 26:18 
+And maybe- 
+
+Speaker 4 26:19 
+So what of this, Aiden, do you guys want to get, uh, Varun actually working on? 
+
+Speaker 1 26:29 
+Was there anything here that you want to actually get Varun start making some adjustments to? For example, the colors, start changing that. Let's see what that looks like in the app. 
+
+Speaker 4 26:39 
+Yeah, we should do that. And then the tracked since, uh, that tracked since section I think should be adjusted as well. Obviously, the deposits, he's already adjusting that. The cash flows, um- 
+
+Speaker 1 26:51 
+But I'm just wondering, can you give, just give him this latest version instead of worrying about... 'Cause we're gonna continue to polish and just say, you know, "Here's some..." Like, we should probably do maybe even a review with him, right? Bring him in, say, "Hey, here it is." And, you know, he can start doing what he thinks, but we're still kind of working on it versus, you know, we just keep working on it, working on it, right? 
+
+Speaker 4 27:14 
+Yeah, I get what you're saying. So we can like- 
+
+Speaker 1 27:15 
+You know, I think the color, the going to the arrows right now, I think is one we wanna start, like saying, "Okay, we, we're pretty sure we wanna go this route. We now need to test it in the app, see if it-- when we start seeing it, we like it," right?
+
+I mean, that's kind of versus thinking that you're just gonna polish it all here and you can figure it all out here. You know, you're doing this and say, "Okay, now let's..." Yeah, I think we're con-- we did enough testing here that we now wanna see it in the app to see what it looks like, right? You know, so you just keep doing things-
+
+Speaker 4 27:45 
+I get what you're, I get what you're saying, but my concern, and so maybe we just need to be specific, 'cause my concern is regressing like that dropdown, you know, of the open and close versus tapping that.
+
+If we had just given that to Varun and said, "Hey, just do this," and then he spent time-
+
+Speaker 1 27:58 
+No, no, no, no 
+
+Speaker 4 27:59 
+... adjusting that, we're like, "Oh, we need to do that." 
+
+Speaker 1 28:01 
+That 100%, that's what I'm saying. I'm saying we go over and say, "Hey, here's ones right now we wanna start trying." 
+
+Speaker 4 28:06 
+Yeah. 
+
+Speaker 1 28:06 
+This one here, no. You, you-- versus so is there... So if there's anything in here like the dropdown, you say definitely not.
+
+But if everything, if there's any- everything else that you say, "Hey, I think directionally we wanna start trying this," right? 
+
+Speaker 4 28:19 
+Mm-hmm. Yeah, I agree. So- 
+
+Speaker 1 28:21 
+Versus still waiting to kind of polish it more, right? 
+
+Speaker 4 28:24 
+Yeah, I agree. So yeah, maybe we'll just call him in in a second here. Um, but just scroll down and-- 'cause just one thing I noticed in this external cash flows, that net deposit, so it should definitely be at the top. If that is... Yeah, 'cause if that is only at the bottom of literally every transaction, nobody's ever gonna see that for the people who have a lot of transactions. Like in our-- my case, I literally have 100 transactions, so if net deposit's at the very bottom, I'm, I'm never gonna see that. So that should be at the, the top, that information, the net deposits.
+
+That shouldn't be something that gets pushed down when there's more transactions. Um, but otherwise, let me just like, let me just compare what does he have in the app versus what we have here. So sorry, scroll up a bit. So he doesn't have... So we have the performance. S-sorry, scroll up further. Keep going. Right. So we got that at the top. We have the trailing one year. He has that. Doesn't have the new design of the track since. We wanna do that. Performance USP. So he doesn't have this YTD one-year, three-year max and the different, uh, benchmarks, right? Uh, and then scroll down, and then he doesn't have the graph yet, and I, I definitely wanna see that graph in the yearly breakdown as well. And then keep going. He's got the cash flows in here now. The placement of it needs to change. He does have the cash drag. This one's a bit adjusted. Uninvested cash, average 16%. Timing and risk. Does he have that section in here right now? Timing and... No. Yeah, obviously something that we don't have yet. Volatility. Yeah. And then decisions, and then we have the win rate, and then keep going down. Yeah, so this one as well, what we were saying, as I understand from the last call, is the top contributors and the top detractors, we actually wanna show all of them, but there definitely should be a point where they're collapsed. Like, obviously, like if somebody had, you know, three detractors, they shouldn't have to scroll past this whole thing. But I don't think it should only show the top three. May-maybe you, you show the top three, and then if somebody clicks a button, it expands it further. Um, but there should be a way that you can see all of them kind of ranked out. And it's a mix of open and close, yeah. That makes sense. 
+
+Speaker 3 31:10 
+And maybe let's just keep the, the headers top contributors and top detractors. 
+
+Speaker 4 31:15 
+Yeah, I agree. I like top contributors and top detractors.
+
+You can remove the to alpha and the from alpha. Uh, okay. Okay, so then let's-- And when you scroll up, you have the new clock design in here too, right? Gotcha. Right. And sorry, scroll down again. So keep scrolling so that it does the... Yeah. Yeah, so that's a-- that's not entirely accurate 'cause obviously it should still have the back button and the tool tip. Like on this page when you're scrolling. Yeah, like notice how when you're scrolling, the back button, like that top nav doesn't follow, and it should. 'Cause oth-otherwise, you literally have to scroll to the very top of the page to hit the back button. So that top nav should follow along with the YTD one year, three-year max. Uh, and then maybe on that front, maybe you still have the clock in the nav too, or maybe you don't. Maybe that just stays at the top of the page. 'Cause right now in Bruin's implementation, he actually does have the clock following you in the nav too, so... Yeah. Well, yeah, like you've seen it on the, uh, on the stock page, right? Have you? Like look at this one. I think I'll just send this. Uh... And then we can call in Bruin. 
+
+Speaker 3 32:55 
+And does the cash drag make sense to you on the S&P 500 comparison? 
+
+Speaker 4 33:05 
+Uh, no, not totally, but I'm, I'm kinda just ignoring that right now to get in these other points. But, but no.
+
+Um, yeah, so look at what I just sent, Inky. See how we have the clock on the stock page in like right to the left of the-- or to the right of the back button. Maybe we can do it like that here as well. But yeah. Okay. Okay, let me call in Bruin. 
+
+Speaker 1 33:34 
+Yeah, the more I see this, this design, the more I think it's a lot more elevated and just feels, uh, a lot nicer to look at than the current one with the colors. 
+
+Speaker 3 33:47 
+Yeah, it's definitely cleaner. 
+
+Speaker 4 33:48 
+See if I can get him here on messaging. Uh, do you wanna talk about that cash drag for a second then? 
+
+Speaker 3 34:06 
+Yeah, I'm just not really understanding it 'cause it seems like it's saying like estimated from today's 9% cash, um, and the S&P's gone up 20%, so it costs you $800. But I'm pretty sure it's counting like when I had 1% cash as the start of that window, if that makes sense. 
+
+Speaker 4 34:30 
+Say, say it again. 
+
+Speaker 3 34:32 
+Like it's saying it's estimating from like today 9% cash balance. 
+
+Speaker 4 34:36 
+Right. 
+
+Speaker 3 34:37 
+And the S&P's up 20% over that same window, but like I just deposited money like again yesterday, right? And I'm at 9% now. So I assume it's been tracking since I've had like a, like $1,000. 
+
+Speaker 1 34:55 
+Yeah, this... I, I ran this through chat, you can run it through Claude, but basically it's saying, yeah, this, this is a weak part of our experience, like this estimated cash drag. 
+
+Speaker 3 35:05 
+Yeah. 
+
+Speaker 1 35:05 
+Um- 
+
+Speaker 3 35:06 
+It just doesn't make-- It's just, it's just not like- 
+
+Speaker 1 35:07 
+It, it's just, it's just, it's BS. It doesn't mean anything. It's just some- 
+
+Speaker 3 35:11 
+Yeah 
+
+Speaker 1 35:11 
+... estimated number. If we're gonna have that, we're better off not having it. So- 
+
+Speaker 4 35:15 
+Yeah, I was gonna say should we just remove it then? 
+
+Speaker 1 35:17 
+Well, we act- Yeah, basically what we should show is the actual cash drag, right? Like on you've, um, in the last, you know... So for example, for me, on average, I had, you know, you know, whatever it was, 15,000, right? Let's say over the last four years, how much cash on average was I-- did I have in the account? Like, what's the weight?
+
+So we actually have to calculate something, right? So yeah, I think for now, let's just eliminate it 'cause I think it's-
+
+Speaker 4 35:43 
+Yeah 
+
+Speaker 1 35:43 
+... you know, 
+
+Speaker 3 35:46 
+Sorry, but you, you're, you're saying if calculated right, it's good, but right now the way we're calculating it makes sense. 
+
+Speaker 1 35:49 
+Yeah, no, no. If, if calculated right, for sure. 
+
+Speaker 4 35:52 
+Yeah. 
+
+Speaker 1 35:52 
+But it's gonna take some work, and so... But I think this one is, it's just completely irrelevant. It's almost misleading, right? 
+
+Speaker 3 36:01 
+Well, I mean, it's misleading because it's saying- 
+
+Speaker 1 36:02 
+It just doesn't mean anything. And then it, and then it makes you think, "Well, is the rest of the stuff kinda calculated this way?" Right? It's just made up. 
+
+Speaker 4 36:08 
+So you just like it, is what you're saying. 
+
+Speaker 1 36:09 
+I'm assuming... Yeah, I, uh, assuming you, you did buy the stock, here's how you might have performed. Is that how this other stuff is meaning? 
+
+Speaker 4 36:17 
+Hmm. Well, that, that's not what we want. 
+
+Speaker 1 36:22 
+So yeah. So let's just eliminate it for now. 
+
+Speaker 4 36:25 
+Yeah, I just messaged. Uh, I'm trying to get him. He might be on a call. I'm trying to get him to join.
+
+Yeah, the cash reg. We were just saying we, we do wanna bring this back, uh, at some point, but just the way that it's currently implemented is not adding value. It's actually taking value away. 
+
+Speaker 3 36:46 
+And maybe the annualized could be just its own row, and then you expand that for the yearly breakdown. 
+
+Speaker 4 36:57 
+He said he'll join in a minute. Um, sorry, maybe what? 
+
+Speaker 3 37:01 
+Is Leo not on? 
+
+Speaker 4 37:03 
+Leo said he's got like lending call or something. He messaged the channel. Uh, he said, yeah, lending application review call, so he's gonna join late. What were you saying again? 
+
+Speaker 3 37:20 
+Maybe for that annualized or the yearly breakdown, it could just be annualized return as the header, and then like a chevron expands it to the yearly breakdown. 
+
+Speaker 4 37:31 
+Hmm. Yeah. 
+
+Speaker 3 37:37 
+Right, 'cause obviously annualized is the hero. 
+
+Speaker 4 37:41 
+Yeah, no, I think it's the same thing kinda as the net deposits. Yeah, I think that annualized should be at the top, and then if you want the detail, you can get the yearly breakdown. 
+
+Speaker 3 37:51 
+Right. 
+
+Speaker 4 37:53 
+Yeah, that makes sense. So yeah, I think we should adjust that inc, that yearly breakdown. The annualized should be the hero, and then if somebody wants the detail, they can get the yearly breakdown, but the annualized shouldn't be at the bottom. And again, over time, as more years get added, that's just gonna keep getting pushed down, which doesn't really make sense.
+
+And does that placement... Yeah, I guess there's some stuff in this whatever. Let's just see. Let's just get it in the app, and then obviously we can ask Chad and debate on the placement of some of these things too, 'cause I think some, some stuff can be moved around in terms of where it's placed on here. 
+
+Speaker 3 38:33 
+Mm-hmm. 
+
+Speaker 4 38:34 
+Okay. He said call me again. Just gonna call.
