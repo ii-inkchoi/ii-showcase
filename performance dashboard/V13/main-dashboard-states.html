@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Main Dashboard, S&amp;P 500 Card Options</title>
+<!-- Companion to "main dashboard.html" (same folder): the full main dashboard, top to bottom,
+     carrying the specified replacement for its S&P 500 Comparison section.
+
+     WHAT THIS PAGE WAS, AND WHY IT IS ONE CARD NOW. It was a three-candidate study (1 Alpha Line,
+     2 Instrument, 3 Headline) built to ask which card design should own the benchmark entry point.
+     The 2026-09-02 review settled it, so the card-design axis is gone: the strip, the three card
+     blocks and their verdicts, and STATE.card with them. The card answers exactly one question,
+     what is my money worth now versus the same money in the S&P 500, and the review cut everything
+     that did not serve it. DO NOT REINTRODUCE:
+       - the oversized amount (34px / 28px headline figures). Called too large and a repeat of
+         what the chart already says. All three rows are 15px as of 2026-09-02, taken from the
+         performance dashboard's .cmp-row; the old 13 / 13 / 15 ladder is gone too.
+       - the permanent readout rectangle. It must not exist at rest. The stock-page grammar is that
+         this information appears only while a finger is down, which is what the row scrub does now.
+         Flagged twice (8-28 "tacked on", and again at the 2026-09-02 review).
+       - the deposits line. Two lines only. Relative performance already accounts for deposits, and
+         a third grey line made the step-ups look unexplained. Deposits, withdrawals and cash flow
+         live in the drill-in ("positions screens.html"), which already carries them.
+       - annualized return. It belongs to the detail page, not the card.
+     WHAT THE PLOT KEEPS AND DROPS, against the reference graph the review pointed at
+     (`1YR - YOU VS THE S&P`). Dropped: y value ticks, x date ticks, gridlines, axis rules, the
+     legend chip, rounded corners. Kept, after a first pass cut them and the 2026-09-02 follow-up
+     put them back:
+       - the plot sits on its own surface, --c-elev inside the card's --c-black with a 0.5px
+         --c-900 hairline and SQUARE corners. Elevation and hairlines are first-class in this
+         system; radius, shadow and gradient are not. It separates the chart from the dollar rows
+         so the chart reads as its own object rather than as more of the same block.
+       - endpoint growth rates, bottom corners, each in its series' colour (--c-white left,
+         --c-gold right). These stopped being duplicates the moment the plot became percent
+         growth: the rows state dollars, these state growth. The reference's word "you" is not
+         used; the labels are our own row vocabulary, Portfolio and S&P 500.
+       - the window, top-left, 11px --c-700. It appears nowhere else on the card. It is NOT added
+         to the title as well: that title is synced verbatim to main dashboard.html's live card,
+         and it must not read twice.
+     The rows had a line swatch each, tying the dollar rows to the two strokes. Both were REMOVED
+     2026-09-02: they pushed the two labels off the card's 16px inset while Difference sat at 16,
+     so the group had no single left edge, and the endpoint labels above already state each
+     stroke in its own colour. The endpoint labels are now the only colour key on the card.
+
+     STRUCTURE. The dashboard shell is written once. Header, alerts, Total Value, Core/Managed,
+     the Active hero, Cash, Calibration and the Active Positions list all exist a single time,
+     and the S&P card area is a slot (#cardslot) holding the card and its no-capital twin, of which
+     at most one is shown.
+
+     THE CARD runs the performance dashboard's own seeded chart engine, ported through
+     "benchmark-entry-point-variants-recovered.html", so the two lines are generated rather than
+     hand-drawn: portfolio in white and the S&P in amber (--c-gold), the pairing mandated for
+     consistency with the approved graph. Dragging the plot rewrites the three rows to that date's
+     figures and shows the date; releasing returns them to current.
+
+     THE PLOT IS PERCENT GROWTH, THE ROWS ARE DOLLARS. The chart used to draw the dollar curves,
+     and the deposit step-ups dominated the shape, so it read as "money went in" rather than
+     "I am ahead of, or behind, the index". The reference graph has no steps for exactly that
+     reason: it plots percent growth. Both series are drawn deposit-neutral from the same origin
+     (see growthIndex()), so nothing separates the lines but performance. Do not put dollars back
+     on the plot: the rows say what the money is worth, the chart says who is winning, and that
+     split is the point.
+
+     AND BOTH SERIES ARE PINNED to the figures the product already publishes: +39.4% for the
+     account and +45.2% for the S&P, which is positions screens.html's own pair (its Timing & Risk
+     section prints that +39.4% as Time-Weighted Return, against Money-Weighted Return +35.1%).
+     pinGrowth() keeps the chained path and moves only its endpoint, the same trick series() uses
+     to land the dollar curves on targetGain. The visible gap is therefore 5.8pp, which is the
+     honest number and the same one the drill-in prints as its alpha. Do not let the chart end
+     anywhere else: an unpinned chain lands near +50.8% and contradicts the drill-in.
+
+     FIGURES. All Accounts is main dashboard.html's DASH_ACCOUNTS set, where the account TRAILS
+     the index (57,142.02 against 59,515.92, so 2,373.90 and 3.99% behind). All three files carry
+     the same set; do not reintroduce this page's old 46,777.23 / 44,593.05 pair, which had the
+     account beating the index and contradicted the other two.
+
+     SHELL CONTENT is synced to "main dashboard.html" (read-only source of truth): the account chip
+     reads All Accounts with a chevron and opens the account sheet, and the card header carries the
+     account scope suffix. Its markup structure is deliberately NOT copied: that file is absolutely
+     positioned and this page is flex, because a card of a different height would break an absolute
+     stack. Two deliberate departures from it: its 10px alert type is raised to the 11px floor of
+     the type scale, and its uppercase US/CA is typed in caps in the markup instead of transformed.
+
+     STATE is one object (STATE) plus one apply(), carrying the two axes the review left standing:
+     account, and deposit state (Funded / No Capital / Transfer Pending), three of the five states
+     the team's annotated no-capital mockups originally supplied. No Account and New User were
+     removed 2026-09-03: No Account is the absence of the self-directed surface, not a state of
+     it, so a user with no account should see no section at all rather than a state of one; New
+     User's card was identical to No Capital's, and the only difference sat on the managed side,
+     not worth a separate state to review. Transfer Pending stays despite also rendering the same
+     card as No Capital, because "funds are on the way" is a distinct thing a real user encounters
+     and its copy differs. Deposit state outranks the account: with nothing measured there is no
+     account figure to print, so the two no-capital states swap in the minimal twin of the card
+     and print a literal 0.00 against the hero Value plus the state label No Capital Deployed and
+     an action (Add Funds, or Transfer Pending while a deposit is unsettled).
+     Per-account figures and curves are ported from "positions screens.html" (its ACCOUNTS table,
+     its depScale deposit ledger and its scaled annual series), so the two screens cannot
+     disagree. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --c-black:#000000; --c-elev:#0A0A0A; --c-1000:#1C1C1C; --c-900:#232627; --c-graphite:#3A3A37;
+    --c-800:#565B5E; --c-700:#929292; --c-400:#C7C7C7; --c-200:#E3E2E2; --c-white:#FFFFFF;
+    --c-live:#30D158; --c-live-muted:#288752; --c-urgent-muted:#BE3C36; --c-gold:#C29A2A;
+    --c-alert:#FF3533; --c-warn:#FBC308;
+    /* the muted amber, documented in Doctrine/Style_Design.md. Added 2026-09-02 for
+       Calibration's "verdicts forming", which was on the vivid --c-warn. Calibration is MUTED
+       THROUGHOUT now, lines and dots alike; --c-alert / --c-warn still serve the alert feed and
+       the position rows. */
+    --c-review-muted:#966E26;
+    /* status-tag dots, ported with the position rows from main dashboard.html's TAG_COLORS.
+       Declared here because hex belongs in :root and nowhere else. */
+    --c-tag-earnings:#FDAD00; --c-tag-corpaction:#FD6900; --c-tag-halt:#FD0200;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--c-elev);font-family:'Inter',sans-serif;padding:48px 20px 96px;
+    -webkit-font-smoothing:antialiased;}
+  .page-head{max-width:1200px;margin:0 auto 40px;}
+  .page-title{font-size:17px;color:var(--c-white);letter-spacing:-0.02em;margin:0 0 8px;}
+  .grid{display:flex;flex-wrap:wrap;gap:40px;justify-content:center;align-items:flex-start;max-width:1400px;margin:0 auto;}
+  .variant{width:390px;}
+  .note{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.5;margin:10px 0 0;}
+  /* review-page chrome, deliberately NOT app UI: flags the no-capital card's state label as
+     copy that is not settled yet. Same 11px review register as .note above, sits outside the
+     phone frame so it can never be read as something the product says. */
+  .ph-flag{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;margin:0 0 10px;display:none;}
+  .ph-flag.on{display:block;}
+
+  /* ══ page-level control bar: the deposit-state axis ══
+     Sits above the strip, next to nothing else, because on a shared screen a reviewer has to
+     find it without being told. Type and active underline are the performance dashboard's own
+     period-selector pattern, so the page has one control grammar rather than two. */
+  .ctlbar{max-width:1200px;margin:0 auto 32px;display:flex;align-items:baseline;gap:20px;}
+  .ctl-cap{font-size:11px;color:var(--c-800);letter-spacing:-0.02em;}
+  .ctl-opts{display:flex;gap:20px;}
+  .ctl-opt{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;cursor:pointer;
+    position:relative;transition:color 160ms ease;}
+  .ctl-opt:hover{color:var(--c-400);}
+  .ctl-opt.on{color:var(--c-white);}
+  .ctl-opt.on::after{content:'';position:absolute;left:0;right:0;bottom:-4px;height:1.5px;
+    background:var(--c-white);}
+
+  .frame{width:390px;background:var(--c-black);border:0.5px solid var(--c-1000);}
+
+  /* ── phone delivery: below the widest phone, the review framing comes off ──
+     This page is a team-review page, so it is built desktop-first: 48/20/96 body
+     padding, a 1200px measure, and a fixed 390px frame with no max-width. On a phone
+     that combination costs 20px of side padding the app never has, and the frame plus
+     its left padding needs 410px, which scrolls sideways on anything narrower.
+     BREAKPOINT. 440px is the iPhone 16 Pro Max's logical portrait width, the widest
+     phone currently shipping. Every device from 360 up gets the full-bleed treatment,
+     and the narrowest tablet portrait (iPad mini, 744px) keeps the desktop rendering.
+     Nothing at or above 441px is touched by this block.
+     .ctlbar IS KEPT, because the deposit-state options are how the states are switched
+     on a phone. It only gains wrapping: measured at 360px the caption plus the three
+     options need more than one line, and the bar is a nowrap flex row by default. */
+  @media (max-width:440px){
+    body{padding:0;}
+    .page-head{max-width:none;margin:0 0 16px;padding:16px 16px 0;}
+    .ctlbar{max-width:none;margin:0 0 16px;padding:0 16px;flex-wrap:wrap;row-gap:8px;}
+    .ph-flag{padding:0 16px;}
+    .stage{max-width:none;}
+    .frame{width:100%;border-width:0;}
+  }
+  header.app{display:flex;align-items:center;justify-content:space-between;height:44px;
+    padding:0 16px;border-bottom:0.5px solid var(--c-900);}
+  .clockrow{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
+  .clockrow .num{color:var(--c-white);font-feature-settings:'tnum' 1,'lnum' 1;}
+  .dot{width:5px;height:5px;border-radius:50%;background:var(--c-live);}
+  .logo{font-size:18px;font-weight:700;color:var(--c-white);letter-spacing:-1px;}
+
+  .hero{padding:24px 16px 0;}
+  .hero-top{display:flex;justify-content:space-between;align-items:baseline;}
+  .hero .kicker{font-size:18px;color:var(--c-400);letter-spacing:-0.02em;}
+  .hero .sub{font-size:15px;color:var(--c-800);letter-spacing:-0.02em;margin-top:6px;}
+  .hero .acct{font-size:15px;color:var(--c-400);letter-spacing:-0.02em;}
+  .hero-value{text-align:right;}
+  .hero-value .lbl{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;}
+  .hero-value .num{font-size:22px;color:var(--c-white);letter-spacing:-0.02em;margin-top:6px;font-feature-settings:'tnum' 1,'lnum' 1;}
+  .hero-value .all{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;margin-top:8px;}
+  .hero-value .all b{color:var(--c-400);font-weight:400;}
+  /* The label/value stack of .hero-value with the action in the value's slot: No Capital's
+     Add Funds and Transfer Pending's own action both use this. */
+  .open-acct{font-size:15px;color:var(--c-white);letter-spacing:-0.02em;margin-top:6px;cursor:pointer;}
+  /* The grey state label of the no-capital states (No Capital Deployed under a 0.00 Value).
+     Same 15px register as the action beneath it, but grey rather than white, so the pair reads
+     state-then-action. */
+  .state{font-size:15px;color:var(--c-700);letter-spacing:-0.02em;}
+  /* No Capital / Transfer Pending read as TWO groups, not one four-line stack: the Value pair,
+     then air, then the state and its action. Group-internal spacing is the funded state's own
+     (label -> number 6, state -> action 6), so the two states differ only in what the number
+     says. The group gap is 24, the funded state's own closing seam for that block (the 24 that
+     separates it from the hairline below); the funded number -> All Time seam is 8, which is
+     the tighter reading of the same instruction and would have left this block exactly as it
+     already was. Flagged for a decision. */
+  .hero-value .state{margin-top:24px;}
+  /* 70 above, which is the between-section seam. The two rules that use this class are both
+     section boundaries (Total Value -> Core, Core -> Active); the third .hr, inside the Value ->
+     Cash seam, overrides it inline because that seam is WITHIN a section. */
+  .hr{height:1px;background:var(--c-900);margin:70px 16px 0;}
+
+  /* SUPERSEDES the earlier rule that these four boundaries mirror main dashboard.html's
+     measured 53 / 70 / 59 / 81. Those were Figma leftovers, not a decision: three different
+     numbers for the same kind of seam is what read as sloppy. Every section boundary in this
+     stack is now 48px ink to ink, the project's standard top-level section gap, and where a
+     hairline sits inside a seam it gets a FULL 48 of air on EACH side. The rule is about air,
+     not total distance: equalising the TOTAL at 48 was tried and rejected, because it left only
+     24 a side around a hairline and read tight next to the unruled 48s. A ruled boundary
+     legitimately carries more total space, because the rule is separating too.
+     main dashboard.html carries the identical rhythm. Change these only in both files at once.
+     THE SPACING MODEL IS TWO LAYERS. Do not collapse them into one number: that is where all of
+     2026-09-02's churn came from, a within-section value applied to section seams.
+       BETWEEN top-level sections   70 above a rule, 30 below it; 70 where there is no rule
+       WITHIN  a section            53 between blocks
+       label -> value pair          6, and 7.63 for the 28px Total Value
+     Read off the confirmed file: Figma "Post-MVP - II 3.0" > page "Unified Dashboard - Sandbox"
+     > "2026-04-16 / Redesign Unified Main Dashboard" > "Iterations" > "V8 - Final",
+     node 599:2738, and its "ACTIVE / SELF-DIRECTED SECTION", node 599:2655. That frame reads
+     Header h71, 70, TOTAL VALUE y141, 70, rule y280.6, 30, MANAGED/CORE y311.6, 70,
+     rule y753.3, 30, ACTIVE/SELF-DIRECTED y784.3.
+     Seam by seam, with its layer:
+       Alert feed -> Total Value  70                    BETWEEN
+       Total Value -> Core rule   70 + .hr + 30         BETWEEN
+       Core -> Active rule        70 + .hr + 30         BETWEEN
+       Value -> Cash              53 + .hr(1px) + 53    WITHIN (the hairline is this file only,
+                                                        and gets the full 53 on each side)
+       Cash -> S&P card           53                    WITHIN
+       card -> Calibration        70, rule, 30          BETWEEN
+       Calibration -> rows        70, rule, 30          BETWEEN
+     SUPERSEDED, do not reinstate: 53 or 52 as a section seam, a 26 / 13 ladder, 32 a side,
+     23 / 30 around a rule, 48 a side, and the project's general 48 rule.
+     Confirmed by the same source and left alone: the big value is 22px, the cash value 15px,
+     and every label-to-value pair inside a block is 6.
+     One divergence worth knowing: this file has a hairline in the Value/Cash seam (.hr) and
+     main dashboard.html does not. Neither was added or removed here. */
+  /* A right-aligned STACK, not a justified row: a dim label with its figure beneath it, the
+     same construction as the Value block above and as "main dashboard.html", which puts the two
+     on their own lines. This was display:flex with space-between, which pushed the label to the
+     left margin and made Cash the only block on the frame built that way. 6 between label and
+     figure, the design's own label-to-value token; type unchanged at 13 / 15. */
+  .cash{padding:53px 16px 0;text-align:right;}
+  .cash .lbl{display:block;font-size:13px;color:var(--c-700);letter-spacing:-0.02em;}
+  .cash .val{display:block;margin-top:6px;font-size:15px;color:var(--c-400);letter-spacing:-0.02em;}
+
+  /* ══ Calibration ══
+     Replaces the three right-aligned Accuracy / Predictions / Next Judgment rows, which the
+     2026-09-02 review called completely wrong. The shipping design is a fan chart: one thin line
+     per call, plotted as percentage points against the S&P over a four-month window, an amber
+     zero baseline for the index itself, green above and red below, and every line ending in a
+     dot labelled with its ticker. Left-aligned like every other section title on this frame; the
+     old block's right alignment went with it. */
+  /* Bracketed by hairlines, as the shipped block is: one above the title, one below the
+     footnote, both 0.5px --c-900. The bottom one is the section's closing edge and REPLACES
+     .pos-hdr's old border-top, which used to do that job from the other side.
+     The 16px inset is on MARGIN, not padding: a border spans the element's whole width, so with
+     the inset on padding these two rules ran the full frame width while the text sat 16 in,
+     which read wrong against the card's own inset dividers. On margin, the borders span exactly
+     the 358px content width, the same span as those dividers.
+     Calibration is a TOP-LEVEL SECTION, so both rules take the between-section seam: 70 of air
+     above the rule, 30 below it.
+     margin-top is 57 and NOT 70, and it is LOAD-BEARING. Do not simplify it to 70. The seam is
+     made of two pieces: .cardblk.on carries padding-bottom:13, and this 57 sits on top of it, so
+     the card's closing rule to Calibration's rule measures 13 + 57 = 70. Verified rendered,
+     2026-09-02.
+     The reason previously written here, that the 13 came from the plot's own frame sitting below
+     the endpoint labels, stopped being true when the plot moved above the rows. The 13 now lives
+     on .cardblk, which explains itself in its own comment, and it is deliberately kept there
+     rather than folded into this margin so the deposit states that have no plot keep the seam
+     they already had. */
+  .cal{margin:57px 16px 0;padding:30px 0 70px;
+    border-top:0.5px solid var(--c-900);border-bottom:0.5px solid var(--c-900);}
+  .cal-head{display:flex;align-items:baseline;justify-content:space-between;}
+  /* Same treatment as .cardslot .sec-title above it: these are siblings, both top-level
+     section titles, so they carry the same size, colour and tracking. The suffix keeps the
+     dim register, matching the card's "· All Accounts". */
+  .cal-title{font-size:15px;color:var(--c-white);letter-spacing:-0.02em;}
+  .cal-title .sep{color:var(--c-700);}
+  .cal-title .win{color:var(--c-800);}
+  .cal-chev{font-size:17px;color:var(--c-800);line-height:1;}
+  /* Fixed svg height, so the block's height does not depend on the script having run. */
+  .cal-plot{margin-top:16px;}
+  .cal-plot svg{display:block;width:100%;height:176px;overflow:visible;}
+  /* Three lines under the plot, in the shipped block's proportions. The summary is clearly the
+     largest thing here at 15px; the middle line and the footnote are both 11px and equal to each
+     other. 16px between each, so they read as three statements rather than one paragraph.
+     The grey hierarchy is carried by COLOUR, not size: `avg` brightest (--c-400); the middle
+     line and the footnote are now tied, both --c-800, since 2026-09-03 (the footnote was
+     --c-700, one step brighter than the middle line, until that pass toned explanatory small
+     text down a step). The only colour is the green count and
+     the amber "verdicts forming", and both are MUTED: --c-live-muted and --c-review-muted.
+     Settled by the user 2026-09-02, reversing the vivid --c-live / --c-warn applied earlier the
+     same day. Calibration is muted throughout, dots included. Do not flip them back.
+     There is no separator between the count and `avg`: the shipped block uses a plain space.
+     12 between the three, not 16: they were asked to sit closer. 12 is the floor here, because
+     below it the three stop reading as three statements and start reading as one paragraph. */
+  .cal-sum{margin-top:16px;font-size:15px;letter-spacing:-0.02em;line-height:1.4;
+    font-feature-settings:'lnum' 1,'tnum' 1;}
+  .cal-sum .ahead{color:var(--c-live-muted);}
+  .cal-sum .avg{color:var(--c-400);}
+  .cal-mid{margin:12px 0 0;font-size:11px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;}
+  .cal-mid .sep{margin:0 6px;}
+  .cal-mid .forming{color:var(--c-review-muted);}
+  .cal-foot{margin:12px 0 0;font-size:11px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;}
+  /* The border-top and the 24px margin above it moved onto .cal as its closing hairline, so
+     this header now only carries its own 24px of air below that line. The WHOLE row is the
+     collapse target, not the chevron glyph: that is this product's pattern for a section that
+     opens. "Open Orders 2" is inside the target, and it carries no handler of its own in this
+     file, so nothing interactive is being swallowed. */
+  .pos-hdr{display:flex;justify-content:space-between;align-items:center;padding:30px 16px 24px;
+    cursor:pointer;}
+  /* the chevron borrows this file's own transform transition rather than a new timing */
+  .pos-hdr .pos-chev{transition:transform 300ms cubic-bezier(.22,.9,.3,1);}
+  .pos-hdr.is-collapsed .pos-chev{transform:rotate(180deg);}
+  /* Collapse is carried on a CLASS, never on inline display, so it cannot fight apply()'s
+     Funded-only inline display of #sd-pos-rows. Consequence, chosen deliberately: returning to
+     Funded RESTORES whatever the reviewer last chose rather than resetting to expanded. */
+  .pos-list.is-collapsed{display:none;}
+  .pos-hdr .lbl{font-size:15px;color:var(--c-400);letter-spacing:-0.02em;display:flex;align-items:center;gap:8px;}
+  .pos-hdr .cnt{font-size:15px;color:var(--c-400);}
+  .pos-hdr .oo{font-size:15px;color:var(--c-700);}
+
+  /* ══ position rows ══
+     The first three rows of main dashboard.html's list, ported so the card is judged with
+     real content under it rather than against empty page. Same rhythm as that file: the
+     two-line header group, then 16 to the description, 16 to the tags, 16 to the closing
+     hairline, then 20 to the next row. Type sizes and colours are its values, off-scale
+     11.5 / 10 / 8 included, because this is a port and not a redesign. */
+  .pos-list{padding:0 16px;}
+  .pos-row{padding-bottom:16px;border-bottom:1px solid var(--c-900);}
+  .pos-row + .pos-row{padding-top:20px;}
+  .pos-line{display:flex;justify-content:space-between;align-items:baseline;gap:12px;}
+  .pos-tkr{font-size:13px;font-weight:500;color:var(--c-white);letter-spacing:-0.02em;}
+  .pos-pp{font-size:11.5px;color:var(--c-white);margin-left:7px;letter-spacing:-0.02em;
+    font-feature-settings:'tnum' 1,'lnum' 1;}
+  .pos-pp .tri{font-size:8px;vertical-align:1.5px;margin-left:4px;}
+  .pos-pp .tri.up{color:var(--c-live);} .pos-pp .tri.down{color:var(--c-alert);}
+  .pos-meta{font-size:10px;color:var(--c-700);margin-top:6px;}
+  .pos-meta .wt{color:var(--c-400);margin-left:6px;}
+  .pos-right{display:flex;align-items:baseline;gap:10px;white-space:nowrap;
+    font-feature-settings:'tnum' 1,'lnum' 1;}
+  .pos-amt{font-size:13px;font-weight:300;color:var(--c-white);letter-spacing:-0.02em;
+    text-align:right;}
+  .pos-pct{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;text-align:right;
+    min-width:50px;}
+  .pos-chg{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;text-align:right;
+    min-width:50px;}
+  .pos-chg.up{color:var(--c-white);font-weight:700;}
+  .pos-desc{font-size:12px;color:var(--c-400);letter-spacing:-0.02em;margin-top:16px;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .pos-tags{display:flex;flex-wrap:wrap;align-items:center;row-gap:8px;column-gap:14px;
+    margin-top:16px;}
+  .pos-tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:500;
+    color:var(--c-white);white-space:nowrap;}
+  .pos-tag .dot{width:4.65px;height:4.65px;border-radius:50%;flex:none;}
+  .pos-tag .dot.earnings{background:var(--c-tag-earnings);}
+  .pos-tag .dot.corpaction{background:var(--c-tag-corpaction);}
+  .pos-tag .dot.halt{background:var(--c-tag-halt);}
+  .pos-tag .dot.nothesis{background:var(--c-warn);}
+
+  /* ---- shared card primitives ---- */
+  .card{padding:24px 16px 0;}
+  .card-title{font-size:15px;letter-spacing:-0.02em;color:var(--c-white);display:flex;align-items:center;justify-content:space-between;}
+  .card-title .dim{color:var(--c-700);} .card-title .dur{color:var(--c-800);}
+  .chev{width:6px;height:10px;}
+  .cmp-row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+    padding:12px 0;border-bottom:0.5px solid var(--c-900);}
+  .cmp-row:last-child{border-bottom:none;}
+  .cmp-label{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;}
+  .cmp-val{font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;font-feature-settings:'tnum' 1,'lnum' 1;}
+  .cmp-val .pct{display:inline-block;min-width:60px;text-align:right;font-size:12px;color:var(--c-700);margin-left:8px;}
+  .cmp-val .tri{font-size:11px;margin-left:5px;vertical-align:1px;}
+  .chartwrap{position:relative;margin-top:16px;}
+  .chartwrap svg{touch-action:none;width:100%;display:block;overflow:visible;}
+  .legend{position:absolute;top:0;left:44px;display:inline-flex;gap:10px;font-size:11px;color:var(--c-700);}
+  .legend .ln{display:inline-block;width:14px;height:0;border-top:1.5px solid var(--c-400);margin-right:5px;vertical-align:1px;}
+  .legend .ln.dash{border-top:1.5px dashed var(--c-gold);}
+  .scrub-box{position:absolute;bottom:calc(100% + 8px);left:0;right:0;z-index:3;display:none;
+    background:var(--c-elev);border:0.5px solid var(--c-900);padding:10px 14px;}
+  .scrub-box.on{display:block;}
+  .sb-grid{display:flex;gap:24px;}
+  .sb-cell{display:flex;flex-direction:column;gap:2px;}
+  .sb-lbl{font-size:11px;color:var(--c-700);} .sb-val{font-size:12px;color:var(--c-white);font-feature-settings:'tnum' 1,'lnum' 1;}
+
+  .spark{margin-top:14px;}
+  .stage{max-width:1200px;margin:0 auto;}
+
+  /* chrome above the Active hero */
+  .alerts{padding:16px 16px 0;display:flex;flex-direction:column;gap:12px;}
+  .alert{display:flex;align-items:flex-start;gap:9px;font-size:11px;color:var(--c-white);
+    letter-spacing:-0.02em;line-height:1.3;}
+  .alert .dot{margin-top:3px;flex-shrink:0;}
+  .alert .dim{color:var(--c-700);}
+  .alert-sub{display:flex;gap:14px;padding-left:14px;margin-top:-4px;
+    font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
+  /* 70: the alert feed and the Total Value hero are two top-level sections, and the design puts
+     Total Value 70 below the header with no rule in that seam. Was 28. Superseded on the way
+     here: 48 (the project's general rule, which does not govern this screen), 52, 53. */
+  .totalv{padding:70px 16px 0;text-align:right;}
+  .totalv .lbl{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;}
+  .totalv .num{font-size:28px;color:var(--c-white);letter-spacing:-0.02em;margin-top:6px;
+    font-feature-settings:'tnum' 1,'lnum' 1;}
+  .totalv .num .cur{color:var(--c-800);}
+  .core-head{display:flex;justify-content:space-between;align-items:flex-start;padding:30px 16px 0;}
+  .core-head .k{font-size:18px;color:var(--c-400);letter-spacing:-0.02em;}
+  .core-head .s{font-size:15px;color:var(--c-800);letter-spacing:-0.02em;margin-top:6px;}
+  .core-body{padding:16px 16px 0;text-align:right;}
+  .core-body .lbl{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;}
+  .core-body .num{font-size:22px;color:var(--c-white);letter-spacing:-0.02em;margin-top:6px;
+    font-feature-settings:'tnum' 1,'lnum' 1;}
+  .core-body .all{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;margin-top:8px;}
+  .core-body .all b{color:var(--c-400);font-weight:400;}
+  .core-proj{margin-top:20px;} .core-proj .v{font-size:15px;color:var(--c-400);margin-top:4px;}
+  .alloc{margin-top:20px;display:flex;flex-direction:column;gap:8px;}
+  .alloc-row{display:flex;justify-content:flex-end;gap:10px;font-size:13px;letter-spacing:-0.02em;}
+  .alloc-row .k{color:var(--c-700);}
+  .alloc-row .v{color:var(--c-400);font-feature-settings:'tnum' 1,'lnum' 1;}
+
+  /* ══ one shell, one card slot ══
+     The slot carries no padding of its own; card-bench and empty-bench share it and toggle
+     via .on, with exactly one on for each of the three remaining deposit states. */
+  .cardslot{padding:0;}
+  .cardblk{display:none;}
+  /* padding-bottom is 13, and it is not decoration. The plot used to close the card and its own
+     frame contributed 13px below the endpoint labels (12 of chart-plot padding plus its 1px
+     hairline), which the .cal margin-top below is netted against. With the plot moved above the
+     rows the card now closes on the Difference rule, flush with its own box, so that 13 has to be
+     put back here or the card -> Calibration seam renders 57 instead of 70. Kept on the card
+     rather than added to .cal's margin so the other deposit states, which have no plot, keep the
+     seam they already had.
+     padding-top is the Cash -> S&P card seam: 53, the WITHIN-section value. */
+  .cardblk.on{display:block;padding:53px 0 13px;cursor:pointer;}
+  /* the no-capital twin of the card block: same slot, no chart, no values and no cursor,
+     because there is nothing behind it to tap through to */
+  .cardblk-empty{display:none;}
+  .cardblk-empty.on{display:block;padding:53px 0 0;}
+
+  /* ══ ported from benchmark-entry-point-variants-recovered.html ══
+     Every rule is scoped under .cardslot, because that file and this one both define
+     .chev / .hr / .cmp-* / .ln / .dim with different values, and the page shell outside the
+     card still depends on this file's versions. (The shell's own .legend / .scrub-box / .sb-*
+     rules are left where they are: they predate this study and nothing under .cardslot
+     overrides them any more.) */
+  .cardslot .pad{padding:0 16px;}
+  .cardslot .dim{color:var(--c-800);}
+  .cardslot .chev{color:var(--c-800);font-size:17px;width:auto;height:auto;}
+  .cardslot .hr{height:0;background:none;margin:0;border-top:0.5px solid var(--c-900);}
+  .cardslot .sec-title{font-size:15px;color:var(--c-white);letter-spacing:-0.02em;}
+
+  /* SERIES SWATCHES REMOVED 2026-09-02. They pushed the two labels off the card's 16px inset
+     while Difference sat at 16, so the group had no single left edge. The colour key already
+     exists in the plot's endpoint labels directly above. */
+
+  .cardslot .chartwrap{position:relative;margin-top:0;}
+  /* The plot is its own object, not more of the block above it: lifted one step onto --c-elev
+     inside the card's --c-black and fenced by a 0.5px hairline. SQUARE corners; the reference's
+     rounded ones are not ours, and radius, shadow and gradient stay forbidden. */
+  .cardslot .chart-plot{position:relative;background:var(--c-elev);
+    border:0.5px solid var(--c-900);padding:12px;}
+  /* the window being measured, top-left, muted. The card states it nowhere else. */
+  .cardslot .plot-window{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;
+    margin-bottom:8px;}
+  /* No axes, no ticks and no gridlines: the only marks are the two strokes. The only text inside
+     the svg is the scrub date label, visible while a finger is down and hidden at rest. */
+  .cardslot svg.chart{display:block;width:100%;height:180px;overflow:visible;touch-action:none;
+    cursor:crosshair;}
+  /* endpoint growth rates, bottom corners of the plot, each in its own series' colour. Not a
+     repeat of the rows above: the rows are dollars, these are growth. They sit in flow under the
+     svg rather than floating over it, so a line that runs low can never collide with them, and
+     the two are typographically identical so they read as a pair. */
+  .cardslot .plot-ends{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    margin-top:8px;font-size:11px;letter-spacing:-0.02em;
+    font-feature-settings:'lnum' 1,'tnum' 1;white-space:nowrap;}
+  .cardslot .plot-ends .acct{color:var(--c-white);}
+  .cardslot .plot-ends .bm{color:var(--c-gold);}
+
+  /* ROW RHYTHM, adopted 2026-09-02 from the performance dashboard's .cmp-row in
+     "positions screens.html" (its Account / S&P 500 (same window) / Alpha rows), which the
+     meeting named as the reference. Measured there, not derived: 15px at -0.02em (-0.3px), which
+     paints a 19px line box in Inter at line-height:normal, then 12 of padding-bottom, a 1px
+     rule, and 12 of gap to the next row. Pitch row to row is 44.
+     All three rows are ONE SIZE. The card's old 13 / 13 / 15 ladder and its halved 5.5 paddings
+     are gone, along with the centred between-rows rule they were built for: every row now
+     carries its own border-bottom, so the three rules land where the meeting settled them, one
+     between the two value rows, one above Difference and one below it as the closing edge.
+     Superseded, do not reinstate: 24 / 25, then 26 / 13, then 23 / 30, then 30 / 6 / 30, then
+     12 / 12 / 12 / 12 against a 16px line box.
+     Height: the rows block is 120 (44 + 44 + 32), 23 more than the 97 it was. This file is flex
+     so it simply grows; "main dashboard.html" is coordinate-based, and everything below its card
+     was shifted +23.00 to match.
+     Labels stay --c-700; the two values are WHITE now, not --c-400, matching the reference and
+     Difference's own value. */
+  .cardslot .rows{display:flex;flex-direction:column;gap:12px;}
+  .cardslot .cmp-row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+    padding:0 0 12px;border-bottom:1px solid var(--c-900);}
+  .cardslot .cmp-label{font-size:15px;color:var(--c-700);letter-spacing:-0.02em;white-space:nowrap;}
+  .cardslot .cmp-val{font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;
+    font-feature-settings:'lnum' 1,'tnum' 1;white-space:nowrap;}
+  /* --c-700, SETTLED by the 2026-09-02 meeting, which pointed at "positions screens.html"'s
+     Performance vs S&P 500 percentages and asked for that tone. The source is that file's
+     .cmp-val .pct. Named here so the two screens stay tied and nobody re-derives it. The element
+     read --c-700, then white off the Figma card (node 4391:1182), and the meeting returned it.
+     min-width is 0, not the old 62: with the amount, the percentage and the arrow reading as one
+     right-aligned group, that 62 was 19px of slack sitting inside the gap the meeting called too
+     wide. The two internal gaps are 9 each, off Figma node 4391:1139. Consequence, on the
+     record: without the reserved width the amount and the arrow now shift a little as the
+     percentage changes width under a scrub. */
+  .cardslot .cmp-row.diff .pct{display:inline-block;min-width:0;text-align:right;
+    font-size:13px;color:var(--c-700);margin-left:9px;}
+  /* The arrow CLOSES the group, after the percentage, as the 2026-09-02 meeting settled; it used
+     to sit between the amount and the percentage. vertical-align is 0.5px, not 2, which lands its
+     ink 3.5px below the amount's ink top, the drop Figma node 4391:1139 carries and the same drop
+     main dashboard.html renders. */
+  .cardslot .trend{display:inline-block;width:11px;font-size:11px;line-height:1;letter-spacing:normal;
+    margin-left:9px;vertical-align:0.5px;text-align:center;}
+  .cardslot .trend.up{color:var(--c-live-muted);}
+  .cardslot .trend.down{color:var(--c-urgent-muted);}
+
+  /* THE CARD'S FOOTNOTE, added 2026-09-03. The 2026-09-02 review asked for the difference
+     between the card's percentage and the performance page's alpha to be highlighted as
+     information: Difference prints -3.99%, the gap between the two dollar values above it,
+     while the performance page prints alpha in PERCENTAGE POINTS against the index.
+     FIRST DRAFT WORDING, PENDING THE CEO'S REVIEW. Not approved copy.
+     Register is .cal-foot's, exactly: 11px, --c-800, -0.02em, line-height 1.4 (was --c-700
+     until 2026-09-03, when explanatory footnote text across the page was toned down a step;
+     both footnotes moved together). Placement is
+     .cal-foot's idiom too, last inside its own section with 12 above it, so the card's 13 of
+     padding-bottom plus .cal's 57 of margin still render the 70 seam, now measured from this
+     line rather than from the Difference rule. */
+  .cardslot .card-foot{margin:12px 0 0;font-size:11px;color:var(--c-800);letter-spacing:-0.02em;
+    line-height:1.4;}
+
+  /* No Capital / Transfer Pending: the card states its title and this one state label, nothing
+     else */
+  /* LEFT aligned, directly under the title and sharing its left edge. It was briefly
+     right-aligned into the value column during the 2026-09-02 pass; that was WRONG and is
+     reverted here to what the file had before. A right-aligned value needs a left-aligned label
+     on the SAME row to be the value of, which is the card's grammar in the funded state; in this
+     state there is no such label, so knocking the line right on the very next line read as a
+     broken diagonal. It is a caption on the title, not a value.
+     DO NOT re-apply the right alignment. */
+  .cardslot .empty-note{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;
+    line-height:1.4;margin:0;}
+
+  /* ══ account chip in the Active header row, synced to main dashboard.html ══
+     Was a static RRSP label; it now names the selected account and opens the sheet. */
+  .acct-chip{display:inline-flex;align-items:baseline;gap:8px;cursor:pointer;}
+  .acct-chip:hover .acct{color:var(--c-white);}
+
+  /* ══ account switcher sheet, ported from main dashboard.html ══
+     There it is an absolute overlay inside the phone screen. This page has no phone, so it
+     is fixed to the viewport and held to the frame's 390px width; classes and copy are the
+     source's own. */
+  #sheet-account{position:fixed;inset:0;z-index:60;pointer-events:none;}
+  .sa-scrim{position:absolute;inset:0;background:rgba(0,0,0,0.6);opacity:0;transition:opacity 220ms ease;}
+  .sa-panel{position:absolute;left:50%;bottom:0;width:390px;max-width:100%;transform:translate(-50%,100%);
+    background:var(--c-elev);border-top:1px solid var(--c-900);border-radius:20px 20px 0 0;
+    transition:transform 300ms cubic-bezier(.22,.9,.3,1);}
+  #sheet-account.open{pointer-events:auto;}
+  #sheet-account.open .sa-scrim{opacity:1;}
+  #sheet-account.open .sa-panel{transform:translate(-50%,0);}
+  .sa-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 12px;
+    border-bottom:1px solid var(--c-900);}
+  .sa-head-txt{display:flex;flex-direction:column;gap:2px;}
+  .sa-title{font-size:17px;color:var(--c-200);letter-spacing:-0.02em;line-height:1.2;}
+  .sa-sub{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.2;}
+  .sa-close{font-size:17px;color:var(--c-700);cursor:pointer;padding:8px;line-height:1;}
+  .sa-body{padding:20px 20px 36px;}
+  .sa-pick{display:flex;align-items:center;justify-content:space-between;padding:16px 0;
+    border-bottom:1px solid var(--c-900);cursor:pointer;font-size:15px;color:var(--c-400);
+    letter-spacing:-0.02em;}
+  .sa-pick:last-child{border-bottom:none;}
+  .sa-pick.on{color:var(--c-white);}
+  .sa-tick{font-size:13px;color:var(--c-white);visibility:hidden;}
+  .sa-pick.on .sa-tick{visibility:visible;}
+</style>
+</head>
+<body>
+
+<div class="page-head">
+  <p class="page-title">Main Dashboard, S&amp;P 500 Card</p>
+</div>
+
+<div class="ctlbar">
+  <span class="ctl-cap">Deposit state</span>
+  <span class="ctl-opts">
+    <span class="ctl-opt on" data-dstate="funded">Funded</span>
+    <span class="ctl-opt" data-dstate="nocap">No Capital</span>
+    <span class="ctl-opt" data-dstate="pending">Transfer Pending</span>
+  </span>
+</div>
+
+<div class="stage">
+
+  <p class="ph-flag" id="ph-flag">Placeholder copy, pending Aidan</p>
+
+  <div class="frame">
+    <header class="app">
+      <span class="logo">&#47;&#47;</span>
+      <span class="clockrow"><span class="num">13:14:26</span>&nbsp;ET <span style="color:var(--c-800);">|</span> <span class="dot"></span>US <span class="dot"></span>CA <span style="color:var(--c-800);">|</span> S&amp;P 500 <span class="num">+0.52%</span></span>
+    </header>
+
+    <div class="alerts" id="sd-alerts">
+      <div class="alert"><span class="dot" style="background:var(--c-alert);"></span><span>Kill criteria 2 triggered: margin below 68%</span></div>
+      <div class="alert"><span class="dot" style="background:var(--c-warn);"></span><span>Earnings <span class="dim">(3)</span></span></div>
+      <div class="alert-sub"><span>BWEN</span><span>MSFT</span><span>TSLA</span></div>
+      <div class="alert"><span class="dot" style="background:var(--c-warn);"></span><span>Contribution missed: no deposit this cycle <span class="dim">04.28.26</span></span></div>
+      <div class="alert"><span class="dot" style="background:var(--c-live);"></span><span>BWEN Filled 1000 @ 87.00 <span class="dim">05.06.26</span></span></div>
+      <div class="alert"><span class="dot" style="background:var(--c-live);"></span><span>Contribution processed: $500 <span class="dim">05.06.26</span></span></div>
+    </div>
+
+    <div class="totalv">
+      <div class="lbl">Total Value</div>
+      <div class="num">173,249.00 <span class="cur">CAD</span></div>
+    </div>
+
+    <div class="hr"></div>
+    <div class="core-head">
+      <div><div class="k">Core</div><div class="s">Managed</div></div>
+      <svg class="chev" viewBox="0 0 6 10" fill="none" style="transform:rotate(90deg);margin-top:6px;"><path d="M1 1L5 5L1 9" stroke="#565B5E" stroke-width="1.2"/></svg>
+    </div>
+    <div class="core-body">
+      <div>
+        <div class="lbl">Value</div>
+        <div class="num">126,471.77</div>
+        <div class="all">All Time <b>+6,365.65</b> <b>(+5.3%)</b></div>
+        <div class="core-proj"><div class="lbl">Projection</div><div class="v">1.68M</div></div>
+      </div>
+      <div class="alloc">
+        <div class="alloc-row"><span class="k">Equity (S&amp;P 500)</span><span class="v">50%</span></div>
+        <div class="alloc-row"><span class="k">Fixed Income</span><span class="v">25%</span></div>
+        <div class="alloc-row"><span class="k">Money Market</span><span class="v">25%</span></div>
+      </div>
+    </div>
+
+    <div class="hr" style="margin-top:70px;"></div>
+    <div class="hero" style="padding-top:30px;">
+      <div class="hero-top">
+        <div><div class="kicker">Active</div><div class="sub">Self-Directed</div></div>
+        <span class="acct-chip" id="acct-chip">
+          <span class="acct" id="acct-label">All Accounts</span>
+          <svg width="6" height="3" viewBox="0 0 6.70711 4.06066" fill="none"><path d="M0.353553 0.353553L3.35355 3.35355L6.35355 0.353553" stroke="#C7C7C7"/></svg>
+        </span>
+      </div>
+    </div>
+    <div class="hero" style="padding-top:16px;">
+      <div class="hero-value">
+        <div class="lbl">Value</div>
+        <div class="num" id="sd-hero-val">57,142.02</div>
+        <div class="all" id="sd-hero-all">All Time <b>+16,142.02</b> <b>(+39.4%)</b></div>
+        <!-- No Capital / Transfer Pending: the same Value label and the same value type, printing
+             a literal 0.00 rather than a placeholder, then the house state label and the action.
+             The action's destination (Money Transfers / Deposit for Add Funds, the Interac
+             request pending page for Transfer Pending) does not exist in this prototype, so it is
+             wired to a no-op. -->
+        <div class="state" id="sd-nocap-state" style="display:none;">No Capital Deployed</div>
+        <div class="open-acct" id="sd-nocap-action" style="display:none;">Add Funds</div>
+      </div>
+    </div>
+    <!-- 53px above the line, matching the 53 below it in .cash. Inline, not on .hr, because
+         the other two .hr rules in this file are outside the Active / Self-Directed stack and
+         keep their own 24. main dashboard.html has NO hairline in this seam, so its Value to
+         Cash is a clean 48 instead. The two files differ here because their structure does. -->
+    <div class="hr" style="margin-top:53px;"></div>
+    <div class="cash" id="sd-cash"><span class="lbl">Cash (10%)</span><span class="val" id="sd-cash-val">5,714.20</span></div>
+
+    <div class="cardslot" id="cardslot">
+        <div class="cardblk on" id="card-bench">
+        <div class="pad" style="display:flex;align-items:baseline;justify-content:space-between;">
+          <span class="sec-title">S&amp;P 500 Comparison <span style="color:var(--c-700);">&middot;</span> <span class="dim" data-bench-scope>All Accounts</span></span>
+          <span class="chev">&#8250;</span>
+        </div>
+
+        <!-- The plot LEADS the card. margin-top is 18, not 20: the title row's flex box paints 2px
+             below the title's own ink, and the 20 is measured ink to the panel's hairline.
+             Both curves are 1px and SOLID. The amber dash was dropped 2026-09-02: dashing was
+             doing double duty as a non-colour cue, and the mandated distinction is white against
+             --c-gold. The resting green end dot went with it, so the line simply ends. -->
+        <div class="pad" style="margin-top:18px;">
+          <div class="chartwrap">
+            <div class="chart-plot">
+              <div class="plot-window" data-plot-window>3y 4m &middot; Portfolio vs S&amp;P 500</div>
+              <svg class="chart" id="bench-svg" viewBox="0 0 320 180" preserveAspectRatio="none" aria-hidden="true">
+                <path id="bench-curveBm" d="" fill="none" style="stroke:var(--c-gold)" stroke-width="1" vector-effect="non-scaling-stroke"/>
+                <path id="bench-curveAcct" d="" fill="none" style="stroke:var(--c-white)" stroke-width="1" vector-effect="non-scaling-stroke"/>
+                <line class="scrub-line" x1="0" y1="12" x2="0" y2="172" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke" visibility="hidden"/>
+                <ellipse class="scrub-dot-b" rx="2.5" ry="2.5" style="fill:var(--c-gold)" visibility="hidden"/>
+                <ellipse class="scrub-dot-a" rx="2.5" ry="2.5" style="fill:var(--c-white)" visibility="hidden"/>
+                <text class="scrub-date-label" x="0" y="22" font-size="11" font-family="Inter" text-anchor="middle" style="fill:var(--c-white)" letter-spacing="-0.02em" visibility="hidden">Jan 24</text>
+              </svg>
+              <div class="plot-ends">
+                <span class="acct">Portfolio <span data-pct-acct>+39.4%</span></span>
+                <span class="bm">S&amp;P 500 <span data-pct-sp>+45.2%</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- The three rows the live card already shows, at its type sizes, BELOW the plot: the
+             2026-09-02 review put the graph first, and with the rows underneath a finger on the
+             plot no longer covers the numbers the scrub is rewriting.
+             Sign treatment is the house muted pair: neutral number, coloured arrow only, and
+             the arrow closes the group after the percentage.
+             NO PERCENTAGES on the first two rows. "positions screens.html" prints +39.4% and
+             +45.2% beside its figures; the card deliberately does not, and the meeting confirmed
+             it. Those growth rates live in the plot's endpoint labels and nowhere else on this
+             card. Only Difference carries a percentage. -->
+        <div class="pad rows" style="margin-top:20px;">
+          <div class="cmp-row">
+            <span class="cmp-label">Portfolio Value</span>
+            <span class="cmp-val" data-portfolio-val>57,142.02</span>
+          </div>
+          <div class="cmp-row">
+            <span class="cmp-label">S&amp;P 500 Value</span>
+            <span class="cmp-val" data-sp-val>59,515.92</span>
+          </div>
+          <div class="cmp-row diff">
+            <span class="cmp-label">Difference</span>
+            <span class="cmp-val"><span data-diff>&minus;2,373.90</span><span class="pct" data-diff-pct>&minus;3.99%</span><span class="trend down" data-diff-arrow>&#9660;</span></span>
+          </div>
+        </div>
+
+        <!-- 12 below the card's closing rule, and the card's own 13 of padding-bottom plus
+             .cal's 57 of margin still make the 70 seam below it. FIRST DRAFT wording, pending
+             the CEO's review; see .card-foot in the CSS above. -->
+        <p class="pad card-foot">This percentage is the gap between the two values above.<br>Alpha, on the performance page, is a different figure: your return against the index, in percentage points.</p>
+
+        </div>
+
+        <!-- ══ the no-capital twin ══
+             Shown in No Capital and Transfer Pending.
+
+             The card is KEPT rather than hidden, which the supplied mockups do not settle because
+             they predate this card. The S&P comparison is the product's core claim, and the
+             activation argument is that a new user should see the thing they are about to fill in,
+             so removing it would remove the reason to fund the account. What is dropped is
+             everything that would have to be faked: no chart, no scrub, no value rows, no
+             chevron, no click handler, no numbers of any kind. The card states its own title and
+             one state label. The only figure in this state is the literal 0.00 on the hero Value
+             above.
+        -->
+        <div class="cardblk-empty" id="empty-bench">
+          <div class="pad">
+            <span class="sec-title">S&amp;P 500 Comparison</span>
+          </div>
+
+          <!-- 6px, the same label-to-line value the Active / Self-Directed pair uses in this
+               block (.hero .sub margin-top). They are a title and its state, so they read as
+               one pair. Was 24. -->
+          <div class="pad" style="margin-top:6px;">
+            <!-- PLACEHOLDER COPY, not settled. The house register for this position is a Title
+                 Case state label, the same register as No Capital Deployed on the hero above.
+                 Final wording is Aidan's call; flagged in the review chrome outside the frame. -->
+            <p class="empty-note">Comparison Starts at First Deposit</p>
+          </div>
+        </div>
+
+    </div>
+
+    <!-- Calibration. The chart is drawn by drawCal() from CAL_CALLS, the eleven open positions'
+         own gaps against the S&P; the svg is empty in the markup and carries its height in CSS,
+         so the block occupies the same space whether or not the script has run. -->
+    <div class="cal" id="sd-cal">
+      <div class="cal-head">
+        <span class="cal-title">Calibration <span class="sep">&middot;</span> <span class="win">last 4 months</span></span>
+        <span class="cal-chev">&#8250;</span>
+      </div>
+      <div class="cal-plot">
+        <svg id="cal-svg" viewBox="0 0 358 176" preserveAspectRatio="none" aria-hidden="true"></svg>
+      </div>
+      <div class="cal-sum"><span class="ahead">6 of 11 ahead of the S&amp;P 500</span> <span class="avg">avg +1.9 pp</span></div>
+      <!-- The horizon figure is DERIVED, never typed: drawCal() writes #cal-horizon from the
+           eleven calls' held days (AVGO 412d down to NFLX 59d, off the Open screen in
+           "positions screens.html") against that file's own stated horizon, the 5-year
+           benchmark, 1,826 days. Mean 348.5 / 1826 = 19%. The literal below is that same figure
+           mirrored, so the sentence still reads if the script has not run.
+           THE ONE INTERPRETIVE CHOICE, on the record: no per-call target horizon is stored
+           anywhere in these files, so "their horizons" is read as each call's own five-year
+           window from its own entry, using the product's five-year benchmark as that horizon.
+           If the team means something else by horizon, this figure changes. -->
+      <p class="cal-mid"><span id="cal-horizon">~19%</span> of the way to their horizons<span class="sep">&middot;</span>0 resolved<span class="sep">&middot;</span><span class="forming">verdicts forming</span></p>
+      <p class="cal-foot">Each call against the S&amp;P 500, measured from the day you made it.</p>
+    </div>
+    <div class="pos-hdr" id="sd-positions">
+      <span class="lbl">Active Positions <span class="cnt">24</span>
+        <svg class="pos-chev" width="11" height="7" viewBox="0 0 11 7" fill="none"><path d="M1 1.5L5.5 6L10 1.5" stroke="#929292" stroke-width="1.2"/></svg>
+      </span>
+      <span class="oo">Open Orders 2</span>
+    </div>
+    <!-- The first three rows of the real list, ported verbatim from main dashboard.html's
+         `positions` array and its row template: ticker with the pp-vs-S&P readout, value and
+         return, price and daily move, the descriptor, and the status tags. Without them the
+         space under the card read emptier than the product does, which is the one thing this
+         page exists to judge. The pp figures are the same ones that file computes
+         (spRet = 6 + (i * 37) % 25): +36.6 / +4.6 / −7.4.
+
+         BWEN's descriptor is the only edit: its em-dash is a comma here, because em-dashes in
+         copy are forbidden project-wide and this file carries no other violation. -->
+    <div class="pos-list" id="sd-pos-rows">
+      <div class="pos-row">
+        <div class="pos-line">
+          <span><span class="pos-tkr">ORIO.TO</span><span class="pos-pp">+36.6 pp vs S&amp;P<span class="tri up">&#9650;</span></span></span>
+          <span class="pos-right"><span class="pos-amt">18,950.00 CAD</span><span class="pos-pct">+42.6%</span></span>
+        </div>
+        <div class="pos-line">
+          <span class="pos-meta">Emerging Compounder<span class="wt">25% WT</span></span>
+          <span class="pos-right"><span class="pos-amt">87.60 CAD</span><span class="pos-chg up">+7.8%</span></span>
+        </div>
+        <div class="pos-desc">Parent moat compounding; the NASDAQ listing re-rates it over 3&ndash;5 years.</div>
+        <div class="pos-tags">
+          <span class="pos-tag"><span class="dot earnings"></span>Earnings</span>
+          <span class="pos-tag"><span class="dot corpaction"></span>Reverse Split</span>
+        </div>
+      </div>
+      <div class="pos-row">
+        <div class="pos-line">
+          <span><span class="pos-tkr">BWEN</span><span class="pos-pp">+4.6 pp vs S&amp;P<span class="tri up">&#9650;</span></span></span>
+          <span class="pos-right"><span class="pos-amt">12,950.00 CAD</span><span class="pos-pct">+22.6%</span></span>
+        </div>
+        <div class="pos-line">
+          <span class="pos-meta">Emerging Compounder<span class="wt">25% WT</span></span>
+          <span class="pos-right"><span class="pos-amt">82.40 USD</span><span class="pos-chg">-2.8%</span></span>
+        </div>
+        <div class="pos-desc">Delisting risk, watching the appeal. No add until it clears.</div>
+        <div class="pos-tags">
+          <span class="pos-tag"><span class="dot halt"></span>Delisted</span>
+        </div>
+      </div>
+      <div class="pos-row">
+        <div class="pos-line">
+          <span><span class="pos-tkr">EOSCR</span><span class="pos-pp">&minus;7.4 pp vs S&amp;P<span class="tri down">&#9660;</span></span></span>
+          <span class="pos-right"><span class="pos-amt">12,950.00 CAD</span><span class="pos-pct">+22.6%</span></span>
+        </div>
+        <div class="pos-line">
+          <span class="pos-meta">Emerging Compounder<span class="wt">15% WT</span></span>
+          <span class="pos-right"><span class="pos-amt">82.40 USD</span><span class="pos-chg">-2.8%</span></span>
+        </div>
+        <div class="pos-tags">
+          <span class="pos-tag"><span class="dot nothesis"></span>No Thesis/Kill Criteria</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- account switcher, copy and structure from main dashboard.html -->
+<div id="sheet-account">
+  <div class="sa-scrim" data-sheet-close></div>
+  <div class="sa-panel">
+    <div class="sa-head">
+      <span class="sa-head-txt">
+        <span class="sa-title">Self-Directed</span>
+        <span class="sa-sub">Accounts</span>
+      </span>
+      <span class="sa-close" data-sheet-close>&times;</span>
+    </div>
+    <div class="sa-body">
+      <div class="sa-pick on" data-acct="all"><span>All Accounts</span><span class="sa-tick">&#10003;</span></div>
+      <div class="sa-pick" data-acct="non-reg"><span>Non-Registered</span><span class="sa-tick">&#10003;</span></div>
+      <div class="sa-pick" data-acct="tfsa"><span>TFSA</span><span class="sa-tick">&#10003;</span></div>
+      <div class="sa-pick" data-acct="rrsp"><span>RRSP</span><span class="sa-tick">&#10003;</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  // ══ chart engine, ported from benchmark-entry-point-variants-recovered.html (which itself
+  //    ported it from performance dashboard/V12/positions screens.html): the seeded
+  //    mulberry32/gaussians noise generator, the per-year-recentred stepReturns(), the series()
+  //    curve builder and the pointer-scrub machinery. ONE chart now, not eight: the 2026-09-02
+  //    review settled the card design, so the per-variant drawFull/drawAlpha factories collapse to
+  //    drawCompare(), and depositsSeries()/ALPHA_CURVE went with the deposits line and the alpha
+  //    card. attachScrub() is the ported handler unchanged; only its callbacks changed target,
+  //    from a floating readout box to the three value rows. ══
+  const MONTHS = 41;                                                          // Mar 2023 -> Jul 2026
+  const SUB = 6;                                                              // samples per month
+  const YEAR_SPAN = [[0,9,0],[10,21,1],[22,33,2],[34,41,3]];                  // month range -> year index
+  const ACCOUNT_YEARS = [12.0, 4.4, 15.0, 3.7];
+  const BM = { sp: { short:'S&P', long:'S&P 500', years:[14.0, 12.0, 10.0, 3.4] } };
+  const DEPOSITS = {0:15000, 6:8000, 11:9000, 20:7000, 27:-4000, 35:6000};    // months from Mar 2023
+  const WINDOW = {all:[0,41], '3y':[5,41], '1y':[29,41], ytd:[34,41]};
+
+  // The card has no period selector and no axis labels, so the only caller left is the on-chart
+  // scrub date label, which takes the 2-digit year. The full-year branch went with the scrub box.
+  function monthLabel(m){
+    const d = new Date(2023, 2 + m, 1);
+    return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]
+      + ' ' + String(d.getFullYear()).slice(2);
+  }
+
+  function mulberry32(seed){
+    return function(){
+      seed = (seed + 0x6D2B79F5) | 0;
+      let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function gaussians(seed, n){
+    const rand = mulberry32(seed), out = [];
+    for (let i = 0; i < n; i++){
+      const u = Math.max(rand(), 1e-9), v = rand();
+      out.push(Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v));
+    }
+    return out;
+  }
+  const N_STEPS = MONTHS * SUB;
+  const Z_MKT = gaussians(20230314, N_STEPS);      // market shocks, shared
+  const Z_OWN = gaussians(20260810, N_STEPS);      // account-specific shocks
+  function stepReturns(years, vol, corr){
+    const perStep = vol * 0.65 / Math.sqrt(12 * SUB);   // damped: legible at 320px wide
+    const logs = [];
+    for (let i = 0; i < N_STEPS; i++)
+      logs.push((corr * Z_MKT[i] + Math.sqrt(1 - corr * corr) * Z_OWN[i]) * perStep);
+    for (const [a, b, yi] of YEAR_SPAN){
+      const from = a * SUB, to = Math.min(b * SUB + SUB, N_STEPS);
+      let sum = 0;
+      for (let i = from; i < to; i++) sum += logs[i];
+      const fix = (Math.log(1 + years[yi] / 100) - sum) / (to - from);
+      for (let i = from; i < to; i++) logs[i] += fix;
+    }
+    return logs.map(Math.exp);
+  }
+  // depScale scopes the deposit ledger to one account: the same schedule, sized to that
+  // account's cost basis, so a scoped curve is not drawn on 41k of capital. Ported from
+  // positions screens.html, which added the parameter for exactly this reason. The ledger still
+  // shapes both curves (a deposit is a step in the value), it is simply no longer drawn as a
+  // third line; deposits, withdrawals and cash flow are the drill-in's job.
+  function series(years, targetGain, vol, corr, depScale){
+    const factors = stepReturns(years, vol, corr);
+    const ds = depScale || 1;
+    const out = [], dep = [];
+    let v = 0, d = 0;
+    for (let i = 0; i <= N_STEPS; i++){
+      const add = (DEPOSITS[i / SUB] || 0) * ds;    // deposits land on their day, as a step
+      v += add; d += add;
+      if (i > 0) v *= factors[i - 1];
+      out.push(v); dep.push(d);
+    }
+    // keep the shape, land the end on the figure the page states
+    const endGain = out[out.length-1] - dep[dep.length-1];
+    const k = endGain === 0 ? 1 : targetGain / endGain;
+    return out.map((val, i) => dep[i] + (val - dep[i]) * k);
+  }
+  const DEP_TOTAL = 41000;                 // sum of DEPOSITS above, the All Accounts ledger
+
+  // ══ per-account model, ported from positions screens.html's ACCOUNTS ══
+  // value / sp / basis are that file's own figures, and every printed figure on this page is
+  // derived from them, so the two screens cannot disagree. The S&P equivalent falls out of one
+  // rule applied per account: that account's cost basis compounded at the S&P's own 45.2%
+  // (24,259.90 x 1.452 = 35,225.38, and so on), which is where those numbers come from.
+  //
+  // The curves follow positions screens.html rather than inventing a per-account deposit
+  // schedule: the shared annual series is scaled by the ratio of the account's return to what
+  // that series itself compounds to (ACCT_YEARS_COMPOUND), the deposit ledger is scaled to the
+  // account's basis, and the existing engine redraws with the account's own end value as the
+  // target. All Accounts keeps ACCOUNT_YEARS and a scale of 1, so its curves are unchanged.
+  //
+  // cagr is kept on the table even though the card no longer prints an annualized figure (the
+  // review moved it to the detail page): the table is the ported contract with
+  // positions screens.html and is not edited here.
+  //
+  // All Accounts carries main dashboard.html's DASH_ACCOUNTS figures verbatim, with its comment:
+  // the lifetime, deposit-adjusted set taken from the performance dashboard so all three files
+  // tell the same story. 41,000 deposited, account +16,142.02, the S&P mirror +18,515.92 on the
+  // same timing, so the account TRAILS by 2,373.90. Nothing is stated twice: the difference and
+  // its percent are derived (value minus sp, then that over sp, the live card's own formula), so
+  // the Difference row can only ever agree with the pair above it.
+  // Cumulative return per account since inception, as positions screens.html publishes it. That
+  // file's Timing & Risk section states the All Accounts figure as Time-Weighted Return (TWR)
+  // +39.4%, next to Money-Weighted Return (MWR) +35.1%, so +39.4% IS the TWR here and the percent
+  // series is pinned to it (see pinGrowth). Typed once and read from here in both places that
+  // need it, the year scaling and the pin, so the two can never disagree.
+  const RET = { all: 39.4, 'non-reg': 52.2, tfsa: 44.3, rrsp: 22.9 };
+  const ACCT_YEARS_COMPOUND = 39.4425;     // what ACCOUNT_YEARS compounds to, the scaling base
+  const scaleYears = k => ACCOUNT_YEARS.map(v => Math.round(v * k * 10) / 10);
+  const SP_RET_ALL = 45.2;                 // BM.sp.years compounds to exactly this
+  const SP_CAGR = 11.2;                    // the annualized S&P figure of the source model
+  const ANN_T = Math.log(1 + SP_RET_ALL / 100) / Math.log(1 + SP_CAGR / 100);
+  const annualize = ret => Math.round((Math.pow(1 + ret / 100, 1 / ANN_T) - 1) * 1000) / 10;
+  const ACCOUNTS = {
+    all:       { label: 'All Accounts',   value: 57142.02, sp: 59515.92, basis: 41000,
+                 years: ACCOUNT_YEARS, cagr: 14.8, allTime: true, ret: RET.all },
+    'non-reg': { label: 'Non-Registered', value: 36930.75, sp: 35225.38, basis: 24259.90,
+                 years: scaleYears(RET['non-reg'] / ACCT_YEARS_COMPOUND),
+                 cagr: annualize(RET['non-reg']), ret: RET['non-reg'] },
+    tfsa:      { label: 'TFSA',           value: 15201.17, sp: 15292.04, basis: 10531.71,
+                 years: scaleYears(RET.tfsa / ACCT_YEARS_COMPOUND),
+                 cagr: annualize(RET.tfsa), ret: RET.tfsa },
+    rrsp:      { label: 'RRSP',           value: 4979.69,  sp: 5882.30,  basis: 4051.17,
+                 years: scaleYears(RET.rrsp / ACCT_YEARS_COMPOUND),
+                 cagr: annualize(RET.rrsp), ret: RET.rrsp }
+  };
+
+  // series() always lands its curve on whatever targetGain it is given, so the printed figure
+  // and the generated curve cannot drift apart: the curve IS the source of the printed figure
+  // (see restoreRows() below, which reads the endpoints back off it).
+  let ACCT_CURVE, SP_CURVE, ACCT_PCT, SP_PCT;
+
+  // ── deposit-neutral percent growth, which is what the plot draws ──
+  // Dollar curves step up every time capital lands, and at these amounts those steps dominated
+  // the shape: the chart read as "money went in" rather than "I am ahead of, or behind, the
+  // index", which is the opposite of what the card is for. The reference graph
+  // (1YR, YOU VS THE S&P) has no steps for exactly this reason: it plots percent growth, which
+  // is why its two lines diverge legibly.
+  //
+  // The flows are known, they are the same ledger series() used, so each step's return is
+  // (value minus flow) / previous value, and the running product of those is a time-weighted
+  // growth index. A deposit lands in both the value and the flow and therefore cancels, so it
+  // creates no step, and the only thing left separating the two series is performance. Both
+  // start from the same origin at 0%.
+  function growthIndex(curve, ds){
+    const out = [1];
+    let acc = 1;
+    for (let i = 1; i < curve.length; i++){
+      const flow = (DEPOSITS[i / SUB] || 0) * ds;     // integer keys only, so only on the day
+      const denom = curve[i - 1] + flow;
+      acc *= denom === 0 ? 1 : curve[i] / denom;
+      out.push(acc);
+    }
+    return out;
+  }
+
+  // ── pin the terminal value to the published figure ──
+  // The chaining above is a shape, not a source of truth: it lands wherever the seeded noise and
+  // the deposit timing put it, which was +50.8% for All Accounts. The product already publishes
+  // this number, +39.4% TWR in the drill-in's Timing & Risk section, so the chart has to end
+  // there or it contradicts a figure the team has already reviewed.
+  //
+  // Pinned the same way series() pins the dollar curves to targetGain: keep the path, move the
+  // endpoint. Raising the whole index to a constant exponent scales every step's log return by
+  // one factor, so the shape, the wiggle and the deposit-neutrality all survive and only the
+  // terminal value changes. Illustrative path, published endpoint.
+  function pinGrowth(curve, ds, targetPct){
+    const idx = growthIndex(curve, ds);
+    const end = idx[idx.length - 1];
+    const lnEnd = Math.log(end);
+    const p = (end > 0 && lnEnd !== 0) ? Math.log(1 + targetPct / 100) / lnEnd : 1;
+    return idx.map(v => (Math.pow(Math.max(v, 1e-9), p) - 1) * 100);
+  }
+
+  function buildCurves(key){
+    const A = ACCOUNTS[key];
+    const ds = A.basis / DEP_TOTAL;
+    ACCT_CURVE = series(A.years, A.value - A.basis, 0.172, 0.85, ds);   // -> endpoint A.value
+    SP_CURVE = series(BM.sp.years, A.sp - A.basis, 0.154, 1, ds);       // -> endpoint A.sp
+    ACCT_PCT = pinGrowth(ACCT_CURVE, ds, A.ret);      // -> ends on the published account TWR
+    SP_PCT = pinGrowth(SP_CURVE, ds, SP_RET_ALL);     // -> ends on the published S&P +45.2%
+  }
+  buildCurves('all');
+
+  // ── ported scrub machinery ──
+  function svgUnitX(svg, clientX){
+    const pt = svg.createSVGPoint(); pt.x = clientX; pt.y = 0;
+    return pt.matrixTransform(svg.getScreenCTM().inverse()).x;
+  }
+  // 320 rather than the source's 360: with the y-tick gutter gone the viewBox is 0 0 320 180,
+  // so the horizontal unit-per-pixel ratio changed and the dot would render as an ellipse.
+  function dotRadii(svg, px){
+    const r = svg.getBoundingClientRect();
+    if (!r.width || !r.height) return {rx: px, ry: px};
+    return {rx: px * 320 / r.width, ry: px * 180 / r.height};
+  }
+  function roundDot(svg, el){
+    const d = dotRadii(svg, 2.5);
+    el.setAttribute('rx', d.rx.toFixed(2)); el.setAttribute('ry', d.ry.toFixed(2));
+  }
+  function marker(svg, on, x, ya, yb){
+    const set = (sel, attrs) => {
+      const el = svg.querySelector(sel); if (!el) return;
+      el.setAttribute('visibility', on ? 'visible' : 'hidden');
+      for (const k in attrs) el.setAttribute(k, attrs[k]);
+    };
+    set('.scrub-line', on ? {x1:x, x2:x} : {});
+    set('.scrub-dot-a', on ? {cx:x, cy:ya} : {});
+    set('.scrub-dot-b', on ? {cx:x, cy:yb} : {});
+    if (on){ roundDot(svg, svg.querySelector('.scrub-dot-a')); roundDot(svg, svg.querySelector('.scrub-dot-b')); }
+  }
+  // the small date label that tracks the scrub line's x, top of the plot. Same on/off
+  // lifecycle as marker() above (visible only while a finger is down), and with the readout box
+  // cut it is the only place the scrubbed date is stated.
+  function setDateLabel(svg, on, x, text){
+    const el = svg.querySelector('.scrub-date-label'); if (!el) return;
+    el.setAttribute('visibility', on ? 'visible' : 'hidden');
+    if (on){ el.setAttribute('x', x); el.textContent = text; }
+  }
+  function attachScrub(svg, atIndex, count, reset){
+    let live = false;
+    const move = ev => {
+      const ux = Math.max(0, Math.min(320, svgUnitX(svg, ev.clientX)));
+      const i = Math.round(ux / 320 * (count() - 1));
+      atIndex(i, ux);
+      ev.preventDefault();
+    };
+    const end = () => { if (!live) return; live = false; marker(svg, false); reset(); };
+    svg.addEventListener('pointerdown', ev => { live = true; try { svg.setPointerCapture(ev.pointerId); } catch(e){} move(ev); });
+    svg.addEventListener('pointermove', ev => { if (live) move(ev); });
+    svg.addEventListener('pointerup', end);
+    svg.addEventListener('pointercancel', end);
+    svg.addEventListener('pointerleave', end);
+  }
+
+  // ── formatting ──
+  const fmtAbs = v => Math.abs(v).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+  const fmtSigned = v => (v < 0 ? '−' : '+') + fmtAbs(v);
+  const fmtPct = v => (v < 0 ? '−' : '+') + Math.abs(v).toFixed(2) + '%';
+  const fmtPct1 = v => (v < 0 ? '−' : '+') + Math.abs(v).toFixed(1) + '%';
+  // ── the tracked window, from the drill-in's own two dates ──
+  // positions screens.html states it twice, as "Tracked since Mar 14, 2023" and as
+  // "3 years 4 months", and computes its own TRACKED_YEARS against Aug 10, 2026. Both dates are
+  // taken from there and the label is derived from them, so the card and the drill-in cannot
+  // drift apart. The study's typed "3y 2m" was simply wrong, and a span read off the generated
+  // series is wrong too (41 monthly samples reads as 3y 5m); the account's real age is 3y 4m.
+  const TRACK_FROM = new Date(2023, 2, 14);              // Mar 14, 2023
+  const TRACK_TO = new Date(2026, 7, 10);                // Aug 10, 2026
+  const trackedMonths = () => {
+    let m = (TRACK_TO.getFullYear() - TRACK_FROM.getFullYear()) * 12
+          + (TRACK_TO.getMonth() - TRACK_FROM.getMonth());
+    if (TRACK_TO.getDate() < TRACK_FROM.getDate()) m -= 1;   // the final month is not complete
+    return m;
+  };
+  const spanLabel = months => {
+    const y = Math.floor(months / 12), m = months % 12;
+    return (y ? y + 'y' : '') + (y && m ? ' ' : '') + (m ? m + 'm' : (y ? '' : '0m'));
+  };
+  // The label states the WINDOW only. A "Portfolio vs S&P 500" suffix was tried and cut: with
+  // it the card names the comparison three times (the title, this label, the endpoint pair).
+  // The title already scopes the card, and the endpoint labels are the only place the two
+  // series colours are taught, so this is the one that goes. Still JS-driven, so the label
+  // follows the period.
+
+  // ── the chart: two percent-growth lines, portfolio white and S&P amber, on empty ground.
+  //    No y value ticks, no x date ticks, no gridlines, no axis rules, no legend, no endpoint
+  //    labels: the three rows above already state the figures, and the review cut the
+  //    repetition. The scale is computed off both series and never printed, so only the shape
+  //    and the gap between the lines carry meaning.
+  //
+  //    CHART keeps both pairs: the percent pair it plots, and the dollar pair the scrub writes
+  //    into the rows. One index addresses both, so the point under the finger and the figures
+  //    in the rows can never be about different dates. ──
+  let CHART = null;
+  function drawCompare(periodKey){
+    const [am, bm2] = WINDOW[periodKey];
+    const a = am * SUB, b = bm2 * SUB;
+    const av = ACCT_CURVE.slice(a, b + 1), bv = SP_CURVE.slice(a, b + 1);
+    // percent is rebased on the window's own first point, so a shorter window would read as
+    // growth since that window opened rather than since inception
+    const reb = (arr, base) => arr.map(v => ((1 + v / 100) / (1 + base / 100) - 1) * 100);
+    const ap = reb(ACCT_PCT.slice(a, b + 1), ACCT_PCT[a]);
+    const bp = reb(SP_PCT.slice(a, b + 1), SP_PCT[a]);
+    // Snug to the two series with a small proportional margin, rather than snapped out to a
+    // round number of percentage points. Nothing is printed on this axis, so a round bound buys
+    // nothing and costs plot height, and the whole point is that a 5.8pp gap has to read.
+    const lo = Math.min(...ap, ...bp), hi = Math.max(...ap, ...bp);
+    const pad = (hi - lo) * 0.08 || 1;
+    const bot = lo - pad, top = hi + pad;
+    const y = v => 176 - (v - bot) / (top - bot) * 164;
+    const path = arr => arr.map((v, i) =>
+      (i ? 'L' : 'M') + (i / (arr.length - 1) * 320).toFixed(1) + ',' + y(v).toFixed(1)).join(' ');
+    document.getElementById('bench-curveAcct').setAttribute('d', path(ap));
+    document.getElementById('bench-curveBm').setAttribute('d', path(bp));
+    // No resting end dot: it was removed 2026-09-02 and the white line simply ends. The
+    // scrub's own two dots are placed by marker() and are unaffected.
+    // The endpoint labels are read off the very series being drawn, so a label can never state a
+    // rate the line does not end on. Same reason the dollar rows read off the dollar curves.
+    document.querySelector('[data-pct-acct]').textContent = fmtPct1(ap[ap.length - 1]);
+    document.querySelector('[data-pct-sp]').textContent = fmtPct1(bp[bp.length - 1]);
+    // 'all' IS the tracked window, so it takes the account's real age from the two dates above
+    // rather than a count of generated samples. A shorter window would state its own span.
+    document.querySelector('[data-plot-window]').textContent =
+      (periodKey === 'all' ? spanLabel(trackedMonths()) : spanLabel(bm2 - am))
+      + ' · Portfolio vs S&P 500';
+    CHART = {av, bv, ap, bp, y, fromM: am, toM: bm2};
+  }
+
+  // ── the three rows are the readout. At rest they carry the curve's final point, which is
+  //    the current figure; while a finger is down they carry the scrubbed date's figures. There
+  //    is no box, at rest or in motion: this is the stock page's grammar, where the numbers on
+  //    the surface are the thing that changes under the finger. ──
+  const rowEls = {
+    portfolio: document.querySelector('[data-portfolio-val]'),
+    sp:        document.querySelector('[data-sp-val]'),
+    diff:      document.querySelector('[data-diff]'),
+    diffPct:   document.querySelector('[data-diff-pct]'),
+    diffArrow: document.querySelector('[data-diff-arrow]')
+  };
+  function writeRows(acct, sp){
+    const diff = acct - sp;
+    const pct = sp === 0 ? 0 : diff / sp * 100;
+    rowEls.portfolio.textContent = fmtAbs(acct);
+    rowEls.sp.textContent = fmtAbs(sp);
+    rowEls.diff.textContent = fmtSigned(diff);
+    rowEls.diffPct.textContent = fmtPct(pct);
+    // muted number, coloured arrow: the arrow is the only thing carrying the sign's colour
+    const down = diff < 0;
+    rowEls.diffArrow.classList.toggle('up', !down);
+    rowEls.diffArrow.classList.toggle('down', down);
+    rowEls.diffArrow.textContent = down ? '\u25BC' : '\u25B2';
+  }
+  function restoreRows(){
+    if (!CHART) return;
+    const i = CHART.av.length - 1;
+    writeRows(CHART.av[i], CHART.bv[i]);
+  }
+  function attachRowScrub(){
+    const svg = document.getElementById('bench-svg');
+    attachScrub(svg,
+      (i, ux) => {
+        if (!CHART) return;
+        const m = CHART.fromM + (CHART.toM - CHART.fromM) * i / (CHART.av.length - 1);
+        // the rows take the dollar pair, the markers take the percent pair they sit on
+        writeRows(CHART.av[i], CHART.bv[i]);
+        marker(svg, true, ux, CHART.y(CHART.ap[i]), CHART.y(CHART.bp[i]));
+        setDateLabel(svg, true, ux, monthLabel(m));
+      },
+      () => CHART ? CHART.av.length : 1,
+      () => { restoreRows(); setDateLabel(svg, false); });
+  }
+  attachRowScrub();
+
+  // == CALIBRATION: one thin line per call, pp against the S&P over four months ==
+  // The figures are OUR OWN, the eleven open positions in positions screens.html, each of which
+  // already states its gap against the S&P over the identical window. The live app's numbers are
+  // deliberately not copied: they would contradict every other figure on these screens. Six of
+  // the eleven are ahead and the average gap is +1.9 pp, which is what the summary line prints.
+  //
+  // `d` is that position's held days, straight off the Open screen in positions screens.html.
+  // It does two jobs. It fixes where each line ENTERS the window (a call has no track record
+  // before it was made, so a call younger than four months cannot have a line at -4mo), and it
+  // feeds the derived horizon figure in the middle summary line.
+  const CAL_CALLS = [
+    { t:'AVGO', pp:  18.4, d: 412 }, { t:'MSFT', pp:   9.1, d: 296 },
+    { t:'COST', pp:   7.8, d: 578 }, { t:'LLY',  pp:   6.2, d: 185 },
+    { t:'AAPL', pp:   4.0, d: 879 }, { t:'V',    pp:   1.6, d:  91 },
+    { t:'NFLX', pp:  -1.1, d:  59 }, { t:'BA',   pp:  -3.0, d: 142 },
+    { t:'DIS',  pp:  -4.2, d: 314 }, { t:'META', pp:  -6.7, d: 526 },
+    { t:'TSLA', pp: -11.3, d: 352 }
+  ];
+  // Seven tickers are named and the remaining four roll into a dim "+4 more". All eleven would
+  // technically fit at a 13px pitch, but eleven labels stop being endpoint labels and become a
+  // legend column, and the four rolled up are exactly the cluster around zero that reads worst.
+  const CAL_LABELLED = 7;
+  // Horizon progress, DERIVED rather than typed, so it stays true if the data changes.
+  // positions screens.html states the product's own horizon as "5-year benchmark, Mar 2028",
+  // five years being where a record against the S&P starts to carry statistical weight, so
+  // 1,826 days is the denominator. Mean held days is 348.5, which is ~19%.
+  // ONE INTERPRETIVE CHOICE, on the record: no PER-CALL target horizon is stored anywhere in
+  // these files. "Their horizons" is therefore read as each call's own five-year window from its
+  // own entry, using the product's five-year benchmark as that horizon. If the team means
+  // something else by horizon, this figure changes.
+  const CAL_HORIZON_DAYS = 1826;
+  const CAL_PROGRESS = Math.round(
+    100 * CAL_CALLS.reduce((s, c) => s + c.d, 0) / CAL_CALLS.length / CAL_HORIZON_DAYS);
+  // The window the plot covers, in days: four months. It turns held days into an x position.
+  // Anything older than it starts flat at the left edge, which is why the live chart shows a
+  // flat bundle before the fan opens.
+  const CAL_WINDOW_DAYS = 122;
+
+  // The axis follows the LIVE block's GRAMMAR, not its numbers: labels on multiples of 15,
+  // outside the plot on the left. The zero slot carries the index's NAME, "S&P" in --c-gold,
+  // not a "0" and not tick-grey. Settled 2026-09-02; the full record is on the y-axis block
+  // inside drawCal(). The
+  // ceiling is +30, not the live +60: our gaps span -11.3 to +18.4 and a +60 ceiling would
+  // squash all eleven lines into the bottom third, which defeats the one thing this chart
+  // exists to show. +30 is the first multiple of 15 that clears our maximum. Gridlines at
+  // 30 / 15 / 0 / -15, four of them, plus a vertical axis rule at the plot's left edge.
+  const CAL = { gutter:26, x0:30, x1:288, top:8, bot:152, hi:30, lo:-15, step:15,
+                xlab:168, lx:306 };
+  const calY = v => CAL.bot - (v - CAL.lo) / (CAL.hi - CAL.lo) * (CAL.bot - CAL.top);
+  const calSign = v => (v < 0 ? '−' : '+') + Math.abs(v);
+  // Two registers, deliberately split. The LINES stay on the muted pair: measured against the
+  // live block ours read too bright and too saturated, and the plot's job is to sit back behind
+  // the text. The DOTS carry the vivid pair, which is how the live endpoints read, and it
+  // follows this file's existing convention of a muted figure with a vivid marker.
+  const calCol = pp => pp >= 0 ? '--c-live-muted' : '--c-urgent-muted';
+  const calDotCol = pp => pp >= 0 ? '--c-live-muted' : '--c-urgent-muted';
+  // Dot size carries the magnitude of the gap: the widest gap gets the widest dot. sqrt rather
+  // than linear, so the smallest call is still a dot and not a speck. Radius 1.9 to 3.6.
+  const CAL_MAGS = CAL_CALLS.map(c => Math.abs(c.pp));
+  const CAL_MAG_LO = Math.min.apply(null, CAL_MAGS), CAL_MAG_HI = Math.max.apply(null, CAL_MAGS);
+  const calR = pp => 1.9 + 1.7 * Math.sqrt(
+    (Math.abs(pp) - CAL_MAG_LO) / (CAL_MAG_HI - CAL_MAG_LO));
+
+  // A polyline with a handful of vertices, not a continuous walk: in the live block each call is
+  // straight between corners that land near the -4mo / -2 / now gridlines. Vertices sit on the
+  // quarter marks, so a full-window line has five points and a young call has fewer.
+  // Both ends are real: 0 pp on the day the call was made, and that position's own published gap
+  // at "now". Only the interior vertices carry a seeded offset, and it is clamped to the axis.
+  const CAL_F = [0, 0.25, 0.5, 0.75, 1];
+  const calStart = c => Math.max(0, 1 - Math.min(c.d, CAL_WINDOW_DAYS) / CAL_WINDOW_DAYS);
+  function calPath(c, k){
+    const f0 = calStart(c);
+    const z = gaussians(6070214 + k * 977, CAL_F.length);
+    const px = f => (CAL.x0 + f * (CAL.x1 - CAL.x0)).toFixed(1);
+    const clamp = v => Math.max(CAL.lo, Math.min(CAL.hi, v));
+    // Before the call existed the line sits flat on zero rather than not existing, which is how
+    // the live chart reads: a flat bundle at the left, and the fan opening where the calls were
+    // actually made. Our book is older than the live screenshot's, so only V (91d) and
+    // NFLX (59d) enter inside the window; the other nine start at the left edge.
+    let d = 'M' + px(0) + ',' + calY(0).toFixed(1);
+    if (f0 > 0) d += 'L' + px(f0) + ',' + calY(0).toFixed(1);
+    const fs = CAL_F.filter(f => f > f0);
+    fs.forEach((f, i) => {
+      const g = (f - f0) / (1 - f0);
+      const v = (i === fs.length - 1) ? c.pp : clamp(c.pp * g + 2.2 * z[i + 1]);
+      d += 'L' + px(f) + ',' + calY(v).toFixed(1);
+    });
+    return d;
+  }
+
+  function drawCal(){
+    const svg = document.getElementById('cal-svg');
+    if (!svg) return;
+    const p = [];
+    const txt = (x, y, anchor, colour, s) =>
+      '<text x="' + x + '" y="' + y + '" text-anchor="' + anchor + '" font-size="11"' +
+      ' font-family="Inter" letter-spacing="-0.02em" style="fill:var(' + colour + ')">' + s + '</text>';
+    const zeroY = calY(0), plotW = CAL.x1 - CAL.x0;
+
+    // ---- plot furniture, all of it subordinate to the data ----
+    // TWO washes, not one. Above the zero line is ahead territory and below it is behind
+    // territory, which is what the live block tints. Both are held at the same step off the
+    // black ground that the single --c-elev wash they replace measured (1.036:1): green
+    // --c-live-muted at 0.055 is 1.037:1, red --c-urgent-muted at 0.07 is 1.037:1. They come off
+    // the MUTED pair on purpose, so nothing done to the data drags the furniture up with it.
+    // Both stop at the "now" vertical, not at the viewBox edge: in the live block the x labels
+    // and the "+N more" rollup sit outside the field on plain ground.
+    p.push('<rect x="' + CAL.x0 + '" y="' + CAL.top + '" width="' + plotW + '" height="' +
+      (zeroY - CAL.top).toFixed(1) + '" style="fill:var(--c-live-muted)" fill-opacity="0.055"/>');
+    p.push('<rect x="' + CAL.x0 + '" y="' + zeroY.toFixed(1) + '" width="' + plotW + '" height="' +
+      (CAL.bot - zeroY).toFixed(1) + '" style="fill:var(--c-urgent-muted)" fill-opacity="0.07"/>');
+    // the "now" region, the last 15% of the plot. One step lighter than the washes and no more:
+    // --c-1000 at 0.35 resolves to #0E0E0E, a 1.05:1 step. It is a marker, not a panel.
+    const nowX = CAL.x1 - 0.15 * plotW;
+    p.push('<rect x="' + nowX.toFixed(1) + '" y="' + CAL.top + '" width="' + (CAL.x1 - nowX).toFixed(1) +
+      '" height="' + (CAL.bot - CAL.top) + '" style="fill:var(--c-1000)" fill-opacity="0.35"/>');
+    // Gridlines at every y tick, plus the vertical axis rule at the plot's left edge that the
+    // live plot carries. Both --c-1000, the hairline token the frame's dividers use. Against the
+    // washes that is 1.19:1, where the palest call line is 3.75:1 and the amber baseline 7.7:1,
+    // so the furniture cannot compete with the data.
+    for (let v = CAL.hi; v >= CAL.lo; v -= CAL.step)
+      p.push('<line x1="' + CAL.x0 + '" y1="' + calY(v).toFixed(1) + '" x2="' + CAL.x1 +
+        '" y2="' + calY(v).toFixed(1) + '" style="stroke:var(--c-1000)" stroke-width="1"' +
+        ' vector-effect="non-scaling-stroke"/>');
+    p.push('<line x1="' + CAL.x0 + '" y1="' + CAL.top + '" x2="' + CAL.x0 + '" y2="' + CAL.bot +
+      '" style="stroke:var(--c-1000)" stroke-width="1" vector-effect="non-scaling-stroke"/>');
+
+    // y axis, in percentage points, outside the plot on the left, right-aligned against its
+    // edge. Same 11px --c-800 as every other secondary label on this screen, no bold.
+    for (let v = CAL.hi; v >= CAL.lo; v -= CAL.step)
+      if (v !== 0) p.push(txt(CAL.gutter, (calY(v) + 3.6).toFixed(1), 'end', '--c-800', calSign(v)));
+    // THE ZERO SLOT CARRIES "S&P", IN --c-gold. Settled 2026-09-02, reversing this file's
+    // earlier "no zero label, the amber baseline marks zero on its own" rule. The meeting
+    // (part 1, 556-576) was not that the label was missing: it existed, in gold, over in the
+    // RIGHT-hand ticker column, and Aidan still could not find it, "Oh, it says it there. Oh,
+    // that was just hidden." The CEO's answer was to put it on the left. Moving it left is
+    // half the fix; keeping it GOLD rather than the ticks' --c-800 is the other half, because
+    // that is what makes it read as the amber line's own name instead of one more axis
+    // number. Grey on the left would reproduce the original problem in a new position.
+    // THE REFERENCE RENDERING WILL RESURFACE: the user's reference for this chart shows S&P
+    // in gold in the RIGHT-hand label column. We did not copy that placement on purpose, as
+    // it is the exact state the meeting asked to change. Do not "fix" our left placement
+    // back to match it, and do NOT add an S&P entry to CAL_CALLS to get it: a data row at
+    // pp 0 would put a dot on the amber line and the name back in the ticker column, which
+    // is the placement being moved away from. It is an axis label, not a call.
+    // Short form "S&P", not "S&P 500": measured at 11px Inter -0.02em it is 20.51 user
+    // units against the widest existing tick "+30" at 20.23, so it lands in the same
+    // right-aligned column with no change to the viewBox. "S&P 500" measures 43.12 and
+    // overflows the viewBox's left edge by 17.12, off the frame at left:16px.
+    p.push(txt(CAL.gutter, (zeroY + 3.6).toFixed(1), 'end', '--c-gold', 'S&amp;P'));
+    // x axis: exactly three labels, the window rather than dates, because the calls were not all
+    // made on the same day. Left / middle / right, same register and size as the y labels.
+    p.push(txt(CAL.x0, CAL.xlab, 'start', '--c-800', '−4mo'));
+    p.push(txt((CAL.x0 + CAL.x1) / 2, CAL.xlab, 'middle', '--c-800', '−2'));
+    p.push(txt(CAL.x1, CAL.xlab, 'end', '--c-800', 'now'));
+
+    // ---- the label column, laid out BEFORE the dots so each dot can be joined to its own ----
+    const byMag = CAL_CALLS.slice().sort((a, b) => Math.abs(b.pp) - Math.abs(a.pp));
+    const rolled = byMag.slice(CAL_LABELLED);
+    const items = byMag.slice(0, CAL_LABELLED).map(c => ({ s: c.t, pp: c.pp, col: calCol(c.pp) }))
+      .sort((a, b) => b.pp - a.pp);
+    const PITCH = 13;
+    let ys = items.map(it => calY(it.pp));
+    for (let i = 1; i < ys.length; i++) if (ys[i] - ys[i - 1] < PITCH) ys[i] = ys[i - 1] + PITCH;
+    // The roll-up is the LAST label in the stack rather than one placed at its group's average
+    // gap: at that average it lands on the amber zero baseline and the two collide. It is also a
+    // step dimmer than the tickers, --c-800.
+    if (rolled.length){
+      items.push({ s: '+' + rolled.length + ' more', col: '--c-800' });
+      ys.push(ys[ys.length - 1] + PITCH);
+    }
+    const over = ys[ys.length - 1] - CAL.bot;
+    if (over > 0) ys = ys.map(v => v - over);
+    const under = CAL.top - ys[0];
+    if (under > 0) ys = ys.map(v => v + under);
+    const labelled = {};
+    items.forEach((it, i) => { if (it.pp !== undefined) labelled[it.s] = ys[i]; });
+
+    // Paint order matters here: call lines, then the benchmark baseline ON TOP of them, then the
+    // leaders and dots on top of that. Every call converges on zero at the left edge, so a
+    // baseline drawn underneath the bundle disappears beneath it. The benchmark is the thing this
+    // whole chart measures against, so it has to stay legible across the full width.
+    CAL_CALLS.forEach((c, k) => {
+      p.push('<path d="' + calPath(c, k) + '" fill="none" style="stroke:var(' + calCol(c.pp) +
+        ')" stroke-width="1" stroke-opacity="0.85" vector-effect="non-scaling-stroke"/>');
+    });
+
+    // the S&P itself: flat at zero, in --c-gold. It stays on the muted amber rather than moving
+    // up to --c-review with the middle line's "verdicts forming": --c-gold is the mandated
+    // benchmark colour product-wide, and this line IS the benchmark.
+    p.push('<line x1="' + CAL.x0 + '" y1="' + zeroY.toFixed(1) + '" x2="' + CAL.x1 +
+      '" y2="' + zeroY.toFixed(1) + '" style="stroke:var(--c-gold)" stroke-width="1"' +
+      ' vector-effect="non-scaling-stroke"/>');
+
+    // a leader out to its label, and a flat endpoint dot
+    CAL_CALLS.forEach((c) => {
+      const col = calCol(c.pp), dotCol = calDotCol(c.pp);
+      const cy = calY(c.pp), r = calR(c.pp);
+      // A short HORIZONTAL stroke from the dot out towards its own label, in that call's own
+      // colour, and only for calls that carry a label. Horizontal, as the live block draws them.
+      // They cannot cross each other: the label stack keeps labels in the same top-to-bottom
+      // order as their dots, and each leader sits at its own dot's y.
+      if (labelled[c.t] !== undefined)
+        p.push('<line x1="' + (CAL.x1 + r + 1.5).toFixed(1) + '" y1="' + cy.toFixed(1) +
+          '" x2="' + (CAL.lx - 3) + '" y2="' + cy.toFixed(1) + '" style="stroke:var(' + col +
+          ')" stroke-width="1" stroke-opacity="0.6" vector-effect="non-scaling-stroke"/>');
+      // No glow. Layered discs were tried and removed on purpose: at full size the halos
+      // bloomed together in the tight MSFT/COST/LLY and DIS/META/TSLA clusters and the plot
+      // read mushy where the reference reads crisp. Do not add it back.
+      p.push('<circle cx="' + CAL.x1 + '" cy="' + cy.toFixed(1) + '" r="' + r.toFixed(2) +
+        '" style="fill:var(' + dotCol + ')"/>');
+    });
+
+    // ticker labels, right of the dots, each in its own line's colour
+    items.forEach((it, i) => p.push(txt(CAL.lx, (ys[i] + 3.6).toFixed(1), 'start', it.col, it.s)));
+
+    svg.innerHTML = p.join('');
+    // mirror the derived horizon figure into the middle summary line
+    const prog = document.getElementById('cal-horizon');
+    if (prog) prog.textContent = '~' + CAL_PROGRESS + '%';
+  }
+  // Drawn once, not per account: the eleven calls are the whole self-directed book, and the
+  // section header states the window rather than an account scope. Scoping it per account would
+  // need a per-account call ledger that these files do not carry.
+  drawCal();
+
+  // ═════════════════ PAGE STATE ══════════════════
+  // One object, one apply(), two axes: account and deposit state. The card-design axis was
+  // removed by the 2026-09-02 review, so STATE.card is gone with it.
+  //
+  // Deposit state outranks account. Three states remain, per the team's annotated mockups:
+  // funded, nocap, pending. No Account and New User were removed 2026-09-03: No Account is the
+  // absence of the self-directed surface, not a state of it, so a user with no account should see
+  // no section at all rather than a state of one; New User's card was identical to No Capital's,
+  // and the only difference (the managed side) was not worth a separate state to review. Transfer
+  // Pending stays despite also rendering the same card, because "funds are on the way" is a
+  // distinct thing a real user encounters and its copy differs.
+  //
+  //   nocap / pending  the account exists but holds no capital. Nothing has been measured, so
+  //                    the hero prints a literal 0.00 (the house convention for a no-capital
+  //                    account, not a placeholder), the state label No Capital Deployed, and one
+  //                    action: Add Funds, or Transfer Pending while a requested deposit has not
+  //                    settled. The account chip stays live: the account is real and pickable.
+  //                    The card stays too, in its minimal twin.
+  //
+  // Funded restores whatever account is selected, because every figure is rebuilt from the
+  // model on each apply() rather than stashed. No state prints a dash anywhere.
+  const STATE = { account: 'all', deposits: 'funded' };
+  const NOCAP_STATES = ['nocap','pending'];   // account exists, holds no capital
+
+  function apply(){
+    const ds = STATE.deposits;
+    const funded = ds === 'funded';
+    const noCapital = NOCAP_STATES.includes(ds);
+
+    document.getElementById('card-bench').classList.toggle('on', funded);
+    document.getElementById('empty-bench').classList.toggle('on', noCapital);
+    // the unsettled-copy flag belongs to the minimal card, so it appears with it
+    document.getElementById('ph-flag').classList.toggle('on', noCapital);
+    document.querySelectorAll('.ctl-opt').forEach(o => o.classList.toggle('on', o.dataset.dstate === ds));
+
+    // The alert strip, Cash, Calibration and the Active Positions header with its rows are all
+    // downstream of actually holding positions, so they exist in Funded only. The mockups say the
+    // Active Positions / Under Review section is hidden when there is nothing in it, and the same
+    // reasoning covers Calibration: with no capital there is nothing to calibrate and no position
+    // to list. The alerts join that list rather than getting a mechanism of
+    // their own: every alert in this prototype is self-directed activity that cannot exist without
+    // capital (a triggered kill criterion, an earnings date on a holding, a fill, a contribution),
+    // so a brand-new user cannot have one.
+    ['sd-alerts','sd-cash','sd-cal','sd-positions','sd-pos-rows'].forEach(id => {
+      document.getElementById(id).style.display = funded ? '' : 'none';
+    });
+
+    const A = ACCOUNTS[STATE.account];
+    document.getElementById('acct-label').textContent = A.label;
+    // the card header's scope suffix, same contract as main dashboard.html's #bench-scope
+    document.querySelectorAll('[data-bench-scope]').forEach(el => el.textContent = A.label);
+    document.querySelectorAll('#sheet-account .sa-pick').forEach(el =>
+      el.classList.toggle('on', el.dataset.acct === STATE.account));
+
+    // The hero Value prints 0.00 whenever the account holds no capital: that is the house
+    // convention, and it is a true figure rather than a placeholder. Everything else that has
+    // no figure is hidden rather than dashed. The All Time line is a figure this study only
+    // holds for All Accounts, so it shows there and is withheld elsewhere rather than guessed
+    // at per account.
+    document.getElementById('sd-hero-val').textContent = funded ? fmtAbs(A.value) : '0.00';
+    if (funded) document.getElementById('sd-cash-val').textContent = fmtAbs(A.value * 0.10);
+    document.getElementById('sd-hero-all').style.display = (funded && A.allTime) ? '' : 'none';
+
+    // the state label and the action beneath the 0.00. Only the action's wording differs
+    // between No Capital (Add Funds) and Transfer Pending.
+    document.getElementById('sd-nocap-state').style.display = noCapital ? '' : 'none';
+    const act = document.getElementById('sd-nocap-action');
+    act.style.display = noCapital ? '' : 'none';
+    act.textContent = ds === 'pending' ? 'Transfer Pending' : 'Add Funds';
+
+    if (funded){
+      buildCurves(STATE.account);
+      drawCompare('all');
+      restoreRows();
+      // The end-dot re-round that used to sit here went with the dot itself (2026-09-02). The
+      // scrub's own dots are rounded by marker() on pointerdown, by which time the card is
+      // visible and its box is measurable, so nothing has to be re-rounded on show.
+    }
+  }
+
+  // deposit state, the page-level control bar
+  document.querySelectorAll('.ctl-opt').forEach(o => {
+    o.addEventListener('click', () => { STATE.deposits = o.dataset.dstate; apply(); });
+  });
+
+  // Add Funds / Transfer Pending. The destinations (the Money Transfers / Deposit flow, and the
+  // Interac request pending page) do not exist in this prototype, so this is a deliberate no-op.
+  // It is wired all the same, so the affordance is real and reviewable rather than dead markup.
+  document.getElementById('sd-nocap-action').addEventListener('click', ev => {
+    ev.stopPropagation();
+    /* no-op: destination not built in this prototype */
+  });
+
+  // account sheet
+  const sheet = document.getElementById('sheet-account');
+  document.getElementById('acct-chip').addEventListener('click', () => sheet.classList.add('open'));
+  document.querySelectorAll('[data-sheet-close]').forEach(el =>
+    el.addEventListener('click', () => sheet.classList.remove('open')));
+  document.querySelectorAll('#sheet-account .sa-pick').forEach(el => {
+    el.addEventListener('click', () => {
+      STATE.account = el.dataset.acct;
+      apply();
+      sheet.classList.remove('open');
+    });
+  });
+
+  // ── the card IS the entry point to the performance dashboard. Same convention as
+  //    main dashboard.html's goBench(): the destination opens pre-scoped to the account the card
+  //    was showing. The plot is excluded because it belongs to the scrub.
+  //
+  //    Only the funded block is wired. The no-capital twin is a different class, carries no
+  //    chevron and gets no handler, because there is no performance history behind it to open;
+  //    the state guard makes that explicit rather than implicit in a selector. ──
+  function goBench(){
+    location.href = 'positions%20screens.html?account=' + STATE.account;
+  }
+  document.getElementById('card-bench').addEventListener('click', ev => {
+    if (STATE.deposits !== 'funded') return;
+    if (ev.target.closest('svg.chart')) return;
+    goBench();
+  });
+
+  apply();
+
+  // ---- Active Positions: collapsible, expanded by default. The header row is the target. ----
+  (function(){
+    const hdr = document.getElementById('sd-positions');
+    const rows = document.getElementById('sd-pos-rows');
+    if (!hdr || !rows) return;
+    hdr.addEventListener('click', () => {
+      const c = !hdr.classList.contains('is-collapsed');
+      hdr.classList.toggle('is-collapsed', c);
+      rows.classList.toggle('is-collapsed', c);
+    });
+  })();
+})();
+</script>
+
+</body>
+</html>

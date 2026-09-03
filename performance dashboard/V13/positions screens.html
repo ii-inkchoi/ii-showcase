@@ -37,10 +37,30 @@
   .screen{display:none;min-height:780px;}
   .screen.active{display:block;}
 
+  /* ── phone delivery: below the widest phone, the review chrome comes off ──
+     Reviewed on a real device over GitHub Pages, a phone-shaped card inside a phone
+     reads as a mockup rather than as the app. The stage padding, the 34px radius, the
+     drop shadow and the device border all exist to say "this is a phone" to a desktop
+     reviewer who is not holding one; on the device itself they are noise.
+     BREAKPOINT. 440px is the iPhone 16 Pro Max's logical portrait width, the widest
+     phone currently shipping. Every device from 360 up therefore gets the full-bleed
+     treatment, and the narrowest tablet portrait (iPad mini, 744px) keeps the desktop
+     rendering. Nothing at or above 441px is touched by this block.
+     .proto-bar IS DELIBERATELY UNTOUCHED. It is how the screens are switched on a
+     phone. Measured at 360px: its four chips total 283px against 340px of available
+     width, so they still centre with slack and need no padding change. Its 59px
+     height is also hardcoded into --proto-h, which header.app, .pd-period-group and
+     .filterbar all calculate their sticky offsets from, so changing its padding here
+     would silently misplace three sticky elements. */
+  @media (max-width:440px){
+    .proto-stage{padding:0;}
+    .phone{width:100%;border-width:0;border-radius:0;box-shadow:none;}
+  }
+
   /* ── shared product primitives ─────────────────────────── */
   header.app{position:sticky;top:var(--proto-h,0px);z-index:12;background:var(--c-black);
     min-height:48px;display:flex;align-items:center;gap:8px;
-    padding:0 20px;border-bottom:0.5px solid var(--c-graphite);}
+    padding:0 20px;border-bottom:0.5px solid var(--c-900);}
   /* the strip's content, condensed into the nav once the strip scrolls away */
   .mkt-nav{display:inline-flex;align-items:center;gap:12px;
     opacity:0;transition:opacity 150ms ease;pointer-events:none;}
@@ -67,11 +87,11 @@
   .info-overlay.open{opacity:1;pointer-events:auto;}
   .info-sheet{position:fixed;left:50%;bottom:0;transform:translate(-50%,100%);
     transition:transform 300ms cubic-bezier(.22,.9,.3,1);width:390px;max-width:calc(100% - 20px);
-    max-height:82vh;background:var(--c-elev);border:1px solid var(--c-graphite);border-bottom:none;
+    max-height:82vh;background:var(--c-elev);border:1px solid var(--c-900);border-bottom:none;
     border-radius:20px 20px 0 0;z-index:201;display:flex;flex-direction:column;}
   .info-sheet.open{transform:translate(-50%,0);}
   .info-sheet-head{display:flex;align-items:center;justify-content:space-between;
-    padding:16px 20px 12px;border-bottom:0.5px solid var(--c-graphite);flex-shrink:0;}
+    padding:16px 20px 12px;border-bottom:0.5px solid var(--c-900);flex-shrink:0;}
   .info-sheet-title{font-size:17px;color:var(--c-200);letter-spacing:-0.02em;line-height:1.2;}
   .info-sheet-close{font-size:17px;color:var(--c-700);cursor:pointer;padding:8px;line-height:1;}
   .info-sheet-body{overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:24px;
@@ -80,14 +100,15 @@
   .info-block-title{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;margin-bottom:8px;}
   .info-p{font-size:13px;color:var(--c-400);line-height:1.4;letter-spacing:-0.02em;}
   .info-p + .info-p{margin-top:8px;}
-  .info-sec-item{display:flex;flex-direction:column;gap:2px;padding:12px 0;border-bottom:0.5px solid var(--c-graphite);}
+  .info-sec-item{display:flex;flex-direction:column;gap:2px;padding:12px 0;border-bottom:0.5px solid var(--c-900);}
   .info-sec-item:last-child{border-bottom:none;}
   .info-sec-item .k{font-size:13px;color:var(--c-white);letter-spacing:-0.02em;}
-  .info-sec-item .d{font-size:13px;color:var(--c-700);line-height:1.4;letter-spacing:-0.02em;}
+  /* toned down one step 2026-09-03: the info-sheet description explains .k, the term beside it */
+  .info-sec-item .d{font-size:13px;color:var(--c-800);line-height:1.4;letter-spacing:-0.02em;}
 
   /* ── decisions module (reproduces source dashboard's Decisions card) ── */
-  .dec-row{display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding-bottom:12px;border-bottom:0.5px solid var(--c-graphite);}
-  .dec-block{display:flex;flex-direction:column;gap:12px;padding-bottom:12px;border-bottom:0.5px solid var(--c-graphite);}
+  .dec-row{display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding-bottom:12px;border-bottom:0.5px solid var(--c-900);}
+  .dec-block{display:flex;flex-direction:column;gap:12px;padding-bottom:12px;border-bottom:0.5px solid var(--c-900);}
   .dec-sub{display:flex;align-items:baseline;justify-content:space-between;gap:24px;}
   .dec-tap{font-size:13px;letter-spacing:-0.02em;cursor:pointer;padding:12px 2px;margin:-12px -2px;
     text-decoration:underline dotted var(--c-800);text-decoration-thickness:0.5px;text-underline-offset:3px;}
@@ -104,12 +125,24 @@
   .dec-prow:hover .dec-ticker{color:var(--c-400);}
   .dec-ticker{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;transition:color 120ms;}
   .dec-note[hidden]{display:none;}
-  .dec-def{padding-bottom:12px;border-bottom:0.5px solid var(--c-graphite);}
+  .dec-def{padding-bottom:12px;border-bottom:0.5px solid var(--c-900);}
   .dec-def[hidden]{display:none;}
-  .dec-def p{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;margin:0;}
+  /* toned down one step 2026-09-03: explanatory prose, not a label or a value.
+     p.formula below was already --c-800; this brings its sibling in line with it. */
+  .dec-def p{font-size:11px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;}
   .dec-def p.formula{color:var(--c-800);margin-top:8px;}
   .dec-note{font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:-2px 0 0 0;}
   .dash-sec{margin:48px 20px 0;}
+  /* positions vs S&P chart. On the two list screens it is not a .dash-sec: it sits
+     between the sticky filterbar and the list, so it takes those screens' own seam,
+     24px down from the filterbar and the same 20px side inset, with the list's own
+     padding-top:24px carrying the gap underneath it. */
+  .pvs-head{padding:24px 20px 0;display:flex;flex-direction:column;gap:12px;}
+  /* .pvs-note carries two roles: the chart intro sentence (explanation, toned down 2026-09-03)
+     and the derived count readout, [data-pvs-count] (data, must stay at the base tone). Split
+     so darkening the class does not also darken the count. */
+  .pvs-note{font-size:11px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;}
+  .pvs-note[data-pvs-count]{color:var(--c-700);}
   /* external cash flows (content: external cashflow.html · design: Performance Dashboard v8 tiers) */
   .cf-table{display:grid;grid-template-columns:88px 82px 1fr 64px;column-gap:12px;padding-right:17px;}
   .cf-head,.cf-row{display:contents;}
@@ -181,7 +214,7 @@
 
   /* period / benchmark group: sticks to the top and governs every section below */
   .pd-period-group{position:sticky;top:calc(var(--proto-h,0px) + 48px);z-index:8;background:var(--c-black);
-    border-bottom:0.5px solid var(--c-graphite);margin-top:48px;
+    border-bottom:0.5px solid var(--c-900);margin-top:48px;
     display:flex;align-items:baseline;justify-content:space-between;padding:14px 20px;}
   /* 16, not 20: the docked account chip shares this row, and Non-Registered is the
      longest label. 20 left only 16px between Max and the chip, which read as one group. */
@@ -205,7 +238,7 @@
     padding:12px 2px;margin:-12px -2px;}
   .pd-bm-current .chev-svg{width:9px;height:9px;color:var(--c-700);}
   .bm-pick{display:flex;align-items:center;justify-content:space-between;
-    padding:16px 0;border-bottom:0.5px solid var(--c-graphite);cursor:pointer;
+    padding:16px 0;border-bottom:0.5px solid var(--c-900);cursor:pointer;
     font-size:15px;color:var(--c-400);letter-spacing:-0.02em;}
   .bm-pick:last-child{border-bottom:none;}
   .bm-pick.on{color:var(--c-white);}
@@ -226,7 +259,7 @@
     font-feature-settings:'lnum' 1,'tnum' 1;}
   .yt-year{text-align:left;color:var(--c-700);}
   .yt-val{text-align:right;color:var(--c-400);white-space:nowrap;}
-  .yt-row.total > span{border-bottom:none;padding-top:16px;border-top:0.5px solid var(--c-graphite);}
+  .yt-row.total > span{border-bottom:none;padding-top:16px;border-top:0.5px solid var(--c-900);}
   .yt-row.total .yt-year{color:var(--c-200);}
   /* monthly returns heat map: 13 columns is too dense for the 11px meta tier, so cell values use
      the 9px glyph tier; sign-color (green/red) is an approved exception for this component only */
@@ -234,12 +267,12 @@
      One unbroken hairline on the non-scrolling wrapper marks where scrolling stops. */
   .mgrid-wrap{position:relative;}
   .mgrid-wrap::after{content:'';position:absolute;top:0;bottom:0;right:68px;width:0.5px;
-    background:var(--c-graphite);pointer-events:none;z-index:3;}
+    background:var(--c-900);pointer-events:none;z-index:3;}
   .mgrid-scroll{overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
   /* mirror of the Annual hairline: marks the sticky Year boundary, so a half-scrolled
      month reads as a cell cut off past an edge rather than digits glued to the year */
   .mgrid-wrap::before{content:'';position:absolute;top:0;bottom:0;left:28px;width:0.5px;
-    background:var(--c-graphite);pointer-events:none;z-index:3;}
+    background:var(--c-900);pointer-events:none;z-index:3;}
   .mgrid-scroll::-webkit-scrollbar{display:none;}
   .mgrid{display:grid;grid-template-columns:26px repeat(12,30px) 66px;gap:4px;
     align-items:stretch;width:max-content;min-width:100%;}
@@ -295,7 +328,7 @@
   .heatn-1{--heat:rgba(255,53,51,0.10);}
   .heatn-2{--heat:rgba(255,53,51,0.20);}
   .heatn-3{--heat:rgba(255,53,51,0.32);}
-  .filterbar{position:sticky;top:calc(var(--proto-h,0px) + 48px);z-index:5;background:var(--c-black);border-bottom:0.5px solid var(--c-graphite);
+  .filterbar{position:sticky;top:calc(var(--proto-h,0px) + 48px);z-index:5;background:var(--c-black);border-bottom:0.5px solid var(--c-900);
     display:flex;align-items:center;padding:16px 0 16px 20px;margin-top:48px;}
   /* one line, scrolls sideways; the right fade says there is more */
   .chips{display:flex;gap:16px;overflow-x:auto;white-space:nowrap;flex:1;min-width:0;position:relative;
@@ -324,7 +357,7 @@
 
   .list{padding:16px 20px 24px;}
   .row{display:grid;grid-template-columns:1fr auto auto;column-gap:12px;row-gap:4px;align-items:baseline;
-    padding:16px 0;border-bottom:0.5px solid var(--c-graphite);cursor:pointer;}
+    padding:16px 0;border-bottom:0.5px solid var(--c-900);cursor:pointer;}
   .row:active{background:var(--c-elev);}
   .row-left{display:contents;}
   .ticker{grid-column:1;grid-row:1;font-size:15px;color:var(--c-400);letter-spacing:-0.02em;font-feature-settings:'lnum' 1;}
@@ -376,19 +409,24 @@
   .hero-pad{padding:0 20px;}
   .hero-return{margin-top:48px;}
   .hero-return .big{font-size:17px;letter-spacing:-0.02em;line-height:1.2;font-feature-settings:'lnum' 1,'tnum' 1;}
+  /* hero pair (2026-09-02): the pp figure is one step down from the 17px figure and rides
+     inside its line box, baseline aligned, with the arrow closing the row. Same grammar as
+     the main dashboard card's Difference row, but the sizes are this screen's: 17 -> 15, and
+     the 8px gap is .cmp-val .pct's, not the card's 9 (that gap belongs to a 15px amount). */
+  .hero-return .big .pct{font-size:15px;color:var(--c-700);letter-spacing:-0.02em;margin-left:8px;}
   .hero-return .sub{font-size:13px;color:var(--c-700);letter-spacing:-0.02em;}
   .hero-return .label{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;margin-bottom:8px;display:block;}
 
   /* title-less fact block: same bracket as the dashboard's Annualized band */
   .kv-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:16px;row-gap:16px;
-    margin:24px 20px 0;padding:24px 0 0;border-top:0.5px solid var(--c-graphite);}
+    margin:24px 20px 0;padding:24px 0 0;border-top:0.5px solid var(--c-900);}
   .kv .k{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
   .kv .v{font-size:15px;color:var(--c-white);letter-spacing:-0.02em;margin-top:4px;font-feature-settings:'lnum' 1,'tnum' 1;}
 
   .sec{padding:48px 20px 0;display:flex;flex-direction:column;gap:12px;}
   .sec-title{font-size:17px;color:var(--c-200);letter-spacing:-0.02em;line-height:1.2;margin-bottom:4px;display:block;}
   .cmp-row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
-    padding-bottom:12px;border-bottom:0.5px solid var(--c-graphite);}
+    padding-bottom:12px;border-bottom:0.5px solid var(--c-900);}
   
   .cmp-label{font-size:15px;color:var(--c-700);letter-spacing:-0.02em;white-space:nowrap;}
   /* descriptive rows: long label, quiet pair */
@@ -400,7 +438,7 @@
   /* status (Open/Closed) rides the same line as price · duration, right-aligned and a shade
      dimmer, so it reads as metadata rather than a second data point or a UI chip */
   .cmp-foot{display:flex;align-items:baseline;justify-content:space-between;gap:12px;
-    padding-bottom:12px;border-bottom:0.5px solid var(--c-graphite);}
+    padding-bottom:12px;border-bottom:0.5px solid var(--c-900);}
   .cmp-meta{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;white-space:nowrap;}
   .cmp-status{font-size:11px;color:var(--c-800);letter-spacing:-0.02em;white-space:nowrap;}
 
@@ -408,7 +446,7 @@
   .chartwrap svg{touch-action:none;}
   /* stock-page scrub grammar: a box over the plot while the finger is down */
   .scrub-box{position:absolute;bottom:calc(100% + 8px);left:0;right:0;z-index:3;display:none;
-    background:var(--c-elev);border:0.5px solid var(--c-graphite);
+    background:var(--c-elev);border:0.5px solid var(--c-900);
     padding:12px 16px;}
   .scrub-box.on{display:block;}
   .sb-date{white-space:nowrap;}
@@ -420,11 +458,21 @@
   .scrubbing .legend{visibility:hidden;}
   /* legend chip: V8's outlined container, square corners (radius-0) */
   .legend{position:absolute;top:10px;left:54px;z-index:1;display:inline-flex;gap:10px;align-items:center;margin:0;
-    background:var(--c-black);border:0.5px solid var(--c-graphite);padding:3px 6px;}
+    background:var(--c-black);border:0.5px solid var(--c-900);padding:3px 6px;}
   .legend span{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
-  .legend .ln{display:inline-block;width:20px;height:0;border-top:1.5px solid var(--c-400);}
-  .legend .ln.dash{border-top:1.5px dashed var(--c-gold);}
+  /* white, matching the account stroke: portfolio is white and the benchmark amber
+     across the product (CEO 2026-09-02, for consistency with the approved graph) */
+  .legend .ln{display:inline-block;width:20px;height:0;border-top:1.5px solid var(--c-white);}
+  .legend .ln.bm{border-top:1.5px solid var(--c-gold);}
   .legend .ln.dep{border-top:1px solid var(--c-800);}
+  /* Ported from main dashboard.html #bench-chart .plot-ends (the S&P card's chart), 2026-09-03.
+     -0.22px there is this file's own -0.02em at 11px (0.22/11 = 0.02), so this keeps the file's
+     em-based letter-spacing convention rather than mixing in a literal px value. */
+  #posPlotEnds{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    margin-top:8px;font-size:11px;letter-spacing:-0.02em;
+    font-variant-numeric:tabular-nums lining-nums;white-space:nowrap;}
+  #posPlotEnds .acct{color:var(--c-white);}
+  #posPlotEnds .bm{color:var(--c-gold);}
   .axis-end{display:flex;justify-content:space-between;font-size:13px;color:var(--c-700);letter-spacing:-0.02em;margin-top:8px;}
   .axis-end b{color:var(--c-200);font-weight:400;}
 
@@ -436,7 +484,8 @@
   .pd-signal-rationale{font-size:11px;color:var(--c-400);letter-spacing:-0.02em;line-height:1.4;}
   .pd-signal-rationale[hidden]{display:none;}
   .pd-signal-rationale p{margin:0;}
-  .pd-signal-rationale .ip-note{font-size:11px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;margin-top:8px;}
+  /* toned down one step 2026-09-03: a qualifying caveat on the paragraph above it */
+  .pd-signal-rationale .ip-note{font-size:11px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin-top:8px;}
   .call-bar{margin-top:2px;width:100%;height:3px;background:var(--c-900);position:relative;}
   .call-bar .fill{position:absolute;top:0;left:0;bottom:0;}
   .call-bar-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
@@ -476,7 +525,7 @@
         aria-label="Change account"><span data-acct-label>All Accounts</span><svg class="chev-svg" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.3"/></svg></span>
     </div>
 
-    <section style="margin:24px 20px 0;padding:24px 0 0;border-top:0.5px solid var(--c-graphite);display:flex;flex-direction:column;gap:24px;">
+    <section style="margin:24px 20px 0;padding:24px 0 0;border-top:0.5px solid var(--c-900);display:flex;flex-direction:column;gap:24px;">
       <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;"><span data-period-label>Since Inception</span> · Preliminary</span>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:8px;row-gap:8px;">
         <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;text-align:left;">Account</span>
@@ -556,7 +605,7 @@
           </div>
           <div class="legend">
             <span><span class="ln"></span>Portfolio</span>
-            <span><span class="ln dash"></span><span data-bm-short>S&amp;P</span></span>
+            <span><span class="ln bm"></span><span data-bm-short>S&amp;P</span></span>
             <span><span class="ln dep"></span>Deposited</span>
           </div>
           <svg style="width:100%;height:180px;display:block;overflow:visible;" viewBox="-40 0 360 180" preserveAspectRatio="none" aria-hidden="true">
@@ -570,8 +619,8 @@
             <g clip-path="url(#acctClip)">
               <path id="curveGap" d="" fill-opacity="0.14"/>
               <path id="curveDep" d="" fill="none" style="stroke:var(--c-800)" stroke-width="1" vector-effect="non-scaling-stroke"/>
-              <path id="curveBm" d="" fill="none" style="stroke:var(--c-gold)" stroke-width="1.25" stroke-dasharray="2 2" vector-effect="non-scaling-stroke"/>
-              <path id="curveAcct" d="" fill="none" style="stroke:var(--c-400)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+              <path id="curveBm" d="" fill="none" style="stroke:var(--c-gold)" stroke-width="1.25" vector-effect="non-scaling-stroke"/>
+              <path id="curveAcct" d="" fill="none" style="stroke:var(--c-white)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
               <ellipse id="acctEndDot" class="live-pt" rx="2.5" ry="2.5" cx="320" cy="20" style="fill:var(--c-700)"/>
             </g>
             <line class="scrub-line" x1="0" y1="12" x2="0" y2="172" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke" visibility="hidden"/>
@@ -588,7 +637,7 @@
 
     <section class="dash-sec" id="sec-by-account" style="display:flex;flex-direction:column;gap:12px;">
       <span class="sec-title">Performance by Account</span>
-      <p style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;margin:0;">Current open holdings only, not the full deposit history above. A different picture on purpose: it shows how today's positions are doing per account, separate from the lifetime, deposit-adjusted number at the top.</p>
+      <p style="font-size:11px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">Current open holdings only, not the full deposit history above. A different picture on purpose: it shows how today's positions are doing per account, separate from the lifetime, deposit-adjusted number at the top.</p>
       <div class="yt-table">
         <div class="yt-head">
           <span style="border-bottom:none;"></span><span>Portfolio</span><span data-bm-short>S&amp;P</span><span style="padding-right:17px;">Alpha</span>
@@ -635,7 +684,7 @@
 
     <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
       <span class="sec-title">Monthly Returns<span class="sc-suffix" data-acct-suffix></span></span>
-      <p style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;margin:0;">Account returns by month, heat-mapped by magnitude.</p>
+      <p style="font-size:11px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">Account returns by month, heat-mapped by magnitude.</p>
       <div class="mgrid-wrap" style="margin-top:4px;">
         <div class="mgrid-scroll">
         <div class="mgrid">
@@ -747,7 +796,7 @@
         <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;"><span class="statnum" id="rCapture">75% / 48%</span><span class="arw-slot"></span></span>
       </div>
       <div class="dec-def" id="def-capture" hidden><p>Share of the benchmark's gain captured in its up months, and share of its loss taken in its down months. Capturing less on the way down than on the way up is the defensive pattern.</p><p class="formula">Mean account return in benchmark up months &divide; mean benchmark return, same for down months.</p></div>
-      <p style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;margin:0;">Read Beta and Capture together. Beta under 1 with Down Capture below Up Capture is the defensive profile, giving up some upside to cushion the downside. Beta above 1 with the capture figures reversed is the aggressive one.</p>
+      <p style="font-size:11px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">Read Beta and Capture together. Beta under 1 with Down Capture below Up Capture is the defensive profile, giving up some upside to cushion the downside. Beta above 1 with the capture figures reversed is the aggressive one.</p>
       <span class="dec-tap" style="font-size:11px;color:var(--c-700);" onclick="toggleDef('notera',this)">Notes</span>
       <div class="dec-def" id="def-notera" hidden><p>Information Ratio is negative because the account has trailed the <span data-bm-long>S&amp;P 500</span> overall, it's answering "did the skill add value net of risk taken," not just "was the return positive." Computed from the same monthly return series as the chart above.</p></div>
     </section>
@@ -775,7 +824,7 @@
         <div class="bar-row mo-bar" style="--d:275ms"><span class="bar-label">Financials</span><div class="bar-track"><div class="bar-fill" style="width:5.2%;"></div></div><span class="bar-val">5.2%</span></div>
         <div class="bar-row mo-bar" style="--d:330ms"><span class="bar-label">Industrials</span><div class="bar-track"><div class="bar-fill" style="width:2.9%;"></div></div><span class="bar-val">2.9%</span></div>
       </div>
-      <p style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;margin:12px 0 0;">Technology alone is 51.0% of the open book, and the three growth-tilted sectors together are 74.7%. That is a concentrated bet on one factor. It has not shown up as extra downside so far (Down Capture is 48%), but a growth-led drawdown would hit this book harder than the sector split suggests.</p>
+      <p style="font-size:11px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:12px 0 0;">Technology alone is 51.0% of the open book, and the three growth-tilted sectors together are 74.7%. That is a concentrated bet on one factor. It has not shown up as extra downside so far (Down Capture is 48%), but a growth-led drawdown would hit this book harder than the sector split suggests.</p>
       <span class="dec-tap" style="font-size:11px;color:var(--c-700);" onclick="toggleDef('notecon',this)">Notes</span>
       <div class="dec-def" id="def-notecon" hidden><p>81.4% isn't a red flag on its own, it's mostly a function of holding only 11 open positions. A 50-position fund's top 10 concentration is lower because it's spread across more names, not because it's more disciplined. Compare this figure to your own position count, not to a fund's.</p></div>
     </section>
@@ -787,132 +836,148 @@
       </div>
       <div class="dec-row">
         <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Positions Opened</span>
-        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;">10<span class="arw-slot"></span></span>
+        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;"><span data-dec="act-opened">10</span><span class="arw-slot"></span></span>
       </div>
       <div class="dec-row">
         <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Positions Closed</span>
-        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;">10<span class="arw-slot"></span></span>
+        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;"><span data-dec="act-closed">10</span><span class="arw-slot"></span></span>
       </div>
+      <!-- UNSCOPED, deliberately: Portfolio Turnover, Ann. stays hardcoded at ~117%
+           for every account. Turnover needs buy/sell dollar volume against AVERAGE
+           portfolio value across the trailing year; this file has no portfolio-value
+           history, only a current value per position, so that denominator cannot be
+           reconstructed from these rows. Left as is rather than inventing a formula
+           for it. See report. -->
       <div class="dec-row" style="border-bottom:none;">
         <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Portfolio Turnover, Ann.</span>
         <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;">~117%<span class="arw-slot"></span></span>
       </div>
-      <p style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;margin:0;">All 10 closed positions closed within the trailing year, activity here is heavily back-loaded, not evenly spread across the full 3-year-plus history. Worth noting on its own, since it means all of this track record's closed evidence is recent.</p>
+      <p id="act-note" style="font-size:11px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">All 10 closed positions closed within the trailing year, activity here is heavily back-loaded, not evenly spread across the full 3-year-plus history. Worth noting on its own, since it means all of this track record's closed evidence is recent.</p>
       <span class="dec-tap" style="font-size:11px;color:var(--c-700);" onclick="toggleDef('noteto',this)">Notes</span>
       <div class="dec-def" id="def-noteto" hidden><p>Turnover is estimated from buy and sell dollar volume against average portfolio value, not a precise daily calculation.</p></div>
+    </section>
+
+    <!-- ══ Positions vs S&P 500: one line per position, pp against the index ══
+         Drawn by the pvs block at the foot of this file, FROM THE POSITION ROWS
+         THEMSELVES, so it can never drift from the list it sits with. -->
+    <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
+      <span class="sec-title">Positions vs S&amp;P 500</span>
+      <p class="pvs-note">Each line is one position, open or closed, measured in percentage points against the S&amp;P 500 over its own window. A filled dot is still held, a hollow one is closed. Every line starts on the day it was entered, where the gap against the index is zero by definition, so how far a line runs is how long it was held.</p>
+      <svg class="pvs-svg" data-pvs="decisions" viewBox="0 0 320 188" style="width:100%;height:auto;display:block;margin-top:4px;" aria-hidden="true"></svg>
+      <p class="pvs-note" data-pvs-count="decisions"></p>
     </section>
 
     <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
       <span class="sec-title">Decisions</span>
       <div class="dec-row">
         <span style="font-size:15px;color:var(--c-700);letter-spacing:-0.02em;">Total Positions</span>
-        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;">21<span class="arw-slot"></span></span>
+        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;"><span data-dec="total">21</span><span class="arw-slot"></span></span>
       </div>
 
       <div class="dec-block" onclick="goTo('open')" style="cursor:pointer;position:relative;">
         <div class="dec-row" style="border-bottom:none;padding-bottom:0;">
           <span style="font-size:15px;color:var(--c-700);letter-spacing:-0.02em;">Open</span>
-          <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;">11<span class="blk-chev">&#8250;</span></span>
+          <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;"><span data-dec="open">11</span><span class="blk-chev">&#8250;</span></span>
         </div>
         <div class="dec-sub">
           <span style="font-size:13px;color:var(--c-700);letter-spacing:-0.02em;">Profitable / Unprofitable</span>
-          <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">9 / 2<span class="arw-slot"></span></span>
+          <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;"><span data-dec="open-pl">9 / 2</span><span class="arw-slot"></span></span>
         </div>
         <div class="dec-sub">
           <span style="font-size:13px;color:var(--c-700);letter-spacing:-0.02em;">Beating S&amp;P</span>
-          <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">6<span class="arw-slot"></span></span>
+          <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;"><span data-dec="open-beat">6</span><span class="arw-slot"></span></span>
         </div>
         <div class="dec-sub">
           <span style="font-size:13px;color:var(--c-700);letter-spacing:-0.02em;">Trailing S&amp;P</span>
-          <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">5<span class="arw-slot"></span></span>
+          <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;"><span data-dec="open-trail">5</span><span class="arw-slot"></span></span>
         </div>
       </div>
 
       <div class="dec-block" onclick="goTo('closed')" style="cursor:pointer;position:relative;">
         <div class="dec-row" style="border-bottom:none;padding-bottom:0;">
           <span style="font-size:15px;color:var(--c-700);letter-spacing:-0.02em;">Closed</span>
-          <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;">10<span class="blk-chev">&#8250;</span></span>
+          <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;"><span data-dec="closed">10</span><span class="blk-chev">&#8250;</span></span>
         </div>
         <div class="dec-sub">
           <span style="font-size:13px;color:var(--c-700);letter-spacing:-0.02em;">Profitable / Unprofitable</span>
-          <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">7 / 2<span class="arw-slot"></span></span>
+          <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;"><span data-dec="closed-pl">7 / 2</span><span class="arw-slot"></span></span>
         </div>
         <div class="dec-sub">
           <span style="font-size:13px;color:var(--c-700);letter-spacing:-0.02em;">Beat S&amp;P</span>
-          <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">5<span class="arw-slot"></span></span>
+          <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;"><span data-dec="closed-beat">5</span><span class="arw-slot"></span></span>
         </div>
         <div class="dec-sub">
           <span style="font-size:13px;color:var(--c-700);letter-spacing:-0.02em;">Trailed</span>
-          <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;">4<span class="arw-slot"></span></span>
+          <span style="font-size:13px;color:var(--c-400);letter-spacing:-0.02em;text-align:right;"><span data-dec="closed-trail">4</span><span class="arw-slot"></span></span>
         </div>
       </div>
 
       <div class="dec-row">
         <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Win Rate vs S&amp;P (Closed)</span>
-        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;">55.6%<span class="arw-slot"></span></span>
+        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;"><span data-dec="winrate">55.6%</span><span class="arw-slot"></span></span>
       </div>
       <div class="dec-row">
         <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Avg Alpha-Win</span>
-        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;"><span class="anum-s">+10.2&nbsp;pp</span><span class="trend up">▲</span></span>
+        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;"><span class="anum-s" data-dec="alpha-win">+10.2&nbsp;pp</span><span class="trend up" data-dec="alpha-win-arrow">▲</span></span>
       </div>
       <div class="dec-row">
         <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Avg Alpha-Loss</span>
-        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;"><span class="anum-s">−8.5&nbsp;pp</span><span class="trend down">▼</span></span>
+        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;"><span class="anum-s" data-dec="alpha-loss">−8.5&nbsp;pp</span><span class="trend down" data-dec="alpha-loss-arrow">▼</span></span>
       </div>
 
-      <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;margin-top:24px;display:block;">Overall · Closed · 9 measured positions</span>
+      <span id="ov-header" style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;margin-top:24px;display:block;">Overall · Closed · 9 measured positions</span>
       <div class="dec-row">
         <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Avg Return</span>
-        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;"><span class="statnum">+11.6%</span><span class="arw-slot"></span></span>
+        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;"><span class="statnum" data-dec="ov-avg">+11.6%</span><span class="arw-slot"></span></span>
       </div>
       <div class="dec-row">
         <span style="font-size:15px;color:var(--c-800);letter-spacing:-0.02em;">Avg Return, by position</span>
-        <span class="stat-delta neutral sub" style="text-align:right;"><span class="statnum">+10.9%</span><span class="arw-slot"></span></span>
+        <span class="stat-delta neutral sub" style="text-align:right;"><span class="statnum" data-dec="ov-avg-pos">+10.9%</span><span class="arw-slot"></span></span>
       </div>
       <div class="dec-row">
         <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Alpha</span>
-        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;"><span class="anum-s">+2.4&nbsp;pp</span><span class="trend up">▲</span></span>
+        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;"><span class="anum-s" data-dec="ov-alpha">+2.4&nbsp;pp</span><span class="trend up" data-dec="ov-alpha-arrow">▲</span></span>
       </div>
       <div class="dec-row">
         <span style="font-size:15px;color:var(--c-800);letter-spacing:-0.02em;">Alpha, by position</span>
-        <span class="stat-delta neutral sub" style="text-align:right;"><span class="statnum">+1.9&nbsp;pp</span><span class="arw-slot"></span></span>
+        <span class="stat-delta neutral sub" style="text-align:right;"><span class="statnum" data-dec="ov-alpha-pos">+1.9&nbsp;pp</span><span class="arw-slot"></span></span>
       </div>
 
       <div class="dec-row">
         <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Avg Return, Profitable</span>
-        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;"><span class="statnum">+15.8%</span><span class="arw-slot"></span></span>
+        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;"><span class="statnum" data-dec="ov-avg-profit">+15.8%</span><span class="arw-slot"></span></span>
       </div>
       <div class="dec-row">
         <span style="font-size:15px;color:var(--c-800);letter-spacing:-0.02em;">Median Return, Profitable</span>
-        <span class="stat-delta neutral sub" style="text-align:right;"><span class="statnum">+16.0%</span><span class="arw-slot"></span></span>
+        <span class="stat-delta neutral sub" style="text-align:right;"><span class="statnum" data-dec="ov-med-profit">+16.0%</span><span class="arw-slot"></span></span>
       </div>
       <div class="dec-row">
         <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Avg Return, Loss</span>
-        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;"><span class="statnum">−6.4%</span><span class="arw-slot"></span></span>
+        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;"><span class="statnum" data-dec="ov-avg-loss">−6.4%</span><span class="arw-slot"></span></span>
       </div>
       <div class="dec-row">
         <span style="font-size:15px;color:var(--c-800);letter-spacing:-0.02em;">Median Return, Loss</span>
-        <span class="stat-delta neutral sub" style="text-align:right;"><span class="statnum">−6.4%</span><span class="arw-slot"></span></span>
+        <span class="stat-delta neutral sub" style="text-align:right;"><span class="statnum" data-dec="ov-med-loss">−6.4%</span><span class="arw-slot"></span></span>
       </div>
 
       <div class="dec-row">
         <span class="dec-tap" style="font-size:15px;color:var(--c-700);" onclick="toggleDef('pf',this)">Profit Factor</span>
-        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;"><span class="statnum">10.27x</span><span class="arw-slot"></span></span>
+        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;"><span class="statnum" data-dec="ov-pf">10.27x</span><span class="arw-slot"></span></span>
       </div>
       <div class="dec-def" id="def-pf" hidden><p>Total dollars made on winning positions for every dollar lost on losing ones. Above 1 means the wins outweigh the losses in size, not just in count.</p><p class="formula">Gross profit &divide; gross loss across all closed positions.</p></div>
       <div class="dec-row">
         <span class="dec-tap" style="font-size:15px;color:var(--c-700);" onclick="toggleDef('batting',this)">Batting Average</span>
-        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;"><span class="statnum">77.8%</span><span class="arw-slot"></span></span>
+        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;"><span class="statnum" data-dec="ov-batting">77.8%</span><span class="arw-slot"></span></span>
       </div>
       <div class="dec-def" id="def-batting" hidden><p>Share of closed positions that made money. Not benchmark-adjusted, unlike Win Rate above: a position can count here and still have trailed the <span data-bm-long>S&amp;P 500</span>.</p><p class="formula">Profitable closed positions &divide; total closed positions.</p></div>
 
       <div class="dec-row">
         <span style="font-size:15px;letter-spacing:-0.02em;color:var(--c-700);">Avg Annual Return per Position</span>
-        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;"><span class="statnum">+20.0%</span><span class="arw-slot"></span></span>
+        <span style="font-size:15px;color:var(--c-white);letter-spacing:-0.02em;text-align:right;"><span class="statnum" data-dec="ov-ann-ret">+20.0%</span><span class="arw-slot"></span></span>
       </div>
       <div class="dec-row" style="border-bottom:none;">
         <span style="font-size:15px;color:var(--c-800);letter-spacing:-0.02em;"><span data-bm-short>S&amp;P</span>, same windows</span>
-        <span class="stat-delta neutral sub" style="text-align:right;"><span class="statnum">+15.3%</span><span class="arw-slot"></span></span>
+        <span class="stat-delta neutral sub" style="text-align:right;"><span class="statnum" data-dec="ov-ann-sp">+15.3%</span><span class="arw-slot"></span></span>
       </div>
       <span class="dec-tap" style="font-size:11px;color:var(--c-700);" onclick="toggleDef('notedec',this)">Notes</span>
       <div class="dec-def" id="def-notedec" hidden>
@@ -924,7 +989,7 @@
 
     <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
       <span class="sec-title">Cumulative Alpha (Closed Positions)</span>
-      <p style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;margin:0;">Running total of dollar alpha as each of the 9 closed positions actually closed, in order. The flat aggregate number hides this shape.</p>
+      <p style="font-size:11px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">Running total of dollar alpha as each of the 9 closed positions actually closed, in order. The flat aggregate number hides this shape.</p>
       <svg viewBox="0 0 320 165" style="width:100%;height:auto;display:block;margin-top:4px;overflow:visible;">
         <line x1="0" y1="66.7" x2="320" y2="66.7" stroke="var(--c-800)" stroke-width="1" stroke-dasharray="3 3"/>
         <text x="320" y="62" fill="var(--c-700)" font-size="9" font-family="Inter" text-anchor="end">$0</text>
@@ -946,12 +1011,12 @@
         <text x="0" y="178" fill="var(--c-700)" font-size="9" text-anchor="start" font-family="Inter">Sep 25</text>
         <text x="320" y="178" fill="var(--c-700)" font-size="9" text-anchor="end" font-family="Inter">Jul 26</text>
       </svg>
-      <p style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;margin:12px 0 0;">Each tick is one close, green where that position beat the index and red where it trailed. Watch whether the line crosses zero steadily or is carried across by one late close, since a single large result can flip a total that ran the other way for most of the period.</p>
+      <p style="font-size:11px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:12px 0 0;">Each tick is one close, green where that position beat the index and red where it trailed. Watch whether the line crosses zero steadily or is carried across by one late close, since a single large result can flip a total that ran the other way for most of the period.</p>
     </section>
 
     <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
       <span class="sec-title">Holding Pattern, Winners vs Losers</span>
-      <p style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;margin:0;">A well-known bias in investing is holding losers longer than winners, selling what's working to lock it in, and holding what isn't, hoping it recovers. Here is what this account's own 9 closed positions show.</p>
+      <p style="font-size:11px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">A well-known bias in investing is holding losers longer than winners, selling what's working to lock it in, and holding what isn't, hoping it recovers. Here is what this account's own 9 closed positions show.</p>
       <div style="position:relative;display:flex;flex-direction:column;gap:12px;margin-top:4px;">
         <div class="bar-row mo-bar" style="--d:0ms"><span class="bar-label" style="width:56px;">Winners</span><div class="bar-track"><div class="bar-fill" style="width:70.2%;"></div></div><span class="bar-val">238d</span></div>
         <div class="bar-row mo-bar" style="--d:90ms"><span class="bar-label" style="width:56px;">Losers</span><div class="bar-track"><div class="bar-fill" style="width:100%;"></div></div><span class="bar-val">339d</span></div>
@@ -959,14 +1024,14 @@
         <div style="position:absolute;left:calc(68px + (100% - 141px) * 0.702);top:2px;bottom:2px;width:0.5px;background:var(--c-700);"></div>
         <span style="position:absolute;left:calc(68px + (100% - 141px) * 0.702 + 6px);top:-13px;font-size:9px;color:var(--c-700);letter-spacing:-0.02em;white-space:nowrap;">1.42x</span>
       </div>
-      <p style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;margin:0;">A ratio above 1x means losers are being held longer than winners. Small samples move this figure a lot, so read the direction rather than the exact number.</p>
+      <p style="font-size:11px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">A ratio above 1x means losers are being held longer than winners. Small samples move this figure a lot, so read the direction rather than the exact number.</p>
       <span class="dec-tap" style="font-size:11px;color:var(--c-700);" onclick="toggleDef('notehp',this)">Notes</span>
       <div class="dec-def" id="def-notehp" hidden><p>Measured on closed positions only, since an open position's holding period is still running. If the gap holds as more positions close, it's worth asking whether specific losers are being held on their own merits or just to avoid closing them out.</p></div>
     </section>
 
     <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
       <span class="sec-title">Position Size vs Return</span>
-      <p style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;margin:0;">Does conviction sizing actually pay off, are the biggest bets the best-performing ones? Each dot is one closed position, green beat the <span data-bm-long>S&amp;P 500</span> over its holding window, red trailed it.</p>
+      <p style="font-size:11px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">Does conviction sizing actually pay off, are the biggest bets the best-performing ones? Each dot is one closed position, green beat the <span data-bm-long>S&amp;P 500</span> over its holding window, red trailed it.</p>
       <svg viewBox="0 0 320 200" style="width:100%;height:auto;display:block;margin-top:4px;overflow:visible;">
         <line x1="30" y1="125" x2="300" y2="125" stroke="var(--c-800)" stroke-width="1" stroke-dasharray="3 3"/>
         <text x="26" y="128" fill="var(--c-800)" font-size="9" text-anchor="end" font-family="Inter">0%</text>
@@ -978,7 +1043,7 @@
         <text x="300" y="174" fill="var(--c-800)" font-size="9" text-anchor="end" font-family="Inter">9.2k</text>
         <text x="165" y="190" fill="var(--c-800)" font-size="9" text-anchor="middle" font-family="Inter">Position size at entry</text>
         <!-- median position size: splits the book into the 4 smallest vs 4 largest closed bets -->
-        <line x1="170.4" y1="20" x2="170.4" y2="160" stroke="var(--c-graphite)" stroke-width="0.5" stroke-dasharray="2 3"/>
+        <line x1="170.4" y1="20" x2="170.4" y2="160" stroke="var(--c-900)" stroke-width="0.5" stroke-dasharray="2 3"/>
         <text x="170.4" y="16" fill="var(--c-800)" font-size="9" text-anchor="middle" font-family="Inter">median</text>
         <circle class="mo-pt" style="--d:330ms" cx="262.2" cy="29.3" r="4" fill="var(--c-live-muted)"/><text class="mo-lb" style="--d:390ms" x="262.2" y="42.3" fill="var(--c-700)" font-size="9" text-anchor="middle" font-family="Inter">NVDA</text>
         <circle class="mo-pt" style="--d:210ms" cx="138" cy="67.1" r="4" fill="var(--c-live-muted)"/><text class="mo-lb" style="--d:270ms" x="138" y="59.1" fill="var(--c-700)" font-size="9" text-anchor="middle" font-family="Inter">UNH</text>
@@ -990,7 +1055,7 @@
         <circle class="mo-pt" style="--d:300ms" cx="202.8" cy="119.4" r="4" fill="var(--c-urgent-muted)"/><text class="mo-lb" style="--d:360ms" x="202.8" y="112" fill="var(--c-700)" font-size="9" text-anchor="middle" font-family="Inter">KO</text>
         <circle class="mo-pt" style="--d:360ms" cx="300" cy="122.7" r="4" fill="var(--c-urgent-muted)"/><text class="mo-lb" style="--d:420ms" x="300" y="115" fill="var(--c-700)" font-size="9" text-anchor="end" font-family="Inter">VZ</text>
       </svg>
-      <p style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;margin:0;">Dots further right are larger bets, dots above the zero line beat the index over their holding window. If conviction sizing is working, the larger positions sit higher than the smaller ones.</p>
+      <p style="font-size:11px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">Dots further right are larger bets, dots above the zero line beat the index over their holding window. If conviction sizing is working, the larger positions sit higher than the smaller ones.</p>
     </section>
 
     <section class="dash-sec" style="padding-bottom:32px;display:flex;flex-direction:column;gap:12px;">
@@ -1148,8 +1213,13 @@
       </div>
       </div>
 
-      <p style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;margin:0;">1 position isn't ranked here, it arrived via a corporate spin-off with no cost basis on record, so its total gain couldn't be established.</p>
-      <p style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;margin:0;">All monetary values in CAD.</p>
+      <p style="font-size:11px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">1 position isn't ranked here, it arrived via a corporate spin-off with no cost basis on record, so its total gain couldn't be established.</p>
+      <!-- Wording unified to "Currency in CAD" 2026-09-03, matching the other currency mention
+           at the Performance section (line ~556): the user chose that wording for both. Kept at
+           --c-700, not toned down with the note above it, since as a bare label ("Currency in
+           CAD") it names a fact rather than explaining one, the same register as the Performance
+           header's version. -->
+      <p style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;margin:0;">Currency in CAD</p>
       <span class="dec-tap" style="font-size:11px;color:var(--c-700);" onclick="toggleDef('notealpha',this)">Notes</span>
       <div class="dec-def" id="def-notealpha" hidden>
         <p>Ranked by dollar alpha, so position size is already in the number: a wide margin over the S&amp;P on a small holding moves the account less than a thin margin on a large one.</p>
@@ -1188,6 +1258,23 @@
       </div>
       <span class="sort-btn"><span class="sort-div"></span><span class="pd-bm-current" onclick="openSort('open')" role="button" aria-label="Sort positions"><span data-sort-label="open">Return</span><svg class="chev-svg" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.3"/></svg></span></span>
     </div>
+    <!-- ══ Positions vs S&P 500: one line per position, pp against the index ══
+         Drawn by the pvs block at the foot of this file, FROM THE POSITION ROWS
+         THEMSELVES, so it can never drift from the list it sits with. -->
+    <!-- NO FILLED/HOLLOW LEGEND HERE ON PURPOSE. This screen plots open positions
+         only, so every dot is a filled disc; the Closed screen is the mirror, all
+         hollow rings. The distinction the Decisions note explains only exists where
+         both marks appear together, so a legend sentence here would describe a
+         difference this chart cannot show. Do not add one to "fix" the inconsistency
+         with the Decisions note; the two screens are not inconsistent, they are
+         each single-state by design. -->
+    <div class="pvs-head">
+      <span class="sec-title">Positions vs S&amp;P 500</span>
+      <p class="pvs-note">Each line is one open position, measured in percentage points against the S&amp;P 500 over its own window. Every line starts on the day it was entered, where the gap against the index is zero by definition, so how far a line runs is how long it has been held.</p>
+      <svg class="pvs-svg" data-pvs="open" viewBox="0 0 320 188" style="width:100%;height:auto;display:block;margin-top:4px;" aria-hidden="true"></svg>
+      <p class="pvs-note" data-pvs-count="open"></p>
+    </div>
+
     <div class="list" style="padding-top:24px;">
       <!-- Beating -->
       <div class="row" data-account="non-reg" onclick="positionTap('AVGO','open')">
@@ -1359,8 +1446,31 @@
       </div>
       <span class="sort-btn"><span class="sort-div"></span><span class="pd-bm-current" onclick="openSort('closed')" role="button" aria-label="Sort positions"><span data-sort-label="closed">Return</span><svg class="chev-svg" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.3"/></svg></span></span>
     </div>
+    <!-- ══ Positions vs S&P 500: one line per position, pp against the index ══
+         Drawn by the pvs block at the foot of this file, FROM THE POSITION ROWS
+         THEMSELVES, so it can never drift from the list it sits with. -->
+    <!-- NO FILLED/HOLLOW LEGEND HERE ON PURPOSE. This screen plots closed positions
+         only, so every dot is a hollow ring; the Open screen is the mirror, all
+         filled discs. The distinction the Decisions note explains only exists where
+         both marks appear together, so a legend sentence here would describe a
+         difference this chart cannot show. Do not add one to "fix" the inconsistency
+         with the Decisions note; the two screens are not inconsistent, they are
+         each single-state by design. -->
+    <div class="pvs-head">
+      <span class="sec-title">Positions vs S&amp;P 500</span>
+      <p class="pvs-note">Each line is one closed position, measured in percentage points against the S&amp;P 500 over its own window. Every line starts on the day it was entered, where the gap against the index is zero by definition, and ends on the day it was closed, so how far a line runs is how long it was held.</p>
+      <svg class="pvs-svg" data-pvs="closed" viewBox="0 0 320 188" style="width:100%;height:auto;display:block;margin-top:4px;" aria-hidden="true"></svg>
+      <p class="pvs-note" data-pvs-count="closed"></p>
+    </div>
+
+    <!-- SAME HOOK AS THE DECISIONS BLOCK, not a second figure. renderDecisions writes
+         every [data-dec="winrate"] on the page at once, so this strip and the block's
+         Win Rate row cannot disagree: at TFSA this read 55.6% while the block read
+         66.7%, because this one was typed markup and account-blind. The colour is left
+         to inherit, which is --c-700 here and --c-white in the block, and the
+         unmeasurable case writes N/A in --c-700 in both places. -->
     <div style="padding:24px 20px 0;">
-      <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;">Win rate 55.6%</span>
+      <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;">Win rate <span data-dec="winrate">55.6%</span></span>
     </div>
 
     <div class="list">
@@ -1516,9 +1626,9 @@
 
     <div class="hero-pad">
       <div class="hero-return">
-        <span class="label">Total Gain</span>
-        <span class="big" style="color:var(--c-white);">+3,485.00<span class="trend up">▲</span></span>
-        <span class="sub" style="display:block;margin:8px 0 0;">+41.0% return · value 11,985.00</span>
+        <span class="label">Total Alpha</span>
+        <span class="big" style="color:var(--c-white);">+1,946.50<span class="pct">+22.9&nbsp;pp</span><span class="trend up">▲</span></span>
+        <span class="sub" style="display:block;margin:8px 0 0;">+41.0% return · gain 3,485.00 · value 11,985.00</span>
       </div>
     </div>
 
@@ -1536,11 +1646,11 @@
       <span class="sec-title">Performance vs S&amp;P</span>
       <div class="cmp-row">
         <span class="cmp-label">Position</span>
-        <span class="cmp-val">3,485.00<span class="pct">+41.0%</span><span class="arw-slot"></span></span>
+        <span class="cmp-val">3,485.00<span class="pct" id="perfPosPct">+41.0%</span><span class="arw-slot"></span></span>
       </div>
       <div class="cmp-row">
         <span class="cmp-label">S&amp;P 500 (same window)</span>
-        <span class="cmp-val">1,538.50<span class="pct">+18.1%</span><span class="arw-slot"></span></span>
+        <span class="cmp-val">1,538.50<span class="pct" id="perfSpPct">+18.1%</span><span class="arw-slot"></span></span>
       </div>
       <div class="cmp-row">
         <span class="cmp-label">Alpha</span>
@@ -1565,10 +1675,6 @@
               <div class="sb-cell"><span class="sb-lbl">Alpha</span><span class="sb-val" id="posScrubAlpha">+22.9&nbsp;pp<span class="trend up" id="posScrubArrow">▲</span></span></div>
             </div>
           </div>
-        <div class="legend">
-          <span><span class="ln"></span>NVDA</span>
-          <span><span class="ln dash"></span>S&amp;P 500</span>
-        </div>
         <svg style="width:100%;height:180px;display:block;overflow:visible;" viewBox="-40 0 360 180" preserveAspectRatio="none" aria-hidden="true">
           <text x="-40" y="16" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">+40%</text>
           <text x="-40" y="96" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">+20%</text>
@@ -1578,13 +1684,27 @@
           <line x1="0" y1="176" x2="320" y2="176" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
           <defs><clipPath id="posClip"><rect id="posClipRect" x="-2" y="0" width="330" height="180"/></clipPath></defs>
           <g clip-path="url(#posClip)">
-            <path id="posAcct" d="M0,176 L45,152 L90,128 L135,140 L180,88 L225,56 L270,32 L320,12" fill="none" style="stroke:var(--c-400)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
-            <path id="posBm" d="M0,176 L45,168 L90,160 L135,164 L180,152 L225,146 L270,140 L320,103.6" fill="none" style="stroke:var(--c-gold)" stroke-width="1.25" stroke-dasharray="2 2" vector-effect="non-scaling-stroke"/>
+            <path id="posAcct" d="M0,176 L45,152 L90,128 L135,140 L180,88 L225,56 L270,32 L320,12" fill="none" style="stroke:var(--c-white)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+            <path id="posBm" d="M0,176 L45,168 L90,160 L135,164 L180,152 L225,146 L270,140 L320,103.6" fill="none" style="stroke:var(--c-gold)" stroke-width="1.25" vector-effect="non-scaling-stroke"/>
           </g>
           <line class="scrub-line" x1="0" y1="12" x2="0" y2="176" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke" visibility="hidden"/>
           <ellipse class="scrub-dot-b" rx="2.5" ry="2.5" style="fill:var(--c-gold)" visibility="hidden"/>
           <ellipse class="scrub-dot-a" rx="2.5" ry="2.5" style="fill:var(--c-400)" visibility="hidden"/>
         </svg>
+        <!-- Legend unified to the S&P card's method (main dashboard.html #bench-chart .plot-ends),
+             2026-09-03. Three reasons: (1) the product had two ways of labelling the same two
+             series, now one; (2) the bordered chip was the loudest stroke on this chart in the
+             colour audit, a supporting element outranking the data, removing the box removes
+             that; (3) the end value now lands where the line ends, which is where the eye
+             arrives, instead of a fixed chip at the top. Values are read from the Performance vs
+             S&P rows above (#perfPosPct / #perfSpPct) by posPlotEndsSync() below, not
+             hardcoded, so the chart's endpoints cannot disagree with the table two inches above
+             it. Scoped to this Detail screen only: the dashboard's own Positions vs S&P 500
+             chart still uses the boxed .legend, untouched. -->
+        <div class="plot-ends" id="posPlotEnds">
+          <span class="acct">NVDA <span id="posPlotEndAcct">+41.0%</span></span>
+          <span class="bm">S&amp;P 500 <span id="posPlotEndBm">+18.1%</span></span>
+        </div>
         </div>
         <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--c-700);letter-spacing:-0.02em;margin-top:8px;padding-left:11%;">
           <span>Nov 25</span><span>Jan 26</span><span>Apr 26</span><span>Jul 26</span>
@@ -1597,7 +1717,7 @@
       <span class="sec-title">Portfolio Impact</span>
       <div class="cmp-row wide">
         <span class="cmp-label">Dollar contribution to account return</span>
-        <span class="cmp-val">+3,485.00<span class="trend up">▲</span></span>
+        <span class="cmp-val">+3,485.00<span class="arw-slot"></span></span>
       </div>
       <div class="cmp-row wide">
         <span class="cmp-label">Share of total return this period</span>
@@ -1792,12 +1912,16 @@
   function goTo(id){
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
     document.getElementById('screen-'+id).classList.add('active');
-    document.querySelectorAll('.proto-btn').forEach(b=>b.classList.toggle('active', b.dataset.target===id));
+    // [data-target] scopes this to buttons that actually navigate in-file;
+    // kept deliberately narrow even though every .proto-btn currently
+    // qualifies, so a future button with its own onclick (leaving this file,
+    // say) can't pick up "active" or fire goTo(undefined) by just existing.
+    document.querySelectorAll('.proto-btn[data-target]').forEach(b=>b.classList.toggle('active', b.dataset.target===id));
     // the account scope is global state, so a list screen re-scopes on entry.
     // Only when it actually changed, so a chip choice survives navigation.
     if ((id === 'open' || id === 'closed') && filterAccount !== state.account) applyAccountFilter();
   }
-  document.querySelectorAll('.proto-btn').forEach(b=>{
+  document.querySelectorAll('.proto-btn[data-target]').forEach(b=>{
     b.addEventListener('click', ()=>goTo(b.dataset.target));
   });
   document.querySelectorAll('.chip').forEach(c=>{
@@ -2279,6 +2403,7 @@
     });
     const count = scr.querySelector('.count-line');
     if (count) count.textContent = shown + (shown === 1 ? ' position' : ' positions');
+    if (window.pvsRefresh) window.pvsRefresh();   // the chart above the list follows the chip
   }
 
   // ── account scope on the two list screens ──────────────────────────────────
@@ -2298,8 +2423,278 @@
     });
     return n;
   }
+
+  // ── the Decisions block, derived from the same rows ────────────────────────
+  // Every figure in the block comes out of accountRows + chipCounts, the same pair
+  // the chip counts and the .count-line already read, so the block cannot describe a
+  // different set of positions than the lists it summarises. That is the whole point:
+  // these ten numbers used to be typed into the markup and stayed at the All Accounts
+  // values whatever account was selected, so Non-Registered read Open 11 while the
+  // Open screen one tap away listed 6. No second data array here, deliberately.
+  //
+  // WHY THE HEADLINE AND THE BREAKDOWN DO NOT ALWAYS ADD UP, and why that is right:
+  // a position with no cost basis on record is still a position, so it counts in the
+  // headline, but it has no return, so it has no profit-or-loss and no verdict against
+  // the index. chipCounts skips it for exactly that reason (its own row-na guard), and
+  // the Closed list says so on screen next to GEHC's N/A. At All Accounts that reads
+  // Closed 10 over breakdowns that each total 9, 7 + 2 and 5 + 4. Filter to an account
+  // that does not hold such a position and the headline and the breakdowns agree: the
+  // same rule giving a different answer, not a bug to be evened out.
+  function renderDecisions(dec){
+    const o = dec.open, c = dec.closed;
+    if (!o || !c) return;
+    const set = (k, v) => {
+      const el = document.querySelector('[data-dec="' + k + '"]');
+      if (el) el.textContent = v;
+    };
+    set('total', o.total + c.total);
+    set('open',  o.total);
+    set('open-pl',    o.n.profit + ' / ' + o.n.loss);
+    set('open-beat',  o.n.beating);
+    set('open-trail', o.n.trailing);
+    set('closed', c.total);
+    set('closed-pl',    c.n.profit + ' / ' + c.n.loss);
+    set('closed-beat',  c.n.beating);
+    set('closed-trail', c.n.trailing);
+    // Win rate divides by the closed positions that HAVE a verdict, not by the
+    // headline count, for the reason above. An account with no measured closed
+    // position has nothing to divide, so it reads N/A in --c-700, which is this
+    // file's existing mark for a figure that cannot be established (GEHC's own
+    // return on the Closed list, and the footnote there naming it). 0.0% would
+    // read as "lost every time" rather than "there is nothing to measure".
+    // querySelectorAll, not querySelector: the Closed screen prints the same rate in a
+    // strip above its list, and it read 55.6% at every account until 2026-09-03 because
+    // it was typed markup. Both hooks take this one derivation, so there is no second
+    // place for the figure to be computed and drift.
+    const judged = c.n.beating + c.n.trailing;
+    const txt = judged ? (c.n.beating / judged * 100).toFixed(1) + '%' : 'N/A';
+    document.querySelectorAll('[data-dec="winrate"]').forEach(wr => {
+      wr.textContent = txt;
+      // '' inherits the surrounding row's colour, white in the block and --c-700 in the
+      // Closed strip; N/A is pinned to --c-700 in both.
+      wr.style.color = judged ? '' : 'var(--c-700)';
+    });
+  }
+
+  // ── Turnover & Activity + Overall (Closed) stats, and the two Decisions
+  // alpha-split rows, the same "no parallel array" rule renderDecisions
+  // documents above, extended to the two sections that were still typed
+  // constants and stayed at the All Accounts figures at every account. Every
+  // number below is reconstructed from what a row already prints (exit
+  // value, return %, the S&P return over the identical window, held days,
+  // entered/closed dates), nothing is looked up from a second table.
+  //
+  // closedStats() reconstructs each measured closed position's implied entry
+  // dollar value from its own printed exit value and return %:
+  //   entry = exit / (1 + return/100)
+  // the exact inverse of how that row's own number was built in the first
+  // place. That is what lets Avg Return, Alpha and Profit Factor be
+  // dollar-weighted with no cost-basis column anywhere in the markup.
+  // Verified against every current All Accounts figure this file already
+  // shipped (see the 2026-09-03 report for the worked numbers); GEHC (no
+  // held days, no cost basis on record) is excluded, same as every other
+  // place row-na is excluded.
+  function numFrom(str){
+    if (!str) return NaN;
+    const t = String(str).replace(/−/g,'-').replace(/[^0-9.\-]/g,'');
+    return (t === '' || t === '-') ? NaN : parseFloat(t);
+  }
+  function closedStats(rows){
+    const out = [];
+    rows.forEach(r => {
+      if (r.classList.contains('row-na')) return;
+      const retEl = r.querySelector('.anum-r'), spEl = r.querySelector('.vstag'),
+            valEl = r.querySelector('.rowvalue'), rrEl = r.querySelector('.rowreturn');
+      if (!retEl || !spEl || !valEl || !rrEl) return;
+      const ret = numFrom(retEl.textContent), sp = numFrom(spEl.textContent), exit = numFrom(valEl.textContent);
+      if (!isFinite(ret) || !isFinite(sp) || !isFinite(exit)) return;
+      const entry = exit / (1 + ret / 100);
+      // held days, parsed off the same "Closed Mon D, YYYY · held Nd" meta text
+      // activityCounts already reads. GEHC ("cost basis not established," no
+      // "held Nd") has no match here, but it never reaches this line anyway:
+      // it fails the retEl/sp checks above first.
+      const heldM = /held\s+(\d+)d/i.exec(r.querySelector('.meta').textContent);
+      const held = heldM ? +heldM[1] : NaN;
+      out.push({
+        ret: ret, sp: sp, exit: exit, entry: entry, gain: exit - entry,
+        alpha: ret - sp, held: held,
+        profit: !retEl.textContent.trim().startsWith('−'),   // sign, same test chipCounts uses
+        beating: rrEl.classList.contains('win')                    // verdict, same test chipCounts uses
+      });
+    });
+    return out;
+  }
+  function mean(arr){ return arr.length ? arr.reduce((a,b)=>a+b, 0) / arr.length : null; }
+  // Compounds a holding-period return out to a 365-day year: a 3-month +7%
+  // and a 3-year +7% no longer average as if they were the same bet. Same
+  // method the Notes panel below already describes in prose for this row.
+  // Named annualizeHeld, not annualize: that name is already a top-level
+  // const above (portfolio-level, single-argument, keyed off TRACKED_YEARS)
+  // and redeclaring it would throw at parse time.
+  function annualizeHeld(retPct, heldDays){ return (Math.pow(1 + retPct / 100, 365 / heldDays) - 1) * 100; }
+  function median(arr){
+    if (!arr.length) return null;
+    const s = arr.slice().sort((a,b)=>a-b), mid = Math.floor(s.length/2);
+    return s.length % 2 ? s[mid] : (s[mid-1] + s[mid]) / 2;
+  }
+  // toFixed(1) can round the wrong way on a genuine .x5 tie, because a value
+  // like -8.45 has no exact binary representation and can land a hair under
+  // it (see the report: Avg Alpha-Loss printed -8.4pp instead of -8.5pp on
+  // first pass). These averages hit that tie often, since every input is
+  // already rounded to 1 decimal. Nudge by a sign-aware epsilon, negligible
+  // next to any real value, before formatting, so a tie rounds the same way
+  // the original hardcoded figures did (half away from zero).
+  function r1fix(v){ return v + (v < 0 ? -1e-9 : 1e-9); }
+  const NA = 'N/A';
+  function setDec2(key, html, na){
+    const el = document.querySelector('[data-dec="' + key + '"]');
+    if (!el) return;
+    el.innerHTML = html;
+    el.style.color = na ? 'var(--c-700)' : '';
+  }
+  function setArrow(key, dir){    // dir: 'up' | 'down' | null (hide)
+    const el = document.querySelector('[data-dec="' + key + '"]');
+    if (!el) return;
+    el.className = 'trend' + (dir ? ' ' + dir : '');
+    el.textContent = dir === 'up' ? '▲' : dir === 'down' ? '▼' : '';
+  }
+
+  // ── entered-date reconstruction, open + closed rows, for the trailing
+  // 12-month Activity window. Every date this reads is already printed on
+  // screen ("entered Mon D, YYYY" / "Closed Mon D, YYYY" · "held Nd"); this
+  // just parses it back out. "Today" is derived the same way, from the first
+  // open row's own entered date + held days, rather than a typed-in date, so
+  // it moves with the data instead of silently going stale.
+  const MONTH_IDX = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+  function parseMDY(str){
+    const m = /([A-Za-z]{3})\s+(\d{1,2}),\s+(\d{4})/.exec(str || '');
+    if (!m || !(m[1] in MONTH_IDX)) return null;
+    return new Date(+m[3], MONTH_IDX[m[1]], +m[2]);
+  }
+  let REF_TODAY = null;
+  function referenceToday(){
+    if (REF_TODAY) return REF_TODAY;
+    const row = document.querySelector('#screen-open .list .row');
+    const meta = row ? row.querySelector('.meta').textContent : '';
+    const held = /Held\s+(\d+)d/i.exec(meta);
+    const entered = parseMDY(meta);
+    REF_TODAY = (held && entered) ? new Date(entered.getTime() + (+held[1]) * 86400000) : new Date();
+    return REF_TODAY;
+  }
+  function trailingCutoff(){
+    const cutoff = new Date(referenceToday());
+    cutoff.setFullYear(cutoff.getFullYear() - 1);
+    return cutoff;
+  }
+  // Counts positions newly entered in the trailing 12 months (open rows via
+  // their own "entered" date, closed rows via "closed date minus held days")
+  // and positions closed in the trailing 12 months (closed rows' own date).
+  function activityCounts(openRows, closedRows){
+    const cutoff = trailingCutoff();
+    let opened = 0, closed = 0;
+    openRows.forEach(r => {
+      const entered = parseMDY(r.querySelector('.meta').textContent);
+      if (entered && entered >= cutoff) opened++;
+    });
+    closedRows.forEach(r => {
+      const meta = r.querySelector('.meta').textContent;
+      const closedDate = parseMDY(meta);
+      const heldM = /held\s+(\d+)d/i.exec(meta);
+      if (closedDate && closedDate >= cutoff) closed++;
+      if (closedDate && heldM) {                    // GEHC has no held days, skipped here
+        const entered = new Date(closedDate.getTime() - (+heldM[1]) * 86400000);
+        if (entered >= cutoff) opened++;
+      }
+    });
+    return { opened: opened, closed: closed };
+  }
+
+  function renderOverallActivity(dec){
+    const openRows = dec.open.rows, closedRows = dec.closed.rows;
+    const m = closedStats(closedRows);   // measured closed positions only (row-na excluded)
+
+    // ── Turnover & Activity ────────────────────────────────────────────────
+    const act = activityCounts(openRows, closedRows);
+    setDec2('act-opened', String(act.opened));
+    setDec2('act-closed', String(act.closed));
+    // UNSCOPED, deliberately: Portfolio Turnover, Ann. stays hardcoded at
+    // ~117% for every account. Turnover needs buy/sell dollar volume against
+    // AVERAGE portfolio value across the trailing year; this file has no
+    // portfolio-value history, only a current value per position, so that
+    // denominator cannot be reconstructed from these rows. Left as is rather
+    // than inventing a formula for it; reported.
+    const noteEl = document.getElementById('act-note');
+    if (noteEl) {
+      if (closedRows.length === 0) {
+        noteEl.textContent = 'No positions closed in this account\'s history yet.';
+      } else if (act.closed === closedRows.length) {
+        const label = closedRows.length === 1 ? 'closed position' : 'closed positions';
+        noteEl.textContent = 'All ' + closedRows.length + ' ' + label + ' closed within the trailing year, activity here is heavily back-loaded, not evenly spread across the full 3-year-plus history. Worth noting on its own, since it means all of this track record\'s closed evidence is recent.';
+      } else {
+        noteEl.textContent = act.closed + ' of ' + closedRows.length + ' closed positions closed within the trailing year.';
+      }
+    }
+
+    // ── Overall · Closed ────────────────────────────────────────────────────
+    const headerEl = document.getElementById('ov-header');
+    if (headerEl) headerEl.textContent = 'Overall · Closed · ' + m.length + (m.length === 1 ? ' measured position' : ' measured positions');
+
+    const totalEntry = m.reduce((a,x) => a + x.entry, 0);
+    const totalGain  = m.reduce((a,x) => a + x.gain, 0);
+    const weightedRet   = totalEntry ? (totalGain / totalEntry * 100) : null;
+    const weightedSpRet = totalEntry ? (m.reduce((a,x) => a + x.entry * x.sp, 0) / totalEntry) : null;
+    const posRet   = mean(m.map(x => x.ret));
+    const posAlpha = mean(m.map(x => x.alpha));
+
+    setDec2('ov-avg',     weightedRet === null ? NA : pct(r1fix(weightedRet)), weightedRet === null);
+    setDec2('ov-avg-pos', posRet === null ? NA : pct(r1fix(posRet)), posRet === null);
+    setDec2('ov-alpha',     weightedRet === null ? NA : pp(r1fix(weightedRet - weightedSpRet)), weightedRet === null);
+    setArrow('ov-alpha-arrow', weightedRet === null ? null : ((weightedRet - weightedSpRet) < 0 ? 'down' : 'up'));
+    setDec2('ov-alpha-pos', posAlpha === null ? NA : pp(r1fix(posAlpha)), posAlpha === null);
+
+    const profitable = m.filter(x => x.profit).map(x => x.ret);
+    const lossy      = m.filter(x => !x.profit).map(x => x.ret);
+    setDec2('ov-avg-profit', profitable.length ? pct(r1fix(mean(profitable))) : NA, !profitable.length);
+    setDec2('ov-med-profit', profitable.length ? pct(r1fix(median(profitable))) : NA, !profitable.length);
+    setDec2('ov-avg-loss', lossy.length ? pct(r1fix(mean(lossy))) : NA, !lossy.length);
+    setDec2('ov-med-loss', lossy.length ? pct(r1fix(median(lossy))) : NA, !lossy.length);
+
+    const grossProfit = m.filter(x => x.gain > 0).reduce((a,x) => a + x.gain, 0);
+    const grossLoss   = Math.abs(m.filter(x => x.gain < 0).reduce((a,x) => a + x.gain, 0));
+    const pf = grossLoss > 0 ? grossProfit / grossLoss : null;   // no losses: undefined, never Infinity
+    setDec2('ov-pf', pf === null ? NA : pf.toFixed(2) + 'x', pf === null);
+
+    setDec2('ov-batting', m.length ? (profitable.length / m.length * 100).toFixed(1) + '%' : NA, !m.length);
+
+    // ── Avg Annual Return per Position / S&P, same windows ─────────────────
+    // Each measured close is annualized to its own holding period (via
+    // annualize() above) before averaging, so a 20% gain in 3 months and a
+    // 20% gain in 3 years no longer look identical, exactly as the Notes
+    // panel below already tells the reader. Weighted by the same implied
+    // entry dollar value as Avg Return above (dollar-weighted, not a flat
+    // per-position mean): weighting it this way is what reproduces the
+    // shipped All Accounts figures, +20.0% and +15.3%, exactly. A flat mean
+    // lands both at +20.0% and +15.2%, one tick short on the S&P side, so
+    // this is the method whoever wrote the original figures used.
+    const annM = m.filter(x => isFinite(x.held) && x.held > 0);
+    const annEntry = annM.reduce((a,x) => a + x.entry, 0);
+    const annRet = annEntry ? annM.reduce((a,x) => a + x.entry * annualizeHeld(x.ret, x.held), 0) / annEntry : null;
+    const annSp  = annEntry ? annM.reduce((a,x) => a + x.entry * annualizeHeld(x.sp,  x.held), 0) / annEntry : null;
+    setDec2('ov-ann-ret', annRet === null ? NA : pct(r1fix(annRet)), annRet === null);
+    setDec2('ov-ann-sp',  annSp  === null ? NA : pct(r1fix(annSp)),  annSp  === null);
+
+    // ── Decisions block: Avg Alpha-Win / Avg Alpha-Loss ────────────────────
+    const winAlphas  = m.filter(x => x.beating).map(x => x.alpha);
+    const lossAlphas = m.filter(x => !x.beating).map(x => x.alpha);
+    setDec2('alpha-win',  winAlphas.length ? pp(r1fix(mean(winAlphas))) : NA, !winAlphas.length);
+    setArrow('alpha-win-arrow', winAlphas.length ? 'up' : null);
+    setDec2('alpha-loss', lossAlphas.length ? pp(r1fix(mean(lossAlphas))) : NA, !lossAlphas.length);
+    setArrow('alpha-loss-arrow', lossAlphas.length ? 'down' : null);
+  }
+
   let filterAccount = null;
   function applyAccountFilter(){
+    const dec = {};
     ['open','closed'].forEach(screen => {
       const scr = document.getElementById('screen-' + screen);
       if (!scr) return;
@@ -2311,6 +2706,7 @@
         r.style.display = (state.account === 'all' || r.dataset.account === state.account) ? '' : 'none';
       });
       const n = chipCounts(rows);
+      dec[screen] = { total: rows.length, n: n, rows: rows };
       scr.querySelectorAll('.chips .chip').forEach(c => {
         const k = c.dataset.fkey;
         if (k && k !== 'all' && n[k] !== undefined)
@@ -2319,7 +2715,10 @@
       const count = scr.querySelector('.count-line');
       if (count) count.textContent = rows.length + (rows.length === 1 ? ' position' : ' positions');
     });
+    renderDecisions(dec);
+    renderOverallActivity(dec);
     filterAccount = state.account;
+    if (window.pvsRefresh) window.pvsRefresh();   // ...and follows the account scope too
   }
 
   function toggleDecPreview(which, el){
@@ -2409,6 +2808,12 @@
     const el = id => document.getElementById(id);
     const box = el('posScrubBox');
     const wrap = svg.parentElement;
+    // Plot-ends at rest are copied from the Performance vs S&P rows above
+    // (#perfPosPct / #perfSpPct), the same source the table two inches above already
+    // uses, so this chart's endpoints can never disagree with it. Not a second formula.
+    const posPctEl = el('perfPosPct'), spPctEl = el('perfSpPct');
+    if (posPctEl && el('posPlotEndAcct')) el('posPlotEndAcct').textContent = posPctEl.textContent;
+    if (spPctEl && el('posPlotEndBm')) el('posPlotEndBm').textContent = spPctEl.textContent;
     const setRow = (f, a, b) => {
       el('posScrubDate').textContent = dayLabel(f);
       el('posScrubA').textContent = sign(a) + '%';
@@ -2506,6 +2911,460 @@
   sortRows('closed', 'return');
   // last: seeds the chip counts and, when the URL carried ?account=, scopes both lists
   applyAccountFilter();
+
+  // ══════════════ POSITIONS vs S&P 500 ══════════════════════════════════════════
+  // One thin line per position, plotted in percentage points against the index.
+  //
+  // The GRAMMAR is drawCal()'s in main dashboard.html: an amber zero baseline with a
+  // gold "S&P" label in the left gutter, green above and red below on the MUTED pair
+  // (--c-live-muted / --c-urgent-muted, lines and dots alike, one register), a line
+  // per position ending in a labelled dot, a "+N more" roll-up when labels would
+  // collide, 11px --c-800 axis labels, the two washes, square corners, no gridlines.
+  // NO DOT GLOW: rejected by the user, do not add it back.
+  // The GEOMETRY is this file's own. Nothing is imported from that file: its chart is
+  // bound to its own viewBox, its own CAL_CALLS and that screen's absolute layout.
+  //
+  // X IS DAYS HELD, NOT CALENDAR TIME. Every line starts at x = 0, the day the
+  // position was entered, where the gap against the index is 0 by definition, and
+  // runs to its own length. Line length therefore reads as holding period and all
+  // the lines share one origin instead of scattering across a calendar, which is
+  // what makes "some have been there a month, some a year" visible at a glance.
+  //
+  // THE DATA IS READ OFF THE ROWS, NEVER TYPED. Every position row already carries
+  // its ticker, "Held NNNd", its own return and "S&P +NN.N%" over the identical
+  // window, so pp = position return − S&P return. AVGO: +64.2 − 45.8 = +18.4, which
+  // is exactly what CAL_CALLS carries for AVGO in main dashboard.html. Deriving it
+  // means the chart cannot disagree with the list beside it, which is the one thing
+  // this component has to get right: if the screen says six beating and five not,
+  // six lines end above the baseline and five below.
+  (function(){
+    // The axis bounds are SHARED by all three placements so the three charts are the
+    // same object at three scopes and can be read against each other. hi/lo clear the
+    // whole book, +22.9 (NVDA, closed) to −14.7 (BA, closed), with a little air.
+    // Ticks are on multiples of 10 rather than at every 5: with no gridlines under
+    // them, nine numbers in the gutter read as noise. 40pp over 144 units is 3.6 per
+    // point, so a 4pp difference is still 14 units apart, which is the resolution this
+    // chart exists to show.
+    // 913 days is 30 months, which clears the longest hold (AAPL, 879d) and gives the
+    // x axis round month labels.
+    const PVS = { gutter:26, x0:30, x1:282, top:8, bot:152, hi:25, lo:-15,
+                  ticks:[20, 10, -10], days:913, xlab:168, roll:184, gap:4 };
+    const pvsY = v => PVS.bot - (v - PVS.lo) / (PVS.hi - PVS.lo) * (PVS.bot - PVS.top);
+    const pvsX = d => PVS.x0 + Math.min(d, PVS.days) / PVS.days * (PVS.x1 - PVS.x0);
+    const pvsSign = v => (v < 0 ? '\u2212' : '+') + Math.abs(v);
+    const pvsCol = pp => pp >= 0 ? '--c-live-muted' : '--c-urgent-muted';
+
+    // ---- reading the list ----------------------------------------------------
+    // TWO SCOPES, AND THE DIFFERENCE IS DELIBERATE.
+    //
+    // 'display' keeps whatever the screen is currently showing, which carries BOTH
+    // dimensions: the account scope and the chip filter. The Open and Closed charts sit
+    // directly above the lists their chips filter, so they must narrow with them or the
+    // chart would contradict the rows an inch below it.
+    //
+    // 'account' re-derives from data-account and ignores display state entirely. The
+    // Decisions chart is the only mount on this scope, because it lives on a third
+    // screen and summarises both lists: a chip left set on Open must not narrow it.
+    // It read display state from 2026-09-03 until this pass, which leaked exactly that
+    // way (Decisions to Open, tap Beating, back to Decisions: 6 open lines under a block
+    // still saying 11). The block is account-scoped, so the chart is too, and the two
+    // agree at every account whatever chips are left set on the other two screens.
+    // The predicate is the one accountRows uses, so there is a single definition of
+    // "in this account" and the chart cannot scope differently from the block.
+    const pvsInAccount = r => state.account === 'all' || r.dataset.account === state.account;
+    const pvsNum = s => parseFloat(String(s).replace(/\u2212/g, '-').replace(/[^0-9.\-]/g, ''));
+    function pvsRead(sel, scope){
+      const kept = [], skipped = [];
+      // `sel` can name more than one list. The Decisions copy names both screens and
+      // gets one flat set back, open rows first, in document order.
+      const roots = sel.split(',').map(t => t.trim() + ' .list .row').join(',');
+      document.querySelectorAll(roots).forEach(r => {
+        if (scope === 'display' ? r.style.display === 'none' : !pvsInAccount(r)) return;
+        const tk = r.querySelector('.ticker');
+        if (!tk) return;
+        const t = tk.textContent.trim();
+        // no cost basis on record, so no return and no verdict: counted out loud
+        // rather than quietly dropped, the same way the list itself handles it
+        if (r.classList.contains('row-na')) { skipped.push(t); return; }
+        const meta = r.querySelector('.meta'), ret = r.querySelector('.anum-r'),
+              vs = r.querySelector('.vstag');
+        if (!meta || !ret || !vs) { skipped.push(t); return; }
+        // "Held 412d · entered ..." and "Closed Jul 2, 2026 · held 236d" both yield 412 / 236
+        const dm = meta.textContent.match(/(\d+)\s*d(?![a-z])/i);
+        const a = pvsNum(ret.textContent), b = pvsNum(vs.textContent);
+        if (!dm || !isFinite(a) || !isFinite(b)) { skipped.push(t); return; }
+        // OPEN OR CLOSED, taken from WHICH LIST THE ROW IS IN rather than from a second
+        // data source, on the same principle as the return above: read off the row and
+        // the chart cannot disagree with the screen the row lives on. This is what
+        // decides the endpoint's mark, filled for still held and hollow for closed.
+        kept.push({ t: t, d: +dm[1], pp: Math.round((a - b) * 10) / 10,
+                    closed: !!r.closest('#screen-closed') });
+      });
+      return { rows: kept, skipped: skipped };
+    }
+
+    // ---- label widths, MEASURED, not guessed ---------------------------------
+    // getBBox is useless here: two of the three placements live on a screen that is
+    // display:none, where it returns zeros. Canvas measures the same face at the same
+    // size with no layout, and because the viewBox scales uniformly a width measured
+    // at 11px IS the width in user units.
+    let pvsCtx = null;
+    function pvsMetrics(s){
+      if (!pvsCtx) pvsCtx = document.createElement('canvas').getContext('2d');
+      pvsCtx.font = "11px 'Inter', system-ui, -apple-system, sans-serif";
+      try { pvsCtx.letterSpacing = '-0.22px'; } catch(e){}   // -0.02em at 11px
+      return pvsCtx.measureText(s);
+    }
+    const pvsWidth = s => pvsMetrics(s).width;
+    // THE INK BOX, NOT THE EM BOX. A ticker is capitals and digits, so it has nothing
+    // below the baseline and nothing in the top 1.6 units of its line box: the em box
+    // is 11 units tall where the glyphs are about 8. Testing the em box rejected slots
+    // the eye reads as clear and sent labels to a knockout that did not need one, so
+    // the crossing test uses what is actually inked. Measured off the same face at the
+    // same size, with a fallback for engines that do not report the ink box.
+    function pvsInk(s){
+      const m = pvsMetrics(s);
+      const a = m.actualBoundingBoxAscent, d = m.actualBoundingBoxDescent;
+      return { asc: isFinite(a) ? a : 8, desc: isFinite(d) ? d : 0.5 };
+    }
+
+    // A polyline with a handful of vertices, not a continuous walk, as drawCal draws
+    // it: straight between corners on the quarter marks. Both ends are real, 0 pp at
+    // entry and the position's own published gap at its endpoint. Only the interior
+    // vertices carry a seeded offset.
+    // TWO THINGS SHAPE THAT OFFSET, and neither is in drawCal, because drawCal's lines
+    // all span the full width and these do not. f * (1 - f) pins the wobble to zero at
+    // BOTH ends, so nothing moves the shared origin or the published endpoint. And it
+    // is scaled by holding period, so a 59-day line drawn across 16 units does not
+    // swing as far as a 3-year one: the first pass put a visible spike on the young
+    // positions that read as data rather than as texture.
+    const PVS_F = [0, 0.25, 0.5, 0.75, 1];
+    // The VERTICES are returned, not a path string. The label placer has to know where
+    // every stroke actually runs in order to keep a ticker off it, and deriving the
+    // same polyline twice, once to draw and once to test, is how the drawn line and
+    // the tested line would come apart.
+    function pvsPts(c, k){
+      const z = gaussians(9020260 + k * 977, PVS_F.length);
+      const xe = pvsX(c.d), clamp = v => Math.max(PVS.lo, Math.min(PVS.hi, v));
+      const amp = 3.0 * Math.min(1, c.d / 365);
+      const pts = [[PVS.x0, pvsY(0)]];
+      PVS_F.slice(1).forEach((f, i) => {
+        const x = PVS.x0 + f * (xe - PVS.x0);
+        const v = (f === 1) ? c.pp : clamp(c.pp * f + amp * f * (1 - f) * z[i + 1]);
+        pts.push([x, pvsY(v)]);
+      });
+      return pts;
+    }
+    const pvsPath = pts => 'M' + pts.map(q => q[0].toFixed(1) + ',' + q[1].toFixed(1)).join('L');
+
+    // Does a segment cross a box? Liang-Barsky, which answers it exactly instead of by
+    // sampling: a line can pass through a four-character ticker between two samples,
+    // and a sampled test would call that clean. This one test decides every label.
+    function pvsCross(a, b, r){
+      let t0 = 0, t1 = 1;
+      const p = [a[0] - b[0], b[0] - a[0], a[1] - b[1], b[1] - a[1]];
+      const q = [a[0] - r.x0, r.x1 - a[0], a[1] - r.y0, r.y1 - a[1]];
+      for (let i = 0; i < 4; i++){
+        if (p[i] === 0){ if (q[i] < 0) return false; continue; }
+        const t = q[i] / p[i];
+        if (p[i] < 0){ if (t > t1) return false; if (t > t0) t0 = t; }
+        else { if (t < t0) return false; if (t < t1) t1 = t; }
+      }
+      return true;
+    }
+
+    function pvsPaint(svg, data, copy){
+      if (!svg) return;
+      const rows = data.rows, p = [];
+      const txt = (x, y, anchor, colour, s) =>
+        '<text x="' + (+x).toFixed(1) + '" y="' + (+y).toFixed(1) + '" text-anchor="' + anchor +
+        '" font-size="11" font-family="Inter" letter-spacing="-0.02em" style="fill:var(' +
+        colour + ')">' + s + '</text>';
+      const zeroY = pvsY(0), plotW = PVS.x1 - PVS.x0;
+
+      // ---- furniture, all of it subordinate to the data ----
+      // Two washes, not one: above the baseline is ahead territory and below it is
+      // behind territory. Both come off the MUTED pair and sit one barely-there step
+      // off the ground, at the same opacities drawCal settled on.
+      p.push('<rect x="' + PVS.x0 + '" y="' + PVS.top + '" width="' + plotW + '" height="' +
+        (zeroY - PVS.top).toFixed(1) + '" style="fill:var(--c-live-muted)" fill-opacity="0.055"/>');
+      p.push('<rect x="' + PVS.x0 + '" y="' + zeroY.toFixed(1) + '" width="' + plotW + '" height="' +
+        (PVS.bot - zeroY).toFixed(1) + '" style="fill:var(--c-urgent-muted)" fill-opacity="0.07"/>');
+      // No gridlines. The one rule kept is the vertical at the plot's left edge: with
+      // x as days held that edge is the shared entry day, the thing every line starts
+      // from, so it earns a mark. --c-1000, the same hairline drawCal gives it.
+      p.push('<line x1="' + PVS.x0 + '" y1="' + PVS.top + '" x2="' + PVS.x0 + '" y2="' + PVS.bot +
+        '" style="stroke:var(--c-1000)" stroke-width="1" vector-effect="non-scaling-stroke"/>');
+
+      // y axis in percentage points, outside the plot on the left, right-aligned
+      // against its edge, 11px --c-800 like every other secondary label here.
+      PVS.ticks.forEach(v => p.push(txt(PVS.gutter, pvsY(v) + 3.6, 'end', '--c-800', pvsSign(v))));
+      // The zero slot carries the index's NAME, in --c-gold, not a "0" and not
+      // tick-grey. Settled in the 2026-09-02 meeting on the calibration chart and
+      // carried here: gold is what makes it read as the amber line's own name rather
+      // than one more axis number, and left is where a reviewer looked for it.
+      // Short form "S&P", not "S&P 500", which overflows the gutter at 11px.
+      p.push(txt(PVS.gutter, zeroY + 3.6, 'end', '--c-gold', 'S&amp;P'));
+      // x axis: three labels, in the days-held register rather than dates, because the
+      // positions were not all entered on the same day and the axis is not a calendar.
+      p.push(txt(PVS.x0, PVS.xlab, 'start', '--c-800', 'entry'));
+      p.push(txt((PVS.x0 + PVS.x1) / 2, PVS.xlab, 'middle', '--c-800', '15mo'));
+      p.push(txt(PVS.x1, PVS.xlab, 'end', '--c-800', '30mo held'));
+
+      if (!rows.length){
+        p.push(txt((PVS.x0 + PVS.x1) / 2, zeroY - 8, 'middle', '--c-800', 'No positions in this view'));
+        svg.innerHTML = p.join('');
+        return { up: 0, down: 0, rolled: 0 };
+      }
+
+      // Dot size carries the size of the gap, sqrt rather than linear so the smallest
+      // is still a dot and not a speck. Normalised inside whichever set is drawn.
+      const mags = rows.map(c => Math.abs(c.pp));
+      const lo = Math.min.apply(null, mags), hi = Math.max.apply(null, mags);
+      const rOf = pp => 1.9 + 1.7 * (hi > lo ? Math.sqrt((Math.abs(pp) - lo) / (hi - lo)) : 0.5);
+
+      // Paint order: the position lines, then the benchmark baseline ON TOP of them,
+      // then the dots and labels. Every line converges on zero at the left edge, so a
+      // baseline drawn underneath would vanish into the bundle, and the baseline is
+      // the thing the whole chart measures against.
+      const tracks = rows.map((c, k) => pvsPts(c, k));
+      tracks.forEach((pts, k) => p.push('<path d="' + pvsPath(pts) + '" fill="none" style="stroke:var(' +
+        pvsCol(rows[k].pp) + ')" stroke-width="1" stroke-opacity="0.85" vector-effect="non-scaling-stroke"/>'));
+      p.push('<line x1="' + PVS.x0 + '" y1="' + zeroY.toFixed(1) + '" x2="' + PVS.x1 + '" y2="' +
+        zeroY.toFixed(1) + '" style="stroke:var(--c-gold)" stroke-width="1" vector-effect="non-scaling-stroke"/>');
+
+      // ---- endpoint labels ----
+      // drawCal stacks its labels in a right-hand column because every one of its dots
+      // shares an x. Here they do not: each line ends at its own holding period, so a
+      // label belongs beside its own dot. A leader-line column would run twenty
+      // connectors of twenty different lengths back across the data to say what
+      // adjacency already says, so it is not used here.
+      //
+      // FOUR SLOTS PER DOT, NOT ONE. The first pass put every ticker to the right of
+      // its dot, and V, LLY and BA landed on lines crossing behind them, which was this
+      // component's weakest spot. A ticker only has to move ninety degrees to clear a
+      // line it sits on, so a label may take right, left, above or below, and the first
+      // slot clean of every stroke wins. Right is tried first, so nothing moves that
+      // did not have to, and every slot is adjacent to its own dot, which keeps the
+      // label's ownership unambiguous.
+      // WHAT COUNTS AS CLEAN IS MEASURED: the box is tested against every segment of
+      // every position line, against the baseline and the entry rule, against every
+      // other dot, and against every label already placed.
+      // ORDER IS BY MAGNITUDE, so the extremes are served first and anything that has
+      // to roll into "+N more" is taken from the middle of the book, where a name
+      // matters least. The roll-up sits under the axis on plain ground, a step dimmer
+      // at --c-800, the same treatment drawCal gives it.
+      // Every stroke a label could sit on, each with what it costs to sit on it. A
+      // position line is worth 1. THE BASELINE IS WORTH 3: it is the thing the whole
+      // chart measures against and it runs the full width, so a slot that lands on it
+      // is the last one to take. The entry rule is worth 2 on the same reasoning.
+      const segs = [];
+      tracks.forEach(pts => { for (let i = 1; i < pts.length; i++) segs.push([pts[i - 1], pts[i], 1]); });
+      segs.push([[PVS.x0, zeroY], [PVS.x1, zeroY], 3]);       // the benchmark baseline
+      segs.push([[PVS.x0, PVS.top], [PVS.x0, PVS.bot], 2]);   // the entry-day rule
+      // TWO RADII, BECAUSE A RING AND A DISC OF THE SAME SIZE DO NOT INK THE SAME AREA.
+      // r is the mark's size, which is data: it carries the size of the gap, so it is
+      // identical for an open and a closed position of equal magnitude and neither the
+      // size nor the position of any mark changes with this treatment. ri is what is
+      // actually inked, and for a closed mark the 1-unit ring straddles r, so it
+      // reaches half a unit further out. Every distance the label placer judges, its
+      // own dot's edge and every neighbour's, is measured on ri, for the same reason
+      // the crossing test measures the ink box of a ticker and not its em box.
+      const dots = rows.map((c, k) => { const r = rOf(c.pp);
+        return { x: pvsX(c.d), y: pvsY(c.pp), r: r, ri: c.closed ? r + 0.5 : r, c: c }; });
+
+      // H is half the 11px line box, so a label occupies the same 11 units wherever it
+      // sits and its baseline is always 3.6 below its own centre. The slot carries TWO
+      // boxes: the line box, which is what keeps two labels apart and keeps a label off
+      // a neighbouring dot, and the ink box, which is what a stroke has to miss. AIR is
+      // half the 1-unit stroke plus a little, so "clear" means clear with daylight.
+      const H = 5.5, AIR = 0.6;
+      const SIDES = ['right', 'left', 'above', 'below'];
+      function pvsSlot(d, w, ink, side){
+        const vc = side === 'above' ? d.y - d.ri - PVS.gap - H
+                 : side === 'below' ? d.y + d.ri + PVS.gap + H : d.y;
+        const x0 = side === 'right' ? d.x + d.ri + PVS.gap
+                 : side === 'left'  ? d.x - d.ri - PVS.gap - w
+                 : d.x - w / 2;
+        const base = vc + 3.6;
+        return { x0: x0, x1: x0 + w, y0: vc - H, y1: vc + H, side: side, vc: vc,
+                 ink: { x0: x0 - AIR, x1: x0 + w + AIR,
+                        y0: base - ink.asc - AIR, y1: base + ink.desc + AIR } };
+      }
+      const order = dots.slice().sort((a, b) => Math.abs(b.c.pp) - Math.abs(a.c.pp));
+      // WHEN A TICKER OWNS TWO MARKS, THE OPEN ONE ASKS FIRST. V and BA each carry an
+      // open and a closed position on the Decisions chart, and magnitude alone always
+      // ranks the closed mark ahead of its open twin (a finished trade has had its full
+      // run to swing away from zero, so it is rarely the smaller number). Only one
+      // label survives a shared ticker, and whichever mark is offered to the slot
+      // solver first is the one that can still claim a clean slot before its twin
+      // becomes a neighbour to dodge, so this reorders JUST the paired index, open
+      // ahead of closed, and changes nothing about where either sits in the walk
+      // relative to every OTHER ticker. Magnitude still ranks everyone else, extremes
+      // are still served first, and the OWNERSHIP TEST INSIDE THE LOOP BELOW is what
+      // actually admits or rejects a slot, not this. Reordering can only change who
+      // WINS a contested slot; it cannot manufacture ownership that was never there,
+      // so if the open mark's own nearest-slot test still fails, it rolls exactly as
+      // it did before this change.
+      const pairIdx = {};
+      order.forEach((d, i) => (pairIdx[d.c.t] = pairIdx[d.c.t] || []).push(i));
+      Object.keys(pairIdx).forEach(t => {
+        const idx = pairIdx[t];
+        if (idx.length !== 2) return;
+        const [i0, i1] = idx;
+        if (order[i0].c.closed && !order[i1].c.closed){
+          const tmp = order[i0]; order[i0] = order[i1]; order[i1] = tmp;
+        }
+      });
+      const placed = [], rolled = [];
+      order.forEach(d => {
+        const w = pvsWidth(d.c.t), ink = pvsInk(d.c.t);
+        let best = null;
+        for (let i = 0; i < SIDES.length; i++){
+          const b = pvsSlot(d, w, ink, SIDES[i]);
+          // In bounds, judged on the ink rather than the line box, and for the same
+          // reason: the bound is there to keep glyphs off the axis furniture, and read
+          // on the line box it threw away the slot under a low dot even when the
+          // letters cleared the x labels by four units.
+          if (b.ink.x0 < PVS.gutter + 2 || b.ink.x1 > 318 ||
+              b.ink.y0 < PVS.top - 2 || b.ink.y1 > PVS.xlab - 10) continue;
+          if (placed.some(q => b.x0 < q.x1 + 3 && q.x0 < b.x1 + 3 &&
+                               b.y0 < q.y1 + 1.5 && q.y0 < b.y1 + 1.5)) continue;
+          // OWNERSHIP OUTRANKS EVERY OTHER TEST HERE. A slot is viable only if this
+          // label's OWN dot is the nearest dot to it, with a clear unit of daylight to
+          // the runner-up. A ticker nearer a neighbour's dot than its own has stopped
+          // naming anything, which is worse than a ticker with a line behind it: the
+          // first is wrong, the second is only untidy. Measured dot edge to glyph edge,
+          // which is the distance a reader actually judges it by. This is the test that
+          // sends a boxed-in endpoint to the roll-up rather than mislabelling a
+          // neighbour, and on the twenty-line chart it is the reason five names roll.
+          const near = o => {
+            const nx = Math.max(b.ink.x0, Math.min(o.x, b.ink.x1));
+            const ny = Math.max(b.ink.y0, Math.min(o.y, b.ink.y1));
+            return Math.hypot(o.x - nx, o.y - ny) - o.ri;
+          };
+          const mine = near(d);
+          if (dots.some(o => o !== d && near(o) < mine + 1.0)) continue;
+          let n = 0;
+          segs.forEach(g => { if (pvsCross(g[0], g[1], b.ink)) n += g[2]; });
+          if (!n){ best = Object.assign(b, { over: 0 }); break; }
+          if (!best || n < best.over) best = Object.assign(b, { over: n });
+        }
+        if (!best) rolled.push(d.c);
+        else placed.push(Object.assign(best, { c: d.c }));
+      });
+      // FILLED MEANS STILL HELD, HOLLOW MEANS CLOSED. The Decisions chart plots the
+      // whole book on one set of axes, and V and BA each hold an OPEN and a CLOSED
+      // position, so without this the same ticker draws two lines with nothing to say
+      // which one is still owned. Filled against hollow is the standard reading of that
+      // and it costs no extra space and no extra colour.
+      // ONE CONVENTION ACROSS ALL THREE PLACEMENTS, so the Closed chart is all rings and
+      // the Open chart is all discs. A position that read one way here and another way
+      // one tap later would be worse than no distinction at all.
+      // The ring takes the position's own colour and the chart's own 1-unit stroke, at
+      // the same r, so nothing about where a mark is or how big it is has changed.
+      // GROUND-FILLED, NOT fill:none. Four of the nine closed endpoints have another
+      // position's line running inside them, and a ring with a stroke through its middle
+      // reads as a filled dot, which is the one thing this distinction cannot afford.
+      // The fill is the local ground rebuilt exactly as the label knockout below rebuilds
+      // it: --c-black plus the wash that side of the baseline already carries, at the
+      // same opacity. No new colour. The knockout needs two bands because a label box can
+      // straddle the baseline; a mark cannot, since that would need r to exceed its own
+      // distance from zero, and the smallest gap on the book is 1.1 pp, which is 3.96
+      // units at 3.6 per point, against a largest possible r of 3.6.
+      dots.forEach(d => {
+        const disc = (tok, op) => '<circle cx="' + d.x.toFixed(1) + '" cy="' + d.y.toFixed(1) +
+          '" r="' + d.r.toFixed(2) + '" style="fill:var(' + tok + ')"' +
+          (op ? ' fill-opacity="' + op + '"' : '') + '/>';
+        if (!d.c.closed){ p.push(disc(pvsCol(d.c.pp), null)); return; }
+        p.push(disc('--c-black', null));
+        p.push(disc(pvsCol(d.c.pp), d.c.pp >= 0 ? '0.055' : '0.07'));
+        p.push('<circle cx="' + d.x.toFixed(1) + '" cy="' + d.y.toFixed(1) + '" r="' +
+          d.r.toFixed(2) + '" fill="none" style="stroke:var(' + pvsCol(d.c.pp) +
+          ')" stroke-width="1" vector-effect="non-scaling-stroke"/>');
+      });
+      // A KNOCKOUT ONLY WHERE ALL FOUR SLOTS ARE BLOCKED, never as a blanket treatment.
+      // It is the local ground rebuilt under the glyphs: --c-black plus the same wash
+      // that side of the baseline already carries, at the same opacity, so it is not a
+      // new colour and it has no border. Labels that found clean air get none, which is
+      // what makes the treatment read as the exception it is.
+      placed.forEach(b => {
+        if (!b.over) return;
+        const kx = (b.ink.x0 - 1).toFixed(1), kw = (b.ink.x1 - b.ink.x0 + 2).toFixed(1);
+        const ky0 = b.ink.y0 - 0.4, ky1 = b.ink.y1 + 0.4;
+        const band = (y0, y1, tok, op) => p.push('<rect x="' + kx + '" y="' + y0.toFixed(1) +
+          '" width="' + kw + '" height="' + (y1 - y0).toFixed(1) + '" style="fill:var(' + tok +
+          ')"' + (op ? ' fill-opacity="' + op + '"' : '') + '/>');
+        band(ky0, ky1, '--c-black', null);
+        // A box can straddle zero, so the wash is rebuilt in two bands rather than one:
+        // one flat fill would put ahead-green over behind-ground and leave a faint
+        // rectangle where the two grounds meet.
+        const cut = Math.max(ky0, Math.min(ky1, zeroY));
+        if (cut > ky0) band(ky0, cut, '--c-live-muted', '0.055');
+        if (ky1 > cut) band(cut, ky1, '--c-urgent-muted', '0.07');
+      });
+      placed.forEach(b => p.push(txt(
+        b.side === 'right' ? b.x0 : b.side === 'left' ? b.x1 : (b.x0 + b.x1) / 2, b.vc + 3.6,
+        b.side === 'right' ? 'start' : b.side === 'left' ? 'end' : 'middle',
+        pvsCol(b.c.pp), b.c.t)));
+      if (rolled.length)
+        p.push(txt(PVS.x1, PVS.roll, 'end', '--c-800', '+' + rolled.length + ' more'));
+
+      svg.innerHTML = p.join('');
+      const up = rows.filter(c => c.pp >= 0).length;
+      return { up: up, down: rows.length - up, rolled: rolled.length };
+    }
+
+    // The count line under each chart is DERIVED from the same rows the chart is, so
+    // it is a readout of the plot rather than a second claim about it.
+    function pvsCount(el, data, n, copy){
+      if (!el) return;
+      if (!data.rows.length){ el.textContent = 'No positions in this view.'; return; }
+      let s = n.up + ' of ' + data.rows.length + ' ' + copy.up + ' the S&P 500, ' +
+              n.down + ' ' + copy.down + '.';
+      if (data.skipped.length)
+        s += ' ' + data.skipped.join(', ') + ' is not plotted, it has no cost basis on record, ' +
+             'so no return against the index can be established.';
+      el.textContent = s;
+    }
+
+    const AHEAD = { up: 'ahead of', down: 'behind' };
+    const BEAT  = { up: 'beat', down: 'trailed' };
+    // Three placements, one function. The Decisions copy plots the WHOLE BOOK, open and
+    // closed on one set of axes: "it's gonna show all positions, and then you can look
+    // at it open and closed." So it reads both lists, 11 open plus 9 closed, and the
+    // Open and Closed SCREENS hold the open-only and closed-only views, each still
+    // following its own account scope and chip filter. There is deliberately no
+    // open/closed toggle on this chart: the Decisions block's own Open and Closed rows
+    // already navigate to those screens. A position with no cost basis has no verdict
+    // and does not plot, so the derived total runs one short of the Total Positions
+    // figure in the block below wherever such a position is in scope (GEHC, RRSP: 20
+    // against 21 at All Accounts, 4 against 5 at RRSP, equal at the other two). The
+    // count line names it rather than leaving it to be noticed.
+    // scope: see pvsRead. 'account' on Decisions, so a chip set on another screen cannot
+    // narrow it; 'display' on the two list screens, so each chart follows its own chips.
+    const MOUNTS = [
+      { key:'decisions', from:'#screen-open,#screen-closed', scope:'account', copy:AHEAD },
+      { key:'open',      from:'#screen-open',                scope:'display', copy:AHEAD },
+      { key:'closed',    from:'#screen-closed',              scope:'display', copy:BEAT  }
+    ];
+    function pvsRefresh(){
+      MOUNTS.forEach(m => {
+        const svg = document.querySelector('.pvs-svg[data-pvs="' + m.key + '"]');
+        if (!svg) return;
+        const data = pvsRead(m.from, m.scope);
+        const n = pvsPaint(svg, data, m.copy);
+        pvsCount(document.querySelector('[data-pvs-count="' + m.key + '"]'), data, n, m.copy);
+      });
+    }
+    window.pvsRefresh = pvsRefresh;
+    pvsRefresh();
+    // Label collisions are decided on a measured width, so the layout has to be
+    // recomputed once the real face has replaced the fallback. Reading before the
+    // font settles returns the fallback's metrics, which are 1 to 2px narrow at
+    // every size and can flip a borderline pair.
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(pvsRefresh);
+  })();
 </script>
 
 </body>
