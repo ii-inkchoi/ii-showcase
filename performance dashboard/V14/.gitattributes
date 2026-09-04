@@ -1,0 +1,35 @@
+# Line endings for the V13 prototypes, pinned per file.
+#
+# WHY THIS FILE EXISTS. The repo has core.autocrlf=true, which converts on
+# checkout. These four files do NOT agree with each other on disk, and each is
+# internally pure, so a blanket setting breaks half of them:
+#
+#   main dashboard.html          2122 CRLF, 0 bare LF
+#   main-dashboard-states.html   1606 CRLF, 0 bare LF
+#   positions screens.html          0 CRLF, 2931 LF
+#   SESSION-2026-09-02.md           0 CRLF, 200 LF
+#
+# Without this file, a checkout would hand back "positions screens.html" as
+# CRLF, and a blanket "-text" would hand back the two dashboards as LF. Both
+# outcomes are silently wrong, and both matter: the agents editing these files
+# patch by exact byte context and verify the ending counts afterwards, so a
+# flipped file reads as corruption. A `sed -i` already converted one of these
+# once, on 2026-09-02, and was caught only by that check.
+#
+# Patterns use `?` rather than quoting so the spaces in the filenames need no
+# escaping. `?` matches exactly one character.
+#
+# If a file is ever deliberately converted, change its line here in the same
+# commit, and re-measure rather than assuming.
+
+positions*.html               text eol=lf
+SESSION-*.md                  text eol=lf
+main?dashboard.html           text eol=crlf
+main-dashboard-states.html    text eol=crlf
+
+# This file too, so the file that pins line endings is itself pinned.
+.gitattributes                text eol=lf
+
+# Reference screenshots, never diffed as text.
+refs/**                       binary
+*.png                         binary

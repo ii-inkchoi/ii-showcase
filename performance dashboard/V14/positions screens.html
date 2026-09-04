@@ -444,6 +444,27 @@
 
   .chartwrap{padding-bottom:8px;}
   .chartwrap svg{touch-action:none;}
+  /* THE PLOT BOX. Ported from the S&P card's own plot treatment, the only boxed chart
+     the product had shipped: main-dashboard-states.html `.cardslot .chart-plot`, i.e.
+     --c-elev ground, 0.5px --c-900 hairline, 12px padding, square corners, no radius
+     and no shadow. Applied to all seven plots on this file so a chart reads as a panel
+     lifted off the page rather than as marks floating on it.
+     WHAT THE PADDING FENCES. Every one of these plots already keeps its axis furniture
+     inside its own element: the y ticks and the gold S&P gutter label sit inside the
+     svg's own viewBox (on the two line charts, a viewBox that starts at -40 for exactly
+     that purpose), and the two x-axis rows are siblings inside the same wrapper. Boxing
+     the element therefore encloses the labels with nothing repositioned and no page
+     gutter breached.
+     THE WASH OPACITIES ARE DELIBERATELY UNTOUCHED (0.055 and 0.07 in pvsPaint). They
+     cannot be held at their old absolute pixel values over this ground, since both
+     composite darker over black than --c-elev itself is, so no opacity in range reaches
+     them; and they do not need to be, because compositing is linear in the ground, so
+     the ground's one step lands on every channel of both washes equally and each wash
+     keeps its relationship to its own panel, which is what the eye actually reads.
+     The four KNOCKOUTS that rebuild the local ground under a blocked label or inside a
+     closed dot moved to --c-elev in the same pass; see pvsPaint() and szPaint(). */
+  .chart-plot{position:relative;background:var(--c-elev);
+    border:0.5px solid var(--c-900);padding:12px;}
   /* stock-page scrub grammar: a box over the plot while the finger is down */
   .scrub-box{position:absolute;bottom:calc(100% + 8px);left:0;right:0;z-index:3;display:none;
     background:var(--c-elev);border:0.5px solid var(--c-900);
@@ -457,8 +478,29 @@
     font-feature-settings:'lnum' 1,'tnum' 1;white-space:nowrap;}
   .scrubbing .legend{visibility:hidden;}
   /* legend chip: V8's outlined container, square corners (radius-0) */
-  .legend{position:absolute;top:10px;left:54px;z-index:1;display:inline-flex;gap:10px;align-items:center;margin:0;
-    background:var(--c-black);border:0.5px solid var(--c-900);padding:3px 6px;}
+  /* THE LEFT IS DERIVED, NOT HAND-SET. It was 54px, measured off the chart's then
+     unpadded left edge, and it drifted: the svg is preserveAspectRatio="none", so the
+     plot's own y axis (viewBox x=0, 40 of 360 user units in) tracks the container while
+     a fixed 54px does not. Measured before this pass, the chip sat 15.1px inside the
+     axis at 390 and 18.4px at 360, and the box's 12px padding would have added 2.7px of
+     drift on top of that. It is now anchored to the axis in the units the x-axis row one
+     div below already uses, `padding-left:11%`, plus the 15px inset the chip measured at
+     390. Same fraction and same reference as that row, so the chip holds one inset at
+     every width instead of three. */
+  /* THE GROUND IS THE PANEL'S, NOT BLACK. It was --c-black, which was the page ground when
+     this chip was written and therefore invisible. Once the plot was boxed in .chart-plot the
+     panel under the chip became --c-elev, so a black fill stopped being the ground and became
+     a black chip punched into the panel: a fourth de-facto knockout, of the same kind the four
+     real ones in pvsPaint() and szPaint() were moved off in that pass. --c-elev puts it back on
+     its own surface, and the chip now reads as an outline over the panel rather than a hole in
+     it.
+     THE --c-900 BORDER STAYS. It is the only thing that makes this a container rather than
+     three loose labels, and it does not double with the box's own hairline, which is the same
+     token: measured at 390px the chip sits 22px below the box's inner top edge and 62.63px
+     inside its left edge (60.53 right, 182 bottom), so the two outlines are nowhere near
+     adjacent and never read as one thickened edge. */
+  .legend{position:absolute;top:10px;left:calc(11% + 15px);z-index:1;display:inline-flex;gap:10px;align-items:center;margin:0;
+    background:var(--c-elev);border:0.5px solid var(--c-900);padding:3px 6px;}
   .legend span{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--c-700);letter-spacing:-0.02em;}
   /* white, matching the account stroke: portfolio is white and the benchmark amber
      across the product (CEO 2026-09-02, for consistency with the approved graph) */
@@ -511,11 +553,29 @@
       <span class="info-btn hdr" onclick="openInfo('decisions')">i</span>
     </header>
 
+    <!-- CURRENCY, 2026-09-04 (fourth pass). Right-hand end of the market strip, the same
+         placement the Open, Closed and Detail screens carry. Full reasoning for the
+         treatment sits above the Open screen's strip; it is not repeated here.
+         THIS SCREEN WAS THE STATED EXCEPTION, and the exception is now RETIRED. It was
+         kept out of the move because this screen is ~7,340px tall and the 09-04 meeting
+         had removed a FOOT-level statement from it after Aidan could not find it, so
+         keeping the statement high seemed to be doing work. IT DOES NOT SURVIVE ITS OWN
+         NUMBERS. Measured at 390px: from the old placement beside the headline triplet to
+         Top Contributors was 6,502px; from the clock row it is 6,682px, because the strip
+         sits 179.78px higher. That is a 2.8% change to a 6,500px problem. At 360px it is
+         6,572px against 6,752px, 2.7%. The move makes it marginally FARTHER, which is the
+         point: neither number is reachable from the top of this screen.
+         The exception was buying nothing and cost the fourth screen its consistency.
+         IF THE DISTANCE TURNS OUT TO MATTER IN REVIEW, THE ANSWER IS A SECOND STATEMENT
+         NEAR TOP CONTRIBUTORS, NOT A MARGINALLY LESS DISTANT SINGLE ONE. Nothing available
+         at the top of a 7,000px screen closes a gap of that size; only a statement near
+         the thing being read does. Do not reinstate the exception. -->
     <div class="mkt-strip">
       <span class="mkt-clock" data-clock>00:00:00 ET</span>
       <span class="mkt-div"></span>
       <span class="mkt-flag"><span class="dot" data-mkt="us"></span>US</span>
       <span class="mkt-flag"><span class="dot" data-mkt="ca"></span>CA</span>
+      <span style="margin-left:auto;font-size:11px;letter-spacing:-0.02em;color:var(--c-700);">Currency in CAD</span>
     </div>
 
     <div class="subhead">
@@ -526,9 +586,22 @@
     </div>
 
     <section style="margin:24px 20px 0;padding:24px 0 0;border-top:0.5px solid var(--c-900);display:flex;flex-direction:column;gap:24px;">
+      <!-- CURRENCY WAS HERE, 2026-09-04 (second pass), sharing this line's baseline with
+           the period label. It moved to the market strip at the top of the screen in the
+           fourth pass; see the note above that strip. The wrapper that paired the two is
+           gone with it, and this line is back to the bare span it was before the pairing,
+           a direct flex child of the section.
+           WHY THEY WERE SEPARATED: they belong to different things. "Since Inception ·
+           Preliminary" scopes the three figures directly below it, and changes with the
+           period tabs (data-period-label). The currency is a property of the whole screen
+           and never changes. Sharing a row implied they were one caption. -->
       <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;"><span data-period-label>Since Inception</span> · Preliminary</span>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:8px;row-gap:8px;">
-        <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;text-align:left;">Account</span>
+        <!-- "Portfolio", not "Account": the home screen calls this same figure Portfolio
+             Value, and two words for one thing read as two things (2026-09-04 meeting).
+             "Account" is still correct where it means a brokerage account: the picker,
+             All Accounts / Non-Registered / TFSA / RRSP, and Performance by Account. -->
+        <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;text-align:left;">Portfolio</span>
         <span data-bm-short style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;text-align:center;">S&amp;P</span>
         <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;text-align:right;">Alpha</span>
         <span data-acct-pct style="font-size:17px;color:var(--c-white);letter-spacing:-0.02em;font-weight:400;line-height:1.2;text-align:left;">+39.4%</span>
@@ -575,61 +648,100 @@
 
     <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
       <div style="display:flex;justify-content:space-between;align-items:baseline;">
+        <!-- The header's right-hand companion was "Currency in CAD" until 2026-09-04. It
+             now sits once at the top of the screen, beside the headline triplet, and this
+             block inherits it. See the note there. -->
         <span class="sec-title">Performance vs <span data-bm-long>S&amp;P 500</span><span class="sc-suffix" data-acct-suffix></span></span>
-        <span style="font-size:11px;letter-spacing:-0.02em;color:var(--c-700);">Currency in CAD</span>
       </div>
+      <!-- LABELS, 2026-09-04 meeting: the two screens measure different things and their
+           labels now say which. The home card's rows are Portfolio Value / S&P 500 Value,
+           stocks of value; these two are the P&L on them, so they read Portfolio P&L and
+           S&P 500 P&L. "Account" is gone from this pair for the same reason it went from
+           the hero: the home screen calls this same thing Portfolio.
+           "(same window)" was dropped from the benchmark label when P&L was added: at
+           360px the row's label and value already ran ~7px past the frame, and
+           "S&P 500 P&L (same window)" would have added ~70 more. The mirror's window and
+           its deposit timing are stated in Notes directly below. -->
       <div class="cmp-row">
-        <span class="cmp-label">Account</span>
+        <span class="cmp-label">Portfolio P&amp;L</span>
         <span class="cmp-val"><span data-acct-dollars>+16,142.02</span><span class="pct" data-acct-pct>+39.4%</span><span class="arw-slot"></span></span>
       </div>
       <div class="cmp-row">
-        <span class="cmp-label"><span data-bm-long>S&amp;P 500</span> (same window)</span>
+        <span class="cmp-label"><span data-bm-long>S&amp;P 500</span> P&amp;L</span>
         <span class="cmp-val"><span data-bm-dollars>+18,515.92</span><span class="pct" data-bm-pct>+45.2%</span><span class="arw-slot"></span></span>
       </div>
       <div class="cmp-row">
         <span class="cmp-label">Alpha</span>
         <span class="cmp-val" data-alpha-cell><span data-alpha-dollars>−2,373.90</span><span class="pct" data-alpha-pp>−5.8&nbsp;pp</span><span class="trend down" data-alpha-arrow>▼</span></span>
       </div>
+      <!-- DIFFERENCE, added 2026-09-04. The home card prints this figure and this screen
+           did not, so a reviewer who tapped the card could not find the number they had
+           just read. Same label as the card, deliberately, because the label is what makes
+           the two reconcile.
+           DERIVED, never typed: alpha over the S&P equivalent VALUE (basis + mirror), which
+           is the card's own formula, (portfolio value − S&P value) / S&P value. See
+           render(). It therefore cannot disagree with the two rows above it at any account
+           or period.
+           Only the percentage is printed. The dollar gap is the same number as Alpha's own
+           dollars one row up, and printing it twice on one screen would read as two facts.
+           No arrow: Alpha's arrow one row above already carries this sign, and the two can
+           never point different ways. .arw-slot holds the arrow gutter, as on the rows above.
+           WHICH COLUMN, 2026-09-04. The figure sat in the amount position, the one every
+           other row fills with a dollar, so the column read as though this row had a dollar
+           of its own. It does not: there is one dollar in this block, the gap between the
+           two P&L rows, and Alpha and Difference are two ways of rating it (points against
+           the two return rates, or a share of the S&P value). So the figure now occupies
+           .pct, the rate column, landing directly under Alpha's pp, and the amount position
+           is left empty rather than held open, because .cmp-val is right-anchored and .pct
+           carries its own min-width: dropping the amount cannot move the rate column.
+           It takes the rate column's own 13px / --c-700 by doing so, which is the point,
+           the column has one type treatment on all four rows. -->
+      <div class="cmp-row">
+        <span class="cmp-label">Difference</span>
+        <span class="cmp-val"><span class="pct" data-diff-pct>−3.99%</span><span class="arw-slot"></span></span>
+      </div>
       <span class="dec-tap" style="font-size:11px;color:var(--c-700);" onclick="toggleDef('noteperf',this)">Notes</span>
       <div class="dec-def" id="def-noteperf" hidden><p>Total return, dividends reinvested, net of fees. The <span data-bm-long>S&amp;P 500</span> mirror applies the same deposit and withdrawal timing as the account, not a static index price return.</p></div>
 
       <div class="chartwrap" style="margin-top:20px;">
-        <div style="position:relative;">
-          <div class="scrub-box" id="acctScrubBox">
-            <div class="sb-grid">
-              <div class="sb-cell"><span class="sb-lbl">Date</span><span class="sb-val sb-date">Aug 26</span></div>
-              <div class="sb-cell"><span class="sb-lbl">Portfolio</span><span class="sb-val" data-sb-acct>57.1k</span></div>
-              <div class="sb-cell"><span class="sb-lbl" data-bm-short>S&amp;P</span><span class="sb-val" data-sb-bm>59.5k</span></div>
-              <div class="sb-cell"><span class="sb-lbl">Deposited</span><span class="sb-val" data-sb-dep>41.0k</span></div>
+        <div class="chart-plot">
+          <div style="position:relative;">
+            <div class="scrub-box" id="acctScrubBox">
+              <div class="sb-grid">
+                <div class="sb-cell"><span class="sb-lbl">Date</span><span class="sb-val sb-date">Aug 26</span></div>
+                <div class="sb-cell"><span class="sb-lbl">Portfolio</span><span class="sb-val" data-sb-acct>57.1k</span></div>
+                <div class="sb-cell"><span class="sb-lbl" data-bm-short>S&amp;P</span><span class="sb-val" data-sb-bm>59.5k</span></div>
+                <div class="sb-cell"><span class="sb-lbl">Deposited</span><span class="sb-val" data-sb-dep>41.0k</span></div>
+              </div>
             </div>
+            <div class="legend">
+              <span><span class="ln"></span>Portfolio</span>
+              <span><span class="ln bm"></span><span data-bm-short>S&amp;P</span></span>
+              <span><span class="ln dep"></span>Deposited</span>
+            </div>
+            <svg style="width:100%;height:180px;display:block;overflow:visible;" viewBox="-40 0 360 180" preserveAspectRatio="none" aria-hidden="true">
+              <text id="tickTop" x="-40" y="16" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">60k</text>
+              <text id="tickMid" x="-40" y="96" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">30k</text>
+              <text id="tickBot" x="-40" y="176" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">0</text>
+              <line x1="0" y1="92" x2="320" y2="92" style="stroke:var(--c-1000)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
+              <line x1="0" y1="12" x2="0" y2="172" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
+              <line x1="0" y1="172" x2="320" y2="172" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
+              <defs><clipPath id="acctClip"><rect id="acctClipRect" x="-2" y="0" width="330" height="180"/></clipPath></defs>
+              <g clip-path="url(#acctClip)">
+                <path id="curveGap" d="" fill-opacity="0.14"/>
+                <path id="curveDep" d="" fill="none" style="stroke:var(--c-800)" stroke-width="1" vector-effect="non-scaling-stroke"/>
+                <path id="curveBm" d="" fill="none" style="stroke:var(--c-gold)" stroke-width="1.25" vector-effect="non-scaling-stroke"/>
+                <path id="curveAcct" d="" fill="none" style="stroke:var(--c-white)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+                <ellipse id="acctEndDot" class="live-pt" rx="2.5" ry="2.5" cx="320" cy="20" style="fill:var(--c-700)"/>
+              </g>
+              <line class="scrub-line" x1="0" y1="12" x2="0" y2="172" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke" visibility="hidden"/>
+              <ellipse class="scrub-dot-b" rx="2.5" ry="2.5" style="fill:var(--c-gold)" visibility="hidden"/>
+              <ellipse class="scrub-dot-a" rx="2.5" ry="2.5" style="fill:var(--c-400)" visibility="hidden"/>
+            </svg>
           </div>
-          <div class="legend">
-            <span><span class="ln"></span>Portfolio</span>
-            <span><span class="ln bm"></span><span data-bm-short>S&amp;P</span></span>
-            <span><span class="ln dep"></span>Deposited</span>
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--c-700);letter-spacing:-0.02em;margin-top:8px;padding-left:11%;">
+            <span id="ax1">Mar 23</span><span id="ax2">Apr 24</span><span id="ax3">Jun 25</span><span id="ax4">Aug 26</span>
           </div>
-          <svg style="width:100%;height:180px;display:block;overflow:visible;" viewBox="-40 0 360 180" preserveAspectRatio="none" aria-hidden="true">
-            <text id="tickTop" x="-40" y="16" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">60k</text>
-            <text id="tickMid" x="-40" y="96" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">30k</text>
-            <text id="tickBot" x="-40" y="176" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">0</text>
-            <line x1="0" y1="92" x2="320" y2="92" style="stroke:var(--c-1000)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
-            <line x1="0" y1="12" x2="0" y2="172" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
-            <line x1="0" y1="172" x2="320" y2="172" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
-            <defs><clipPath id="acctClip"><rect id="acctClipRect" x="-2" y="0" width="330" height="180"/></clipPath></defs>
-            <g clip-path="url(#acctClip)">
-              <path id="curveGap" d="" fill-opacity="0.14"/>
-              <path id="curveDep" d="" fill="none" style="stroke:var(--c-800)" stroke-width="1" vector-effect="non-scaling-stroke"/>
-              <path id="curveBm" d="" fill="none" style="stroke:var(--c-gold)" stroke-width="1.25" vector-effect="non-scaling-stroke"/>
-              <path id="curveAcct" d="" fill="none" style="stroke:var(--c-white)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
-              <ellipse id="acctEndDot" class="live-pt" rx="2.5" ry="2.5" cx="320" cy="20" style="fill:var(--c-700)"/>
-            </g>
-            <line class="scrub-line" x1="0" y1="12" x2="0" y2="172" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke" visibility="hidden"/>
-            <ellipse class="scrub-dot-b" rx="2.5" ry="2.5" style="fill:var(--c-gold)" visibility="hidden"/>
-            <ellipse class="scrub-dot-a" rx="2.5" ry="2.5" style="fill:var(--c-400)" visibility="hidden"/>
-          </svg>
-        </div>
-        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--c-700);letter-spacing:-0.02em;margin-top:8px;padding-left:11%;">
-          <span id="ax1">Mar 23</span><span id="ax2">Apr 24</span><span id="ax3">Jun 25</span><span id="ax4">Aug 26</span>
         </div>
 
       </div>
@@ -863,7 +975,9 @@
     <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
       <span class="sec-title">Positions vs S&amp;P 500</span>
       <p class="pvs-note">Each line is one position, open or closed, measured in percentage points against the S&amp;P 500 over its own window. A filled dot is still held, a hollow one is closed. Every line starts on the day it was entered, where the gap against the index is zero by definition, so how far a line runs is how long it was held.</p>
-      <svg class="pvs-svg" data-pvs="decisions" viewBox="0 0 320 188" style="width:100%;height:auto;display:block;margin-top:4px;" aria-hidden="true"></svg>
+      <div class="chart-plot" style="margin-top:4px;">
+        <svg class="pvs-svg" data-pvs="decisions" viewBox="0 0 320 188" style="width:100%;height:auto;display:block;" aria-hidden="true"></svg>
+      </div>
       <p class="pvs-note" data-pvs-count="decisions"></p>
     </section>
 
@@ -990,77 +1104,178 @@
     <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
       <span class="sec-title">Cumulative Alpha (Closed Positions)</span>
       <p style="font-size:11px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">Running total of dollar alpha as each of the 9 closed positions actually closed, in order. The flat aggregate number hides this shape.</p>
-      <svg viewBox="0 0 320 165" style="width:100%;height:auto;display:block;margin-top:4px;overflow:visible;">
-        <line x1="0" y1="66.7" x2="320" y2="66.7" stroke="var(--c-800)" stroke-width="1" stroke-dasharray="3 3"/>
-        <text x="320" y="62" fill="var(--c-700)" font-size="9" font-family="Inter" text-anchor="end">$0</text>
-        <path class="mo-line" data-draw d="M0,78.7 L40,95.0 L80,120.6 L120,152.0 L160,148.6 L200,133.8 L240,112.6 L280,86.2 L320,12.0" fill="none" stroke="var(--c-700)" stroke-width="1.5"/>
-        <!-- one tick per close, colored by that position's own alpha sign, not the running
-             total. each lands as the drawing line reaches its own x -->
-        <circle class="mo-pt" style="--d:250ms" cx="0" cy="78.7" r="2" fill="var(--c-urgent-muted)"/>
-        <circle class="mo-pt" style="--d:306ms" cx="40" cy="95.0" r="2" fill="var(--c-urgent-muted)"/>
-        <circle class="mo-pt" style="--d:362ms" cx="80" cy="120.6" r="2" fill="var(--c-urgent-muted)"/>
-        <circle class="mo-pt" style="--d:419ms" cx="120" cy="152.0" r="2" fill="var(--c-urgent-muted)"/>
-        <circle class="mo-pt" style="--d:475ms" cx="160" cy="148.6" r="2" fill="var(--c-live-muted)"/>
-        <circle class="mo-pt" style="--d:531ms" cx="200" cy="133.8" r="2" fill="var(--c-live-muted)"/>
-        <circle class="mo-pt" style="--d:587ms" cx="240" cy="112.6" r="2" fill="var(--c-live-muted)"/>
-        <circle class="mo-pt" style="--d:644ms" cx="280" cy="86.2" r="2" fill="var(--c-live-muted)"/>
-        <circle class="mo-pt" style="--d:470ms" cx="120" cy="152.0" r="3.5" fill="none" stroke="var(--c-urgent-muted)" stroke-width="1"/>
-        <circle class="mo-pt" style="--d:700ms" cx="320" cy="12.0" r="4" fill="var(--c-live-muted)"/>
-        <text class="mo-lb" style="--d:520ms" x="120" y="163" fill="var(--c-700)" font-size="9" text-anchor="middle" font-family="Inter">low: −2,238.40</text>
-        <text class="mo-lb" style="--d:760ms" x="316" y="9" fill="var(--c-700)" font-size="9" text-anchor="end" font-family="Inter">+1,436.30</text>
-        <text x="0" y="178" fill="var(--c-700)" font-size="9" text-anchor="start" font-family="Inter">Sep 25</text>
-        <text x="320" y="178" fill="var(--c-700)" font-size="9" text-anchor="end" font-family="Inter">Jul 26</text>
-      </svg>
+      <div class="chart-plot" style="margin-top:4px;">
+        <svg viewBox="0 0 320 165" style="width:100%;height:auto;display:block;overflow:visible;">
+          <!-- Zero dollar alpha is the S&P: a position that matched the index contributed
+               nothing here. Gold because gold is the S&P in every chart on this product
+               (2026-09-04 meeting). SOLID, for the same reason it is gold: the S&P
+               baseline is already solid in pvsPaint, on the Positions vs S&P 500 charts,
+               which is the one Aidan reviewed on 2026-09-04. It also follows the CEO's
+               2026-09-02 rule that a dash reads as a projection, so a reviewer asks "is
+               that projected or is that actual?" The index is measured history, so it is
+               actual, so it is solid.
+               An earlier note here claimed solid meant plotted data and dashed meant a
+               reference line. That rule was wrong: pvsPaint's baseline is a reference line
+               and has always been solid. The dashed grey median guide below stays dashed
+               because it is not the index, not because it is a reference. -->
+          <line x1="0" y1="66.7" x2="320" y2="66.7" stroke="var(--c-gold)" stroke-width="1" vector-effect="non-scaling-stroke"/>
+          <!-- THE ZERO SLOT CARRIES THE INDEX'S NAME, IN --c-gold, following the calibration
+               chart's precedent (main-dashboard-states.html drawCal): a gold NAME in the
+               axis gutter, not a gold number. It read "$0" in --c-700, so gold meant the
+               index on the line and zero on the label beside it, and only calibration made
+               the rule legible. The dollar is not lost: this axis is index-relative by the
+               section's own framing, so the S&P is necessarily at zero, which is why
+               calibration omits its zero too.
+               POSITION IS UNCHANGED, on purpose. Calibration and Position Size vs Return
+               both have a left gutter to sit in; this plot does not, its viewBox starts at
+               x=0 and so does the field, and 9px "S&P" needs ~16.8 units where the box's
+               12px padding is ~11.8. So the label keeps this chart's own gutter, the right
+               end, where "$0" already sat, and 9px keeps it in register with this svg's
+               other labels rather than calibration's 11px axis. -->
+          <text x="320" y="62" fill="var(--c-gold)" font-size="9" font-family="Inter" text-anchor="end">S&amp;P</text>
+          <path class="mo-line" data-draw d="M0,78.7 L40,95.0 L80,120.6 L120,152.0 L160,148.6 L200,133.8 L240,112.6 L280,86.2 L320,12.0" fill="none" stroke="var(--c-700)" stroke-width="1.5"/>
+          <!-- one tick per close, colored by that position's own alpha sign, not the running
+               total. each lands as the drawing line reaches its own x -->
+          <circle class="mo-pt" style="--d:250ms" cx="0" cy="78.7" r="2" fill="var(--c-urgent-muted)"/>
+          <circle class="mo-pt" style="--d:306ms" cx="40" cy="95.0" r="2" fill="var(--c-urgent-muted)"/>
+          <circle class="mo-pt" style="--d:362ms" cx="80" cy="120.6" r="2" fill="var(--c-urgent-muted)"/>
+          <circle class="mo-pt" style="--d:419ms" cx="120" cy="152.0" r="2" fill="var(--c-urgent-muted)"/>
+          <circle class="mo-pt" style="--d:475ms" cx="160" cy="148.6" r="2" fill="var(--c-live-muted)"/>
+          <circle class="mo-pt" style="--d:531ms" cx="200" cy="133.8" r="2" fill="var(--c-live-muted)"/>
+          <circle class="mo-pt" style="--d:587ms" cx="240" cy="112.6" r="2" fill="var(--c-live-muted)"/>
+          <circle class="mo-pt" style="--d:644ms" cx="280" cy="86.2" r="2" fill="var(--c-live-muted)"/>
+          <circle class="mo-pt" style="--d:470ms" cx="120" cy="152.0" r="3.5" fill="none" stroke="var(--c-urgent-muted)" stroke-width="1"/>
+          <circle class="mo-pt" style="--d:700ms" cx="320" cy="12.0" r="4" fill="var(--c-live-muted)"/>
+          <text class="mo-lb" style="--d:520ms" x="120" y="163" fill="var(--c-700)" font-size="9" text-anchor="middle" font-family="Inter">low: −2,238.40</text>
+          <text class="mo-lb" style="--d:760ms" x="316" y="9" fill="var(--c-700)" font-size="9" text-anchor="end" font-family="Inter">+1,436.30</text>
+        </svg>
+        <!-- X AXIS IN HTML, NOT IN THE SVG. Moved out on 2026-09-04, when this plot was boxed
+             in .chart-plot. The two labels were <text y="178"> inside a "0 0 320 165" viewBox,
+             15 user units below its bottom edge on an overflow:visible svg, and the box's 12px
+             padding cannot absorb 15. Measured at 390px, "Sep 25" put ink 3.19px past the box's
+             inner edge and 2.19px past its outer edge, so the new bottom hairline ran through
+             the descender of its "p"; "Jul 26" crossed the inner edge by 1.16px and reached
+             within 0.16px of the outer one. Both cleared it before only because there was no
+             border there to cross.
+             WHY A ROW RATHER THAN A TALLER VIEWBOX. Extending the viewBox would have given this
+             one chart a bespoke geometry. Charts 1 and 7 (Positions vs S&P 500, Position vs
+             Benchmark) already carry their x labels as an HTML sibling of the svg inside the
+             same wrapper, so this makes the chart match its siblings instead.
+             REGISTER COPIED VERBATIM FROM CHART 1's ROW, not invented: flex, space-between,
+             11px, --c-700, -0.02em, margin-top:8px. That is why the labels are 11px here and
+             were 9px inside the svg: the register belongs to the row, and the row is shared.
+             ONE DELIBERATE DIFFERENCE, AND IT IS THE ALIGNMENT. Charts 1 and 7 add
+             padding-left:11% because their viewBox starts at -40 of 360 user units, holding a
+             y-tick gutter, so 11% is where their plot's left edge actually is. This viewBox
+             starts at 0 and the plot spans the full 0..320, so the same offset here would push
+             both labels off the marks they name. THE TWO POSITIONS CARRY MEANING: x=0 is the
+             first close (Sep 25) and x=320 the last (Jul 26), the two ends of the path itself,
+             not decoration at the ends of the frame. The svg is width:100% with a "0 0 320 165"
+             viewBox, so 320 user units map exactly onto the box's content width; the row shares
+             that content box, and space-between puts the first span's left edge and the last
+             span's right edge on its two ends. That reproduces the old text-anchor="start" at
+             x=0 and text-anchor="end" at x=320 exactly, which is why the offset is 0 and not
+             11%. Verified rendered at 390 and 360. -->
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--c-700);letter-spacing:-0.02em;margin-top:8px;">
+          <span>Sep 25</span><span>Jul 26</span>
+        </div>
+      </div>
       <p style="font-size:11px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:12px 0 0;">Each tick is one close, green where that position beat the index and red where it trailed. Watch whether the line crosses zero steadily or is carried across by one late close, since a single large result can flip a total that ran the other way for most of the period.</p>
     </section>
 
     <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
       <span class="sec-title">Holding Pattern, Winners vs Losers</span>
       <p style="font-size:11px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">A well-known bias in investing is holding losers longer than winners, selling what's working to lock it in, and holding what isn't, hoping it recovers. Here is what this account's own 9 closed positions show.</p>
-      <div style="position:relative;display:flex;flex-direction:column;gap:12px;margin-top:4px;">
+      <div id="hp-bars" style="display:flex;flex-direction:column;gap:12px;margin-top:4px;">
         <div class="bar-row mo-bar" style="--d:0ms"><span class="bar-label" style="width:56px;">Winners</span><div class="bar-track"><div class="bar-fill" style="width:70.2%;"></div></div><span class="bar-val">238d</span></div>
         <div class="bar-row mo-bar" style="--d:90ms"><span class="bar-label" style="width:56px;">Losers</span><div class="bar-track"><div class="bar-fill" style="width:100%;"></div></div><span class="bar-val">339d</span></div>
-        <!-- gap made visible: a hairline ties the two bar ends together, the ratio is printed at the tie point -->
-        <div style="position:absolute;left:calc(68px + (100% - 141px) * 0.702);top:2px;bottom:2px;width:0.5px;background:var(--c-700);"></div>
-        <span style="position:absolute;left:calc(68px + (100% - 141px) * 0.702 + 6px);top:-13px;font-size:9px;color:var(--c-700);letter-spacing:-0.02em;white-space:nowrap;">1.42x</span>
+        <!-- The axis is what was missing, and its absence is what made the bars unreadable
+             (2026-09-04 review: "why is the bar graph full for the losers but it's not for
+             the winners?"). The losers' bar was full only because 339 was the larger of the
+             two figures, and nothing on screen said what a full bar was worth, so the bar's
+             endpoint carried no meaning. Three things this axis fixes together: a full bar
+             now states its own value, so that question is answered on screen; the two
+             lengths read as durations rather than as a ratio drawn twice; and the old 1.42x
+             hairline is gone, which pointed at nothing - it sat at the winners' endpoint but
+             was labelled with the ratio of the two bars, so the number and its position were
+             unrelated. The ratio itself is already carried by the prose below.
+             Register copied from Position Size vs Return's x-axis endpoints rather than
+             invented: 9px, --c-800, one label anchored to each end of the track. The padding
+             reproduces the track's own box, 68px in from the left (56px label + 12px gap) and
+             73px in from the right (61px value cell + 12px gap), so the labels sit on the
+             bars' real endpoints. The maximum is written by hpAxis() below, never typed. -->
+        <div style="display:flex;justify-content:space-between;padding:0 73px 0 68px;font-size:9px;color:var(--c-800);letter-spacing:-0.02em;"><span>0</span><span data-hp-max></span></div>
       </div>
-      <p style="font-size:11px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">A ratio above 1x means losers are being held longer than winners. Small samples move this figure a lot, so read the direction rather than the exact number.</p>
+      <!-- THE RATIO IS WRITTEN BY hpAxis(), NEVER TYPED. It is LOSERS OVER WINNERS, not
+           the longer over the shorter, so it can fall below 1x and the sentence beside
+           it stays true when winners are the longer hold. Read off the same two
+           .bar-val cells that set the bar widths and the axis maximum, so the sentence
+           cannot disagree with the bars above it. The axis maximum still follows the
+           larger of the two values, whichever kind that is.
+           This span is why the figure is on screen at all: the old 1.42x hairline was
+           removed with the axis pass (see the comment above) and nothing replaced it,
+           which left the section stating the rule without this account's own value. -->
+      <p style="font-size:11px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">This account is at <span data-hp-ratio></span>. A ratio above 1x means losers are being held longer than winners. Small samples move this figure a lot, so read the direction rather than the exact number.</p>
       <span class="dec-tap" style="font-size:11px;color:var(--c-700);" onclick="toggleDef('notehp',this)">Notes</span>
       <div class="dec-def" id="def-notehp" hidden><p>Measured on closed positions only, since an open position's holding period is still running. If the gap holds as more positions close, it's worth asking whether specific losers are being held on their own merits or just to avoid closing them out.</p></div>
     </section>
 
     <section class="dash-sec" style="display:flex;flex-direction:column;gap:12px;">
       <span class="sec-title">Position Size vs Return</span>
-      <p style="font-size:11px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">Does conviction sizing actually pay off, are the biggest bets the best-performing ones? Each dot is one closed position, green beat the <span data-bm-long>S&amp;P 500</span> over its holding window, red trailed it.</p>
-      <svg viewBox="0 0 320 200" style="width:100%;height:auto;display:block;margin-top:4px;overflow:visible;">
-        <line x1="30" y1="125" x2="300" y2="125" stroke="var(--c-800)" stroke-width="1" stroke-dasharray="3 3"/>
-        <text x="26" y="128" fill="var(--c-800)" font-size="9" text-anchor="end" font-family="Inter">0%</text>
-        <text x="26" y="33" fill="var(--c-800)" font-size="9" text-anchor="end" font-family="Inter">+40%</text>
-        <text x="0" y="12" fill="var(--c-800)" font-size="9" text-anchor="start" font-family="Inter">Return vs S&amp;P</text>
-        <line x1="30" y1="20" x2="30" y2="160" stroke="var(--c-900)" stroke-width="0.5"/>
-        <line x1="30" y1="160" x2="300" y2="160" stroke="var(--c-900)" stroke-width="0.5"/>
-        <text x="30" y="174" fill="var(--c-800)" font-size="9" text-anchor="start" font-family="Inter">4.2k</text>
-        <text x="300" y="174" fill="var(--c-800)" font-size="9" text-anchor="end" font-family="Inter">9.2k</text>
-        <text x="165" y="190" fill="var(--c-800)" font-size="9" text-anchor="middle" font-family="Inter">Position size at entry</text>
-        <!-- median position size: splits the book into the 4 smallest vs 4 largest closed bets -->
-        <line x1="170.4" y1="20" x2="170.4" y2="160" stroke="var(--c-900)" stroke-width="0.5" stroke-dasharray="2 3"/>
-        <text x="170.4" y="16" fill="var(--c-800)" font-size="9" text-anchor="middle" font-family="Inter">median</text>
-        <circle class="mo-pt" style="--d:330ms" cx="262.2" cy="29.3" r="4" fill="var(--c-live-muted)"/><text class="mo-lb" style="--d:390ms" x="262.2" y="42.3" fill="var(--c-700)" font-size="9" text-anchor="middle" font-family="Inter">NVDA</text>
-        <circle class="mo-pt" style="--d:210ms" cx="138" cy="67.1" r="4" fill="var(--c-live-muted)"/><text class="mo-lb" style="--d:270ms" x="138" y="59.1" fill="var(--c-700)" font-size="9" text-anchor="middle" font-family="Inter">UNH</text>
-        <circle class="mo-pt" style="--d:180ms" cx="116.4" cy="82.8" r="4" fill="var(--c-live-muted)"/><text class="mo-lb" style="--d:240ms" x="116.4" y="74.8" fill="var(--c-700)" font-size="9" text-anchor="middle" font-family="Inter">ADBE</text>
-        <circle class="mo-pt" style="--d:270ms" cx="192" cy="87.7" r="4" fill="var(--c-live-muted)"/><text class="mo-lb" style="--d:330ms" x="192" y="79.7" fill="var(--c-700)" font-size="9" text-anchor="middle" font-family="Inter">TXN</text>
-        <circle class="mo-pt" style="--d:120ms" cx="30" cy="107.7" r="4" fill="var(--c-live-muted)"/><text class="mo-lb" style="--d:180ms" x="36" y="110.7" fill="var(--c-700)" font-size="9" text-anchor="start" font-family="Inter">V</text>
-        <circle class="mo-pt" style="--d:240ms" cx="170.4" cy="133.4" r="4" fill="var(--c-urgent-muted)"/><text class="mo-lb" style="--d:300ms" x="170.4" y="146.4" fill="var(--c-700)" font-size="9" text-anchor="middle" font-family="Inter">PYPL</text>
-        <circle class="mo-pt" style="--d:150ms" cx="105.6" cy="146.5" r="4" fill="var(--c-urgent-muted)"/><text class="mo-lb" style="--d:210ms" x="105.6" y="138.5" fill="var(--c-700)" font-size="9" text-anchor="middle" font-family="Inter">BA</text>
-        <circle class="mo-pt" style="--d:300ms" cx="202.8" cy="119.4" r="4" fill="var(--c-urgent-muted)"/><text class="mo-lb" style="--d:360ms" x="202.8" y="112" fill="var(--c-700)" font-size="9" text-anchor="middle" font-family="Inter">KO</text>
-        <circle class="mo-pt" style="--d:360ms" cx="300" cy="122.7" r="4" fill="var(--c-urgent-muted)"/><text class="mo-lb" style="--d:420ms" x="300" y="115" fill="var(--c-700)" font-size="9" text-anchor="end" font-family="Inter">VZ</text>
-      </svg>
+      <!-- ══ COPY PENDING THE CEO ══════════════════════════════════════════════════
+           DRAFT, not approved. It replaced "Each dot is one closed position, green
+           beat the S&P 500 over its holding window, red trailed it," which became
+           untrue the moment the eleven open positions were added below: the chart is
+           no longer closed-only. The legend sentence is lifted verbatim from the
+           Decisions chart's own note ("A filled dot is still held, a hollow one is
+           closed"), which is already on screen and already reviewed, rather than
+           written fresh. Same treatment as the card footnote: on screen, flagged.
+           ── ALSO PENDING, AND DELIBERATELY NOT REWRITTEN HERE ──
+           The intro question and the note under the chart are both arguments about
+           what the plot means, not descriptions of it, so they were left exactly as
+           they were and raised instead of edited. The note ("dots above the zero
+           line beat the index") was untrue while y carried the position's RAW return
+           rather than its return against the index, which put KO, VZ, TSLA, META and
+           NFLX above the gold zero line while trailing the S&P and drawn red. The y
+           basis was changed to the index-relative figure on 2026-09-04, so the note
+           is now true as written: height and colour read off the same value. See the
+           Y BASIS note in szPaint(). The copy is still first-draft and still goes to
+           the CEO; it was not edited here. -->
+      <p style="font-size:11px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">Does conviction sizing actually pay off, are the biggest bets the best-performing ones? Each dot is one position, open and closed. A filled dot is still held, a hollow one is closed. Green beat the <span data-bm-long>S&amp;P 500</span> over its holding window, red trailed it.</p>
+      <!-- ONLY THE FRAME IS STATIC HERE. Everything that depends on the data, both
+           axis endpoints, the zero line and its label, the y tick, the median guide,
+           every dot and every ticker, is written by szPaint() from the position rows
+           themselves, on the same rule the Positions vs S&P 500 charts follow: the
+           data is read off the rows, never typed. It had to be. The chart used to be
+           twenty hardcoded coordinates against a hardcoded 4.2k / 9.2k axis derived
+           from the closed set alone, and adding the open positions moves both axes. -->
+      <div class="chart-plot" style="margin-top:4px;">
+        <svg id="sz-svg" viewBox="0 0 320 200" style="width:100%;height:auto;display:block;overflow:visible;">
+          <line x1="30" y1="20" x2="30" y2="160" stroke="var(--c-900)" stroke-width="0.5"/>
+          <line x1="30" y1="160" x2="300" y2="160" stroke="var(--c-900)" stroke-width="0.5"/>
+          <text x="0" y="12" fill="var(--c-800)" font-size="9" text-anchor="start" font-family="Inter">Return vs S&amp;P</text>
+          <text x="165" y="190" fill="var(--c-800)" font-size="9" text-anchor="middle" font-family="Inter">Position size at entry</text>
+          <g data-sz-plot></g>
+        </svg>
+      </div>
       <p style="font-size:11px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">Dots further right are larger bets, dots above the zero line beat the index over their holding window. If conviction sizing is working, the larger positions sit higher than the smaller ones.</p>
     </section>
 
     <section class="dash-sec" style="padding-bottom:32px;display:flex;flex-direction:column;gap:12px;">
       <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
-        <span class="sec-title" id="alpha-up">Top Contributors</span>
+        <!-- CURRENCY HISTORY OF THIS BLOCK, so it is not re-added a fourth way.
+             It was a <p> at the FOOT of this section, where the 2026-09-04 meeting could
+             not find it: "we need to have the currency here on the top contributors and
+             top detractors". It moved onto this header and onto the Detractors header the
+             same day. Both were removed on the second 09-04 pass: currency is a property of
+             the account, stated once per screen beside the headline figure, and three
+             statements on one screen make a global fact look local. It is now at the top of
+             the screen, beside the Portfolio / S&P / Alpha triplet, and this block inherits
+             it. The scroll distance is recorded in the note there, deliberately, because
+             this block is the one that went unfound before. -->
+        <span style="display:flex;align-items:baseline;gap:8px;">
+          <span class="sec-title" id="alpha-up">Top Contributors</span>
+        </span>
         <span class="dec-exp" style="font-size:13px;color:var(--c-700);" onclick="toggleDecPreview('alphaUp',this)">View All<svg class="chev-svg" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.3"/></svg></span>
       </div>
       <div class="cmp-item" onclick="positionTap('NVDA','closed')" style="cursor:pointer;">
@@ -1068,21 +1283,21 @@
           <span class="cmp-label">NVDA</span>
           <span class="cmp-val"><span class="anum">+1,946.50</span><span class="pct">+22.9&nbsp;pp</span><span class="trend up">▲</span></span>
         </div>
-        <div class="cmp-foot"><span class="cmp-meta">195.15 · 8mo</span><span class="cmp-status">Closed</span></div>
+        <div class="cmp-foot"><span class="cmp-meta">8mo</span><span class="cmp-status">Closed</span></div>
       </div>
       <div class="cmp-item" onclick="positionTap('AVGO','open')" style="cursor:pointer;">
         <div class="cmp-row">
           <span class="cmp-label">AVGO</span>
           <span class="cmp-val"><span class="anum">+1,292.00</span><span class="pct">+18.4&nbsp;pp</span><span class="trend up">▲</span></span>
         </div>
-        <div class="cmp-foot"><span class="cmp-meta">187.40 · 1y 2m</span><span class="cmp-status">Open</span></div>
+        <div class="cmp-foot"><span class="cmp-meta">1y 2m</span><span class="cmp-status">Open</span></div>
       </div>
       <div class="cmp-item" onclick="positionTap('UNH','closed')" style="cursor:pointer;">
         <div class="cmp-row">
           <span class="cmp-label">UNH</span>
           <span class="cmp-val"><span class="anum">+694.40</span><span class="pct">+11.2&nbsp;pp</span><span class="trend up">▲</span></span>
         </div>
-        <div class="cmp-foot"><span class="cmp-meta">498.60 · 11mo</span><span class="cmp-status">Closed</span></div>
+        <div class="cmp-foot"><span class="cmp-meta">11mo</span><span class="cmp-status">Closed</span></div>
       </div>
       <div class="dec-preview" id="dec-preview-alphaUp">
       <div class="cmp-item" onclick="positionTap('ADBE','closed')" style="cursor:pointer;">
@@ -1090,61 +1305,65 @@
           <span class="cmp-label">ADBE</span>
           <span class="cmp-val"><span class="anum">+556.80</span><span class="pct">+9.6&nbsp;pp</span><span class="trend up">▲</span></span>
         </div>
-        <div class="cmp-foot"><span class="cmp-meta">428.10 · 6mo</span><span class="cmp-status">Closed</span></div>
+        <div class="cmp-foot"><span class="cmp-meta">6mo</span><span class="cmp-status">Closed</span></div>
       </div>
       <div class="cmp-item" onclick="positionTap('MSFT','open')" style="cursor:pointer;">
         <div class="cmp-row">
           <span class="cmp-label">MSFT</span>
           <span class="cmp-val"><span class="anum">+425.70</span><span class="pct">+9.1&nbsp;pp</span><span class="trend up">▲</span></span>
         </div>
-        <div class="cmp-foot"><span class="cmp-meta">441.20 · 10mo</span><span class="cmp-status">Open</span></div>
+        <div class="cmp-foot"><span class="cmp-meta">10mo</span><span class="cmp-status">Open</span></div>
       </div>
       <div class="cmp-item" onclick="positionTap('TXN','closed')" style="cursor:pointer;">
         <div class="cmp-row">
           <span class="cmp-label">TXN</span>
           <span class="cmp-val"><span class="anum">+388.80</span><span class="pct">+5.4&nbsp;pp</span><span class="trend up">▲</span></span>
         </div>
-        <div class="cmp-foot"><span class="cmp-meta">198.30 · 1y 5m</span><span class="cmp-status">Closed</span></div>
+        <div class="cmp-foot"><span class="cmp-meta">1y 5m</span><span class="cmp-status">Closed</span></div>
       </div>
       <div class="cmp-item" onclick="positionTap('COST','open')" style="cursor:pointer;">
         <div class="cmp-row">
           <span class="cmp-label">COST</span>
           <span class="cmp-val"><span class="anum">+304.00</span><span class="pct">+7.8&nbsp;pp</span><span class="trend up">▲</span></span>
         </div>
-        <div class="cmp-foot"><span class="cmp-meta">964.85 · 1y 7m</span><span class="cmp-status">Open</span></div>
+        <div class="cmp-foot"><span class="cmp-meta">1y 7m</span><span class="cmp-status">Open</span></div>
       </div>
       <div class="cmp-item" onclick="positionTap('AAPL','open')" style="cursor:pointer;">
         <div class="cmp-row">
           <span class="cmp-label">AAPL</span>
           <span class="cmp-val"><span class="anum">+218.50</span><span class="pct">+4.0&nbsp;pp</span><span class="trend up">▲</span></span>
         </div>
-        <div class="cmp-foot"><span class="cmp-meta">231.60 · 2y 5m</span><span class="cmp-status">Open</span></div>
+        <div class="cmp-foot"><span class="cmp-meta">2y 5m</span><span class="cmp-status">Open</span></div>
       </div>
       <div class="cmp-item" onclick="positionTap('LLY','open')" style="cursor:pointer;">
         <div class="cmp-row">
           <span class="cmp-label">LLY</span>
           <span class="cmp-val"><span class="anum">+193.30</span><span class="pct">+6.2&nbsp;pp</span><span class="trend up">▲</span></span>
         </div>
-        <div class="cmp-foot"><span class="cmp-meta">872.15 · 6mo</span><span class="cmp-status">Open</span></div>
+        <div class="cmp-foot"><span class="cmp-meta">6mo</span><span class="cmp-status">Open</span></div>
       </div>
       <div class="cmp-item" onclick="positionTap('V','closed')" style="cursor:pointer;">
         <div class="cmp-row">
           <span class="cmp-label">V</span>
           <span class="cmp-val"><span class="anum">+88.20</span><span class="pct">+2.1&nbsp;pp</span><span class="trend up">▲</span></span>
         </div>
-        <div class="cmp-foot"><span class="cmp-meta">336.20 · 3mo</span><span class="cmp-status">Closed</span></div>
+        <div class="cmp-foot"><span class="cmp-meta">3mo</span><span class="cmp-status">Closed</span></div>
       </div>
       <div class="cmp-item" onclick="positionTap('V','open')" style="cursor:pointer;">
         <div class="cmp-row">
           <span class="cmp-label">V</span>
           <span class="cmp-val"><span class="anum">+37.40</span><span class="pct">+1.6&nbsp;pp</span><span class="trend up">▲</span></span>
         </div>
-        <div class="cmp-foot"><span class="cmp-meta">341.90 · 3mo</span><span class="cmp-status">Open</span></div>
+        <div class="cmp-foot"><span class="cmp-meta">3mo</span><span class="cmp-status">Open</span></div>
       </div>
       </div>
 
       <div style="display:flex;justify-content:space-between;align-items:baseline;margin:48px 0 4px;">
-        <span style="font-size:17px;color:var(--c-200);letter-spacing:-0.02em;line-height:1.2;" id="alpha-down">Top Detractors</span>
+        <span style="display:flex;align-items:baseline;gap:8px;">
+          <!-- Currency removed here on the second 2026-09-04 pass, with the Contributors
+               header's. Stated once at the top of the screen; see the note there. -->
+          <span style="font-size:17px;color:var(--c-200);letter-spacing:-0.02em;line-height:1.2;" id="alpha-down">Top Detractors</span>
+        </span>
         <span class="dec-exp" style="font-size:13px;color:var(--c-700);" onclick="toggleDecPreview('alphaDown',this)">View All<svg class="chev-svg" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.3"/></svg></span>
       </div>
       <div class="cmp-item" onclick="positionTap('BA','closed')" style="cursor:pointer;">
@@ -1152,21 +1371,21 @@
           <span class="cmp-label">BA</span>
           <span class="cmp-val"><span class="anum">−823.20</span><span class="pct">−14.7&nbsp;pp</span><span class="trend down">▼</span></span>
         </div>
-        <div class="cmp-foot"><span class="cmp-meta">172.85 · 1y 1m</span><span class="cmp-status">Closed</span></div>
+        <div class="cmp-foot"><span class="cmp-meta">1y 1m</span><span class="cmp-status">Closed</span></div>
       </div>
       <div class="cmp-item" onclick="positionTap('PYPL','closed')" style="cursor:pointer;">
         <div class="cmp-row">
           <span class="cmp-label">PYPL</span>
           <span class="cmp-val"><span class="anum">−673.20</span><span class="pct">−9.9&nbsp;pp</span><span class="trend down">▼</span></span>
         </div>
-        <div class="cmp-foot"><span class="cmp-meta">71.40 · 9mo</span><span class="cmp-status">Closed</span></div>
+        <div class="cmp-foot"><span class="cmp-meta">9mo</span><span class="cmp-status">Closed</span></div>
       </div>
       <div class="cmp-item" onclick="positionTap('KO','closed')" style="cursor:pointer;">
         <div class="cmp-row">
           <span class="cmp-label">KO</span>
           <span class="cmp-val"><span class="anum">−429.20</span><span class="pct">−5.8&nbsp;pp</span><span class="trend down">▼</span></span>
         </div>
-        <div class="cmp-foot"><span class="cmp-meta">66.15 · 6mo</span><span class="cmp-status">Closed</span></div>
+        <div class="cmp-foot"><span class="cmp-meta">6mo</span><span class="cmp-status">Closed</span></div>
       </div>
       <div class="dec-preview" id="dec-preview-alphaDown">
       <div class="cmp-item" onclick="positionTap('TSLA','open')" style="cursor:pointer;">
@@ -1174,52 +1393,46 @@
           <span class="cmp-label">TSLA</span>
           <span class="cmp-val"><span class="anum">−396.80</span><span class="pct">−11.3&nbsp;pp</span><span class="trend down">▼</span></span>
         </div>
-        <div class="cmp-foot"><span class="cmp-meta">298.70 · 1y</span><span class="cmp-status">Open</span></div>
+        <div class="cmp-foot"><span class="cmp-meta">1y</span><span class="cmp-status">Open</span></div>
       </div>
       <div class="cmp-item" onclick="positionTap('VZ','closed')" style="cursor:pointer;">
         <div class="cmp-row">
           <span class="cmp-label">VZ</span>
           <span class="cmp-val"><span class="anum">−312.80</span><span class="pct">−3.4&nbsp;pp</span><span class="trend down">▼</span></span>
         </div>
-        <div class="cmp-foot"><span class="cmp-meta">42.80 · 4mo</span><span class="cmp-status">Closed</span></div>
+        <div class="cmp-foot"><span class="cmp-meta">4mo</span><span class="cmp-status">Closed</span></div>
       </div>
       <div class="cmp-item" onclick="positionTap('META','open')" style="cursor:pointer;">
         <div class="cmp-row">
           <span class="cmp-label">META</span>
           <span class="cmp-val"><span class="anum">−250.90</span><span class="pct">−6.7&nbsp;pp</span><span class="trend down">▼</span></span>
         </div>
-        <div class="cmp-foot"><span class="cmp-meta">578.30 · 1y 5m</span><span class="cmp-status">Open</span></div>
+        <div class="cmp-foot"><span class="cmp-meta">1y 5m</span><span class="cmp-status">Open</span></div>
       </div>
       <div class="cmp-item" onclick="positionTap('DIS','open')" style="cursor:pointer;">
         <div class="cmp-row">
           <span class="cmp-label">DIS</span>
           <span class="cmp-val"><span class="anum">−71.90</span><span class="pct">−4.2&nbsp;pp</span><span class="trend down">▼</span></span>
         </div>
-        <div class="cmp-foot"><span class="cmp-meta">108.40 · 10mo</span><span class="cmp-status">Open</span></div>
+        <div class="cmp-foot"><span class="cmp-meta">10mo</span><span class="cmp-status">Open</span></div>
       </div>
       <div class="cmp-item" onclick="positionTap('BA','open')" style="cursor:pointer;">
         <div class="cmp-row">
           <span class="cmp-label">BA</span>
           <span class="cmp-val"><span class="anum">−42.20</span><span class="pct">−3.0&nbsp;pp</span><span class="trend down">▼</span></span>
         </div>
-        <div class="cmp-foot"><span class="cmp-meta">178.90 · 5mo</span><span class="cmp-status">Open</span></div>
+        <div class="cmp-foot"><span class="cmp-meta">5mo</span><span class="cmp-status">Open</span></div>
       </div>
       <div class="cmp-item" onclick="positionTap('NFLX','open')" style="cursor:pointer;">
         <div class="cmp-row">
           <span class="cmp-label">NFLX</span>
           <span class="cmp-val"><span class="anum">−21.50</span><span class="pct">−1.1&nbsp;pp</span><span class="trend down">▼</span></span>
         </div>
-        <div class="cmp-foot"><span class="cmp-meta">712.50 · 2mo</span><span class="cmp-status">Open</span></div>
+        <div class="cmp-foot"><span class="cmp-meta">2mo</span><span class="cmp-status">Open</span></div>
       </div>
       </div>
 
       <p style="font-size:11px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">1 position isn't ranked here, it arrived via a corporate spin-off with no cost basis on record, so its total gain couldn't be established.</p>
-      <!-- Wording unified to "Currency in CAD" 2026-09-03, matching the other currency mention
-           at the Performance section (line ~556): the user chose that wording for both. Kept at
-           --c-700, not toned down with the note above it, since as a bare label ("Currency in
-           CAD") it names a fact rather than explaining one, the same register as the Performance
-           header's version. -->
-      <p style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;line-height:1.4;margin:0;">Currency in CAD</p>
       <span class="dec-tap" style="font-size:11px;color:var(--c-700);" onclick="toggleDef('notealpha',this)">Notes</span>
       <div class="dec-def" id="def-notealpha" hidden>
         <p>Ranked by dollar alpha, so position size is already in the number: a wide margin over the S&amp;P on a small holding moves the account less than a thin margin on a large one.</p>
@@ -1236,11 +1449,40 @@
       <span class="info-btn hdr" onclick="openInfo('open')">i</span>
     </header>
 
+    <!-- CURRENCY, 2026-09-04 (third pass). This screen printed dollars on every row
+         (11,530.00 and ten more) and named no currency anywhere, which is the live failure
+         the rule exists to close. The rule itself is unchanged: stated ONCE per screen, and
+         everything below inherits it.
+         WHERE IT SITS, and why it moved here from the headline line. Three reasons, in
+         order of weight:
+         1. METADATA SITS WITH METADATA. The clock, the two market flags and the currency
+            are all conditions for reading the screen, not content of it. The strip already
+            holds the other two.
+         2. IT USES SPACE THAT WAS EMPTY. The strip's whole right-hand side was unused, and
+            the headline line the statement used to share is a better line without it.
+         3. ONE STRIP PER SCREEN. Each screen has exactly one .mkt-strip, so "once per
+            screen" becomes structural instead of something to remember.
+         The Detail screen is what exposed it: the statement was copied from the
+         Performance vs S&P 500 header, where the title is LEFT and the currency RIGHT.
+         Detail's heading block is already right-aligned, so the same markup left the
+         currency alone at the far left of an otherwise empty baseline.
+         REGISTER: 11px --c-700, the quietest thing in the row. The clock is 13px --c-200
+         and the flags are 13px --c-700. The currency must not compete with the clock.
+         THERE IS NO EXCEPTION. #screen-decisions was one for a day and it was retired in
+         the fourth pass, so all four screens now carry this identically. The exception had
+         been argued on that screen's height, and it did not survive its own numbers: the
+         move changes its distance to Top Contributors by under 3%. The reasoning is written
+         out above that screen's strip. Do not reinstate it.
+         KNOWN, not worked around: .mkt-strip is not sticky. It scrolls away and header.app's
+         .mkt-nav fades in with a condensed clock and flags but NO currency, so the statement
+         is a read-on-the-way-in fact on all four screens. Same as before this move, since
+         the headline line scrolled away too. -->
     <div class="mkt-strip">
       <span class="mkt-clock" data-clock>00:00:00 ET</span>
       <span class="mkt-div"></span>
       <span class="mkt-flag"><span class="dot" data-mkt="us"></span>US</span>
       <span class="mkt-flag"><span class="dot" data-mkt="ca"></span>CA</span>
+      <span style="margin-left:auto;font-size:11px;letter-spacing:-0.02em;color:var(--c-700);">Currency in CAD</span>
     </div>
 
     <div class="subhead">
@@ -1271,7 +1513,9 @@
     <div class="pvs-head">
       <span class="sec-title">Positions vs S&amp;P 500</span>
       <p class="pvs-note">Each line is one open position, measured in percentage points against the S&amp;P 500 over its own window. Every line starts on the day it was entered, where the gap against the index is zero by definition, so how far a line runs is how long it has been held.</p>
-      <svg class="pvs-svg" data-pvs="open" viewBox="0 0 320 188" style="width:100%;height:auto;display:block;margin-top:4px;" aria-hidden="true"></svg>
+      <div class="chart-plot" style="margin-top:4px;">
+        <svg class="pvs-svg" data-pvs="open" viewBox="0 0 320 188" style="width:100%;height:auto;display:block;" aria-hidden="true"></svg>
+      </div>
       <p class="pvs-note" data-pvs-count="open"></p>
     </div>
 
@@ -1424,11 +1668,21 @@
       <span class="info-btn hdr" onclick="openInfo('closed')">i</span>
     </header>
 
+    <!-- CURRENCY, 2026-09-04 (third pass). Same failure and same fix as the Open screen:
+         every row printed a dollar ("Exit value 11,985.00" and nine more) and no currency
+         was named anywhere. It now sits at the right-hand end of the market strip, with
+         the clock and the flags, for the reasons written out in full on the Open screen.
+         It was deliberately NOT put on the Win rate strip further down, which is the
+         closest thing to a list header here: that would place it lower on this screen than
+         on Open for no reason other than that a strip happened to exist, and the two
+         screens are mirrors. Now that it rides the market strip, the two are identical by
+         structure rather than by matching two hand-placed lines. -->
     <div class="mkt-strip">
       <span class="mkt-clock" data-clock>00:00:00 ET</span>
       <span class="mkt-div"></span>
       <span class="mkt-flag"><span class="dot" data-mkt="us"></span>US</span>
       <span class="mkt-flag"><span class="dot" data-mkt="ca"></span>CA</span>
+      <span style="margin-left:auto;font-size:11px;letter-spacing:-0.02em;color:var(--c-700);">Currency in CAD</span>
     </div>
 
     <div class="subhead">
@@ -1459,7 +1713,9 @@
     <div class="pvs-head">
       <span class="sec-title">Positions vs S&amp;P 500</span>
       <p class="pvs-note">Each line is one closed position, measured in percentage points against the S&amp;P 500 over its own window. Every line starts on the day it was entered, where the gap against the index is zero by definition, and ends on the day it was closed, so how far a line runs is how long it was held.</p>
-      <svg class="pvs-svg" data-pvs="closed" viewBox="0 0 320 188" style="width:100%;height:auto;display:block;margin-top:4px;" aria-hidden="true"></svg>
+      <div class="chart-plot" style="margin-top:4px;">
+        <svg class="pvs-svg" data-pvs="closed" viewBox="0 0 320 188" style="width:100%;height:auto;display:block;" aria-hidden="true"></svg>
+      </div>
       <p class="pvs-note" data-pvs-count="closed"></p>
     </div>
 
@@ -1611,11 +1867,18 @@
       <span class="info-btn hdr" onclick="openInfo('detail')">i</span>
     </header>
 
+    <!-- CURRENCY, 2026-09-04 (third pass). This is the screen that exposed the old
+         placement. The statement had been copied from the Performance vs S&P 500 header,
+         where the title is LEFT and the currency RIGHT; this screen's heading block is
+         already right-aligned, so the same markup stranded the currency alone at the far
+         left of an otherwise empty baseline. It now rides the market strip. Full reasoning
+         on the Open screen. -->
     <div class="mkt-strip">
       <span class="mkt-clock" data-clock>00:00:00 ET</span>
       <span class="mkt-div"></span>
       <span class="mkt-flag"><span class="dot" data-mkt="us"></span>US</span>
       <span class="mkt-flag"><span class="dot" data-mkt="ca"></span>CA</span>
+      <span style="margin-left:auto;font-size:11px;letter-spacing:-0.02em;color:var(--c-700);">Currency in CAD</span>
     </div>
 
     <div class="subhead">
@@ -1626,9 +1889,9 @@
 
     <div class="hero-pad">
       <div class="hero-return">
-        <span class="label">Total Alpha</span>
+        <span class="label">Alpha</span>
         <span class="big" style="color:var(--c-white);">+1,946.50<span class="pct">+22.9&nbsp;pp</span><span class="trend up">▲</span></span>
-        <span class="sub" style="display:block;margin:8px 0 0;">+41.0% return · gain 3,485.00 · value 11,985.00</span>
+        <span class="sub" style="display:block;margin:8px 0 0;">+41.0% return · +3,485.00 gain · 11,985.00 value</span>
       </div>
     </div>
 
@@ -1638,7 +1901,7 @@
       <div class="kv"><div class="k">Avg. Cost / Share</div><div class="v">138.42</div></div>
       <div class="kv"><div class="k">Exit Price</div><div class="v">195.15</div></div>
       <div class="kv"><div class="k">Held</div><div class="v">236 days</div></div>
-      <div class="kv"><div class="k">Entry Weight</div><div class="v">17.9% of portfolio</div></div>
+      <div class="kv"><div class="k">Entry Weight</div><div class="v">17.9%</div></div>
       <div class="kv"><div class="k">Book Cost</div><div class="v">8,500.00</div></div>
     </div>
 
@@ -1665,49 +1928,51 @@
     <div class="sec">
       <span class="sec-title">Position vs Benchmark</span>
       <div class="chartwrap" style="margin-top:4px;">
-        <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;display:block;margin-bottom:8px;">NVDA vs. S&amp;P 500, % return since entry</span>
-        <div style="position:relative;">
-          <div class="scrub-box" id="posScrubBox">
-            <div class="sb-grid">
-              <div class="sb-cell"><span class="sb-lbl">Date</span><span class="sb-val sb-date" id="posScrubDate">Jul 2, 2026</span></div>
-              <div class="sb-cell"><span class="sb-lbl">NVDA</span><span class="sb-val" id="posScrubA">+41.0%</span></div>
-              <div class="sb-cell"><span class="sb-lbl">S&amp;P</span><span class="sb-val" id="posScrubB">+18.1%</span></div>
-              <div class="sb-cell"><span class="sb-lbl">Alpha</span><span class="sb-val" id="posScrubAlpha">+22.9&nbsp;pp<span class="trend up" id="posScrubArrow">▲</span></span></div>
+        <div class="chart-plot">
+          <span style="font-size:11px;color:var(--c-700);letter-spacing:-0.02em;display:block;margin-bottom:8px;">NVDA vs. S&amp;P 500, % return since entry</span>
+          <div style="position:relative;">
+            <div class="scrub-box" id="posScrubBox">
+              <div class="sb-grid">
+                <div class="sb-cell"><span class="sb-lbl">Date</span><span class="sb-val sb-date" id="posScrubDate">Jul 2, 2026</span></div>
+                <div class="sb-cell"><span class="sb-lbl">NVDA</span><span class="sb-val" id="posScrubA">+41.0%</span></div>
+                <div class="sb-cell"><span class="sb-lbl">S&amp;P</span><span class="sb-val" id="posScrubB">+18.1%</span></div>
+                <div class="sb-cell"><span class="sb-lbl">Alpha</span><span class="sb-val" id="posScrubAlpha">+22.9&nbsp;pp<span class="trend up" id="posScrubArrow">▲</span></span></div>
+              </div>
             </div>
+          <svg style="width:100%;height:180px;display:block;overflow:visible;" viewBox="-40 0 360 180" preserveAspectRatio="none" aria-hidden="true">
+            <text x="-40" y="16" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">+40%</text>
+            <text x="-40" y="96" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">+20%</text>
+            <text x="-40" y="176" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">0%</text>
+            <line x1="0" y1="92" x2="320" y2="92" style="stroke:var(--c-1000)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
+            <line x1="0" y1="12" x2="0" y2="176" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
+            <line x1="0" y1="176" x2="320" y2="176" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
+            <defs><clipPath id="posClip"><rect id="posClipRect" x="-2" y="0" width="330" height="180"/></clipPath></defs>
+            <g clip-path="url(#posClip)">
+              <path id="posAcct" d="M0,176 L45,152 L90,128 L135,140 L180,88 L225,56 L270,32 L320,12" fill="none" style="stroke:var(--c-white)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+              <path id="posBm" d="M0,176 L45,168 L90,160 L135,164 L180,152 L225,146 L270,140 L320,103.6" fill="none" style="stroke:var(--c-gold)" stroke-width="1.25" vector-effect="non-scaling-stroke"/>
+            </g>
+            <line class="scrub-line" x1="0" y1="12" x2="0" y2="176" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke" visibility="hidden"/>
+            <ellipse class="scrub-dot-b" rx="2.5" ry="2.5" style="fill:var(--c-gold)" visibility="hidden"/>
+            <ellipse class="scrub-dot-a" rx="2.5" ry="2.5" style="fill:var(--c-400)" visibility="hidden"/>
+          </svg>
+          <!-- Legend unified to the S&P card's method (main dashboard.html #bench-chart .plot-ends),
+               2026-09-03. Three reasons: (1) the product had two ways of labelling the same two
+               series, now one; (2) the bordered chip was the loudest stroke on this chart in the
+               colour audit, a supporting element outranking the data, removing the box removes
+               that; (3) the end value now lands where the line ends, which is where the eye
+               arrives, instead of a fixed chip at the top. Values are read from the Performance vs
+               S&P rows above (#perfPosPct / #perfSpPct) by posPlotEndsSync() below, not
+               hardcoded, so the chart's endpoints cannot disagree with the table two inches above
+               it. Scoped to this Detail screen only: the dashboard's own Positions vs S&P 500
+               chart still uses the boxed .legend, untouched. -->
+          <div class="plot-ends" id="posPlotEnds">
+            <span class="acct">NVDA <span id="posPlotEndAcct">+41.0%</span></span>
+            <span class="bm">S&amp;P 500 <span id="posPlotEndBm">+18.1%</span></span>
           </div>
-        <svg style="width:100%;height:180px;display:block;overflow:visible;" viewBox="-40 0 360 180" preserveAspectRatio="none" aria-hidden="true">
-          <text x="-40" y="16" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">+40%</text>
-          <text x="-40" y="96" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">+20%</text>
-          <text x="-40" y="176" style="fill:var(--c-700)" font-size="11" letter-spacing="-0.02em" text-anchor="start">0%</text>
-          <line x1="0" y1="92" x2="320" y2="92" style="stroke:var(--c-1000)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
-          <line x1="0" y1="12" x2="0" y2="176" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
-          <line x1="0" y1="176" x2="320" y2="176" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke"/>
-          <defs><clipPath id="posClip"><rect id="posClipRect" x="-2" y="0" width="330" height="180"/></clipPath></defs>
-          <g clip-path="url(#posClip)">
-            <path id="posAcct" d="M0,176 L45,152 L90,128 L135,140 L180,88 L225,56 L270,32 L320,12" fill="none" style="stroke:var(--c-white)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
-            <path id="posBm" d="M0,176 L45,168 L90,160 L135,164 L180,152 L225,146 L270,140 L320,103.6" fill="none" style="stroke:var(--c-gold)" stroke-width="1.25" vector-effect="non-scaling-stroke"/>
-          </g>
-          <line class="scrub-line" x1="0" y1="12" x2="0" y2="176" style="stroke:var(--c-800)" stroke-width="0.5" vector-effect="non-scaling-stroke" visibility="hidden"/>
-          <ellipse class="scrub-dot-b" rx="2.5" ry="2.5" style="fill:var(--c-gold)" visibility="hidden"/>
-          <ellipse class="scrub-dot-a" rx="2.5" ry="2.5" style="fill:var(--c-400)" visibility="hidden"/>
-        </svg>
-        <!-- Legend unified to the S&P card's method (main dashboard.html #bench-chart .plot-ends),
-             2026-09-03. Three reasons: (1) the product had two ways of labelling the same two
-             series, now one; (2) the bordered chip was the loudest stroke on this chart in the
-             colour audit, a supporting element outranking the data, removing the box removes
-             that; (3) the end value now lands where the line ends, which is where the eye
-             arrives, instead of a fixed chip at the top. Values are read from the Performance vs
-             S&P rows above (#perfPosPct / #perfSpPct) by posPlotEndsSync() below, not
-             hardcoded, so the chart's endpoints cannot disagree with the table two inches above
-             it. Scoped to this Detail screen only: the dashboard's own Positions vs S&P 500
-             chart still uses the boxed .legend, untouched. -->
-        <div class="plot-ends" id="posPlotEnds">
-          <span class="acct">NVDA <span id="posPlotEndAcct">+41.0%</span></span>
-          <span class="bm">S&amp;P 500 <span id="posPlotEndBm">+18.1%</span></span>
-        </div>
-        </div>
-        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--c-700);letter-spacing:-0.02em;margin-top:8px;padding-left:11%;">
-          <span>Nov 25</span><span>Jan 26</span><span>Apr 26</span><span>Jul 26</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--c-700);letter-spacing:-0.02em;margin-top:8px;padding-left:11%;">
+            <span>Nov 25</span><span>Jan 26</span><span>Apr 26</span><span>Jul 26</span>
+          </div>
         </div>
 
       </div>
@@ -1716,7 +1981,7 @@
     <div class="sec">
       <span class="sec-title">Portfolio Impact</span>
       <div class="cmp-row wide">
-        <span class="cmp-label">Dollar contribution to account return</span>
+        <span class="cmp-label">Dollar contribution to portfolio return</span>
         <span class="cmp-val">+3,485.00<span class="arw-slot"></span></span>
       </div>
       <div class="cmp-row wide">
@@ -1745,9 +2010,28 @@
       </div>
       <div class="cmp-row">
         <span class="cmp-label">Selling early cost you</span>
-        <span class="cmp-val"><span class="anum">−2,040.59</span><span class="pct">−24.0&nbsp;pp</span><span class="trend down">▼</span></span>
+        <span class="cmp-val"><span class="anum" id="sellCostVal">−2,040.59</span><span class="pct">−24.0&nbsp;pp</span><span class="trend down">▼</span></span>
       </div>
-      <p style="font-size:13px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">Priced at Aug 10, 2026 on the 61.41 shares sold. Assumes the shares were kept and does not count what the proceeds earned after the sale.</p>
+      <!-- Portfolio Value if held. What the WHOLE self-directed portfolio would be
+           worth today if this position had never been sold.
+           SCOPE, deliberate: this row does NOT follow the account filter. NVDA was a
+           Non-Registered position, so scoping this figure to TFSA or RRSP would claim
+           that holding NVDA would have made an account worth more that never held it.
+           It is the self-directed total on purpose. Do not "fix" it into consistency
+           with the account-scoped sections elsewhere on this screen.
+           SIGNS: value = self-directed total, minus the "Selling early cost you"
+           figure above. That figure is negative when selling was a mistake, and a
+           mistake makes the if-held portfolio HIGHER, so this row reads positive while
+           the row directly above it reads negative. That is the correct relationship
+           between the two, not a bug.
+           Derived at runtime from the row above so the two can never disagree.
+           LABEL: "Portfolio Value if held", not "Total Portfolio Value if held": the
+           longer wording overran the 20px right gutter at 390px. Do not lengthen it. -->
+      <div class="cmp-row">
+        <span class="cmp-label">Portfolio Value if held</span>
+        <span class="cmp-val"><span class="anum" id="ifHeldPortVal"></span><span class="pct" id="ifHeldPortPct"></span><span id="ifHeldPortArw"></span></span>
+      </div>
+      <p style="font-size:11px;color:var(--c-800);letter-spacing:-0.02em;line-height:1.4;margin:0;">Priced at Aug 10, 2026 on the 61.41 shares sold. Assumes the shares were kept and does not count what the proceeds earned after the sale.</p>
     </div>
 
     <p class="foot-disclosure">Closed positions use past tense (Beat / Trailed). Alpha vs S&amp;P 500, dividends reinvested. Figures are preliminary and unaudited.</p>
@@ -1958,13 +2242,25 @@
   // cost basis of what is open today, per account. Return falls out of the two
   // (value − basis) / basis, so the table and the hero can never disagree.
   // The three account totals sum to 57,111.62, the page's total portfolio value.
+  //
+  // THREE INPUTS PER ACCOUNT, and every since-inception figure on this screen is derived
+  // from them: the capital deposited (basis), what it is worth (value), and what the same
+  // capital would be worth in the index (sp). P&L is value − basis, the mirror is
+  // sp − basis, both rates are those over basis, Alpha is the two P&Ls subtracted and
+  // Difference is Alpha over sp. Nothing is stored twice, so nothing can drift.
+  //
+  // The same triple is what main-dashboard-states.html carries, verbatim, and that card
+  // prints value, sp and value − sp. So the card's Difference and this screen's Alpha are
+  // the same subtraction of the same two numbers, at every account scope. They used to be
+  // computed off a separate 40,969.60 base that existed only here, which put the card and
+  // the page 2.34 apart on a figure the user reaches by tapping from one to the other.
   const ACCT_YEARS_COMPOUND = 39.4425;                   // what ACCOUNT_YEARS itself compounds to, the scaling base, not the current-holdings blend
   const scaleYears = k => ACCOUNT_YEARS.map(v => Math.round(v * k * 10) / 10);
   const ACCOUNTS = {
-    all:       {label:'All Accounts',   value:57142.02, basis:41000,    years:ACCOUNT_YEARS},
-    'non-reg': {label:'Non-Registered', value:36930.75, basis:24259.90, years:scaleYears(52.2/ACCT_YEARS_COMPOUND)},
-    tfsa:      {label:'TFSA',           value:15201.17, basis:10531.71, years:scaleYears(44.3/ACCT_YEARS_COMPOUND)},
-    rrsp:      {label:'RRSP',           value:4979.69,  basis:4051.17,  years:scaleYears(22.9/ACCT_YEARS_COMPOUND)}
+    all:       {label:'All Accounts',   value:57142.02, sp:59515.92, basis:41000,    years:ACCOUNT_YEARS},
+    'non-reg': {label:'Non-Registered', value:36930.75, sp:35225.38, basis:24259.90, years:scaleYears(52.2/ACCT_YEARS_COMPOUND)},
+    tfsa:      {label:'TFSA',           value:15201.17, sp:15292.04, basis:10531.71, years:scaleYears(44.3/ACCT_YEARS_COMPOUND)},
+    rrsp:      {label:'RRSP',           value:4979.69,  sp:5882.30,  basis:4051.17,  years:scaleYears(22.9/ACCT_YEARS_COMPOUND)}
   };
   const DEP_TOTAL = 41000;                               // sum of DEPOSITS below
   const BM = {
@@ -1975,12 +2271,17 @@
     tsx:    {short:'TSX',    long:'TSX',     years:[8.0, 6.0, 7.0, 3.2],
              ret:{ytd:3.2, '1y':7.1,  '3y':17.6, all:26.4}}
   };
-  // account return and the capital it was earned on, per period
+  // account return and the capital it was earned on, per SHORTER period. There is no
+  // position-level history per window in this file, so these three windows stay stated.
+  // Since Inception carries neither: that window is exactly what the ACCOUNTS triple
+  // above describes, and it is read from there instead of restated here. Its `ret` is
+  // kept only as the published TWR the three shorter windows are scaled against, and it
+  // is never printed.
   const PERIOD = {
     ytd:  {label:'Year to Date',      ret:3.7,  base:50000},
     '1y': {label:'Trailing 1 Year',   ret:11.2, base:47000},
     '3y': {label:'Trailing 3 Years',  ret:25.6, base:38000},
-    all:  {label:'Since Inception',   ret:39.4, base:40969.6}
+    all:  {label:'Since Inception',   ret:39.4}
   };
   let state = {period:'all', benchmark:'sp', account:'all'};
   // arriving from the main dashboard's S&P card: open already scoped to the
@@ -1996,6 +2297,17 @@
     const A = ACCOUNTS[state.account];
     const full = (A.value - A.basis) / A.basis * 100;
     return periodKey === 'all' ? full : full * PERIOD[periodKey].ret / PERIOD.all.ret;
+  }
+  // The benchmark's return, derived the same way the account's is wherever the data exists
+  // to derive it: since inception the S&P's own value is one of the account's three inputs,
+  // so its return is (sp − basis) / basis and its dollar mirror comes back out as sp − basis
+  // exactly. That is what makes Alpha here and Difference on the home card the same number
+  // rather than two roundings of the same idea. The shorter windows, and Nasdaq and the TSX,
+  // have no stored value on this screen and stay on BM's stated rates.
+  function bmReturn(bmKey, periodKey, A){
+    return (bmKey === 'sp' && periodKey === 'all')
+      ? (A.sp - A.basis) / A.basis * 100
+      : BM[bmKey].ret[periodKey];
   }
   const money = v => (v < 0 ? '\u2212' : '+') + Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:2, maximumFractionDigits:2});
   const pct  = v => (v < 0 ? '\u2212' : '+') + Math.abs(v).toFixed(1) + '%';
@@ -2233,16 +2545,19 @@
   }
 
   function drawCurve(bm, periodKey){
-    const A = state.account === 'all' ? null : ACCOUNTS[state.account];
-    const base = A ? A.basis : PERIOD.all.base;
-    const ds = A ? A.basis / DEP_TOTAL : 1;
-    const acctRet = A ? acctReturn('all') : PERIOD.all.ret;
-    const acct = series(A ? A.years : ACCOUNT_YEARS, base * acctRet/100, 0.172, 0.85, ds);
-    const mirror = series(bm.years, base * bm.ret.all/100, 0.154, 1, ds);
+    // All Accounts is no longer the exception here: it carries basis, value and sp like the
+    // other three, so both curves land on the same figures the rows print.
+    const A = ACCOUNTS[state.account];
+    const scoped = state.account !== 'all';
+    const base = A.basis;
+    const ds = A.basis / DEP_TOTAL;
+    const acctRet = acctReturn('all');
+    const acct = series(A.years, base * acctRet/100, 0.172, 0.85, ds);
+    const mirror = series(bm.years, base * bmReturn(state.benchmark, 'all', A)/100, 0.154, 1, ds);
     const [am,bm2] = WINDOW[periodKey];
     const a = am*SUB, b = bm2*SUB;
     const av = acct.slice(a,b+1), bv = mirror.slice(a,b+1);
-    const dv = (A ? depositsSeries(ds) : DEP_CURVE).slice(a,b+1);
+    const dv = (scoped ? depositsSeries(ds) : DEP_CURVE).slice(a,b+1);
     const lo = Math.min(...av, ...bv, ...dv), hi = Math.max(...av, ...bv, ...dv);
     const step = hi - lo < 12000 ? 2000 : 10000;
     const bot = Math.floor(lo/step)*step, top = Math.ceil(hi/step)*step;
@@ -2284,22 +2599,31 @@
 
   function render(){
     const bm = BM[state.benchmark], per = PERIOD[state.period];
-    const A = state.account === 'all' ? null : ACCOUNTS[state.account];
+    // A is the selected account's figures, which All Accounts now carries in the same shape
+    // as the other three. `scoped` is the separate question of whether one account is
+    // selected rather than the whole book, which is what the section suffixes and the
+    // by-account breakdown key off.
+    const A = ACCOUNTS[state.account];
+    const scoped = state.account !== 'all';
     document.querySelectorAll('#info-sheet-bm .bm-pick').forEach(el=>el.classList.toggle('on', el.dataset.pick===state.benchmark));
     document.querySelectorAll('#info-sheet-account .bm-pick').forEach(el=>el.classList.toggle('on', el.dataset.acct===state.account));
     document.querySelectorAll('[data-acct-label]').forEach(el=>el.textContent = ACCOUNTS[state.account].label);
     // the scope is repeated on every section title, so it is never off-screen
-    document.querySelectorAll('[data-acct-suffix]').forEach(el=>el.textContent = A ? ' · ' + A.label : '');
+    document.querySelectorAll('[data-acct-suffix]').forEach(el=>el.textContent = scoped ? ' · ' + A.label : '');
     // scoped to one account, a per-account breakdown of that same account is circular
     const byAcct = document.getElementById('sec-by-account');
-    if (byAcct) byAcct.style.display = A ? 'none' : 'flex';
+    if (byAcct) byAcct.style.display = scoped ? 'none' : 'flex';
     document.querySelectorAll('.pd-period-opt').forEach(el=>el.classList.toggle('active', el.dataset.period===state.period));
     document.querySelectorAll('[data-period-label]').forEach(el=>el.textContent = per.label);
     document.querySelectorAll('[data-bm-short]').forEach(el=>el.textContent = bm.short);
     document.querySelectorAll('[data-bm-long]').forEach(el=>el.textContent = bm.long);
-    const bmRet  = bm.ret[state.period];
-    const base   = A ? A.basis : per.base;
-    const acctRet = A ? acctReturn(state.period) : per.ret;
+    const bmRet  = bmReturn(state.benchmark, state.period, A);
+    // Since inception is the window the account's own three inputs describe, so every account
+    // including All reads its capital and its return off them. The three shorter windows have
+    // no per-account history in this file and stay on the PERIOD table's stated pair.
+    const ownFigures = scoped || state.period === 'all';
+    const base   = ownFigures ? A.basis : per.base;
+    const acctRet = ownFigures ? acctReturn(state.period) : per.ret;
     const gain   = base * acctRet/100;
     const mirror = base * bmRet/100;
     const alpha  = gain - mirror;
@@ -2310,13 +2634,24 @@
     document.querySelectorAll('[data-bm-pct]').forEach(el=>el.textContent = pct(bmRet));
     document.querySelectorAll('[data-alpha-dollars]').forEach(el=>el.textContent = money(alpha));
     document.querySelectorAll('[data-alpha-pp]').forEach(el=>el.innerHTML = pp(alphaPp));
+    // Difference: the home card's own figure, so the two screens reconcile. The card
+    // computes (portfolio value − S&P value) / S&P value; here the values are basis + gain
+    // and basis + mirror, so the numerator is exactly `alpha` and the denominator is the
+    // S&P equivalent value. Read off the same three variables the rows above print, which
+    // is why it cannot drift from them. Sign comes out of alpha, so it always agrees with
+    // Alpha's arrow. Alpha is in PERCENTAGE POINTS of return, this is a PERCENT of value:
+    // different measures, which is the reason both rows exist.
+    const spValue = base + mirror;
+    const diffPct = spValue ? alpha / spValue * 100 : 0;
+    document.querySelectorAll('[data-diff-pct]').forEach(el=>el.textContent =
+      (diffPct < 0 ? '−' : '+') + Math.abs(diffPct).toFixed(2) + '%');
     const down = alpha < 0;
     document.querySelectorAll('[data-alpha-arrow]').forEach(el=>{
       el.className = 'trend ' + (down ? 'down' : 'up');
       el.textContent = down ? '\u25bc' : '\u25b2';
     });
     const ends = drawCurve(bm, state.period);
-    const annAcct = annualize(A ? acctReturn('all') : PERIOD.all.ret), annBm = annualize(bm.ret.all);
+    const annAcct = annualize(acctReturn('all')), annBm = annualize(bmReturn(state.benchmark, 'all', A));
     const annPp = Math.round((annAcct - annBm)*10)/10;
     const totArw = annPp < 0 ? '<span class="trend down">\u25bc</span>' : '<span class="trend up">\u25b2</span>';
     document.getElementById('annAcct').textContent = pct(annAcct);
@@ -2886,6 +3221,360 @@
   onFirstView(document.querySelector('#screen-detail .chartwrap'),
     () => sweep('posClipRect', 600));
 
+  // Holding Pattern, Winners vs Losers: the axis maximum and both bar widths.
+  // The two day counts stay hardcoded in the .bar-val cells, because this file has no
+  // per-position holding-period ledger to compute them from, so those cells are treated
+  // as the single source. The longer of the two defines the axis maximum and the full
+  // bar; the shorter is drawn as its share of that maximum. Change a .bar-val and the
+  // axis label and both bar lengths follow, so a full bar cannot stop meaning the
+  // labelled maximum the way it did before the axis existed. Runs before the reveal
+  // observers below register, so the widths are in place before the fill animates.
+  // IT ALSO WRITES THE RATIO INTO THE PROSE BELOW THE BARS, off the same two cells.
+  // THE RATIO IS LOSERS OVER WINNERS, DIRECTIONAL, NOT LARGER OVER SMALLER. It was the
+  // larger over the smaller, which can never fall below 1x, while the sentence beside
+  // it asserts "a ratio above 1x means losers are being held longer than winners." On
+  // the old basis a book that held its WINNERS longer would still have printed above
+  // 1x and the sentence would have been false. Losers ÷ winners carries the direction
+  // the sentence claims: below 1x now correctly reads as winners held longer.
+  // The AXIS MAXIMUM stays the LARGER of the two regardless of which kind it is, so
+  // the two are deliberately decoupled: max sets the frame, the ratio states direction.
+  // Deriving it here rather than typing it into the sentence is what keeps the number,
+  // the bar lengths and the axis maximum from ever stating three different things.
+  (function hpAxis(){
+    const wrap = document.getElementById('hp-bars');
+    const out = wrap && wrap.querySelector('[data-hp-max]');
+    if (!out) return;
+    const rows = [...wrap.querySelectorAll('.bar-row')];
+    const days = rows.map(r => parseFloat(r.querySelector('.bar-val').textContent));
+    const max = Math.max(...days);
+    if (!isFinite(max) || max <= 0) return;
+    rows.forEach((r, i) => { r.querySelector('.bar-fill').style.width = (days[i] / max * 100).toFixed(1) + '%'; });
+    out.textContent = max + 'd';
+    // Two decimals is the register the removed hairline used (1.42x), kept so the
+    // figure reads as the same measure it always was, just relocated into the prose.
+    // Losers and winners are read by their own labels, not by row order, so the
+    // direction cannot silently invert if the two rows are ever reordered.
+    const ratioEl = document.querySelector('[data-hp-ratio]');
+    const dayOf = name => {
+      const r = rows.find(r => r.querySelector('.bar-label').textContent.trim() === name);
+      return r ? parseFloat(r.querySelector('.bar-val').textContent) : NaN;
+    };
+    const lose = dayOf('Losers'), win = dayOf('Winners');
+    if (ratioEl && isFinite(lose) && isFinite(win) && win > 0)
+      ratioEl.textContent = (lose / win).toFixed(2) + 'x';
+  })();
+
+  // ══════════════ POSITION SIZE vs RETURN ═══════════════════════════════════════
+  // One dot per position, x = what was put in at entry, y = what it returned.
+  //
+  // WHY THIS IS DERIVED NOW. It was twenty typed coordinates plus a typed 4.2k / 9.2k
+  // axis, all of it computed off the NINE CLOSED positions and nothing else, so the
+  // book's other eleven positions were simply absent from a chart about the whole
+  // book. Aidan asked for them conditionally in the 2026-09-04 review ("if this one is
+  // including opened and closed positions... then we should do it the same way that
+  // you've done it for that other one where there's the empty dots for the closed and
+  // then the filled in for the other one"); the user decided to include them, which
+  // makes his condition true. Adding eleven dots moves both axis ranges, the median
+  // guide and every existing dot, which is exactly the arithmetic no one should be
+  // doing by hand into an attribute. So the frame stays in the markup and everything
+  // that is data comes off the rows.
+  //
+  // BOTH AXES EXIST FOR AN OPEN POSITION, CHECKED BEFORE ANY DOT WAS PLOTTED.
+  //   x, size at entry: reconstructed from the row's own printed value and return,
+  //     entry = value / (1 + return/100), the exact inverse closedStats() documents
+  //     and uses. An open row carries both, so this is the same measure for both
+  //     kinds, not an estimate standing in for one of them.
+  //   y, the return over the holding window: the row's own .anum-r. For an open
+  //     position that window is still running rather than final, which is what the
+  //     hollow-vs-filled mark is there to say.
+  // Nothing is invented and nothing is defaulted: a row that cannot supply all three
+  // figures is dropped, which is GEHC (row-na, no cost basis on record) and is the
+  // same exclusion every other derived figure on this screen already makes.
+  //
+  // ── THE Y BASIS IS THE INDEX-RELATIVE FIGURE, SETTLED 2026-09-04 ──
+  // SZ_Y below returns the position's return AGAINST THE S&P in percentage points,
+  // which is what the chart's own furniture already claimed: the y axis is titled
+  // "Return vs S&P" and its zero line is gold, the product-wide mark for the index.
+  // It used to return the RAW return, because that is what the nine original dots
+  // were plotted on (verified: y = 125 − ret × 7/3 reproduced all nine to 0.1 units),
+  // and the visible contradiction was dots sitting ABOVE the gold line drawn RED:
+  // KO and VZ at nine dots, then TSLA, META and NFLX once the open positions joined,
+  // five of twenty. On the index-relative basis height and colour cannot disagree,
+  // since both now read off the same figure. DO NOT REVERT TO c.ret: it puts the
+  // axis title, the gold line and the dot colours back into conflict.
+  //
+  // THE MARK IS THE EXISTING CONVENTION, UNCHANGED: filled means still held, a ring
+  // means closed, same r, same muted pair, same 1-unit stroke, and the ring is
+  // GROUND-FILLED rather than fill:none for the reason the pvs block states at
+  // length: a bare ring with anything behind it reads as a filled dot again. Ground
+  // here is plain --c-elev, with no wash to add back since this chart carries none.
+  // It was --c-black until 2026-09-04, when this chart was boxed in .chart-plot: the
+  // ground it rebuilds is the box's, so it has to be the box's colour or the ring reads
+  // as a hole in the panel instead of a ring on it.
+  // IT PAINTS TWICE, AND IT HAS TO. Label collisions are decided on a MEASURED width,
+  // so the first pass, which runs before the webfont has replaced the fallback, reads
+  // Arial's metrics: 1 to 2px narrow at every size, enough to flip a borderline label
+  // into or out of the roll-up. Measured here, not assumed: on the raw-return basis
+  // the first pass rolled 3 names and the settled pass rolled 4. On the index-relative
+  // basis both passes roll the same 2, NFLX and the open BA, so the second pass is
+  // currently invisible - it is kept because whether a label is borderline depends on
+  // the data, not on this pass. pvsRefresh() repaints on document.fonts.ready
+  // for exactly this reason and this follows it.
+  //
+  // Which is why this chart owns its own reveal instead of joining the shared
+  // revealRoots collector below. revealOnView() captures its .mo-pt / .mo-lb list ONCE
+  // at registration; repainting replaces every one of those nodes, so the observer
+  // would hand .inview to detached elements and the new dots would never appear. This
+  // re-queries at fire time, and its first paint runs AFTER that collector so the
+  // collector cannot claim this svg. Same animation classes, same --d stagger, same
+  // reduced-motion behaviour, just a live node list.
+  let szSeen = false;
+  function szReveal(){
+    const svg = document.getElementById('sz-svg');
+    if (!svg) return;
+    const light = () => svg.querySelectorAll('.mo-pt, .mo-lb').forEach(el => el.classList.add('inview'));
+    if (REDUCED || szSeen){ light(); return; }
+    const io = new IntersectionObserver(entries => entries.forEach(e => {
+      if (e.isIntersecting){ io.disconnect(); szSeen = true; light(); }
+    }), {threshold: 0});
+    io.observe(svg);
+  }
+  function szPaint(){
+    const g = document.querySelector('#sz-svg [data-sz-plot]');
+    if (!g) return;
+    // The frame's own coordinates, repeated from the markup above so the two cannot
+    // disagree about where the plot box is.
+    const X0 = 30, X1 = 300, TOP = 20, BOT = 160, R = 4, XLAB = 174, ROLL = 190;
+
+    const num = s => { const t = String(s).replace(/−/g, '-').replace(/[^0-9.\-]/g, '');
+                       return (t === '' || t === '-') ? NaN : parseFloat(t); };
+    const rows = [];
+    document.querySelectorAll('#screen-open .list .row, #screen-closed .list .row').forEach(r => {
+      if (r.classList.contains('row-na')) return;
+      const tk = r.querySelector('.ticker'), val = r.querySelector('.rowvalue'),
+            ret = r.querySelector('.anum-r'), vs = r.querySelector('.vstag');
+      if (!tk || !val || !ret || !vs) return;
+      const v = num(val.textContent), a = num(ret.textContent), b = num(vs.textContent);
+      if (!isFinite(v) || !isFinite(a) || !isFinite(b) || a <= -100) return;
+      // OPEN OR CLOSED COMES FROM WHICH LIST THE ROW IS IN, not a second data source,
+      // the same test pvsRead() makes. It is what decides ring against disc.
+      rows.push({ t: tk.textContent.trim(), entry: v / (1 + a / 100), ret: a,
+                  pp: Math.round((a - b) * 10) / 10, closed: !!r.closest('#screen-closed') });
+    });
+    if (!rows.length) return;
+
+    const SZ_Y = c => c.pp;               // see the Y BASIS note above
+    const col = c => c.pp >= 0 ? '--c-live-muted' : '--c-urgent-muted';
+
+    // ---- the axes, which is the part that moves ------------------------------
+    // The rounding rule is read back off the chart it replaces rather than invented:
+    // the closed-only set ran 41.0 to −9.2 and was drawn on +45 to −15, i.e. the top
+    // rounded up to the next 5 and the bottom rounded down to the next 5 and then
+    // given one more step of air. Applied to the closed set's raw returns it still
+    // gives +45 to −15, so the chart the review already saw is reproducible from this
+    // code. On the index-relative basis the whole book spans +22.9 to −14.7 pp, which
+    // the same rule draws on +25 to −20, tick +20%. The rule is unchanged; only the
+    // basis it is fed moved, so nothing here is hand-set for a particular range.
+    const ys = rows.map(SZ_Y);
+    const hi = Math.ceil(Math.max.apply(null, ys) / 5) * 5;
+    const lo = Math.floor(Math.min.apply(null, ys) / 5) * 5 - 5;
+    const es = rows.map(c => c.entry);
+    const eLo = Math.min.apply(null, es), eHi = Math.max.apply(null, es);
+    const yOf = v => BOT - (v - lo) / (hi - lo) * (BOT - TOP);
+    const xOf = e => eHi === eLo ? (X0 + X1) / 2 : X0 + (e - eLo) / (eHi - eLo) * (X1 - X0);
+    const sortedE = es.slice().sort((a, b) => a - b), midI = sortedE.length >> 1;
+    const med = sortedE.length % 2 ? sortedE[midI] : (sortedE[midI - 1] + sortedE[midI]) / 2;
+    const zeroY = yOf(0), tickV = hi - 5, medX = xOf(med);
+    const kfmt = v => (v / 1000).toFixed(1) + 'k';
+
+    // ---- label widths, MEASURED, not guessed --------------------------------
+    // Canvas, for pvsMetrics()'s reason: getBBox reads zero on a display:none screen,
+    // and because the viewBox scales uniformly a width measured at 9px IS the width
+    // in user units. Same face, same size as the labels themselves.
+    let ctx = null;
+    function metrics(s){
+      if (!ctx) ctx = document.createElement('canvas').getContext('2d');
+      ctx.font = "9px 'Inter', system-ui, -apple-system, sans-serif";
+      return ctx.measureText(s);
+    }
+    const wOf = s => metrics(s).width;
+    // The ink box, not the em box, same as pvsInk(): a ticker is capitals and digits,
+    // so it has nothing below the baseline and nothing in the top of its line box.
+    function inkOf(s){
+      const m = metrics(s), a = m.actualBoundingBoxAscent, d = m.actualBoundingBoxDescent;
+      return { asc: isFinite(a) ? a : 6.5, desc: isFinite(d) ? d : 0.4 };
+    }
+    // Liang-Barsky, a local copy of pvsCross(): the same exact test, not a sampled
+    // one. It is duplicated rather than hoisted because pvsCross lives inside the pvs
+    // block's closure and reaching into that block would put the three Positions vs
+    // S&P 500 charts at risk for a chart that does not share a single other line
+    // with them.
+    function cross(a, b, r){
+      let t0 = 0, t1 = 1;
+      const p = [a[0] - b[0], b[0] - a[0], a[1] - b[1], b[1] - a[1]];
+      const q = [a[0] - r.x0, r.x1 - a[0], a[1] - r.y0, r.y1 - a[1]];
+      for (let i = 0; i < 4; i++){
+        if (p[i] === 0){ if (q[i] < 0) return false; continue; }
+        const t = q[i] / p[i];
+        if (p[i] < 0){ if (t > t1) return false; if (t > t0) t0 = t; }
+        else { if (t < t0) return false; if (t < t1) t1 = t; }
+      }
+      return true;
+    }
+
+    // TWO RADII: r is the mark's size and does not change with the treatment, ri is
+    // what is actually inked, and a closed mark's 1-unit ring straddles r so it
+    // reaches half a unit further out. Every distance judged below uses ri.
+    const dots = rows.map(c => ({ c: c, x: xOf(c.entry), y: yOf(SZ_Y(c)),
+                                  r: R, ri: c.closed ? R + 0.5 : R }));
+
+    // Four slots per dot, right first so nothing moves that did not have to. The
+    // baselines are the ones the nine hardcoded labels already used: 13 below the
+    // dot's centre, 8 above it, and +3 beside it, so the placed labels sit exactly
+    // where they used to sit whenever a slot was not contested.
+    const AIR = 0.6, H = 4.5, SIDES = ['right', 'left', 'above', 'below'];
+    function slotOf(d, w, ink, side){
+      const base = side === 'above' ? d.y - 8 : side === 'below' ? d.y + 13 : d.y + 3;
+      const x0 = side === 'right' ? d.x + d.ri + 2
+               : side === 'left'  ? d.x - d.ri - 2 - w : d.x - w / 2;
+      const vc = base - 3;
+      return { x0: x0, x1: x0 + w, y0: vc - H, y1: vc + H, side: side, base: base,
+               ink: { x0: x0 - AIR, x1: x0 + w + AIR,
+                      y0: base - ink.asc - AIR, y1: base + ink.desc + AIR } };
+    }
+    // Every stroke a label could land on, each with what it costs. The gold zero line
+    // is worth 3, it is what the chart measures against and it runs the full width.
+    // The median guide and the two axis rules are worth 2.
+    const segs = [
+      [[X0, zeroY], [X1, zeroY], 3],
+      [[medX, TOP], [medX, BOT], 2],
+      [[X0, TOP], [X0, BOT], 2],
+      [[X0, BOT], [X1, BOT], 2]
+    ];
+    // ORDER IS BY MAGNITUDE on the plotted value, so the extremes are named first and
+    // anything that has to roll comes from the middle of the book, where a name
+    // matters least. Same rule the pvs charts use.
+    const order = dots.slice().sort((a, b) => Math.abs(SZ_Y(b.c)) - Math.abs(SZ_Y(a.c)));
+    // WHEN A TICKER OWNS TWO MARKS, THE OPEN ONE ASKS FIRST. V and BA each carry an
+    // open and a closed position here, exactly as on the Decisions chart, and only
+    // one label can survive a shared ticker. Same reordering, same reasoning.
+    const pairIdx = {};
+    order.forEach((d, i) => (pairIdx[d.c.t] = pairIdx[d.c.t] || []).push(i));
+    Object.keys(pairIdx).forEach(t => {
+      const idx = pairIdx[t];
+      if (idx.length !== 2) return;
+      const [i0, i1] = idx;
+      if (order[i0].c.closed && !order[i1].c.closed){
+        const tmp = order[i0]; order[i0] = order[i1]; order[i1] = tmp;
+      }
+    });
+    const placed = [], rolled = [];
+    order.forEach(d => {
+      const w = wOf(d.c.t), ink = inkOf(d.c.t);
+      let best = null;
+      for (let i = 0; i < SIDES.length; i++){
+        const b = slotOf(d, w, ink, SIDES[i]);
+        // In bounds on the ink, not the line box: the bound is there to keep glyphs
+        // off the axis furniture. XLAB − 8 keeps a low label clear of the x endpoints.
+        if (b.ink.x0 < 26 || b.ink.x1 > 316 || b.ink.y0 < TOP - 2 || b.ink.y1 > XLAB - 8) continue;
+        if (placed.some(q => b.x0 < q.x1 + 3 && q.x0 < b.x1 + 3 &&
+                             b.y0 < q.y1 + 1.5 && q.y0 < b.y1 + 1.5)) continue;
+        // OWNERSHIP OUTRANKS EVERYTHING: a slot is viable only if this label's own dot
+        // is the nearest dot to it with a unit of daylight to the runner-up. A ticker
+        // nearer a neighbour's dot than its own has stopped naming anything. This is
+        // the test that sends a boxed-in dot to the roll-up rather than mislabelling
+        // its neighbour, and with twenty dots on 270 by 140 units it is the one that
+        // does most of the work.
+        const near = o => {
+          const nx = Math.max(b.ink.x0, Math.min(o.x, b.ink.x1));
+          const ny = Math.max(b.ink.y0, Math.min(o.y, b.ink.y1));
+          return Math.hypot(o.x - nx, o.y - ny) - o.ri;
+        };
+        const mine = near(d);
+        if (dots.some(o => o !== d && near(o) < mine + 1.0)) continue;
+        let n = 0;
+        segs.forEach(s => { if (cross(s[0], s[1], b.ink)) n += s[2]; });
+        if (!n){ best = Object.assign(b, { over: 0 }); break; }
+        if (!best || n < best.over) best = Object.assign(b, { over: n });
+      }
+      if (!best) rolled.push(d.c); else placed.push(Object.assign(best, { d: d }));
+    });
+
+    // ---- paint --------------------------------------------------------------
+    const p = [];
+    const txt = (x, y, anchor, colour, s, cls, delay) =>
+      '<text' + (cls ? ' class="' + cls + '" style="--d:' + delay + 'ms"' : '') +
+      ' x="' + (+x).toFixed(1) + '" y="' + (+y).toFixed(1) + '" fill="var(' + colour +
+      ')" font-size="9" text-anchor="' + anchor + '" font-family="Inter">' + s + '</text>';
+    // The zero line IS the index by the axis's own title, so it is gold, per the
+    // product-wide rule that the S&P is gold in every chart. It is also SOLID, matching
+    // pvsPaint, where the same S&P baseline has always been drawn solid and where it was
+    // the version Aidan reviewed on 2026-09-04. The CEO's 2026-09-02 note is the rule
+    // behind it: a dash reads as a projection ("is that projected or is that actual?"),
+    // and the index is measured history, so it is actual, so it is solid.
+    // Do not restate the old claim that solid means plotted data and dashed means a
+    // reference line. pvsPaint's baseline is a reference line drawn solid, which disproves
+    // it. The median guide below stays dashed and stays --c-900 because it is NOT the S&P,
+    // which is the only distinction gold is carrying.
+    p.push('<line x1="' + X0 + '" y1="' + zeroY.toFixed(1) + '" x2="' + X1 + '" y2="' +
+      zeroY.toFixed(1) + '" stroke="var(--c-gold)" stroke-width="1" vector-effect="non-scaling-stroke"/>');
+    // The zero slot carries the index's NAME, in --c-gold, the same treatment the
+    // calibration chart settled on (main-dashboard-states.html drawCal): a gold name in
+    // the left gutter, not a gold number. It read "0%" in the ticks' --c-800, so a gold
+    // line sat beside a grey zero and read as though gold meant zero. The percentage is
+    // not lost information: this axis is index-relative by its own title, Return vs S&P,
+    // so the S&P is necessarily at zero. The tick below still prints its number.
+    p.push(txt(26, zeroY + 3, 'end', '--c-gold', 'S&amp;P'));
+    p.push(txt(26, yOf(tickV) + 3, 'end', '--c-800', '+' + tickV + '%'));
+    p.push(txt(X0, XLAB, 'start', '--c-800', kfmt(eLo)));
+    p.push(txt(X1, XLAB, 'end', '--c-800', kfmt(eHi)));
+    // median position size: splits the book into its smaller and larger halves
+    p.push('<line x1="' + medX.toFixed(1) + '" y1="' + TOP + '" x2="' + medX.toFixed(1) +
+      '" y2="' + BOT + '" stroke="var(--c-900)" stroke-width="0.5" stroke-dasharray="2 3"/>');
+    p.push(txt(medX, 16, 'middle', '--c-800', 'median'));
+
+    // The stagger runs left to right across the axis, 120ms then 30ms a dot, which is
+    // the rhythm the nine hardcoded dots already carried. A label follows its own dot
+    // by 60ms. Written as .mo-pt / .mo-lb so the section's existing reveal observer
+    // picks these up unchanged; this runs before that observer registers.
+    const byX = dots.slice().sort((a, b) => a.x - b.x);
+    const delay = d => 120 + byX.indexOf(d) * 30;
+    dots.forEach(d => {
+      const disc = (tok) => '<circle class="mo-pt" style="--d:' + delay(d) + 'ms" cx="' +
+        d.x.toFixed(1) + '" cy="' + d.y.toFixed(1) + '" r="' + d.r +
+        '" fill="var(' + tok + ')"/>';
+      if (!d.c.closed){ p.push(disc(col(d.c))); return; }
+      p.push(disc('--c-elev'));
+      p.push('<circle class="mo-pt" style="--d:' + delay(d) + 'ms" cx="' + d.x.toFixed(1) +
+        '" cy="' + d.y.toFixed(1) + '" r="' + d.r + '" fill="none" stroke="var(' + col(d.c) +
+        ')" stroke-width="1" vector-effect="non-scaling-stroke"/>');
+    });
+    // A knockout ONLY where every slot was blocked and the least-bad one still lands
+    // on a stroke, never as a blanket treatment. It is the local ground rebuilt under
+    // the glyphs, plain --c-elev here because this chart carries no washes. --c-elev,
+    // not --c-black, since this chart was boxed in .chart-plot on 2026-09-04; same
+    // reason as the ring fill above.
+    placed.forEach(b => {
+      if (!b.over) return;
+      p.push('<rect class="mo-lb" style="--d:' + (delay(b.d) + 60) + 'ms" x="' +
+        (b.ink.x0 - 1).toFixed(1) + '" y="' + (b.ink.y0 - 0.4).toFixed(1) + '" width="' +
+        (b.ink.x1 - b.ink.x0 + 2).toFixed(1) + '" height="' +
+        (b.ink.y1 - b.ink.y0 + 0.8).toFixed(1) + '" fill="var(--c-elev)"/>');
+    });
+    placed.forEach(b => p.push(txt(
+      b.side === 'right' ? b.x0 : b.side === 'left' ? b.x1 : (b.x0 + b.x1) / 2, b.base,
+      b.side === 'right' ? 'start' : b.side === 'left' ? 'end' : 'middle',
+      '--c-700', b.d.c.t, 'mo-lb', delay(b.d) + 60)));
+    // The roll-up sits bottom right, right-aligned to the plot's own right edge, for
+    // the reason the pvs charts moved theirs there: under the x endpoints it reads as
+    // one more axis number.
+    if (rolled.length)
+      p.push(txt(X1, ROLL, 'end', '--c-800', '+' + rolled.length + ' more', 'mo-lb',
+                 120 + (dots.length - 1) * 30 + 60));   // last, after every dot has landed
+    g.innerHTML = p.join('');
+    szReveal();
+  }
+
   // the Dave-sourced analysis blocks: same vocabulary, one reveal each.
   // Each root is the tightest element that actually holds the animated parts.
   const grid = document.getElementById('mgridBody');
@@ -2896,6 +3585,13 @@
   document.querySelectorAll('#screen-decisions .mo-bar')
     .forEach(el => revealRoots.add(el.parentElement));
   revealRoots.forEach(root => revealOnView(root));
+
+  // Position Size vs Return, first paint. AFTER the collector above on purpose, so
+  // #sz-svg holds no .mo-pt yet and the collector cannot claim it: szReveal() owns it,
+  // because the chart repaints once the font settles and a captured node list would
+  // then be pointing at detached dots. See the szPaint comment for the measurement.
+  szPaint();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(szPaint);
 
   // Only NVDA has a fully built-out Detail screen in this mockup; every other
   // ticker tap routes to the relevant list screen as the honest fallback.
@@ -3267,8 +3963,13 @@
       // position's line running inside them, and a ring with a stroke through its middle
       // reads as a filled dot, which is the one thing this distinction cannot afford.
       // The fill is the local ground rebuilt exactly as the label knockout below rebuilds
-      // it: --c-black plus the wash that side of the baseline already carries, at the
-      // same opacity. No new colour. The knockout needs two bands because a label box can
+      // it: --c-elev plus the wash that side of the baseline already carries, at the
+      // same opacity. No new colour. --c-elev, not --c-black, since 2026-09-04: the box
+      // this chart now sits in (.chart-plot) put --c-elev under the plot, and a ring
+      // filled with black on that ground is a hole in the panel, not a rebuilt ground.
+      // The wash opacities are unchanged for the reason .chart-plot states; only the
+      // base the ring rebuilds moved, and it moved with the panel.
+      // The knockout needs two bands because a label box can
       // straddle the baseline; a mark cannot, since that would need r to exceed its own
       // distance from zero, and the smallest gap on the book is 1.1 pp, which is 3.96
       // units at 3.6 per point, against a largest possible r of 3.6.
@@ -3277,17 +3978,20 @@
           '" r="' + d.r.toFixed(2) + '" style="fill:var(' + tok + ')"' +
           (op ? ' fill-opacity="' + op + '"' : '') + '/>';
         if (!d.c.closed){ p.push(disc(pvsCol(d.c.pp), null)); return; }
-        p.push(disc('--c-black', null));
+        p.push(disc('--c-elev', null));
         p.push(disc(pvsCol(d.c.pp), d.c.pp >= 0 ? '0.055' : '0.07'));
         p.push('<circle cx="' + d.x.toFixed(1) + '" cy="' + d.y.toFixed(1) + '" r="' +
           d.r.toFixed(2) + '" fill="none" style="stroke:var(' + pvsCol(d.c.pp) +
           ')" stroke-width="1" vector-effect="non-scaling-stroke"/>');
       });
       // A KNOCKOUT ONLY WHERE ALL FOUR SLOTS ARE BLOCKED, never as a blanket treatment.
-      // It is the local ground rebuilt under the glyphs: --c-black plus the same wash
+      // It is the local ground rebuilt under the glyphs: --c-elev plus the same wash
       // that side of the baseline already carries, at the same opacity, so it is not a
       // new colour and it has no border. Labels that found clean air get none, which is
       // what makes the treatment read as the exception it is.
+      // --c-elev since 2026-09-04, the same move the closed-dot fill above made and for
+      // the same reason: the ground under this chart is the .chart-plot box, so a black
+      // band is no longer the local ground, it is a hole punched in the panel.
       placed.forEach(b => {
         if (!b.over) return;
         const kx = (b.ink.x0 - 1).toFixed(1), kw = (b.ink.x1 - b.ink.x0 + 2).toFixed(1);
@@ -3295,7 +3999,7 @@
         const band = (y0, y1, tok, op) => p.push('<rect x="' + kx + '" y="' + y0.toFixed(1) +
           '" width="' + kw + '" height="' + (y1 - y0).toFixed(1) + '" style="fill:var(' + tok +
           ')"' + (op ? ' fill-opacity="' + op + '"' : '') + '/>');
-        band(ky0, ky1, '--c-black', null);
+        band(ky0, ky1, '--c-elev', null);
         // A box can straddle zero, so the wash is rebuilt in two bands rather than one:
         // one flat fill would put ahead-green over behind-ground and leave a faint
         // rectangle where the two grounds meet.
@@ -3364,6 +4068,43 @@
     // font settles returns the fallback's metrics, which are 1 to 2px narrow at
     // every size and can flip a borderline pair.
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(pvsRefresh);
+  })();
+
+  // Had You Held: Portfolio Value if held.
+  // Read the "Selling early cost you" figure off its own row rather than re-typing it,
+  // so the two rows can never disagree. Scope is the whole self-directed book
+  // (ACCOUNTS.all), NOT the selected account: see the comment on the row itself.
+  // The cost is negative when selling was a mistake, and subtracting a negative is
+  // what makes the if-held portfolio larger than the real one.
+  (function ifHeldPortfolio(){
+    const src = document.getElementById('sellCostVal');
+    const valEl = document.getElementById('ifHeldPortVal');
+    const pctEl = document.getElementById('ifHeldPortPct');
+    const arwEl = document.getElementById('ifHeldPortArw');
+    if (!src || !valEl || !pctEl) return;
+    const raw = src.textContent.trim();
+    const cost = parseFloat(raw.replace(/[^0-9.]/g, '')) * (/^[−-]/.test(raw) ? -1 : 1);
+    const total = ACCOUNTS.all.value;
+    const ifHeld = total - cost;
+    // SECOND FIGURE IS A DOLLAR, NOT A PERCENTAGE, and the row carries an arrow.
+    // Both taken from the live app, which the 2026-09-04 meeting handed over as the
+    // reference for this row ("Total Portfolio Value if held  28,175.16  -16.79 down").
+    // It is the delta this position made to the whole book, so it is simply the cost
+    // with its sign flipped: selling early at a loss leaves the if-held book HIGHER.
+    //
+    // THE ARROW MEANS SOMETHING DIFFERENT HERE, and that is deliberate. Everywhere else
+    // in this file an arrow means beat or trailed the index. On this row it means the
+    // if-held portfolio would have been larger or smaller than today's. Do not "fix" it
+    // to the index convention and do not delete it as a rule violation: the live app
+    // sets this convention and it is the reference.
+    const delta = -cost;
+    const money = n => n.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+    valEl.textContent = money(ifHeld);
+    pctEl.textContent = (delta < 0 ? '−' : '+') + money(Math.abs(delta));
+    if (arwEl) {
+      arwEl.className = 'trend ' + (delta < 0 ? 'down' : 'up');
+      arwEl.textContent = delta < 0 ? '▼' : '▲';
+    }
   })();
 </script>
 

@@ -282,6 +282,43 @@
   .cal-chev{font-size:17px;color:var(--c-800);line-height:1;}
   /* Fixed svg height, so the block's height does not depend on the script having run. */
   .cal-plot{margin-top:16px;}
+  /* THE SAME PLOT BOX THE CARD'S CHART CARRIES, added 2026-09-04. Until then this page
+     shipped two treatments for two charts: the S&P card's plot was boxed and this one was
+     marks floating on the frame's ground, so the inconsistency sat on a single screen.
+     The four declarations are copied from `.cardslot .chart-plot` above, which is the
+     reference for every boxed chart in the product: --c-elev ground, 0.5px --c-900
+     hairline, 12px padding, SQUARE corners. No radius, no shadow, no gradient.
+     WHY A SEPARATE RULE AND NOT AN EXTRA SELECTOR ON THAT ONE. The card's block is
+     deliberately scoped under .cardslot, because this file and the file it was ported from
+     define the same class names with different values; reaching that selector out of its
+     scope would break the reason it is scoped. Same values, stated twice, on purpose.
+     WHAT THE PADDING FENCES, MEASURED. Every mark drawCal() emits is already inside the
+     svg's own "0 0 358 176" viewBox, so boxing the element encloses the labels with
+     nothing repositioned. Widest ink is the roll-up "+4 more" ending at x=349.35 of 358,
+     and the lowest is the x-axis row's baseline at y=168 with ink to y=169.0 of 176. The
+     GOLD S&P GUTTER LABEL lands INSIDE the box, at x=26 anchored end so its ink spans
+     5.49 to 26.19: the same choice already made for the gutter labels on the seven charts
+     in "positions screens.html", where the box encloses the y ticks rather than leaving
+     them out on the page ground. Nothing here sits below the viewBox the way Cumulative
+     Alpha's x labels did, so no label had to move out into an HTML row.
+     THE TWO WASHES SHIFT ONE STEP LIGHTER AND ARE DELIBERATELY LEFT AT THEIR OPACITIES
+     (0.055 green, 0.07 red, set in drawCal). They composited over --c-black and now
+     composite over --c-elev, so each gains that ground's one step, MEASURED off a 390px
+     render rather than computed: green #020705 -> #0B100E and red #0D0404 -> #160D0D, both
+     +9 on every channel. The "now" band moved #0B0F0D -> #111413. Held rather than re-tuned
+     for the reason
+     the same trade was accepted on "positions screens.html": compositing is linear in the
+     ground, so the one step lands on every channel of both washes equally and each keeps
+     its relationship to its own panel, which is what the eye reads. Holding the old
+     absolute pixel values is not available anyway, since both composite darker than
+     --c-elev is on its own and no opacity in range reaches them.
+     drawCal() EMITS NO KNOCKOUTS, audited in the same pass. Its only fills are
+     --c-live-muted, --c-urgent-muted, --c-1000, --c-800 and --c-gold; nothing is painted
+     in --c-black as a local ground, so it carried none of the four patches that
+     pvsPaint() and szPaint() needed and nothing in it had to change. Do not introduce one:
+     on this lifted panel a --c-black fill is a hole, not a ground. */
+  .cal-plot .chart-plot{position:relative;background:var(--c-elev);
+    border:0.5px solid var(--c-900);padding:12px;}
   .cal-plot svg{display:block;width:100%;height:176px;overflow:visible;}
   /* Three lines under the plot, in the shipped block's proportions. The summary is clearly the
      largest thing here at 15px; the middle line and the footnote are both 11px and equal to each
@@ -611,6 +648,22 @@
       <div class="alert"><span class="dot" style="background:var(--c-live);"></span><span>Contribution processed: $500 <span class="dim">05.06.26</span></span></div>
     </div>
 
+    <!-- CURRENCY IS STATED ONCE ON THIS SCREEN, HERE, AND NOWHERE ELSE BELOW IT.
+         Currency is a property of the account, so it belongs beside that account's headline
+         figure. Everything under this line inherits it.
+
+         The reason it is not repeated, which otherwise reads as an omission and gets "fixed":
+         stating a global fact repeatedly makes it look local. If four blocks each say CAD, a
+         reader infers the blocks might differ and starts checking. Said once at the top against
+         the headline number, it reads as "this whole screen is CAD" and nothing below has to
+         say so.
+
+         Load-bearing consequence: this block is NOT in apply()'s hide list, so it renders in
+         all three deposit states (Funded / No Capital / Transfer Pending). If it is ever
+         state-gated, the states that lose it are left with figures and no currency named
+         anywhere, which is the exact failure this rule exists to prevent. Removed 2026-09-04
+         from the four position-row amounts below. USD on the two US-listed prices STAYS: that
+         is a deviation from the inherited currency, not a restatement of it. -->
     <div class="totalv">
       <div class="lbl">Total Value</div>
       <div class="num">173,249.00 <span class="cur">CAD</span></div>
@@ -768,7 +821,9 @@
         <span class="cal-chev">&#8250;</span>
       </div>
       <div class="cal-plot">
-        <svg id="cal-svg" viewBox="0 0 358 176" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <div class="chart-plot">
+          <svg id="cal-svg" viewBox="0 0 358 176" preserveAspectRatio="none" aria-hidden="true"></svg>
+        </div>
       </div>
       <div class="cal-sum"><span class="ahead">6 of 11 ahead of the S&amp;P 500</span> <span class="avg">avg +1.9 pp</span></div>
       <!-- The horizon figure is DERIVED, never typed: drawCal() writes #cal-horizon from the
@@ -797,16 +852,22 @@
          (spRet = 6 + (i * 37) % 25): +36.6 / +4.6 / −7.4.
 
          BWEN's descriptor is the only edit: its em-dash is a comma here, because em-dashes in
-         copy are forbidden project-wide and this file carries no other violation. -->
+         copy are forbidden project-wide and this file carries no other violation.
+
+         NO CAD ON THESE AMOUNTS, and that is deliberate rather than an oversight: the screen
+         states its currency once, on Total Value, and these figures inherit it. The full
+         reasoning is on that block. Do not put CAD back. The two USD prices are not an
+         inconsistency with this: USD is a departure from the inherited currency and has to be
+         named, CAD is the inheritance and does not. -->
     <div class="pos-list" id="sd-pos-rows">
       <div class="pos-row">
         <div class="pos-line">
           <span><span class="pos-tkr">ORIO.TO</span><span class="pos-pp">+36.6 pp vs S&amp;P<span class="tri up">&#9650;</span></span></span>
-          <span class="pos-right"><span class="pos-amt">18,950.00 CAD</span><span class="pos-pct">+42.6%</span></span>
+          <span class="pos-right"><span class="pos-amt">18,950.00</span><span class="pos-pct">+42.6%</span></span>
         </div>
         <div class="pos-line">
           <span class="pos-meta">Emerging Compounder<span class="wt">25% WT</span></span>
-          <span class="pos-right"><span class="pos-amt">87.60 CAD</span><span class="pos-chg up">+7.8%</span></span>
+          <span class="pos-right"><span class="pos-amt">87.60</span><span class="pos-chg up">+7.8%</span></span>
         </div>
         <div class="pos-desc">Parent moat compounding; the NASDAQ listing re-rates it over 3&ndash;5 years.</div>
         <div class="pos-tags">
@@ -817,7 +878,7 @@
       <div class="pos-row">
         <div class="pos-line">
           <span><span class="pos-tkr">BWEN</span><span class="pos-pp">+4.6 pp vs S&amp;P<span class="tri up">&#9650;</span></span></span>
-          <span class="pos-right"><span class="pos-amt">12,950.00 CAD</span><span class="pos-pct">+22.6%</span></span>
+          <span class="pos-right"><span class="pos-amt">12,950.00</span><span class="pos-pct">+22.6%</span></span>
         </div>
         <div class="pos-line">
           <span class="pos-meta">Emerging Compounder<span class="wt">25% WT</span></span>
@@ -831,7 +892,7 @@
       <div class="pos-row">
         <div class="pos-line">
           <span><span class="pos-tkr">EOSCR</span><span class="pos-pp">&minus;7.4 pp vs S&amp;P<span class="tri down">&#9660;</span></span></span>
-          <span class="pos-right"><span class="pos-amt">12,950.00 CAD</span><span class="pos-pct">+22.6%</span></span>
+          <span class="pos-right"><span class="pos-amt">12,950.00</span><span class="pos-pct">+22.6%</span></span>
         </div>
         <div class="pos-line">
           <span class="pos-meta">Emerging Compounder<span class="wt">15% WT</span></span>
