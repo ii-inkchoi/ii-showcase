@@ -1,0 +1,231 @@
+# HANDOFF — V14 landing site
+
+**Written 2026-09-01, end of the design-QA session. Read this plus `shared/TITLE-TIERS.md` and
+`SESSION-2026-08-31.md` before touching anything.**
+
+Designer: Inkyung Choi (Mogo). Works in Korean, replies best to measured numbers rather than
+adjectives. Files live on her Mac at `~/Desktop/V14/`, deployed to GitHub Pages. Reference screen is
+a MacBook 15" at **1512px** — check that width first, always.
+
+---
+
+## Goal
+
+Polish the "Intelligent Investing" V14 landing site (8 static HTML pages) so that every value on it
+is either **on the design system** or **has a recorded reason not to be**. The work is screenshot-
+driven: she sends a crop, names what feels wrong, and expects the cause found and fixed sitewide —
+never patched in one section only. Her standing instruction:
+
+> "한 섹션만 가능하게 꼼수 부리면 안 되고" — no per-section hacks.
+
+---
+
+## How to work on this (the part that matters most)
+
+1. **Measure before claiming.** Never read a CSS line and report it as the rendered value. Render the
+   page headless and read computed styles / rects. Scripts live in the container at `~/v14m/*.py`
+   (playwright + chromium). Pattern: stage the HTML, run, print numbers in `u` units.
+2. **`u` is the unit.** `--u: calc(100vw / 2545)`. Everything scales from a 2545px Figma frame.
+   Report spacing in `u`, not px — px changes with the window and she will (correctly) call it
+   meaningless. Rail 1645u, gutter 30u, **column 109.583u**. 6 col = 807.5u, 7 col = 947.08u,
+   5 col = 667.9u, 4 col = 528.3u.
+3. **Type sizes have floors.** `--t-body: max(17px, 22u)` etc. So a token named `--t-mono15` renders
+   **13px** on a laptop. The floored type and the unfloored measures diverge — that divergence is the
+   root cause of most bugs found in this project.
+4. **Kill the reveal animation before measuring**: add `.in` to every `.rv`/`.ri` and disable
+   transitions/animations, or you measure mid-fade. Also `transform:none`.
+5. **Measure ink, not boxes**, when the question is "does this look too far apart" — use a `Range`
+   over the text nodes. Box gaps lie when font sizes differ.
+6. **Inter does not load in the container** (Google Fonts is blocked). Geometry is exact; anything
+   font-dependent (character counts, line counts) is an approximation with the fallback face. Say so
+   rather than reporting it as fact. Inter's average char width, measured by her on her own machine:
+   **0.503em**. chars = (width_px / font_size) / 0.503.
+7. **Background images are not staged** unless you stage them. They are ~5MB each; downscale on the
+   device with PIL into `_archive/imgproxy/` first, then stage. Without them a photo section renders
+   as flat black and you will draw the wrong conclusion.
+8. **Cascade traps.** Before concluding "this rule does nothing", grep for a **higher-specificity
+   copy** of the same selector. Two that bit this session:
+   - `.close9 .cols .ccol .pricehd9` (0,4,0) silently beat `.close9 .pricehd9` (0,2,0).
+   - `.acct3 .a h3` mobile: both pages looked identical because the real controller was
+     **`shared/v11.css`**, not either page. Grep the shared sheet first.
+   - `.acct3 .a p` matches the mono `.lim` first — the card is `h3 / .lim / p / .lim` and the body is
+     the **second** `p`. Getting this wrong reports a nonexistent typeset.
+9. **Back up before each change**: `cp x.html _archive/x-pre-<topic>-YYYYMMDD.html`. ~45 such files
+   exist from 2026-09-01 alone.
+10. **`device_bash` cannot delete files.** `rm` fails with "Operation not permitted". Move to a
+    `_to_delete/` folder and tell her, or ask for delete permission.
+11. Cache-bust `shared/v11.css` separately from the HTML when checking in a real browser.
+
+---
+
+## The design system as it now stands
+
+### Prose measure — THE WHOLE RULE (audited across all 6 content pages, 2026-09-01)
+
+- **A. Prose that OWNS its row:** 6 col at ≥1800, **7 col at ≤1799** → `var(--prose)`
+- **B. Prose that SHARES its row** (with a figure, a mockup, or a second prose column):
+  **6 col at every width** → the 12-col formula
+
+B never takes the 7-col bump because 7 leaves only 5 columns and every shared row needs more than
+that (a 5-col mockup plus a spacer, or a second 6-col prose column). **B is not a per-section
+exception.** `.specimens`, `.calgrid`, `.close9 .cols`, `.defgrid`, `.pfgrid`, `.devgrid` are all 6.
+
+Two spellings, one rule: index / self-directed / managed carry `--prose` (a width); pricing /
+manifesto / newsroom carry `--prose-cols` (a column count). Consolidating them is unfinished work.
+
+### TYPESET registry — the criterion is ITEM COUNT
+
+| | title / body | tokens |
+|---|---|---|
+| TYPESET 1 · LARGE | 28 / 500 / 1.25 + 17 / 400 / 1.3 | `--t-h34` + `--t-body` (currently unused) |
+| TYPESET 2 · MEDIUM | 22 / 500 / 1.25 + 17 / 400 / 1.3 | `--t-read27` + `--t-body` |
+| TYPESET 3 · SMALL | 17 / 500 / 1.25 + 15 / 400 / 1.3 | `--t-body` + `--t-small17` |
+
+**3 items or fewer → TYPESET 2. 4 or more → TYPESET 3.** Tested against all 8 multi-item rows; it is
+the only candidate that survives (padding, fill, and column width all fail). Causal: 3 items = 4 col
+each ≈ 300px, where 22 fits; 4 items = 3 col ≈ 225px, where 22 breaks badly. `.rows3` (REVIEW) is the
+proof it is count and not box-ness — no fill, no side padding, 3 items, TYPESET 2.
+
+Full registry and the per-row table are in `shared/TITLE-TIERS.md`. **She calls these by name**
+("typeset 2로 해줘") — apply the table, do not re-derive.
+
+### Spacing scale
+14u · 28u · 42u · 71u · 104u · 113u · 184u.
+- title → body **14u** (ROW RULES)
+- panel padding **42u**; a card/row that is its own panel takes 42u
+- prose paragraph → paragraph **24px flat** (deliberately flat, not u — 24 against the 22.1 leading
+  is 1.09×, which is the whole point)
+- two sentences meant to read as **one** statement: margin **0**, leading only
+  (her words: "한문단의 행간처럼")
+- section padding 184u top and bottom, verified symmetric
+
+### Mono (IBM Plex Mono)
+Ladder **13 / 11 / 9**, tracking `0.04em` everywhere. Leading rule B: multi-line mono prose 1.5,
+one-line label/meta 1.4; captions 9px/1.4. Mono = meta only (labels, dates, captions, specs) —
+**never prose body**. Price-condition text (`.fee9`) is the **11** tier on mobile on all three pages.
+Modifier classes (`.mut`) set colour only; role classes set size and leading.
+
+### Radius
+`--r-site:4px` (site boxes, diagram figures) · `--r-app:12px` (app mockups — `.dr-doc`, `.cal-card`)
+· `--r-app-in:6px` (boxes inside a mockup) · `--r-pill:99px`.
+
+### Hairlines
+Canon **0.667px**. Dark grounds `rgba(255,255,255,0.18)`; light grounds `rgba(28,28,28,0.16)`;
+**a dark box on a light ground takes `--c-800`** (the `.dr-doc` answer). Product-UI mockups are
+excluded from the hairline sweep and keep their own 1px internal scale (HANDOFF 4-B-7).
+
+### Grounds and fills
+- Light-ground panel canon: **white on cream**, 42u, 4px (home membership cards, `.close9 .offer`).
+  This is correct — do not "fix" it.
+- Dark ground: `--c-1000 #1C1C1C` on black.
+- **A mockup on a black ground uses `--c-surface #151515`**, not `--c-elev #0A0A0A` (10/255 off black
+  is invisible). Precedent: `.constfig`.
+- **The fill answers to its ground**: opaque on a flat ground; **translucent on a photo** so the photo
+  reads through. `.refuse .r` = `rgba(28,28,28,0.60)` — measured as the most transparent value that
+  keeps the c-200 body at AAA over that photo (see below).
+- Status colours: `--c-live-muted #288752` (green/tracking), `--c-review-muted #966E26` (gold/
+  sold-early), `--c-urgent-muted #BE3C36` (red), `--c-700` (neutral/void).
+
+### App mockups are one class, one size
+`.dr-doc` (memo) and `.cal-card` (record) — the only two app screens. **5 col (667.9u), max-width
+566px, radius 12px.** `.constfig`, `.pffig`, `.loopfig` are canvas *diagrams*, a different class
+(radius 4px).
+
+### Figure placement
+All three figures on self-directed sit on **track 3 of the 6 col / 1fr / 5 col figure grid**:
+**5 col wide, left edge at column 7.22**, verified identical at 1920 and 1512. Grids: `.specimens`,
+`.calgrid`, and `.close9 .cols.figrow`. When a prose row needs a figure, give it this grid — do not
+put the figure in a prose track.
+
+---
+
+## What worked
+
+- **Measure, then decide.** Every value she accepted was derived from a measurement, not proposed.
+  Two examples worth copying:
+  - *Card transparency*: composited c-1000 over the actual photo at the actual card region,
+    p99.99 worst case, contrast against c-200 → alpha 0.60 (7.9:1, AAA). It also **killed the
+    "outline only" option with data** (no fill = 3.8:1, a WCAG failure) instead of by opinion.
+  - *"The photo is too dark"*: the histogram said it was not — its midtone (26.8) was **higher** than
+    the accepted photo's (7.7). Its **range** was 17.4 vs 28–80 for every other photo. So the fix was
+    contrast, not brightness, and it applied to exactly one photo.
+- **Find the site's own precedent before inventing a value.** `--c-surface` for a mockup on black,
+  `--c-800` for a dark box on a light ground, `box-decoration-break:clone` for per-line plates — all
+  three already existed elsewhere in the codebase for the same situation.
+- **Subtracting beats retuning.** The constellation's 30-label rim ring was removed after thinning it
+  to 12 made it worse. Own the failed attempt in the comment.
+- **Write the reasoning into the CSS comment**, including reversals and what was tried and rejected.
+  The codebase's comments are load-bearing documentation and she reads them.
+
+## What didn't work
+
+- **Reporting a CSS line as the rendered value.** Claimed `.acct3 .a h3` differed between two pages
+  from reading source; measurement showed both were already identical and the real controller was the
+  shared sheet. Always render.
+- **`box-decoration-break:clone` on a flex item.** A flex item blockifies `display:inline`, so the
+  clone never applies. Retracted once, then solved by putting the plate on an inline **child**
+  (`.hero .hbar .hp`).
+- **Thinning the rim labels to 12 at 9px** — worse than 30 at 6.5px. The ring's radius (~37px) cannot
+  hold twelve ~90px strings at any legible size.
+- **`contrast()` above 1 on a dark image** — it pivots on 0.5, so it crushes everything to black.
+  Brightness must return to 1 first.
+- **Subgrid `grid-row: span N` where N < the flow-child count** — the overflow stacks silently into
+  the last track and prints on top of the previous item. Count the children first.
+- **Guessing an alpha / a filter / a gap by eye.** Every one of these got sent back until measured.
+
+---
+
+## Current state — 2026-09-01, all verified rendered at 1512
+
+Written to her Mac and re-measured after the fact:
+
+| area | state |
+|---|---|
+| index hero | scrim **removed**, per-line black plates **restored** via `.hp` + `box-decoration-break:clone`; wraps naturally (1 line-box at 1920/1512, 2 at 1100/950) |
+| `$20` plate | sentence → fee margin **0** (leading only) |
+| `.pricehd9` ×3 pages | 22 → **17** (reverses the "22 유지" entry in TITLE-TIERS; reason recorded) |
+| closing `.offer` ×3 pages | padding 42u, title→fee 28u, fee→CTA 42u — identical |
+| NO.03 `.rows3` (SD + managed) | row padding 71u → **42u**, title→body 28u → **14u**, `align-content:start` fixes a per-row gap drift |
+| NO.04 calibration | mockup rebuilt to the app's ledger design + scorecard header; `.calgrid` = the `.specimens` grid |
+| NO.05 photo | `.bg.deep` = `brightness(1) contrast(1.2) saturate(1.15)` |
+| NO.06 Fiscal panel | items 22/15 → **17/15** (TYPESET 3); header mono11 → mono13, 1.6 → 1.4; title→desc 6u → 14u |
+| NO.07 REFUSE | bordered table → **cards matching `.acct3`**, translucent `rgba(28,28,28,0.60)` on the photo |
+| closing constellation | radius 4px, border `--c-800`, on the figure grid (5 col / col 7.22); rim label ring removed, node labels 22% → 8% |
+| captions | `.constfig` caption unified to the memo `.figcap`: **c-800** (was c-700 — a contrast fail, the old comment's premise was wrong) and line gap 6px → 0 |
+| mono mobile | `.fee9` unified to 11px on all three pages (was 9 / 11 / 13) |
+| `.devgrid` | 798u / 796u → two clean 6-col tracks |
+| docs | `shared/TITLE-TIERS.md` updated (typeset audit, FISCAL row, mobile item closed); prose rule written into all 6 pages' token comments |
+
+---
+
+## Next steps
+
+**Open questions for her (do not decide these alone):**
+1. **Figure pull-ups are still eyeballed** — `-250u` (memo), `-271u`/`-296u` (record), `-255u`
+   (constellation). Each was set by hand to lift the figure level with its section title. Offer to
+   derive it from the title block's height instead. She was asked; no answer yet.
+2. **NO.03 `.rows3` right-side space** — the row content stops at ~6 col and the rest of the rail is
+   empty. It is consistent with managed's copy of the same component, so it is a design choice, not a
+   bug. Keep the whitespace, or go horizontal like the home's 4-up `.step4`? Asked; no answer yet.
+3. **managed hero title clearance** — 33u to the photo at every width, above the 28u gutter canon, so
+   it passes. Dropping the hero to 8 col would give more air at the cost of column-width uniformity
+   with index/SD. Recommended leaving it; not confirmed.
+
+**Known work, no decision needed:**
+4. Consolidate `--prose` and `--prose-cols` into one spelling across the 6 pages.
+5. `--t-mono12` is redundant (renders identically to `--t-mono13`'s floor at desktop) — absorb it.
+6. Remaining one-line mono labels still at 1.5 instead of 1.4: `.k`, `thead th`, `.nr-tabs button`,
+   `.step b`, pricing `.sub`.
+7. `.menuov-cta` is the only mono at weight 500 (5 pages) — intent unconfirmed.
+8. `.calcard` is dead CSS — no markup anywhere.
+9. Mobile `.metaline` / `.figcap` declarations are still tangled on SD and managed; the desktop role
+   split (`.fee9` / `.stamp` / `.metaline`) has not been applied to the ≤900 blocks.
+10. Delete `_archive/imgproxy/` (two downscaled photos I made to render the photo sections; this
+    environment cannot delete files).
+11. **Compliance / content, pre-existing from `SESSION-2026-08-31.md` §8:** managed.html has 9
+    placeholders; NO.01 headline TBC; managed closing's SD sentence (entity separation); index mobile
+    REGULATORY STANDING accordion; Operating Loop canvas render verification. The memo mockup keeps a
+    fictional issuer (NOVA) — Figma 3967:1732 uses AAPL / 87.60 CAD; swap only if compliance clears it.
+
+**Never verified by me, needs her eyes:** anything involving the hero video playing (it does not play
+in the container), and the photo sections at their real resolution.

@@ -1,0 +1,931 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Intelligent Investing: Final Copy Wireframe</title>
+<style>
+  :root{
+    --c-black:#000000; --c-1000:#1C1C1C; --c-900:#232627; --c-800:#565B5E; --c-700:#929292;
+    --c-600:#A7A7A7; --c-400:#C7C7C7; --c-200:#E3E2E2; --c-white:#FFFFFF;
+    --c-graphite:#3A3A37; --c-stone:#8F8D85; --c-mist:#C9C7C0; --c-paper:#EDECE8;
+    --c-urgent-muted:#BE3C36;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--c-paper);color:var(--c-1000);
+       font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+
+  .jumpbar{position:sticky;top:0;z-index:20;background:var(--c-black);color:var(--c-white);
+           padding:10px 20px;display:flex;gap:18px;align-items:baseline;flex-wrap:wrap}
+  .jumpbar b{font-size:13px;letter-spacing:.06em}
+  .jumpbar a{color:var(--c-white);font-size:13px;text-decoration:none;border-bottom:1px solid var(--c-800)}
+  .jumpbar span{color:var(--c-700);font-size:11px;margin-left:auto}
+
+  .doc{max-width:1040px;margin:0 auto;padding:40px 20px 100px}
+  .pagelabel{font:12px/1 ui-monospace,Menlo,monospace;letter-spacing:.08em;color:var(--c-800);
+             margin:56px 0 10px;padding-top:24px;border-top:2px solid var(--c-1000)}
+  .pagelabel:first-child{margin-top:0;padding-top:0;border-top:0}
+  .frame{background:var(--c-white);border:1px solid var(--c-mist)}
+
+  .row{display:flex;align-items:center;gap:14px;padding:14px 24px;border-bottom:1px solid var(--c-200)}
+  .row.between{justify-content:space-between}
+  .pill{border:1px solid var(--c-1000);border-radius:3px;padding:6px 14px;
+        font:12px/1 ui-monospace,Menlo,monospace;letter-spacing:.05em;white-space:nowrap}
+  .pill.solid{background:var(--c-1000);color:var(--c-white)}
+  .navlink{font-size:13px;color:var(--c-800)}
+  .navlink.cur{color:var(--c-1000);font-weight:600}
+
+  section.blk{padding:36px 24px;border-bottom:1px solid var(--c-200)}
+  section.blk:last-child{border-bottom:0}
+  section.blk.dark{background:var(--c-1000);color:var(--c-white)}
+  section.blk.dark .eyeb{color:var(--c-600)}
+  section.blk.cream{background:var(--c-paper)}
+
+  .eyeb{font:11px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.08em;color:var(--c-700);margin-bottom:12px}
+  h1.hl{margin:0 0 14px;font-size:34px;line-height:1.15;font-weight:600;letter-spacing:-.01em;max-width:22ch}
+  h2.hl{margin:0 0 12px;font-size:24px;line-height:1.2;font-weight:600;letter-spacing:-.01em;max-width:26ch}
+  section.blk.dark h1.hl,section.blk.dark h2.hl{color:var(--c-white)}
+  p.copy{margin:0 0 12px;max-width:58ch;color:var(--c-graphite)}
+  section.blk.dark p.copy{color:var(--c-400)}
+  .lead{font-size:15px}
+  .cap{font-size:12px;margin-top:8px}
+
+  .imgslot{background:var(--c-paper);border:1px solid var(--c-mist);min-height:160px;
+           display:flex;align-items:center;justify-content:center;text-align:center;
+           font:11px/1.6 ui-monospace,Menlo,monospace;color:var(--c-700);letter-spacing:.04em;padding:12px}
+  .imgslot.logo{min-height:44px;background:var(--c-white)}
+  .imgslot.wide{min-height:200px}
+  section.blk.dark .imgslot{background:transparent;border-color:var(--c-800);color:var(--c-600)}
+
+  .cardrow{display:grid;gap:16px;margin-top:18px}
+  .cardrow.n2{grid-template-columns:1fr 1fr}
+  .cardrow.n3{grid-template-columns:1fr 1fr 1fr}
+  .cardrow.n4{grid-template-columns:repeat(4,1fr)}
+  .card{border:1px solid var(--c-mist);padding:16px}
+  section.blk.dark .card{border-color:var(--c-800)}
+  .card .k{font:11px ui-monospace,Menlo,monospace;color:var(--c-700)}
+  .card .t{font-size:17px;font-weight:600;margin:6px 0 8px}
+  section.blk.dark .card .t{color:var(--c-white)}
+  .card .d{font-size:13px;color:var(--c-graphite)}
+  section.blk.dark .card .d{color:var(--c-400)}
+  .card .cta{margin-top:10px;display:block;font:12px/1 ui-monospace,Menlo,monospace;letter-spacing:.05em}
+
+  .stat{border:1px solid var(--c-mist);padding:14px}
+  section.blk.dark .stat{border-color:var(--c-800)}
+  .stat .v{font-size:28px;font-weight:600}
+  section.blk.dark .stat .v{color:var(--c-white)}
+  .stat .l{font-size:12px;color:var(--c-graphite);margin-top:4px}
+  section.blk.dark .stat .l{color:var(--c-400)}
+
+  ul.plain{margin:8px 0 0;padding-left:18px;max-width:58ch}
+  ul.plain li{margin-bottom:5px;font-size:13px;color:var(--c-graphite)}
+
+  .memo{border:1px solid var(--c-mist);padding:16px;max-width:440px;font-size:12px}
+  .memo .hd{display:flex;justify-content:space-between;font:11px ui-monospace,Menlo,monospace;color:var(--c-700)}
+  .memo .nm{font-weight:600;font-size:15px;margin:6px 0 10px}
+  .memo dt{font:11px ui-monospace,Menlo,monospace;color:var(--c-700);margin-top:8px}
+  .memo dd{margin:2px 0 0;font-size:12px}
+  .memo ol{margin:2px 0 0;padding-left:16px;font-size:12px}
+
+  .tbc{display:inline-block;font:11px/1 ui-monospace,Menlo,monospace;color:var(--c-urgent-muted);
+       border:1px solid var(--c-urgent-muted);padding:3px 7px;border-radius:2px;margin-left:6px}
+  .tbcnote{font:12px/1.5 ui-monospace,Menlo,monospace;color:var(--c-urgent-muted);margin:8px 0 0}
+
+  .chg{color:var(--c-urgent-muted)}
+  .chgtag{display:inline-block;font:10px/1 ui-monospace,Menlo,monospace;letter-spacing:.06em;
+          color:var(--c-white);background:var(--c-urgent-muted);padding:3px 7px;border-radius:2px;
+          margin-left:8px;vertical-align:2px}
+  .dest{font:11px/1 ui-monospace,Menlo,monospace;color:var(--c-800);margin-left:8px;white-space:nowrap}
+  section.blk.dark .dest{color:var(--c-600)}
+  .destline{font:11px/1.6 ui-monospace,Menlo,monospace;color:var(--c-800);margin-top:10px}
+  section.blk.dark .destline{color:var(--c-600)}
+  .islogo{outline:2px solid var(--c-urgent-muted);outline-offset:2px}
+  .legend{background:var(--c-white);border:1px solid var(--c-mist);padding:14px 20px;margin:0 0 24px;
+          font-size:12px;color:var(--c-graphite)}
+  .legend b{color:var(--c-1000)}
+  .legend .sw{display:inline-block;width:34px;height:14px;border:1px solid var(--c-mist);
+              vertical-align:-3px;margin-right:6px}
+  .legend .sw.img{outline:2px solid var(--c-urgent-muted);outline-offset:1px}
+  .footer{padding:24px;font-size:11px;color:var(--c-700)}
+  @media(max-width:760px){.cardrow.n2,.cardrow.n3,.cardrow.n4{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="jumpbar">
+  <b>Final Copy</b>
+  <a href="#home">Home</a>
+  <a href="#sd">Self-Directed</a>
+  <a href="#mgd">Managed</a>
+  <span>Only what ships. Red = still to be decided.</span>
+</div>
+
+<div class="doc">
+
+<div class="legend">
+  <b>Reading this file.</b><br>
+  <span class="sw img"></span> A red-outlined box is an <b>image asset</b>: a logo, a diagram, or a figure. Nothing
+  inside it is live text.<br>
+  Everything else on the page is <b>set text</b>.<br>
+  <span style="font-family:ui-monospace,Menlo,monospace">&rarr; file.html</span> after a button or link is where that
+  link goes.<br>
+  Red type marks the few things still to be decided.<br>
+  Desktop layout only. Mobile-only controls, such as the VIEW MORE folds, are not shown.
+</div>
+
+<!-- =============================== HOME =============================== -->
+<div class="pagelabel" id="home">HOME</div>
+<div class="frame">
+
+  <div class="row between">
+    <div class="imgslot logo islogo" style="width:150px">[LOGO: II wordmark]</div>
+    <div style="display:flex;gap:16px">
+      <span class="navlink cur">Home</span>
+      <span class="navlink">Self-Directed</span>
+      <span class="navlink">Managed</span>
+      <span class="navlink">Pricing</span>
+      <span class="navlink">Manifesto</span>
+      <span class="navlink">Newsroom</span>
+    </div>
+    <div class="destline" style="width:100%;order:9">nav &rarr; index.html &middot; self-directed.html &middot;
+      managed.html &middot; pricing.html &middot; manifesto.html &middot; newsroom.html &nbsp;|&nbsp;
+      EN / FR &rarr; not wired yet</div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <span class="navlink">EN / FR</span>
+      <span class="pill solid">OPEN AN ACCOUNT</span><span class="dest">&rarr; get-the-app.html</span>
+    </div>
+  </div>
+
+  <section class="blk dark">
+    <div class="imgslot logo islogo" style="width:150px">[LOGO: II wordmark]</div>
+    <h1 class="hl" style="margin-top:16px">The market remembers every decision.<br>Most investors do not.</h1>
+    <p class="copy lead">A Canadian capital allocation system combining self-directed brokerage, decision records,
+      and institutional-grade research.</p>
+    <div style="margin-top:16px">
+      <span class="pill solid">OPEN AN ACCOUNT</span>
+      <span class="pill" style="border-color:var(--c-white);color:var(--c-white)">EXPLORE THE SYSTEM &rarr;</span>
+    </div>
+    <div class="destline">OPEN AN ACCOUNT &rarr; get-the-app.html &nbsp;&middot;&nbsp; EXPLORE THE SYSTEM &rarr;
+      #system, the next section on this page</div>
+  </section>
+
+  <section class="blk">
+    <div class="eyeb">NO. 01 &middot; SELF-DIRECTED &middot; THE SYSTEM</div>
+    <h2 class="hl">A capital allocation system.<br>Decisions on the record. <span class="tbc">HEADLINE TBC</span></h2>
+    <p class="copy">Some decisions you will choose to make yourself. Each one is capital allocation, and each should
+      have a defined purpose, an appropriate benchmark, and a record of what the capital was asked to do.
+      <span class="tbc">COPY TBC</span></p>
+    <p class="tbcnote">Dave to confirm the headline and this paragraph. Alternate headline: "The system is the
+      record. / Every decision, before the outcome."</p>
+
+    <div class="imgslot wide islogo" style="margin-top:18px">
+      [DIAGRAM: Operating Loop, drawn on canvas]<br>
+      01 Research &amp; Analysis &middot; Fiscal.ai + your AI tools<br>
+      02 Memo &middot; classify, size, conviction, record<br>
+      03 Review &middot; the research, run again<br>
+      04 Calibration &middot; conviction, scored against outcome<br>
+      &#8635; BACK TO 01 &middot; THE LOOP REPEATS<br>
+      Nodes: Behavioral bias &middot; Research &middot; Benchmark (S&amp;P 500 core)<br>
+      Status: Validated &middot; Under review &middot; Broken<br>
+      Caption: Operating Loop &middot; Illustrative &middot; not live data
+    </div>
+    <p class="tbcnote">Caption gains "Illustrative &middot; not live data", matching the constellation figure on
+      the Self-Directed page. V13 carried no disclaimer here, but every other figure on the site does, and the
+      status dots read as data.</p>
+    <p class="tbcnote">Loop model to confirm: this diagram runs Research / Memo / Review / Calibration, while the
+      Self-Directed page sections run Record / Benchmark / Review / Calibrate.</p>
+    <span class="pill" style="margin-top:14px;display:inline-block">SELF-DIRECTED &rarr;</span>
+    <div class="destline">&rarr; self-directed.html</div>
+  </section>
+
+
+  <section class="blk dark">
+    <div class="eyeb">SELF-DIRECTED &middot; THE MISSING LAYER</div>
+    <h2 class="hl">The industry solved access.<br>It never solved judgment.</h2>
+    <p class="copy">Commissions went to zero. Fractional shares arrived. Most public markets now fit in a pocket.
+      Access was the easier problem, and the industry finished it.</p>
+    <p class="copy">Professional investment organisations preserve research, review their decisions, and measure
+      attribution. Mainstream retail brokerage largely stops at the transaction record. The reasoning lives
+      somewhere else: a notebook, a chat thread, a memory that edits, or nowhere at all.</p>
+  </section>
+
+  <section class="blk dark">
+    <div class="eyeb">SELF-DIRECTED &middot; THE LOOP</div>
+    <h2 class="hl">Record. Benchmark.<br>Review. Calibrate.<br>You run it from day one.</h2>
+    <div class="cardrow n4">
+      <div class="card"><div class="t">01 Record</div><div class="d">Classification, role, size and probability
+        before an active order. The written case when you complete it.</div></div>
+      <div class="card"><div class="t">02 Benchmark</div><div class="d">The result against the relevant
+        alternative, using the same capital over the same period.</div></div>
+      <div class="card"><div class="t">03 Review</div><div class="d">What changed? The new version is dated.
+        The previous version remains.</div></div>
+      <div class="card"><div class="t">04 Calibrate</div><div class="d">As horizons close, stated probabilities
+        and actual outcomes become comparable. Outcome and decision quality begin to separate.</div></div>
+    </div>
+    <span class="pill" style="border-color:var(--c-white);color:var(--c-white);margin-top:14px;display:inline-block">CALIBRATION &rarr;</span>
+    <div class="destline">&rarr; self-directed.html#calibration</div>
+  </section>
+
+  <section class="blk dark" style="border-top:1px solid var(--c-800)">
+    <div class="eyeb">SELF-DIRECTED &middot; THE STANDARD</div><!-- a running beat header, not its own
+         number: the sections after the chapter opener are the same entity -->
+    <h2 class="hl">The standard is high.<br>The door is open.</h2>
+    <div class="eyeb" style="margin-top:20px">SELF-DIRECTED &middot; THE QUESTION</div>
+    <p class="copy lead">Five years of your own decisions, measured against the alternative that was available.
+      Can you name the number?</p>
+    <p class="copy">Few investors can. The record required to answer was never part of the brokerage experience.
+      Intelligent Investing makes it part of the system.</p>
+    <p class="copy">No wealth threshold. No invitation. One standard for everyone, and eligible Canadian investors
+      can apply to open an account.</p>
+    <p class="copy">The system scores predictions and records outcomes. It does not rank the person. Frequency is
+      not the achievement. The quality of the judgment is.</p>
+    <span class="pill" style="border-color:var(--c-white);color:var(--c-white)">THE BENCHMARK &rarr;</span>
+    <div class="destline">&rarr; self-directed.html#benchmark</div>
+  </section>
+
+  <!-- Moved out of the second slot: five Self-Directed sections run in a row and this broke the chapter
+       at its second beat. It is also the only block on the home that names Managed, so the entity switch
+       landed mid-argument. Price after the argument. -->
+  <section class="blk cream">
+    <div class="eyeb">NO. 02 &middot; MEMBERSHIP</div>
+    <div class="stat" style="max-width:520px">
+      <div class="v">$20<span style="font-size:13px">/mo</span></div>
+      <div class="l">One Membership &middot; Managed and Self-Directed included.<br>
+        Managed assets carry an additional 0.10% fee.</div>
+    </div>
+    <div class="cardrow n3" style="margin-top:16px">
+      <div class="card">
+        <div class="t">Self-Directed</div>
+        <div class="d">An active decision system that places each order on the record before the outcome, and
+          preserves what changed afterward.</div>
+        <span class="cta">SELF-DIRECTED &rarr;<span class="dest">&rarr; self-directed.html</span></span>
+      </div>
+      <div class="card">
+        <div class="t">Managed</div>
+        <div class="d">Low-cost, long-term portfolios for capital that needs a disciplined core.</div>
+        <span class="cta">MANAGED &rarr;<span class="dest">&rarr; managed.html</span></span>
+      </div>
+      <div class="card">
+        <div class="t">Fiscal.ai Max</div>
+        <div class="d">Multi-year financials, operating metrics, return on capital, margin trends and company
+          comparisons. Included with membership. Research supplies evidence. Judgment remains yours.<br><br>
+          Fiscal.ai Max &middot; $99/month standalone</div>
+        <span class="cta">RESEARCH &rarr;<span class="dest">&rarr; self-directed.html#research</span></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <div class="eyeb">NO. 03 &middot; NEWSROOM</div>
+    <h2 class="hl" style="max-width:none">Press Releases</h2>
+    <div style="max-width:75%">
+      <p class="copy" style="font-size:17px;font-weight:600;color:var(--c-1000);margin-bottom:8px">Orion Digital
+        Commercially Launches Intelligent Investing<span class="dest">&rarr; press-release.html</span></p>
+      <p class="copy">The investing industry solved access. In an AI world, Intelligent Investing is built to help
+        investors make better investment decisions.</p>
+      <p class="copy cap">JUL 27, 2026</p>
+      <span class="pill">READ THE PRESS RELEASE &rarr;</span><span class="dest">&rarr; press-release.html</span>
+    </div>
+    <p class="tbcnote">"ALL PRESS RELEASES" is present in the markup but carries the hidden attribute: two arrow
+      links stacked read as a duplicate while the stream holds a single release. It comes back when a second
+      release lands.</p>
+
+    <h2 class="hl" style="max-width:none;margin-top:36px">Changelog</h2>
+    <div class="cardrow n4">
+      <div class="card"><div class="k">&bull;</div>
+        <div class="t" style="font-size:15px">The stock page: the memo at the sell decision</div>
+        <div class="d">The memo now shows in the sell flow. Selling or reducing a position that has one surfaces it
+          first, read only.</div>
+        <div class="k" style="margin-top:8px">AUG 17, 2026</div>
+        <div class="destline">whole card &rarr; changelog-2026-08-17.html</div></div>
+      <div class="card"><div class="k">&bull;</div>
+        <div class="t" style="font-size:15px">Writing the investment case</div>
+        <div class="d">The editor now behaves like a proper notes editor, not a form field, and a memo opens to the
+          full investment case.</div>
+        <div class="k" style="margin-top:8px">JUL 27, 2026</div>
+        <div class="destline">whole card &rarr; changelog-2026-07-27.html</div></div>
+      <div class="card"><div class="k">&bull;</div>
+        <div class="t" style="font-size:15px">Investment memos</div>
+        <div class="d">A memo is now required before an order, covering classification, role, the case, idea origin,
+          and a prediction.</div>
+        <div class="k" style="margin-top:8px">JUL 17, 2026</div>
+        <div class="destline">whole card &rarr; changelog-2026-07-17.html</div></div>
+      <div class="card"><div class="k">&bull;</div>
+        <div class="t" style="font-size:15px">S&amp;P 500 comparison</div>
+        <div class="d">Self-directed performance is now shown against the S&amp;P 500, mirroring your own deposits
+          and withdrawals.</div>
+        <div class="k" style="margin-top:8px">JUN 15, 2026</div>
+        <div class="destline">whole card &rarr; changelog-2026-06-15.html</div></div>
+    </div>
+    <p class="tbcnote">Each card is one link. The first dot is dark, the rest grey. No images in the code today,
+      though the Figma frame shows them.</p>
+    <span class="pill" style="margin-top:14px;display:inline-block">VIEW ALL &rarr;</span><span class="dest">&rarr;
+      newsroom.html#changelog</span>
+  </section>
+
+  <section class="blk cream">
+    <div class="eyeb">INTELLIGENT INVESTING</div>
+    <h2 class="hl">Nobody can buy a ten-year record.<br>It has to be kept.</h2>
+    <p class="copy">Money buys access, information and tools this afternoon. It cannot buy ten years of dated
+      decisions, revised cases, recorded mistakes and measured outcomes. Time is the one input that cannot be
+      accelerated.</p>
+    <p class="copy">The only way to have a ten-year record in 2036 is to begin it now. It starts empty. That is the
+      same for everyone.</p>
+    <p class="copy">One $20/month membership includes access to Managed, Self-Directed, and Fiscal.ai Max.<br>
+      Managed assets carry an additional 0.10% fee.</p>
+    <span class="pill solid">OPEN AN ACCOUNT</span>
+    <span class="pill">READ THE MANIFESTO &rarr;</span>
+    <div class="destline">OPEN AN ACCOUNT &rarr; get-the-app.html &nbsp;&middot;&nbsp; READ THE MANIFESTO &rarr;
+      manifesto.html</div>
+    <p class="copy" style="margin-top:18px">Client assets held separately &middot; Orion Digital Corp., NASDAQ &amp; TSX: ORIO</p>
+    <p class="tbcnote">2026-08-27: the CIRO/CIPF tiles and the "A licensed Canadian brokerage" lead were removed here.
+      Compliance: the home covers two entities with two different regulators, so no regulator may be named on this
+      page. CIRO/CIPF belong on self-directed.html, the AMF on managed.html. Custodian and Orion stay, and are
+      now one line, not two cards.</p>
+  </section>
+
+  <div class="footer">
+    <p style="color:var(--c-graphite);font-size:12px;margin:0 0 12px"><b>Footer, identical on every page.</b>
+      Compliance-confirmed text, reproduced verbatim. Not to be edited.</p>
+    <p style="margin:0 0 10px">Privacy Policy<span class="dest">&rarr; intelligentinvesting.ai privacy-policy</span>
+      &middot; Disclosures<span class="dest">&rarr; intelligentinvesting.ai disclosures</span>
+      &middot; Terms of Use<span class="dest">&rarr; intelligentinvesting.ai terms-of-use</span></p>
+    <p style="margin:0 0 10px">&copy;2026 Orion Digital Corp. All rights reserved.</p>
+    <p style="margin:0 0 10px">Social icons: Instagram &middot; TikTok &middot; X &middot; YouTube<span class="dest">&rarr; instagram.com/intelligentinvesting.ai &middot; tiktok.com/@intelligentinvesting.ai &middot; x.com/intellinvesting &middot; youtube.com/@intelligentinvesting-ai</span></p>
+    <p style="margin:0 0 10px">IntelligentInvesting Securities Inc. (IISI) and IntelligentInvesting Wealth Management
+      Inc.(IIWMI) are subsidiaries of Orion Digital Corp. Orion Digital Corp. is not an investment adviser or dealer
+      and does not provide investment advice or deal in securities.</p>
+    <p style="margin:0 0 10px">Managed investing accounts are opened with IIWMI, a registered portfolio manager whose
+      principal regulator is the Autorit&eacute; des March&eacute;s Financiers (AMF). Registered accounts managed by
+      IIWMI are held by CI Investment Services Inc., an independent custodian, a member of CIRO and CIPF. Accounts
+      held by CI Investment Services Inc. are eligible for CIPF protection, in accordance with CIPF coverage
+      policies.</p>
+    <p style="margin:0 0 10px">Self-directed investing accounts are opened with IISI, an investment dealer offering
+      order execution only account services, a member of CIRO and CIPF. Accounts with IISI are eligible for CIPF
+      protection, in accordance with CIPF coverage policies.</p>
+    <p style="margin:0 0 10px">A brochure describing the scope and nature of coverage, as well as the limitations and
+      exclusions of coverage, is available upon request or at www.cipf.ca<span class="dest">&rarr; cipf.ca</span>.</p>
+    <p style="margin:0 0 10px">IISI and IIWMI are registered in each province and territory in which it conducts
+      business and is subject to regulation by the applicable provincial or territorial securities regulatory
+      authorities.</p>
+    <p style="margin:0 0 10px">The information contained on this webpage is provided for informational purposes only
+      and does not constitute a promise of specific results or future performance. Certain statements may contain
+      opinions, assumptions, or forward-looking information that are subject to change and may not reflect actual
+      outcomes. No representation or warranty, express or implied, is made as to the accuracy, completeness, or
+      timeliness of the information presented. Statistics, examples, and projections, where provided, are for
+      illustrative purposes only and should not be relied upon as guarantees of future results. Nothing herein should
+      be considered investment advice or an offer or solicitation to buy or sell securities. The information provided
+      may not be suitable or applicable to all investors. For additional details regarding the content of this page,
+      please refer to our full disclosure.</p>
+    <p style="margin:0 0 10px">Investing involves risk, and it is possible to lose some or all of your investment.
+      Always research before investing.</p>
+    <p style="margin:0">Fiscal.ai, an AI investment research tool powered by Fiscal.ai, is a third-party product
+      provided "as is" without warranties on accuracy, completeness, quality, or timeliness. Verify information
+      independently. Fiscal.ai outputs are not investment advice or recommendations and should not be used for
+      investment decisions. By using Fiscal.ai, you agree to our Privacy Policy and Terms of Use.</p>
+  </div>
+</div>
+
+<!-- =========================== SELF-DIRECTED =========================== -->
+<div class="pagelabel" id="sd">SELF-DIRECTED</div>
+<div class="frame">
+
+  <section class="blk dark">
+    <div class="eyeb">SELF-DIRECTED &middot; PART OF THE INTELLIGENT INVESTING SYSTEM</div>
+    <h1 class="hl">Most investors record outcomes.<br>The decision comes before the trade.</h1>
+    <p class="copy lead">An active decision system that places each order on the record before the outcome, and
+      preserves what changed afterward. Without the reasoning, the outcome teaches nothing.</p>
+    <span class="pill solid">OPEN AN ACCOUNT</span>
+    <span class="pill" style="border-color:var(--c-white);color:var(--c-white)">SEE THE RECORD &rarr;</span>
+    <div class="destline">OPEN AN ACCOUNT &rarr; get-the-app.html &nbsp;&middot;&nbsp; SEE THE RECORD &rarr;
+      #record, the next section on this page</div>
+    <p class="copy" style="margin-top:14px">A licensed Canadian brokerage &middot; regulated by CIRO &middot;
+      CIPF member</p>
+    <p class="tbcnote">2026-08-31: the entity logo was removed from this hero. Compliance asked that each page
+      name the entity that owns it, but located the marks "at the bottom", and the closing block below carries
+      IISI, CIRO and CIPF. Dave on the hero: "but don't do it... it still has to be the icon logo has to be the
+      main one, our logo." Flagged for the compliance debate (see STILL OPEN, item 7).</p>
+  </section>
+
+  <section class="blk">
+    <div class="eyeb">NO. 01 &middot; THE RECORD</div>
+    <h2 class="hl">A thesis without a stated way to be wrong is an opinion.</h2>
+    <p class="copy">Before an active order, the position is classified, its role and size are set, and you state your
+      probability of clearing your hurdle. The investment case can be added later, and when it is, it carries the
+      date it was written, not the date of the order. The system does not invent a history you did not create.</p>
+    <p class="copy">The case states what would prove it wrong. Once sealed, it locks. Editing creates a new version.
+      The original is never overwritten.</p>
+    <p class="copy">You will read it later and disagree with yourself. That is the record working.</p>
+
+    <div class="memo" style="margin-top:16px">
+      <div class="hd"><span>Memo</span><span>06.22.26</span></div>
+      <div class="nm">NOVA &middot; 87.60 CAD</div>
+      <dt>Classification</dt><dd>Compounder</dd>
+      <dt>Role</dt><dd>Core Position</dd>
+      <dt>Prediction</dt><dd>60% probability of 20%/yr over 3 years</dd>
+      <dt>Source</dt><dd>Screener</dd>
+      <dt>Thesis</dt><dd>Nova compounds through a connected installed base that keeps paying. Services are roughly
+        a third of gross profit and grow faster than the hardware they ride on. The market prices a mature device
+        vendor; we back a widening-moat annuity.</dd>
+      <dt>Kill Criteria</dt><dd>Services growth below 8% for two straight quarters, or the buyback is paused.
+        Either voids the thesis.</dd>
+    </div>
+    <p class="tbcnote">Memo specimen rebuilt 2026-09-01 to the current product card (issuer and figures stay
+      invented). It now carries a Source field and a single-paragraph Kill Criteria; it no longer carries a
+      separate Investment Case date or a numbered kill-criteria list.</p>
+    <p class="copy cap" style="max-width:440px">Specimen. The structure is the product's. The position and the
+      figures are illustrative, not a security, a recommendation, or a client record.</p>
+  </section>
+
+  <section class="blk dark">
+    <div class="eyeb">NO. 02 &middot; THE BENCHMARK</div>
+    <h2 class="hl">Every dollar is measured against the market.<br>Including when it loses.</h2>
+    <p class="copy">Every position is measured against the S&amp;P 500, dollar for dollar, the same capital over the
+      same period. The gap is shown plainly, including when negative.</p>
+    <p class="copy">Every holding has a Position Page: your record, your reviews, performance, research, news, and
+      full history. Names you are still considering are staged before capital is committed. Each position is open,
+      measured, and accountable to the record that opened it.</p>
+    <div class="cardrow n3" style="margin-top:16px">
+      <div class="stat"><div class="v">46,782</div><div class="l">Your portfolio, CAD</div></div>
+      <div class="stat"><div class="v">50,627</div><div class="l">The same capital, in the index</div></div>
+      <div class="stat"><div class="v">&minus;7.60%</div><div class="l">The difference, shown plainly</div></div>
+    </div>
+    <p class="copy cap">Illustrative. The benchmark block as it appears on every account.</p>
+    <p class="tbcnote">The opening "S&amp;P 500 is the default hurdle" paragraph and the trailing 9-in-10 SPIVA stat
+      are no longer on this section of the live page as of 2026-09-01.</p>
+  </section>
+
+  <section class="blk">
+    <div class="eyeb">NO. 03 &middot; THE REVIEW</div>
+    <h2 class="hl">A record is not written once.</h2>
+    <p class="copy">Writing it is the first pass. As the thesis is tested it is revised, version by version, and
+      every capital decision answers to the record, never the other way around.</p>
+    <div class="cardrow n3">
+      <div class="card"><div class="k">01</div><div class="t" style="font-size:15px">Record</div>
+        <div class="d">The first time, you fill out the record: classification, sizing, confidence, idea origin, and
+          the investment case.</div></div>
+      <div class="card"><div class="k">02</div><div class="t" style="font-size:15px">Review</div>
+        <div class="d">As the thesis is tested, you revise it section by section. Each revision becomes a new
+          version. The new version is dated. The previous version remains.</div></div>
+      <div class="card"><div class="k">03</div><div class="t" style="font-size:15px">Capital decision</div>
+        <div class="d">Your decision to initiate, increase, or reduce always follows the record, never the other way
+          around.</div></div>
+    </div>
+    <p class="tbcnote">The closing line, "Every active decision begins with a record. When the allocator returns,
+      the case can change. The history cannot," is no longer on the live page as of 2026-09-01.</p>
+  </section>
+
+  <section class="blk dark">
+    <div class="eyeb">NO. 04 &middot; CALIBRATION</div>
+    <h2 class="hl">Confidence, scored against outcome.</h2>
+    <p class="copy">Every allocator carries a private conviction about how often they are right. Almost none has
+      ever measured it. The number is almost always worse than the belief.</p>
+    <p class="copy">Each decision is recorded as a probability against a horizon, then scored against what occurred.
+      As horizons close, stated probabilities and actual outcomes become comparable. Outcome and decision quality
+      begin to separate. The record does not care what you believed.</p>
+    <p class="copy">A sound decision can lose. A reckless one can pay off. The outcome alone never tells you which
+      you made.</p>
+    <p class="copy">There are only two kinds of allocators: those who have been humbled, and those who are about to
+      be. The only question is what happens next.</p>
+    <div class="imgslot wide islogo" style="margin-top:14px">
+      [FIGURE: Calibration record, drawn on canvas]<br>
+      Summary row: You said 70% &middot; Reality 64% &middot; Predictions 17<br>
+      Card header: The record &middot; 17 entries<br>
+      Intro: Every sealed forecast, the append-only ledger. A sale, a re-underwrite, or a killed thesis each
+      gets its own status; nothing is ever overwritten.<br>
+      POWL &middot; 75% conf &middot; +35% hurdle &middot; 5-year &middot; +16.5% vs S&amp;P &middot; Tracking<br>
+      CELH &middot; 80% conf &middot; +35% hurdle &middot; 5-year &middot; +11.9% vs S&amp;P &middot; Tracking<br>
+      SHOP &middot; 65% conf &middot; +30% hurdle &middot; 3-year &middot; Superseded &middot; re-underwritten<br>
+      AEHR &middot; 60% conf &middot; +25% hurdle &middot; 1-year &middot; +3.1% vs S&amp;P &middot; Sold-early<br>
+      SMCI &middot; 70% conf &middot; +35% hurdle &middot; 3-year &middot; Void &middot; thesis killed
+    </div>
+    <p class="copy cap">Illustrative. A calibration record, summarised.</p>
+    <p class="tbcnote">Figure rebuilt 2026-09-01: the old predicted-vs-actual scatter chart is replaced by this
+      append-only calibration ledger (issuer tickers are specimens, not live positions).</p>
+    <div class="cardrow n3" style="margin-top:16px">
+      <div class="stat"><div class="v">70%</div><div class="l">you said</div></div>
+      <div class="stat"><div class="v">64%</div><div class="l">reality</div></div>
+      <div class="stat"><div class="v">6 pts</div><div class="l">overconfident, on the record</div></div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <div class="eyeb">NO. 05 &middot; THE DEVELOPMENT</div>
+    <h2 class="hl">The portfolio is an artifact.<br>The allocator is the product.</h2>
+    <p class="copy">The record, the benchmark, the review, and the score are not features. They are training. What
+      they develop is specific: calibration, probabilistic reasoning, position sizing, updating when the evidence
+      changes, learning from error, decision quality.</p>
+    <p class="copy">The system does not try to improve your outcomes. It tries to improve the decision-maker.
+      Outcomes are downstream.</p>
+    <p class="copy">We promise no outcome. We hold one belief: people who consistently make higher-quality
+      allocation decisions tend to achieve better long-term outcomes. Not always. Not immediately. But over time.</p>
+    <p class="copy">A rigorous record may teach some investors that most of their capital belongs in the default.
+      That is not failure. That is the system working. The highest expression of allocation is knowing when you can
+      beat the market, and when you cannot.</p>
+    <span class="pill">MANAGED &rarr;</span>
+    <div class="destline">&rarr; managed.html</div>
+  </section>
+
+  <section class="blk dark">
+    <div class="eyeb">NO. 06 &middot; RESEARCH</div>
+    <h2 class="hl">Research comes before the record.</h2>
+    <p class="copy">Every membership includes access to Fiscal.ai Max, a professional-grade research and analysis
+      environment. Most investors trade on price and headlines. Serious investors analyse businesses.</p>
+    <p class="copy">Research supplies evidence. Judgment remains yours. It is not a stock picker, a signal engine,
+      or a shortcut. It does not make the decision, assign the probability, or absorb the consequence.</p>
+    <div class="row between" style="border:0;padding:0;margin-top:18px">
+      <span class="eyeb" style="margin:0">Fiscal.ai Max</span>
+      <span class="eyeb" style="margin:0">$99/month standalone &middot; included with membership</span>
+    </div>
+    <div class="cardrow n2" style="margin-top:10px">
+      <div class="card"><div class="t" style="font-size:15px">Multi-year financials</div>
+        <div class="d">Income statement, balance sheet, cash flow.</div></div>
+      <div class="card"><div class="t" style="font-size:15px">Capital allocation</div>
+        <div class="d">Return on capital and free cash flow analysis.</div></div>
+      <div class="card"><div class="t" style="font-size:15px">Margin trends</div>
+        <div class="d">Margin trends and capital allocation history.</div></div>
+      <div class="card"><div class="t" style="font-size:15px">Company comparisons</div>
+        <div class="d">Clean company comparisons across time.</div></div>
+      <div class="card"><div class="t" style="font-size:15px">Filing summaries</div>
+        <div class="d">AI-assisted tools to summarise filings, with sources.</div></div>
+      <div class="card"><div class="t" style="font-size:15px">Segment &amp; KPI data</div>
+        <div class="d">Business-line revenue across 2,500+ companies.</div></div>
+      <div class="card"><div class="t" style="font-size:15px">Earnings call transcripts</div>
+        <div class="d">Full transcripts, with sourced AI summaries.</div></div>
+    </div>
+    <p class="copy cap">No trading commissions. FX carries no added fee; a conversion spread applies. The $20/month
+      membership applies.</p>
+    <span class="pill" style="border-color:var(--c-white);color:var(--c-white)">PRICING &rarr;</span>
+    <div class="destline">&rarr; pricing.html</div>
+  </section>
+
+  <section class="blk">
+    <div class="eyeb">NO. 07 &middot; WHAT IT REFUSES</div>
+    <h2 class="hl">Refusal is governance.</h2>
+    <div class="cardrow n3">
+      <div class="card"><div class="t" style="font-size:15px">No recommendations</div>
+        <div class="d">The firm does not tell you what to buy or sell. Self-Directed is order-execution only; the
+          judgment, and its record, are yours.</div></div>
+      <div class="card"><div class="t" style="font-size:15px">No engagement mechanics</div>
+        <div class="d">No streaks, no badges, no confetti, no notifications engineered to make you trade. Nothing on
+          the platform is optimized for activity.</div></div>
+      <div class="card"><div class="t" style="font-size:15px">No edited history</div>
+        <div class="d">Nothing is rewritten, nothing is deleted, nothing is polished. The version you were wrong in
+          stays in the file.</div></div>
+    </div>
+    <p class="copy" style="margin-top:14px">Each of these costs us growth. That is why you can believe them.</p>
+  </section>
+
+  <section class="blk cream">
+    <div class="eyeb">NO. 08 &middot; ACCOUNT TYPES</div>
+    <h2 class="hl">The account is a container.<br>The record is the point.</h2>
+    <div class="cardrow n3">
+      <div class="card"><div class="t">TFSA</div><div class="k">Tax-free</div>
+        <div class="d" style="margin-top:6px">Growth and withdrawals are completely tax-free, within an annual
+          contribution limit that carries forward when unused. The most flexible registered account, with no tax on
+          what compounds inside it.</div>
+        <div class="k" style="margin-top:8px">2025 contribution limit: $7,000</div></div>
+      <div class="card"><div class="t">RRSP</div><div class="k">Tax-deferred</div>
+        <div class="d" style="margin-top:6px">Contributions reduce your taxable income now, and investment growth is
+          deferred until you withdraw, usually in retirement when your marginal rate is lower. Built for
+          long-horizon, tax-aware compounding.</div>
+        <div class="k" style="margin-top:8px">2025 contribution limit: $32,490</div></div>
+      <div class="card"><div class="t">Non-Registered</div><div class="k">Taxable</div>
+        <div class="d" style="margin-top:6px">No contribution limit and no withdrawal restrictions, but investment
+          income and capital gains are taxed each year. Typically used once your registered accounts are fully
+          funded.</div>
+        <div class="k" style="margin-top:8px">No contribution limit</div></div>
+    </div>
+    <p class="copy cap">FAQ &middot; Privacy Policy &amp; Security Practices &middot; Fee Schedule &middot;
+      Self-Directed Investing App Terms of Use &middot; Complaint Handling Procedures &middot; Best Execution Policy
+      &middot; Relationship Disclosure</p>
+  </section>
+
+  <section class="blk">
+    <div class="eyeb">INTELLIGENT INVESTING</div>
+    <h2 class="hl">The record starts empty.<br>That is the same for everyone.</h2>
+    <p class="copy">Money buys access, information, and tools this afternoon. It cannot buy ten years of dated
+      decisions, revised cases, recorded mistakes, and measured outcomes. The only way to have a ten-year record in
+      2036 is to begin it now.</p>
+    <p class="copy">Within your first week: an account, a benchmark, and your first decision on the record. We
+      commit to the process. We never promise the return.</p>
+    <p class="copy">One $20/month membership includes access to Managed, Self-Directed, and Fiscal.ai Max.<br>
+      Managed assets carry an additional 0.10% fee.</p>
+    <span class="pill solid">OPEN AN ACCOUNT</span>
+    <span class="pill">SEE MANAGED &rarr;</span>
+    <div class="destline">OPEN AN ACCOUNT &rarr; get-the-app.html &nbsp;&middot;&nbsp; SEE MANAGED &rarr; managed.html</div>
+    <div class="imgslot islogo" style="margin-top:16px;min-height:200px">
+      [FIGURE: the record, ten years of case versions, drawn on canvas]<br>
+      Caption: The record, ten years of case versions. &middot; Illustrative &middot; not live data
+    </div>
+    <div class="row between" style="border:0;padding:0;margin-top:20px;align-items:flex-start">
+      <p class="copy" style="margin:0">A licensed Canadian brokerage.<br>Client assets are held separately by the
+        custodian.</p>
+      <div style="display:flex;gap:14px;align-items:center">
+        <div class="imgslot logo islogo" style="width:130px">[LOGO: IISI]</div>
+        <div class="imgslot logo islogo" style="width:110px">[LOGO: CIRO]</div>
+        <div class="imgslot logo islogo" style="width:110px">[LOGO: CIPF]</div>
+      </div>
+    </div>
+    <p class="destline">Logos sit top right, level with the statement. Below is one run of set text, not four
+      boxes: 2026-09-01 folded the four labelled tiles into a single line, since the labels only restated what
+      their own notes already said.</p>
+    <p class="copy" style="margin-top:14px">CIRO regulated investment dealer &middot; CIPF coverage applies to
+      insolvency, not to investment losses &middot; Client assets held separately &middot; Orion Digital Corp.,
+      NASDAQ &amp; TSX: ORIO</p>
+  </section>
+
+  <div class="footer">Footer: the same legal block reproduced on the Home page above, word for word. Not repeated here.</div>
+</div>
+
+<!-- =============================== MANAGED =============================== -->
+<div class="pagelabel" id="mgd">MANAGED</div>
+<div class="frame">
+
+  <div class="row between">
+    <div class="imgslot logo islogo" style="width:150px">[LOGO: II wordmark]</div>
+    <div style="display:flex;gap:16px">
+      <span class="navlink">Home</span>
+      <span class="navlink">Self-Directed</span>
+      <span class="navlink cur">Managed</span>
+      <span class="navlink">Pricing</span>
+      <span class="navlink">Manifesto</span>
+      <span class="navlink">Newsroom</span>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <span class="navlink">EN / FR</span>
+      <span class="pill solid">OPEN AN ACCOUNT</span><span class="dest">&rarr; get-the-app.html</span>
+    </div>
+  </div>
+
+  <section class="blk dark">
+    <div class="imgslot wide islogo" style="margin-bottom:18px">[VIDEO: hero-managed-d.mp4, background]</div>
+    <div class="eyeb">MANAGED &middot; PART OF THE INTELLIGENT INVESTING SYSTEM</div>
+    <h1 class="hl">The market, every week,<br>without the decision.</h1>
+    <p class="copy lead">Low-cost, long-term portfolios for capital that needs a disciplined core. Answer the
+      questionnaire; the firm matches you to a portfolio and funds it weekly, automatically.</p>
+    <span class="pill solid">OPEN AN ACCOUNT</span>
+    <span class="pill" style="border-color:var(--c-white);color:var(--c-white)">SEE THE PORTFOLIOS &rarr;</span>
+    <div class="destline">OPEN AN ACCOUNT &rarr; get-the-app.html &nbsp;&middot;&nbsp; SEE THE PORTFOLIOS &rarr;
+      #portfolios, further down this page</div>
+    <p class="copy" style="margin-top:14px">A registered portfolio manager &middot; regulated by the AMF</p>
+    <p class="tbcnote">Shortened to two beats 2026-09-01. Compliance, verbatim: "on the managed, you would do, in
+      this case, regulated not by CIRO but by the AMF." CIPF is deliberately absent from this line: compliance
+      allowed it only conditionally ("CIPF if needed") and warned it off in the same breath, since non-registered
+      accounts are not covered by CIPF on the managed side and a hero line cannot carry that qualification. The
+      custodian and CIPF detail now live only in the closing trust block below. Compliance sign-off on this exact
+      wording is not confirmed (see STILL OPEN, item 3).</p>
+  </section>
+
+  <section class="blk">
+    <div class="eyeb">NO. 01 &middot; THE DEFAULT</div>
+    <h2 class="hl">Every departure from the default is a decision.</h2>
+    <p class="copy">Managed holds a broad index core: disciplined, weekly, automatic. It requires no view of the
+      market. Everything beyond it is a view you have chosen to take, and a view should be able to explain itself.</p>
+    <p class="copy">The system doesn't tell you what to hold. It asks you to say why.</p>
+    <div class="stat" style="max-width:520px;margin-top:16px">
+      <div class="v">9 in 10</div>
+      <div class="l">active large-cap US funds trailed the S&amp;P 500 over the fifteen years to 2024. Professional
+        access. Professional research. The default they failed to beat is the one Managed holds.<br>
+        S&amp;P SPIVA Scorecard, Year-End 2024<span class="dest">&rarr; spglobal.com SPIVA</span></div>
+    </div>
+    <p class="copy" style="margin-top:16px">The objective is not reducing ambition. The objective is preventing
+      self-deception.</p>
+    <p class="copy">Managed is not the alternative to active investing. It is the foundation beneath it, and the
+      number every active decision answers to.</p>
+    <span class="pill">SELF-DIRECTED &rarr;</span><span class="dest">&rarr; self-directed.html</span>
+    <div class="imgslot wide islogo" style="margin-top:18px">[CANVAS: coreSphere, the core held]</div>
+    <p class="copy cap">The core, held. One year, 52 weekly layers. Illustrative.</p>
+  </section>
+
+  <section class="blk dark">
+    <div class="imgslot wide islogo" style="margin-bottom:18px">[IMAGE: band photograph, egor-komarov]</div>
+    <div class="eyeb">NO. 02 &middot; THE FEE</div>
+    <h2 class="hl">The return is uncertain. The fee is not.</h2>
+    <p class="copy">Canadians hold $2.2 trillion in mutual funds, more than four times what they hold in ETFs, at
+      fees commonly near 2% of assets, every year, in up years and down. Over the ten years to 2024, roughly nine in
+      ten Canadian equity funds trailed their benchmark, net of those fees.</p>
+    <p class="copy">What you pay is the one part of the outcome you fully control. So we price the core plainly, and
+      in full: the $20 monthly membership, a 0.10% asset fee, and the costs of the underlying funds. Nothing
+      embedded, nothing implied.</p>
+    <div class="cardrow n3">
+      <div class="stat"><div class="v">9 in 10</div>
+        <div class="l">Canadian equity funds that trailed their benchmark over the ten years to 2024, net of fees</div></div>
+      <div class="stat"><div class="v">~$2,000</div>
+        <div class="l">the annual cost of a 2% fee on a $100,000 fund holding</div></div>
+      <div class="stat"><div class="v">~$[490] <span class="tbc">FIGURE TBC</span></div>
+        <div class="l">Managed's all-in annual cost on the same $100,000: membership, asset fee, and underlying fund
+          costs included&dagger;</div></div>
+    </div>
+    <p class="copy" style="margin-top:16px">Underperformance is forgiven every year.<br>The fee is collected every
+      year.</p>
+    <p class="copy cap">&dagger;Illustrative comparison on a $100,000 account, assumptions as stated: a fund fee of
+      2.00% of assets versus Managed's $240 annual membership, 0.10% asset fee, and underlying ETF costs of
+      approximately [X.XX]%. Identical holdings and gross returns are assumed; taxes excluded. Because the membership
+      is flat, Managed's all-in rate rises as account size falls: below roughly $[14,000], it can approach or exceed
+      a 2% fund fee. The comparison is stated because it is true, both ways. Sources: IFIC 2024 Investment Funds
+      Report (year-end 2024: $2.242 trillion in mutual fund assets; $518 billion in ETF assets). SPIVA Canada
+      Scorecard, year-end 2024.</p>
+    <p class="tbcnote">Three placeholders still open in this section: ~$[490], [X.XX]% and $[14,000].</p>
+  </section>
+
+  <section class="blk">
+    <div class="eyeb">NO. 03 &middot; HOW IT WORKS</div>
+    <h2 class="hl">Three steps.<br>Then the schedule takes over.</h2>
+    <div class="cardrow n3">
+      <div class="card"><div class="k">01</div><div class="t" style="font-size:15px">Answer the questionnaire</div>
+        <div class="d">It reads your objectives, time horizon, risk tolerance, capacity for loss, and financial
+          circumstances. It is thorough, because it has to be.</div></div>
+      <div class="card"><div class="k">02</div><div class="t" style="font-size:15px">Get matched to a portfolio</div>
+        <div class="d">The firm recommends a portfolio suited to your profile, from full equity to capital
+          preservation. An advising representative reviews every account, and you can speak with one at any point.
+          You confirm before anything moves.</div></div>
+      <div class="card"><div class="k">03</div><div class="t" style="font-size:15px">Weekly, automatically</div>
+        <div class="d">Set a contribution and it runs on schedule regardless of market conditions. That consistency
+          is the point, not a feature.</div></div>
+    </div>
+    <p class="copy" style="margin-top:14px">The default is the market. Managed makes that the practice.</p>
+    <p class="copy">Within your first week: a matched portfolio, a funded schedule, and a benchmark. We commit to the
+      process. We never promise the return.</p>
+  </section>
+
+  <section class="blk dark">
+    <div class="imgslot wide islogo" style="margin-bottom:18px">[IMAGE: band photograph, szymon-shields]</div>
+    <div class="eyeb">NO. 04 &middot; WHAT IT DOESN'T DO</div>
+    <h2 class="hl">The absence is the decision.</h2>
+    <div class="cardrow n3">
+      <div class="card"><div class="t" style="font-size:15px">No market timing</div>
+        <div class="d">Contributions run on the same schedule regardless of the market, with no attempt to enter at
+          the right moment, because no one does it reliably.</div></div>
+      <div class="card"><div class="t" style="font-size:15px">No stock selection</div>
+        <div class="d">Capital is allocated across a diversified portfolio matched to your risk profile, not
+          concentrated in individual names chosen to beat the market.</div></div>
+      <div class="card"><div class="t" style="font-size:15px">No reaction</div>
+        <div class="d">Headlines, volatility, and forecasts do not change the plan. The allocation holds through
+          cycles, which is where most of the long-term return is earned.</div></div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <div class="eyeb">NO. 05 &middot; THE PORTFOLIOS</div>
+    <h2 class="hl">Five profiles. Each shown with its worst.</h2>
+    <p class="copy">Answer the questionnaire and the firm recommends a profile, from full equity to capital
+      preservation. Every profile is listed with the deepest loss an allocation like it has historically endured,
+      because the honest question is not the return you want. It is the drawdown you can hold.</p>
+    <div class="imgslot wide islogo" style="margin-top:16px">[CANVAS: pfStack, five profiles by risk]</div>
+    <p class="copy cap">Risk settles downward &middot; one layer takes your weight</p>
+    <p class="copy cap">Five profiles by risk. Illustrative &middot; not live data.</p>
+    <table class="wf" style="margin-top:16px">
+      <tr><th>Portfolio</th><th>Allocation</th><th>Peak drawdown</th><th>Risk level</th><th>Historical return&dagger;</th></tr>
+      <tr><td>Equity Growth</td><td>100% Equity (S&amp;P 500)</td><td>50%+</td><td>5 / 5</td><td>~11%</td></tr>
+      <tr><td>Balanced Growth</td><td>70% Equity / 30% Fixed Income</td><td>~30-35%</td><td>4 / 5</td><td>~9%</td></tr>
+      <tr><td>Balanced</td><td>50% Equity / 50% Fixed Income</td><td>~20-25%</td><td>3 / 5</td><td>~7%</td></tr>
+      <tr><td>Balanced Income</td><td>70% Fixed Income / 30% Money Market</td><td>Minimal</td><td>2 / 5</td><td>3.06% yield*</td></tr>
+      <tr><td>Cautious Income</td><td>100% Money Market</td><td>Minimal</td><td>1 / 5</td><td>2.63% yield*</td></tr>
+    </table>
+    <p class="copy cap">&dagger;Long-run historical performance of the indices underlying each allocation, before
+      fees. Historical and approximate; not a forecast, a projection, or a promise of future returns. Index history
+      is shown to describe the allocation, not to predict the portfolio.</p>
+    <p class="copy cap">*Current yields as of [DATE]; yields change with rates.
+      <span class="tbc">DATE TBC</span></p>
+  </section>
+
+  <section class="blk dark">
+    <div class="eyeb">NO. 06 &middot; THE PROJECTION</div>
+    <h2 class="hl">Every contribution has a destination.</h2>
+    <p class="copy">Each account is a goal with a target. The system funds it weekly and projects the path it is on.</p>
+    <div class="cardrow n3">
+      <div class="card"><div class="t" style="font-size:15px">A target, not a forecast</div>
+        <div class="d">The bands are a range of outcomes, not a promise. The system projects the path you are on; it
+          does not predict returns.</div></div>
+      <div class="card"><div class="t" style="font-size:15px">Funded before projected</div>
+        <div class="d">The first stretch of the line is the record of deposits already executed. The projection is
+          that momentum, extended forward.</div></div>
+      <div class="card"><div class="t" style="font-size:15px">Course corrections</div>
+        <div class="d">If the path drifts from the goal, the system says so, and shows the weekly amount that would
+          bring the plan back on track.</div></div>
+    </div>
+  </section>
+
+  <section class="blk">
+    <div class="eyeb">NO. 07 &middot; THE TRACK RECORD</div>
+    <h2 class="hl">Net of fees. Beside the benchmark.</h2>
+    <p class="copy">The same standard we ask of you. Portfolio performance is published net of fees, beside the
+      alternative that was always available, including the periods it trailed.</p>
+    <p class="copy cap">As of July 31, 2026 &middot; inception dates per portfolio</p>
+    <table class="wf">
+      <tr><th>Portfolio</th><th>1M</th><th>3M</th><th>YTD</th><th>1Y</th><th>3Y</th><th>5Y</th><th>Since inception</th></tr>
+      <tr><td>Equity Growth</td><td>&minus;0.96%</td><td>7.33%</td><td>12.35%</td><td>20.34%</td><td>21.03%</td><td>14.45%</td><td>[TBD]</td></tr>
+      <tr><td>Balanced Growth</td><td>&minus;1.10%</td><td>5.11%</td><td>8.68%</td><td>14.73%</td><td>15.78%</td><td>9.99%</td><td>[TBD]</td></tr>
+      <tr><td>Balanced</td><td>&minus;1.20%</td><td>3.62%</td><td>6.24%</td><td>11.00%</td><td>12.28%</td><td>7.01%</td><td>[TBD]</td></tr>
+      <tr><td>Balanced Income</td><td>&minus;0.96%</td><td>0.10%</td><td>0.40%</td><td>1.84%</td><td>3.51%</td><td>0.64%</td><td>[TBD]</td></tr>
+      <tr><td>Cautious Income</td><td>0.17%</td><td>0.53%</td><td>1.06%</td><td>2.26%</td><td>3.46%</td><td>3.14%</td><td>[TBD]</td></tr>
+      <tr><td>S&amp;P 500 (CAD)</td><td>&minus;1.18%</td><td>7.39%</td><td>12.72%</td><td>21.32%</td><td>21.89%</td><td>15.52%</td><td>[TBD]</td></tr>
+    </table>
+    <p class="copy cap">Portfolio returns are actual, net of fees. Benchmark returns are shown gross of fees.
+      Since-inception periods vary by portfolio; inception dates shown. Past returns are no guarantee of future
+      performance.</p>
+    <p class="tbcnote">Six [TBD] cells in the since-inception column.</p>
+  </section>
+
+  <section class="blk cream">
+    <div class="eyeb">NO. 08 &middot; ACCOUNT TYPES</div>
+    <h2 class="hl">The account is a container.<br>The discipline is the point.</h2>
+    <div class="cardrow n3">
+      <div class="card"><div class="t">TFSA</div><div class="k">Tax-free</div>
+        <div class="d" style="margin-top:6px">Growth and withdrawals are completely tax-free, within an annual
+          contribution limit that carries forward when unused. The most flexible registered account, with no tax on
+          what compounds inside it.</div>
+        <div class="k" style="margin-top:8px">2025 contribution limit: $7,000</div></div>
+      <div class="card"><div class="t">RRSP</div><div class="k">Tax-deferred</div>
+        <div class="d" style="margin-top:6px">Contributions reduce your taxable income now, and investment growth is
+          deferred until you withdraw, usually in retirement when your marginal rate is lower. Built for
+          long-horizon, tax-aware compounding.</div>
+        <div class="k" style="margin-top:8px">2025 contribution limit: $32,490</div></div>
+      <div class="card"><div class="t">Non-Registered</div><div class="k">Taxable</div>
+        <div class="d" style="margin-top:6px">No contribution limit and no withdrawal restrictions, but investment
+          income and capital gains are taxed each year. Typically used once your registered accounts are fully
+          funded.</div>
+        <div class="k" style="margin-top:8px">No contribution limit</div></div>
+    </div>
+    <p class="copy cap">FAQ &middot; Privacy Policy &amp; Security Practices &middot; Fee Schedule &middot;
+      Complaint Handling Procedures &middot; Relationship Disclosure</p>
+    <p class="tbcnote">Shorter list than the Self-Directed page, which also carries App Terms of Use and Best
+      Execution Policy.</p>
+  </section>
+
+  <section class="blk">
+    <div class="eyeb">INTELLIGENT INVESTING</div>
+    <h2 class="hl">The intelligent move is the core.<br>Prove you can beat it before you leave it.</h2>
+    <p class="copy">Managed is the disciplined core: broad, weekly, automatic. For the decisions you choose to make
+      yourself, Self-Directed places each one on the record and measures it against this default, the number every
+      active decision answers to.</p>
+    <p class="copy">Anyone is free to try to do better. Most never do. The record will tell you whether you are the
+      exception.</p>
+    <span class="pill">SELF-DIRECTED &rarr;</span><span class="dest">&rarr; self-directed.html</span>
+    <p class="copy" style="margin-top:16px">One $20/month membership includes access to Managed, Self-Directed, and
+      Fiscal.ai Max.<br>Managed assets carry an additional 0.10% fee, plus underlying fund costs.</p>
+    <span class="pill solid">OPEN AN ACCOUNT</span>
+    <span class="pill">SEE PRICING &rarr;</span>
+    <div class="destline">OPEN AN ACCOUNT &rarr; get-the-app.html &nbsp;&middot;&nbsp; SEE PRICING &rarr;
+      pricing.html</div>
+
+    <div class="row between" style="border:0;padding:0;margin-top:20px;align-items:flex-start">
+      <p class="copy" style="margin:0">A registered portfolio manager.<br>Client assets are held separately by the
+        custodian.</p>
+      <div style="display:flex;gap:14px;align-items:center">
+        <div class="imgslot logo islogo" style="width:110px">[LOGO: CIRO]</div>
+        <div class="imgslot logo islogo" style="width:130px">[LOGO: AMF]</div>
+        <div class="imgslot logo islogo" style="width:140px">[LOGO: IIWMI]</div>
+      </div>
+    </div>
+    <p class="tbcnote">AMF asset resolved (amf_black.png / amf_white.png now in assets/). CIPF still has no logo
+      here on purpose: coverage runs through the custodian's membership and is limited to registered accounts, so
+      the mark alone would read as a blanket claim, the exact confusion compliance flagged.</p>
+
+    <p class="copy" style="margin-top:14px">Managed accounts are advised and managed by IntelligentInvesting Wealth
+      Management Inc. &middot; Client assets held separately by CI Investment Services Inc., a CIRO member &middot;
+      CIPF coverage through the custodian's membership; applies to insolvency, not to investment losses &middot;
+      Orion Digital Corp., NASDAQ &amp; TSX: ORIO</p>
+  </section>
+
+  <div class="footer">Footer: the same legal block reproduced on the Home page above, word for word. Not repeated here.</div>
+</div>
+
+
+<div class="pagelabel">STILL OPEN</div>
+<div class="frame" style="padding:24px">
+  <table class="wf">
+    <tr><th style="width:26px">#</th><th>Item</th><th>Where it stands</th></tr>
+    <tr><td>1</td><td>CTA label</td>
+      <td>Compliance asked for "Download the app". Dave holds "Open an account" and takes that conversation
+        himself. The pages currently read "Open an account".</td></tr>
+    <tr><td>2</td><td>AMF logo asset</td>
+      <td>Resolved. amf_black.png / amf_white.png are in assets/ and used on managed.html's closing trust
+        block.</td></tr>
+    <tr><td>3</td><td>Managed hero trust line</td>
+      <td>Shortened 2026-09-01 to two beats: "A registered portfolio manager &middot; regulated by the AMF."
+        CIPF and custodian detail moved to the closing trust block. Compliance sign-off on this exact wording is
+        not confirmed.</td></tr>
+    <tr><td>4</td><td>Memo, thesis and kill criteria on the home</td>
+      <td>Dave: "the most important thing". Compliance treats feature detail as off-limits on a page covering both
+        entities. Currently on the Self-Directed page only.</td></tr>
+    <tr><td>5</td><td>Which four-step loop is canon</td>
+      <td>The diagram runs Research / Memo / Review / Calibration. The Self-Directed sections run Record /
+        Benchmark / Review / Calibrate.</td></tr>
+    <tr><td>6</td><td>NO.01 headline and opening paragraph</td>
+      <td>Draft in place, marked TBC. Dave to confirm.</td></tr>
+    <tr><td>7</td><td>Entity logo prominence</td>
+      <td>Compliance asked for the entity logo and name on each product page. Dave: "the icon logo has to be the
+        main one, our logo." 2026-08-31: the entity logo was removed from both product hero bands entirely; the
+        entity is now named in text only, and the logo marks sit in the closing trust block. Flagged for continued
+        compliance debate.</td></tr>
+    <tr><td>8</td><td>Managed figures</td>
+      <td>Still unresolved in the page itself: ~$[490], [X.XX]%, $[14,000], [DATE], and six [TBD] cells in the
+        track record.</td></tr>
+  </table>
+</div>
+
+</div>
+</body>
+</html>
