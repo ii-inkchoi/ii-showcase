@@ -1,0 +1,1593 @@
+/* ================================================================================
+   Orion Digital IR · V3 — role study (00 hero, 01 at a glance, 02 businesses)
+
+   V2 was reviewed as "난잡해". The measured cause was not size or photography, it was
+   ROLE: every one of ten sections carried a device (grain, photo, sheet, pale, invert),
+   so the page never said which moment mattered. The reference is legible because each
+   section does exactly one job and only two of them are designed at all.
+
+   V3 assigns roles. Two sections are composed, the rest recede:
+     00 hero      declaration     photographic ground + ONE plate
+     01 glance    evidence        paper, typography only, no sheet, no image
+     02 business  the three       photographic ground + ONE ruled sheet, inset from the rail
+     03-05        argument        (not in this study) paper, typography only
+     06           breath          (not in this study) black, one sentence
+   Rules that follow from it, and that V2 broke:
+     - a sheet is NEVER the width of the rail. Ground must be visible on all four sides,
+       otherwise the sheet reads as a band with a different fill.
+     - --c-stone / --c-graphite grain fields are dropped. A mid grey under noise reads as
+       dirty concrete, not texture. Grounds are black, paper, or a photograph.
+     - ink per section is budgeted at roughly 15-20 percent. V2 measured 29.
+
+   12-column system, --u fluid sizing and max() floors unchanged from V1/V2/V16.
+   Rail 1645u from 450u, gutter 30u.
+   ================================================================================ */
+
+:root{
+  --c-black:#000; --c-1000:#1C1C1C; --c-900:#232627;
+  --c-800:#565B5E; --c-700:#929292; --c-600:#A7A7A7; --c-400:#C7C7C7; --c-200:#E3E2E2;
+  --c-white:#FFF; --c-cream:#F4F2EB; --c-paper:#EDECE8; --c-accent:#BE3C36;
+  /* Neutral, and only for 02's cells. Cream is warm by construction, #F4F2EB with blue 9
+     below red, and it earns that warmth on a paper section where it is the whole surface.
+     Under 02's greyscale veil photograph the surface is mostly image and what survives of
+     the cream is the cast alone, which reads as a yellowed print rather than as paper.
+     242 flat is the neutral of the same luminance as cream (0.2126*244 + 0.7152*242 +
+     0.0722*235 = 242.0), so the cells hold their place in the page's value order and only
+     the hue leaves. */
+  --c-veil:#F2F2F2;
+  /* how far the hero's ground lags the page */
+  --hlag:160px;
+  --font:'Inter',-apple-system,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --u:calc(100vw / 2545);
+  --hair-light:rgba(28,28,28,0.16);
+  --hair-dark:var(--c-800);
+  /* a hairline on a dark ground. --c-800 was being borrowed for this and reads as a drawn
+     line on black rather than as a division; this is the same family at low alpha. */
+  --hair-onblack:rgba(227,226,226,0.16);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--c-black);color:var(--c-200);font-family:var(--font);
+  -webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+sup{font-size:0.62em;vertical-align:super;line-height:0}
+
+/* ── grounds ──────────────────────────────────────────────────────────────────
+   Three only. Paper, black, photograph. The grain stays on all of them at low
+   opacity so the page is one surface, but it is now tooth on a defined ground
+   rather than the ground itself. */
+.field{position:relative;overflow:hidden;overflow:clip}
+.field>*{position:relative;z-index:2}
+.field::before,.field::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:1}
+.field::before{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode:overlay}
+.field::after{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.06' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
+  mix-blend-mode:multiply}
+
+.field.paper{background:var(--c-cream);color:var(--c-1000)}
+.field.paper::before{opacity:0.16} .field.paper::after{opacity:0.07}
+/* a white ground. 03, 04 and 05 are the argument run and all three sat on cream; 05 is the
+   end of it and the one that has to feel like a different page, so it goes to white. Same
+   text contract as cream, less grain, because white shows tooth more readily than cream. */
+.field.white{background:var(--c-white);color:var(--c-1000)}
+.field.white::before{opacity:0.10} .field.white::after{opacity:0.05}
+.field.blk{background:var(--c-black);color:var(--c-200)}
+.field.blk::before{opacity:0.16} .field.blk::after{opacity:0.24}
+.field.photo{background:var(--c-black);color:var(--c-200)}
+.field.photo>.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;
+  filter:saturate(0.75) brightness(0.30) contrast(1.06)}
+.field.photo::before{opacity:0.20} .field.photo::after{opacity:0.26}
+/* a mid-grey variant of the photographic ground. The default cut to 0.30 puts the frame
+   close to black, which is right where large text stands on it, but 02 now carries a full
+   rail sheet and the ground only shows as bands above and below. A near-black band reads as
+   empty; a mid grey band reads as material, which is what the reference's grounds do.
+   The grain is raised with it, because texture is the point of lifting it at all. */
+/* inverted, like a negative. The order in the filter chain is not cosmetic: greyscale
+   first so the inversion happens on one channel, invert second, and only then the exposure,
+   because brightness applied before invert would be inverted along with everything else.
+   The piers read as a negative of themselves, dark where the concrete caught light. */
+/* distressed: a very small blur plus more grain over it. 1.6px is enough to take the
+   digital edge off without erasing the piers, which is what the 9px and 44px attempts did.
+   scale(1.02) hides the transparent fringe a blur leaves at the element's edges. */
+/* the CSS blur is gone. Softness and grain are both baked into the file now, at 1600px so
+   one image pixel lands on roughly one screen pixel at 1440: a blur applied here would run
+   over the grain and flatten it back into the mush this was trying to escape. */
+/* descendant, not child: 02's ground now sits inside a wrapper */
+/* No inversion. 02's ground was a photographic negative, and that is what made the section
+   frightening rather than institutional: put four candidate frames through this treatment both
+   ways and every inverted one came out a pale X-ray with false cyan and magenta, while the
+   same four without it read as ordinary dark architecture. Replacing the frame alone would
+   have changed nothing.
+   Losing the inversion also retires the rule that used to govern this surface, that an
+   inverted ground needs a warm source so the negative lands cool. It no longer applies here,
+   and there is now no inverted surface on the page. */
+/* 02 is black and white by decision, the page's second such section with 08. Going B/W
+   retires the temperature criterion for this surface, which is why the candidate ranking for
+   it changed: frames refused for a golden cast became eligible again and the choice came down
+   to luminance and structure alone. */
+.field.photo.mid .bg{filter:grayscale(1) brightness(0.40) contrast(0.95)}
+/* the exposure had to be re-cut after inverting. A negative moves the bright mass somewhere
+   else in the frame, and here it landed exactly where the eyebrow and the title stand: at
+   0.55 they measured 3.74 and 3.50. Inverting is never only a look change, it relocates
+   every contrast problem the frame had. */
+/* 0.62 -> 0.50, measured. The veil ground is soft and even, so its worst pixel sits close to
+   its mean: at 0.62 the ground read 95 and the 13px mono eyebrow came out 3.90:1, under the
+   4.5 small-text floor even though the 40px title cleared its own 3:1. Large type passing is
+   not evidence that the small type passes on the same ground. */
+.field.photo.mid::before{opacity:0.44}
+.field.photo.mid::after{opacity:0.40}
+
+/* text contract per ground. A photographic ground takes the black ground's contract,
+   because a photograph has a worst pixel and the grey tiers have no headroom against it
+   (measured in V2: --c-700 meta at 2.42:1). Small text goes on a sheet, never on the
+   picture. */
+.paper .h1,.paper .h2,.paper .v,.white .h1,.white .h2,.white .v{color:var(--c-1000)}
+.paper .p,.paper .t22,.white .p,.white .t22{color:var(--c-1000)}
+.paper .m9,.paper .m11,.paper .m13,.paper .s15,.paper .eyeb,.paper .par,
+.white .m9,.white .m11,.white .m13,.white .s15,.white .eyeb,.white .par{color:var(--c-800)}
+.blk .h1,.blk .h2,.blk .v,.photo .h1,.photo .h2,.photo .v{color:var(--c-white)}
+.blk .p,.blk .t22,.photo .p,.photo .t22{color:var(--c-200)}
+.blk .m9,.blk .m11,.blk .m13,.blk .s15,.blk .eyeb,.blk .par{color:var(--c-700)}
+.photo .eyeb,.photo .par{color:var(--c-white)}
+.photo .m9,.photo .m11,.photo .m13,.photo .s15{color:var(--c-400)}
+
+.rail{margin:0 calc(450 * var(--u))}
+.grid12{display:grid;grid-template-columns:repeat(12,1fr);column-gap:calc(30 * var(--u))}
+/* section padding is deliberately larger than V2's 184u. Emptiness is the register. */
+.secpad{padding:calc(248 * var(--u)) 0}
+
+/* ── type. Same ladder as V1/V16. Nothing invented. ───────────────────────── */
+/* the one type value that leaves the II ladder, and the reason is structural: this is the
+   only display type on either site that stands on a photograph with no box behind it, so
+   its size is its hierarchy. 96u over 10 columns, against V16's 64u over 9. Everything
+   below h1 is II's value unchanged. */
+.h1{font-weight:500;font-size:max(44px,calc(96 * var(--u)));line-height:1.02;letter-spacing:-0.02em;
+  text-wrap:balance}
+.h2{font-weight:500;font-size:max(40px,calc(64 * var(--u)));line-height:1.05;letter-spacing:-0.02em;
+  max-width:calc((100% + 30 * var(--u)) / 12 * 9 - 30 * var(--u));text-wrap:balance}
+/* the indented continuation line is gone. It was taken from the reference, where a second
+   line is set in from the first, and it does not survive contact with sentence-case display
+   type: at 54px the indent reads as a mistake rather than as a decision, and it fights the
+   column start that everything else on the page aligns to. The line break stays, the offset
+   does not. */
+.h2 .ind,.h1 .ind{display:block}
+.v{font-weight:500;font-size:34px;line-height:1.15;letter-spacing:-0.069em;
+  font-variant-numeric:tabular-nums lining-nums}
+.t22{font-weight:500;font-size:max(22px,calc(27 * var(--u)));line-height:1.25}
+.p{font-weight:400;font-size:max(17px,calc(22 * var(--u)));line-height:1.3}
+.s15{font-weight:400;font-size:max(15px,calc(17 * var(--u)));line-height:1.4}
+.m13{font-family:var(--mono);font-size:max(13px,calc(15 * var(--u)));letter-spacing:0.04em;line-height:1.5}
+.m11{font-family:var(--mono);font-size:max(11px,calc(13 * var(--u)));letter-spacing:0.04em;line-height:1.5}
+.m9{font-family:var(--mono);font-size:max(9px,calc(11 * var(--u)));letter-spacing:0.04em;line-height:1.4}
+.par{font-family:var(--mono);font-size:max(9px,calc(11 * var(--u)));letter-spacing:0.04em;
+  line-height:1.4;opacity:0.7}
+.eyeb{display:flex;align-items:baseline;gap:calc(20 * var(--u));font-family:var(--mono);
+  font-size:max(11px,calc(13 * var(--u)));letter-spacing:0.04em;line-height:1.5}
+.eyeb .n{min-width:calc(40 * var(--u))}
+
+.link{display:inline-flex;align-items:center;gap:calc(6 * var(--u));font-family:var(--mono);
+  font-size:max(11px,calc(13 * var(--u)));letter-spacing:0.04em;text-decoration:underline;
+  text-underline-offset:5px;text-decoration-thickness:0.667px}
+.arr{width:10px;height:10px;flex:none}
+/* matched to II's own .cta-fill (design-system/index.html): 160px floor not 150, and an
+   explicit fluid height rather than min-height alone. Without the height line the box sat at
+   its intrinsic content height above the 38px floor and never grew with --u, so at any width
+   past the floor it read shorter than II's box even though both cleared "at least 38px". */
+.cta{display:inline-flex;align-items:center;justify-content:center;
+  min-width:max(160px,calc(196 * var(--u)));height:calc(48 * var(--u));min-height:38px;
+  padding:0 22px;
+  background:var(--c-accent);color:var(--c-white);font-family:var(--mono);
+  font-size:max(15px,calc(15 * var(--u)));letter-spacing:0.04em}
+.unc{text-decoration:underline dashed;text-underline-offset:5px}
+
+/* ── nav ──────────────────────────────────────────────────────────────────── */
+.nav{position:fixed;inset:0 0 auto;z-index:100;height:calc(78 * var(--u));min-height:54px;
+  display:flex;align-items:center;background:transparent;transition:background .35s ease}
+.nav.scrolled{background:var(--c-cream)}
+.nav .logo{position:absolute;left:calc(40 * var(--u));top:50%;transform:translateY(-50%);
+  height:max(32px,calc(40 * var(--u)));color:var(--c-white)}
+.nav.scrolled .logo{color:var(--c-1000)}
+.nav .logo svg{height:100%;width:auto;display:block}
+.navmenu{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;
+  gap:calc(42 * var(--u))}
+.navmenu a{font-size:13px;line-height:1.3;color:var(--c-600);transition:color .35s ease}
+.navmenu a.on{color:var(--c-white)}
+.nav.scrolled .navmenu a{color:var(--c-800)} .nav.scrolled .navmenu a.on{color:var(--c-1000)}
+.navright{position:absolute;right:calc(40 * var(--u));top:50%;transform:translateY(-50%);
+  display:flex;align-items:center;gap:calc(28 * var(--u))}
+
+
+/* ══ 00 HERO — DECLARATION ══════════════════════════════════════════════════
+   The photograph is the ground and the title stands ON it, not inside a box. One small
+   cream plate carries the paragraph at the lower right. Two elements at opposite ends of
+   the weight scale, and the ground reads uninterrupted between them.
+   The title was tried inside the plate first and it does not work: a 6-column plate gives
+   the display type a 369px measure, so the sentence broke into four lines and the plate
+   grew until it was a band again. Either the type is large or it is boxed. It cannot be
+   both without taking the whole rail. */
+/* The hero's exposure is in the file, not in this filter.
+   .field.photo's shared ground filter ends in brightness(0.30), which is a multiplier: it
+   maps 255 to 76, so the ground has no highlight available and therefore no depth, whatever
+   is photographed. Measured across nineteen candidate frames at that setting, almost every
+   one topped out at exactly 76, which is why changing the picture never changed the impact.
+   hero-vessel.jpg is baked into a 4 to 124 window instead. Blacks stay deeper than the
+   multiplier gave, the top end is a real tone rather than a ceiling, and white display type
+   still clears its contrast floor against it by a wide margin. Measured, not assumed. */
+#hero > .bg{filter:saturate(0.75)}
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;
+  padding:calc(150 * var(--u)) 0 calc(96 * var(--u))}
+.hero .hmark{position:absolute;z-index:2;top:calc(150 * var(--u));left:calc(450 * var(--u));
+  color:var(--c-white)}
+/* 8 and 4, not 9 and 4. At 9 the plate could not share the row and dropped below the
+   title, which put the two elements in a stack instead of a composition. */
+/* 10 columns, not 8. At 8 the title had a 605px measure and the plate shared its row; at
+   10 the title gets 761px and the plate drops to a second row at the right, which is closer
+   to the reference anyway: one large thing, then one small thing offset under it. */
+.htitle{grid-column:1 / span 10;color:var(--c-white);align-self:end}
+.htitle .par{color:var(--c-white);margin-bottom:calc(28 * var(--u))}
+.hplate{grid-column:9 / span 4;grid-row:2;background:var(--c-cream);color:var(--c-1000);
+  margin-top:calc(56 * var(--u));
+  padding:calc(36 * var(--u)) calc(36 * var(--u)) calc(38 * var(--u))}
+.hplate .p{color:var(--c-1000)}
+.hplate .m9{color:var(--c-800);margin-top:calc(28 * var(--u))}
+/* the sector line now shares .hplate's bottom edge instead of sitting further down the
+   page. It carried its own margin-top and landed on the row after the plate's row, so its
+   baseline had no relationship to anything; grid-row pulls it into the plate's row and
+   align-self:end matches the two bottoms. */
+/* col1-8, not the full 12: sharing row 2 with .hplate (col9-12) needs the two spans to not
+   overlap, or the grid pushes .hplate to a third row instead of aligning it. */
+.hfoot{grid-column:1 / span 8;grid-row:2;color:var(--c-400);align-self:end;
+  display:flex;justify-content:space-between;gap:calc(30 * var(--u))}
+.hfoot .lead{color:var(--c-white)}
+
+/* ══ 01 AT A GLANCE — EVIDENCE ══════════════════════════════════════════════
+   Paper. No sheet, no rules, no image. Six figures set directly on the ground in two
+   rows of three, the second row inset by one column so the block does not settle into
+   a table. This section is not designed and that is the point: it is the quiet between
+   the two composed moments. */
+.gwrap{margin-top:calc(140 * var(--u));row-gap:calc(104 * var(--u))}
+.gcell .v{margin-top:calc(12 * var(--u))}
+.gcell .m9{margin-top:calc(10 * var(--u))}
+.g1{grid-column:1 / span 3} .g2{grid-column:5 / span 3} .g3{grid-column:9 / span 3}
+.g4{grid-column:2 / span 3} .g5{grid-column:6 / span 3} .g6{grid-column:10 / span 3}
+
+/* ══ SUPERSEDED / 02 as three horizontal registers ══════════════════════════
+   Built 2026-09-05 and reviewed as worse than the ruled sheet. Kept so the attempt is on
+   the record and not repeated. Nothing in the page uses these classes.
+   Rebuilt from the ruled sheet to three horizontal registers, one per business, set
+   directly on the photographic ground. Borrowed from the reference: the decimal number
+   spine, the attribute stack held away from the name, and the habit of pushing content
+   to opposite ends of a wide row so the middle stays empty.
+   What was NOT borrowed, and why: greying out inactive attributes (on an issuer's page a
+   grey line reads as missing data, not as "not applicable"), rotated text, radial type,
+   circle and triangle cut-outs, dashed construction guides, and the infinite scrolling
+   list. All of those are motion-led or fail the Mute test on an IR page.
+
+   The risk in a row layout is that it becomes the band grammar V2 was rejected for. Three
+   things prevent it: no row carries a fill of its own, the only rule is a hairline, and
+   every row starts on a different column. A register with no colour plane cannot read as
+   a band.
+   The number sits at column 1 on all three rows. That fixed spine is what carries the
+   unity, which frees the content offsets to differ. */
+.breg{border-top:0.667px solid var(--hair-dark);padding-top:calc(34 * var(--u));
+  margin-top:calc(72 * var(--u));row-gap:calc(24 * var(--u))}
+.breg:first-of-type{margin-top:calc(120 * var(--u))}
+.bnum{grid-column:1 / span 1;color:var(--c-400)}
+/* name block, stack and figure. Offsets differ per row; the classes are on the row. */
+.r1 .bname{grid-column:1 / span 4} .r1 .bstack{grid-column:6 / span 3} .r1 .bfig{grid-column:10 / span 3}
+.r2 .bname{grid-column:2 / span 4} .r2 .bstack{grid-column:7 / span 3} .r2 .bfig{grid-column:10 / span 3}
+.r3 .bname{grid-column:1 / span 3} .r3 .bstack{grid-column:5 / span 4} .r3 .bfig{grid-column:10 / span 3}
+.bname .t22{color:var(--c-white);letter-spacing:-0.02em}
+.bname .p{margin-top:calc(24 * var(--u));color:var(--c-200)}
+.bname .link{margin-top:calc(32 * var(--u));display:inline-flex}
+/* the attribute stack. Same three slots on every row, so the businesses are comparable;
+   the values are what differ. Label and value are split onto two lines because a three
+   column measure is too narrow to set them side by side without hyphenation. */
+.at{margin-top:calc(26 * var(--u))}
+.at:first-child{margin-top:0}
+.at .k{color:var(--c-400)}
+.at .val{margin-top:calc(6 * var(--u));color:var(--c-white)}
+/* the figure block. This is the one part deliberately NOT unified: one figure, two
+   figures, or a linked pair. The slots say the three are the same kind of thing; the
+   figures say they are not the same business. */
+.bfig .lbl{color:var(--c-400)}
+.bfig .v{margin-top:calc(8 * var(--u))}
+.bfig .m9{margin-top:calc(8 * var(--u))}
+.bfig .stack2{margin-top:calc(40 * var(--u))}
+/* the linked pair carries the section's one piece of argument, so its rule and its glyph
+   have to be visible on a dark ground. The sheet version inherited the light hairline and
+   the c-800 label tier, both of which disappear here. */
+.photo .pairline{color:var(--c-400)}
+.photo .pairline .ln{background:var(--hair-dark)}
+
+/* ══ 02 / earlier sheet version, kept for the record ═════════════════════════
+   The second composed moment, and the only sheet on the page. It spans 10 of 12
+   columns starting at column 2, so the ground runs down both sides of it: that is the
+   whole difference between an object on a ground and a band. One sheet divided by
+   hairlines, not three cards. Equal widths, unequal insides, the centre column left
+   mostly empty. */
+/* the sheet no longer paints its own surface. Each cell declares one, so the three can
+   differ: cell 1 is cream held back from full opacity, which lets the ground's texture come
+   through as a whisper; cell 2 is flat white; cell 3 is cream. Same widths, same structure,
+   three different materials, which is the section's argument carried by the surface instead
+   of only by the type. Cell 1 has to be a translucent CELL rather than a translucent sheet,
+   so the sheet's own fill is gone; otherwise cream would show through cream. */
+/* Four shared row tracks, and each cell hands its own rows back to the sheet through
+   subgrid, so head, figures, prose and link start at the same height in all three columns
+   whatever any one of them contains. Before this the description began at 243, 389 and 315px
+   down the three cells: Carta's category label wraps to two lines at this width and pushed
+   its column down, and the three cells held different numbers of figure blocks.
+   A flex column could not do it. Flex aligns items within one cell; only the sheet can align
+   across them, which is what subgrid is for. */
+.bsheet{display:grid;grid-template-columns:repeat(3,1fr);
+  grid-template-rows:repeat(6,auto);
+  grid-column:1 / span 12;margin-top:calc(120 * var(--u))}
+.bcell{padding:calc(48 * var(--u)) calc(40 * var(--u)) calc(44 * var(--u));
+  border-left:0.667px solid var(--hair-light);color:var(--c-1000);
+  display:grid;grid-row:span 6;grid-template-rows:subgrid}
+/* Every slot is assigned rather than auto-placed. Auto-placement fills tracks in source
+   order, so a cell with no separator would have pulled its second figure up into the
+   separator's track and the columns would drift again. Named slots let a cell leave a track
+   empty and keep everything after it in place. */
+.bcell > .bhead{grid-row:1}
+.bcell > .b-fig.f1{grid-row:2}
+/* The note and the separator share one track. No cell has both: Intelligent Investing has a
+   footnote under its figure, Mogo has the rule that ties its pair together, and Carta has
+   neither. Given separate tracks each cell reserved room for the other's content, which is
+   why Mogo's rule stayed 40.3px below its number against 23.3px above the next one however
+   the margins were set. Sharing the track, the rule follows the figure directly. */
+.bcell > .b-note,.bcell > .b-sep{grid-row:3}
+.bcell > .b-fig.f2{grid-row:4}
+.bcell > .b-body{grid-row:5}
+.bcell > .link{grid-row:6}
+.bcell:first-child{border-left:0}
+/* cell 02.1 carries its own picture rather than letting the section's ground show through.
+   Holding the cream back was the first attempt and it could not work: the ground behind this
+   cell is dark, so thinning the cream only greyed it DOWN. A light grey has to be put in, not
+   subtracted. The picture sits under the content at low opacity over cream, which lands the
+   cell in the light greys with visible structure. */
+.bcell{position:relative;overflow:hidden;overflow:clip}
+.bcell>*{position:relative;z-index:1}
+.bcell:nth-child(1){background:var(--c-veil)}
+/* held well back. At 0.42 with the picture's own contrast intact the balconies read as a
+   picture and the copy sat on top of it fighting for the page; a cell background has to be
+   a surface, not an image. Contrast is crushed first, then opacity, so what survives is the
+   structure and not the tonal range. */
+.cellbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;
+  opacity:0.22;filter:saturate(0.75) contrast(0.45) brightness(1.12)}
+.bcell:nth-child(2){background:var(--c-white)}
+.bcell:nth-child(3){background:var(--c-veil)}
+/* an image inside cell 02.1, bled to the cell's edges. Grey and quiet, not black: the page
+   has exactly two dark masses, the hero and 04.2, and 04.2 carries weight only because it is
+   the one reversal on a light ground. A black block here would be a third and would spend
+   that. This cell's character is already material rather than contrast, so the picture is
+   pushed pale and low in contrast until it reads as a surface with something in it. */
+.cellpic{margin:calc(34 * var(--u)) calc(-40 * var(--u)) 0;overflow:hidden;overflow:clip}
+.cellpic img{width:100%;height:calc(240 * var(--u));object-fit:cover;
+  filter:saturate(0.75) brightness(1.28) contrast(0.86) opacity(0.72)}
+/* the sheet is an opaque surface inside a photographic section, so it has to reassert the
+   light-surface contract for EVERY tier it carries, not just some. .t22 was missing, so the
+   ground rule .photo .t22 (0,2,0) beat .bname (0,1,0) and the three business names rendered
+   at --c-200 on cream: measured 1.27:1, effectively invisible.
+   Same class of failure as the register links that came out at 1.13:1. The lesson is that an
+   opaque panel needs a complete contract, never a partial one. */
+.bcell .v,.bcell .p,.bcell .t22,.bcell .h2{color:var(--c-1000)}
+.bcell .m9,.bcell .m11,.bcell .m13{color:var(--c-800)}
+.bcell .link{color:var(--c-black)}
+/* The cell header. Reviewed as "상단에 3개의 비지니스라는게 보이지않아. 그냥 작은 레이블 같아":
+   the business name was set at mono 13 alongside its category, so the two read as one
+   label stack and the section never announced that these are the three companies.
+   Two changes. The name takes a real title tier in the sans face and Title Case, which
+   separates it from every mono label on the sheet; and a hairline bleeds to the cell edges
+   under the header, so the top of the cell is identification and everything under the rule
+   is evidence. The sheet already divides vertically with hairlines, so the horizontal one
+   is the same instrument, not a new device. */
+.bhead{margin:0 calc(-40 * var(--u));padding:0 calc(40 * var(--u)) calc(34 * var(--u));
+  border-bottom:0.667px solid var(--hair-light);
+  display:flex;align-items:flex-start;justify-content:space-between;gap:calc(20 * var(--u))}
+.bhead .bid{min-width:0}
+/* ══ per-business mark, top right of each header ═══════════════════════════
+   "3개의 비지니스" 를 말로만 하지 않고 신원으로 보여주는 장치. Requested 2026-09-06.
+   Fixed height, width auto: the three marks have very different native ratios (Mogo's
+   wordmark is roughly 4.5:1, II's roughly 16:1), and forcing one width would stretch or
+   crush whichever does not match it. Height is what a header logo actually needs to agree
+   on, not width.
+   Carta has none: no logo asset exists in this repository, and orion-digital.com's own live
+   header links its three subsidiaries as plain mono text with no logos at all, confirmed
+   2026-09-06. Until one is supplied, 02.2 stays text-only rather than guessing at a mark. */
+.bmark{height:calc(22 * var(--u));min-height:16px;width:auto;flex:none;color:var(--c-1000);
+  opacity:0.92}
+.bmark img,.bmark svg{height:100%;width:auto;display:block}
+/* Carta's asset is two lines, CARTA over WORLDWIDE, in a 1015x364 box. At .bmark's 16px its
+   first line lands at 10px and its second under 4px, which is a smudge rather than a mark.
+   So this sizes the WORDMARK rather than the bounding box: that line is 63% of the asset's
+   height, so 25px on the box puts it at the same 16px as the Mogo wordmark beside it. Optical
+   parity is what reads on the row; equal bounding boxes would have made Carta the smallest
+   name of the three.
+   The asset is not cropped to its first line. Trimming WORLDWIDE off a supplied logo is a
+   brand decision, and not one to take silently on an issuer's page.
+   Both marks keep their supplied fills. They load through <img>, which isolates the SVG
+   document, so currentColor there resolves against the SVG's own initial colour rather than
+   the cell's: converting them bought nothing. The Mogo file was briefly rewritten that way
+   and its clipPath rect removed with it, on the reading that the rect was a white backing
+   plate; it was the clip shape, so the mark vanished entirely while still reporting as a
+   loaded image with a non-zero box. Box size is not proof that a mark paints. */
+.bmark.carta{height:calc(35 * var(--u));min-height:25px}
+.bname{color:var(--c-1000);margin-top:calc(18 * var(--u));letter-spacing:-0.02em}
+.bcat{margin-top:calc(10 * var(--u))}
+.b-fig.f1{margin-top:calc(48 * var(--u))}
+/* A figure's own footnote, in the track after it rather than inside it. Kept inside, it made
+   this cell's first figure taller than the other two, and since the track is sized by the
+   tallest cell the others were stretched to match: Mogo's separator then measured its margin
+   from 17.1px below its own number, which is where the 40.3px above the rule came from
+   against 23.3px below it. */
+.b-note{margin-top:calc(8 * var(--u))}
+/* Back to the rhythm the pair had when it was one block: the separator sits 16u under the
+   first value and the second figure 16u under the separator. Widening these to 20u each
+   while building the row tracks pushed the second figure 40px down its column and opened a
+   hole under the first one.
+   Both margins have to stay equal to each other across cells, not just tight: the row track
+   starts at the same height in every column, so any difference in the margin inside it shows
+   up as a misalignment. */
+.b-sep{margin-top:calc(16 * var(--u))}
+.b-fig.f2{margin-top:calc(16 * var(--u))}
+/* No separate margin when a separator precedes it. The row track starts at the same height
+   in every column, so the second figure's own margin has to match too: at 14u against the
+   others' 20u it sat 4px high, which is the whole misalignment. The separator's track
+   absorbs the difference instead. */
+.b-fig .v{margin-top:calc(8 * var(--u))}
+.b-fig .m9{margin-top:calc(8 * var(--u))}
+.b-desc{margin-top:calc(40 * var(--u))}
+.b-gap{flex:1 1 auto;min-height:calc(168 * var(--u))}
+.pairline{display:flex;align-items:center;gap:calc(10 * var(--u));margin:calc(16 * var(--u)) 0;
+  color:var(--c-800)}
+.pairline .ln{flex:1 1 auto;height:0.667px;background:var(--hair-light)}
+.pairline .gl{font-family:var(--mono);font-size:max(11px,calc(13 * var(--u)));line-height:1}
+.push{align-self:end;padding-top:calc(40 * var(--u))}
+
+/* ── mobile ───────────────────────────────────────────────────────────────── */
+@media (max-width:900px){
+  .rail{margin:0 20px}
+  .secpad{padding:64px 0}
+  .grid12{grid-template-columns:1fr;row-gap:40px}
+  .grid12>*{grid-column:1 !important}
+  .h1,.h2{font-size:clamp(28px,7.4vw,40px);max-width:none}
+  .hero{min-height:0;padding:112px 0 56px}
+  .hero .hmark{left:20px;top:96px}
+  .hplate{padding:24px}
+  .hfoot{padding-bottom:0}
+  .gwrap{margin-top:48px;row-gap:40px}
+  .bsheet{margin-top:48px;grid-template-columns:1fr}
+  .bsheet{grid-template-rows:none}
+  .bcell{border-left:0;border-top:0.667px solid var(--hair-light);padding:24px;
+    display:flex;flex-direction:column;grid-row:auto}
+  .bcell > .bhead,.bcell > .b-fig.f1,.bcell > .b-note,.bcell > .b-sep,
+  .bcell > .b-fig.f2,.bcell > .b-body,.bcell > .link{grid-row:auto}
+  .b-fig.f1{margin-top:32px} .b-sep,.b-fig.f2{margin-top:20px}
+  .push{align-self:auto;margin-top:auto}
+  .bcell:first-child{border-top:0}
+  .b-gap{min-height:24px}
+  .push{padding-top:24px}
+  .navmenu{display:none}
+  .navright{right:20px}
+}
+
+/* ══ 03 / 04 / 05 THE ARGUMENT RUN ══════════════════════════════════════════
+   Paper, grain, typography. No photograph and no sheet across all three, which is where
+   the page puts nothing between the reader and the company. It also solves the contrast
+   problem structurally: the 34px figures never fight an image, so no section has to be
+   tuned by brightness the way V1's had to be.
+   Figures sit on the 12 column grid at unequal starts, so a run of numbers does not settle
+   into a table. */
+.run{margin-top:calc(120 * var(--u));row-gap:calc(96 * var(--u))}
+.f .v{margin-top:calc(14 * var(--u))}
+.f .s15{margin-top:calc(10 * var(--u))}
+.disc{margin-top:calc(104 * var(--u))}
+.c1-2{grid-column:1 / span 2} .c1-3{grid-column:1 / span 3} .c1-4{grid-column:1 / span 4}
+.c1-5{grid-column:1 / span 5} .c1-6{grid-column:1 / span 6} .c2-4{grid-column:2 / span 4}
+.c2-6{grid-column:2 / span 6} .c3-3{grid-column:3 / span 3} .c4-3{grid-column:4 / span 3}
+.c5-3{grid-column:5 / span 3} .c5-4{grid-column:5 / span 4} .c6-4{grid-column:6 / span 4}
+.c7-3{grid-column:7 / span 3} .c7-5{grid-column:7 / span 5} .c8-4{grid-column:8 / span 4}
+.c9-3{grid-column:9 / span 3} .c9-4{grid-column:9 / span 4} .c10-3{grid-column:10 / span 3}
+.c11-2{grid-column:11 / span 2} .c2-5{grid-column:2 / span 5} .c8-5{grid-column:8 / span 5}
+/* .c2-5 was used in 07 and never existed. A missing helper does not fail loudly: the browser
+   ignores the unknown class and auto-places the item, which is how a pillar ended up 106px
+   wide against the right edge. Every column helper in the markup is now defined; audited. */
+
+/* 04, the one reversal on the whole page. A dark plate on paper holding the pair the
+   section exists to explain. It is the only inverted surface after the hero, and it mirrors
+   the hero exactly: there a cream plate stands on dark, here a dark plate stands on cream.
+   One reversal each way is a rhyme; a third would be a pattern and the emphasis would go. */
+.plate{background:var(--c-1000);color:var(--c-200);padding:calc(42 * var(--u))}
+.plate .v{color:var(--c-white)}
+.plate .m9,.plate .m11{color:var(--c-600)}
+.plate .pairline{color:var(--c-600)}
+.plate .pairline .ln{background:var(--hair-dark)}
+
+/* ══ 06 to 09 ITEM GROUPS ═══════════════════════════════════════════════════
+   Four sections that each carry a set of short items. All four use the same unit, a number
+   then a title then a line or a paragraph, set straight on the ground with no card and no
+   rule. What differs between them is only where the items start on the grid, which is
+   enough: a set that starts at 1, 4, 7, 10 reads as a table, and a set that starts at 1, 5,
+   10 does not. */
+.items{margin-top:calc(120 * var(--u));row-gap:calc(80 * var(--u))}
+.it .num{display:block}
+.it .t22{margin-top:calc(16 * var(--u))}
+.it .s15{margin-top:calc(12 * var(--u))}
+.it .m11{margin-top:calc(10 * var(--u))}
+.it .p{margin-top:calc(24 * var(--u))}
+.it .link{margin-top:calc(28 * var(--u))}
+/* a dropped item. One or two items in a set sit lower than their neighbours so the row has
+   a horizon rather than a baseline. Same instrument in every section, different members. */
+.drop{margin-top:calc(72 * var(--u))}
+
+/* 09, the contact line. Not a box: a rule with the ask on the left and the action on the
+   right, so the page ends on an instruction rather than on another panel. */
+.offer{margin-top:calc(120 * var(--u));padding-top:calc(34 * var(--u));
+  border-top:0.667px solid var(--hair-light);display:flex;align-items:flex-end;
+  justify-content:space-between;gap:calc(42 * var(--u));flex-wrap:wrap}
+.offer .t22{margin-top:calc(12 * var(--u))}
+
+/* ══ 10 DISCLOSURES ═════════════════════════════════════════════════════════ */
+.fn-list{margin-top:calc(96 * var(--u));display:flex;flex-direction:column;
+  gap:calc(28 * var(--u))}
+.fn-row{display:grid;grid-template-columns:calc(60 * var(--u)) 1fr;column-gap:calc(20 * var(--u))}
+.divider{margin-top:calc(72 * var(--u));padding-top:calc(28 * var(--u));
+  border-top:0.667px solid var(--hair-dark)}
+.divider .p,.divider .m9{max-width:calc((100% + 30 * var(--u)) / 12 * 8 - 30 * var(--u))}
+.draft{color:var(--c-accent)}
+.foot-id{margin-top:calc(96 * var(--u))}
+.foot-links{display:flex;gap:calc(24 * var(--u));margin-top:calc(20 * var(--u))}
+.foot-links a{text-decoration:underline;text-underline-offset:4px}
+
+@media (max-width:900px){
+  .run,.items{margin-top:48px;row-gap:48px}
+  .drop{margin-top:0}
+  .disc{margin-top:48px}
+  .plate{padding:24px}
+  .offer{margin-top:48px;flex-direction:column;align-items:flex-start;gap:24px}
+  .fn-list{margin-top:48px}
+  .fn-row{grid-template-columns:32px 1fr;column-gap:12px}
+  .divider{margin-top:48px}
+  .divider .p,.divider .m9{max-width:none}
+  .foot-id{margin-top:48px}
+}
+
+/* ══ BORROWED FROM THE REFERENCE ════════════════════════════════════════════
+   Four devices taken from format.obys.agency, named here so the next session can tell
+   what is quoted and what is ours. What was refused stays refused: rotated text, radial
+   type, circle and triangle cut-outs, dashed construction guides, the infinite list, and
+   greying out inactive attributes (on an issuer's page a grey line reads as missing data).
+
+   (i) THE SPACED HEADER. The reference sets the number hard left and the label a long way
+   from it, so the pair reads as an annotation on a drawing rather than as a heading. Our
+   eyebrow had the two 20u apart, which is just a heading with a number in front. */
+.eyeb{display:grid;grid-template-columns:repeat(12,1fr);column-gap:calc(30 * var(--u));
+  align-items:baseline}
+.eyeb .n{grid-column:1 / span 1;min-width:0}
+/* column 2, not column 3. At 3 the label sat 95px from the number on an otherwise empty
+   line, and an empty gap with nothing to relate to reads as a spacing error rather than as
+   an offset. The reference can afford the wide gap because its header row carries more than
+   two things. Column 2 keeps the number hanging on its own and still lands the label on a
+   column edge. */
+.eyeb>span:last-child{grid-column:2 / span 9}
+
+/* (ii) THE LABEL AND VALUE PAIR. (Format) over Horizontal: a grey parenthetical, then the
+   value under it, never on the same line. Applied to every figure in the argument run, so
+   03, 04 and 05 read as a spec sheet rather than as three rows of statistics. */
+.sp .ix{display:block}
+.sp .lb{display:block;margin-top:calc(12 * var(--u))}
+.sp .v{margin-top:calc(10 * var(--u))}
+.sp .s15{margin-top:calc(10 * var(--u))}
+.paper .sp .ix,.paper .sp .lb,.white .sp .ix,.white .sp .lb{color:var(--c-800)}
+.blk .sp .ix,.blk .sp .lb{color:var(--c-700)}
+
+/* (iii) THE ALMOST EMPTY FIELD. In the reference a whole screen holds one small object.
+   Section 06 is the only place on this page that can afford it, because it carries four
+   short lines and no figures. The field is tall and the content sits at the bottom of it. */
+/* removed the forced min-height + space-between. .voidfield sits on the SECTION, which
+   already carries secpad top and bottom; adding min-height:82svh with only one flex child
+   (.rail) meant the extra space had nowhere to go but after the content, since a single
+   flex item in a space-between column just sits at the top. The section's own secpad,
+   equal on both sides, is now the section's only vertical rule, same as every other
+   section on the page. */
+.voidfield .it .t22{font-size:max(17px,calc(22 * var(--u)))}
+
+/* (iv) THE PINNED PANEL. The reference hangs its numbered stack on one edge and leaves the
+   rest of the frame to the picture. Section 08 does the same: the three items become one
+   stack in columns 9 to 12 and the left two thirds of the photograph stay empty. */
+.panel{grid-column:9 / span 4}
+.panel .it{margin-top:calc(56 * var(--u))}
+.panel .it:first-child{margin-top:0}
+.panel .it .t22{margin-top:calc(10 * var(--u))}
+.panel .it .p{margin-top:calc(12 * var(--u))}
+
+@media (max-width:900px){
+  .eyeb{display:flex;gap:20px}
+  .eyeb .n,.eyeb>span:last-child{grid-column:auto}
+  .voidfield{min-height:0}
+  .panel{grid-column:1 !important}
+  .panel .it{margin-top:40px}
+}
+
+/* (v) THE SPLIT. A picture held on one side, the text stacked top to bottom on the other.
+   Taken from the reference spread where a framed image fills the left half and two numbered
+   headings run down the right.
+   The important distinction: this is a PICTURE, not a ground. It occupies its own columns
+   and no text sits on it, so it takes no brightness cut and none of the photographic-ground
+   contrast rules apply. A ground is darkened because content stands on it; a picture is left
+   alone because nothing does. It stays greyscale only so it belongs to the page.
+   This also gives 03 a bottom. Set as three figures across, the section left its whole lower
+   half empty, which is not the emptiness the reference has; the reference fills the frame and
+   leaves air INSIDE it. */
+.split{margin-top:calc(120 * var(--u));align-items:start}
+.pic{grid-column:1 / span 6;overflow:hidden;overflow:clip;background:var(--c-1000)}
+/* lifted, not darkened. As shot this frame renders as a near-black block on cream, which
+   reads as a hole rather than as a picture. A ground gets a brightness cut because content
+   stands on it; a picture gets whatever exposure makes it legible on its own. */
+.pic img{width:100%;aspect-ratio:4 / 5;object-fit:cover;
+  filter:saturate(0.75) brightness(1.34) contrast(0.98)}
+.pic .cap{margin-top:calc(14 * var(--u))}
+.stack{grid-column:8 / span 5;display:flex;flex-direction:column}
+.stack .sp{margin-top:calc(72 * var(--u))}
+.stack .sp:first-child{margin-top:calc(6 * var(--u))}
+.stack .foot{margin-top:calc(72 * var(--u));padding-top:calc(28 * var(--u));
+  border-top:0.667px solid var(--hair-light)}
+
+@media (max-width:900px){
+  .split{margin-top:48px}
+  .pic,.stack{grid-column:1 !important}
+  .pic img{aspect-ratio:4 / 3}
+  .stack{margin-top:40px}
+  .stack .sp{margin-top:40px}
+  .stack .sp:first-child{margin-top:0}
+  .stack .foot{margin-top:40px}
+}
+
+/* (vi) THE MAT. The reference does not put a photograph straight onto the page. It builds a
+   panel with a vertical grey gradient, then insets a high-key image inside it with wide
+   margins, so the picture reads as something mounted rather than as a picture box.
+   Two things this is NOT, and the distinction matters because one of them is banned:
+   the gradient is the MAT, a surface of its own with hard edges on all four sides. It is not
+   a gradient laid over a photograph and it is not a fade at the image's edge. The doctrine
+   rule is "darken with brightness, hard edges, no gradient masks on background images"
+   (design-system/index.html#imagery), and this does not touch the image at all.
+   The image inside is pushed high key so the subject reads as a dark form on light, which is
+   what makes the mounted look work; at normal exposure a mid-grey photograph inside a grey
+   mat is just two greys. */
+/* the mat is a frame, so its margin is even on all four sides. It was 64 top / 56 sides /
+   0 bottom, with the caption sitting inside and standing in for the bottom margin, which
+   read as a mat that had been cropped short. The caption now lives OUTSIDE the mat, where a
+   caption belongs, and the mat is a clean even rectangle. */
+.picwrap{grid-column:1 / span 6;margin:0}
+.pic{background:linear-gradient(180deg,var(--c-900) 0%,var(--c-200) 78%,var(--c-200) 100%);
+  padding:calc(56 * var(--u))}
+/* The exposure lives in the file now, not here. The frame is baked through gamma 0.65 into
+   a 40 to 240 window, which lands it at mean 117 with its darks still at 68 and its lights
+   at 206, so this filter only takes the colour out and adds a little bite;
+   the 1.62 brightness this replaces existed to rescue a picture that was too dark for cream,
+   and CSS lifting a photograph that far crushes whatever was in its shadows. */
+.pic img{width:100%;aspect-ratio:4 / 5;object-fit:cover;
+  filter:saturate(0.75) contrast(1.04)}
+.picwrap .cap{display:block;margin-top:calc(14 * var(--u));color:var(--c-800)}
+
+/* the 12-column overlay. g toggles it, same key as every page on the II site. Review tool
+   only: it renders nothing until the key is pressed and ships inert. */
+.gridov{position:fixed;inset:0;z-index:9000;pointer-events:none;display:none}
+.gridov.on{display:block}
+.gridov .rail,.gridov .grid12{height:100%}
+.gridov .col{background:rgba(190,60,54,0.10);border-left:0.667px solid rgba(190,60,54,0.32);
+  border-right:0.667px solid rgba(190,60,54,0.32)}
+
+@media (max-width:900px){
+  .picwrap{grid-column:1 !important}
+  .pic{padding:20px}
+  .pic img{aspect-ratio:4 / 3}
+}
+
+/* ══ 01 AT A GLANCE / the leader lines ══════════════════════════════════════
+   Six figures, two columns each, filling the rail 1-2, 3-4, 5-6, 7-8, 9-10, 11-12. They
+   alternate high and low, and a hairline drops to each one from a single line above the
+   row, so the lines run short, long, short, long while all beginning at the same height.
+   This is the one place the page draws anything. It works here and nowhere else because
+   01 is the only section whose items are all the same kind of thing: six figures, no prose,
+   no links. A leader line is an annotation, and annotations need something uniform to
+   annotate.
+   The line is drawn upward from each figure (bottom:100%) rather than downward from the
+   row, so a figure that moves takes its line with it and the common start is arithmetic,
+   not a guess: short is 56u, long is 56u plus the drop. */
+.gwrap{margin-top:calc(150 * var(--u));align-items:start;position:relative}
+.gcell{position:relative;padding-left:calc(18 * var(--u))}
+.gcell::before{content:'';position:absolute;left:0;bottom:100%;width:0.667px;
+  height:calc(56 * var(--u));background:var(--hair-light)}
+.gcell.dn{margin-top:calc(176 * var(--u))}
+.gcell.dn::before{height:calc(232 * var(--u))}
+.gcell .v{margin-top:calc(12 * var(--u))}
+.gcell .m9{margin-top:calc(10 * var(--u))}
+.p1{grid-column:1 / span 2} .p2{grid-column:3 / span 2} .p3{grid-column:5 / span 2}
+.p4{grid-column:7 / span 2} .p5{grid-column:9 / span 2} .p6{grid-column:11 / span 2}
+
+@media (max-width:900px){
+  .gwrap{margin-top:48px;row-gap:40px}
+  .gcell{padding-left:14px}
+  .gcell.dn{margin-top:0}
+  .gcell::before,.gcell.dn::before{height:20px}
+}
+
+/* ══ 04 THE THREE BOXES ═════════════════════════════════════════════════════
+   Ten columns from column 2, the same footprint as 02's sheet, so the two sections that
+   carry a group of three sit on the same measure and the page has one width for that idea.
+   Three boxes rather than three loose columns of type, because the section's whole argument
+   is that one of these three is a different kind of thing. Type alone cannot say that; a
+   surface can.
+   The two outer boxes are white on cream: a lighter surface of the same family, so they read
+   as panels, not as a reversal. Only the middle box inverts. That keeps the reversal budget
+   at two for the page, hero and 04.2, and it puts the emphasis exactly where the section
+   needs it, on the pair the misconception is about.
+   Boxes stretch to a common height, so the middle one's extra content sets the measure and
+   the outer two carry the air. */
+/* no gaps between the boxes, the same construction as 02: one object divided, not three
+   objects placed. Detached boxes read as three tiles that happen to be near each other;
+   a divided block reads as one balance sheet with three positions in it, which is what the
+   section is arguing. The gap between them was also the only place on the page where cream
+   showed through a group, and that stripe made the row look assembled rather than cut. */
+.quad{grid-column:1 / span 12;display:grid;grid-template-columns:repeat(3,1fr);
+  column-gap:0;align-items:stretch;margin-top:calc(120 * var(--u))}
+/* no outline. White against cream is already a change of surface, and the only internal
+   division needed is supplied by the dark box's own edge, so an outer rule would be the one
+   line on the block and would read as a table border rather than as a panel. */
+.box{background:var(--c-white);border:0;padding:calc(40 * var(--u));
+  display:flex;flex-direction:column}
+.box + .box{border-left:0.667px solid var(--hair-light)}
+/* the dark box brings its own edge, so the rule beside it would only double the line */
+.box.inv,.box.inv + .box{border-left-color:var(--c-1000)}
+.box .sp .v{margin-top:calc(10 * var(--u))}
+.box.inv{background:var(--c-1000);color:var(--c-200)}
+.box.inv .v{color:var(--c-white)}
+.box.inv .m9,.box.inv .m11,.box.inv .ix,.box.inv .lb{color:var(--c-600)}
+.box.inv .pairline{color:var(--c-600)}
+.box.inv .pairline .ln{background:var(--hair-dark)}
+
+@media (max-width:900px){
+  .quad{grid-column:1 !important;grid-template-columns:1fr;row-gap:20px;margin-top:48px}
+  .box{padding:24px}
+}
+
+/* the paragraph under 04 starts on the same vertical as the text inside 04.1, not on the
+   box's outer edge. The box begins at column 2 and pads its content in by 40u, so a
+   paragraph set to column 2 lands 40u to the left of everything it is explaining. Matching
+   the inner edge is the alignment a reader actually sees. */
+/* on the grid, not on the box's inner text. When the group ran columns 2 to 11 the two
+   were the same thing; at full rail they are not, and a loose paragraph that follows a
+   box's internal padding is the only element on the page standing off a column line.
+   Inside a box the text is inset by design and the box EDGE is what aligns. */
+.alignbox{grid-column:1 / span 7}
+@media (max-width:900px){ .alignbox{grid-column:1 !important} }
+
+/* ══ 05 THE JUXTAPOSITION ═══════════════════════════════════════════════════
+   Not another horizontal run. 03 and 04 had already used that shape twice, and 05 is not a
+   list of three things: it is one comparison. The market's numbers stand on the left, the
+   business's earnings on the right, a hairline runs between them, and nothing is written
+   across it. The two sides are deliberately unequal in count, three against two, so the
+   block does not read as a table of pairs.
+   The right side carries no index numbers. Those two figures are not new facts, they are
+   03.1 and the guidance line brought back; numbering them would imply 05 holds two more
+   items than it does. */
+.face{margin-top:calc(120 * var(--u));align-items:stretch}
+.side-a{grid-column:1 / span 5}
+.rule{grid-column:6 / span 1;justify-self:center;width:0.667px;align-self:stretch;
+  background:var(--hair-light)}
+.side-b{grid-column:8 / span 4}
+.side-a .sp,.side-b .sp{margin-top:calc(64 * var(--u))}
+.side-a .sp:first-child,.side-b .sp:first-child{margin-top:0}
+/* the two sides end together. Set from the top, the right column began at an arbitrary
+   height and stopped in the middle of the section, so it read as something left over rather
+   than as the counterweight. Anchored to the bottom, the two stacks terminate on one line
+   and the empty space collects above the lighter side, which is what a balance looks like. */
+/* top-aligned again, not bottom. Bottom alignment made the two stacks END together, which
+   tidied the block edges but put the two lead figures 60px apart; the leads are the whole
+   point of the section, so they align and the bottoms are left to fall where the content
+   ends. Aligning the comparison beats aligning the boxes. */
+.side-b{display:flex;flex-direction:column;padding-top:0}
+/* the earnings group sits inside the photographic panel, so it is padded off the panel's
+   edges rather than sitting flush against them: columns 8 to 12 inside a panel that starts
+   at column 7 already gives a column of inset on the left, and this adds the same on the
+   right so the block is not pinned to the picture's edge. */
+#valuation .side-b{grid-column:8 / span 4;padding-right:calc(20 * var(--u))}
+
+@media (max-width:900px){
+  .face{margin-top:48px}
+  .side-a,.side-b{grid-column:1 !important}
+  .rule{display:none}
+  .side-b{padding-top:0;margin-top:48px;border-top:0.667px solid var(--hair-light)}
+  .side-a .sp,.side-b .sp{margin-top:40px}
+  .side-b .sp:first-child{margin-top:40px}
+}
+
+/* 07's four pillars are placed on explicit ROWS as well as columns. With columns only, the
+   third item (columns 2 to 6) overlapped the span the auto-placement algorithm had already
+   committed on row 1, so it was pushed into the leftover slot at the right edge and squeezed
+   to 106px; the fourth landed on the wrong column too. Any grid that places items by column
+   into more than one row has to name the row, or the browser will find its own answer. */
+#capital-allocation .items > *:nth-child(1){grid-row:1}
+#capital-allocation .items > *:nth-child(2){grid-row:1}
+#capital-allocation .items > *:nth-child(3){grid-row:2}
+#capital-allocation .items > *:nth-child(4){grid-row:2}
+
+/* 08's ground was at the default 0.30 cut, which on this frame is effectively black: the
+   section read as an empty dark field with a thin column of type pinned to the right, and
+   the picture contributed nothing. It is lifted here, and the panel widens by one column so
+   the copy is not a ribbon. The eyebrow and title still stand on the ground, so the exposure
+   is set by measurement, not by eye. */
+#upside > .bg{filter:grayscale(1) brightness(0.34) contrast(1.02)}
+#upside .panel{grid-column:8 / span 5}
+
+/* 06 loses the stagger. In a section whose whole job is to change the air, four items
+   nudged out of line read as an accident rather than as a decision; the emptiness above and
+   below is the gesture, and it works better with the row set straight. */
+#transition .drop{margin-top:0}
+
+/* ══ 07 THE FOUR ROWS ═══════════════════════════════════════════════════════
+   Taken from the reference's horizontal panels: the number keeps its own zone at the far
+   left, the labelled title sits in the middle, and the prose runs to the right of both.
+   Three zones on one line, read left to right, which is what a schedule looks like.
+   Two by two was the earlier arrangement and it made the four principles read as a set of
+   equals to be scanned. They are not a set: they are an order of operations, and a stacked
+   list says that where a grid cannot.
+   The number column is deliberately wider than the number: the empty part of it is what
+   keeps the middle zone from touching the rail edge, so the row has a margin inside itself.
+   Not borrowed: the large circle drawn through those reference panels. It is geometry
+   unrelated to the 12-column system, the same reason the circle and triangle cut-outs were
+   refused earlier. */
+.rows{margin-top:calc(120 * var(--u))}
+.prow{display:grid;grid-template-columns:repeat(12,1fr);column-gap:calc(30 * var(--u));
+  padding:calc(44 * var(--u)) 0;border-top:0.667px solid var(--hair-light);align-items:start}
+.prow:last-child{border-bottom:0.667px solid var(--hair-light)}
+/* the prose moves under the title instead of beside it, so all four paragraphs get the same
+   wide measure and set to the same depth. Beside the title the body had five columns, 372px,
+   and the four paragraphs came out 2, 2, 4 and 3 lines; no column width between 5 and 12 can
+   even those out, because the longest is 168 characters and would need roughly 610px to hold
+   two lines. Widening it to 10 columns does, without a word of Greg's copy being touched. */
+.prow .n{grid-column:1 / span 1;grid-row:1}
+.prow .ttl{grid-column:3 / span 5;grid-row:1}
+.prow .ttl .m11{margin-top:calc(10 * var(--u))}
+/* the measure is capped, because the type stops growing before the grid does. .p floors at
+   17px (max(17px, 22u)), so past about 1440 the font is frozen while ten columns keep
+   widening, and the three shorter paragraphs collapse to one line while the 180-character
+   one stays at two. Freezing the measure at the width where the type freezes keeps all four
+   at two lines at any viewport above it. */
+.prow .body{grid-column:3 / span 10;grid-row:2;margin-top:calc(24 * var(--u));max-width:760px}
+
+@media (max-width:900px){
+  .rows{margin-top:48px}
+  .prow{grid-template-columns:1fr;row-gap:14px;padding:24px 0}
+  .prow .n,.prow .ttl,.prow .body{grid-column:1}
+}
+
+/* ══ 08 THREE BANDS, THREE PICTURES ═════════════════════════════════════════
+   Each of the three sources of upside carries its own frame, the way the reference gives
+   every panel a picture of its own rather than sitting them all on one backdrop.
+   The section's own ground is gone: with the bands opaque and full rail, nothing of it would
+   have been visible anyway, and leaving it would have meant loading a large image to be
+   covered up.
+   The text keeps to columns 8 to 12 on every band, so the three read as one instrument at
+   three settings. What differs is the picture and its exposure, which is set per band by
+   measurement: band 3's frame is a bright wall (mean 147) and band 1's is a dark corridor
+   (mean 38), so a single filter across all three would either blow one out or bury another.
+   This is the only place on the page where a band grammar is right, because here the bands
+   are not the same fill repeated: each one is a different image. */
+.bands{margin-top:calc(120 * var(--u))}
+.band{position:relative;overflow:hidden;overflow:clip;background:var(--c-black);
+  display:grid;grid-template-columns:repeat(12,1fr);column-gap:calc(30 * var(--u));
+  padding:calc(52 * var(--u)) 0;margin-top:calc(20 * var(--u))}
+.band:first-child{margin-top:0}
+.band > .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+/* columns 3 to 9, not 8 to 12. Pinned to the right edge the copy started 622px into the rail
+   and the band read as a picture with a caption bolted on the end. At column 3 it starts
+   where 07's rows start, so the two sections share one left edge. */
+/* the copy sits on an opaque plate, not on the picture. Measured across the whole library:
+   with white text directly on these frames, the brightest a band can be and still clear
+   4.8:1 is a mean of about 83, and only one architectural frame reaches even that; every
+   brighter candidate is a notebook or a runner, which is II's language or lifestyle stock.
+   The plate removes the constraint entirely. It is also what the reference does: its panels
+   hold their text on white blocks and let the imagery run at full strength behind them.
+   Three plates in one section read as one instrument used three times, not as three
+   separate reversals, so the page's reversal budget is unaffected. */
+/* the plate reaches column 1 so the number sits on the rail edge, exactly where 07's does,
+   and the title and prose start at column 3 inside it. The plate carries no left padding for
+   the same reason: any inset would push the number off the column line the rest of the page
+   aligns to. */
+.band > .bd{position:relative;z-index:2;grid-column:1 / span 9;
+  display:grid;grid-template-columns:repeat(9,1fr);column-gap:calc(30 * var(--u));
+  background:var(--c-cream);color:var(--c-1000);
+  padding:calc(38 * var(--u)) calc(40 * var(--u)) calc(40 * var(--u)) 0}
+.band .t22,.band .m11,.band .p{grid-column:3 / span 7}
+/* after the .m11 rule, not before it. The index carries both classes, "m11 num", so the two
+   selectors have the same specificity and source order decides; written first, .num lost and
+   the number sat at column 3 with the title. */
+.band .num{grid-column:1 / span 1}
+.band .t22{color:var(--c-1000)}
+.band .m11,.band .num{color:var(--c-800)}
+.band .p{color:var(--c-1000)}
+/* the picture is now an exposure decision, so all three sit in the same register */
+/* 08 is black and white on purpose, bands and ground together. The only saturated element
+   across the three frames is the packaging on the shop shelving, and it reads as loose colour
+   rather than documentary; the other two subjects, filing drawers and line cards, are
+   near-neutral as shot and lose nothing. Both filters are luminance-preserving matrices, so
+   the exposure and every contrast number measured against it are unchanged. */
+#upside .band > .bg{filter:grayscale(1) contrast(0.96) brightness(0.78)}
+.band .t22{margin-top:calc(12 * var(--u))}
+.band .num{display:block}
+.band .p{margin-top:calc(14 * var(--u));max-width:760px}
+/* exposure per band, each set from a measurement of that frame rather than one value for all */
+
+@media (max-width:900px){
+  .bands{margin-top:48px}
+  .band{grid-template-columns:1fr;padding:24px 20px;margin-top:12px}
+  .band > .bd{grid-column:1}
+}
+
+/* 09 aligns. The three resources started at three heights and their titles run one line or
+   two, so the links landed on three different baselines and the row read as unset type. The
+   stagger is dropped and the links are pushed to a common bottom line: in an index section
+   the action is the thing being scanned, so the actions have to sit on one line even when the
+   titles above them do not. */
+#resources .drop{margin-top:0}
+#resources .items{align-items:stretch}
+#resources .it{display:flex;flex-direction:column}
+#resources .it .link{margin-top:auto;padding-top:calc(28 * var(--u))}
+
+/* ══ 06, given a structure ══════════════════════════════════════════════════
+   Four labels floating in a black field read as unfinished rather than as quiet. The
+   emptiness stays, because the section's job is to change the air, but the four items are
+   now divided by vertical hairlines and topped by one horizontal rule, so the row is a
+   register with four positions in it instead of four things that happen to be side by side.
+   Nothing is added to the content: the structure is doing the work. */
+/* SUPERSEDED by the mirror below. Kept so the four-column arrow version stays on the
+   record: its whole account of time was a single arrow inside a 15px caption. */
+#transition .items{border-top:0.667px solid var(--hair-onblack);padding-top:calc(40 * var(--u))}
+#transition .it{padding-left:calc(24 * var(--u));
+  border-left:0.667px solid var(--hair-onblack)}
+#transition .it:first-child{border-left:0;padding-left:0}
+#transition .it .s15{margin-top:calc(20 * var(--u))}
+
+/* ══ 10, spacing and hairline ═══════════════════════════════════════════════
+   The gaps ran 96, 72, 72, 96 between blocks and every rule was --c-800, which on black is
+   #565B5E: bright enough to read as a drawn line rather than as a division. Disclosures are
+   the one place on the page where the structure should be almost invisible, so the rules go
+   to a low-alpha light and every gap becomes one value.
+   --hair-onblack is declared once and used by both 06 and 10, because a hairline on a dark
+   ground is a different instrument from one on paper, and the page had been borrowing
+   --c-800 for it. */
+/* 72u each side of the rule was symmetrical and too loose: 10 is the section that should
+   take the least room on the page, and 41px above and below every hairline gave the legal
+   blocks more air than the argument sections get. 40u, still equal on both sides. */
+#disclosures .fn-list{margin-top:calc(40 * var(--u))}
+/* the rule sits in the middle of its own gap. Above it was 72u and below it 32u, so every
+   hairline in 10 was pushed toward the block beneath it and read as belonging to that block
+   rather than dividing two. Same value both sides. */
+#disclosures .divider{margin-top:calc(40 * var(--u));padding-top:calc(40 * var(--u));
+  border-top:0.667px solid var(--hair-onblack)}
+#disclosures .foot-id{margin-top:calc(40 * var(--u))}
+
+/* ══ 05, the right side ═════════════════════════════════════════════════════
+   The measure is named once, then read twice: realised, and forecast. Written as two spec
+   pairs it repeated "ADJUSTED EBITDA" in both labels and carried a third line, "Adjusted
+   EBITDA outlook", that said the label again; and being the same unit as the left side it
+   made the two halves look like one list split in two rather than a comparison.
+   The rule under the shared label is the only rule on this side, so it reads as a heading
+   over a ledger rather than as a divider between items. */
+.ledger-hd{display:block;padding-bottom:calc(18 * var(--u));
+  border-bottom:0.667px solid var(--hair-light)}
+/* stacked, not side by side. Two columns inside four gave each figure a 132px cell and
+   C$6.0-7.0M needs 185px at the 34px stat size, so the range broke across two lines. The
+   readings run down instead, divided by a hairline, which is what a ledger does anyway. */
+/* 30u -> 25u. The left side stacks an index line and a label above its lead figure and the
+   right side stacks only its ruled header, so the two leads sat 3px apart at 1440. The
+   correction carries a px floor for the same reason rule 6a exists: the label tiers above
+   each lead are px-floored past ~1440, so a purely fluid correction kept growing after the
+   thing it was correcting had stopped, and the two leads drifted 4px apart again at 1920.
+   Measured: delta 0 at 1440, 0 at 1920. */
+.ledger{margin-top:max(14px, calc(25 * var(--u)))}
+.ledger .lg{padding-top:calc(30 * var(--u));border-top:0.667px solid var(--hair-light)}
+.ledger .lg:first-child{padding-top:0;border-top:0}
+.ledger .lg .s15{margin-top:calc(10 * var(--u))}
+
+@media (max-width:900px){
+  .ledger{margin-top:24px}
+  .ledger .lg{padding-top:24px}
+}
+
+/* ══ FOOTER, social row ═════════════════════════════════════════════════════
+   White circular badges with a black glyph, matching the live orion-digital.com footer
+   exactly (a screenshot of it was supplied 2026-09-06). This is the one place on the page a
+   filled white circle appears outside the type system; it is reproduced as shown rather than
+   redrawn in the page's own mono-line idiom, because the instruction was verbatim, not
+   "in this style." */
+.soc-row{display:flex;gap:calc(14 * var(--u));margin-top:calc(28 * var(--u))}
+.soc{width:22px;height:22px;flex:none}
+.soc svg{width:100%;height:100%;display:block}
+
+/* ══ NAV, the quote strip ═══════════════════════════════════════════════════
+   Rebuilt as an aligned ticker. It had been three ragged lines: two exchange rows whose
+   labels are different lengths, so the prices started at different x, each carrying both an
+   absolute change and a percentage, with the as-of date orphaned underneath.
+   Now a three column grid, exchange / price / change, with the numbers right aligned and
+   tabular so the two rows read as a column of figures rather than as two sentences. The
+   absolute change is gone: +0.03 and +2.19% say the same thing, and a nav is the one place
+   on the page with no room to say anything twice.
+   The CTA keeps the II box: accent fill, mono caps, the 196u minimum. Its height is pulled
+   to the strip's so the two sit as one object rather than a slab beside some type. */
+/* rebuilt again. The 3-column grid put the price in a right-aligned column sized to the
+   longer row, so the short row's number sat far from its own label with a gap that meant
+   nothing. This reads left to right instead, each row its own baseline, gapped evenly: a
+   ticker line, not a table with two rows in it. */
+/* One band rather than three stacked lines. The strip measured 45px beside a 38px CTA, and
+   the third line was the as-of, which qualifies BOTH quotes rather than following the second
+   one: stated once, beside the pair, it is the same statement in one line less.
+   The exchange labels lost their ticker. "TSX: ORIO" and "NASDAQ: ORIO" repeat ORIO twice
+   under a masthead that already carries the name, so the field went from 12 characters to 7
+   and the strip from 189px to what the numbers actually need. */
+.qstrip{display:flex;align-items:center;gap:calc(14 * var(--u));
+  font-family:var(--mono);letter-spacing:0.04em;background:var(--c-black);
+  padding:calc(7 * var(--u)) calc(16 * var(--u))}
+.qrows{display:flex;flex-direction:column;gap:calc(3 * var(--u))}
+.qrow{display:flex;align-items:baseline;gap:calc(10 * var(--u))}
+/* fixed character widths, not fixed pixel columns. The font is monospace, so a ch-based
+   width lines up the price and the percent on both rows without a grid: "NASDAQ: ORIO" is
+   the longer label at 12 characters, "TSX: ORIO" is 9, and the 3ch of difference is real
+   trailing space that exists because the labels are actually different lengths, not an
+   arbitrary gap manufactured to force alignment. The price gets the same treatment so the
+   percent column lines up too. */
+/* the ch widths carry their letter-spacing. ch is the advance of "0" with no tracking, but
+   every tier here is set at +0.04em, so a 12-character label actually needs 12ch plus twelve
+   times that tracking. Set to a bare 12ch, "NASDAQ: ORIO" overflowed its own field and wrapped
+   onto a second line. nowrap holds it even if a label ever grows past the field. */
+.qstrip .qex{font-size:max(11px,calc(13 * var(--u)));color:var(--c-600);
+  display:inline-block;width:calc(7ch + 7 * 0.04em);white-space:nowrap}
+/* the currency sits in its own field so the digits line up. Right-aligning "C$1.40" and
+   "US$1.01" as whole strings aligns their last digit but staggers everything else, because
+   the prefixes are two and three characters; the eye reads a price column by its numerals,
+   not by its trailing edge. Currency right-aligned in 3ch, number left-aligned after it. */
+.qstrip .qv{font-size:max(11px,calc(13 * var(--u)));color:var(--c-white);
+  font-variant-numeric:tabular-nums lining-nums;display:inline-flex;white-space:nowrap}
+.qstrip .qc{display:inline-block;width:calc(3ch + 3 * 0.04em);text-align:right}
+.qstrip .qn{display:inline-block;width:calc(4ch + 4 * 0.04em);text-align:left}
+.qstrip .qp{white-space:nowrap}
+.qstrip .qp{font-size:max(11px,calc(13 * var(--u)));color:var(--c-white);
+  font-variant-numeric:tabular-nums lining-nums}
+.qstrip .qasof{font-size:max(9px,calc(11 * var(--u)));color:var(--c-700);
+  /* Two short lines rather than one long one. Beside the quotes on a single line the strip
+     measured 276px and its left edge landed 1px inside the last nav link; broken after "As
+     of" it needs 10 characters of width instead of 16 and clears the menu again. Both lines
+     still fit inside the 38px the CTA occupies. */
+  width:calc(11ch + 11 * 0.04em);line-height:1.2}
+.nav.scrolled .qstrip{background:transparent;padding:0}
+.nav.scrolled .qstrip .qv,.nav.scrolled .qstrip .qp{color:var(--c-1000)}
+.nav.scrolled .qstrip .qex{color:var(--c-800)}
+.nav.scrolled .qstrip .qasof{color:var(--c-800)}
+/* removed: this stretched the CTA taller by overriding its min-height with a fluid-only
+   value and no floor, which is what silently zeroed the 38px canon a few lines above it via
+   plain source order. The CTA takes II's own fixed box; the nav row sizes around it via
+   align-items:center, not the other way around. */
+
+/* ══ 05, one dominant figure per side ═══════════════════════════════════════
+   Reviewed as "could be better", and the reason was that both sides set every figure at the
+   34px stat tier, so five equal numbers sat across a rule and the design never said which
+   two the comparison is actually between. It is between what the market pays for the whole
+   company and what the company earns in a year; the share price, the enterprise value and
+   next year's guidance are all context around that one pair.
+   So each side keeps exactly one figure at the stat tier and demotes the rest to 22. No
+   multiple is printed and the word undervalued still never appears: the two survivors are
+   simply the same size, on the same line, either side of the rule. */
+#valuation .side-a .sp:not(.lead) .v,
+#valuation .side-b .lg:not(.lead) .v{font-size:max(22px,calc(27 * var(--u)));
+  letter-spacing:-0.02em}
+#valuation .side-a .sp.lead .v,
+#valuation .side-b .lg.lead .v{font-size:34px;letter-spacing:-0.069em}
+
+/* 05 only: freeze the lead stacks' internal margins at the width the type freezes.
+   The two sides stack differently above their lead figure, so as long as one side's spacing
+   kept growing on --u past ~1440 while the px-floored type did not, the leads drifted apart
+   again (0 at 1440, 1 at 1512, 4 at 1920). Both stacks now stop growing at the same point,
+   which holds the delta wherever it was set. Scoped to #valuation so the .sp unit everywhere
+   else on the page is untouched. */
+#valuation .sp .lb{margin-top:max(7px, calc(12 * var(--u)))}
+#valuation .sp .v{margin-top:max(6px, calc(10 * var(--u)))}
+#valuation .sp .s15{margin-top:max(6px, calc(10 * var(--u)))}
+#valuation .ledger .lg .s15{margin-top:max(6px, calc(10 * var(--u)))}
+#valuation .ledger-hd{padding-bottom:max(10px, calc(18 * var(--u)))}
+#valuation .side-a .sp{margin-top:max(36px, calc(64 * var(--u)))}
+#valuation .side-a .sp:first-child{margin-top:0}
+
+/* ══ 05, the split ground ═══════════════════════════════════════════════════
+   One side on paper, the other on a photograph, borrowed from the reference spread where a
+   white panel of type sits beside a black-and-white frame. The mapping is not arbitrary:
+   what the market pays is a number on paper, and what the business earns is made in the
+   physical economy, so the market side keeps the white ground and the earnings side stands
+   on the picture.
+   The split lands on the column-6/7 boundary rather than at 50% of the viewport, so the
+   material change happens on a grid line: rail starts at 450u, each column is 109.58u and
+   each gutter 30u, so six columns and six gutters put the edge at 1287.5u. It bleeds to the
+   right edge of the viewport from there.
+   The hairline rule between the two sides is gone. The change of material IS the division,
+   and drawing a line on top of it would say the same thing twice. */
+#valuation{position:relative;overflow:hidden;overflow:clip}
+#valuation > .rail{position:relative;z-index:2}
+/* the panel lives INSIDE the rail, not across the page. Bled to the viewport edge it read
+   as the whole page being split in two rather than as one section's own two halves, and the
+   12-column system stopped governing at the point it mattered most. Left edge on the
+   column-6/7 boundary (450u rail offset + six columns and six gutters = 1287.5u), right edge
+   on the rail's own right margin. So it occupies columns 7 to 12 exactly. */
+.vsplit{position:absolute;top:0;bottom:0;left:calc(1287.5 * var(--u));
+  right:calc(450 * var(--u));z-index:0;
+  overflow:hidden;overflow:clip;background:var(--c-black)}
+/* 0.42 -> 0.28, measured. At 0.42 the small text on this side read 3.30:1 and at 0.34 it
+   was 4.48, still under the 4.5 floor; 0.28 gives 5.76 with room. The corridor's perspective
+   lines survive the cut, which is why this frame was chosen for a side that has to carry
+   type at all. */
+.vsplit img{width:100%;height:100%;object-fit:cover;
+  filter:saturate(0.75) brightness(0.62) contrast(0.94)}
+/* the section's own ground is a pale grain field rather than flat white, so the panel is
+   grey ON grey with a different texture, which is the layering the reference is actually
+   doing. Flat white under a near-black panel gave the opposite: maximum contrast between
+   two surfaces instead of two readings of the same material.
+   The panel therefore stops being a hole and becomes a second sheet of the same stuff. */
+#valuation > .vbg{position:absolute;inset:0;z-index:0;overflow:hidden;overflow:clip}
+#valuation > .vbg img{width:100%;height:100%;object-fit:cover;
+  filter:saturate(0.75) brightness(1.12) contrast(0.72)}
+#valuation .rule{display:none}
+/* the earnings side now stands on a photographic ground, so it takes that contract:
+   full-strength white for the figures, --c-400 for everything small. --c-800 was fine on
+   white and is forbidden here (rule 4a). */
+
+@media (max-width:900px){
+  .vsplit{display:none}
+  #valuation .side-b .v{color:var(--c-1000)}
+  #valuation .side-b .glabel,#valuation .side-b .ix,#valuation .side-b .s15{color:var(--c-800)}
+  #valuation .side-b .glabel{border-bottom-color:var(--hair-light)}
+}
+
+/* ══ 05, two numbered groups ════════════════════════════════════════════════
+   The number belongs to the GROUP, not to each figure: the three readings on the left are
+   one subject read three ways and so are the two on the right. Index in its own narrow
+   column, group label beside it over a hairline, readings stacked underneath.
+   This block was written once and lost when the patch that carried it aborted on a bad
+   anchor, so the markup shipped unstyled and the readings collapsed into one dense column.
+   That is what "다닥다닥 붙어있어" was looking at. */
+.dgroup{display:grid;grid-template-columns:calc(52 * var(--u)) 1fr;
+  column-gap:calc(20 * var(--u));align-items:start}
+.dgroup .ix{grid-column:1}
+.dgroup .gbody{grid-column:2;min-width:0}
+.glabel{display:block;padding-bottom:max(10px, calc(16 * var(--u)));
+  border-bottom:0.667px solid var(--hair-light)}
+/* the readings sit well apart and each caption stays close to its own figure. Packed at
+   25px between readings and 5px between a 34px number and its caption, the three read as
+   one block of text instead of three separate facts. */
+/* Density, measured against the reference spread. There the items of a group sit with no
+   gap at all, so each numbered group reads as one block; here every reading was floating a
+   full value-line apart and the five of them stopped belonging to two groups.
+   Ours cannot go to zero: a reading is a value plus a caption, and with no gap the caption
+   binds to the value below it instead of the one above. Half a value line is the floor. */
+.greads{margin-top:max(20px, calc(35 * var(--u)))}
+.gread{margin-top:max(20px, calc(35 * var(--u)))}
+.gread:first-child{margin-top:0}
+.gread .s15{margin-top:max(8px, calc(14 * var(--u)))}
+/* One size for every figure. The lead of each group used to take 34 and the rest 22, on the
+   argument that the two figures being compared should be the largest things in the section.
+   On screen it just read as inconsistent typography: five numbers in the same column at two
+   sizes, with no rule a reader could infer. The group label already says what each set is,
+   and the order already says which comes first, so the size was carrying no information the
+   layout was not carrying better. All five sit on the II stat tier. */
+#valuation .gread .v{font-size:34px;letter-spacing:-0.069em}
+
+/* both layers are normalised into an explicit luminance window when the file is baked
+   (ground 212-240, panel 40-80), so CSS does not re-expose them: that would move the window
+   the contrast was calculated against. */
+.vsplit img,#valuation > .vbg img{filter:saturate(0.75)}
+
+@media (max-width:900px){
+  .dgroup{grid-template-columns:1fr;row-gap:10px}
+  .dgroup .ix,.dgroup .gbody{grid-column:1}
+  .greads{margin-top:20px}
+  .gread{margin-top:32px}
+}
+
+/* ══ 05, the sheet on the ground ════════════════════════════════════════════
+   The reference's construction: a grey textured field, a white sheet floating on it, and
+   the same texture appearing again inside the sheet beside the data. The data itself never
+   leaves white.
+   The sheet takes the full rail, so it shares 02 and 04's footprint; what makes it read as
+   an object rather than a band is that the ground behind it is a photograph and shows above
+   and below it. */
+#valuation{position:relative;overflow:hidden;overflow:clip;background:var(--c-black)}
+#valuation > .vbg{position:absolute;inset:0;z-index:0;overflow:hidden;overflow:clip}
+#valuation > .vbg img{width:100%;height:100%;object-fit:cover;filter:saturate(0.75)}
+#valuation > .rail{position:relative;z-index:2}
+.vsheet{background:var(--c-white);padding:calc(56 * var(--u)) calc(56 * var(--u)) calc(64 * var(--u))}
+/* the sheet is an opaque white surface and has to declare the full light contract itself.
+   The section lost its .white class when the ground became a photograph, so every tier
+   inside fell back to the body's --c-200 and the eyebrow measured 1.29:1 on white. Same
+   failure as the 02 cells: an opaque panel needs a complete contract, never a partial one. */
+.vsheet .h1,.vsheet .h2,.vsheet .v,.vsheet .p,.vsheet .t22{color:var(--c-1000)}
+.vsheet .m9,.vsheet .m11,.vsheet .m13,.vsheet .s15,.vsheet .eyeb,.vsheet .par,
+.vsheet .ix,.vsheet .glabel{color:var(--c-800)}
+.vsheet .glabel{border-bottom-color:var(--hair-light)}
+.vhead{max-width:calc((100% + 30 * var(--u)) / 12 * 10 - 30 * var(--u))}
+.vbody{display:grid;grid-template-columns:repeat(12,1fr);column-gap:calc(30 * var(--u));
+  margin-top:calc(88 * var(--u));align-items:start}
+/* the texture inside the sheet, columns 1 to 5 of the sheet's own grid */
+.vpic{grid-column:1 / span 5;margin:0;overflow:hidden;overflow:clip}
+.vpic img{width:100%;aspect-ratio:3 / 4;object-fit:cover;filter:saturate(0.75)}
+/* every figure sits here, on white */
+.vdata{grid-column:7 / span 6}
+.vdata .dg2{margin-top:calc(96 * var(--u))}
+
+@media (max-width:900px){
+  .vsheet{padding:24px 20px 28px}
+  .vbody{grid-template-columns:1fr;row-gap:32px;margin-top:40px}
+  .vpic,.vdata{grid-column:1}
+  .vpic img{aspect-ratio:4 / 3}
+  .vdata .dg2{margin-top:48px}
+}
+
+/* ══ 05, back to the split ══════════════════════════════════════════════════
+   The white-sheet construction was built and reviewed as worse. This restores what was on
+   screen before it: a pale grain ground with the market's numbers, and a darker panel of a
+   different texture inset to columns 7-12 with the company's. .vsheet and its contract stay
+   in the stylesheet above, unused, so the attempt is on the record and not tried again. */
+#valuation{position:relative;overflow:hidden;overflow:clip;background:var(--c-white)}
+#valuation > .vbg{position:absolute;inset:0;z-index:0;overflow:hidden;overflow:clip}
+#valuation > .vbg img{width:100%;height:100%;object-fit:cover;filter:saturate(0.75)}
+#valuation > .vsplit{position:absolute;top:0;bottom:0;left:calc(1287.5 * var(--u));
+  right:calc(450 * var(--u));z-index:1;overflow:hidden;overflow:clip;background:var(--c-black)}
+#valuation > .vsplit img{width:100%;height:100%;object-fit:cover;filter:saturate(0.75)}
+#valuation > .rail{position:relative;z-index:2}
+/* dark text on the pale ground */
+#valuation .eyeb,#valuation .side-a .ix,#valuation .side-a .glabel,
+#valuation .side-a .s15{color:var(--c-800)}
+#valuation .h2,#valuation .side-a .v{color:var(--c-1000)}
+/* light text on the dark panel. Rule 4a: --c-800 is forbidden on a photographic surface. */
+#valuation .side-b .v{color:var(--c-white)}
+#valuation .side-b .ix,#valuation .side-b .glabel,#valuation .side-b .s15{color:var(--c-400)}
+#valuation .side-b .glabel{border-bottom-color:var(--hair-onblack)}
+#valuation .side-b{padding-right:calc(20 * var(--u))}
+
+@media (max-width:900px){
+  #valuation > .vsplit{display:none}
+  #valuation .side-b .v{color:var(--c-1000)}
+  #valuation .side-b .ix,#valuation .side-b .glabel,#valuation .side-b .s15{color:var(--c-800)}
+  #valuation .side-b .glabel{border-bottom-color:var(--hair-light)}
+}
+
+/* ══ 05, title left on texture / visual centre / data right ═════════════════
+   The construction the reference actually uses, and the third arrangement tried here. The
+   two before it are left in this stylesheet unused, .vsheet and the .vsplit pair, so the
+   record shows what was tested rather than inviting a fourth pass at the same ideas.
+   White sheet. The distressed texture sits only behind the title, which is the one block
+   that can afford an uneven surface because it is 54px type; every figure is on plain white
+   at the right. The half disc on the seam is sized to three columns so the one decorative
+   mark on the page still answers to the grid. */
+#valuation{background:var(--c-white)}
+.vsheet2{position:relative;display:grid;grid-template-columns:repeat(12,1fr);
+  column-gap:calc(30 * var(--u));align-items:start;min-height:calc(560 * var(--u))}
+/* the texture fills the left half and the title sits on it, vertically centred. The
+   section keeps its .white class: without one of the ground classes the .field grain
+   overlays lose their opacity rule and render at full strength, which is what covered the
+   whole section in speckle the first time this was built. */
+/* columns 1-6, and every child names its row. .vleft spanned 1-7 while .vdisc started at
+   7, so the two overlapped on column 7 and the disc was auto-placed onto a second row,
+   which also stopped .vleft from stretching to the data column's height. Same failure as
+   07's pillars: a grid that places by column across more than one item has to name the row
+   or the browser will invent one. */
+.vleft{grid-column:1 / span 6;grid-row:1;position:relative;align-self:stretch;
+  display:flex;align-items:center;min-height:calc(520 * var(--u))}
+.vtex{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;
+  filter:saturate(0.75)}
+.vtitle{position:relative;z-index:1;padding:calc(48 * var(--u)) calc(52 * var(--u))}
+.vsheet2 .vtitle .h2{max-width:none}
+/* the half disc is gone. It was the one mark on the page that carried no information, and
+   read second as what it probably is in the reference anyway: the grey ground showing
+   through the sheet, not a drawn shape. If that reading is wanted it should be built as a
+   cut-out in the sheet, not as a decoration laid on top of it. */
+/* Columns 8 to 12, with one gutter held back on the right as the sheet's inner margin.
+   At 9 / span 4 the measure was 253px and every caption in the section wrapped to two lines,
+   including ones as short as "Market capitalization"; worse, the column's right edge landed
+   on 1170px, which is exactly the sheet's own right edge, so the type sat on the boundary
+   between the white sheet and the grey ground with nothing between them. A sheet floating on
+   a ground needs a margin on the side it floats over. */
+/* The sheet is the grid container itself, so its white area is exactly the content box and
+   it has no padding of its own. The inset therefore lives on the data column: 96u top and
+   bottom, one gutter at the right.
+   It is not on .vsheet2 because the texture panel has to keep bleeding to the sheet's top and
+   bottom edges; padding on the container would inset the picture too and leave white bands
+   above and below it. Ground reaches the edge, reading matter comes inside. */
+/* Columns 7 to 12 now that the disc is gone. Removing it left 95px of blank white in the
+   seam, and the data column was the thing short of room: at 8 / span 5 the measure was 314px
+   and two of the five captions still broke to a second line.
+   The left inset is 60u rather than nothing, because column 7 begins only 17px from the
+   texture panel's edge and a reading column must not butt against a photograph. */
+.vright{grid-column:7 / span 6;grid-row:1;
+  padding-top:calc(96 * var(--u));padding-bottom:calc(96 * var(--u));
+  padding-left:calc(60 * var(--u));padding-right:calc(30 * var(--u))}
+.vright .dg2{margin-top:max(22px, calc(39 * var(--u)))}
+/* the sheet is white, so the light contract holds for everything on it */
+.vsheet2 .h2,.vsheet2 .v{color:var(--c-1000)}
+.vsheet2 .eyeb,.vsheet2 .ix,.vsheet2 .glabel,.vsheet2 .s15{color:var(--c-800)}
+.vsheet2 .glabel{border-bottom-color:var(--hair-light)}
+
+@media (max-width:900px){
+  .vsheet2{grid-template-columns:1fr;row-gap:32px;min-height:0}
+  .vleft{grid-column:1;min-height:0}
+  .vtitle{padding:24px 20px}
+  .vdisc{display:none}
+  .vright{grid-column:1;padding:0}
+  .vright .dg2{margin-top:48px}
+}
+
+/* ══ 05, the hole ═══════════════════════════════════════════════════════════
+   The sheet's white is its own layer so it can be masked. A radial gradient punches a
+   circle at the seam between the two halves; the left half of that circle falls under the
+   opaque texture panel, so what shows is a half disc bulging right, and what shows THROUGH
+   it is the section's grey ground.
+   The geometry is in --u like everything else: the rail is 1645u across 12 columns of
+   109.58u with 30u gutters, so the boundary after column 6 is 6*109.58 + 5*30 = 807.5u from
+   the sheet's left edge. The radius is 165u, three half-columns, so even the one decorative
+   move answers to the grid.
+   Drawn as a filled shape instead, this was just a grey semicircle sitting on white: the
+   reference's disc is the ground itself, seen through the sheet. */
+#valuation{position:relative;overflow:hidden;overflow:clip;background:var(--c-white)}
+#valuation > .vbg{position:absolute;inset:0;z-index:0;overflow:hidden;overflow:clip}
+#valuation > .vbg img{width:100%;height:100%;object-fit:cover;filter:saturate(0.75)}
+#valuation > .rail{position:relative;z-index:2}
+/* the hole is placed as a PERCENTAGE of the sheet, not at an absolute u offset. The rail
+   renders 915.78px rather than the nominal 1645u, because 100vw includes the scrollbar, so
+   an absolute u position put the circle 8px past the texture's edge. Six columns and five
+   gutters are 49.06% of the rail whatever the scrollbar does.
+   The radius is one column, 109.58u. It was 1.5 columns until the data moved to column 8:
+   at that radius the disc reached 797px and the type began at 799px, a 2px clearance. One
+   column ends it at 766px and leaves 33px of white, so the hole sits whole inside the gap
+   between the two halves instead of crowding the figures. Both values come off the grid. */
+#valuation::before{opacity:0.10} #valuation::after{opacity:0.06}
+/* The hole is gone. As a shape it was doing nothing: in the reference the disc belongs to a
+   dial, with angles, ticks and labels around it, and here it stood alone as an ornament in
+   the section that closes the page's argument.
+   Rejected on the way out: sizing two discs to market capitalization and Adjusted EBITDA so
+   that the shape would MEAN something. That draws the EBITDA multiple as a picture, and the
+   two things Greg fixed are that the page never says undervalued and never prints a multiple.
+   A figure we may not set in type we may not set in geometry either, and copy is reviewed by
+   counsel while shapes are not. */
+.vsheetbg{position:absolute;inset:0;z-index:0;background:var(--c-white)}
+.vsheet2 > .vleft,.vsheet2 > .vright{position:relative;z-index:1}
+
+@media (max-width:900px){
+  /* no hole on a single column: there is no seam for it to sit on */
+  .vsheetbg{-webkit-mask-image:none;mask-image:none}
+}
+
+/* ══ 06, the mirror ═════════════════════════════════════════════════════════
+   Past left, present right, and the constant on the seam. Columns 2-5 and 8-11 are the two
+   states, mirrored about columns 6-7; column 1 and column 12 hold the index with a leader
+   hairline running out to the rail's edge, which is where the reference puts its numerals.
+   The leader lines stop at the columns' edges rather than running under the type. A rule
+   drawn through the row would have to be interrupted by a solid patch behind each phrase,
+   and this section carries a grain overlay, so that patch would read as a flat rectangle
+   sitting on textured black. The gap does the interrupting instead.
+   Both states are t22. The reference sets its pair at one size and lets colour carry the
+   change, which is right here too: the two states are equally true, and one of them is
+   simply over. --c-700 on this ground is 6.7:1, well clear of the floor for 22px type. */
+.mirror{margin-top:calc(120 * var(--u))}
+.mrow{display:grid;grid-template-columns:repeat(12,1fr);column-gap:calc(30 * var(--u));
+  align-items:center;margin-top:calc(72 * var(--u))}
+.mrow:first-child{margin-top:0}
+/* The index moved onto the seam with the business name. Both of them answer "which row is
+   this", and they were sitting a rail's width apart: one piece of information split across
+   916px. Together on the centre they identify the row once, and the two ends are left with
+   nothing but their lines, which is what finally makes the mirror symmetrical.
+   Stacked rather than set on one line: [06.4] INVESTMENT PORTFOLIO needs about 190px and the
+   seam is 138px. Widening the seam narrows the state columns, and Technology investment
+   breaks to two lines the moment they lose width, so the stack is the only version where
+   nothing else has to give. */
+/* Columns 5 and 8 are empty gutters either side of the constant. They used to hold the two
+   leader lines; kept clear they do the same job better, since the seam is what this section
+   is about and a gap states it without drawing anything.
+   The section's motion moved to the row rule below, which is a better carrier: it spans the
+   rail, so drawing it is drawing the row rather than dressing its ends. */
+/* Anchored out, not in. Set the other way, every row huddled around the seam and neither
+   end of the rail was touched, which is what made the section read as floating in the field
+   rather than sitting in it. This way each row runs the full rail: the past begins at the left
+   edge, the present ends at the right, and what is left over is in the middle, where the seam
+   is and where this section actually wants its emptiness. */
+.was{grid-column:1 / span 4;text-align:left}
+.const{grid-column:6 / span 2;text-align:center;color:var(--c-700);white-space:nowrap}
+.const .cn{display:block;margin-bottom:calc(8 * var(--u))}
+.const .m11{display:block}
+.is{grid-column:9 / span 4;text-align:right}
+/* The dark-ground contract sets .blk .t22 to --c-200 at two classes, so a bare .was would
+   have lost and both states would have rendered the same grey. The same failure as the
+   opaque panels in 02 and 05: whenever a block takes its own colour scheme inside a section
+   that already declares one, declare the whole contract at the section's specificity, not
+   the half of it that looks wrong. Here that is both states, not just the past. */
+#transition .was{color:var(--c-700)}
+#transition .is{color:var(--c-white)}
+
+/* The header row names the two columns. Only the two labels are rules-bearing: the index
+   end and the seam are empty here, and the leader hairlines are suppressed, because a row
+   that carries no item should not draw an item's furniture.
+   The right-hand index was removed from every row at the same time. The reference numbers
+   both ends because its two halves are separate frames that each need a name; here one row
+   is one item, so the second number was the same string twice and said nothing. The leader
+   line on that side stays: it marks the row's extent and holds the mirror's silhouette. */
+
+/* each header sits over the block it names, at that block's own edge */
+.mhead .was{text-align:left}
+.mhead .is{text-align:right}
+.mhead .was,.mhead .is{padding-bottom:max(10px, calc(16 * var(--u)));
+  border-bottom:0.667px solid var(--hair-onblack)}
+.mhead + .mrow{margin-top:calc(40 * var(--u))}
+
+/* The row's own rule. Full rail, under the pair, drawn from the left.
+   Absolutely positioned so it stays out of the row's grid: as a normal ::after it would have
+   become a seventh grid item and taken a column. */
+/* The row names a timeline for its rule to use. Given view() the rule tracked its OWN box,
+   and a 0.667px line enters the scrollport inside a single pixel of scroll: the animation
+   completed instantly and measured scaleX(1) at every position. The row has real height, so
+   naming the timeline on the row and referencing it from the pseudo gives the draw something
+   to happen over. */
+.mrow:not(.mhead){position:relative;padding-bottom:calc(34 * var(--u))}
+.mrule{position:absolute;left:0;right:0;bottom:0;grid-row:1;
+  height:0.667px;background:var(--hair-onblack);
+  transform-origin:left center}
+@media (prefers-reduced-motion: reduce){
+  .anim .mrow:not(.mhead){animation:none}
+  .anim .mrule{transform:scaleX(1)}
+}
+
+/* The line draws inward from the rail's edge as its row arrives. Each side grows from its
+   OUTER end, so the two lines travel toward the seam and the row closes on the centre; that
+   direction is the whole point, and origins set the other way would have them retreating.
+   .motion is added by script. Without it the lines are drawn, which is also what a reader
+   with prefers-reduced-motion gets, and what anyone gets if the observer never runs. */
+
+/* the rows are staggered against each other, not against the scroll: each one starts when it
+   arrives, and the delay only separates the two ends of the same row from its neighbours */
+
+@media (prefers-reduced-motion: reduce){
+}
+
+@media (max-width:900px){
+  /* no seam on one column. The pair becomes a line of prose, and colour still carries the
+     change, which is the half of the device that survives a phone. */
+  .mrow{grid-template-columns:1fr;align-items:start;row-gap:6px;margin-top:36px}
+  .was,.const,.is{grid-column:1;text-align:left}
+  .const{order:-1}
+  .mirror{margin-top:56px}
+}
+
+/* == Motion =================================================================
+   Three events on the page, each in a different section and each a different KIND: a line
+   drawing itself in 06, a pair arriving in order in 04, a ground holding still under the
+   hero. The budget is the same argument as the two reversals. An effect repeated in every
+   section stops being an event and becomes the background, and the first one loses whatever
+   it meant.
+   All three are gated on a .motion class added by script, so with JS off, or under
+   prefers-reduced-motion, the page is simply the finished state. Nothing is hidden by CSS
+   that only script can bring back. */
+
+/* 04. The pair arrives in the order the argument runs: the loan portfolio first, then the
+   rule between the two, then the facility landing underneath it. This section exists to
+   correct a misreading of C$80M of debt against C$25M of cash, and the correction IS the
+   pairing, so sequence is the one thing motion can say here that type cannot.
+   Not animated: the figures themselves. A number that counts up reads as an estimate, and
+   several values on this page are still unconfirmed. */
+#balance-sheet.motion .box.inv > *{opacity:0;transform:translateY(calc(16 * var(--u)));
+  transition:opacity 0.55s ease, transform 0.55s cubic-bezier(0.22,0.61,0.36,1)}
+#balance-sheet.motion .box.inv.in > *{opacity:1;transform:none}
+#balance-sheet.motion .box.inv > *:nth-child(4){transition-delay:0.25s}
+#balance-sheet.motion .box.inv > *:nth-child(5),
+#balance-sheet.motion .box.inv > *:nth-child(6){transition-delay:0.55s}
+#balance-sheet.motion .box.inv > *:nth-child(7){transition-delay:0.80s}
+
+/* 04's reduced-motion reset. The section's own sequence is the one piece of motion on this
+   page that predates the general system and stays bespoke, so it carries its own opt-out. */
+@media (prefers-reduced-motion: reduce){
+  #balance-sheet.motion .box.inv > *{opacity:1;transform:none;transition:none}
+}
+
+/* The hero's lag, restored to what it was before the wider system. A ten-section version of
+   this (numbers arriving, panels wiping open, every photograph drifting) was built, reviewed
+   on screen and pulled back out: with every section carrying an effect, none of them read as
+   an event, only as constant motion.
+   .a-lag oversizes its element upward by its inline top/height so no scroll position can
+   reveal an edge, and leaves it unscaled so grain stays as shot. */
+.a-lag{will-change:transform}
+
+/* == Why every overflow:hidden above is paired with overflow:clip ============
+   overflow:hidden makes an element a scroll container, and a view() timeline resolves against
+   its element's nearest scroll container. With .field on hidden, every animated thing inside
+   every section measured its progress against a box that never scrolls, so every timeline sat
+   inactive: animation-name applied, progress stayed at one end, and nothing moved.
+   overflow:clip clips identically and creates no scroll container, so progress resolves
+   against the page. The hidden declaration stays in front of it as the fallback for engines
+   without clip, where the page keeps its one-shot motion anyway.
+   This conversion has been lost once already, together with the motion primitives and the
+   script's config table. The validator cannot see it: nothing is malformed, a rule is just
+   missing. The check that catches it is measuring one element per primitive and confirming it
+   actually moves across a few scroll positions. */
+
+/* == Motion, script driven ==================================================
+   Four primitives. Which element gets which, and with what delay, is a config table in the
+   page script; this file only says what each one does.
+
+   Everything that hides before it reveals is gated on .js-anim, which the script adds only
+   once it has finished wiring up. With no script, a failed script, or a reverted one, the
+   page renders finished. This is not belt and braces: the hidden-by-default version of these
+   rules blanked 02's cells and 05's sheet outright when their timelines went inactive.
+
+   Native scroll timelines were tried and abandoned. They attach on this page, and the
+   ViewTimeline object exists, but its currentTime reads null, so no animation ever
+   progresses. The script's rAF pass is the version that measures. */
+
+/* VAL, the figure arrives. RISE, the same move shorter, for blocks carrying no figure. */
+.js-anim .a-val{opacity:0;transform:translateY(calc(16 * var(--u)));
+  transition:opacity 0.55s ease, transform 0.55s cubic-bezier(0.22,0.61,0.36,1)}
+.js-anim .a-val.in{opacity:1;transform:none}
+.js-anim .a-rise{opacity:0;transform:translateY(calc(10 * var(--u)));
+  transition:opacity 0.5s ease, transform 0.5s cubic-bezier(0.22,0.61,0.36,1)}
+.js-anim .a-rise.in{opacity:1;transform:none}
+
+/* WIPE, an opaque surface uncovered from one edge. Only for things that read as printed
+   objects: 02's cells and 05's sheet. */
+.js-anim .a-wipe{clip-path:inset(0 0 100% 0);
+  transition:clip-path 0.8s cubic-bezier(0.22,0.61,0.36,1)}
+.js-anim .a-wipe.wl{clip-path:inset(0 100% 0 0)}
+.js-anim .a-wipe.in,.js-anim .a-wipe.wl.in{clip-path:inset(0 0 0 0)}
+
+/* 06's row rule draws from the left as its row arrives. */
+.js-anim .mrule{transform:scaleX(0);transition:transform 0.7s cubic-bezier(0.22,0.61,0.36,1)}
+.js-anim .mrow.in .mrule{transform:scaleX(1)}
+
+/* LAG and ZOOM are written inline by the script, per frame. The geometry has to be inline
+   too: every ground already has a rule sizing it, and those rules outrank a class selector,
+   which loses the height and keeps the translate. That is the one combination that opens a
+   gap at the top of the frame. */
+.a-lag,.a-zoom{will-change:transform}
+
+@media (prefers-reduced-motion: reduce){
+  .js-anim .a-val,.js-anim .a-rise{opacity:1;transform:none;transition:none}
+  .js-anim .a-wipe,.js-anim .a-wipe.wl{clip-path:none;transition:none}
+  .js-anim .mrule{transform:scaleX(1);transition:none}
+}
+
+/* == Colour ==================================================================
+   The page is muted colour, not black and white. Every image carried grayscale(1), eighteen
+   declarations, and eight of the eleven files had been baked to saturation 0 as well, so the
+   colour was not recoverable in CSS at all. That was my convenience, contrast maths being
+   easier on one channel, and it contradicts the standard: colour is the default and black and
+   white is for a stated purpose. A B/W frame had already been rejected once at CEO review and
+   replaced with its colour equivalent.
+
+   The five pictures were rebaked from the library originals with hue intact. The luminance
+   window is applied with one LUT across all three channels, so hue survives, saturation
+   compresses with the range, and the luminance means come out identical to the greyscale
+   versions they replace: hero 38.7, 03's picture 135.3, bands 96.5 / 82.1 / 85.6. Every
+   contrast guarantee measured against those numbers therefore still holds.
+
+   saturate(0.75) is the final mute on top of that. The hero measures cool at R-B -17.9, which
+   is the blue-hour temperature the standard asks for.
+
+   08's third band needed more than a mute. A shop interior under tungsten measured R-B +19.4,
+   the golden tint the standard bans outright, so it was desaturated to 55% and given a channel
+   shift that holds luminance, R x0.96 and B x1.10, landing at R-B -0.6.
+
+   02's ground keeps grayscale(1) deliberately and is the page's one black and white surface.
+   It is an inverted negative, and inverting colour yields false cyan and magenta rather than
+   muted documentary. That is the stated purpose the standard allows for.
+
+   Still neutral, and not by choice: 05's two pale textures and 02's cell veil. They derive
+   from the concrete stand-in, whose own source measures only 6.5 saturation, and they sit in
+   windows near white where colour would not register anyway. They come back with whatever
+   replaces the stand-in. */
