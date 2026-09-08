@@ -1341,7 +1341,19 @@ sup{font-size:0.62em;vertical-align:super;line-height:0}
    reference's disc is the ground itself, seen through the sheet. */
 #valuation{position:relative;overflow:hidden;overflow:clip;background:var(--c-white)}
 #valuation > .vbg{position:absolute;inset:0;z-index:0;overflow:hidden;overflow:clip}
-#valuation > .vbg img{width:100%;height:100%;object-fit:cover;filter:saturate(0.75)}
+/* position:relative is declared here rather than being discovered at runtime. The lag script
+   writes top and height inline per frame, and top only moves a positioned element; this is the
+   one ground on the page that is static inside its wrapper, so it is the one that needs it.
+   The script used to infer it, with `if (getComputedStyle(el).position === 'static')`, and that
+   was a race: when the stylesheet arrived after the inline script, every ground read static and
+   got an inline position:relative, which permanently beats the absolute in this file. The
+   background images then stayed in flow and carried their inline height, so the hero measured
+   1852px instead of 880 and the h1 sat below the fold. Same origin hid it, because a
+   same-origin stylesheet blocks rendering and is therefore always in place first; it showed up
+   on htmlpreview, which fetches the CSS cross-origin. Declaring the one real case removes the
+   inference, and with it the race. */
+#valuation > .vbg img{width:100%;height:100%;object-fit:cover;filter:saturate(0.75);
+  position:relative}
 #valuation > .rail{position:relative;z-index:2}
 /* the hole is placed as a PERCENTAGE of the sheet, not at an absolute u offset. The rail
    renders 915.78px rather than the nominal 1645u, because 100vw includes the scrollbar, so

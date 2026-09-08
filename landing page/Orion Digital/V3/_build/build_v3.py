@@ -625,9 +625,12 @@ TAIL = '''
     Array.prototype.forEach.call(document.querySelectorAll(r[0]), function(el){
       el.classList.add('a-lag');
       // top only moves a positioned element, and 05's ground image is static inside its
-      // wrapper: without this it grew downward only and opened a gap the height of the
-      // travel at the top of the frame.
-      if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
+      // wrapper. That is declared in the stylesheet now, on #valuation > .vbg img, and is
+      // deliberately NOT inferred here: reading getComputedStyle at this moment asks a
+      // question the page cannot yet answer. If the stylesheet has not arrived, every ground
+      // reads static and gets an inline position:relative that permanently beats the
+      // absolute in the stylesheet, which leaves the background images in flow carrying the
+      // inline height below and blows the hero up from 880px to 1852px.
       el.style.top = (-r[1]) + 'px';
       el.style.height = 'calc(100% + ' + r[1] + 'px)';
       moving.push({el: el, kind: 'lag', amount: r[1], clock: r[2]});
