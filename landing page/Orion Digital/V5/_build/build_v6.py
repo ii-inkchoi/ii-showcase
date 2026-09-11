@@ -3,7 +3,7 @@ import io, os, re
 ROOT = r"C:\Users\p0107\OneDrive\바탕 화면\II Work\Product Design_work files\Prototype\website\Orion Digital Website"
 v2 = io.open(os.path.join(ROOT, "V2", "index.html"), encoding="utf-8").read()
 nav = re.search(r'<nav class="nav">.*?</nav>', v2, re.S).group(0)
-nav = nav.replace('shared/v2.css', 'shared/v5.css')
+nav = nav.replace('shared/v2.css', 'shared/v6.css')
 assert '    <div class="qstrip">\n      <div class="qline"><span class="qlabel">TSX: ORIO</span><span class="qv unc">C$1.40</span><span class="qd">+0.03</span><span class="qp">+2.19%</span></div>\n      <div class="qline"><span class="qlabel">NASDAQ: ORIO</span><span class="qv unc">US$1.01</span><span class="qd">+0.02</span><span class="qp">+2.02%</span></div>\n      <div class="qasof">As of 2026-08-12</div>\n    </div>' in nav
 nav = nav.replace('    <div class="qstrip">\n      <div class="qline"><span class="qlabel">TSX: ORIO</span><span class="qv unc">C$1.40</span><span class="qd">+0.03</span><span class="qp">+2.19%</span></div>\n      <div class="qline"><span class="qlabel">NASDAQ: ORIO</span><span class="qv unc">US$1.01</span><span class="qd">+0.02</span><span class="qp">+2.02%</span></div>\n      <div class="qasof">As of 2026-08-12</div>\n    </div>', '    <div class="qstrip">\n      <div class="qrows">\n        <div class="qrow"><span class="qex">TSX</span><span class="qv unc"><span class="qc">C$</span><span class="qn">1.40</span></span><span class="qp">+2.19%</span></div>\n        <div class="qrow"><span class="qex">NASDAQ</span><span class="qv unc"><span class="qc">US$</span><span class="qn">1.01</span></span><span class="qp">+2.02%</span></div>\n      </div>\n      <span class="qasof">As of 2026-08-12</span>\n    </div>', 1)
 
@@ -36,7 +36,7 @@ HEAD = '''<!DOCTYPE html>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="shared/v5.css">
+<link rel="stylesheet" href="shared/v6.css">
 </head>
 <body>
 
@@ -180,7 +180,7 @@ BIZ = '''
      three exists in our library, so the register approved instead is muted urban photography,
      one subject each so no two cells share a frame. -->
 <section class="field photo mid secpad" id="businesses">
-  <img class="bg" src="Images/ground-light.jpg" alt="" style="object-position:50% 50%">
+  <img class="bg" src="Images/ground-pattern.jpg" alt="" style="object-position:50% 50%">
   <div class="rail">
     <div class="m13 beyeb">WEALTH. PAYMENTS. CONSUMER LENDING.</div>
     <h2 class="h2 bstand">Three financial businesses managed through a disciplined capital allocation framework.</h2>

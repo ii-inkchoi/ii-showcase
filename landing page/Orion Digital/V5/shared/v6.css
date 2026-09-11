@@ -2570,3 +2570,225 @@ body.menu-open .nav .burger span:last-child{top:50%;bottom:auto;
   .nav .burger{display:block}
 }
 body.menu-open .nav{z-index:130;background:transparent}
+
+/* ===== MOBILE, flat. No rail units below 900. ================================== */
+@media (max-width:900px){
+  /* the rail's own gutters */
+  .grid12,.pgrid,.tgrid,.figrow,.q2row,.nrow,.q2head,.nhead,.bsheet{column-gap:16px}
+
+  /* hero */
+  .h1{margin:24px 0 0}
+  .heyeb{margin-bottom:0}
+  .hsub{margin-top:24px}
+
+  /* Orion Today */
+  .tleft .h2,.bstand,.q2title{margin-bottom:0}
+  .tleft .p{margin-top:24px}
+  .tright.panel{margin-top:40px;padding:24px 20px 28px}
+  .tright.panel .mcap{margin-top:16px}
+  .tright .mcapex{margin-top:12px}
+  .tright .m9{margin-top:8px}
+
+  /* the figure rows, in both sections */
+  .figrow{margin-top:40px;row-gap:32px}
+  .figrow .fig .v,.q2row .fig .v{padding-bottom:16px}
+  .figrow .fig .s15,.q2row .fig .s15{margin-top:16px}
+  .figrow .fig .m9,.q2row .fig .m9{margin-top:8px}
+
+  /* the three cards */
+  .bsheet{row-gap:24px}
+  .bhead{padding:0 0 16px;gap:12px}
+  .bcat{margin-top:8px}
+  .b-desc{margin-top:16px}
+  .b-fig{margin-top:24px}
+  .b-fig .v{margin-top:8px}
+  .link,.link.push{gap:8px}
+
+  /* Q2 */
+  .q2head{gap:16px}
+  .q2panel .q2row{margin-top:24px;row-gap:16px}
+
+  /* Latest News: one column, the row grammar stacked */
+  .nhead{padding-bottom:16px;gap:16px}
+  .nrows{margin-top:24px}
+  .nrow{grid-template-columns:1fr;row-gap:12px;padding:24px 0}
+  .nmeta,.ntitle,.nread{grid-column:1;grid-row:auto;justify-self:start}
+  .ntitle{white-space:normal;margin:0}
+  .nmeta .ndate{margin-top:4px}
+  .nread{padding-top:0}
+
+  /* footer */
+  .fsite{margin-top:40px;padding-top:24px}
+  .fsite .soc-row{gap:16px}
+  .fsite .flegal{margin-top:24px;font-size:11px;line-height:1.6}
+
+  /* the price strip, flat */
+  .plabel .pasof{margin-top:8px}
+  .pq{margin-top:28px}
+  .pquote{margin-top:8px}
+  .pquote .pch{margin-top:8px}
+}
+
+@media (max-width:900px){
+  .b-fig.f1{margin-top:24px}
+  .b-fig .m11{margin-top:8px}
+}
+
+@media (max-width:900px){
+  /* the glyph stays 18; the target around it reaches 44 */
+  .fsite .soc{width:44px;height:44px;display:flex;align-items:center;justify-content:flex-start}
+  .fsite .soc svg{width:18px;height:18px}
+  .fsite .soc-row{gap:4px;margin-left:-0px}
+  /* the overlay's links and the logo */
+  .menuov a{min-height:44px;display:flex;align-items:center}
+  .menuov .mlist{gap:16px}
+  .nav .logo{display:flex;align-items:center;min-height:44px}
+}
+
+/* ===== MOBILE, to the II V16 canon ============================================ */
+@media (max-width:900px){
+  /* the section boundary */
+  .secpad{padding:104px 0}
+
+  /* prose at the phone tier */
+  .p,.b-desc,.hsub,.tleft .p,#businesses .p{font-size:15px;line-height:1.4}
+
+  /* title to its description */
+  .tleft .p{margin-top:16px}
+  .b-desc{margin-top:16px}
+
+  /* group to group */
+  .tright.panel{margin-top:48px}
+  .figrow{margin-top:48px}
+  .bsheet{row-gap:48px}
+
+  /* the figure row as II stacks a stat trio: one per row, a hairline between */
+  .figrow{grid-template-columns:1fr;row-gap:0}
+  .figrow .fig{padding:24px 0;border-top:0.667px solid var(--hair-light)}
+  .figrow .fig:last-child{border-bottom:0.667px solid var(--hair-light)}
+  .figrow .fig .v{font-size:34px;line-height:1.15;letter-spacing:-0.069em;
+    padding-bottom:0;border-bottom:0}
+  .figrow .fig .s15{font-size:15px;line-height:1.4;margin-top:8px}
+  .figrow .fig .m9{margin-top:8px}
+
+  /* the Q2 boxes keep their box, but take the same inner steps */
+  .q2row .fig .v{padding-bottom:0;border-bottom:0}
+  .q2row .fig .s15{font-size:15px;line-height:1.4;margin-top:8px}
+  .q2row .fig .m9{margin-top:8px}
+}
+
+/* the burger, at II's geometry */
+.nav .burger{width:44px;height:44px;right:20px}
+.nav .burger span{left:10px;width:24px}
+.nav .burger span:first-child{top:18px}
+.nav .burger span:last-child{bottom:18px}
+@media (max-width:900px){
+  /* the overlay's list, as II stacks it */
+  .menuov .mlist{gap:4px;padding-left:20px}
+  .menuov a{font-size:clamp(28px,7.4vw,40px);line-height:1.1;min-height:0;display:block;
+    padding:6px 0}
+}
+
+@media (max-width:900px){
+  .nav .logo{min-height:44px;display:flex;align-items:center}
+  .nav .logo svg{width:92px;height:30px;flex:none}
+}
+
+@media (max-width:900px){
+  /* one gutter around the nav: 20 on the sides, 20 above and below the mark */
+  .nav{height:70px;min-height:70px}
+}
+
+@media (max-width:900px){
+  /* 104 is the boundary between two sections, so each side carries half */
+  .secpad{padding:52px 0}
+  /* the mark on the gutter: 20 from the top, 20 from the left, its tap area around it */
+  .nav{height:70px;min-height:70px}
+  .nav .logo{position:absolute;left:20px;top:20px;transform:none;height:30px;min-height:0;
+    display:block}
+  .nav .logo svg{width:92px;height:30px;display:block}
+  .nav .logo::after{content:"";position:absolute;inset:-7px -10px}
+}
+
+@media (max-width:900px){
+  .grid12,.tgrid,.pgrid{row-gap:0}
+}
+
+@media (max-width:900px){
+  .bsheet{row-gap:24px}
+}
+
+@media (max-width:900px){
+  /* one step for a stack of boxes */
+  .bsheet{row-gap:16px}
+  /* one figure tier across both rows */
+  .q2row .fig .v{font-size:34px;line-height:1.15;letter-spacing:-0.069em}
+  /* the mark keeps its place; its box carries the 44 */
+  .nav .logo{top:13px;padding:7px 10px;margin-left:-10px;height:auto;min-height:44px;
+    display:flex;align-items:center}
+  .nav .logo::after{content:none}
+  .nav .logo svg{width:92px;height:30px;display:block}
+  /* the last rail unit on the page */
+  .navmenu{gap:0}
+}
+
+@media (max-width:900px){
+  /* the rule to the ink: 24, measured to the glyph rather than to its tap box */
+  .fsite .soc-row{margin-top:-13px;margin-bottom:-13px;gap:0}
+  .fsite .soc{width:34px;justify-content:center}
+  .fsite .soc:first-child{width:24px;justify-content:flex-start}
+  .fsite .flegal{margin-top:24px}
+}
+
+@media (max-width:900px){
+  .nav .burger span{left:auto;right:0}
+}
+
+@media (max-width:900px){
+  /* the mark's ink carries 5 of its 42 units as empty space under the baseline */
+  .nav .logo{top:15px}
+}
+
+@media (max-width:900px){
+  /* one gutter: both inks 20 from the top, 20 from their own side */
+  .nav{height:68px;min-height:68px}
+  .nav .logo{top:20px;padding:0;margin-left:0;min-height:0;height:30px;display:block}
+  .nav .logo svg{width:92px;height:30px;display:block}
+  .nav .burger{top:0;transform:none;height:48px;width:44px;right:20px}
+  .nav .burger span{left:auto;right:0;width:24px}
+  .nav .burger span:first-child{top:20px;bottom:auto}
+  .nav .burger span:last-child{top:28px;bottom:auto}
+  body.menu-open .nav .burger span:first-child{top:24px;bottom:auto;
+    transform:translateY(-50%) rotate(45deg)}
+  body.menu-open .nav .burger span:last-child{top:24px;bottom:auto;
+    transform:translateY(-50%) rotate(-45deg)}
+}
+
+
+/* ============================================================================
+   V6: the product visuals in the cards
+   The three pictures are renders of the products themselves, supplied by the team, rather
+   than photographs of buildings. A render carries its own black ground, so the strip stops
+   bleeding past the card's edges and stops being cropped to fill: it sits inside the card,
+   full width, and shows the whole object.
+   ============================================================================ */
+.bpic{width:100%;margin:0 0 calc(30 * var(--u));height:calc(220 * var(--u));min-height:140px;
+  object-fit:cover;object-position:50% 50%;background:#080808;filter:none;max-width:100%}
+@media (max-width:900px){
+  .bpic{width:100%;margin:0 0 20px;height:160px}
+}
+
+/* the whole render, not a crop of it */
+.bpic{object-fit:contain}
+
+/* the second set is framed already: the strip covers again, cropping only the top and bottom */
+.bpic{object-fit:cover;object-position:50% 50%}
+
+/* the render's own proportion: the height follows the card's width */
+.bpic{aspect-ratio:2460 / 1456;height:auto;min-height:0}
+@media (max-width:900px){
+  .bpic{aspect-ratio:2460 / 1456;height:auto;min-height:0}
+}
+
+/* the second set is framed already: the strip covers again, cropping only the top and bottom */
+.bpic{object-fit:cover;object-position:50% 50%}
